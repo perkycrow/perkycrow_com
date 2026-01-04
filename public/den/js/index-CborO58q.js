@@ -11657,15 +11657,15 @@ const manifest = {
     name: "Mistbrewer"
   },
   assets: {
-    background: { type: "image", url: "/assets/images/background.png" },
-    wolf: { type: "image", url: "/assets/images/wolf.png" },
-    wolf_right: { type: "image", url: "/assets/images/wolf_right.png" },
-    wolf_up: { type: "image", url: "/assets/images/wolf_up.png" },
-    wolf_down: { type: "image", url: "/assets/images/wolf_down.png" },
-    pig: { type: "image", url: "/assets/images/pig.png" },
-    red: { type: "image", url: "/assets/images/red.png" },
-    granny: { type: "image", url: "/assets/images/granny.png" },
-    amalgam: { type: "image", url: "/assets/images/amalgam.png" }
+    background: { type: "image", url: "./assets/images/background.png" },
+    wolf: { type: "image", url: "./assets/images/wolf.png" },
+    wolf_right: { type: "image", url: "./assets/images/wolf_right.png" },
+    wolf_up: { type: "image", url: "./assets/images/wolf_up.png" },
+    wolf_down: { type: "image", url: "./assets/images/wolf_down.png" },
+    pig: { type: "image", url: "./assets/images/pig.png" },
+    red: { type: "image", url: "./assets/images/red.png" },
+    granny: { type: "image", url: "./assets/images/granny.png" },
+    amalgam: { type: "image", url: "./assets/images/amalgam.png" }
   }
 };
 const instances = /* @__PURE__ */ new Map();
@@ -19181,7 +19181,7 @@ cleanupKeyboard_fn = function() {
 showCommandPalette_fn = async function() {
   if (!__privateGet(this, _commandPaletteEl)) {
     const { default: DevToolsCommandPalette } = await __vitePreload(async () => {
-      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-D7p5brnT.js");
+      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-RCjHMmg7.js");
       return { default: DevToolsCommandPalette2 };
     }, true ? [] : void 0, import.meta.url);
     __privateSet(this, _commandPaletteEl, new DevToolsCommandPalette());
