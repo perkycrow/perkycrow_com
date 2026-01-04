@@ -8734,7 +8734,7 @@ function testCapsuleCapsule(capsuleA, posA, capsuleB, posB) {
 class Player extends Entity {
   constructor(params = {}) {
     super(params);
-    const { maxSpeed = 3, acceleration = 25, boundaries = { min: -0.85, max: 1.55 } } = params;
+    const { maxSpeed = 3, acceleration = 25, boundaries = { min: -1.25, max: 1.15 } } = params;
     this.maxSpeed = maxSpeed;
     this.acceleration = acceleration;
     this.boundaries = boundaries;
@@ -9575,7 +9575,7 @@ __publicField(GameController, "waveSettings", {
   speedGrowthPerDay: 0.05,
   baseSpawnInterval: { min: 1.2, max: 2 },
   spawnIntervalDecreasePerDay: 0.1,
-  spawnY: { min: -1.5, max: 1 }
+  spawnY: { min: -1.9, max: 0.6 }
 });
 __publicField(GameController, "waveSpawnRatios", [
   { pig: 1, red: 0, granny: 0 },
@@ -19181,7 +19181,7 @@ cleanupKeyboard_fn = function() {
 showCommandPalette_fn = async function() {
   if (!__privateGet(this, _commandPaletteEl)) {
     const { default: DevToolsCommandPalette } = await __vitePreload(async () => {
-      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-RCjHMmg7.js");
+      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-Dd--V6Dt.js");
       return { default: DevToolsCommandPalette2 };
     }, true ? [] : void 0, import.meta.url);
     __privateSet(this, _commandPaletteEl, new DevToolsCommandPalette());
