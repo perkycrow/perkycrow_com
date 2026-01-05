@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLCanvas2D_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _world, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _program2, _enabled3, _a, _width2, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _GameRenderer_instances, registerViews_fn, registerShaderEffects_fn, buildScene_fn, setupRenderGroups_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _enabled4, _program3, _uniforms2, _RenderPass_instances, applyUniform_fn, _DefendTheDen_instances, updateShadows_fn, checkWaveClear_fn, startNextWave_fn, _listeners, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _customStyles2, _BaseInspector_instances, getStyles_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _fpsValueEl, _statusValueEl, _toggleBtn, _GameLoopInspector_instances, handleToggle_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _value, _step, _precision, _label, _min, _max, _input, _labelEl2, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn4, updateDisplay_fn, handleInputChange_fn, handleBlur_fn2, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn, startDrag_fn, _vec2, _xInput, _yInput, _label2, _labelEl3, _Vec2Input_instances, buildDOM_fn5, updateDisplay_fn2, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn, openSceneTree_fn, _WorldViewInspector_instances, update_fn2, openSceneTree_fn2, _value2, _min2, _max2, _step2, _label3, _slider, _labelEl4, _valueEl, _SliderInput_instances, buildDOM_fn6, updateDisplay_fn3, handleInput_fn, clamp_fn2, _checked, _label4, _toggle, _labelEl5, _ToggleInput_instances, buildDOM_fn7, updateDisplay_fn4, handleClick_fn, _WebGLCanvasInspector_instances, update_fn3, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn4, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _ManifestInspector_instances, update_fn5, createSection_fn, createConfigSection_fn, createDataGrid_fn, createAssetsSection_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn6, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn7, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn8, createControllerGroup_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn8, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn9, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn10, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn11, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn12, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn13, createHeader_fn4, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn14, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn15, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn;
+var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLCanvas2D_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _world, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _program2, _enabled3, _a, _width2, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _GameRenderer_instances, registerViews_fn, registerShaderEffects_fn, buildScene_fn, setupRenderGroups_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _enabled4, _program3, _uniforms2, _RenderPass_instances, applyUniform_fn, _DefendTheDen_instances, updateShadows_fn, checkWaveClear_fn, startNextWave_fn, _listeners, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _customStyles2, _BaseInspector_instances, getStyles_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn4, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl3, _ToggleInput_instances, buildDOM_fn5, updateDisplay_fn2, handleClick_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl4, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn6, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn2, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _vec2, _xInput, _yInput, _label4, _labelEl5, _Vec2Input_instances, buildDOM_fn7, updateDisplay_fn4, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _ManifestInspector_instances, update_fn6, createSection_fn, createConfigSection_fn, createDataGrid_fn, createAssetsSection_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn8, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn9, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn10, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn11, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn12, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn13, createHeader_fn4, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn14, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn15, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -4136,12 +4136,16 @@ class GameLoop extends PerkyModule {
   constructor(params = {}) {
     super(params);
     __privateAdd(this, _paused, false);
+    __privateAdd(this, _fpsLimited, false);
     this.lastTime = 0;
     this.accumulator = 0;
     this.maxFrameSkip = params.maxFrameSkip || 5;
     this.frameCount = 0;
+    this.screenFrameCount = 0;
     this.lastFpsUpdate = 0;
-    this.setFps(params.fps || 60);
+    this.fps = params.fps ?? 60;
+    this.frameInterval = 1e3 / this.fps;
+    __privateSet(this, _fpsLimited, params.fpsLimited ?? false);
   }
   onInstall(host) {
     this.delegateTo(host, [
@@ -4150,14 +4154,18 @@ class GameLoop extends PerkyModule {
       "resume",
       "setFps",
       "getFps",
-      "getCurrentFps"
+      "getCurrentFps",
+      "getScreenFps",
+      "fpsLimited",
+      "setFpsLimited"
     ]);
     this.delegateEventsTo(host, [
       "update",
       "render",
       "pause",
       "resume",
-      "changed:fps"
+      "changed:fps",
+      "changed:fpsLimited"
     ]);
   }
   get paused() {
@@ -4206,29 +4214,49 @@ class GameLoop extends PerkyModule {
   getCurrentFps() {
     return this.currentFps || 0;
   }
+  getScreenFps() {
+    return this.screenFps || 0;
+  }
+  get fpsLimited() {
+    return __privateGet(this, _fpsLimited);
+  }
+  setFpsLimited(value) {
+    __privateSet(this, _fpsLimited, value);
+    this.emit("changed:fpsLimited", value);
+  }
 }
 _paused = new WeakMap();
+_fpsLimited = new WeakMap();
 __publicField(GameLoop, "$category", "gameLoop");
 function update(gameLoop, currentTime) {
   if (!gameLoop.started || gameLoop.paused) {
     return false;
   }
-  const { frameInterval, maxFrameSkip } = gameLoop;
   const deltaTime = currentTime - gameLoop.lastTime;
   gameLoop.lastTime = currentTime;
-  gameLoop.frameCount++;
+  gameLoop.screenFrameCount++;
+  if (gameLoop.fpsLimited) {
+    const { frameInterval, maxFrameSkip } = gameLoop;
+    gameLoop.accumulator += Math.min(deltaTime, frameInterval * maxFrameSkip);
+    while (gameLoop.accumulator >= frameInterval) {
+      gameLoop.emit("update", frameInterval / 1e3);
+      gameLoop.accumulator -= frameInterval;
+      gameLoop.frameCount++;
+    }
+    const frameProgress = gameLoop.accumulator / frameInterval;
+    gameLoop.emit("render", frameProgress, gameLoop.currentFps, gameLoop.screenFps);
+  } else {
+    gameLoop.emit("update", deltaTime / 1e3);
+    gameLoop.emit("render", 1, gameLoop.currentFps, gameLoop.screenFps);
+    gameLoop.frameCount++;
+  }
   if (currentTime - gameLoop.lastFpsUpdate >= 1e3) {
     gameLoop.currentFps = gameLoop.frameCount;
+    gameLoop.screenFps = gameLoop.screenFrameCount;
     gameLoop.frameCount = 0;
+    gameLoop.screenFrameCount = 0;
     gameLoop.lastFpsUpdate = currentTime;
   }
-  gameLoop.accumulator += Math.min(deltaTime, frameInterval * maxFrameSkip);
-  while (gameLoop.accumulator >= frameInterval) {
-    gameLoop.emit("update", frameInterval / 1e3);
-    gameLoop.accumulator -= frameInterval;
-  }
-  const frameProgress = gameLoop.accumulator / frameInterval;
-  gameLoop.emit("render", frameProgress, gameLoop.currentFps);
   requestAnimationFrame((time) => update(gameLoop, time));
   return true;
 }
@@ -8925,19 +8953,18 @@ function testCapsuleCapsule(capsuleA, posA, capsuleB, posB) {
   const bBottomY = posB.y + capsuleB.bottomY;
   const overlapTop = Math.min(aTopY, bTopY);
   const overlapBottom = Math.max(aBottomY, bBottomY);
-  let closestAY, closestBY;
+  let closestAY;
+  let closestBY;
   if (overlapTop >= overlapBottom) {
     const midY = (overlapTop + overlapBottom) / 2;
     closestAY = Math.max(aBottomY, Math.min(aTopY, midY));
     closestBY = Math.max(bBottomY, Math.min(bTopY, midY));
+  } else if (aTopY < bBottomY) {
+    closestAY = aTopY;
+    closestBY = bBottomY;
   } else {
-    if (aTopY < bBottomY) {
-      closestAY = aTopY;
-      closestBY = bBottomY;
-    } else {
-      closestAY = aBottomY;
-      closestBY = bTopY;
-    }
+    closestAY = aBottomY;
+    closestBY = bTopY;
   }
   const dx = ax - bx;
   const dy = closestAY - closestBY;
@@ -9390,7 +9417,7 @@ class AmalgamEnemy extends Enemy {
     });
     this.state = "stalking";
     this.stateTimer = 0;
-    this.stalkDuration = 2 + Math.random() * 1;
+    this.stalkDuration = 2 + Math.random();
     this.laneChangeSpeed = 1.5;
     this.targetY = this.position.y;
     this.fearChargeDuration = 1.2;
@@ -9437,7 +9464,7 @@ class AmalgamEnemy extends Enemy {
     if (this.stateTimer >= this.fearActiveDuration) {
       this.state = "stalking";
       this.stateTimer = 0;
-      this.stalkDuration = 1.5 + Math.random() * 1;
+      this.stalkDuration = 1.5 + Math.random();
       this.fearProgress = 0;
     }
   }
@@ -9777,6 +9804,9 @@ class GameController extends WorldController {
   }
   spawnAmalgamEnemy(options = {}) {
     return this.world.spawnAmalgamEnemy(options);
+  }
+  toggleHitboxDebug() {
+    return this.renderer.toggleHitboxDebug();
   }
 }
 __publicField(GameController, "bindings", {
@@ -11225,13 +11255,7 @@ __publicField(DayNightPass, "shaderDefinition", {
             precision mediump float;
             uniform sampler2D uTexture;
             uniform float uDayNightProgress;
-            uniform float uTime;
             uniform float uAspectRatio;
-            uniform vec2 uHill1;
-            uniform float uHill1R;
-            uniform vec2 uHill2;
-            uniform float uHill2R;
-            uniform float uCameraRatio;
             in vec2 vTexCoord;
             out vec4 fragColor;
 
@@ -11242,6 +11266,12 @@ __publicField(DayNightPass, "shaderDefinition", {
             const vec2 WORLD_SIZE = vec2(7.0, 5.0);
             const vec2 SUN_ARC = vec2(2.95, 2.325);
             const float SUN_RADIUS = 0.15;
+            // Terrain hills (fixed geometry)
+            const vec2 HILL1 = vec2(-4.5, -20.68);
+            const float HILL1_R = 22.65;
+            const vec2 HILL2 = vec2(3.55, -14.0);
+            const float HILL2_R = 15.95;
+            const float CAMERA_RATIO = 1.4;
             // Lighting constants
             const float SKY_EXTRA_DARKNESS = 0.35;
             const float MAX_DARKNESS = 0.85;
@@ -11299,8 +11329,7 @@ __publicField(DayNightPass, "shaderDefinition", {
             const float HALO_STRENGTH = 0.2;          // Halo opacity
 
             // Stars
-            const vec2 STAR_GRID = vec2(100.0, 60.0);
-            const vec2 STAR_SPEED = vec2(0.008, 0.003);
+            const float STAR_GRID_SIZE = 60.0;
             const float STAR_THRESHOLD = 0.92;
 
             // DEBUG: uncomment to visualize sun radius and terrain intersection
@@ -11318,86 +11347,19 @@ __publicField(DayNightPass, "shaderDefinition", {
             }
 
             // ─────────────────────────────────────────────────────────────
-            // Ambiance calculations (based on sun position, not time!)
-            // ─────────────────────────────────────────────────────────────
-
-            struct Ambiance {
-                float darkness;
-                float tintStrength;
-                vec3 tintColor;
-                float starsIntensity;
-                float sunProgress;
-                float nightFactor;  // 0=day, 1=full night - for Purkinje/desat effects
-            };
-
-            // Calculate ambiance from sun position relative to terrain
-            // sunProgress: 0=dawn start, 0.5=zenith, 1=dusk end
-            // intersectStrength: 0-1 when sun intersects terrain
-            Ambiance getAmbianceFromSun(float sunTop, float sunBottom, float terrainY, float intersectStrength, float sunProgress) {
-                Ambiance a;
-
-                // Sun position relative to terrain
-                float aboveTerrain = sunBottom - terrainY;  // positive = fully in sky
-                float belowTerrain = terrainY - sunTop;     // positive = fully below
-
-                // Smooth blend factors
-                float nightFactor = smoothstep(0.0, HORIZON_RANGE, belowTerrain);
-                float dayFactor = smoothstep(0.0, HORIZON_RANGE, aboveTerrain);
-                float raysFactor = intersectStrength;
-
-                // Dawn vs Dusk: sunProgress < 0.5 = dawn, > 0.5 = dusk
-                float duskFactor = smoothstep(0.35, 0.65, sunProgress);
-
-                // Interpolate horizon colors between dawn and dusk
-                vec3 horizonTint = mix(TINT_DAWN, TINT_DUSK, duskFactor);
-                float horizonDark = mix(DARK_DAWN, DARK_DUSK, duskFactor);
-                float horizonTintStr = mix(TINT_STR_DAWN, TINT_STR_DUSK, duskFactor);
-
-                // Mix ambiance based on sun state
-                // Start with night/day/horizon blend
-                a.tintColor = mix(
-                    mix(horizonTint, TINT_NIGHT, nightFactor),
-                    TINT_DAY,
-                    dayFactor
-                );
-                a.darkness = mix(
-                    mix(horizonDark, DARK_NIGHT, nightFactor),
-                    DARK_DAY,
-                    dayFactor
-                );
-                a.tintStrength = mix(
-                    mix(horizonTintStr, TINT_STR_NIGHT, nightFactor),
-                    TINT_STR_DAY,
-                    dayFactor
-                );
-
-                // Override with rays ambiance when sun intersects terrain
-                vec3 raysTint = mix(TINT_RAYS_DAWN, TINT_RAYS_DUSK, duskFactor);
-                a.tintColor = mix(a.tintColor, raysTint, raysFactor);
-                a.darkness = mix(a.darkness, DARK_RAYS, raysFactor);
-                a.tintStrength = mix(a.tintStrength, TINT_STR_RAYS, raysFactor);
-
-                // Stars only at night
-                a.starsIntensity = STARS_NIGHT * nightFactor;
-
-                // Export night factor for Purkinje/desaturation effects
-                a.nightFactor = nightFactor;
-
-                return a;
-            }
-
-            // ─────────────────────────────────────────────────────────────
             // Coordinate transforms
             // ─────────────────────────────────────────────────────────────
             void getScreenWorldParams(out vec2 margin, out vec2 scale) {
-                float ratio = uAspectRatio / uCameraRatio;
+                float ratio = uAspectRatio / CAMERA_RATIO;
+                float wider = step(CAMERA_RATIO, uAspectRatio);  // 1 if wider, 0 if taller
+                float taller = 1.0 - wider;
                 margin = vec2(
-                    uAspectRatio > uCameraRatio ? (1.0 - 1.0/ratio) * 0.5 : 0.0,
-                    uAspectRatio < uCameraRatio ? (1.0 - ratio) * 0.5 : 0.0
+                    wider * (1.0 - 1.0/ratio) * 0.5,
+                    taller * (1.0 - ratio) * 0.5
                 );
                 scale = vec2(
-                    uAspectRatio > uCameraRatio ? ratio : 1.0,
-                    uAspectRatio < uCameraRatio ? 1.0/ratio : 1.0
+                    mix(1.0, ratio, wider),
+                    mix(1.0, 1.0/ratio, taller)
                 );
             }
 
@@ -11423,7 +11385,7 @@ __publicField(DayNightPass, "shaderDefinition", {
             }
 
             float terrainHeight(float x) {
-                return max(hillHeight(uHill1, uHill1R, x), hillHeight(uHill2, uHill2R, x));
+                return max(hillHeight(HILL1, HILL1_R, x), hillHeight(HILL2, HILL2_R, x));
             }
 
             // Smooth terrain detection with anti-aliasing
@@ -11443,8 +11405,8 @@ __publicField(DayNightPass, "shaderDefinition", {
                 float terrainY;
                 float top;
                 float bottom;
-                bool intersectsTerrain;
-                float intersectStrength;
+                float intersectStrength;  // 0 when not intersecting, 0-1 when intersecting
+                float duskFactor;         // 0=dawn, 1=dusk - precomputed for reuse
             };
 
             vec2 calcSunPos(float progress) {
@@ -11464,48 +11426,98 @@ __publicField(DayNightPass, "shaderDefinition", {
                 s.terrainY = terrainHeight(s.pos.x);
                 s.top = s.pos.y + SUN_RADIUS;
                 s.bottom = s.pos.y - SUN_RADIUS;
-                s.intersectsTerrain = s.bottom < s.terrainY && s.top > s.terrainY;
-                s.intersectStrength = s.intersectsTerrain
-                    ? min(s.terrainY - s.bottom, s.top - s.terrainY) / SUN_RADIUS
-                    : 0.0;
+                // Branchless intersection strength calculation
+                // Returns 0 when not intersecting, 0-1 based on overlap depth
+                float belowTerrain = s.terrainY - s.bottom;  // How far bottom is below terrain
+                float aboveTerrain = s.top - s.terrainY;     // How far top is above terrain
+                float isIntersecting = step(0.0, belowTerrain) * step(0.0, aboveTerrain);
+                s.intersectStrength = min(belowTerrain, aboveTerrain) / SUN_RADIUS * isIntersecting;
+                // Precompute dusk factor (0=dawn, 1=dusk) - reused in ambiance and sun disc
+                s.duskFactor = smoothstep(0.35, 0.65, progress);
                 return s;
+            }
+
+            // ─────────────────────────────────────────────────────────────
+            // Ambiance calculations (based on sun position, not time!)
+            // ─────────────────────────────────────────────────────────────
+
+            struct Ambiance {
+                float darkness;
+                float tintStrength;
+                vec3 tintColor;
+                float starsIntensity;
+                float nightFactor;  // 0=day, 1=full night - for Purkinje/desat effects
+            };
+
+            // Calculate ambiance from sun position relative to terrain
+            // Uses precomputed SunData for efficiency
+            Ambiance getAmbianceFromSun(SunData sun) {
+                Ambiance a;
+
+                // Sun position relative to terrain
+                float aboveTerrain = sun.bottom - sun.terrainY;  // positive = fully in sky
+                float belowTerrain = sun.terrainY - sun.top;     // positive = fully below
+
+                // Smooth blend factors
+                float nightFactor = smoothstep(0.0, HORIZON_RANGE, belowTerrain);
+                float dayFactor = smoothstep(0.0, HORIZON_RANGE, aboveTerrain);
+                float raysFactor = sun.intersectStrength;
+
+                // Interpolate horizon colors between dawn and dusk (use precomputed duskFactor)
+                vec3 horizonTint = mix(TINT_DAWN, TINT_DUSK, sun.duskFactor);
+                float horizonDark = mix(DARK_DAWN, DARK_DUSK, sun.duskFactor);
+                float horizonTintStr = mix(TINT_STR_DAWN, TINT_STR_DUSK, sun.duskFactor);
+
+                // Mix ambiance based on sun state
+                // Start with night/day/horizon blend
+                a.tintColor = mix(
+                    mix(horizonTint, TINT_NIGHT, nightFactor),
+                    TINT_DAY,
+                    dayFactor
+                );
+                a.darkness = mix(
+                    mix(horizonDark, DARK_NIGHT, nightFactor),
+                    DARK_DAY,
+                    dayFactor
+                );
+                a.tintStrength = mix(
+                    mix(horizonTintStr, TINT_STR_NIGHT, nightFactor),
+                    TINT_STR_DAY,
+                    dayFactor
+                );
+
+                // Override with rays ambiance when sun intersects terrain
+                vec3 raysTint = mix(TINT_RAYS_DAWN, TINT_RAYS_DUSK, sun.duskFactor);
+                a.tintColor = mix(a.tintColor, raysTint, raysFactor);
+                a.darkness = mix(a.darkness, DARK_RAYS, raysFactor);
+                a.tintStrength = mix(a.tintStrength, TINT_STR_RAYS, raysFactor);
+
+                // Stars only at night
+                a.starsIntensity = STARS_NIGHT * nightFactor;
+
+                // Export night factor for Purkinje/desaturation effects
+                a.nightFactor = nightFactor;
+
+                return a;
             }
 
             // ─────────────────────────────────────────────────────────────
             // Color utilities
             // ─────────────────────────────────────────────────────────────
-            vec3 rgbToHsl(vec3 c) {
-                float maxC = max(c.r, max(c.g, c.b));
-                float minC = min(c.r, min(c.g, c.b));
-                float l = (maxC + minC) * 0.5;
-                if (maxC == minC) return vec3(0.0, 0.0, l);
-                float d = maxC - minC;
-                float s = l > 0.5 ? d / (2.0 - maxC - minC) : d / (maxC + minC);
-                float h;
-                if (maxC == c.r) h = (c.g - c.b) / d + (c.g < c.b ? 6.0 : 0.0);
-                else if (maxC == c.g) h = (c.b - c.r) / d + 2.0;
-                else h = (c.r - c.g) / d + 4.0;
-                return vec3(h / 6.0, s, l);
+            // Attempt branchless HSL conversion - IQ style
+            // HSV to RGB is cheaper and similar for our use case (night desaturation)
+            vec3 rgbToHsv(vec3 c) {
+                vec4 K = vec4(0.0, -1.0/3.0, 2.0/3.0, -1.0);
+                vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+                vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+                float d = q.x - min(q.w, q.y);
+                float e = 1.0e-10;
+                return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
             }
 
-            float hueToRgb(float p, float q, float t) {
-                if (t < 0.0) t += 1.0;
-                if (t > 1.0) t -= 1.0;
-                if (t < 1.0/6.0) return p + (q - p) * 6.0 * t;
-                if (t < 0.5) return q;
-                if (t < 2.0/3.0) return p + (q - p) * (2.0/3.0 - t) * 6.0;
-                return p;
-            }
-
-            vec3 hslToRgb(vec3 hsl) {
-                if (hsl.y == 0.0) return vec3(hsl.z);
-                float q = hsl.z < 0.5 ? hsl.z * (1.0 + hsl.y) : hsl.z + hsl.y - hsl.z * hsl.y;
-                float p = 2.0 * hsl.z - q;
-                return vec3(
-                    hueToRgb(p, q, hsl.x + 1.0/3.0),
-                    hueToRgb(p, q, hsl.x),
-                    hueToRgb(p, q, hsl.x - 1.0/3.0)
-                );
+            vec3 hsvToRgb(vec3 c) {
+                vec3 p = abs(fract(c.xxx + vec3(1.0, 2.0/3.0, 1.0/3.0)) * 6.0 - 3.0);
+                return c.z * mix(vec3(1.0), clamp(p - 1.0, 0.0, 1.0), c.y);
             }
 
             // Apply Purkinje shift: boost blue-green perception at night
@@ -11520,13 +11532,13 @@ __publicField(DayNightPass, "shaderDefinition", {
 
             // Selective desaturation: warm colors lose saturation at night
             vec3 applyNightDesaturation(vec3 rgb, float nightFactor) {
-                vec3 hsl = rgbToHsl(rgb);
+                vec3 hsv = rgbToHsv(rgb);
                 // Hue 0-0.15 = red/orange (warm), 0.5-0.7 = blue/cyan (cool)
-                float warmness = 1.0 - smoothstep(0.0, 0.2, hsl.x) * smoothstep(0.5, 0.15, hsl.x);
+                float warmness = 1.0 - smoothstep(0.0, 0.2, hsv.x) * smoothstep(0.5, 0.15, hsv.x);
                 // More desaturation for warm colors
                 float desat = mix(DESAT_COOL, DESAT_WARM, warmness);
-                hsl.y *= 1.0 - desat * nightFactor;
-                return hslToRgb(hsl);
+                hsv.y *= 1.0 - desat * nightFactor;
+                return hsvToRgb(hsv);
             }
 
             // ─────────────────────────────────────────────────────────────
@@ -11563,14 +11575,13 @@ __publicField(DayNightPass, "shaderDefinition", {
                 // Fade halo when sun leaves intersection
                 halo *= sun.intersectStrength;
 
-                // Dawn vs Dusk color tinting
-                float duskFactor = smoothstep(0.35, 0.65, sunProgress);
+                // Dawn vs Dusk color tinting (use precomputed duskFactor)
                 vec3 dawnTint = vec3(1.0, 0.85, 0.6);   // Warm orange-yellow
                 vec3 duskTint = vec3(1.0, 0.7, 0.75);   // Soft pink-orange
 
                 // Low sun = more tinted, high sun = whiter
                 float lowSunFactor = 1.0 - smoothstep(0.0, 1.2, sun.pos.y);
-                vec3 horizonTint = mix(dawnTint, duskTint, duskFactor);
+                vec3 horizonTint = mix(dawnTint, duskTint, sun.duskFactor);
 
                 // Apply tint based on sun height
                 vec3 discColor = mix(sun.color, horizonTint, lowSunFactor * 0.5);
@@ -11588,7 +11599,7 @@ __publicField(DayNightPass, "shaderDefinition", {
                 return rgb + result * edgeFade;
             }
 
-            vec3 applyRays(vec3 rgb, vec2 world, SunData sun, float terrain, bool inSky) {
+            vec3 applyRays(vec3 rgb, vec2 world, SunData sun, float skyBlend) {
                 vec2 rayOrigin = vec2(sun.pos.x, sun.terrainY);
                 vec2 toPixel = world - rayOrigin;
                 float dist = length(toPixel);
@@ -11598,68 +11609,60 @@ __publicField(DayNightPass, "shaderDefinition", {
                 float lowSunFactor = 1.0 - smoothstep(0.0, 1.5, sun.pos.y);
                 vec3 rayColor = mix(sun.color, vec3(1.0, 0.7, 0.5), lowSunFactor * 0.4);
 
-                // Subtle shimmer
-                float shimmer = sin(uTime * 0.2) * 0.05 + 0.95;
+                // Subtle shimmer based on progress
+                float shimmer = sin(uDayNightProgress * 50.0) * 0.05 + 0.95;
 
-                if (inSky) {
-                    // Upward bias for fan effect
-                    float upwardBias = smoothstep(-0.3, 1.0, toPixel.y / max(dist, 0.01));
+                // === Sky rays ===
+                float upwardBias = smoothstep(-0.3, 1.0, toPixel.y / max(dist, 0.01));
+                float skyAtmoFalloff = exp(-dist * 0.6) * smoothstep(0.0, 0.4, dist);
+                float skyAtmoGlow = skyAtmoFalloff * upwardBias * 0.25;
+                float pattern = rayPattern(angle, dist);
+                float skyRayFalloff = exp(-dist * 0.5) * smoothstep(0.1, 0.5, dist);
+                float skyStylizedRays = pattern * skyRayFalloff * upwardBias * 0.4;
+                float skyCombined = (skyAtmoGlow + skyStylizedRays) * sun.intersectStrength * shimmer;
 
-                    // Layer 1: Atmospheric glow (soft, diffuse)
-                    float atmoFalloff = exp(-dist * 0.6) * smoothstep(0.0, 0.4, dist);
-                    float atmoGlow = atmoFalloff * upwardBias * 0.25;
+                // === Ground rays ===
+                vec2 stretchedPixel = toPixel * vec2(0.6, 1.0);
+                float stretchedAngle = atan(stretchedPixel.y, stretchedPixel.x);
+                float radialFade = smoothstep(4.0, 0.0, abs(world.x - sun.pos.x));
+                float groundAtmoGlow = exp(-dist * 0.4) * radialFade * 0.2;
+                float groundPattern = rayPattern(stretchedAngle, dist);
+                float groundStylizedRays = groundPattern * exp(-dist * 0.5) * radialFade * 0.1;
+                float bottomFade = smoothstep(-1.5, 0.8, world.y);
+                float groundCombined = (groundAtmoGlow + groundStylizedRays) * sun.intersectStrength * shimmer * bottomFade;
 
-                    // Layer 2: Stylized rays (sharper, on top)
-                    float pattern = rayPattern(angle, dist);
-                    float rayFalloff = exp(-dist * 0.5) * smoothstep(0.1, 0.5, dist);
-                    float stylizedRays = pattern * rayFalloff * upwardBias * 0.4;
+                // Blend sky and ground contributions
+                float combined = mix(groundCombined, skyCombined, skyBlend);
+                vec3 glowColor = rayColor * combined;
 
-                    // Combine layers
-                    float combined = (atmoGlow + stylizedRays) * sun.intersectStrength * shimmer;
-                    rgb += rayColor * combined;
-                } else {
-                    // Ground rays - more atmospheric, less pattern
-                    vec2 stretchedPixel = toPixel * vec2(0.6, 1.0);
-                    float stretchedAngle = atan(stretchedPixel.y, stretchedPixel.x);
-
-                    // Radial falloff from sun position
-                    float radialFade = smoothstep(4.0, 0.0, abs(world.x - sun.pos.x));
-
-                    // Layer 1: Dominant atmospheric glow (soft, wide)
-                    float atmoGlow = exp(-dist * 0.4) * radialFade * 0.2;
-
-                    // Layer 2: Subtle ray pattern (less prominent)
-                    float groundPattern = rayPattern(stretchedAngle, dist);
-                    float stylizedRays = groundPattern * exp(-dist * 0.5) * radialFade * 0.1;
-
-                    // Faster fade toward bottom - god rays dissipate quickly
-                    float bottomFade = smoothstep(-1.5, 0.8, world.y);
-
-                    // Combine with screen-like blend for softer result
-                    float combined = (atmoGlow + stylizedRays) * sun.intersectStrength * shimmer * bottomFade;
-                    vec3 glowColor = rayColor * combined;
-                    rgb = rgb + glowColor * (1.0 - rgb * 0.3);  // Soft screen-ish blend
-                }
-                return rgb;
+                // Soft screen-ish blend (works for both, slightly stronger on ground)
+                float screenFactor = mix(0.3, 0.0, skyBlend);
+                return rgb + glowColor * (1.0 - rgb * screenFactor);
             }
 
-            vec3 applyStars(vec3 rgb, vec2 uv, vec4 baseColor, float starsIntensity) {
+            vec3 applyStars(vec3 rgb, vec2 uv, float baseLum, float starsIntensity) {
                 vec2 aspectUV = vec2(uv.x * uAspectRatio, uv.y);
-                vec2 starUV = aspectUV + STAR_SPEED * uTime;
-                float gridSize = 60.0;
-                vec2 cell = floor(starUV * gridSize);
-                float r = random(cell);
+                // Slow drift based on progress
+                vec2 starUV = aspectUV + vec2(0.008, 0.003) * uDayNightProgress * 100.0;
+                vec2 gridUV = starUV * STAR_GRID_SIZE;
+                vec2 cell = floor(gridUV);
 
-                if (r > STAR_THRESHOLD) {
-                    vec2 cellUV = fract(starUV * gridSize);
-                    vec2 starPos = vec2(random(cell + 0.1), random(cell + 0.2));
-                    float star = smoothstep(0.12, 0.0, length(cellUV - starPos));
-                    float phase = random(cell + 0.3) * 6.28;
-                    float speed = 0.3 + random(cell + 0.4) * 0.4;
-                    float twinkle = sin(uTime * speed + phase) * 0.15 + 0.85;
-                    float lum = dot(baseColor.rgb, vec3(0.299, 0.587, 0.114));
-                    rgb += vec3(starsIntensity * star * twinkle * smoothstep(0.5, 1.0, lum));
-                }
+                // Single random call, derive others with cheap ops (IQ technique)
+                float rBase = random(cell);
+                float isStar = step(STAR_THRESHOLD, rBase);
+
+                vec2 cellUV = fract(gridUV);
+                // Derive star position from base random using fract arithmetic
+                vec2 starPos = fract(vec2(rBase * 17.31, rBase * 43.17));
+                float star = smoothstep(0.12, 0.0, length(cellUV - starPos));
+
+                // Twinkle: derive phase and speed from rBase
+                float phase = fract(rBase * 127.1) * 6.28;
+                float speed = 0.3 + fract(rBase * 311.7) * 0.4;
+                float twinkle = sin(uDayNightProgress * speed * 100.0 + phase) * 0.15 + 0.85;
+
+                rgb += vec3(starsIntensity * star * twinkle * smoothstep(0.5, 1.0, baseLum) * isStar);
+
                 return rgb;
             }
 
@@ -11668,10 +11671,10 @@ __publicField(DayNightPass, "shaderDefinition", {
             // ─────────────────────────────────────────────────────────────
             #ifdef DEBUG_HILLS
             vec3 debugHills(vec3 rgb, vec2 world) {
-                float d1 = length(world - uHill1);
-                float d2 = length(world - uHill2);
-                if (d1 < uHill1R) rgb = mix(rgb, vec3(1.0, 0.0, 0.0), 0.3);
-                if (d2 < uHill2R) rgb = mix(rgb, vec3(0.0, 0.0, 1.0), 0.3);
+                float d1 = length(world - HILL1);
+                float d2 = length(world - HILL2);
+                if (d1 < HILL1_R) rgb = mix(rgb, vec3(1.0, 0.0, 0.0), 0.3);
+                if (d2 < HILL2_R) rgb = mix(rgb, vec3(0.0, 0.0, 1.0), 0.3);
                 return rgb;
             }
             #endif
@@ -11684,7 +11687,7 @@ __publicField(DayNightPass, "shaderDefinition", {
                 if (abs(world.x - sun.pos.x) < 0.004 && abs(world.y - sun.terrainY) < 0.006) return vec3(0.0, 1.0, 0.0);
                 if (abs(world.y - sun.bottom) < 0.002 && abs(world.x - sun.pos.x) < 0.3) return vec3(0.0, 1.0, 1.0);
                 if (abs(world.y - sun.top) < 0.002 && abs(world.x - sun.pos.x) < 0.3) return vec3(1.0, 0.0, 1.0);
-                if (sun.intersectsTerrain && abs(world.x - sun.pos.x) < 0.01 && world.y > sun.terrainY && world.y < sun.terrainY + 0.02) return vec3(1.0);
+                if (sun.intersectStrength > 0.0 && abs(world.x - sun.pos.x) < 0.01 && world.y > sun.terrainY && world.y < sun.terrainY + 0.02) return vec3(1.0);
                 return rgb;
             }
             #endif
@@ -11692,7 +11695,6 @@ __publicField(DayNightPass, "shaderDefinition", {
             #ifdef DEBUG_SUN_PATH
             vec3 debugSunPath(vec3 rgb, vec2 world, float sunProgress) {
                 float minDist = 1000.0;
-                float closestProgress = 0.0;
 
                 // Sample trajectory to find closest point
                 for (float p = 0.0; p <= 1.0; p += 0.01) {
@@ -11700,7 +11702,6 @@ __publicField(DayNightPass, "shaderDefinition", {
                     float d = length(world - sunPos);
                     if (d < minDist) {
                         minDist = d;
-                        closestProgress = p;
                     }
                 }
 
@@ -11763,24 +11764,21 @@ __publicField(DayNightPass, "shaderDefinition", {
             void main() {
                 vec4 color = texture(uTexture, vTexCoord);
                 vec2 world = screenToWorld(vTexCoord);
-                float terrain = terrainHeight(world.x);
                 float skyBlend = terrainFactor(world);  // Smooth 0-1 transition at terrain edge
-                bool inSky = skyBlend > 0.5;
 
                 // Calculate sun position from progress
                 // Game waves: 0-0.25=dawn, 0.25-0.5=day, 0.5-0.75=dusk, 0.75-1=night
                 // We want: end of dawn (0.25) = sun at intersection
                 //          start of dusk (0.5) = sun at intersection
                 float sunProgress = 0.29 + (uDayNightProgress - 0.25) * 1.68;
-                bool sunVisible = sunProgress >= 0.0 && sunProgress <= 1.0;
+                float clampedSunProgress = clamp(sunProgress, 0.0, 1.0);
 
                 // Get sun data (clamp to valid range)
-                SunData sun = getSunDataFromProgress(clamp(sunProgress, 0.0, 1.0));
+                SunData sun = getSunDataFromProgress(clampedSunProgress);
 
                 // Get ambiance based on sun position
                 // Always use sun-based ambiance - it handles below-horizon naturally
-                Ambiance ambiance = getAmbianceFromSun(sun.top, sun.bottom, sun.terrainY, sun.intersectStrength, clamp(sunProgress, 0.0, 1.0));
-                ambiance.sunProgress = sunProgress;
+                Ambiance ambiance = getAmbianceFromSun(sun);
 
                 // Sky detection
                 float blueness = color.b - max(color.r, color.g);
@@ -11795,12 +11793,10 @@ __publicField(DayNightPass, "shaderDefinition", {
                 vec3 rgb = color.rgb;
 
                 // Apply night vision effects (Purkinje + selective desaturation)
-                // Reduced on sprites to preserve their colors
-                if (ambiance.nightFactor > 0.0) {
-                    float nightEffect = ambiance.nightFactor * effectStrength;
-                    rgb = applyPurkinje(rgb, nightEffect);
-                    rgb = applyNightDesaturation(rgb, nightEffect);
-                }
+                // nightFactor naturally fades to 0 during day, no branch needed
+                float nightEffect = ambiance.nightFactor * effectStrength;
+                rgb = applyPurkinje(rgb, nightEffect);
+                rgb = applyNightDesaturation(rgb, nightEffect);
 
                 // Apply reduced darkness (contrast preservation)
                 // Sprites receive less darkness to stay readable
@@ -11812,23 +11808,24 @@ __publicField(DayNightPass, "shaderDefinition", {
                 float tintStrength = ambiance.tintStrength * effectStrength;
                 rgb = mix(rgb, rgb * ambiance.tintColor, tintStrength);
 
-                // Sun effects
-                if (sunVisible) {
-                    if (blueness > 0.0) {
-                        rgb = applyGoldenHour(rgb, sun.pos.y, sunProgress);
-                    }
-                    // Use skyBlend for smooth sun disc transition at horizon
-                    vec3 sunDiscEffect = applySunDisc(vec3(0.0), vTexCoord, sun, sunProgress);
-                    rgb += sunDiscEffect * skyBlend;
+                // Sun effects - use sunVisibleFactor instead of branch
+                float sunVisibleFactor = step(0.0, sunProgress) * step(sunProgress, 1.0);
 
-                    if (sun.intersectsTerrain) {
-                        rgb = applyRays(rgb, world, sun, terrain, inSky);
-                    }
+                // Golden hour - multiply by sky factor (blueness > 0 means sky)
+                float skyness = step(0.0, blueness);
+                vec3 goldenRgb = applyGoldenHour(rgb, sun.pos.y, sunProgress);
+                rgb = mix(rgb, goldenRgb, skyness * sunVisibleFactor);
 
-                    #ifdef DEBUG_SUN_RADIUS
-                    rgb = debugSun(rgb, world, sun);
-                    #endif
-                }
+                // Sun disc - already uses skyBlend for smooth transition
+                vec3 sunDiscEffect = applySunDisc(vec3(0.0), vTexCoord, sun, sunProgress);
+                rgb += sunDiscEffect * skyBlend * sunVisibleFactor;
+
+                // Rays - intersectStrength naturally fades to 0 when not intersecting
+                rgb = applyRays(rgb, world, sun, skyBlend);
+
+                #ifdef DEBUG_SUN_RADIUS
+                rgb = debugSun(rgb, world, sun);
+                #endif
 
                 #ifdef DEBUG_HILLS
                 rgb = debugHills(rgb, world);
@@ -11838,33 +11835,24 @@ __publicField(DayNightPass, "shaderDefinition", {
                 rgb = debugSunPath(rgb, world, sunProgress);
                 #endif
 
-                // Stars - only in sky (above terrain and blue)
-                if (blueness > 0.0 && ambiance.starsIntensity > 0.0 && inSky) {
-                    rgb = applyStars(rgb, vTexCoord, color, ambiance.starsIntensity);
-                }
+                // Stars - starsIntensity fades to 0 during day, skyBlend handles terrain
+                // No branch needed, just multiply by all factors
+                float starsFactor = step(0.0, blueness) * ambiance.starsIntensity * skyBlend;
+                float baseLum = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+                rgb = applyStars(rgb, vTexCoord, baseLum, starsFactor);
 
                 fragColor = vec4(clamp(rgb, 0.0, 1.0), color.a);
             }
         `,
-  uniforms: ["uTexture", "uDayNightProgress", "uTime", "uAspectRatio", "uHill1", "uHill1R", "uHill2", "uHill2R", "uCameraRatio"],
+  uniforms: ["uTexture", "uDayNightProgress", "uAspectRatio"],
   attributes: ["aPosition", "aTexCoord"]
 });
 __publicField(DayNightPass, "defaultUniforms", {
   uDayNightProgress: 0,
-  uHill1: [-4.5, -20.68],
-  uHill1R: 22.65,
-  uHill2: [3.55, -14],
-  uHill2R: 15.95,
-  uCameraRatio: 1.4,
-  uTime: 0,
   uAspectRatio: 1
 });
 __publicField(DayNightPass, "uniformConfig", {
-  uDayNightProgress: { min: 0, max: 1, step: 0.01 },
-  uHill1: { type: "vec2" },
-  uHill1R: { min: 0, max: 30, step: 0.1 },
-  uHill2: { type: "vec2" },
-  uHill2R: { min: 0, max: 30, step: 0.1 }
+  uDayNightProgress: { min: 0, max: 1, step: 0.01 }
 });
 const manifest = {
   config: {
@@ -12024,6 +12012,7 @@ class DefendTheDen extends Game {
     });
     const gameController = this.getController("game");
     gameController.world = this.world;
+    gameController.renderer = this.renderer;
     const gameLayer = this.getCanvas("game");
     this.dayNightPass = new DayNightPass();
     gameLayer.renderer.addPostPass(this.dayNightPass);
@@ -12040,7 +12029,6 @@ class DefendTheDen extends Game {
     this.waveElapsedTime = 0;
     this.on("update", (delta) => {
       this.dayNightPass.setUniform("uAspectRatio", gameLayer.canvas.width / gameLayer.canvas.height);
-      this.dayNightPass.setUniform("uCameraRatio", this.camera.unitsInView.width / this.camera.unitsInView.height);
       if (this.dayPaused) {
         return;
       }
@@ -12065,7 +12053,6 @@ class DefendTheDen extends Game {
         this.emit("wave:tick", { wave, progress: 1, dayNumber, timeOfDay: this.timeOfDay, isSpawning: false });
         return;
       }
-      this.dayNightPass.setUniform("uTime", this.waveElapsedTime);
       this.dayNightPass.setProgress(this.timeOfDay);
       __privateMethod(this, _DefendTheDen_instances, updateShadows_fn).call(this, this.timeOfDay);
       gameController.setSpawning(isSpawning);
@@ -12087,9 +12074,6 @@ class DefendTheDen extends Game {
     gameController.onWaveStart(0, 0);
     this.emit("wave:start", { wave: 0, dayNumber: 0 });
     this.emit("day:start", { dayNumber: 0 });
-  }
-  toggleHitboxDebug() {
-    return this.renderer.toggleHitboxDebug();
   }
   setHitboxDebug(enabled2) {
     this.renderer.setHitboxDebug(enabled2);
@@ -13862,13 +13846,675 @@ function formatTags(tags) {
   return container;
 }
 customElements.define("perky-explorer-details", PerkyExplorerDetails);
-class GameLoopInspector extends BaseInspector {
+function createInputStyles(customStyles2) {
+  return `
+        :host {
+            ${cssVariables}
+            display: inline-flex;
+            font-family: var(--font-mono);
+        }
+        ${customStyles2}
+    `;
+}
+function emitChange(element, detail) {
+  element.dispatchEvent(new CustomEvent("change", {
+    detail,
+    bubbles: true
+  }));
+}
+const attributeHandlers = {
+  value: (component, newValue) => {
+    component.setValue(parseFloat(newValue) || 0);
+  },
+  min: (component, newValue) => {
+    component.setMin(parseFloat(newValue) || 0);
+  },
+  max: (component, newValue) => {
+    component.setMax(parseFloat(newValue) || 100);
+  },
+  step: (component, newValue) => {
+    component.setStep(parseFloat(newValue) || 1);
+  },
+  label: (component, newValue) => {
+    component.setLabel(newValue || "");
+  },
+  precision: (component, newValue) => {
+    component.setPrecision(parseInt(newValue, 10) || 2);
+  },
+  checked: (component, newValue) => {
+    component.setChecked(newValue !== null);
+  }
+};
+function handleAttributeChange(component, name, oldValue, newValue) {
+  if (oldValue === newValue) {
+    return false;
+  }
+  const handler = attributeHandlers[name];
+  if (handler) {
+    handler(component, newValue);
+    return true;
+  }
+  return false;
+}
+const sliderStyles = createInputStyles(`
+    .slider-input-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .slider-input-label {
+        font-size: 10px;
+        color: var(--fg-muted);
+        min-width: 60px;
+    }
+
+    .slider-input-label:empty {
+        display: none;
+    }
+
+    .slider-input-track {
+        flex: 1;
+        height: 4px;
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .slider-input-track::-webkit-slider-runnable-track {
+        height: 4px;
+        background: var(--bg-hover);
+        border-radius: 2px;
+    }
+
+    .slider-input-track::-moz-range-track {
+        height: 4px;
+        background: var(--bg-hover);
+        border-radius: 2px;
+        border: none;
+    }
+
+    .slider-input-track::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        background: var(--accent);
+        border-radius: 50%;
+        cursor: pointer;
+        margin-top: -4px;
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .slider-input-track::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 6px var(--accent);
+    }
+
+    .slider-input-track::-moz-range-thumb {
+        width: 12px;
+        height: 12px;
+        background: var(--accent);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .slider-input-value {
+        font-size: 10px;
+        color: var(--fg-secondary);
+        min-width: 32px;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+    }
+`);
+function formatSliderValue(value) {
+  if (Math.abs(value) < 0.01) {
+    return value.toFixed(3);
+  }
+  return value.toFixed(2);
+}
+class SliderInput extends HTMLElement {
   constructor() {
     super();
+    __privateAdd(this, _SliderInput_instances);
+    __privateAdd(this, _value, 0);
+    __privateAdd(this, _min, 0);
+    __privateAdd(this, _max, 100);
+    __privateAdd(this, _step, 1);
+    __privateAdd(this, _label, "");
+    __privateAdd(this, _slider, null);
+    __privateAdd(this, _labelEl2, null);
+    __privateAdd(this, _valueEl, null);
+    this.attachShadow({ mode: "open" });
+    __privateMethod(this, _SliderInput_instances, buildDOM_fn4).call(this);
+  }
+  static get observedAttributes() {
+    return ["value", "min", "max", "step", "label"];
+  }
+  connectedCallback() {
+    __privateMethod(this, _SliderInput_instances, updateDisplay_fn).call(this);
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    handleAttributeChange(this, name, oldValue, newValue);
+  }
+  get value() {
+    return __privateGet(this, _value);
+  }
+  set value(val) {
+    const newValue = __privateMethod(this, _SliderInput_instances, clamp_fn).call(this, parseFloat(val) || 0);
+    if (__privateGet(this, _value) !== newValue) {
+      __privateSet(this, _value, newValue);
+      __privateMethod(this, _SliderInput_instances, updateDisplay_fn).call(this);
+    }
+  }
+  setValue(val) {
+    __privateSet(this, _value, val);
+    __privateMethod(this, _SliderInput_instances, updateDisplay_fn).call(this);
+  }
+  setMin(val) {
+    __privateSet(this, _min, val);
+    if (__privateGet(this, _slider)) {
+      __privateGet(this, _slider).min = __privateGet(this, _min);
+    }
+  }
+  setMax(val) {
+    __privateSet(this, _max, val);
+    if (__privateGet(this, _slider)) {
+      __privateGet(this, _slider).max = __privateGet(this, _max);
+    }
+  }
+  setStep(val) {
+    __privateSet(this, _step, val);
+    if (__privateGet(this, _slider)) {
+      __privateGet(this, _slider).step = __privateGet(this, _step);
+    }
+  }
+  setLabel(val) {
+    __privateSet(this, _label, val);
+    if (__privateGet(this, _labelEl2)) {
+      __privateGet(this, _labelEl2).textContent = __privateGet(this, _label);
+    }
+  }
+}
+_value = new WeakMap();
+_min = new WeakMap();
+_max = new WeakMap();
+_step = new WeakMap();
+_label = new WeakMap();
+_slider = new WeakMap();
+_labelEl2 = new WeakMap();
+_valueEl = new WeakMap();
+_SliderInput_instances = new WeakSet();
+buildDOM_fn4 = function() {
+  const style = document.createElement("style");
+  style.textContent = sliderStyles;
+  this.shadowRoot.appendChild(style);
+  const container = document.createElement("div");
+  container.className = "slider-input-container";
+  __privateSet(this, _labelEl2, document.createElement("span"));
+  __privateGet(this, _labelEl2).className = "slider-input-label";
+  __privateGet(this, _labelEl2).textContent = __privateGet(this, _label);
+  __privateSet(this, _slider, document.createElement("input"));
+  __privateGet(this, _slider).type = "range";
+  __privateGet(this, _slider).className = "slider-input-track";
+  __privateGet(this, _slider).min = __privateGet(this, _min);
+  __privateGet(this, _slider).max = __privateGet(this, _max);
+  __privateGet(this, _slider).step = __privateGet(this, _step);
+  __privateGet(this, _slider).addEventListener("input", () => __privateMethod(this, _SliderInput_instances, handleInput_fn).call(this));
+  __privateSet(this, _valueEl, document.createElement("span"));
+  __privateGet(this, _valueEl).className = "slider-input-value";
+  container.appendChild(__privateGet(this, _labelEl2));
+  container.appendChild(__privateGet(this, _slider));
+  container.appendChild(__privateGet(this, _valueEl));
+  this.shadowRoot.appendChild(container);
+};
+updateDisplay_fn = function() {
+  if (__privateGet(this, _slider)) {
+    __privateGet(this, _slider).value = __privateGet(this, _value);
+  }
+  if (__privateGet(this, _valueEl)) {
+    __privateGet(this, _valueEl).textContent = formatSliderValue(__privateGet(this, _value));
+  }
+};
+handleInput_fn = function() {
+  const newValue = parseFloat(__privateGet(this, _slider).value);
+  if (__privateGet(this, _value) !== newValue) {
+    __privateSet(this, _value, newValue);
+    __privateGet(this, _valueEl).textContent = formatSliderValue(__privateGet(this, _value));
+    emitChange(this, { value: __privateGet(this, _value) });
+  }
+};
+clamp_fn = function(value) {
+  return Math.max(__privateGet(this, _min), Math.min(__privateGet(this, _max), value));
+};
+customElements.define("slider-input", SliderInput);
+const toggleStyles = createInputStyles(`
+    .toggle-input-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+
+    .toggle-input-track {
+        position: relative;
+        width: 28px;
+        height: 14px;
+        background: var(--bg-hover);
+        border-radius: 7px;
+        transition: background 0.2s;
+        flex-shrink: 0;
+    }
+
+    .toggle-input-track.checked {
+        background: var(--accent);
+    }
+
+    .toggle-input-thumb {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 10px;
+        height: 10px;
+        background: var(--fg-muted);
+        border-radius: 50%;
+        transition: transform 0.2s, background 0.2s;
+    }
+
+    .toggle-input-track.checked .toggle-input-thumb {
+        transform: translateX(14px);
+        background: var(--bg-primary);
+    }
+
+    .toggle-input-label {
+        font-size: 11px;
+        color: var(--fg-primary);
+        font-weight: 500;
+        user-select: none;
+    }
+
+    .toggle-input-label:empty {
+        display: none;
+    }
+
+    .toggle-input-container:hover .toggle-input-track:not(.checked) {
+        background: var(--bg-selected);
+    }
+
+    .toggle-input-container:hover .toggle-input-thumb {
+        background: var(--fg-secondary);
+    }
+
+    .toggle-input-track.checked:hover .toggle-input-thumb {
+        background: var(--bg-primary);
+    }
+`);
+class ToggleInput extends HTMLElement {
+  constructor() {
+    super();
+    __privateAdd(this, _ToggleInput_instances);
+    __privateAdd(this, _checked, false);
+    __privateAdd(this, _label2, "");
+    __privateAdd(this, _toggle, null);
+    __privateAdd(this, _labelEl3, null);
+    this.attachShadow({ mode: "open" });
+    __privateMethod(this, _ToggleInput_instances, buildDOM_fn5).call(this);
+  }
+  static get observedAttributes() {
+    return ["checked", "label"];
+  }
+  connectedCallback() {
+    __privateMethod(this, _ToggleInput_instances, updateDisplay_fn2).call(this);
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    handleAttributeChange(this, name, oldValue, newValue);
+  }
+  get checked() {
+    return __privateGet(this, _checked);
+  }
+  set checked(val) {
+    const newChecked = Boolean(val);
+    if (__privateGet(this, _checked) !== newChecked) {
+      __privateSet(this, _checked, newChecked);
+      __privateMethod(this, _ToggleInput_instances, updateDisplay_fn2).call(this);
+    }
+  }
+  setChecked(val) {
+    __privateSet(this, _checked, val);
+    __privateMethod(this, _ToggleInput_instances, updateDisplay_fn2).call(this);
+  }
+  setLabel(val) {
+    __privateSet(this, _label2, val);
+    if (__privateGet(this, _labelEl3)) {
+      __privateGet(this, _labelEl3).textContent = __privateGet(this, _label2);
+    }
+  }
+}
+_checked = new WeakMap();
+_label2 = new WeakMap();
+_toggle = new WeakMap();
+_labelEl3 = new WeakMap();
+_ToggleInput_instances = new WeakSet();
+buildDOM_fn5 = function() {
+  const style = document.createElement("style");
+  style.textContent = toggleStyles;
+  this.shadowRoot.appendChild(style);
+  const container = document.createElement("div");
+  container.className = "toggle-input-container";
+  __privateSet(this, _toggle, document.createElement("div"));
+  __privateGet(this, _toggle).className = "toggle-input-track";
+  __privateGet(this, _toggle).addEventListener("click", () => __privateMethod(this, _ToggleInput_instances, handleClick_fn).call(this));
+  const thumb = document.createElement("div");
+  thumb.className = "toggle-input-thumb";
+  __privateGet(this, _toggle).appendChild(thumb);
+  __privateSet(this, _labelEl3, document.createElement("span"));
+  __privateGet(this, _labelEl3).className = "toggle-input-label";
+  __privateGet(this, _labelEl3).textContent = __privateGet(this, _label2);
+  __privateGet(this, _labelEl3).addEventListener("click", () => __privateMethod(this, _ToggleInput_instances, handleClick_fn).call(this));
+  container.appendChild(__privateGet(this, _toggle));
+  container.appendChild(__privateGet(this, _labelEl3));
+  this.shadowRoot.appendChild(container);
+};
+updateDisplay_fn2 = function() {
+  if (__privateGet(this, _toggle)) {
+    __privateGet(this, _toggle).classList.toggle("checked", __privateGet(this, _checked));
+  }
+};
+handleClick_fn = function() {
+  __privateSet(this, _checked, !__privateGet(this, _checked));
+  __privateMethod(this, _ToggleInput_instances, updateDisplay_fn2).call(this);
+  emitChange(this, { checked: __privateGet(this, _checked) });
+};
+customElements.define("toggle-input", ToggleInput);
+function createToggle(label, checked, onChange) {
+  const container = document.createElement("div");
+  container.style.cssText = "grid-column: 1 / -1;";
+  const toggle = document.createElement("toggle-input");
+  toggle.checked = checked;
+  toggle.setAttribute("label", label);
+  toggle.addEventListener("change", (e) => onChange(e.detail.checked));
+  container.appendChild(toggle);
+  return container;
+}
+function createSlider(label, value, options, onChange) {
+  const { min, max, step } = options;
+  const container = document.createElement("div");
+  container.style.cssText = "grid-column: 1 / -1;";
+  const slider = document.createElement("slider-input");
+  slider.setAttribute("label", label);
+  slider.setAttribute("min", min);
+  slider.setAttribute("max", max);
+  slider.setAttribute("step", step);
+  slider.value = value;
+  slider.addEventListener("change", (e) => onChange(e.detail.value));
+  container.appendChild(slider);
+  return container;
+}
+function createColorRow(name, color, onChange) {
+  const row = document.createElement("div");
+  row.className = "inspector-row";
+  const label = document.createElement("span");
+  label.className = "inspector-row-label";
+  label.textContent = name;
+  const colorInput = document.createElement("input");
+  colorInput.type = "color";
+  colorInput.style.cssText = "position: absolute; opacity: 0; pointer-events: none;";
+  const swatch = document.createElement("div");
+  swatch.className = "inspector-color-swatch";
+  const toHex = (v) => Math.round(v * 255).toString(16).padStart(2, "0");
+  const updateSwatch = () => {
+    swatch.style.backgroundColor = `rgba(${color[0] * 255}, ${color[1] * 255}, ${color[2] * 255}, ${color[3]})`;
+  };
+  updateSwatch();
+  colorInput.value = `#${toHex(color[0])}${toHex(color[1])}${toHex(color[2])}`;
+  swatch.addEventListener("click", () => colorInput.click());
+  colorInput.addEventListener("input", (e) => {
+    const hex = e.target.value;
+    const r = parseInt(hex.slice(1, 3), 16) / 255;
+    const g = parseInt(hex.slice(3, 5), 16) / 255;
+    const b = parseInt(hex.slice(5, 7), 16) / 255;
+    color[0] = r;
+    color[1] = g;
+    color[2] = b;
+    updateSwatch();
+    onChange([r, g, b, color[3]]);
+  });
+  row.appendChild(label);
+  row.appendChild(colorInput);
+  row.appendChild(swatch);
+  return row;
+}
+function getEditableUniforms(pass) {
+  var _a2, _b;
+  const defaults = pass.constructor.defaultUniforms || ((_a2 = pass.getDefaultUniforms) == null ? void 0 : _a2.call(pass)) || {};
+  const configs = pass.constructor.uniformConfig || ((_b = pass.getUniformConfig) == null ? void 0 : _b.call(pass)) || {};
+  const currentUniforms = pass.uniforms || {};
+  return Object.entries(defaults).filter(([, defaultValue]) => typeof defaultValue === "number").map(([name, defaultValue]) => ({
+    name,
+    defaultValue,
+    currentValue: currentUniforms[name] ?? defaultValue,
+    config: configs[name] || { min: 0, max: defaultValue * 2 || 1, step: 0.01 }
+  }));
+}
+function renderUniformSlider(container, pass, uniform) {
+  const { min, max, step } = uniform.config;
+  const slider = document.createElement("slider-input");
+  slider.setAttribute("label", uniform.name.replace(/^u/, ""));
+  slider.setAttribute("min", min);
+  slider.setAttribute("max", max);
+  slider.setAttribute("step", step);
+  slider.value = uniform.currentValue;
+  slider.addEventListener("change", (e) => {
+    pass.setUniform(uniform.name, e.detail.value);
+  });
+  container.appendChild(slider);
+}
+function renderTransformProperty(container, transform, name, config) {
+  if (config.type === "color") {
+    const row = createColorRow(name, transform[name], (newColor) => {
+      transform[name] = newColor;
+    });
+    container.appendChild(row);
+  } else {
+    const slider = document.createElement("slider-input");
+    slider.setAttribute("label", name);
+    slider.setAttribute("min", config.min ?? 0);
+    slider.setAttribute("max", config.max ?? 1);
+    slider.setAttribute("step", config.step ?? 0.01);
+    slider.value = transform[name];
+    slider.addEventListener("change", (e) => {
+      transform[name] = e.detail.value;
+    });
+    container.appendChild(slider);
+  }
+}
+const passStyles = `
+    .pass-section {
+        grid-column: 1 / -1;
+        margin-top: 8px;
+    }
+
+    .pass-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 0;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 8px;
+    }
+
+    .pass-uniforms {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-left: 4px;
+    }
+
+    .no-passes {
+        color: var(--fg-muted);
+        font-style: italic;
+        padding: 8px 0;
+    }
+`;
+function renderPass(gridEl, pass) {
+  const section = document.createElement("div");
+  section.className = "pass-section";
+  const header = document.createElement("div");
+  header.className = "pass-header";
+  const toggle = document.createElement("toggle-input");
+  toggle.checked = pass.enabled;
+  toggle.setAttribute("label", pass.constructor.name);
+  toggle.addEventListener("change", (e) => {
+    pass.enabled = e.detail.checked;
+  });
+  header.appendChild(toggle);
+  section.appendChild(header);
+  const uniforms = getEditableUniforms(pass);
+  if (uniforms.length > 0) {
+    const uniformsEl = document.createElement("div");
+    uniformsEl.className = "pass-uniforms";
+    for (const uniform of uniforms) {
+      renderUniformSlider(uniformsEl, pass, uniform);
+    }
+    section.appendChild(uniformsEl);
+  }
+  gridEl.appendChild(section);
+}
+function renderTransform(gridEl, addRow, transform) {
+  var _a2;
+  if (!transform) {
+    addRow("transform", "none");
+    return;
+  }
+  const section = document.createElement("div");
+  section.className = "pass-section";
+  const header = document.createElement("div");
+  header.className = "pass-header";
+  const toggle = document.createElement("toggle-input");
+  toggle.checked = transform.enabled;
+  toggle.setAttribute("label", transform.constructor.name);
+  toggle.addEventListener("change", (e) => {
+    transform.enabled = e.detail.checked;
+  });
+  header.appendChild(toggle);
+  section.appendChild(header);
+  const config = ((_a2 = transform.getPropertyConfig) == null ? void 0 : _a2.call(transform)) || {};
+  const propertyNames = Object.keys(config);
+  if (propertyNames.length > 0) {
+    const propsEl = document.createElement("div");
+    propsEl.className = "pass-uniforms";
+    for (const name of propertyNames) {
+      const propConfig = config[name];
+      renderTransformProperty(propsEl, transform, name, propConfig);
+    }
+    section.appendChild(propsEl);
+  }
+  gridEl.appendChild(section);
+}
+class BaseRendererInspector extends BaseInspector {
+  constructor() {
+    super();
+    __privateAdd(this, _BaseRendererInspector_instances);
+    this.buildDOM();
+  }
+  static matches(module) {
+    return module instanceof BaseRenderer;
+  }
+  onModuleSet(module) {
+    if (module) {
+      __privateMethod(this, _BaseRendererInspector_instances, update_fn).call(this);
+    }
+  }
+}
+_BaseRendererInspector_instances = new WeakSet();
+update_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  this.clearContent();
+  const renderer = this.module;
+  this.addRow("canvas", `${renderer.canvas.width}×${renderer.canvas.height}`);
+  this.addRow("display", `${renderer.displayWidth}×${renderer.displayHeight}`);
+  this.addSeparator();
+  const slider = createSlider(
+    "pixelRatio",
+    renderer.pixelRatio,
+    { min: 0.25, max: 3, step: 0.25 },
+    (value) => renderer.setPixelRatio(value)
+  );
+  this.gridEl.appendChild(slider);
+};
+customElements.define("base-renderer-inspector", BaseRendererInspector);
+PerkyExplorerDetails.registerInspector(BaseRendererInspector);
+const customStyles$6 = `
+    .fps-controls {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+    }
+
+    .fps-limit-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .fps-limit-checkbox {
+        width: 14px;
+        height: 14px;
+        accent-color: var(--accent);
+        cursor: pointer;
+    }
+
+    .fps-limit-label {
+        color: var(--fg-secondary);
+        font-size: 11px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .fps-slider-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .fps-slider {
+        flex: 1;
+        height: 4px;
+        accent-color: var(--accent);
+        cursor: pointer;
+    }
+
+    .fps-slider:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .fps-slider-value {
+        min-width: 32px;
+        color: var(--fg-secondary);
+        font-size: 11px;
+        text-align: right;
+    }
+`;
+class GameLoopInspector extends BaseInspector {
+  constructor() {
+    super(customStyles$6);
     __privateAdd(this, _GameLoopInspector_instances);
     __privateAdd(this, _fpsValueEl, null);
+    __privateAdd(this, _screenFpsValueEl, null);
     __privateAdd(this, _statusValueEl, null);
     __privateAdd(this, _toggleBtn, null);
+    __privateAdd(this, _fpsLimitCheckbox, null);
+    __privateAdd(this, _fpsSlider, null);
+    __privateAdd(this, _fpsSliderValue, null);
     this.buildDOM();
   }
   static matches(module) {
@@ -13883,18 +14529,51 @@ class GameLoopInspector extends BaseInspector {
   buildDOM() {
     super.buildDOM();
     __privateSet(this, _fpsValueEl, this.addRow("fps", "0"));
+    __privateSet(this, _screenFpsValueEl, this.addRow("screen fps", "0"));
     __privateSet(this, _statusValueEl, this.addRow("status", "stopped"));
-    this.addRow("target fps", () => {
-      var _a2;
-      return ((_a2 = this.module) == null ? void 0 : _a2.fps) || 60;
-    });
+    const controlsEl = document.createElement("div");
+    controlsEl.className = "fps-controls";
+    const limitRow = document.createElement("div");
+    limitRow.className = "fps-limit-row";
+    __privateSet(this, _fpsLimitCheckbox, document.createElement("input"));
+    __privateGet(this, _fpsLimitCheckbox).type = "checkbox";
+    __privateGet(this, _fpsLimitCheckbox).className = "fps-limit-checkbox";
+    __privateGet(this, _fpsLimitCheckbox).id = "fps-limit-checkbox";
+    __privateGet(this, _fpsLimitCheckbox).addEventListener("change", () => __privateMethod(this, _GameLoopInspector_instances, handleLimitChange_fn).call(this));
+    const limitLabel = document.createElement("label");
+    limitLabel.className = "fps-limit-label";
+    limitLabel.htmlFor = "fps-limit-checkbox";
+    limitLabel.textContent = "Limit FPS";
+    limitRow.appendChild(__privateGet(this, _fpsLimitCheckbox));
+    limitRow.appendChild(limitLabel);
+    const sliderRow = document.createElement("div");
+    sliderRow.className = "fps-slider-row";
+    __privateSet(this, _fpsSlider, document.createElement("input"));
+    __privateGet(this, _fpsSlider).type = "range";
+    __privateGet(this, _fpsSlider).className = "fps-slider";
+    __privateGet(this, _fpsSlider).min = "15";
+    __privateGet(this, _fpsSlider).max = "144";
+    __privateGet(this, _fpsSlider).value = "60";
+    __privateGet(this, _fpsSlider).addEventListener("input", () => __privateMethod(this, _GameLoopInspector_instances, handleSliderChange_fn).call(this));
+    __privateSet(this, _fpsSliderValue, document.createElement("span"));
+    __privateGet(this, _fpsSliderValue).className = "fps-slider-value";
+    __privateGet(this, _fpsSliderValue).textContent = "60";
+    sliderRow.appendChild(__privateGet(this, _fpsSlider));
+    sliderRow.appendChild(__privateGet(this, _fpsSliderValue));
+    controlsEl.appendChild(limitRow);
+    controlsEl.appendChild(sliderRow);
+    this.gridEl.appendChild(controlsEl);
     __privateSet(this, _toggleBtn, this.createButton("⏸", "Pause", () => __privateMethod(this, _GameLoopInspector_instances, handleToggle_fn).call(this)));
     this.actionsEl.appendChild(__privateGet(this, _toggleBtn));
   }
 }
 _fpsValueEl = new WeakMap();
+_screenFpsValueEl = new WeakMap();
 _statusValueEl = new WeakMap();
 _toggleBtn = new WeakMap();
+_fpsLimitCheckbox = new WeakMap();
+_fpsSlider = new WeakMap();
+_fpsSliderValue = new WeakMap();
 _GameLoopInspector_instances = new WeakSet();
 handleToggle_fn = function() {
   if (!this.module) {
@@ -13906,24 +14585,57 @@ handleToggle_fn = function() {
     this.module.pause();
   }
 };
+handleLimitChange_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  this.module.setFpsLimited(__privateGet(this, _fpsLimitCheckbox).checked);
+  __privateMethod(this, _GameLoopInspector_instances, updateSliderState_fn).call(this);
+};
+handleSliderChange_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const fps = parseInt(__privateGet(this, _fpsSlider).value, 10);
+  this.module.setFps(fps);
+  __privateGet(this, _fpsSliderValue).textContent = fps;
+};
 bindEvents_fn2 = function() {
   if (!this.module) {
     return;
   }
-  this.listenTo(this.module, "render", (_, fps) => __privateMethod(this, _GameLoopInspector_instances, updateFps_fn).call(this, fps));
+  this.listenTo(this.module, "render", (_, fps, screenFps) => __privateMethod(this, _GameLoopInspector_instances, updateFps_fn).call(this, fps, screenFps));
   this.listenTo(this.module, "pause", () => __privateMethod(this, _GameLoopInspector_instances, updateStatus_fn2).call(this));
   this.listenTo(this.module, "resume", () => __privateMethod(this, _GameLoopInspector_instances, updateStatus_fn2).call(this));
   this.listenTo(this.module, "start", () => __privateMethod(this, _GameLoopInspector_instances, updateStatus_fn2).call(this));
   this.listenTo(this.module, "stop", () => __privateMethod(this, _GameLoopInspector_instances, updateStatus_fn2).call(this));
+  this.listenTo(this.module, "changed:fps", (fps) => __privateMethod(this, _GameLoopInspector_instances, updateSlider_fn).call(this, fps));
+  this.listenTo(this.module, "changed:fpsLimited", () => __privateMethod(this, _GameLoopInspector_instances, updateSliderState_fn).call(this));
 };
 updateAll_fn = function() {
-  var _a2;
-  __privateMethod(this, _GameLoopInspector_instances, updateFps_fn).call(this, ((_a2 = this.module) == null ? void 0 : _a2.getCurrentFps()) || 0);
+  var _a2, _b, _c;
+  __privateMethod(this, _GameLoopInspector_instances, updateFps_fn).call(this, ((_a2 = this.module) == null ? void 0 : _a2.getCurrentFps()) || 0, ((_b = this.module) == null ? void 0 : _b.getScreenFps()) || 0);
   __privateMethod(this, _GameLoopInspector_instances, updateStatus_fn2).call(this);
+  __privateMethod(this, _GameLoopInspector_instances, updateSlider_fn).call(this, ((_c = this.module) == null ? void 0 : _c.fps) || 60);
+  __privateMethod(this, _GameLoopInspector_instances, updateSliderState_fn).call(this);
 };
-updateFps_fn = function(fps) {
+updateFps_fn = function(fps, screenFps) {
   __privateGet(this, _fpsValueEl).textContent = fps;
   __privateGet(this, _fpsValueEl).className = "inspector-value accent";
+  __privateGet(this, _screenFpsValueEl).textContent = screenFps;
+  __privateGet(this, _screenFpsValueEl).className = "inspector-value";
+};
+updateSlider_fn = function(fps) {
+  __privateGet(this, _fpsSlider).value = fps;
+  __privateGet(this, _fpsSliderValue).textContent = fps;
+};
+updateSliderState_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const isLimited = this.module.fpsLimited;
+  __privateGet(this, _fpsLimitCheckbox).checked = isLimited;
+  __privateGet(this, _fpsSlider).disabled = !isLimited;
 };
 updateStatus_fn2 = function() {
   if (!this.module) {
@@ -14252,56 +14964,6 @@ updateAll_fn2 = function() {
 };
 customElements.define("texture-manager-inspector", TextureManagerInspector);
 PerkyExplorerDetails.registerInspector(TextureManagerInspector);
-function createInputStyles(customStyles2) {
-  return `
-        :host {
-            ${cssVariables}
-            display: inline-flex;
-            font-family: var(--font-mono);
-        }
-        ${customStyles2}
-    `;
-}
-function emitChange(element, detail) {
-  element.dispatchEvent(new CustomEvent("change", {
-    detail,
-    bubbles: true
-  }));
-}
-const attributeHandlers = {
-  value: (component, newValue) => {
-    component.setValue(parseFloat(newValue) || 0);
-  },
-  min: (component, newValue) => {
-    component.setMin(parseFloat(newValue) || 0);
-  },
-  max: (component, newValue) => {
-    component.setMax(parseFloat(newValue) || 100);
-  },
-  step: (component, newValue) => {
-    component.setStep(parseFloat(newValue) || 1);
-  },
-  label: (component, newValue) => {
-    component.setLabel(newValue || "");
-  },
-  precision: (component, newValue) => {
-    component.setPrecision(parseInt(newValue, 10) || 2);
-  },
-  checked: (component, newValue) => {
-    component.setChecked(newValue !== null);
-  }
-};
-function handleAttributeChange(component, name, oldValue, newValue) {
-  if (oldValue === newValue) {
-    return false;
-  }
-  const handler = attributeHandlers[name];
-  if (handler) {
-    handler(component, newValue);
-    return true;
-  }
-  return false;
-}
 const SHIFT_MULTIPLIER = 10;
 const CTRL_MULTIPLIER = 0.1;
 const DRAG_SENSITIVITY = 0.5;
@@ -14407,14 +15069,14 @@ class NumberInput extends HTMLElement {
   constructor() {
     super();
     __privateAdd(this, _NumberInput_instances);
-    __privateAdd(this, _value, 0);
-    __privateAdd(this, _step, 0.1);
+    __privateAdd(this, _value2, 0);
+    __privateAdd(this, _step2, 0.1);
     __privateAdd(this, _precision, 2);
-    __privateAdd(this, _label, "");
-    __privateAdd(this, _min, -Infinity);
-    __privateAdd(this, _max, Infinity);
+    __privateAdd(this, _label3, "");
+    __privateAdd(this, _min2, -Infinity);
+    __privateAdd(this, _max2, Infinity);
     __privateAdd(this, _input, null);
-    __privateAdd(this, _labelEl2, null);
+    __privateAdd(this, _labelEl4, null);
     __privateAdd(this, _decrementBtn, null);
     __privateAdd(this, _incrementBtn, null);
     __privateAdd(this, _isDragging, false);
@@ -14426,29 +15088,29 @@ class NumberInput extends HTMLElement {
       }
       const deltaX = event.clientX - __privateGet(this, _dragStartX);
       const multiplier = getMultiplier(event);
-      const delta = deltaX * DRAG_SENSITIVITY * __privateGet(this, _step) * multiplier;
-      const newValue = __privateMethod(this, _NumberInput_instances, clamp_fn).call(this, __privateGet(this, _dragStartValue) + delta);
-      if (__privateGet(this, _value) !== newValue) {
-        __privateSet(this, _value, newValue);
-        __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
-        emitChange(this, { value: __privateGet(this, _value) });
+      const delta = deltaX * DRAG_SENSITIVITY * __privateGet(this, _step2) * multiplier;
+      const newValue = __privateMethod(this, _NumberInput_instances, clamp_fn2).call(this, __privateGet(this, _dragStartValue) + delta);
+      if (__privateGet(this, _value2) !== newValue) {
+        __privateSet(this, _value2, newValue);
+        __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
+        emitChange(this, { value: __privateGet(this, _value2) });
       }
     });
     __privateAdd(this, _onDragEnd, () => {
       __privateSet(this, _isDragging, false);
-      __privateGet(this, _labelEl2).classList.remove("dragging");
+      __privateGet(this, _labelEl4).classList.remove("dragging");
       document.body.style.cursor = "";
       document.removeEventListener("mousemove", __privateGet(this, _onDragMove));
       document.removeEventListener("mouseup", __privateGet(this, _onDragEnd));
     });
     this.attachShadow({ mode: "open" });
-    __privateMethod(this, _NumberInput_instances, buildDOM_fn4).call(this);
+    __privateMethod(this, _NumberInput_instances, buildDOM_fn6).call(this);
   }
   static get observedAttributes() {
     return ["value", "step", "precision", "label", "min", "max"];
   }
   connectedCallback() {
-    __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
+    __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
   }
   disconnectedCallback() {
     if (__privateGet(this, _isDragging)) {
@@ -14459,47 +15121,47 @@ class NumberInput extends HTMLElement {
     handleAttributeChange(this, name, oldValue, newValue);
   }
   get value() {
-    return __privateGet(this, _value);
+    return __privateGet(this, _value2);
   }
   set value(val) {
-    const newValue = __privateMethod(this, _NumberInput_instances, clamp_fn).call(this, parseFloat(val) || 0);
-    if (__privateGet(this, _value) !== newValue) {
-      __privateSet(this, _value, newValue);
-      __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
+    const newValue = __privateMethod(this, _NumberInput_instances, clamp_fn2).call(this, parseFloat(val) || 0);
+    if (__privateGet(this, _value2) !== newValue) {
+      __privateSet(this, _value2, newValue);
+      __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
     }
   }
   setValue(val) {
-    __privateSet(this, _value, val);
-    __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
+    __privateSet(this, _value2, val);
+    __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
   }
   setStep(val) {
-    __privateSet(this, _step, val);
+    __privateSet(this, _step2, val);
   }
   setPrecision(val) {
     __privateSet(this, _precision, val);
-    __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
+    __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
   }
   setLabel(val) {
-    __privateSet(this, _label, val);
-    if (__privateGet(this, _labelEl2)) {
-      __privateGet(this, _labelEl2).textContent = __privateGet(this, _label);
+    __privateSet(this, _label3, val);
+    if (__privateGet(this, _labelEl4)) {
+      __privateGet(this, _labelEl4).textContent = __privateGet(this, _label3);
     }
   }
   setMin(val) {
-    __privateSet(this, _min, val);
+    __privateSet(this, _min2, val);
   }
   setMax(val) {
-    __privateSet(this, _max, val);
+    __privateSet(this, _max2, val);
   }
 }
-_value = new WeakMap();
-_step = new WeakMap();
+_value2 = new WeakMap();
+_step2 = new WeakMap();
 _precision = new WeakMap();
-_label = new WeakMap();
-_min = new WeakMap();
-_max = new WeakMap();
+_label3 = new WeakMap();
+_min2 = new WeakMap();
+_max2 = new WeakMap();
 _input = new WeakMap();
-_labelEl2 = new WeakMap();
+_labelEl4 = new WeakMap();
 _decrementBtn = new WeakMap();
 _incrementBtn = new WeakMap();
 _isDragging = new WeakMap();
@@ -14508,16 +15170,16 @@ _dragStartValue = new WeakMap();
 _onDragMove = new WeakMap();
 _onDragEnd = new WeakMap();
 _NumberInput_instances = new WeakSet();
-buildDOM_fn4 = function() {
+buildDOM_fn6 = function() {
   const style = document.createElement("style");
   style.textContent = numberStyles;
   this.shadowRoot.appendChild(style);
   const container = document.createElement("div");
   container.className = "number-input-container";
-  __privateSet(this, _labelEl2, document.createElement("span"));
-  __privateGet(this, _labelEl2).className = "number-input-label";
-  __privateGet(this, _labelEl2).textContent = __privateGet(this, _label);
-  __privateGet(this, _labelEl2).addEventListener("mousedown", (e) => __privateMethod(this, _NumberInput_instances, startDrag_fn).call(this, e));
+  __privateSet(this, _labelEl4, document.createElement("span"));
+  __privateGet(this, _labelEl4).className = "number-input-label";
+  __privateGet(this, _labelEl4).textContent = __privateGet(this, _label3);
+  __privateGet(this, _labelEl4).addEventListener("mousedown", (e) => __privateMethod(this, _NumberInput_instances, startDrag_fn).call(this, e));
   __privateSet(this, _input, document.createElement("input"));
   __privateGet(this, _input).className = "number-input-field";
   __privateGet(this, _input).type = "text";
@@ -14540,33 +15202,33 @@ buildDOM_fn4 = function() {
   __privateGet(this, _incrementBtn).addEventListener("click", (e) => __privateMethod(this, _NumberInput_instances, handleStep_fn).call(this, 1, e));
   stepperContainer.appendChild(__privateGet(this, _decrementBtn));
   stepperContainer.appendChild(__privateGet(this, _incrementBtn));
-  container.appendChild(__privateGet(this, _labelEl2));
+  container.appendChild(__privateGet(this, _labelEl4));
   container.appendChild(__privateGet(this, _input));
   container.appendChild(stepperContainer);
   this.shadowRoot.appendChild(container);
 };
-updateDisplay_fn = function() {
+updateDisplay_fn3 = function() {
   if (__privateGet(this, _input) && !__privateGet(this, _input).matches(":focus")) {
-    __privateGet(this, _input).value = __privateGet(this, _value).toFixed(__privateGet(this, _precision));
+    __privateGet(this, _input).value = __privateGet(this, _value2).toFixed(__privateGet(this, _precision));
   }
 };
 handleInputChange_fn = function() {
   const parsed = parseFloat(__privateGet(this, _input).value);
   if (!isNaN(parsed)) {
-    const clamped = __privateMethod(this, _NumberInput_instances, clamp_fn).call(this, parsed);
-    if (__privateGet(this, _value) !== clamped) {
-      __privateSet(this, _value, clamped);
-      emitChange(this, { value: __privateGet(this, _value) });
+    const clamped = __privateMethod(this, _NumberInput_instances, clamp_fn2).call(this, parsed);
+    if (__privateGet(this, _value2) !== clamped) {
+      __privateSet(this, _value2, clamped);
+      emitChange(this, { value: __privateGet(this, _value2) });
     }
   }
 };
 handleBlur_fn2 = function() {
   const parsed = parseFloat(__privateGet(this, _input).value);
   if (isNaN(parsed)) {
-    __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
+    __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
   } else {
-    __privateSet(this, _value, __privateMethod(this, _NumberInput_instances, clamp_fn).call(this, parsed));
-    __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
+    __privateSet(this, _value2, __privateMethod(this, _NumberInput_instances, clamp_fn2).call(this, parsed));
+    __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
   }
 };
 handleKeyDown_fn = function(event) {
@@ -14574,40 +15236,40 @@ handleKeyDown_fn = function(event) {
   const key = event.key;
   if (key === "ArrowUp") {
     event.preventDefault();
-    __privateMethod(this, _NumberInput_instances, adjustValue_fn).call(this, __privateGet(this, _step) * multiplier);
+    __privateMethod(this, _NumberInput_instances, adjustValue_fn).call(this, __privateGet(this, _step2) * multiplier);
   } else if (key === "ArrowDown") {
     event.preventDefault();
-    __privateMethod(this, _NumberInput_instances, adjustValue_fn).call(this, -__privateGet(this, _step) * multiplier);
+    __privateMethod(this, _NumberInput_instances, adjustValue_fn).call(this, -__privateGet(this, _step2) * multiplier);
   } else if (key === "Enter") {
     event.preventDefault();
     __privateGet(this, _input).blur();
   } else if (key === "Escape") {
     event.preventDefault();
-    __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
+    __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
     __privateGet(this, _input).blur();
   }
 };
 handleStep_fn = function(direction, event) {
   const multiplier = getMultiplier(event);
-  __privateMethod(this, _NumberInput_instances, adjustValue_fn).call(this, direction * __privateGet(this, _step) * multiplier);
+  __privateMethod(this, _NumberInput_instances, adjustValue_fn).call(this, direction * __privateGet(this, _step2) * multiplier);
 };
 adjustValue_fn = function(delta) {
-  const newValue = __privateMethod(this, _NumberInput_instances, clamp_fn).call(this, __privateGet(this, _value) + delta);
-  if (__privateGet(this, _value) !== newValue) {
-    __privateSet(this, _value, newValue);
-    __privateMethod(this, _NumberInput_instances, updateDisplay_fn).call(this);
-    emitChange(this, { value: __privateGet(this, _value) });
+  const newValue = __privateMethod(this, _NumberInput_instances, clamp_fn2).call(this, __privateGet(this, _value2) + delta);
+  if (__privateGet(this, _value2) !== newValue) {
+    __privateSet(this, _value2, newValue);
+    __privateMethod(this, _NumberInput_instances, updateDisplay_fn3).call(this);
+    emitChange(this, { value: __privateGet(this, _value2) });
   }
 };
-clamp_fn = function(value) {
-  return Math.max(__privateGet(this, _min), Math.min(__privateGet(this, _max), value));
+clamp_fn2 = function(value) {
+  return Math.max(__privateGet(this, _min2), Math.min(__privateGet(this, _max2), value));
 };
 startDrag_fn = function(event) {
   event.preventDefault();
   __privateSet(this, _isDragging, true);
   __privateSet(this, _dragStartX, event.clientX);
-  __privateSet(this, _dragStartValue, __privateGet(this, _value));
-  __privateGet(this, _labelEl2).classList.add("dragging");
+  __privateSet(this, _dragStartValue, __privateGet(this, _value2));
+  __privateGet(this, _labelEl4).classList.add("dragging");
   document.body.style.cursor = "ew-resize";
   document.addEventListener("mousemove", __privateGet(this, _onDragMove));
   document.addEventListener("mouseup", __privateGet(this, _onDragEnd));
@@ -14656,16 +15318,16 @@ class Vec2Input extends HTMLElement {
     __privateAdd(this, _vec2, null);
     __privateAdd(this, _xInput, null);
     __privateAdd(this, _yInput, null);
-    __privateAdd(this, _label2, "");
-    __privateAdd(this, _labelEl3, null);
+    __privateAdd(this, _label4, "");
+    __privateAdd(this, _labelEl5, null);
     this.attachShadow({ mode: "open" });
-    __privateMethod(this, _Vec2Input_instances, buildDOM_fn5).call(this);
+    __privateMethod(this, _Vec2Input_instances, buildDOM_fn7).call(this);
   }
   static get observedAttributes() {
     return ["label"];
   }
   connectedCallback() {
-    __privateMethod(this, _Vec2Input_instances, updateDisplay_fn2).call(this);
+    __privateMethod(this, _Vec2Input_instances, updateDisplay_fn4).call(this);
   }
   attributeChangedCallback(name, oldValue, newValue) {
     handleAttributeChange(this, name, oldValue, newValue);
@@ -14675,30 +15337,30 @@ class Vec2Input extends HTMLElement {
   }
   set value(vec2) {
     __privateSet(this, _vec2, vec2);
-    __privateMethod(this, _Vec2Input_instances, updateDisplay_fn2).call(this);
+    __privateMethod(this, _Vec2Input_instances, updateDisplay_fn4).call(this);
   }
   setLabel(val) {
-    __privateSet(this, _label2, val);
-    if (__privateGet(this, _labelEl3)) {
-      __privateGet(this, _labelEl3).textContent = __privateGet(this, _label2);
+    __privateSet(this, _label4, val);
+    if (__privateGet(this, _labelEl5)) {
+      __privateGet(this, _labelEl5).textContent = __privateGet(this, _label4);
     }
   }
 }
 _vec2 = new WeakMap();
 _xInput = new WeakMap();
 _yInput = new WeakMap();
-_label2 = new WeakMap();
-_labelEl3 = new WeakMap();
+_label4 = new WeakMap();
+_labelEl5 = new WeakMap();
 _Vec2Input_instances = new WeakSet();
-buildDOM_fn5 = function() {
+buildDOM_fn7 = function() {
   const style = document.createElement("style");
   style.textContent = vec2Styles;
   this.shadowRoot.appendChild(style);
   const container = document.createElement("div");
   container.className = "vec2-input-container";
-  __privateSet(this, _labelEl3, document.createElement("span"));
-  __privateGet(this, _labelEl3).className = "vec2-input-label";
-  __privateGet(this, _labelEl3).textContent = __privateGet(this, _label2);
+  __privateSet(this, _labelEl5, document.createElement("span"));
+  __privateGet(this, _labelEl5).className = "vec2-input-label";
+  __privateGet(this, _labelEl5).textContent = __privateGet(this, _label4);
   const inputs = document.createElement("div");
   inputs.className = "vec2-inputs";
   __privateSet(this, _xInput, document.createElement("number-input"));
@@ -14713,11 +15375,11 @@ buildDOM_fn5 = function() {
   __privateGet(this, _yInput).addEventListener("change", (e) => __privateMethod(this, _Vec2Input_instances, handleChange_fn).call(this, "y", e.detail.value));
   inputs.appendChild(__privateGet(this, _xInput));
   inputs.appendChild(__privateGet(this, _yInput));
-  container.appendChild(__privateGet(this, _labelEl3));
+  container.appendChild(__privateGet(this, _labelEl5));
   container.appendChild(inputs);
   this.shadowRoot.appendChild(container);
 };
-updateDisplay_fn2 = function() {
+updateDisplay_fn4 = function() {
   if (!__privateGet(this, _vec2)) {
     return;
   }
@@ -14767,12 +15429,12 @@ class CanvasLayerInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _CanvasLayerInspector_instances, update_fn).call(this);
+      __privateMethod(this, _CanvasLayerInspector_instances, update_fn2).call(this);
     }
   }
 }
 _CanvasLayerInspector_instances = new WeakSet();
-update_fn = function() {
+update_fn2 = function() {
   var _a2, _b;
   if (!this.module) {
     return;
@@ -14847,12 +15509,12 @@ class WorldViewInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _WorldViewInspector_instances, update_fn2).call(this);
+      __privateMethod(this, _WorldViewInspector_instances, update_fn3).call(this);
     }
   }
 }
 _WorldViewInspector_instances = new WeakSet();
-update_fn2 = function() {
+update_fn3 = function() {
   var _a2, _b, _c, _d;
   if (!this.module) {
     return;
@@ -14885,523 +15547,6 @@ openSceneTree_fn2 = function() {
 };
 customElements.define("world-view-inspector", WorldViewInspector);
 PerkyExplorerDetails.registerInspector(WorldViewInspector);
-const sliderStyles = createInputStyles(`
-    .slider-input-container {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .slider-input-label {
-        font-size: 10px;
-        color: var(--fg-muted);
-        min-width: 60px;
-    }
-
-    .slider-input-label:empty {
-        display: none;
-    }
-
-    .slider-input-track {
-        flex: 1;
-        height: 4px;
-        -webkit-appearance: none;
-        appearance: none;
-        background: transparent;
-        cursor: pointer;
-    }
-
-    .slider-input-track::-webkit-slider-runnable-track {
-        height: 4px;
-        background: var(--bg-hover);
-        border-radius: 2px;
-    }
-
-    .slider-input-track::-moz-range-track {
-        height: 4px;
-        background: var(--bg-hover);
-        border-radius: 2px;
-        border: none;
-    }
-
-    .slider-input-track::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 12px;
-        height: 12px;
-        background: var(--accent);
-        border-radius: 50%;
-        cursor: pointer;
-        margin-top: -4px;
-        transition: transform 0.1s, box-shadow 0.1s;
-    }
-
-    .slider-input-track::-webkit-slider-thumb:hover {
-        transform: scale(1.2);
-        box-shadow: 0 0 6px var(--accent);
-    }
-
-    .slider-input-track::-moz-range-thumb {
-        width: 12px;
-        height: 12px;
-        background: var(--accent);
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    .slider-input-value {
-        font-size: 10px;
-        color: var(--fg-secondary);
-        min-width: 32px;
-        text-align: right;
-        font-variant-numeric: tabular-nums;
-    }
-`);
-function formatSliderValue(value) {
-  if (Math.abs(value) < 0.01) {
-    return value.toFixed(3);
-  }
-  return value.toFixed(2);
-}
-class SliderInput extends HTMLElement {
-  constructor() {
-    super();
-    __privateAdd(this, _SliderInput_instances);
-    __privateAdd(this, _value2, 0);
-    __privateAdd(this, _min2, 0);
-    __privateAdd(this, _max2, 100);
-    __privateAdd(this, _step2, 1);
-    __privateAdd(this, _label3, "");
-    __privateAdd(this, _slider, null);
-    __privateAdd(this, _labelEl4, null);
-    __privateAdd(this, _valueEl, null);
-    this.attachShadow({ mode: "open" });
-    __privateMethod(this, _SliderInput_instances, buildDOM_fn6).call(this);
-  }
-  static get observedAttributes() {
-    return ["value", "min", "max", "step", "label"];
-  }
-  connectedCallback() {
-    __privateMethod(this, _SliderInput_instances, updateDisplay_fn3).call(this);
-  }
-  attributeChangedCallback(name, oldValue, newValue) {
-    handleAttributeChange(this, name, oldValue, newValue);
-  }
-  get value() {
-    return __privateGet(this, _value2);
-  }
-  set value(val) {
-    const newValue = __privateMethod(this, _SliderInput_instances, clamp_fn2).call(this, parseFloat(val) || 0);
-    if (__privateGet(this, _value2) !== newValue) {
-      __privateSet(this, _value2, newValue);
-      __privateMethod(this, _SliderInput_instances, updateDisplay_fn3).call(this);
-    }
-  }
-  setValue(val) {
-    __privateSet(this, _value2, val);
-    __privateMethod(this, _SliderInput_instances, updateDisplay_fn3).call(this);
-  }
-  setMin(val) {
-    __privateSet(this, _min2, val);
-    if (__privateGet(this, _slider)) {
-      __privateGet(this, _slider).min = __privateGet(this, _min2);
-    }
-  }
-  setMax(val) {
-    __privateSet(this, _max2, val);
-    if (__privateGet(this, _slider)) {
-      __privateGet(this, _slider).max = __privateGet(this, _max2);
-    }
-  }
-  setStep(val) {
-    __privateSet(this, _step2, val);
-    if (__privateGet(this, _slider)) {
-      __privateGet(this, _slider).step = __privateGet(this, _step2);
-    }
-  }
-  setLabel(val) {
-    __privateSet(this, _label3, val);
-    if (__privateGet(this, _labelEl4)) {
-      __privateGet(this, _labelEl4).textContent = __privateGet(this, _label3);
-    }
-  }
-}
-_value2 = new WeakMap();
-_min2 = new WeakMap();
-_max2 = new WeakMap();
-_step2 = new WeakMap();
-_label3 = new WeakMap();
-_slider = new WeakMap();
-_labelEl4 = new WeakMap();
-_valueEl = new WeakMap();
-_SliderInput_instances = new WeakSet();
-buildDOM_fn6 = function() {
-  const style = document.createElement("style");
-  style.textContent = sliderStyles;
-  this.shadowRoot.appendChild(style);
-  const container = document.createElement("div");
-  container.className = "slider-input-container";
-  __privateSet(this, _labelEl4, document.createElement("span"));
-  __privateGet(this, _labelEl4).className = "slider-input-label";
-  __privateGet(this, _labelEl4).textContent = __privateGet(this, _label3);
-  __privateSet(this, _slider, document.createElement("input"));
-  __privateGet(this, _slider).type = "range";
-  __privateGet(this, _slider).className = "slider-input-track";
-  __privateGet(this, _slider).min = __privateGet(this, _min2);
-  __privateGet(this, _slider).max = __privateGet(this, _max2);
-  __privateGet(this, _slider).step = __privateGet(this, _step2);
-  __privateGet(this, _slider).addEventListener("input", () => __privateMethod(this, _SliderInput_instances, handleInput_fn).call(this));
-  __privateSet(this, _valueEl, document.createElement("span"));
-  __privateGet(this, _valueEl).className = "slider-input-value";
-  container.appendChild(__privateGet(this, _labelEl4));
-  container.appendChild(__privateGet(this, _slider));
-  container.appendChild(__privateGet(this, _valueEl));
-  this.shadowRoot.appendChild(container);
-};
-updateDisplay_fn3 = function() {
-  if (__privateGet(this, _slider)) {
-    __privateGet(this, _slider).value = __privateGet(this, _value2);
-  }
-  if (__privateGet(this, _valueEl)) {
-    __privateGet(this, _valueEl).textContent = formatSliderValue(__privateGet(this, _value2));
-  }
-};
-handleInput_fn = function() {
-  const newValue = parseFloat(__privateGet(this, _slider).value);
-  if (__privateGet(this, _value2) !== newValue) {
-    __privateSet(this, _value2, newValue);
-    __privateGet(this, _valueEl).textContent = formatSliderValue(__privateGet(this, _value2));
-    emitChange(this, { value: __privateGet(this, _value2) });
-  }
-};
-clamp_fn2 = function(value) {
-  return Math.max(__privateGet(this, _min2), Math.min(__privateGet(this, _max2), value));
-};
-customElements.define("slider-input", SliderInput);
-const toggleStyles = createInputStyles(`
-    .toggle-input-container {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-    }
-
-    .toggle-input-track {
-        position: relative;
-        width: 28px;
-        height: 14px;
-        background: var(--bg-hover);
-        border-radius: 7px;
-        transition: background 0.2s;
-        flex-shrink: 0;
-    }
-
-    .toggle-input-track.checked {
-        background: var(--accent);
-    }
-
-    .toggle-input-thumb {
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 10px;
-        height: 10px;
-        background: var(--fg-muted);
-        border-radius: 50%;
-        transition: transform 0.2s, background 0.2s;
-    }
-
-    .toggle-input-track.checked .toggle-input-thumb {
-        transform: translateX(14px);
-        background: var(--bg-primary);
-    }
-
-    .toggle-input-label {
-        font-size: 11px;
-        color: var(--fg-primary);
-        font-weight: 500;
-        user-select: none;
-    }
-
-    .toggle-input-label:empty {
-        display: none;
-    }
-
-    .toggle-input-container:hover .toggle-input-track:not(.checked) {
-        background: var(--bg-selected);
-    }
-
-    .toggle-input-container:hover .toggle-input-thumb {
-        background: var(--fg-secondary);
-    }
-
-    .toggle-input-track.checked:hover .toggle-input-thumb {
-        background: var(--bg-primary);
-    }
-`);
-class ToggleInput extends HTMLElement {
-  constructor() {
-    super();
-    __privateAdd(this, _ToggleInput_instances);
-    __privateAdd(this, _checked, false);
-    __privateAdd(this, _label4, "");
-    __privateAdd(this, _toggle, null);
-    __privateAdd(this, _labelEl5, null);
-    this.attachShadow({ mode: "open" });
-    __privateMethod(this, _ToggleInput_instances, buildDOM_fn7).call(this);
-  }
-  static get observedAttributes() {
-    return ["checked", "label"];
-  }
-  connectedCallback() {
-    __privateMethod(this, _ToggleInput_instances, updateDisplay_fn4).call(this);
-  }
-  attributeChangedCallback(name, oldValue, newValue) {
-    handleAttributeChange(this, name, oldValue, newValue);
-  }
-  get checked() {
-    return __privateGet(this, _checked);
-  }
-  set checked(val) {
-    const newChecked = Boolean(val);
-    if (__privateGet(this, _checked) !== newChecked) {
-      __privateSet(this, _checked, newChecked);
-      __privateMethod(this, _ToggleInput_instances, updateDisplay_fn4).call(this);
-    }
-  }
-  setChecked(val) {
-    __privateSet(this, _checked, val);
-    __privateMethod(this, _ToggleInput_instances, updateDisplay_fn4).call(this);
-  }
-  setLabel(val) {
-    __privateSet(this, _label4, val);
-    if (__privateGet(this, _labelEl5)) {
-      __privateGet(this, _labelEl5).textContent = __privateGet(this, _label4);
-    }
-  }
-}
-_checked = new WeakMap();
-_label4 = new WeakMap();
-_toggle = new WeakMap();
-_labelEl5 = new WeakMap();
-_ToggleInput_instances = new WeakSet();
-buildDOM_fn7 = function() {
-  const style = document.createElement("style");
-  style.textContent = toggleStyles;
-  this.shadowRoot.appendChild(style);
-  const container = document.createElement("div");
-  container.className = "toggle-input-container";
-  __privateSet(this, _toggle, document.createElement("div"));
-  __privateGet(this, _toggle).className = "toggle-input-track";
-  __privateGet(this, _toggle).addEventListener("click", () => __privateMethod(this, _ToggleInput_instances, handleClick_fn).call(this));
-  const thumb = document.createElement("div");
-  thumb.className = "toggle-input-thumb";
-  __privateGet(this, _toggle).appendChild(thumb);
-  __privateSet(this, _labelEl5, document.createElement("span"));
-  __privateGet(this, _labelEl5).className = "toggle-input-label";
-  __privateGet(this, _labelEl5).textContent = __privateGet(this, _label4);
-  __privateGet(this, _labelEl5).addEventListener("click", () => __privateMethod(this, _ToggleInput_instances, handleClick_fn).call(this));
-  container.appendChild(__privateGet(this, _toggle));
-  container.appendChild(__privateGet(this, _labelEl5));
-  this.shadowRoot.appendChild(container);
-};
-updateDisplay_fn4 = function() {
-  if (__privateGet(this, _toggle)) {
-    __privateGet(this, _toggle).classList.toggle("checked", __privateGet(this, _checked));
-  }
-};
-handleClick_fn = function() {
-  __privateSet(this, _checked, !__privateGet(this, _checked));
-  __privateMethod(this, _ToggleInput_instances, updateDisplay_fn4).call(this);
-  emitChange(this, { checked: __privateGet(this, _checked) });
-};
-customElements.define("toggle-input", ToggleInput);
-function createToggle(label, checked, onChange) {
-  const container = document.createElement("div");
-  container.style.cssText = "grid-column: 1 / -1;";
-  const toggle = document.createElement("toggle-input");
-  toggle.checked = checked;
-  toggle.setAttribute("label", label);
-  toggle.addEventListener("change", (e) => onChange(e.detail.checked));
-  container.appendChild(toggle);
-  return container;
-}
-function createSlider(label, value, options, onChange) {
-  const { min, max, step } = options;
-  const container = document.createElement("div");
-  container.style.cssText = "grid-column: 1 / -1;";
-  const slider = document.createElement("slider-input");
-  slider.setAttribute("label", label);
-  slider.setAttribute("min", min);
-  slider.setAttribute("max", max);
-  slider.setAttribute("step", step);
-  slider.value = value;
-  slider.addEventListener("change", (e) => onChange(e.detail.value));
-  container.appendChild(slider);
-  return container;
-}
-function createColorRow(name, color, onChange) {
-  const row = document.createElement("div");
-  row.className = "inspector-row";
-  const label = document.createElement("span");
-  label.className = "inspector-row-label";
-  label.textContent = name;
-  const colorInput = document.createElement("input");
-  colorInput.type = "color";
-  colorInput.style.cssText = "position: absolute; opacity: 0; pointer-events: none;";
-  const swatch = document.createElement("div");
-  swatch.className = "inspector-color-swatch";
-  const toHex = (v) => Math.round(v * 255).toString(16).padStart(2, "0");
-  const updateSwatch = () => {
-    swatch.style.backgroundColor = `rgba(${color[0] * 255}, ${color[1] * 255}, ${color[2] * 255}, ${color[3]})`;
-  };
-  updateSwatch();
-  colorInput.value = `#${toHex(color[0])}${toHex(color[1])}${toHex(color[2])}`;
-  swatch.addEventListener("click", () => colorInput.click());
-  colorInput.addEventListener("input", (e) => {
-    const hex = e.target.value;
-    const r = parseInt(hex.slice(1, 3), 16) / 255;
-    const g = parseInt(hex.slice(3, 5), 16) / 255;
-    const b = parseInt(hex.slice(5, 7), 16) / 255;
-    color[0] = r;
-    color[1] = g;
-    color[2] = b;
-    updateSwatch();
-    onChange([r, g, b, color[3]]);
-  });
-  row.appendChild(label);
-  row.appendChild(colorInput);
-  row.appendChild(swatch);
-  return row;
-}
-function getEditableUniforms(pass) {
-  var _a2, _b;
-  const defaults = pass.constructor.defaultUniforms || ((_a2 = pass.getDefaultUniforms) == null ? void 0 : _a2.call(pass)) || {};
-  const configs = pass.constructor.uniformConfig || ((_b = pass.getUniformConfig) == null ? void 0 : _b.call(pass)) || {};
-  const currentUniforms = pass.uniforms || {};
-  return Object.entries(defaults).filter(([, defaultValue]) => typeof defaultValue === "number").map(([name, defaultValue]) => ({
-    name,
-    defaultValue,
-    currentValue: currentUniforms[name] ?? defaultValue,
-    config: configs[name] || { min: 0, max: defaultValue * 2 || 1, step: 0.01 }
-  }));
-}
-function renderUniformSlider(container, pass, uniform) {
-  const { min, max, step } = uniform.config;
-  const slider = document.createElement("slider-input");
-  slider.setAttribute("label", uniform.name.replace(/^u/, ""));
-  slider.setAttribute("min", min);
-  slider.setAttribute("max", max);
-  slider.setAttribute("step", step);
-  slider.value = uniform.currentValue;
-  slider.addEventListener("change", (e) => {
-    pass.setUniform(uniform.name, e.detail.value);
-  });
-  container.appendChild(slider);
-}
-function renderTransformProperty(container, transform, name, config) {
-  if (config.type === "color") {
-    const row = createColorRow(name, transform[name], (newColor) => {
-      transform[name] = newColor;
-    });
-    container.appendChild(row);
-  } else {
-    const slider = document.createElement("slider-input");
-    slider.setAttribute("label", name);
-    slider.setAttribute("min", config.min ?? 0);
-    slider.setAttribute("max", config.max ?? 1);
-    slider.setAttribute("step", config.step ?? 0.01);
-    slider.value = transform[name];
-    slider.addEventListener("change", (e) => {
-      transform[name] = e.detail.value;
-    });
-    container.appendChild(slider);
-  }
-}
-const passStyles = `
-    .pass-section {
-        grid-column: 1 / -1;
-        margin-top: 8px;
-    }
-
-    .pass-header {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 0;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 8px;
-    }
-
-    .pass-uniforms {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding-left: 4px;
-    }
-
-    .no-passes {
-        color: var(--fg-muted);
-        font-style: italic;
-        padding: 8px 0;
-    }
-`;
-function renderPass(gridEl, pass) {
-  const section = document.createElement("div");
-  section.className = "pass-section";
-  const header = document.createElement("div");
-  header.className = "pass-header";
-  const toggle = document.createElement("toggle-input");
-  toggle.checked = pass.enabled;
-  toggle.setAttribute("label", pass.constructor.name);
-  toggle.addEventListener("change", (e) => {
-    pass.enabled = e.detail.checked;
-  });
-  header.appendChild(toggle);
-  section.appendChild(header);
-  const uniforms = getEditableUniforms(pass);
-  if (uniforms.length > 0) {
-    const uniformsEl = document.createElement("div");
-    uniformsEl.className = "pass-uniforms";
-    for (const uniform of uniforms) {
-      renderUniformSlider(uniformsEl, pass, uniform);
-    }
-    section.appendChild(uniformsEl);
-  }
-  gridEl.appendChild(section);
-}
-function renderTransform(gridEl, addRow, transform) {
-  var _a2;
-  if (!transform) {
-    addRow("transform", "none");
-    return;
-  }
-  const section = document.createElement("div");
-  section.className = "pass-section";
-  const header = document.createElement("div");
-  header.className = "pass-header";
-  const toggle = document.createElement("toggle-input");
-  toggle.checked = transform.enabled;
-  toggle.setAttribute("label", transform.constructor.name);
-  toggle.addEventListener("change", (e) => {
-    transform.enabled = e.detail.checked;
-  });
-  header.appendChild(toggle);
-  section.appendChild(header);
-  const config = ((_a2 = transform.getPropertyConfig) == null ? void 0 : _a2.call(transform)) || {};
-  const propertyNames = Object.keys(config);
-  if (propertyNames.length > 0) {
-    const propsEl = document.createElement("div");
-    propsEl.className = "pass-uniforms";
-    for (const name of propertyNames) {
-      const propConfig = config[name];
-      renderTransformProperty(propsEl, transform, name, propConfig);
-    }
-    section.appendChild(propsEl);
-  }
-  gridEl.appendChild(section);
-}
 class WebGLCanvasInspector extends BaseInspector {
   constructor() {
     super(passStyles);
@@ -15413,12 +15558,12 @@ class WebGLCanvasInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _WebGLCanvasInspector_instances, update_fn3).call(this);
+      __privateMethod(this, _WebGLCanvasInspector_instances, update_fn4).call(this);
     }
   }
 }
 _WebGLCanvasInspector_instances = new WeakSet();
-update_fn3 = function() {
+update_fn4 = function() {
   if (!this.module) {
     return;
   }
@@ -15464,12 +15609,12 @@ class RenderGroupInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _RenderGroupInspector_instances, update_fn4).call(this);
+      __privateMethod(this, _RenderGroupInspector_instances, update_fn5).call(this);
     }
   }
 }
 _RenderGroupInspector_instances = new WeakSet();
-update_fn4 = function() {
+update_fn5 = function() {
   var _a2;
   if (!this.module) {
     return;
@@ -15751,13 +15896,13 @@ class ManifestInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _ManifestInspector_instances, update_fn5).call(this);
+      __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this);
     }
   }
 }
 _sectionsState = new WeakMap();
 _ManifestInspector_instances = new WeakSet();
-update_fn5 = function() {
+update_fn6 = function() {
   if (!this.module) {
     return;
   }
@@ -16226,14 +16371,14 @@ class InputBinderInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _InputBinderInspector_instances, update_fn6).call(this);
+      __privateMethod(this, _InputBinderInspector_instances, update_fn7).call(this);
     }
   }
 }
 _viewMode = new WeakMap();
 _containerEl = new WeakMap();
 _InputBinderInspector_instances = new WeakSet();
-update_fn6 = function() {
+update_fn7 = function() {
   if (!this.module) {
     return;
   }
@@ -16270,14 +16415,14 @@ createHeader_fn2 = function(count) {
   actionBtn.textContent = "By Action";
   actionBtn.addEventListener("click", () => {
     __privateSet(this, _viewMode, "action");
-    __privateMethod(this, _InputBinderInspector_instances, update_fn6).call(this);
+    __privateMethod(this, _InputBinderInspector_instances, update_fn7).call(this);
   });
   const deviceBtn = document.createElement("button");
   deviceBtn.className = `view-btn ${__privateGet(this, _viewMode) === "device" ? "active" : ""}`;
   deviceBtn.textContent = "By Device";
   deviceBtn.addEventListener("click", () => {
     __privateSet(this, _viewMode, "device");
-    __privateMethod(this, _InputBinderInspector_instances, update_fn6).call(this);
+    __privateMethod(this, _InputBinderInspector_instances, update_fn7).call(this);
   });
   toggle.appendChild(actionBtn);
   toggle.appendChild(deviceBtn);
@@ -16502,13 +16647,13 @@ class ActionControllerInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _ActionControllerInspector_instances, update_fn7).call(this);
+      __privateMethod(this, _ActionControllerInspector_instances, update_fn8).call(this);
     }
   }
 }
 _containerEl2 = new WeakMap();
 _ActionControllerInspector_instances = new WeakSet();
-update_fn7 = function() {
+update_fn8 = function() {
   if (!this.module) {
     return;
   }
@@ -16682,13 +16827,13 @@ class ActionDispatcherInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _ActionDispatcherInspector_instances, update_fn8).call(this);
+      __privateMethod(this, _ActionDispatcherInspector_instances, update_fn9).call(this);
     }
   }
 }
 _containerEl3 = new WeakMap();
 _ActionDispatcherInspector_instances = new WeakSet();
-update_fn8 = function() {
+update_fn9 = function() {
   if (!this.module) {
     return;
   }
@@ -19395,7 +19540,7 @@ cleanupKeyboard_fn = function() {
 showCommandPalette_fn = async function() {
   if (!__privateGet(this, _commandPaletteEl)) {
     const { default: DevToolsCommandPalette } = await __vitePreload(async () => {
-      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-DAoK38Nj.js");
+      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-DgGcx7Yq.js");
       return { default: DevToolsCommandPalette2 };
     }, true ? [] : void 0, import.meta.url);
     __privateSet(this, _commandPaletteEl, new DevToolsCommandPalette());

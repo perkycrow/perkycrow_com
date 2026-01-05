@@ -7,7 +7,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _state, _overlayEl, _containerEl, _inputEl, _resultsEl, _appActions, _internalCommands, _filteredCommands, _selectedIndex, _history, _maxHistory, _DevToolsCommandPalette_instances, buildDOM_fn, rebuildAll_fn, buildAppActions_fn, buildInternalCommands_fn, onInput_fn, showHistory_fn, filterCommands_fn, renderResults_fn, groupCommands_fn, createResultItem_fn, updateSelection_fn, onKeydown_fn, executeCurrentCommand_fn, executeCommand_fn, executeTemplateCommand_fn, executeHistoryEntry_fn, addToHistory_fn;
-import { B as BaseEditorComponent, b as buildCommandPaletteStyles, g as getAllTools, I as ICONS } from "./index-RE946Z-V.js";
+import { B as BaseEditorComponent, b as buildCommandPaletteStyles, g as getAllTools, I as ICONS } from "./index-CnallOn9.js";
 function tokenize(input) {
   const args = [];
   let current = "";
