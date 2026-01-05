@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _swipeReferenceY, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLCanvas2D_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _world, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _program2, _enabled3, _a, _width2, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _GameRenderer_instances, registerViews_fn, registerShaderEffects_fn, buildScene_fn, setupRenderGroups_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _enabled4, _program3, _uniforms2, _RenderPass_instances, applyUniform_fn, _DefendTheDen_instances, updateShadows_fn, checkWaveClear_fn, startNextWave_fn, _listeners, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _customStyles2, _BaseInspector_instances, getStyles_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn4, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl3, _ToggleInput_instances, buildDOM_fn5, updateDisplay_fn2, handleClick_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl4, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn6, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn2, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _vec2, _xInput, _yInput, _label4, _labelEl5, _Vec2Input_instances, buildDOM_fn7, updateDisplay_fn4, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _ManifestInspector_instances, update_fn6, createSection_fn, createConfigSection_fn, createDataGrid_fn, createAssetsSection_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn8, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn9, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn10, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn11, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn12, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn13, createHeader_fn4, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn14, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn15, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn;
+var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _swipeReferenceY, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLCanvas2D_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _world, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _program2, _enabled3, _a, _width2, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _GameRenderer_instances, registerViews_fn, registerShaderEffects_fn, buildScene_fn, setupRenderGroups_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _enabled4, _program3, _uniforms2, _RenderPass_instances, applyUniform_fn, _DefendTheDen_instances, updateShadows_fn, checkWaveClear_fn, startNextWave_fn, _listeners, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _customStyles2, _BaseInspector_instances, getStyles_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn4, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl3, _ToggleInput_instances, buildDOM_fn5, updateDisplay_fn2, handleClick_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl4, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn6, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn2, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _vec2, _xInput, _yInput, _label4, _labelEl5, _Vec2Input_instances, buildDOM_fn7, updateDisplay_fn4, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _ManifestInspector_instances, update_fn6, createSection_fn, createConfigSection_fn, createDataGrid_fn, createAssetsSection_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn8, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn9, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn10, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn11, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn12, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn13, createHeader_fn4, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn14, togglePin_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn15, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -1050,6 +1050,78 @@ function delegateProperty(receiver, source, sourceName, receiverName) {
     });
   }
 }
+const SELECTOR_REGEX = /([#.$@])([a-zA-Z0-9_-]+)/g;
+const PREFIX_TO_TYPE = {
+  "#": "id",
+  ".": "tag",
+  $: "name",
+  "@": "category"
+};
+const TYPE_MATCHERS = {
+  id: (module, value) => module.$id === value,
+  tag: (module, value) => {
+    var _a2;
+    return (_a2 = module.hasTag) == null ? void 0 : _a2.call(module, value);
+  },
+  name: (module, value) => module.$name === value,
+  category: (module, value) => module.$category === value
+};
+function parseSelector(selector) {
+  const segments = selector.trim().split(/\s+/);
+  return segments.map((segment) => {
+    const conditions = [];
+    let match;
+    SELECTOR_REGEX.lastIndex = 0;
+    while ((match = SELECTOR_REGEX.exec(segment)) !== null) {
+      const [, prefix, value] = match;
+      conditions.push({
+        type: PREFIX_TO_TYPE[prefix],
+        value
+      });
+    }
+    return conditions;
+  }).filter((segment) => segment.length > 0);
+}
+function matchesConditions(module, conditions) {
+  return conditions.every(({ type, value }) => {
+    const matcher = TYPE_MATCHERS[type];
+    return matcher ? matcher(module, value) : false;
+  });
+}
+function findMatchingChildren(candidates, conditions) {
+  return candidates.flatMap((candidate) => {
+    const children = candidate.children || [];
+    return children.filter((child) => matchesConditions(child, conditions));
+  });
+}
+function query(root, selector) {
+  const segments = parseSelector(selector);
+  if (segments.length === 0) {
+    return null;
+  }
+  let candidates = [root];
+  for (const conditions of segments) {
+    candidates = findMatchingChildren(candidates, conditions);
+    if (candidates.length === 0) {
+      return null;
+    }
+  }
+  return candidates[0] || null;
+}
+function queryAll(root, selector) {
+  const segments = parseSelector(selector);
+  if (segments.length === 0) {
+    return [];
+  }
+  let candidates = [root];
+  for (const conditions of segments) {
+    candidates = findMatchingChildren(candidates, conditions);
+    if (candidates.length === 0) {
+      return [];
+    }
+  }
+  return candidates;
+}
 class PerkyModule extends Notifier {
   constructor(options = {}) {
     super();
@@ -1368,6 +1440,12 @@ class PerkyModule extends Notifier {
     }
     __privateGet(this, _eventDelegations).length = 0;
   }
+  query(selector) {
+    return query(this, selector);
+  }
+  queryAll(selector) {
+    return queryAll(this, selector);
+  }
 }
 _id = new WeakMap();
 _name = new WeakMap();
@@ -1437,7 +1515,9 @@ __publicField(PerkyModule, "perkyModuleMethods", Notifier.notifierMethods.concat
   "delegateTo",
   "cleanDelegations",
   "delegateEventsTo",
-  "cleanEventDelegations"
+  "cleanEventDelegations",
+  "query",
+  "queryAll"
 ]));
 function setupLifecycle(host, child, options) {
   const { $lifecycle = true } = options;
@@ -12223,6 +12303,8 @@ __publicField(BaseTool, "toolIcon", "🔧");
 __publicField(BaseTool, "location", "sidebar");
 __publicField(BaseTool, "order", 100);
 const ICONS = {
+  inspect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+  clipboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>',
   action: '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>',
   start: '<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>',
   stop: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>',
@@ -13808,7 +13890,7 @@ renderInspectMethod_fn = function() {
   const inspectData = __privateGet(this, _module3).inspect();
   const grid = createGrid();
   for (const [key, value] of Object.entries(inspectData)) {
-    addGridRow(grid, key, formatValue(value));
+    addGridRow(grid, key, formatValue$2(value));
   }
   __privateGet(this, _contentEl2).appendChild(grid);
 };
@@ -13853,7 +13935,7 @@ function addGridRow(grid, label, value, isAccent = false) {
   grid.appendChild(labelEl);
   grid.appendChild(valueEl);
 }
-function formatValue(value) {
+function formatValue$2(value) {
   if (value === null || value === void 0) {
     return "(none)";
   }
@@ -17155,6 +17237,21 @@ function addDefaultActions(actions, module, callbacks) {
       return (_a2 = callbacks.onFocus) == null ? void 0 : _a2.call(callbacks, module);
     }
   });
+  actions.push({
+    iconSvg: ICONS.inspect,
+    label: "Inspect",
+    action: () => {
+      var _a2;
+      logger.info(module);
+      (_a2 = callbacks.onInspect) == null ? void 0 : _a2.call(callbacks);
+    }
+  });
+  const selector = buildSelector(module);
+  actions.push({
+    iconSvg: ICONS.clipboard,
+    label: "Copy selector",
+    action: () => navigator.clipboard.writeText(selector)
+  });
   actions.push({ separator: true });
   if (isStarted) {
     actions.push({
@@ -17200,6 +17297,15 @@ registerActionProvider({
     ];
   }
 });
+function buildSelector(module) {
+  const parts = [];
+  let current = module;
+  while (current && current.host) {
+    parts.unshift(`#${current.$id}`);
+    current = current.host;
+  }
+  return parts.join(" ");
+}
 class PerkyExplorer extends BaseEditorComponent {
   constructor() {
     super(...arguments);
@@ -17443,7 +17549,8 @@ handleNodeContextMenu_fn = function(detail) {
   }
   __privateMethod(this, _PerkyExplorer_instances, ensureContextMenu_fn).call(this);
   const actions = getActionsForModule(module, {
-    onFocus: (m) => this.focusModule(m)
+    onFocus: (m) => this.focusModule(m),
+    onInspect: () => this.dispatchEvent(new CustomEvent("inspect"))
   });
   __privateGet(this, _contextMenuEl).show(actions, module, { x, y });
 };
@@ -17675,6 +17782,10 @@ buildDOM_fn10 = function() {
   this.shadowRoot.appendChild(style);
   __privateSet(this, _explorerEl2, document.createElement("perky-explorer"));
   __privateGet(this, _explorerEl2).embedded = true;
+  __privateGet(this, _explorerEl2).addEventListener("inspect", () => {
+    var _a3;
+    return (_a3 = this.state) == null ? void 0 : _a3.openLogger();
+  });
   this.shadowRoot.appendChild(__privateGet(this, _explorerEl2));
   if ((_a2 = this.state) == null ? void 0 : _a2.module) {
     __privateGet(this, _explorerEl2).setModule(this.state.module);
@@ -19015,6 +19126,448 @@ function renderLogItem(item) {
   }
   return null;
 }
+const MAX_PREVIEW_KEYS = 5;
+const MAX_STRING_LENGTH$1 = 50;
+function formatString$2(str) {
+  const truncated = str.length > MAX_STRING_LENGTH$1 ? str.slice(0, MAX_STRING_LENGTH$1) + "..." : str;
+  return `"${truncated}"`;
+}
+function formatObject$2(obj) {
+  var _a2;
+  if (Array.isArray(obj)) {
+    return `Array(${obj.length})`;
+  }
+  const name = (_a2 = obj.constructor) == null ? void 0 : _a2.name;
+  return name && name !== "Object" ? name : "{...}";
+}
+function formatValue$1(value) {
+  if (value === null) {
+    return "null";
+  }
+  if (value === void 0) {
+    return "undefined";
+  }
+  if (typeof value === "string") {
+    return formatString$2(value);
+  }
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  if (typeof value === "function") {
+    return "f()";
+  }
+  if (typeof value === "object") {
+    return formatObject$2(value);
+  }
+  return String(value);
+}
+function createPreview$1(obj) {
+  const keys = Object.keys(obj);
+  const previewKeys = keys.slice(0, MAX_PREVIEW_KEYS);
+  const parts = previewKeys.map((key) => `${key}: ${formatValue$1(obj[key])}`);
+  if (keys.length > MAX_PREVIEW_KEYS) {
+    parts.push("...");
+  }
+  return `{${parts.join(", ")}}`;
+}
+function renderExpandedContent$2(obj, container) {
+  const keys = Object.keys(obj);
+  const methods = [];
+  const properties = [];
+  for (const key of keys) {
+    if (typeof obj[key] === "function") {
+      methods.push(key);
+    } else {
+      properties.push(key);
+    }
+  }
+  for (const key of properties) {
+    const row = document.createElement("div");
+    row.className = "log-object-row";
+    const keyEl = document.createElement("span");
+    keyEl.className = "log-object-key";
+    keyEl.textContent = key;
+    const separator = document.createElement("span");
+    separator.className = "log-object-separator";
+    separator.textContent = ": ";
+    const valueEl = document.createElement("span");
+    valueEl.className = "log-object-value";
+    const customRender = renderLogItem(obj[key]);
+    if (customRender) {
+      valueEl.appendChild(customRender);
+    } else {
+      valueEl.textContent = formatValue$1(obj[key]);
+    }
+    row.appendChild(keyEl);
+    row.appendChild(separator);
+    row.appendChild(valueEl);
+    container.appendChild(row);
+  }
+  if (methods.length > 0) {
+    const row = document.createElement("div");
+    row.className = "log-object-row log-object-methods-row";
+    const keyEl = document.createElement("span");
+    keyEl.className = "log-object-key";
+    keyEl.textContent = "methods";
+    const separator = document.createElement("span");
+    separator.className = "log-object-separator";
+    separator.textContent = ": ";
+    const valueEl = document.createElement("span");
+    valueEl.className = "log-object-value log-object-methods";
+    for (let i = 0; i < methods.length; i++) {
+      const methodSpan = document.createElement("span");
+      methodSpan.className = "log-object-method-name";
+      methodSpan.textContent = methods[i];
+      valueEl.appendChild(methodSpan);
+      if (i < methods.length - 1) {
+        valueEl.appendChild(document.createTextNode(", "));
+      }
+    }
+    row.appendChild(keyEl);
+    row.appendChild(separator);
+    row.appendChild(valueEl);
+    container.appendChild(row);
+  }
+}
+const objectLogRenderer = {
+  match(item) {
+    var _a2;
+    return item !== null && typeof item === "object" && !Array.isArray(item) && ((_a2 = item.constructor) == null ? void 0 : _a2.name) === "Object";
+  },
+  render(obj) {
+    const container = document.createElement("span");
+    container.className = "log-object";
+    const toggle = document.createElement("span");
+    toggle.className = "log-object-toggle";
+    toggle.textContent = "▶";
+    const preview = document.createElement("span");
+    preview.className = "log-object-preview";
+    preview.textContent = createPreview$1(obj);
+    const expanded = document.createElement("div");
+    expanded.className = "log-object-expanded";
+    expanded.style.display = "none";
+    let isExpanded = false;
+    let hasRenderedContent = false;
+    const header = document.createElement("span");
+    header.className = "log-object-header";
+    header.style.cursor = "pointer";
+    header.appendChild(toggle);
+    header.appendChild(preview);
+    header.addEventListener("click", () => {
+      isExpanded = !isExpanded;
+      if (isExpanded && !hasRenderedContent) {
+        renderExpandedContent$2(obj, expanded);
+        hasRenderedContent = true;
+      }
+      toggle.textContent = isExpanded ? "▼" : "▶";
+      expanded.style.display = isExpanded ? "block" : "none";
+      preview.style.display = isExpanded ? "none" : "inline";
+    });
+    container.appendChild(header);
+    container.appendChild(expanded);
+    return container;
+  }
+};
+registerLogRenderer(objectLogRenderer);
+const MAX_PREVIEW_ITEMS = 5;
+function formatString$1(str) {
+  const truncated = str.length > 20 ? str.slice(0, 20) + "..." : str;
+  return `"${truncated}"`;
+}
+function formatObject$1(obj) {
+  var _a2;
+  if (Array.isArray(obj)) {
+    return `Array(${obj.length})`;
+  }
+  return ((_a2 = obj.constructor) == null ? void 0 : _a2.name) || "Object";
+}
+function getItemLabel(item) {
+  if (item === null) {
+    return "null";
+  }
+  if (item === void 0) {
+    return "undefined";
+  }
+  if (typeof item === "string") {
+    return formatString$1(item);
+  }
+  if (typeof item === "number" || typeof item === "boolean") {
+    return String(item);
+  }
+  if (typeof item === "object") {
+    return formatObject$1(item);
+  }
+  return String(item);
+}
+function createPreview(arr) {
+  const previewItems = arr.slice(0, MAX_PREVIEW_ITEMS);
+  const parts = previewItems.map(getItemLabel);
+  if (arr.length > MAX_PREVIEW_ITEMS) {
+    parts.push(`... +${arr.length - MAX_PREVIEW_ITEMS} more`);
+  }
+  return `(${arr.length}) [${parts.join(", ")}]`;
+}
+function renderExpandedContent$1(arr, container) {
+  for (let i = 0; i < arr.length; i++) {
+    const row = document.createElement("div");
+    row.className = "log-array-row";
+    const indexEl = document.createElement("span");
+    indexEl.className = "log-array-index";
+    indexEl.textContent = i;
+    const separator = document.createElement("span");
+    separator.className = "log-array-separator";
+    separator.textContent = ": ";
+    const valueEl = document.createElement("span");
+    valueEl.className = "log-array-value";
+    const customRender = renderLogItem(arr[i]);
+    if (customRender) {
+      valueEl.appendChild(customRender);
+    } else {
+      valueEl.textContent = getItemLabel(arr[i]);
+    }
+    row.appendChild(indexEl);
+    row.appendChild(separator);
+    row.appendChild(valueEl);
+    container.appendChild(row);
+  }
+  const lengthRow = document.createElement("div");
+  lengthRow.className = "log-array-row log-array-length";
+  lengthRow.textContent = `length: ${arr.length}`;
+  container.appendChild(lengthRow);
+}
+const arrayLogRenderer = {
+  match(item) {
+    return Array.isArray(item);
+  },
+  render(arr) {
+    const container = document.createElement("span");
+    container.className = "log-array";
+    const toggle = document.createElement("span");
+    toggle.className = "log-array-toggle";
+    toggle.textContent = "▶";
+    const preview = document.createElement("span");
+    preview.className = "log-array-preview";
+    preview.textContent = createPreview(arr);
+    const expanded = document.createElement("div");
+    expanded.className = "log-array-expanded";
+    expanded.style.display = "none";
+    let isExpanded = false;
+    let hasRenderedContent = false;
+    const header = document.createElement("span");
+    header.className = "log-array-header";
+    header.style.cursor = "pointer";
+    header.appendChild(toggle);
+    header.appendChild(preview);
+    header.addEventListener("click", () => {
+      isExpanded = !isExpanded;
+      if (isExpanded && !hasRenderedContent) {
+        renderExpandedContent$1(arr, expanded);
+        hasRenderedContent = true;
+      }
+      toggle.textContent = isExpanded ? "▼" : "▶";
+      expanded.style.display = isExpanded ? "block" : "none";
+      preview.style.display = isExpanded ? "none" : "inline";
+    });
+    container.appendChild(header);
+    container.appendChild(expanded);
+    return container;
+  }
+};
+registerLogRenderer(arrayLogRenderer);
+const IGNORED_KEYS = /* @__PURE__ */ new Set([
+  "options",
+  "host",
+  "children",
+  "childrenRegistry",
+  "tags",
+  "started",
+  "disposed",
+  "installed",
+  "running"
+]);
+function createCompactLabel(module) {
+  var _a2;
+  const category = module.$category || "";
+  const name = module.$name || ((_a2 = module.constructor) == null ? void 0 : _a2.name) || "Module";
+  const id = module.$id || "";
+  if (category === name || category === id) {
+    return `${category} #${id}`;
+  }
+  return `${category} ${name} #${id}`;
+}
+function getPropertyKeys(module) {
+  const keys = [];
+  for (const key of Object.keys(module)) {
+    if (!IGNORED_KEYS.has(key) && !key.startsWith("_")) {
+      keys.push(key);
+    }
+  }
+  return keys;
+}
+const MAX_STRING_LENGTH = 30;
+function formatString(str) {
+  const truncated = str.length > MAX_STRING_LENGTH ? str.slice(0, MAX_STRING_LENGTH) + "..." : str;
+  return `"${truncated}"`;
+}
+function formatObject(obj) {
+  var _a2;
+  if (Array.isArray(obj)) {
+    return `Array(${obj.length})`;
+  }
+  return ((_a2 = obj.constructor) == null ? void 0 : _a2.name) || "{...}";
+}
+function formatValue(value) {
+  if (value === null) {
+    return "null";
+  }
+  if (value === void 0) {
+    return "undefined";
+  }
+  if (typeof value === "string") {
+    return formatString(value);
+  }
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  if (typeof value === "function") {
+    return "f()";
+  }
+  if (typeof value === "object") {
+    return formatObject(value);
+  }
+  return String(value);
+}
+function createRow(className, keyText, valueContent) {
+  const row = document.createElement("div");
+  row.className = className;
+  const keyEl = document.createElement("span");
+  keyEl.className = "log-module-key";
+  keyEl.textContent = keyText;
+  const separator = document.createElement("span");
+  separator.className = "log-module-separator";
+  separator.textContent = ": ";
+  const valueEl = document.createElement("span");
+  valueEl.className = "log-module-value";
+  if (typeof valueContent === "string") {
+    valueEl.textContent = valueContent;
+  } else if (valueContent instanceof Node) {
+    valueEl.appendChild(valueContent);
+  }
+  row.appendChild(keyEl);
+  row.appendChild(separator);
+  row.appendChild(valueEl);
+  return { row, valueEl };
+}
+function renderMetaSection(module) {
+  var _a2, _b;
+  const metaSection = document.createElement("div");
+  metaSection.className = "log-module-meta";
+  const metaItems = [
+    { label: "$id", value: module.$id },
+    { label: "$name", value: module.$name },
+    { label: "$category", value: module.$category },
+    { label: "$status", value: module.$status },
+    { label: "$tags", value: ((_a2 = module.$tags) == null ? void 0 : _a2.join(", ")) || "(none)" },
+    { label: "children", value: ((_b = module.children) == null ? void 0 : _b.length) || 0 }
+  ];
+  for (const { label, value } of metaItems) {
+    const { row, valueEl } = createRow("log-module-row log-module-meta-row", label, String(value));
+    valueEl.className = "log-module-value log-module-meta-value";
+    metaSection.appendChild(row);
+  }
+  return metaSection;
+}
+function renderPropsSection(module, properties) {
+  const propsSection = document.createElement("div");
+  propsSection.className = "log-module-props";
+  for (const key of properties) {
+    const customRender = renderLogItem(module[key]);
+    const content = customRender || formatValue(module[key]);
+    const { row, valueEl } = createRow("log-module-row", key, content);
+    if (!customRender) {
+      valueEl.textContent = content;
+    }
+    propsSection.appendChild(row);
+  }
+  return propsSection;
+}
+function renderMethodsSection(methods) {
+  const methodsSection = document.createElement("div");
+  methodsSection.className = "log-module-methods";
+  const { row, valueEl } = createRow("log-module-row log-module-methods-row", "methods", "");
+  for (let i = 0; i < methods.length; i++) {
+    const methodSpan = document.createElement("span");
+    methodSpan.className = "log-module-method-name";
+    methodSpan.textContent = methods[i];
+    valueEl.appendChild(methodSpan);
+    if (i < methods.length - 1) {
+      valueEl.appendChild(document.createTextNode(", "));
+    }
+  }
+  methodsSection.appendChild(row);
+  return methodsSection;
+}
+function separatePropertiesAndMethods(module) {
+  const propsKeys = getPropertyKeys(module);
+  const methods = [];
+  const properties = [];
+  for (const key of propsKeys) {
+    if (typeof module[key] === "function") {
+      methods.push(key);
+    } else {
+      properties.push(key);
+    }
+  }
+  return { methods, properties };
+}
+function renderExpandedContent(module, container) {
+  container.appendChild(renderMetaSection(module));
+  const { methods, properties } = separatePropertiesAndMethods(module);
+  if (properties.length > 0) {
+    container.appendChild(renderPropsSection(module, properties));
+  }
+  if (methods.length > 0) {
+    container.appendChild(renderMethodsSection(methods));
+  }
+}
+const perkyModuleLogRenderer = {
+  match(item) {
+    return item !== null && typeof item === "object" && typeof item.$id !== "undefined" && typeof item.$name !== "undefined" && typeof item.$category !== "undefined";
+  },
+  render(module) {
+    const container = document.createElement("span");
+    container.className = "log-module";
+    const toggle = document.createElement("span");
+    toggle.className = "log-module-toggle";
+    toggle.textContent = "▶";
+    const label = document.createElement("span");
+    label.className = "log-module-label";
+    label.textContent = createCompactLabel(module);
+    const expanded = document.createElement("div");
+    expanded.className = "log-module-expanded";
+    expanded.style.display = "none";
+    let isExpanded = false;
+    let hasRenderedContent = false;
+    const header = document.createElement("span");
+    header.className = "log-module-header";
+    header.style.cursor = "pointer";
+    header.appendChild(toggle);
+    header.appendChild(label);
+    header.addEventListener("click", () => {
+      isExpanded = !isExpanded;
+      if (isExpanded && !hasRenderedContent) {
+        renderExpandedContent(module, expanded);
+        hasRenderedContent = true;
+      }
+      toggle.textContent = isExpanded ? "▼" : "▶";
+      expanded.style.display = isExpanded ? "block" : "none";
+    });
+    container.appendChild(header);
+    container.appendChild(expanded);
+    return container;
+  }
+};
+registerLogRenderer(perkyModuleLogRenderer);
 function formatNumber(n) {
   if (Number.isInteger(n)) {
     return String(n);
@@ -19063,6 +19616,8 @@ class PerkyLogger extends HTMLElement {
     __privateAdd(this, _entries, []);
     __privateAdd(this, _containerEl6, null);
     __privateAdd(this, _contentEl4, null);
+    __privateAdd(this, _opacityToggle, null);
+    __privateAdd(this, _isPinned, true);
     __privateAdd(this, _onLog, null);
     __privateAdd(this, _onClear, null);
     __privateAdd(this, _onSpacer, null);
@@ -19196,6 +19751,8 @@ _theme = new WeakMap();
 _entries = new WeakMap();
 _containerEl6 = new WeakMap();
 _contentEl4 = new WeakMap();
+_opacityToggle = new WeakMap();
+_isPinned = new WeakMap();
 _onLog = new WeakMap();
 _onClear = new WeakMap();
 _onSpacer = new WeakMap();
@@ -19230,9 +19787,20 @@ buildDOM_fn14 = function() {
   this.shadowRoot.appendChild(style);
   __privateSet(this, _containerEl6, document.createElement("div"));
   __privateMethod(this, _PerkyLogger_instances, updateClasses_fn).call(this);
+  __privateSet(this, _opacityToggle, document.createElement("button"));
+  __privateGet(this, _opacityToggle).className = "logger-pin-toggle pinned";
+  __privateGet(this, _opacityToggle).innerHTML = EYE_ICON;
+  __privateGet(this, _opacityToggle).title = "Toggle opacity";
+  __privateGet(this, _opacityToggle).addEventListener("click", () => __privateMethod(this, _PerkyLogger_instances, togglePin_fn).call(this));
+  __privateGet(this, _containerEl6).appendChild(__privateGet(this, _opacityToggle));
   __privateSet(this, _contentEl4, createLoggerContent());
   __privateGet(this, _containerEl6).appendChild(__privateGet(this, _contentEl4));
   this.shadowRoot.appendChild(__privateGet(this, _containerEl6));
+};
+togglePin_fn = function() {
+  __privateSet(this, _isPinned, !__privateGet(this, _isPinned));
+  __privateGet(this, _opacityToggle).classList.toggle("pinned", __privateGet(this, _isPinned));
+  __privateGet(this, _containerEl6).classList.toggle("logger-faded", !__privateGet(this, _isPinned));
 };
 bindLoggerEvents_fn = function() {
   __privateMethod(this, _PerkyLogger_instances, replayHistory_fn).call(this);
@@ -19308,6 +19876,7 @@ function processMessage(messageElement, message, format) {
 function formatMessage(...messages) {
   return messages.map((m) => typeof m === "object" ? JSON.stringify(m, null, 2) : m).join(" ");
 }
+const EYE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
 const STYLES$1 = buildEditorStyles(
   editorScrollbarStyles,
   editorBaseStyles,
@@ -19329,12 +19898,49 @@ const STYLES$1 = buildEditorStyles(
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         border: 1px solid var(--border);
         color: var(--fg-primary);
-        opacity: 0.4;
         transition: opacity 0.2s ease;
     }
 
-    .logger:hover {
+    .logger-faded {
+        opacity: 0.4;
+    }
+
+    .logger-faded:hover {
         opacity: 1;
+    }
+
+    .logger-pin-toggle {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 20px;
+        height: 20px;
+        padding: 2px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--fg-muted);
+        opacity: 0.5;
+        transition: opacity 0.15s, color 0.15s;
+        z-index: 10;
+    }
+
+    .logger-pin-toggle:hover {
+        opacity: 1;
+    }
+
+    .logger-pin-toggle.pinned {
+        color: var(--accent);
+        opacity: 0.8;
+    }
+
+    .logger-pin-toggle.pinned:hover {
+        opacity: 1;
+    }
+
+    .logger-pin-toggle svg {
+        width: 100%;
+        height: 100%;
     }
 
     .logger-content {
@@ -19456,6 +20062,112 @@ const STYLES$1 = buildEditorStyles(
     .log-vec2-value {
         color: var(--accent);
     }
+
+
+    .log-object,
+    .log-array,
+    .log-module {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .log-object-header,
+    .log-array-header,
+    .log-module-header {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .log-object-toggle,
+    .log-array-toggle,
+    .log-module-toggle {
+        color: var(--fg-muted);
+        font-size: 8px;
+        width: 10px;
+        user-select: none;
+    }
+
+    .log-object-preview,
+    .log-array-preview {
+        color: var(--fg-secondary);
+    }
+
+    .log-object-expanded,
+    .log-array-expanded,
+    .log-module-expanded {
+        margin-left: 14px;
+        padding: 4px 0;
+        border-left: 1px solid var(--border);
+        padding-left: 8px;
+    }
+
+    .log-object-row,
+    .log-array-row,
+    .log-module-row {
+        display: flex;
+        gap: 4px;
+        padding: 1px 0;
+    }
+
+    .log-object-key,
+    .log-module-key {
+        color: var(--accent);
+    }
+
+    .log-array-index {
+        color: var(--fg-muted);
+        min-width: 20px;
+    }
+
+    .log-object-separator,
+    .log-array-separator,
+    .log-module-separator {
+        color: var(--fg-muted);
+    }
+
+    .log-object-value,
+    .log-array-value,
+    .log-module-value {
+        color: var(--fg-secondary);
+    }
+
+    .log-array-length {
+        color: var(--fg-muted);
+        font-style: italic;
+    }
+
+
+    .log-module-label {
+        color: var(--fg-primary);
+        background: var(--bg-hover);
+        padding: 2px 8px;
+        border-radius: 4px;
+    }
+
+    .log-module-meta {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 4px;
+        margin-bottom: 4px;
+    }
+
+    .log-module-meta-row .log-module-key {
+        color: var(--fg-muted);
+    }
+
+    .log-module-meta-value {
+        color: var(--fg-secondary);
+    }
+
+    .log-object-methods-row,
+    .log-module-methods-row {
+        flex-wrap: wrap;
+    }
+
+    .log-object-method-name,
+    .log-module-method-name {
+        white-space: nowrap;
+    }
 `
 );
 customElements.define("perky-logger", PerkyLogger);
@@ -19571,7 +20283,7 @@ cleanupKeyboard_fn = function() {
 showCommandPalette_fn = async function() {
   if (!__privateGet(this, _commandPaletteEl)) {
     const { default: DevToolsCommandPalette } = await __vitePreload(async () => {
-      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-BLGAyuRZ.js");
+      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-BKAYAIyV.js");
       return { default: DevToolsCommandPalette2 };
     }, true ? [] : void 0, import.meta.url);
     __privateSet(this, _commandPaletteEl, new DevToolsCommandPalette());
@@ -19633,5 +20345,6 @@ export {
   BaseEditorComponent as B,
   ICONS as I,
   buildCommandPaletteStyles as b,
-  getAllTools as g
+  getAllTools as g,
+  logger as l
 };

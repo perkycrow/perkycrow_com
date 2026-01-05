@@ -6,8 +6,8 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _state, _overlayEl, _containerEl, _inputEl, _resultsEl, _appActions, _internalCommands, _filteredCommands, _selectedIndex, _history, _maxHistory, _DevToolsCommandPalette_instances, buildDOM_fn, rebuildAll_fn, buildAppActions_fn, buildInternalCommands_fn, onInput_fn, showHistory_fn, filterCommands_fn, renderResults_fn, groupCommands_fn, createResultItem_fn, updateSelection_fn, onKeydown_fn, executeCurrentCommand_fn, autocompleteSelected_fn, executeCommand_fn, executeTemplateCommand_fn, executeHistoryEntry_fn, addToHistory_fn;
-import { B as BaseEditorComponent, b as buildCommandPaletteStyles, g as getAllTools, I as ICONS } from "./index-TcZEzfxt.js";
+var _state, _overlayEl, _containerEl, _inputEl, _resultsEl, _appActions, _internalCommands, _filteredCommands, _selectedIndex, _history, _maxHistory, _DevToolsCommandPalette_instances, buildDOM_fn, rebuildAll_fn, buildAppActions_fn, buildInternalCommands_fn, onInput_fn, showHistory_fn, filterCommands_fn, renderResults_fn, groupCommands_fn, createResultItem_fn, updateSelection_fn, onKeydown_fn, executeCurrentCommand_fn, autocompleteSelected_fn, executeCommand_fn, executeTemplateCommand_fn, executeHistoryEntry_fn, addToHistory_fn, executeInspectCommand_fn;
+import { B as BaseEditorComponent, b as buildCommandPaletteStyles, g as getAllTools, I as ICONS, l as logger } from "./index-lTlTj1kW.js";
 function tokenize(input) {
   const args = [];
   let current = "";
@@ -271,6 +271,14 @@ buildInternalCommands_fn = function() {
     type: "template",
     icon: ICONS.dispose
   });
+  commands.push({
+    id: "inspect",
+    title: "/inspect",
+    placeholder: "appId.query(selector)",
+    subtitle: "Inspect module",
+    type: "template",
+    icon: ICONS.logger
+  });
   return commands;
 };
 onInput_fn = function() {
@@ -480,7 +488,8 @@ executeTemplateCommand_fn = function(commandId, arg) {
     spawn: () => appManager.spawn(arg),
     start: () => appManager.startApp(arg),
     stop: () => appManager.stopApp(arg),
-    dispose: () => appManager.disposeApp(arg)
+    dispose: () => appManager.disposeApp(arg),
+    inspect: () => __privateMethod(this, _DevToolsCommandPalette_instances, executeInspectCommand_fn).call(this, arg)
   };
   const handler = handlers[commandId];
   if (handler) {
@@ -506,6 +515,18 @@ addToHistory_fn = function(input, cmd) {
   __privateGet(this, _history).unshift(entry);
   if (__privateGet(this, _history).length > __privateGet(this, _maxHistory)) {
     __privateGet(this, _history).pop();
+  }
+};
+executeInspectCommand_fn = function(expression) {
+  var _a, _b;
+  const appManager = (_a = __privateGet(this, _state)) == null ? void 0 : _a.appManager;
+  if (!appManager) {
+    return;
+  }
+  const result = evaluateExpression(expression, appManager);
+  if (result !== void 0) {
+    logger.info(result);
+    (_b = __privateGet(this, _state)) == null ? void 0 : _b.openLogger();
   }
 };
 function collectActionsFromApp(app, actions) {
@@ -560,6 +581,90 @@ function buildHistoryInput(actionName, args) {
     return String(arg);
   }).join(", ");
   return `${actionName} ${argsString}`;
+}
+function evaluateExpression(expression, appManager) {
+  const parts = parseExpression(expression);
+  const appId = parts[0];
+  const app = appManager.getChild(appId);
+  if (!app) {
+    logger.warn(`App "${appId}" not found`);
+    return void 0;
+  }
+  if (parts.length === 1) {
+    return app;
+  }
+  let current = app;
+  for (let i = 1; i < parts.length; i++) {
+    const part = parts[i];
+    if (part.type === "method") {
+      if (typeof current[part.name] === "function") {
+        current = current[part.name](part.arg);
+      } else {
+        logger.warn(`Method "${part.name}" not found`);
+        return void 0;
+      }
+    } else {
+      current = current[part];
+    }
+    if (current === void 0 || current === null) {
+      logger.warn(`Property "${part.name || part}" not found`);
+      return void 0;
+    }
+  }
+  return current;
+}
+function handleQuoteChar(char, state) {
+  if ((char === '"' || char === "'") && !state.inQuotes) {
+    state.inQuotes = true;
+    state.quoteChar = char;
+    return true;
+  }
+  if (char === state.quoteChar && state.inQuotes) {
+    state.inQuotes = false;
+    state.quoteChar = null;
+    return true;
+  }
+  return false;
+}
+function handleParenChar(char, state) {
+  if (char === "(" && !state.inQuotes) {
+    state.inParens++;
+    return true;
+  }
+  if (char === ")" && !state.inQuotes) {
+    state.inParens--;
+    return true;
+  }
+  return false;
+}
+function parseExpression(expression) {
+  const parts = [];
+  let current = "";
+  const state = { inParens: 0, inQuotes: false, quoteChar: null };
+  for (const char of expression) {
+    handleQuoteChar(char, state);
+    handleParenChar(char, state);
+    if (char === "." && !state.inQuotes && state.inParens === 0) {
+      if (current) {
+        parts.push(parsePart(current));
+      }
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+  if (current) {
+    parts.push(parsePart(current));
+  }
+  return parts;
+}
+function parsePart(part) {
+  const methodMatch = part.match(/^(\w+)\((['"]?)(.*)(['"]?)\)$/);
+  if (methodMatch) {
+    const [, name, , arg] = methodMatch;
+    return { type: "method", name, arg };
+  }
+  return part;
 }
 function fuzzyScore(query, target) {
   if (target.includes(query)) {
