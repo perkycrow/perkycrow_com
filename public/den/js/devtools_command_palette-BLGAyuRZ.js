@@ -6,8 +6,8 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _state, _overlayEl, _containerEl, _inputEl, _resultsEl, _appActions, _internalCommands, _filteredCommands, _selectedIndex, _history, _maxHistory, _DevToolsCommandPalette_instances, buildDOM_fn, rebuildAll_fn, buildAppActions_fn, buildInternalCommands_fn, onInput_fn, showHistory_fn, filterCommands_fn, renderResults_fn, groupCommands_fn, createResultItem_fn, updateSelection_fn, onKeydown_fn, executeCurrentCommand_fn, executeCommand_fn, executeTemplateCommand_fn, executeHistoryEntry_fn, addToHistory_fn;
-import { B as BaseEditorComponent, b as buildCommandPaletteStyles, g as getAllTools, I as ICONS } from "./index-CnallOn9.js";
+var _state, _overlayEl, _containerEl, _inputEl, _resultsEl, _appActions, _internalCommands, _filteredCommands, _selectedIndex, _history, _maxHistory, _DevToolsCommandPalette_instances, buildDOM_fn, rebuildAll_fn, buildAppActions_fn, buildInternalCommands_fn, onInput_fn, showHistory_fn, filterCommands_fn, renderResults_fn, groupCommands_fn, createResultItem_fn, updateSelection_fn, onKeydown_fn, executeCurrentCommand_fn, autocompleteSelected_fn, executeCommand_fn, executeTemplateCommand_fn, executeHistoryEntry_fn, addToHistory_fn;
+import { B as BaseEditorComponent, b as buildCommandPaletteStyles, g as getAllTools, I as ICONS } from "./index-TcZEzfxt.js";
 function tokenize(input) {
   const args = [];
   let current = "";
@@ -417,6 +417,9 @@ onKeydown_fn = function(e) {
     Enter: () => {
       __privateMethod(this, _DevToolsCommandPalette_instances, executeCurrentCommand_fn).call(this);
     },
+    Tab: () => {
+      __privateMethod(this, _DevToolsCommandPalette_instances, autocompleteSelected_fn).call(this);
+    },
     Escape: () => {
       var _a;
       (_a = __privateGet(this, _state)) == null ? void 0 : _a.closeCommandPalette();
@@ -432,6 +435,13 @@ executeCurrentCommand_fn = function() {
   const selected = __privateGet(this, _filteredCommands)[__privateGet(this, _selectedIndex)];
   if (selected) {
     __privateMethod(this, _DevToolsCommandPalette_instances, executeCommand_fn).call(this, selected);
+  }
+};
+autocompleteSelected_fn = function() {
+  const selected = __privateGet(this, _filteredCommands)[__privateGet(this, _selectedIndex)];
+  if (selected) {
+    __privateGet(this, _inputEl).value = selected.title + " ";
+    __privateMethod(this, _DevToolsCommandPalette_instances, onInput_fn).call(this);
   }
 };
 executeCommand_fn = function(cmd) {
@@ -504,8 +514,11 @@ function collectActionsFromApp(app, actions) {
   if (!actionsMap) {
     return;
   }
-  for (const [controllerName, actionNames] of actionsMap) {
-    for (const actionName of actionNames) {
+  for (const [controllerName, actionInfos] of actionsMap) {
+    for (const actionInfo of actionInfos) {
+      const actionName = typeof actionInfo === "string" ? actionInfo : actionInfo.name;
+      const params = typeof actionInfo === "object" ? actionInfo.params : [];
+      const placeholder = formatParamsPlaceholder(params);
       actions.push({
         id: `action:${app.$id}:${controllerName}:${actionName}`,
         title: actionName,
@@ -513,10 +526,25 @@ function collectActionsFromApp(app, actions) {
         type: "action",
         icon: ICONS.action,
         app,
-        actionName
+        actionName,
+        placeholder
       });
     }
   }
+}
+function formatParamsPlaceholder(params) {
+  if (!params || params.length === 0) {
+    return null;
+  }
+  return params.map((p) => {
+    if (typeof p === "string") {
+      return p;
+    }
+    if (p.defaultValue !== null) {
+      return `${p.name}=${p.defaultValue}`;
+    }
+    return p.name;
+  }).join(", ");
 }
 function buildHistoryInput(actionName, args) {
   if (args.length === 0) {

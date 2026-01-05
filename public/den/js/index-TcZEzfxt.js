@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLCanvas2D_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _world, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _program2, _enabled3, _a, _width2, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _GameRenderer_instances, registerViews_fn, registerShaderEffects_fn, buildScene_fn, setupRenderGroups_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _enabled4, _program3, _uniforms2, _RenderPass_instances, applyUniform_fn, _DefendTheDen_instances, updateShadows_fn, checkWaveClear_fn, startNextWave_fn, _listeners, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _customStyles2, _BaseInspector_instances, getStyles_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn4, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl3, _ToggleInput_instances, buildDOM_fn5, updateDisplay_fn2, handleClick_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl4, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn6, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn2, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _vec2, _xInput, _yInput, _label4, _labelEl5, _Vec2Input_instances, buildDOM_fn7, updateDisplay_fn4, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _ManifestInspector_instances, update_fn6, createSection_fn, createConfigSection_fn, createDataGrid_fn, createAssetsSection_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn8, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn9, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn10, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn11, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn12, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn13, createHeader_fn4, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn14, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn15, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn;
+var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _swipeReferenceY, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLCanvas2D_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _world, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _program2, _enabled3, _a, _width2, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _GameRenderer_instances, registerViews_fn, registerShaderEffects_fn, buildScene_fn, setupRenderGroups_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _enabled4, _program3, _uniforms2, _RenderPass_instances, applyUniform_fn, _DefendTheDen_instances, updateShadows_fn, checkWaveClear_fn, startNextWave_fn, _listeners, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _customStyles2, _BaseInspector_instances, getStyles_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn4, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl3, _ToggleInput_instances, buildDOM_fn5, updateDisplay_fn2, handleClick_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl4, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn6, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn2, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _vec2, _xInput, _yInput, _label4, _labelEl5, _Vec2Input_instances, buildDOM_fn7, updateDisplay_fn4, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _ManifestInspector_instances, update_fn6, createSection_fn, createConfigSection_fn, createDataGrid_fn, createAssetsSection_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn8, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn9, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn10, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn11, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn12, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn13, createHeader_fn4, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn14, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn15, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -1789,6 +1789,15 @@ const _ActionController = class _ActionController extends PerkyModule {
   listActions() {
     return [...__privateGet(this, _actionList)];
   }
+  listActionsWithParams() {
+    const result = [];
+    for (const actionName of __privateGet(this, _actionList)) {
+      const action = this.getAction(actionName) || this[actionName];
+      const params = typeof action === "function" ? extractFunctionParams(action) : [];
+      result.push({ name: actionName, params });
+    }
+    return result;
+  }
   execute(actionName, ...args) {
     const action = this.getAction(actionName) || this[actionName];
     if (typeof action === "function") {
@@ -1873,6 +1882,23 @@ function normalizeBindingDefinition(bindingDef) {
     }));
   }
   return [];
+}
+function extractFunctionParams(fn) {
+  const fnStr = fn.toString();
+  const match = fnStr.match(/^[^(]*\(([^)]*)\)/);
+  if (!match || !match[1]) {
+    return [];
+  }
+  return match[1].split(",").map((p) => {
+    const trimmed = p.trim();
+    if (trimmed.startsWith("...")) {
+      return null;
+    }
+    const parts = trimmed.split("=").map((s) => s.trim());
+    const name = parts[0];
+    const defaultValue = parts[1] ?? null;
+    return { name, defaultValue };
+  }).filter((p) => p && p.name);
 }
 const CONSOLE_METHODS = {
   info: "info",
@@ -2115,8 +2141,10 @@ class ActionDispatcher extends PerkyModule {
     const allActions = /* @__PURE__ */ new Map();
     const registry = this.childrenRegistry;
     for (const [name, controller] of registry.entries) {
-      if (typeof controller.listActions === "function") {
-        allActions.set(name, controller.listActions());
+      if (typeof controller.listActionsWithParams === "function") {
+        allActions.set(name, controller.listActionsWithParams());
+      } else if (typeof controller.listActions === "function") {
+        allActions.set(name, controller.listActions().map((n) => ({ name: n, params: [] })));
       }
     }
     return allActions;
@@ -3623,6 +3651,7 @@ class TouchDevice extends InputDevice {
     __privateAdd(this, _startY, 0);
     __privateAdd(this, _currentY, 0);
     __privateAdd(this, _touchStartTime, 0);
+    __privateAdd(this, _swipeReferenceY, 0);
     this.swipeThreshold = params.swipeThreshold ?? 30;
     this.tapThreshold = params.tapThreshold ?? 20;
     this.tapMaxDuration = params.tapMaxDuration ?? 300;
@@ -3655,6 +3684,7 @@ _startX = new WeakMap();
 _startY = new WeakMap();
 _currentY = new WeakMap();
 _touchStartTime = new WeakMap();
+_swipeReferenceY = new WeakMap();
 _TouchDevice_instances = new WeakSet();
 createControls_fn2 = function() {
   this.registerControl(new ButtonControl({
@@ -3687,6 +3717,7 @@ handleTouchstart_fn = function(event) {
   __privateSet(this, _startX, touch.clientX);
   __privateSet(this, _startY, touch.clientY);
   __privateSet(this, _currentY, touch.clientY);
+  __privateSet(this, _swipeReferenceY, touch.clientY);
   __privateSet(this, _touchStartTime, Date.now());
   const positionControl = this.getControl("position");
   positionControl.setValue({
@@ -3712,7 +3743,7 @@ handleTouchmove_fn = function(event) {
     x: 0,
     y: __privateGet(this, _currentY) - previousY
   }, event);
-  const deltaY = __privateGet(this, _startY) - __privateGet(this, _currentY);
+  const deltaY = __privateGet(this, _swipeReferenceY) - __privateGet(this, _currentY);
   const swipeUpControl = this.getControl("swipeUp");
   const swipeDownControl = this.getControl("swipeDown");
   if (deltaY > this.swipeThreshold) {
@@ -3721,6 +3752,7 @@ handleTouchmove_fn = function(event) {
     }
     if (swipeDownControl.isPressed) {
       swipeDownControl.release(event);
+      __privateSet(this, _swipeReferenceY, __privateGet(this, _currentY));
     }
   } else if (deltaY < -this.swipeThreshold) {
     if (!swipeDownControl.isPressed) {
@@ -3728,13 +3760,7 @@ handleTouchmove_fn = function(event) {
     }
     if (swipeUpControl.isPressed) {
       swipeUpControl.release(event);
-    }
-  } else {
-    if (swipeUpControl.isPressed) {
-      swipeUpControl.release(event);
-    }
-    if (swipeDownControl.isPressed) {
-      swipeDownControl.release(event);
+      __privateSet(this, _swipeReferenceY, __privateGet(this, _currentY));
     }
   }
   this.preventDefault(event, positionControl);
@@ -9707,6 +9733,10 @@ class GameController extends WorldController {
     this.nextSpawnTime = 0;
     this.isSpawning = false;
   }
+  setFps(fps = 60) {
+    this.game.setFpsLimited(true);
+    this.game.setFps(fps);
+  }
   update(game, deltaTime) {
     this.world.update(deltaTime, game);
     this.updateWaveSpawning(deltaTime);
@@ -12013,6 +12043,7 @@ class DefendTheDen extends Game {
     const gameController = this.getController("game");
     gameController.world = this.world;
     gameController.renderer = this.renderer;
+    gameController.game = this;
     const gameLayer = this.getCanvas("game");
     this.dayNightPass = new DayNightPass();
     gameLayer.renderer.addPostPass(this.dayNightPass);
@@ -19540,7 +19571,7 @@ cleanupKeyboard_fn = function() {
 showCommandPalette_fn = async function() {
   if (!__privateGet(this, _commandPaletteEl)) {
     const { default: DevToolsCommandPalette } = await __vitePreload(async () => {
-      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-DgGcx7Yq.js");
+      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-BLGAyuRZ.js");
       return { default: DevToolsCommandPalette2 };
     }, true ? [] : void 0, import.meta.url);
     __privateSet(this, _commandPaletteEl, new DevToolsCommandPalette());
