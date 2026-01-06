@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Background options",
+    "source": "// Solid color\nconst renderer1 = new WebGLCanvas2D({\n    backgroundColor: '#1a1a2e'\n})\n\n// Transparent (default)\nconst renderer2 = new WebGLCanvas2D({\n    backgroundColor: 'transparent'\n})\n\n// Or set later\nrenderer1.backgroundColor = '#ff0000'"
+  }
+]

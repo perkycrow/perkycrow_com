@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const mouse = new MouseDevice({\n    container: document.body\n})\n\nmouse.start()"
+  },
+  {
+    "type": "code",
+    "title": "Navigation control API",
+    "source": "const mouse = new MouseDevice()\nconst nav = mouse.getControl('navigation')\n\n// Delta values\nnav.deltaX\nnav.deltaY\nnav.deltaZ\n\n// Gesture detection\nnav.isTrackpadPinchZoom  // ctrl/cmd + scroll\nnav.isTrackpadPan        // two-finger scroll\nnav.isMouseWheelZoom     // vertical wheel only"
+  },
+  {
+    "type": "code",
+    "title": "Block context menu",
+    "source": "const mouse = new MouseDevice({\n    shouldPreventDefault: (event, control) => {\n        return control.name === 'rightButton'\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Block all",
+    "source": "const mouse = new MouseDevice({\n    shouldPreventDefault: true\n})"
+  }
+]

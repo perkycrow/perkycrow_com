@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vec2 - Perky Docs</title>
+    <meta name="description" content="Documentation for Vec2 in the Perky game framework">
+    <meta property="og:title" content="Vec2 - Perky Docs">
+    <meta property="og:description" content="Documentation for Vec2 in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Vec2</h1>
+            <section class="api-section"><h2>Constructor</h2>
+                <div class="api-member">
+                    <h3><code>constructor(x = ..., y = ...)</code></h3>
+                    <pre><code>constructor (x = 0, y = 0) {
+    if (typeof x === 'object') {
+        if (Array.isArray(x)) {
+            this.x = x[0] ?? 0
+            this.y = x[1] ?? 0
+        } else {
+            this.x = x.x ?? 0
+            this.y = x.y ?? 0
+        }
+    } else {
+        this.x = x
+        this.y = y
+    }
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Methods</h2>
+                <div class="api-member">
+                    <h3><code>set(x, y)</code></h3>
+                    <pre><code>set (x, y) {
+    this.x = x
+    this.y = y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>setX(x)</code></h3>
+                    <pre><code>setX (x) {
+    this.x = x
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>setY(y)</code></h3>
+                    <pre><code>setY (y) {
+    this.y = y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>setScalar(scalar)</code></h3>
+                    <pre><code>setScalar (scalar) {
+    this.x = scalar
+    this.y = scalar
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>copy(v)</code></h3>
+                    <pre><code>copy (v) {
+    this.x = v.x
+    this.y = v.y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>clone()</code></h3>
+                    <pre><code>clone () {
+    return new Vec2(this.x, this.y)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>add(v)</code></h3>
+                    <pre><code>add (v) {
+    this.x += v.x
+    this.y += v.y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>addScalar(s)</code></h3>
+                    <pre><code>addScalar (s) {
+    this.x += s
+    this.y += s
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>addVectors(a, b)</code></h3>
+                    <pre><code>addVectors (a, b) {
+    this.x = a.x + b.x
+    this.y = a.y + b.y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>addScaledVector(v, s)</code></h3>
+                    <pre><code>addScaledVector (v, s) {
+    this.x += v.x * s
+    this.y += v.y * s
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>sub(v)</code></h3>
+                    <pre><code>sub (v) {
+    this.x -= v.x
+    this.y -= v.y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>subScalar(s)</code></h3>
+                    <pre><code>subScalar (s) {
+    this.x -= s
+    this.y -= s
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>subVectors(a, b)</code></h3>
+                    <pre><code>subVectors (a, b) {
+    this.x = a.x - b.x
+    this.y = a.y - b.y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>multiply(v)</code></h3>
+                    <pre><code>multiply (v) {
+    this.x *= v.x
+    this.y *= v.y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>multiplyScalar(scalar)</code></h3>
+                    <pre><code>multiplyScalar (scalar) {
+    this.x *= scalar
+    this.y *= scalar
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>divide(v)</code></h3>
+                    <pre><code>divide (v) {
+    this.x /= v.x
+    this.y /= v.y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>divideScalar(scalar)</code></h3>
+                    <pre><code>divideScalar (scalar) {
+    return this.multiplyScalar(1 / scalar)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>dot(v)</code></h3>
+                    <pre><code>dot (v) {
+    return this.x * v.x + this.y * v.y
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>cross(v)</code></h3>
+                    <pre><code>cross (v) {
+    return this.x * v.y - this.y * v.x
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>lengthSq()</code></h3>
+                    <pre><code>lengthSq () {
+    return this.x * this.x + this.y * this.y
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>length()</code></h3>
+                    <pre><code>length () {
+    return Math.sqrt(this.lengthSq())
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>manhattanLength()</code></h3>
+                    <pre><code>manhattanLength () {
+    return Math.abs(this.x) + Math.abs(this.y)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>normalize()</code></h3>
+                    <pre><code>normalize () {
+    return this.divideScalar(this.length() || 1)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>angle()</code></h3>
+                    <pre><code>angle () {
+    return Math.atan2(-this.y, -this.x) + Math.PI
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>angleTo(v)</code></h3>
+                    <pre><code>angleTo (v) {
+    const denominator = Math.sqrt(this.lengthSq() * v.lengthSq())
+    if (denominator === 0) {
+        return Math.PI / 2
+    }
+    const theta = this.dot(v) / denominator
+    return Math.acos(Math.max(-1, Math.min(1, theta)))
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>distanceTo(v)</code></h3>
+                    <pre><code>distanceTo (v) {
+    return Math.sqrt(this.distanceToSquared(v))
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>distanceToSquared(v)</code></h3>
+                    <pre><code>distanceToSquared (v) {
+    const dx = this.x - v.x
+    const dy = this.y - v.y
+    return dx * dx + dy * dy
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>manhattanDistanceTo(v)</code></h3>
+                    <pre><code>manhattanDistanceTo (v) {
+    return Math.abs(this.x - v.x) + Math.abs(this.y - v.y)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>setLength(length)</code></h3>
+                    <pre><code>setLength (length) {
+    return this.normalize().multiplyScalar(length)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>lerp(v, alpha)</code></h3>
+                    <pre><code>lerp (v, alpha) {
+    this.x += (v.x - this.x) * alpha
+    this.y += (v.y - this.y) * alpha
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>lerpVectors(v1, v2, alpha)</code></h3>
+                    <pre><code>lerpVectors (v1, v2, alpha) {
+    this.x = v1.x + (v2.x - v1.x) * alpha
+    this.y = v1.y + (v2.y - v1.y) * alpha
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>equals(v)</code></h3>
+                    <pre><code>equals (v) {
+    return v.x === this.x &amp;&amp; v.y === this.y
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>fromArray(array, offset = ...)</code></h3>
+                    <pre><code>fromArray (array, offset = 0) {
+    this.x = array[offset]
+    this.y = array[offset + 1]
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>toArray(array = ..., offset = ...)</code></h3>
+                    <pre><code>toArray (array = [], offset = 0) {
+    array[offset] = this.x
+    array[offset + 1] = this.y
+    return array
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>negate()</code></h3>
+                    <pre><code>negate () {
+    this.x = -this.x
+    this.y = -this.y
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>min(v)</code></h3>
+                    <pre><code>min (v) {
+    this.x = Math.min(this.x, v.x)
+    this.y = Math.min(this.y, v.y)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>max(v)</code></h3>
+                    <pre><code>max (v) {
+    this.x = Math.max(this.x, v.x)
+    this.y = Math.max(this.y, v.y)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>clamp(min, max)</code></h3>
+                    <pre><code>clamp (min, max) {
+    this.x = Math.max(min.x, Math.min(max.x, this.x))
+    this.y = Math.max(min.y, Math.min(max.y, this.y))
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>clampScalar(minVal, maxVal)</code></h3>
+                    <pre><code>clampScalar (minVal, maxVal) {
+    this.x = Math.max(minVal, Math.min(maxVal, this.x))
+    this.y = Math.max(minVal, Math.min(maxVal, this.y))
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>clampLength(min, max)</code></h3>
+                    <pre><code>clampLength (min, max) {
+    const length = this.length()
+    return this.divideScalar(length || 1).multiplyScalar(
+        Math.max(min, Math.min(max, length))
+    )
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>floor()</code></h3>
+                    <pre><code>floor () {
+    this.x = Math.floor(this.x)
+    this.y = Math.floor(this.y)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>ceil()</code></h3>
+                    <pre><code>ceil () {
+    this.x = Math.ceil(this.x)
+    this.y = Math.ceil(this.y)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>round()</code></h3>
+                    <pre><code>round () {
+    this.x = Math.round(this.x)
+    this.y = Math.round(this.y)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>roundToZero()</code></h3>
+                    <pre><code>roundToZero () {
+    this.x = Math.trunc(this.x)
+    this.y = Math.trunc(this.y)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>rotateAround(center, angle)</code></h3>
+                    <pre><code>rotateAround (center, angle) {
+    const c = Math.cos(angle)
+    const s = Math.sin(angle)
+
+    const x = this.x - center.x
+    const y = this.y - center.y
+
+    this.x = x * c - y * s + center.x
+    this.y = x * s + y * c + center.y
+
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>random()</code></h3>
+                    <pre><code>random () {
+    this.x = Math.random()
+    this.y = Math.random()
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>getComponent(index)</code></h3>
+                    <pre><code>getComponent (index) {
+    if (index === 0) {
+        return this.x
+    } else if (index === 1) {
+        return this.y
+    }
+    throw new Error(`index out of range: ${index}`)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>setComponent(index, value)</code></h3>
+                    <pre><code>setComponent (index, value) {
+    if (index === 0) {
+        this.x = value
+    } else if (index === 1) {
+        this.y = value
+    } else {
+        throw new Error(`index out of range: ${index}`)
+    }
+    return this
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Getters</h2>
+                <div class="api-member">
+                    <h3><code>width()</code></h3>
+                    <pre><code>get width () {
+    return this.x
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>height()</code></h3>
+                    <pre><code>get height () {
+    return this.y
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>isVector2()</code></h3>
+                    <pre><code>get isVector2 () { // eslint-disable-line local/class-methods-use-this -- clean
+    return true
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Setters</h2>
+                <div class="api-member">
+                    <h3><code>width(value)</code></h3>
+                    <pre><code>set width (value) {
+    this.x = value
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>height(value)</code></h3>
+                    <pre><code>set height (value) {
+    this.y = value
+}</code></pre>
+                </div>
+            </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item active" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-XNg5OnvZ.js"></script>
+</body>
+</html>

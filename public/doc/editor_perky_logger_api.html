@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkyLogger - Perky Docs</title>
+    <meta name="description" content="Documentation for PerkyLogger in the Perky game framework">
+    <meta property="og:title" content="PerkyLogger - Perky Docs">
+    <meta property="og:description" content="Documentation for PerkyLogger in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>PerkyLogger</h1>
+            <p class="api-extends">extends <code>HTMLElement</code></p><section class="api-section"><h2>Static</h2>
+                <div class="api-member">
+                    <h3><code>observedAttributes</code></h3>
+                    <pre><code>static observedAttributes = ['max-entries', 'position', 'timestamp', 'theme']</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Constructor</h2>
+                <div class="api-member">
+                    <h3><code>constructor()</code></h3>
+                    <pre><code>constructor () {
+    super()
+    this.attachShadow({mode: 'open'})
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Methods</h2>
+                <div class="api-member">
+                    <h3><code>connectedCallback()</code></h3>
+                    <pre><code>connectedCallback () {
+    this.#buildDOM()
+    this.#bindLoggerEvents()
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>disconnectedCallback()</code></h3>
+                    <pre><code>disconnectedCallback () {
+    this.#unbindLoggerEvents()
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>attributeChangedCallback(name, oldValue, newValue)</code></h3>
+                    <pre><code>attributeChangedCallback (name, oldValue, newValue) {
+    if (oldValue === newValue) {
+        return
+    }
+
+    this.#handleAttributeChange(name, newValue)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>log(message, type = ..., format = ..., timestamp = ...)</code></h3>
+                    <pre><code>log (message, type = 'info', format = 'text', timestamp = null) {
+    const entry = document.createElement('div')
+    entry.className = `logger-entry log-${type}`
+
+    const indicator = document.createElement('span')
+    indicator.className = 'logger-indicator'
+    entry.appendChild(indicator)
+
+    const messageElement = document.createElement('span')
+    messageElement.className = 'logger-message'
+
+    processMessage(messageElement, message, format)
+
+    entry.appendChild(messageElement)
+
+    const time = timestamp ? new Date(timestamp) : new Date()
+    const timestampEl = document.createElement('span')
+    timestampEl.className = 'logger-timestamp'
+    timestampEl.textContent = time.toLocaleTimeString()
+    entry.appendChild(timestampEl)
+
+    this.#entries.push(entry)
+
+    while (this.#entries.length &gt; this.#maxEntries) {
+        const removed = this.#entries.shift()
+        if (removed.parentNode) {
+            removed.parentNode.removeChild(removed)
+        }
+    }
+
+    if (this.#contentEl) {
+        this.#contentEl.appendChild(entry)
+        this.#contentEl.scrollTop = this.#contentEl.scrollHeight
+    }
+
+    this.#updateControlsVisibility()
+
+    return entry
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>info(...messages)</code></h3>
+                    <pre><code>info (...messages) {
+    return this.log(formatMessage(...messages), 'info')
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>notice(...messages)</code></h3>
+                    <pre><code>notice (...messages) {
+    return this.log(formatMessage(...messages), 'notice')
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>warn(...messages)</code></h3>
+                    <pre><code>warn (...messages) {
+    return this.log(formatMessage(...messages), 'warn')
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>error(...messages)</code></h3>
+                    <pre><code>error (...messages) {
+    return this.log(formatMessage(...messages), 'error')
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>success(...messages)</code></h3>
+                    <pre><code>success (...messages) {
+    return this.log(formatMessage(...messages), 'success')
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>spacer()</code></h3>
+                    <pre><code>spacer () {
+    const entry = document.createElement('div')
+    entry.className = 'logger-entry logger-spacer'
+    this.#entries.push(entry)
+
+    if (this.#contentEl) {
+        this.#contentEl.appendChild(entry)
+    }
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>title(title)</code></h3>
+                    <pre><code>title (title) {
+    const entry = document.createElement('div')
+    entry.className = 'logger-entry logger-title-entry'
+    entry.textContent = title
+    this.#entries.push(entry)
+
+    if (this.#contentEl) {
+        this.#contentEl.appendChild(entry)
+    }
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>clear()</code></h3>
+                    <pre><code>clear () {
+    this.#entries = []
+    if (this.#contentEl) {
+        this.#contentEl.innerHTML = ''
+    }
+    this.#updateControlsVisibility()
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Getters</h2>
+                <div class="api-member">
+                    <h3><code>maxEntries()</code></h3>
+                    <pre><code>get maxEntries () {
+    return this.#maxEntries
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>position()</code></h3>
+                    <pre><code>get position () {
+    return this.#position
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>timestamp()</code></h3>
+                    <pre><code>get timestamp () {
+    return this.#timestamp
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>theme()</code></h3>
+                    <pre><code>get theme () {
+    return this.#theme
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>entries()</code></h3>
+                    <pre><code>get entries () {
+    return this.#entries
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Setters</h2>
+                <div class="api-member">
+                    <h3><code>maxEntries(value)</code></h3>
+                    <pre><code>set maxEntries (value) {
+    this.#maxEntries = value
+    this.setAttribute('max-entries', value)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>position(value)</code></h3>
+                    <pre><code>set position (value) {
+    this.#position = value
+    this.setAttribute('position', value)
+    this.#updateClasses()
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>timestamp(value)</code></h3>
+                    <pre><code>set timestamp (value) {
+    this.#timestamp = value
+    if (value) {
+        this.setAttribute('timestamp', '')
+    } else {
+        this.removeAttribute('timestamp')
+    }
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>theme(value)</code></h3>
+                    <pre><code>set theme (value) {
+    this.#theme = value
+    if (value) {
+        this.setAttribute('theme', value)
+    } else {
+        this.removeAttribute('theme')
+    }
+}</code></pre>
+                </div>
+            </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><div class="nav-category">editor</div><a class="nav-item active" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-XNg5OnvZ.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const a = new Vec2(3, 4)\nconst b = new Vec2({x: 1, y: 2})\nconst c = new Vec2([5, 6])"
+  },
+  {
+    "type": "action",
+    "title": "Addition",
+    "source": "logger.log('a:', ctx.a)\nlogger.log('b:', ctx.b)\nlogger.log('a + b:', ctx.a.clone().add(ctx.b))"
+  },
+  {
+    "type": "action",
+    "title": "Subtraction",
+    "source": "logger.log('a:', ctx.a)\nlogger.log('b:', ctx.b)\nlogger.log('a - b:', ctx.a.clone().sub(ctx.b))"
+  },
+  {
+    "type": "action",
+    "title": "Scalar multiplication",
+    "source": "logger.log('a:', ctx.a)\nlogger.log('a * 2:', ctx.a.clone().multiplyScalar(2))"
+  },
+  {
+    "type": "action",
+    "title": "Length",
+    "source": "logger.log('v:', ctx.v)\nlogger.log('length:', ctx.v.length())"
+  },
+  {
+    "type": "action",
+    "title": "Normalize",
+    "source": "logger.log('original:', ctx.v.clone())\nlogger.log('normalized:', ctx.v.clone().normalize())"
+  },
+  {
+    "type": "action",
+    "title": "Distance",
+    "source": "const other = new Vec2(0, 0)\nlogger.log('v:', ctx.v)\nlogger.log('other:', other)\nlogger.log('distance:', ctx.v.distanceTo(other))"
+  },
+  {
+    "type": "action",
+    "title": "Rotation",
+    "source": "const v = new Vec2(1, 0)\nconst center = new Vec2(0, 0)\nlogger.log('original:', v.clone())\nlogger.log('rotated 90deg:', v.rotateAround(center, Math.PI / 2))"
+  },
+  {
+    "type": "action",
+    "title": "Lerp",
+    "source": "const a = new Vec2(0, 0)\nconst b = new Vec2(10, 10)\nlogger.log('a:', a)\nlogger.log('b:', b)\nlogger.log('25%:', a.clone().lerp(b, 0.25))\nlogger.log('50%:', a.clone().lerp(b, 0.5))\nlogger.log('75%:', a.clone().lerp(b, 0.75))"
+  },
+  {
+    "type": "action",
+    "title": "Example",
+    "source": "const result = new Vec2(1, 0)\n    .multiplyScalar(5)\n    .add(new Vec2(0, 3))\n    .normalize()\nlogger.log('result:', result)"
+  }
+]

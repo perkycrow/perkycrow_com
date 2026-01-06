@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkyView - Perky Docs</title>
+    <meta name="description" content="Documentation for PerkyView in the Perky game framework">
+    <meta property="og:title" content="PerkyView - Perky Docs">
+    <meta property="og:description" content="Documentation for PerkyView in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>PerkyView</h1>
+            
+            <div class="doc-block">
+                <h3>Basic creation</h3>
+                <pre><code>const view = new PerkyView({$id: 'myView'})
+
+// Uses a default div element
+console.log(view.element.tagName) // 'DIV'</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>With custom element</h3>
+                <pre><code>const canvas = document.createElement('canvas')
+const view = new PerkyView({
+    $id: 'canvasView',
+    element: canvas
+})</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Mount to container</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+const container = document.getElementById('app')
+
+view.mount(container)
+
+console.log(view.mounted) // true
+console.log(view.width, view.height)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Size properties</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+console.log(view.width)
+console.log(view.height)
+console.log(view.size) // {width, height}
+console.log(view.aspectRatio)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>setSize</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+view.setSize({width: 800, height: 600})
+view.setSize({width: 100, height: 100, unit: '%'})</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>fit</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+view.fit() // Fits to container
+view.fit(someElement) // Fits to specific element</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>hide / show</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+console.log(view.isVisible()) // true
+
+view.hide()
+console.log(view.isVisible()) // false
+
+view.show()
+console.log(view.isVisible()) // true</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>display property</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+view.display = 'flex'
+console.log(view.display) // 'flex'</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>addClass / removeClass / hasClass</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+view.addClass('active')
+console.log(view.hasClass('active')) // true
+
+view.removeClass('active')
+console.log(view.hasClass('active')) // false</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Fullscreen methods</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+view.enterFullscreenMode()
+view.exitFullscreenMode()
+view.toggleFullscreen()
+
+// Or via setDisplayMode
+view.setDisplayMode('fullscreen')
+view.setDisplayMode('normal')</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>displayMode event</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+view.on('displayMode:changed', ({mode}) =&gt; {
+    console.log('mode changed:', mode)
+})
+
+console.log(view.displayMode) // 'normal' or 'fullscreen'</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>mount / dismount</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+const container = document.getElementById('app')
+
+view.on('mount', () =&gt; console.log('mounted'))
+view.on('dismount', () =&gt; console.log('dismounted'))
+
+view.mount(container)
+console.log(view.container === container) // true
+console.log(view.mounted) // true
+
+view.dismount()
+console.log(view.mounted) // false</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Resize event</h3>
+                <pre><code>const view = new PerkyView({$id: 'demo'})
+
+view.on('resize', ({width, height}) =&gt; {
+    console.log('resized:', width, height)
+})
+
+view.setSize({width: 300, height: 100})</code></pre>
+            </div>
+        
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item active" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-XNg5OnvZ.js"></script>
+</body>
+</html>

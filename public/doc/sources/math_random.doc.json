@@ -1,0 +1,47 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const rng = new Random()\nconst seeded = new Random('my-seed')"
+  },
+  {
+    "type": "action",
+    "title": "Random numbers",
+    "source": "const rng = new Random()\nlogger.log('between(0, 100):', rng.between(0, 100))\nlogger.log('between(0, 100):', rng.between(0, 100))\nlogger.log('intBetween(1, 10):', rng.intBetween(1, 10))"
+  },
+  {
+    "type": "action",
+    "title": "Reproducibility",
+    "source": "const rng1 = new Random('test-seed')\nconst rng2 = new Random('test-seed')\nlogger.log('rng1:', rng1.between(0, 100))\nlogger.log('rng2:', rng2.between(0, 100))\nlogger.log('Same seed = same values')"
+  },
+  {
+    "type": "action",
+    "title": "coinToss",
+    "source": "const rng = new Random()\nfor (let i = 0; i < 5; i++) {\n    logger.log('coinToss:', rng.coinToss())\n}"
+  },
+  {
+    "type": "action",
+    "title": "oneChanceIn",
+    "source": "const rng = new Random()\nfor (let i = 0; i < 5; i++) {\n    logger.log('oneChanceIn(4):', rng.oneChanceIn(4))\n}"
+  },
+  {
+    "type": "action",
+    "title": "pick",
+    "source": "const rng = new Random()\nconst items = ['sword', 'shield', 'potion', 'scroll']\nfor (let i = 0; i < 5; i++) {\n    logger.log('pick:', rng.pick(items))\n}"
+  },
+  {
+    "type": "action",
+    "title": "weightedChoice",
+    "source": "const rng = new Random()\nconst loot = [\n    {value: 'common', weight: 70},\n    {value: 'rare', weight: 25},\n    {value: 'legendary', weight: 5}\n]\nfor (let i = 0; i < 5; i++) {\n    logger.log('loot:', rng.weightedChoice(loot))\n}"
+  },
+  {
+    "type": "action",
+    "title": "fork",
+    "source": "const rng = new Random('base')\nrng.between(0, 100)\nrng.between(0, 100)\n\nconst forked = rng.fork()\nlogger.log('original:', rng.between(0, 100))\nlogger.log('forked:', forked.between(0, 100))\nlogger.log('Both continue independently')"
+  },
+  {
+    "type": "action",
+    "title": "getState / setState",
+    "source": "const rng = new Random('save-test')\nlogger.log('val 1:', rng.between(0, 100))\n\nconst state = rng.getState()\nlogger.log('val 2:', rng.between(0, 100))\nlogger.log('val 3:', rng.between(0, 100))\n\nrng.setState(state)\nlogger.log('after restore:', rng.between(0, 100))"
+  }
+]

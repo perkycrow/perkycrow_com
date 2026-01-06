@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkyModule - Perky Docs</title>
+    <meta name="description" content="Documentation for PerkyModule in the Perky game framework">
+    <meta property="og:title" content="PerkyModule - Perky Docs">
+    <meta property="og:description" content="Documentation for PerkyModule in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>PerkyModule</h1>
+            
+            <div class="doc-block">
+                <h3>Direct instantiation</h3>
+                <pre><code>const module = new PerkyModule({
+    $id: 'myModule',
+    $category: 'custom',
+    $tags: ['active', 'visible']
+})</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Subclassing</h3>
+                <pre><code>class Player extends PerkyModule {
+    static $category = 'entity'
+    static $tags = ['controllable']
+
+    onStart () {
+        // Called when module starts
+    }
+}</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Instance properties</h3>
+                <pre><code>const module = new PerkyModule({
+    $id: 'player',
+    $category: 'entity'
+})
+logger.log('$id:', module.$id)
+logger.log('$name:', module.$name)
+logger.log('$category:', module.$category)
+logger.log('$status:', module.$status)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>start / stop</h3>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+logger.log('initial status:', module.$status)
+
+module.start()
+logger.log('after start:', module.$status, 'running:', module.running)
+
+module.stop()
+logger.log('after stop:', module.$status, 'running:', module.running)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>dispose</h3>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+module.start()
+logger.log('before dispose:', module.$status)
+
+module.dispose()
+logger.log('after dispose:', module.$status, 'disposed:', module.disposed)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Lifecycle events</h3>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+module.on('start', () =&gt; logger.log('event: start'))
+module.on('stop', () =&gt; logger.log('event: stop'))
+module.on('dispose', () =&gt; logger.log('event: dispose'))
+
+module.start()
+module.stop()
+module.dispose()</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>create</h3>
+                <pre><code>const parent = new PerkyModule({$id: 'parent'})
+
+const child = parent.create(PerkyModule, {
+    $id: 'child',
+    $category: 'component'
+})
+
+logger.log('children count:', parent.children.length)
+logger.log('child.$id:', child.$id)
+logger.log('child.host:', child.host.$id)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>getChild / hasChild</h3>
+                <pre><code>const parent = new PerkyModule({$id: 'parent'})
+parent.create(PerkyModule, {$id: 'player'})
+parent.create(PerkyModule, {$id: 'enemy'})
+
+logger.log('hasChild player:', parent.hasChild('player'))
+logger.log('hasChild boss:', parent.hasChild('boss'))
+logger.log('getChild:', parent.getChild('player').$id)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Lifecycle propagation</h3>
+                <pre><code>const parent = new PerkyModule({$id: 'parent'})
+const child = parent.create(PerkyModule, {$id: 'child'})
+
+child.on('start', () =&gt; logger.log('child started'))
+child.on('stop', () =&gt; logger.log('child stopped'))
+
+logger.log('Starting parent...')
+parent.start()
+
+logger.log('Stopping parent...')
+parent.stop()</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>childrenByCategory</h3>
+                <pre><code>const game = new PerkyModule({$id: 'game'})
+game.create(PerkyModule, {$id: 'player', $category: 'entity'})
+game.create(PerkyModule, {$id: 'enemy1', $category: 'entity'})
+game.create(PerkyModule, {$id: 'score', $category: 'ui'})
+
+const entities = game.childrenByCategory('entity')
+logger.log('entities:', entities.map(e =&gt; e.$id))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Basic tags</h3>
+                <pre><code>const module = new PerkyModule({
+    $id: 'player',
+    $tags: ['controllable', 'visible']
+})
+
+logger.log('$tags:', module.$tags)
+logger.log('hasTag visible:', module.hasTag('visible'))
+logger.log('hasTags:', module.hasTags(['controllable', 'visible']))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>addTag / removeTag</h3>
+                <pre><code>const module = new PerkyModule({$id: 'enemy'})
+
+module.addTag('hostile')
+module.addTag('visible')
+logger.log('after adding:', module.$tags)
+
+module.removeTag('hostile')
+logger.log('after removing:', module.$tags)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>childrenByTags</h3>
+                <pre><code>const game = new PerkyModule({$id: 'game'})
+game.create(PerkyModule, {$id: 'player', $tags: ['entity', 'controllable']})
+game.create(PerkyModule, {$id: 'enemy', $tags: ['entity', 'hostile']})
+game.create(PerkyModule, {$id: 'rock', $tags: ['entity']})
+
+logger.log('entities:', game.childrenByTags('entity').map(c =&gt; c.$id))
+logger.log('hostile:', game.childrenByTags(['entity', 'hostile']).map(c =&gt; c.$id))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>query / queryAll</h3>
+                <pre><code>const app = new PerkyModule({$id: 'app'})
+const game = app.create(PerkyModule, {$id: 'game', $category: 'scene'})
+game.create(PerkyModule, {$id: 'player', $category: 'entity', $tags: ['controllable']})
+game.create(PerkyModule, {$id: 'enemy', $category: 'entity', $tags: ['hostile']})
+
+logger.log('query #player:', app.query('#player')?.$id)
+logger.log('queryAll entity:', app.queryAll('entity').map(e =&gt; e.$id))
+logger.log('queryAll .hostile:', app.queryAll('.hostile').map(e =&gt; e.$id))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>on / emit</h3>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+
+module.on('damage', amount =&gt; {
+    logger.log('received damage:', amount)
+})
+
+module.emit('damage', 25)
+module.emit('damage', 50)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>listenTo</h3>
+                <pre><code>const player = new PerkyModule({$id: 'player'})
+const enemy = new PerkyModule({$id: 'enemy'})
+
+player.listenTo(enemy, 'attack', damage =&gt; {
+    logger.log('player received attack:', damage)
+})
+
+enemy.emit('attack', 30)</code></pre>
+            </div>
+        
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item active" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-XNg5OnvZ.js"></script>
+</body>
+</html>

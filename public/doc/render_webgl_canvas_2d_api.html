@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebglCanvas2d - Perky Docs</title>
+    <meta name="description" content="Documentation for WebglCanvas2d in the Perky game framework">
+    <meta property="og:title" content="WebglCanvas2d - Perky Docs">
+    <meta property="og:description" content="Documentation for WebglCanvas2d in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>WebglCanvas2d</h1>
+            <p class="api-extends">extends <code>BaseRenderer</code></p><section class="api-section"><h2>Static</h2>
+                <div class="api-member">
+                    <h3><code>$name</code></h3>
+                    <pre><code>static $name = 'webGLCanvas2D'</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Constructor</h2>
+                <div class="api-member">
+                    <h3><code>constructor(options = ...)</code></h3>
+                    <pre><code>constructor (options = {}) {
+    const {autoFit, ...parentOptions} = options
+    super(parentOptions)
+
+    this.#setupWebGL()
+    this.#setupDefaultRenderers()
+    this.applyPixelRatio()
+
+    this.backgroundColor = options.backgroundColor ?? null
+    this.enableCulling = options.enableCulling ?? false
+    this.enableDebugGizmos = options.enableDebugGizmos ?? true
+
+    this.stats = {
+        totalObjects: 0,
+        renderedObjects: 0,
+        culledObjects: 0,
+        drawCalls: 0
+    }
+
+    if (autoFit) {
+        this.autoFitEnabled = true
+    }
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Methods</h2>
+                <div class="api-member">
+                    <h3><code>registerRenderer(renderer)</code></h3>
+                    <pre><code>registerRenderer (renderer) {
+    const context = {
+        gl: this.gl,
+        spriteProgram: this.spriteProgram,
+        primitiveProgram: this.primitiveProgram,
+        textureManager: this.textureManager,
+        shaderEffectRegistry: this.#shaderEffectRegistry
+    }
+
+    renderer.init(context)
+
+    for (const ObjectClass of renderer.constructor.handles) {
+        this.#rendererRegistry.set(ObjectClass, renderer)
+    }
+
+    if (!this.#renderers.includes(renderer)) {
+        this.#renderers.push(renderer)
+    }
+
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>unregisterRenderer(renderer)</code></h3>
+                    <pre><code>unregisterRenderer (renderer) {
+    for (const ObjectClass of renderer.constructor.handles) {
+        if (this.#rendererRegistry.get(ObjectClass) === renderer) {
+            this.#rendererRegistry.delete(ObjectClass)
+        }
+    }
+
+    const index = this.#renderers.indexOf(renderer)
+    if (index !== -1) {
+        this.#renderers.splice(index, 1)
+    }
+
+    renderer.dispose()
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>applyPixelRatio()</code></h3>
+                    <pre><code>applyPixelRatio () {
+    super.applyPixelRatio()
+
+    if (this.gl) {
+        this.gl.viewport(0, 0, this.canvas.width, this.canvas.height)
+    }
+
+    if (this.#postProcessor) {
+        this.#postProcessor.resize(this.canvas.width, this.canvas.height)
+    }
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>registerShaderEffect(EffectClass)</code></h3>
+                    <pre><code>registerShaderEffect (EffectClass) {
+    return this.#shaderEffectRegistry.register(EffectClass)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>setUniform(name, value, type = ...)</code></h3>
+                    <pre><code>setUniform (name, value, type = null) {
+    this.#shaderEffectRegistry.setUniform(name, value, type)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>getUniform(name)</code></h3>
+                    <pre><code>getUniform (name) {
+    return this.#shaderEffectRegistry.getUniform(name)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>registerShader(id, definition)</code></h3>
+                    <pre><code>registerShader (id, definition) {
+    return this.#shaderRegistry.register(id, definition)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>getShader(id)</code></h3>
+                    <pre><code>getShader (id) {
+    return this.#shaderRegistry.get(id)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>addPostPass(pass)</code></h3>
+                    <pre><code>addPostPass (pass) {
+    this.#postProcessor.addPass(pass)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>removePostPass(pass)</code></h3>
+                    <pre><code>removePostPass (pass) {
+    this.#postProcessor.removePass(pass)
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>setRenderGroups(configs)</code></h3>
+                    <pre><code>setRenderGroups (configs) {
+    this.clearRenderGroups()
+
+    if (!this.#compositeProgram) {
+        this.#setupCompositeShader()
+    }
+    if (!this.#compositeQuad) {
+        this.#compositeQuad = new FullscreenQuad(this.gl)
+    }
+
+    for (const config of configs) {
+        this.create(RenderGroup, config)
+    }
+
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>clearRenderGroups()</code></h3>
+                    <pre><code>clearRenderGroups () {
+    const groups = this.renderGroups
+    for (const group of groups) {
+        this.removeChild(group.$id)
+    }
+    return this
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>onDispose()</code></h3>
+                    <pre><code>onDispose () {
+    for (const renderer of this.#renderers) {
+        renderer.dispose()
+    }
+    this.#renderers = []
+    this.#rendererRegistry.clear()
+
+    if (this.#debugGizmoRenderer) {
+        this.#debugGizmoRenderer.dispose()
+        this.#debugGizmoRenderer = null
+    }
+
+    this.clearRenderGroups()
+
+    if (this.#compositeQuad) {
+        this.#compositeQuad.dispose(this.gl)
+        this.#compositeQuad = null
+    }
+
+    if (this.#postProcessor) {
+        this.#postProcessor.dispose()
+        this.#postProcessor = null
+    }
+
+    if (this.#shaderEffectRegistry) {
+        this.#shaderEffectRegistry.dispose()
+        this.#shaderEffectRegistry = null
+    }
+
+    if (this.#shaderRegistry) {
+        this.#shaderRegistry.dispose()
+        this.#shaderRegistry = null
+    }
+
+    super.onDispose()
+    this.gl = null
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>render(scene)</code></h3>
+                    <pre><code>render (scene) {
+    if (this.renderGroups.length &gt; 0 &amp;&amp; !scene) {
+        return this.#renderWithGroups()
+    }
+    return this.#renderSingleScene(scene)
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Getters</h2>
+                <div class="api-member">
+                    <h3><code>shaderRegistry()</code></h3>
+                    <pre><code>get shaderRegistry () {
+    return this.#shaderRegistry
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>shaderEffectRegistry()</code></h3>
+                    <pre><code>get shaderEffectRegistry () {
+    return this.#shaderEffectRegistry
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>postProcessor()</code></h3>
+                    <pre><code>get postProcessor () {
+    return this.#postProcessor
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>renderGroups()</code></h3>
+                    <pre><code>get renderGroups () {
+    return this.childrenByCategory('renderGroup')
+}</code></pre>
+                </div>
+            </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item active" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-XNg5OnvZ.js"></script>
+</body>
+</html>

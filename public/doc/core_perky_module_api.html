@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkyModule - Perky Docs</title>
+    <meta name="description" content="Documentation for PerkyModule in the Perky game framework">
+    <meta property="og:title" content="PerkyModule - Perky Docs">
+    <meta property="og:description" content="Documentation for PerkyModule in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>PerkyModule</h1>
+            <p class="api-extends">extends <code>Notifier</code></p><section class="api-section"><h2>Static</h2>
+                <div class="api-member">
+                    <h3><code>$category</code></h3>
+                    <pre><code>static $category = 'perkyModule'</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$name</code></h3>
+                    <pre><code>static $name = null</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$lifecycle</code></h3>
+                    <pre><code>static $lifecycle = true</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$eagerStart</code></h3>
+                    <pre><code>static $eagerStart = true</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$tags</code></h3>
+                    <pre><code>static $tags = []</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>perkyModuleMethods</code></h3>
+                    <pre><code>static perkyModuleMethods = Notifier.notifierMethods.concat([
+    'start',
+    'stop',
+    'dispose',
+    'install',
+    'uninstall',
+    'create',
+    'getChild',
+    'hasChild',
+    'removeChild',
+    'listNamesFor',
+    'lookup',
+    'childrenByCategory',
+    'hasTag',
+    'addTag',
+    'removeTag',
+    'hasTags',
+    'childrenByTags',
+    'addTagsIndex',
+    'removeTagsIndex',
+    'delegateTo',
+    'cleanDelegations',
+    'delegateEventsTo',
+    'cleanEventDelegations',
+    'query',
+    'queryAll'
+])</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Constructor</h2>
+                <div class="api-member">
+                    <h3><code>constructor(options = ...)</code></h3>
+                    <pre><code>constructor (options = {}) {
+    super()
+
+    this.options = {...options}
+    this.#name = options.$name || this.constructor.$name || this.constructor.name
+    this.#id = options.$id || this.#name
+    this.#category = options.$category || this.constructor.$category
+    this.#bind = options.$bind
+    this.#eagerStart = (options.$eagerStart ?? this.constructor.$eagerStart) !== false
+    this.#lifecycle = (options.$lifecycle ?? this.constructor.$lifecycle) !== false
+
+    this.#tags = new ObservableSet([
+        ...this.constructor.$tags,
+        ...(options.$tags || [])
+    ])
+
+    this.#childrenRegistry = new Registry()
+    this.#childrenRegistry.addIndex('$category')
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Methods</h2>
+                <div class="api-member">
+                    <h3><code>start()</code></h3>
+                    <pre><code>start () {
+    if (this.#started) {
+        return false
+    }
+
+    this.#started = true
+    this.onStart?.()
+    this.emit('start')
+
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>stop()</code></h3>
+                    <pre><code>stop () {
+    if (!this.#started) {
+        return false
+    }
+
+    this.#started = false
+    this.onStop?.()
+    this.emit('stop')
+
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>dispose()</code></h3>
+                    <pre><code>dispose () {
+    if (this.#disposed) {
+        return false
+    }
+
+    this.#disposed = true
+    this.stop()
+
+    this.cleanExternalListeners()
+
+    this.#childrenRegistry.forEach(child =&gt; {
+        if (child &amp;&amp; !child.disposed) {
+            child.dispose()
+        }
+    })
+    this.#childrenRegistry.clear()
+
+    this.onDispose?.()
+    this.emit('dispose')
+    this.removeListeners()
+
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>install(host, options)</code></h3>
+                    <pre><code>install (host, options) {
+    if (this.#installed) {
+        return this.uninstall()
+    }
+
+    this.#host = host
+    if (this.$bind) {
+        host[this.$bind] = this
+    }
+    this.#installed = true
+
+    this.onInstall?.(host, options)
+
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>uninstall()</code></h3>
+                    <pre><code>uninstall () {
+    if (!this.#installed) {
+        return false
+    }
+
+    this.cleanDelegations()
+    this.cleanEventDelegations()
+    this.onUninstall?.(this.#host)
+    this.#installed = false
+    this.#host = null
+
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>create(Child, options = ...)</code></h3>
+                    <pre><code>create (Child, options = {}) {
+    options.$category ||= Child.$category
+    options.$name ||= Child.$name || options.$category
+    options.$id ||= uniqueId(this.#childrenRegistry, options.$name)
+    options.$lifecycle = options.$lifecycle ?? Child.$lifecycle ?? true
+    options.$eagerStart = options.$eagerStart ?? Child.$eagerStart ?? true
+
+    return this.#addChild(new Child(options), options)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>getChild(name)</code></h3>
+                    <pre><code>getChild (name) {
+    return this.#childrenRegistry.get(name) || null
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>hasChild(name)</code></h3>
+                    <pre><code>hasChild (name) {
+    return this.#childrenRegistry.has(name)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>removeChild(name)</code></h3>
+                    <pre><code>removeChild (name) {
+    const child = this.#childrenRegistry.get(name)
+
+    if (!child) {
+        return false
+    }
+
+    unregisterChild(this, child)
+
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>listNamesFor(key, indexName = ...)</code></h3>
+                    <pre><code>listNamesFor (key, indexName = '$category') {
+    return this.#childrenRegistry.lookupKeys(indexName, key)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>lookup(indexName, key)</code></h3>
+                    <pre><code>lookup (indexName, key) {
+    return this.#childrenRegistry.lookup(indexName, key)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>childrenByCategory(category)</code></h3>
+                    <pre><code>childrenByCategory (category) {
+    return this.lookup('$category', category)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>hasTag(tag)</code></h3>
+                    <pre><code>hasTag (tag) {
+    return this.#tags.has(tag)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>addTag(tag)</code></h3>
+                    <pre><code>addTag (tag) {
+    if (this.#tags.has(tag)) {
+        return false
+    }
+    this.#tags.add(tag)
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>removeTag(tag)</code></h3>
+                    <pre><code>removeTag (tag) {
+    return this.#tags.delete(tag)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>hasTags(tags)</code></h3>
+                    <pre><code>hasTags (tags) {
+    if (typeof tags === 'string') {
+        return this.hasTag(tags)
+    }
+
+    return Array.isArray(tags) &amp;&amp; tags.every(tag =&gt; this.#tags.has(tag))
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>childrenByTags(tags)</code></h3>
+                    <pre><code>childrenByTags (tags) {
+    const tagArray = Array.isArray(tags) ? tags : [tags]
+
+    if (tagArray.length === 0) {
+        return []
+    }
+
+    const indexKey = getTagIndexKey(tagArray)
+
+    if (this.#tagIndexes.has(indexKey)) {
+        return this.#childrenRegistry.lookup(indexKey, indexKey)
+    }
+
+    return this.#childrenRegistry.all.filter(
+        child =&gt; tagArray.every(tag =&gt; child.$tags?.includes(tag))
+    )
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>addTagsIndex(tags)</code></h3>
+                    <pre><code>addTagsIndex (tags) {
+    if (!Array.isArray(tags) || tags.length === 0) {
+        return false
+    }
+
+    const indexKey = getTagIndexKey(tags)
+
+    if (this.#tagIndexes.has(indexKey)) {
+        return false
+    }
+
+    this.#childrenRegistry.addIndex(indexKey, child =&gt; {
+        const hasAllTags = tags.every(tag =&gt; child.tags?.has(tag))
+        return hasAllTags ? indexKey : null
+    })
+
+    this.#tagIndexes.set(indexKey, tags)
+
+    this.#childrenRegistry.forEach(child =&gt; {
+        if (child.tags) {
+            this.#setupTagIndexListeners(child)
+        }
+    })
+
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>removeTagsIndex(tags)</code></h3>
+                    <pre><code>removeTagsIndex (tags) {
+    const indexKey = getTagIndexKey(tags)
+
+    if (!this.#tagIndexes.has(indexKey)) {
+        return false
+    }
+
+    this.#childrenRegistry.removeIndex(indexKey)
+    this.#tagIndexes.delete(indexKey)
+    return true
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>delegateTo(host, names)</code></h3>
+                    <pre><code>delegateTo (host, names) {
+    delegateProperties(host, this, names)
+
+    const propertyNames = Array.isArray(names)
+        ? names
+        : Object.values(names)
+
+    this.#delegations.push({host, propertyNames})
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>cleanDelegations()</code></h3>
+                    <pre><code>cleanDelegations () {
+    for (const {host, propertyNames} of this.#delegations) {
+        for (const name of propertyNames) {
+            delete host[name]
+        }
+    }
+    this.#delegations.length = 0
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>delegateEventsTo(host, events, namespace)</code></h3>
+                    <pre><code>delegateEventsTo (host, events, namespace) {
+    const eventArray = Array.isArray(events) ? events : Object.keys(events)
+    const callbacks = []
+
+    for (const event of eventArray) {
+        const prefixedEvent = namespace ? `${namespace}:${event}` : event
+        const callback = (...args) =&gt; host.emit(prefixedEvent, ...args)
+        this.on(event, callback)
+        callbacks.push({event, callback})
+    }
+
+    this.#eventDelegations.push({callbacks})
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>cleanEventDelegations()</code></h3>
+                    <pre><code>cleanEventDelegations () {
+    for (const {callbacks} of this.#eventDelegations) {
+        for (const {event, callback} of callbacks) {
+            this.off(event, callback)
+        }
+    }
+    this.#eventDelegations.length = 0
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>query(selector)</code></h3>
+                    <pre><code>query (selector) {
+    return perkyQuery(this, selector)
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>queryAll(selector)</code></h3>
+                    <pre><code>queryAll (selector) {
+    return perkyQueryAll(this, selector)
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Getters</h2>
+                <div class="api-member">
+                    <h3><code>$id()</code></h3>
+                    <pre><code>get $id () {
+    return this.#id
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$name()</code></h3>
+                    <pre><code>get $name () {
+    return this.#name
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$category()</code></h3>
+                    <pre><code>get $category () {
+    return this.#category
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$bind()</code></h3>
+                    <pre><code>get $bind () {
+    return this.#bind
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>host()</code></h3>
+                    <pre><code>get host () {
+    return this.#host
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>started()</code></h3>
+                    <pre><code>get started () {
+    return this.#started
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>disposed()</code></h3>
+                    <pre><code>get disposed () {
+    return this.#disposed
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>installed()</code></h3>
+                    <pre><code>get installed () {
+    return this.#installed
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$eagerStart()</code></h3>
+                    <pre><code>get $eagerStart () {
+    return this.#eagerStart
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$lifecycle()</code></h3>
+                    <pre><code>get $lifecycle () {
+    return this.#lifecycle
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$status()</code></h3>
+                    <pre><code>get $status () {
+    if (!this.#lifecycle) {
+        return 'static'
+    }
+
+    if (this.#disposed) {
+        return 'disposed'
+    }
+
+    if (this.#started) {
+        return 'started'
+    }
+
+    return 'stopped'
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>running()</code></h3>
+                    <pre><code>get running () {
+    return this.#started
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>children()</code></h3>
+                    <pre><code>get children () {
+    return this.#childrenRegistry.all
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>childrenRegistry()</code></h3>
+                    <pre><code>get childrenRegistry () {
+    return this.#childrenRegistry
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$tags()</code></h3>
+                    <pre><code>get $tags () {
+    return this.#tags.toArray()
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>tags()</code></h3>
+                    <pre><code>get tags () {
+    return this.#tags
+}</code></pre>
+                </div>
+            </section><section class="api-section"><h2>Setters</h2>
+                <div class="api-member">
+                    <h3><code>$id(newId)</code></h3>
+                    <pre><code>set $id (newId) {
+    const oldId = this.#id
+
+    if (oldId !== newId) {
+        this.#id = newId
+        this.emit('$id:changed', newId, oldId)
+    }
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$name(newName)</code></h3>
+                    <pre><code>set $name (newName) {
+    const oldName = this.#name
+
+    if (oldName !== newName) {
+        this.#name = newName
+        this.emit('$name:changed', newName, oldName)
+    }
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$category(newCategory)</code></h3>
+                    <pre><code>set $category (newCategory) {
+    const oldCategory = this.#category
+
+    if (oldCategory !== newCategory) {
+        this.#category = newCategory
+        this.emit('$category:changed', newCategory, oldCategory)
+    }
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$bind(newBind)</code></h3>
+                    <pre><code>set $bind (newBind) {
+    const oldBind = this.#bind
+
+    if (oldBind !== newBind) {
+        this.#bind = newBind
+        this.emit('$bind:changed', newBind, oldBind)
+    }
+}</code></pre>
+                </div>
+            
+                <div class="api-member">
+                    <h3><code>$tags(newTags)</code></h3>
+                    <pre><code>set $tags (newTags) {
+    this.#tags.clear()
+    if (Array.isArray(newTags)) {
+        newTags.forEach(tag =&gt; this.#tags.add(tag))
+    }
+}</code></pre>
+                </div>
+            </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item active" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-XNg5OnvZ.js"></script>
+</body>
+</html>

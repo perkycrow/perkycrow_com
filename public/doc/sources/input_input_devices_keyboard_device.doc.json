@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const keyboard = new KeyboardDevice({\n    container: document.body\n})\n\nkeyboard.start()"
+  },
+  {
+    "type": "code",
+    "title": "API methods",
+    "source": "const keyboard = new KeyboardDevice()\nkeyboard.start()\n\n// Check single key\nconst isSpacePressed = keyboard.isPressed('Space')\n\n// Get all pressed\nconst pressedControls = keyboard.getPressedControls()\n\n// Get control value (0 or 1 for buttons)\nconst value = keyboard.getValueFor('KeyW')"
+  },
+  {
+    "type": "code",
+    "title": "Prevent all",
+    "source": "const keyboard = new KeyboardDevice({\n    shouldPreventDefault: true\n})"
+  },
+  {
+    "type": "code",
+    "title": "Selective prevention",
+    "source": "const keyboard = new KeyboardDevice({\n    shouldPreventDefault: (event, control) => {\n        // Only prevent arrow keys and space\n        return ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space']\n            .includes(control.name)\n    }\n})"
+  }
+]

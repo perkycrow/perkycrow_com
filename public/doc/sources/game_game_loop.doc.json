@@ -1,0 +1,47 @@
+[
+  {
+    "type": "code",
+    "title": "Creating a GameLoop",
+    "source": "const gameLoop = new GameLoop()\n\ngameLoop.on('update', (deltaTime) => {\n    logger.log(`Update: ${deltaTime.toFixed(3)}s`)\n})\n\ngameLoop.on('render', (progress, fps, screenFps) => {\n    logger.log(`Render: fps=${fps}, screen=${screenFps}`)\n})"
+  },
+  {
+    "type": "action",
+    "title": "Start the loop",
+    "source": "const gameLoop = new GameLoop()\n\ngameLoop.on('update', (dt) => {\n    logger.log(`Update: ${dt.toFixed(3)}s`)\n})\n\nlet frameCount = 0\ngameLoop.on('render', (progress, fps) => {\n    frameCount++\n    if (frameCount <= 5) {\n        logger.log(`Frame ${frameCount}, FPS: ${fps}`)\n    }\n    if (frameCount === 5) {\n        gameLoop.stop()\n        logger.log('Stopped after 5 frames')\n    }\n})\n\ngameLoop.start()"
+  },
+  {
+    "type": "action",
+    "title": "Pause and resume",
+    "source": "const gameLoop = new GameLoop()\n\ngameLoop.on('pause', () => logger.log('Game paused'))\ngameLoop.on('resume', () => logger.log('Game resumed'))\n\nlet updates = 0\ngameLoop.on('update', () => {\n    updates++\n    if (updates === 3) {\n        gameLoop.pause()\n        setTimeout(() => {\n            gameLoop.resume()\n        }, 500)\n    }\n    if (updates === 6) {\n        gameLoop.stop()\n        logger.log(`Total updates: ${updates}`)\n    }\n})\n\ngameLoop.start()"
+  },
+  {
+    "type": "code",
+    "title": "Check paused state",
+    "source": "const gameLoop = new GameLoop()\n\nif (gameLoop.paused) {\n    logger.log('Game is paused')\n}"
+  },
+  {
+    "type": "code",
+    "title": "Set target FPS",
+    "source": "const gameLoop = new GameLoop({\n    fps: 30,\n    fpsLimited: true\n})\n\n// Or change at runtime\ngameLoop.setFps(60)\ngameLoop.setFpsLimited(true)"
+  },
+  {
+    "type": "action",
+    "title": "Monitor FPS",
+    "source": "const gameLoop = new GameLoop()\n\nlet checks = 0\ngameLoop.on('render', () => {\n    checks++\n    if (checks % 60 === 0) {\n        logger.log(`Current FPS: ${gameLoop.getCurrentFps()}`)\n        logger.log(`Screen FPS: ${gameLoop.getScreenFps()}`)\n    }\n    if (checks >= 180) {\n        gameLoop.stop()\n    }\n})\n\ngameLoop.start()"
+  },
+  {
+    "type": "action",
+    "title": "Fixed timestep example",
+    "source": "const gameLoop = new GameLoop({\n    fps: 10,\n    fpsLimited: true\n})\n\nlet position = 0\nconst velocity = 100\n\ngameLoop.on('update', (dt) => {\n    position += velocity * dt\n    logger.log(`Position: ${position.toFixed(1)}`)\n})\n\nlet frames = 0\ngameLoop.on('render', (progress) => {\n    frames++\n    const interpolated = position + velocity * (1 / 10) * progress\n    if (frames <= 10) {\n        logger.log(`Render pos: ${interpolated.toFixed(1)} (progress: ${progress.toFixed(2)})`)\n    }\n    if (frames >= 30) {\n        gameLoop.stop()\n    }\n})\n\ngameLoop.start()"
+  },
+  {
+    "type": "code",
+    "title": "Listen to all events",
+    "source": "const gameLoop = new GameLoop()\n\ngameLoop.on('update', (dt) => { /* game logic */ })\ngameLoop.on('render', (progress) => { /* rendering */ })\ngameLoop.on('pause', () => { /* handle pause */ })\ngameLoop.on('resume', () => { /* handle resume */ })\ngameLoop.on('changed:fps', (fps) => { /* fps changed */ })\ngameLoop.on('changed:fpsLimited', (limited) => { /* mode changed */ })"
+  },
+  {
+    "type": "code",
+    "title": "Using with Application",
+    "source": "// const app = new Application()\n// app.install(new GameLoop())\n\n// Methods are delegated to app:\n// app.pause()\n// app.resume()\n// app.setFps(30)\n// app.getFps()\n// app.getCurrentFps()\n// app.getScreenFps()\n// app.setFpsLimited(true)\n\n// Events are also delegated:\n// app.on('update', (dt) => { ... })\n// app.on('render', (progress) => { ... })"
+  }
+]

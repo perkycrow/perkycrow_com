@@ -1,0 +1,104 @@
+{
+  "docs": [
+    {
+      "id": "application",
+      "file": "/application/application.doc.js",
+      "category": "application",
+      "title": "Application",
+      "tags": [
+        "application",
+        "application"
+      ]
+    },
+    {
+      "id": "perky_view",
+      "file": "/application/perky_view.doc.js",
+      "category": "application",
+      "title": "PerkyView",
+      "tags": [
+        "application",
+        "perky_view"
+      ]
+    },
+    {
+      "id": "perky_module",
+      "file": "/core/perky_module.doc.js",
+      "category": "core",
+      "title": "PerkyModule",
+      "tags": [
+        "core",
+        "perky_module"
+      ]
+    },
+    {
+      "id": "perky_logger",
+      "file": "/editor/perky_logger.doc.js",
+      "category": "editor",
+      "title": "PerkyLogger",
+      "tags": [
+        "editor",
+        "perky_logger"
+      ]
+    },
+    {
+      "id": "game_loop",
+      "file": "/game/game_loop.doc.js",
+      "category": "game",
+      "title": "GameLoop",
+      "tags": [
+        "game",
+        "game_loop"
+      ]
+    },
+    {
+      "id": "keyboard_device",
+      "file": "/input/input_devices/keyboard_device.doc.js",
+      "category": "input",
+      "title": "KeyboardDevice",
+      "tags": [
+        "input",
+        "keyboard_device"
+      ]
+    },
+    {
+      "id": "mouse_device",
+      "file": "/input/input_devices/mouse_device.doc.js",
+      "category": "input",
+      "title": "MouseDevice",
+      "tags": [
+        "input",
+        "mouse_device"
+      ]
+    },
+    {
+      "id": "random",
+      "file": "/math/random.doc.js",
+      "category": "math",
+      "title": "Random",
+      "tags": [
+        "math",
+        "random"
+      ]
+    },
+    {
+      "id": "vec2",
+      "file": "/math/vec2.doc.js",
+      "category": "math",
+      "title": "Vec2",
+      "tags": [
+        "math",
+        "vec2"
+      ]
+    },
+    {
+      "id": "webgl_canvas_2d",
+      "file": "/render/webgl_canvas_2d.doc.js",
+      "category": "render",
+      "title": "WebglCanvas2d",
+      "tags": [
+        "render",
+        "webgl_canvas_2d"
+      ]
+    }
+  ]
+}

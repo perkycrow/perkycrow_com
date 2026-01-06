@@ -1,0 +1,67 @@
+[
+  {
+    "type": "code",
+    "title": "Basic creation",
+    "source": "const view = new PerkyView({$id: 'myView'})\n\n// Uses a default div element\nconsole.log(view.element.tagName) // 'DIV'"
+  },
+  {
+    "type": "code",
+    "title": "With custom element",
+    "source": "const canvas = document.createElement('canvas')\nconst view = new PerkyView({\n    $id: 'canvasView',\n    element: canvas\n})"
+  },
+  {
+    "type": "code",
+    "title": "Mount to container",
+    "source": "const view = new PerkyView({$id: 'demo'})\nconst container = document.getElementById('app')\n\nview.mount(container)\n\nconsole.log(view.mounted) // true\nconsole.log(view.width, view.height)"
+  },
+  {
+    "type": "code",
+    "title": "Size properties",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nconsole.log(view.width)\nconsole.log(view.height)\nconsole.log(view.size) // {width, height}\nconsole.log(view.aspectRatio)"
+  },
+  {
+    "type": "code",
+    "title": "setSize",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nview.setSize({width: 800, height: 600})\nview.setSize({width: 100, height: 100, unit: '%'})"
+  },
+  {
+    "type": "code",
+    "title": "fit",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nview.fit() // Fits to container\nview.fit(someElement) // Fits to specific element"
+  },
+  {
+    "type": "code",
+    "title": "hide / show",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nconsole.log(view.isVisible()) // true\n\nview.hide()\nconsole.log(view.isVisible()) // false\n\nview.show()\nconsole.log(view.isVisible()) // true"
+  },
+  {
+    "type": "code",
+    "title": "display property",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nview.display = 'flex'\nconsole.log(view.display) // 'flex'"
+  },
+  {
+    "type": "code",
+    "title": "addClass / removeClass / hasClass",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nview.addClass('active')\nconsole.log(view.hasClass('active')) // true\n\nview.removeClass('active')\nconsole.log(view.hasClass('active')) // false"
+  },
+  {
+    "type": "code",
+    "title": "Fullscreen methods",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nview.enterFullscreenMode()\nview.exitFullscreenMode()\nview.toggleFullscreen()\n\n// Or via setDisplayMode\nview.setDisplayMode('fullscreen')\nview.setDisplayMode('normal')"
+  },
+  {
+    "type": "code",
+    "title": "displayMode event",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nview.on('displayMode:changed', ({mode}) => {\n    console.log('mode changed:', mode)\n})\n\nconsole.log(view.displayMode) // 'normal' or 'fullscreen'"
+  },
+  {
+    "type": "code",
+    "title": "mount / dismount",
+    "source": "const view = new PerkyView({$id: 'demo'})\nconst container = document.getElementById('app')\n\nview.on('mount', () => console.log('mounted'))\nview.on('dismount', () => console.log('dismounted'))\n\nview.mount(container)\nconsole.log(view.container === container) // true\nconsole.log(view.mounted) // true\n\nview.dismount()\nconsole.log(view.mounted) // false"
+  },
+  {
+    "type": "code",
+    "title": "Resize event",
+    "source": "const view = new PerkyView({$id: 'demo'})\n\nview.on('resize', ({width, height}) => {\n    console.log('resized:', width, height)\n})\n\nview.setSize({width: 300, height: 100})"
+  }
+]

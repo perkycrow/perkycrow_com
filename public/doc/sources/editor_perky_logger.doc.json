@@ -1,0 +1,77 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "// In HTML\n// <perky-logger max-entries=\"50\"></perky-logger>\n\n// Logs appear automatically via the global logger\nlogger.log('Hello world')"
+  },
+  {
+    "type": "action",
+    "title": "info",
+    "source": "logger.info('This is an info message')"
+  },
+  {
+    "type": "action",
+    "title": "notice",
+    "source": "logger.notice('This is a notice message')"
+  },
+  {
+    "type": "action",
+    "title": "warn",
+    "source": "logger.warn('This is a warning message')"
+  },
+  {
+    "type": "action",
+    "title": "error",
+    "source": "logger.error('This is an error message')"
+  },
+  {
+    "type": "action",
+    "title": "success",
+    "source": "logger.success('This is a success message')"
+  },
+  {
+    "type": "action",
+    "title": "title",
+    "source": "logger.title('Section Title')\nlogger.log('Content under title')"
+  },
+  {
+    "type": "action",
+    "title": "spacer",
+    "source": "logger.log('Before spacer')\nlogger.spacer()\nlogger.log('After spacer')"
+  },
+  {
+    "type": "action",
+    "title": "clear",
+    "source": "logger.clear()\nlogger.log('Logger cleared')"
+  },
+  {
+    "type": "action",
+    "title": "Object",
+    "source": "logger.log('user:', {name: 'Alice', age: 30, active: true})"
+  },
+  {
+    "type": "action",
+    "title": "Array",
+    "source": "logger.log('items:', ['sword', 'shield', 'potion'])"
+  },
+  {
+    "type": "action",
+    "title": "Vec2",
+    "source": "const position = new Vec2(100, 200)\nlogger.log('position:', position)"
+  },
+  {
+    "type": "action",
+    "title": "Nested",
+    "source": "logger.log('data:', {\n    player: {name: 'Bob', pos: new Vec2(10, 20)},\n    inventory: ['gold', 'key']\n})"
+  },
+  {
+    "type": "action",
+    "title": "Multiple values",
+    "source": "const x = 42\nconst y = 'hello'\nlogger.log('x:', x, 'y:', y)"
+  },
+  {
+    "type": "action",
+    "title": "Mixed types",
+    "source": "logger.info('Position:', new Vec2(5, 10), 'Score:', 100)"
+  }
+]
