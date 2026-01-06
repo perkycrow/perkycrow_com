@@ -37,7 +37,7 @@
   {
     "type": "code",
     "title": "Listen to all events",
-    "source": "const gameLoop = new GameLoop()\n\ngameLoop.on('update', (dt) => { /* game logic */ })\ngameLoop.on('render', (progress) => { /* rendering */ })\ngameLoop.on('pause', () => { /* handle pause */ })\ngameLoop.on('resume', () => { /* handle resume */ })\ngameLoop.on('changed:fps', (fps) => { /* fps changed */ })\ngameLoop.on('changed:fpsLimited', (limited) => { /* mode changed */ })"
+    "source": "const gameLoop = new GameLoop()\n\ngameLoop.on('update', (dt) => {/* game logic */})\ngameLoop.on('render', (progress) => {/* rendering */})\ngameLoop.on('pause', () => {/* handle pause */})\ngameLoop.on('resume', () => {/* handle resume */})\ngameLoop.on('changed:fps', (fps) => {/* fps changed */})\ngameLoop.on('changed:fpsLimited', (limited) => {/* mode changed */})"
   },
   {
     "type": "code",

@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application - Perky Docs</title>
+    <meta name="description" content="Documentation for Application in the Perky game framework">
+    <meta property="og:title" content="Application - Perky Docs">
+    <meta property="og:description" content="Documentation for Application in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Application</h1>
+            <section class="test-section"><h2>Application</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>mockManifest = {
+    getAsset: vi.fn(),
+    getSource: vi.fn(),
+    getConfig: vi.fn(),
+    setConfig: vi.fn()
+}
+
+vi.spyOn(Manifest.prototype, 'getAsset').mockImplementation((...args) =&gt; {
+    return mockManifest.getAsset(...args)
+})
+
+vi.spyOn(Manifest.prototype, 'getSource').mockImplementation((...args) =&gt; {
+    return mockManifest.getSource(...args)
+})
+
+vi.spyOn(Manifest.prototype, 'getConfig').mockImplementation((path) =&gt; {
+    return mockManifest.getConfig(path)
+})
+
+vi.spyOn(Manifest.prototype, 'setConfig').mockImplementation((path, value) =&gt; {
+    return mockManifest.setConfig(path, value)
+})
+
+const mockPerkyViewElement = document.createElement('div')
+mockPerkyViewElement.exitFullscreenMode = vi.fn()
+mockPerkyViewElement.enterFullscreenMode = vi.fn()
+vi.spyOn(PerkyView.prototype, 'mount').mockReturnValue(null)
+vi.spyOn(PerkyView, 'defaultElement').mockReturnValue(mockPerkyViewElement)
+
+application = new Application()</code></pre>
+            </div>
+        
+            <div class="test-hook">
+                <h4>afterEach</h4>
+                <pre><code>vi.restoreAllMocks()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor</h4>
+                <pre><code>expect(application).toBeInstanceOf(PerkyModule)
+expect(application.manifest).toBeInstanceOf(Manifest)
+expect(application.actionDispatcher).toBeDefined()
+expect(application.loaders).toBeInstanceOf(Registry)
+expect(application.perkyView).toBeInstanceOf(PerkyView)
+expect(application.sourceManager).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with custom manifest</h4>
+                <pre><code>vi.restoreAllMocks()
+
+const customManifestData = {
+    config: {name: 'Test App'}
+}
+
+const customApp = new Application({manifest: customManifestData})
+
+expect(customApp.manifest).toBeDefined()
+expect(customApp.manifest.getConfig('name')).toBe('Test App')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with manifest instance</h4>
+                <pre><code>vi.restoreAllMocks()
+
+const manifest = new Manifest({
+    data: {
+        config: {name: 'Test App Instance'}
+    }
+})
+const customApp = new Application({manifest})
+
+expect(customApp.manifest).toBeInstanceOf(Manifest)
+expect(customApp.manifest.getConfig('name')).toBe('Test App Instance')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with static manifest</h4>
+                <pre><code>vi.restoreAllMocks()
+
+class CustomApp extends Application {
+    static manifest = {
+        config: {name: 'Static Manifest App'}
+    }
+}
+
+const customApp = new CustomApp()
+
+expect(customApp.manifest).toBeInstanceOf(Manifest)
+expect(customApp.manifest.getConfig('name')).toBe('Static Manifest App')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor registers keyboard and mouse devices</h4>
+                <pre><code>const testApp = new Application()
+
+expect(testApp.getDevice('keyboard')).toBeInstanceOf(KeyboardDevice)
+expect(testApp.getDevice('mouse')).toBeInstanceOf(MouseDevice)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor calls configure if defined</h4>
+                <pre><code>class ConfiguredApp extends Application {
+    constructor () {
+        super()
+    }
+
+    configureApplication () {
+        this.configureCalled = true
+    }
+}
+
+const app = new ConfiguredApp()
+expect(app.configureCalled).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>loadAsset</h4>
+                <pre><code>vi.spyOn(application, 'loadAsset').mockResolvedValue('loaded')
+
+const promise = application.loadAsset('logo')
+
+expect(application.loadAsset).toHaveBeenCalledWith('logo')
+await expect(promise).resolves.toBe('loaded')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>loadTag</h4>
+                <pre><code>vi.spyOn(application, 'loadTag').mockResolvedValue('loaded')
+
+const promise = application.loadTag('mainScene')
+
+expect(application.loadTag).toHaveBeenCalledWith('mainScene')
+await expect(promise).resolves.toBe('loaded')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>loadAll</h4>
+                <pre><code>vi.spyOn(application, 'loadAll').mockResolvedValue('loaded')
+
+const promise = application.loadAll()
+
+expect(application.loadAll).toHaveBeenCalled()
+await expect(promise).resolves.toBe('loaded')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getSource</h4>
+                <pre><code>application.getSource('logo')
+
+expect(mockManifest.getSource).toHaveBeenCalledWith('logo')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>config</h4>
+                <pre><code>application.setConfig('debug', true)
+
+expect(mockManifest.setConfig).toHaveBeenCalledWith('debug', true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>dispose calls perkyView.dispose() which dismounts</h4>
+                <pre><code>const perkyView = application.perkyView
+vi.spyOn(perkyView, 'dispose')
+vi.spyOn(perkyView, 'dismount')
+
+application.dispose()
+
+expect(perkyView.dispose).toHaveBeenCalled()
+expect(perkyView.dismount).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>input event handling integration</h4>
+                <pre><code>class TestController extends PerkyModule {
+    jump = vi.fn()
+}
+
+const testApp = new Application()
+const controller = testApp.registerController('game', TestController)
+testApp.setActiveControllers('game')
+testApp.bindInput({
+    deviceName: 'keyboard',
+    controlName: 'Space',
+    actionName: 'jump',
+    controllerName: 'game'
+})
+
+const keyboardDevice = testApp.getDevice('keyboard')
+expect(keyboardDevice).toBeDefined()
+
+const spaceControl = keyboardDevice.getControl('Space') || keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})
+
+spaceControl.press({code: 'Space'})
+
+await new Promise(resolve =&gt; setTimeout(resolve, 0))
+expect(controller.jump).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>inputSystem alias provides access to InputSystem</h4>
+                <pre><code>expect(application.inputSystem.getDevice('keyboard')).toBeDefined()
+expect(application.inputSystem.getDevice('mouse')).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>inputSystem and inputBinder getters</h4>
+                <pre><code>expect(application.inputSystem).toBeDefined()
+expect(application.inputBinder).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>bind and unbind</h4>
+                <pre><code>const binding = application.bindInput({
+    deviceName: 'keyboard',
+    controlName: 'Enter',
+    actionName: 'select'
+})
+
+expect(binding).toBeDefined()
+expect(binding.actionName).toBe('select')
+expect(application.getAllBindings()).toHaveLength(1)
+
+const result = application.unbind({actionName: 'select'})
+expect(result).toBe(true)
+expect(application.getAllBindings()).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getBinding and hasBinding</h4>
+                <pre><code>application.bindInput({
+    deviceName: 'keyboard',
+    controlName: 'Tab',
+    actionName: 'nextTab'
+})
+
+expect(application.hasBinding({actionName: 'nextTab'})).toBe(true)
+
+const binding = application.getBinding({actionName: 'nextTab'})
+expect(binding).toBeDefined()
+expect(binding.actionName).toBe('nextTab')
+
+expect(application.hasBinding({actionName: 'nonExistent'})).toBe(false)
+expect(application.getBinding({actionName: 'nonExistent'})).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getBindingsForInput</h4>
+                <pre><code>application.bindInput({
+    deviceName: 'keyboard',
+    controlName: 'F1',
+    actionName: 'help'
+})
+
+const bindings = application.getBindingsForInput({
+    deviceName: 'keyboard',
+    controlName: 'F1',
+    eventType: 'pressed'
+})
+
+expect(bindings).toHaveLength(1)
+expect(bindings[0].actionName).toBe('help')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clearBindings</h4>
+                <pre><code>application.bindInput({deviceName: 'keyboard', controlName: 'A', actionName: 'action1'})
+application.bindInput({deviceName: 'keyboard', controlName: 'B', actionName: 'action2'})
+
+expect(application.getAllBindings()).toHaveLength(2)
+
+application.clearBindings()
+expect(application.getAllBindings()).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>device management</h4>
+                <pre><code>expect(application.registerDevice).toBeDefined()
+expect(application.getDevice).toBeDefined()
+
+const keyboardDevice = application.getDevice('keyboard')
+const mouseDevice = application.getDevice('mouse')
+expect(keyboardDevice).toBeInstanceOf(KeyboardDevice)
+expect(mouseDevice).toBeInstanceOf(MouseDevice)
+expect(application.getDevice('nonExistent')).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>input state queries</h4>
+                <pre><code>expect(application.isPressed('keyboard', 'Space')).toBe(false)
+expect(application.isPressedAny('Jump')).toBe(false)
+expect(application.getInputValue('mouse', 'leftButton')).toBe(0)
+expect(application.getInputValueAny('Fire')).toBeUndefined()
+expect(application.getControl('keyboard', 'Space')).toBeNull()
+expect(application.getControlAny('Jump')).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>input state shortcuts - isKeyPressed and isMousePressed</h4>
+                <pre><code>expect(application.isKeyPressed('Space')).toBe(false)
+expect(application.isKeyPressed('ArrowLeft')).toBe(false)
+expect(application.isKeyPressed('KeyW')).toBe(false)
+
+expect(application.isMousePressed('leftButton')).toBe(false)
+expect(application.isMousePressed('rightButton')).toBe(false)
+expect(application.isMousePressed('middleButton')).toBe(false)
+
+expect(application.isKeyPressed('Space')).toBe(application.isPressed('keyboard', 'Space'))
+expect(application.isMousePressed('leftButton')).toBe(application.isPressed('mouse', 'leftButton'))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>input value shortcuts - getKeyValue and getMouseValue</h4>
+                <pre><code>expect(application.getKeyValue('Space')).toBeUndefined()
+expect(application.getKeyValue('ArrowLeft')).toBeUndefined()
+expect(application.getKeyValue('KeyW')).toBeUndefined()
+
+expect(application.getMouseValue('leftButton')).toBe(application.getInputValue('mouse', 'leftButton'))
+expect(application.getMouseValue('rightButton')).toBe(application.getInputValue('mouse', 'rightButton'))
+expect(application.getMouseValue('position')).toBe(application.getInputValue('mouse', 'position'))
+
+expect(application.getKeyValue('Space')).toBe(application.getInputValue('keyboard', 'Space'))
+expect(application.getMouseValue('leftButton')).toBe(application.getInputValue('mouse', 'leftButton'))
+expect(application.getMouseValue('unknownControl')).toBe(application.getInputValue('mouse', 'unknownControl'))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>input shortcuts with simulated key presses</h4>
+                <pre><code>const keyboardDevice = application.getDevice('keyboard')
+const mouseDevice = application.getDevice('mouse')
+
+const spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})
+spaceControl.press()
+
+expect(application.isKeyPressed('Space')).toBe(true)
+expect(application.getKeyValue('Space')).toBe(1)
+expect(application.isPressed('keyboard', 'Space')).toBe(true)
+
+const leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})
+leftButtonControl.press()
+
+expect(application.isMousePressed('leftButton')).toBe(true)
+expect(application.getMouseValue('leftButton')).toBe(1)
+expect(application.isPressed('mouse', 'leftButton')).toBe(true)
+
+spaceControl.release()
+leftButtonControl.release()
+
+expect(application.isKeyPressed('Space')).toBe(false)
+expect(application.getKeyValue('Space')).toBe(0)
+expect(application.isMousePressed('leftButton')).toBe(false)
+expect(application.getMouseValue('leftButton')).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>input shortcuts consistency verification</h4>
+                <pre><code>const testCases = [
+    {key: 'Space', device: 'keyboard'},
+    {key: 'ArrowLeft', device: 'keyboard'},
+    {key: 'KeyW', device: 'keyboard'},
+    {key: 'leftButton', device: 'mouse'},
+    {key: 'rightButton', device: 'mouse'},
+    {key: 'unknownControl', device: 'keyboard'},
+    {key: 'unknownControl', device: 'mouse'}
+]
+
+testCases.forEach(({key, device}) =&gt; {
+    if (device === 'keyboard') {
+        expect(application.isKeyPressed(key)).toBe(application.isPressed('keyboard', key))
+        expect(application.getKeyValue(key)).toBe(application.getInputValue('keyboard', key))
+    } else {
+        expect(application.isMousePressed(key)).toBe(application.isPressed('mouse', key))
+        expect(application.getMouseValue(key)).toBe(application.getInputValue('mouse', key))
+    }
+})
+
+expect(application.isKeyPressed('NonExistentKey')).toBe(false)
+expect(application.isMousePressed('NonExistentButton')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>bindKey convenience method</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'Escape', actionName: 'pause'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('keyboard')
+expect(binding.controlName).toBe('Escape')
+expect(binding.actionName).toBe('pause')
+expect(binding.eventType).toBe('pressed')
+
+const releasedBinding = application.bindInput({controlName: 'Escape', actionName: 'resume', eventType: 'released'})
+expect(releasedBinding.eventType).toBe('released')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>bindMouse convenience method</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'leftButton', actionName: 'shoot'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('mouse')
+expect(binding.controlName).toBe('leftButton')
+expect(binding.actionName).toBe('shoot')
+expect(binding.eventType).toBe('pressed')
+
+const releasedBinding = application.bindInput({controlName: 'rightButton', actionName: 'aim', eventType: 'released'})
+expect(releasedBinding.eventType).toBe('released')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addControl</h4>
+                <pre><code>const control = application.addControl('keyboard', ButtonControl, {name: 'CustomKey'})
+
+expect(control).toBeInstanceOf(ButtonControl)
+expect(control.name).toBe('CustomKey')
+
+const keyboardDevice = application.getDevice('keyboard')
+expect(keyboardDevice.getControl('CustomKey')).toBe(control)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>use method installs child class</h4>
+                <pre><code>class TestChild extends PerkyModule {
+    constructor (options) {
+        super({...options, $id: 'testChild'})
+    }
+}
+
+application.create(TestChild, {$id: 'testChild', $category: 'default'})
+
+expect(application.hasChild('testChild')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>use method installs child instance</h4>
+                <pre><code>class TestChild extends PerkyModule {
+    constructor (options) {
+        super({...options, $id: 'testChild'})
+    }
+}
+
+application.create(TestChild, {
+    $id: 'testChild',
+    $category: 'default'
+})
+
+expect(application.hasChild('testChild')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>use method with options</h4>
+                <pre><code>class TestChild extends PerkyModule {
+    constructor (options) {
+        super({...options, $id: 'testChild'})
+    }
+}
+
+application.create(TestChild, {
+    $id: 'testChild',
+    $category: 'default',
+    someOption: true
+})
+
+const child = application.getChild('testChild')
+expect(child.options.someOption).toBe(true)</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>bindKey flexible API</h3>
+            <div class="test-case">
+                <h4>parameter format with controllerName</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'KeyF', actionName: 'fire', eventType: 'pressed', controllerName: 'player1'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('keyboard')
+expect(binding.controlName).toBe('KeyF')
+expect(binding.actionName).toBe('fire')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBe('player1')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>parameter format with eventType and no controllerName</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'KeyG', actionName: 'grenade', eventType: 'released'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('keyboard')
+expect(binding.controlName).toBe('KeyG')
+expect(binding.actionName).toBe('grenade')
+expect(binding.eventType).toBe('released')
+expect(binding.controllerName).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with actionName only</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'KeyH', actionName: 'heal'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('keyboard')
+expect(binding.controlName).toBe('KeyH')
+expect(binding.actionName).toBe('heal')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with actionName and eventType</h4>
+                <pre><code>const binding = application.bindInput({
+    controlName: 'KeyI',
+    actionName: 'inventory',
+    eventType: 'released'
+})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('keyboard')
+expect(binding.controlName).toBe('KeyI')
+expect(binding.actionName).toBe('inventory')
+expect(binding.eventType).toBe('released')
+expect(binding.controllerName).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with all options</h4>
+                <pre><code>const binding = application.bindInput({
+    controlName: 'KeyJ',
+    actionName: 'jump',
+    eventType: 'pressed',
+    controllerName: 'player2'
+})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('keyboard')
+expect(binding.controlName).toBe('KeyJ')
+expect(binding.actionName).toBe('jump')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBe('player2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with partial options uses defaults</h4>
+                <pre><code>const binding = application.bindInput({
+    controlName: 'KeyK',
+    actionName: 'kick',
+    controllerName: 'player3'
+})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('keyboard')
+expect(binding.controlName).toBe('KeyK')
+expect(binding.actionName).toBe('kick')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBe('player3')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>backwards compatibility - original format still works</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'KeyL', actionName: 'look'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('keyboard')
+expect(binding.controlName).toBe('KeyL')
+expect(binding.actionName).toBe('look')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBeNull()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>bindMouse flexible API</h3>
+            <div class="test-case">
+                <h4>parameter format with controllerName</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'middleButton', actionName: 'zoom', eventType: 'pressed', controllerName: 'camera'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('mouse')
+expect(binding.controlName).toBe('middleButton')
+expect(binding.actionName).toBe('zoom')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBe('camera')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>parameter format with eventType and no controllerName</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'rightButton', actionName: 'context', eventType: 'released'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('mouse')
+expect(binding.controlName).toBe('rightButton')
+expect(binding.actionName).toBe('context')
+expect(binding.eventType).toBe('released')
+expect(binding.controllerName).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with actionName only</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'leftButton', actionName: 'select'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('mouse')
+expect(binding.controlName).toBe('leftButton')
+expect(binding.actionName).toBe('select')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with actionName and eventType</h4>
+                <pre><code>const binding = application.bindInput({
+    controlName: 'rightButton',
+    actionName: 'menu',
+    eventType: 'released'
+})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('mouse')
+expect(binding.controlName).toBe('rightButton')
+expect(binding.actionName).toBe('menu')
+expect(binding.eventType).toBe('released')
+expect(binding.controllerName).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with all options</h4>
+                <pre><code>const binding = application.bindInput({
+    controlName: 'leftButton',
+    actionName: 'fire',
+    eventType: 'pressed',
+    controllerName: 'weapon'
+})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('mouse')
+expect(binding.controlName).toBe('leftButton')
+expect(binding.actionName).toBe('fire')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBe('weapon')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with partial options uses defaults</h4>
+                <pre><code>const binding = application.bindInput({
+    controlName: 'middleButton',
+    actionName: 'special',
+    controllerName: 'ui'
+})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('mouse')
+expect(binding.controlName).toBe('middleButton')
+expect(binding.actionName).toBe('special')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBe('ui')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>backwards compatibility - original format still works</h4>
+                <pre><code>const binding = application.bindInput({controlName: 'rightButton', actionName: 'aim'})
+
+expect(binding).toBeDefined()
+expect(binding.deviceName).toBe('mouse')
+expect(binding.controlName).toBe('rightButton')
+expect(binding.actionName).toBe('aim')
+expect(binding.eventType).toBe('pressed')
+expect(binding.controllerName).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format validation - empty object should throw</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindMouse('leftButton', {})
+}).toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format validation - undefined actionName should throw</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindMouse('rightButton', {actionName: undefined})
+}).toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>parameter format validation - undefined actionName should throw</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindMouse('middleButton', undefined)
+}).toThrow()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>flexible API edge cases</h3>
+            <div class="test-case">
+                <h4>mixed usage in same application</h4>
+                <pre><code>const binding1 = application.bindInput({controlName: 'Digit1', actionName: 'slot1', eventType: 'pressed', controllerName: 'inventory'})
+
+const binding2 = application.bindInput({
+    controlName: 'Digit2',
+    actionName: 'slot2',
+    eventType: 'pressed',
+    controllerName: 'inventory'
+})
+
+expect(binding1.actionName).toBe('slot1')
+expect(binding1.controllerName).toBe('inventory')
+expect(binding2.actionName).toBe('slot2')
+expect(binding2.controllerName).toBe('inventory')
+
+const allBindings = application.getAllBindings()
+const inventoryBindings = allBindings.filter(b =&gt; b.controllerName === 'inventory')
+expect(inventoryBindings).toHaveLength(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with empty object defaults everything</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindKey('KeyEmpty', {})
+}).toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with undefined actionName</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindKey('KeyUndef', {actionName: undefined})
+}).toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with null actionName</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindKey('KeyNull', {actionName: null})
+}).toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>object format with empty string actionName</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindKey('KeyEmpty', {actionName: ''})
+}).toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>parameter format with undefined actionName</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindKey('KeyParamUndef', undefined)
+}).toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>parameter format with null actionName</h4>
+                <pre><code>expect(() =&gt; {
+    application.bindKey('KeyParamNull', null)
+}).toThrow()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>bindCombo</h3>
+            <div class="test-case">
+                <h4>accepts string format with auto-detection</h4>
+                <pre><code>const combo = application.bindCombo(['ShiftLeft', 'leftButton'], 'shiftClick')
+
+expect(combo).toBeDefined()
+expect(combo.controls).toHaveLength(2)
+expect(combo.controls[0].deviceName).toBe('keyboard')
+expect(combo.controls[0].controlName).toBe('ShiftLeft')
+expect(combo.controls[1].deviceName).toBe('mouse')
+expect(combo.controls[1].controlName).toBe('leftButton')
+expect(combo.actionName).toBe('shiftClick')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>accepts object format</h4>
+                <pre><code>const combo = application.bindCombo([
+    {deviceName: 'keyboard', controlName: 'ControlLeft'},
+    {deviceName: 'mouse', controlName: 'rightButton'}
+], 'ctrlRightClick')
+
+expect(combo.controls).toHaveLength(2)
+expect(combo.controls[0].deviceName).toBe('keyboard')
+expect(combo.controls[1].deviceName).toBe('mouse')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>accepts mixed string and object formats</h4>
+                <pre><code>const combo = application.bindCombo([
+    'ControlLeft',
+    {deviceName: 'mouse', controlName: 'leftButton'}
+], 'mixedCombo')
+
+expect(combo.controls).toHaveLength(2)
+expect(combo.controls[0].deviceName).toBe('keyboard')
+expect(combo.controls[0].controlName).toBe('ControlLeft')
+expect(combo.controls[1].deviceName).toBe('mouse')
+expect(combo.controls[1].controlName).toBe('leftButton')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>works with keyboard-only combinations</h4>
+                <pre><code>const combo = application.bindCombo(['ControlLeft', 'KeyS'], 'save')
+
+expect(combo.controls).toHaveLength(2)
+expect(combo.controls.every(c =&gt; c.deviceName === 'keyboard')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>works with mouse-only combinations</h4>
+                <pre><code>const combo = application.bindCombo(['leftButton', 'rightButton'], 'bothButtons')
+
+expect(combo.controls).toHaveLength(2)
+expect(combo.controls.every(c =&gt; c.deviceName === 'mouse')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>supports controller and eventType</h4>
+                <pre><code>const combo = application.bindCombo(
+    ['AltLeft', 'middleButton'],
+    'special',
+    'editor',
+    'released'
+)
+
+expect(combo.controllerName).toBe('editor')
+expect(combo.eventType).toBe('released')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>integration test - triggers when all controls are pressed</h4>
+                <pre><code>class TestController extends PerkyModule {
+    smartCombo = vi.fn()
+}
+
+const testApp = new Application()
+
+
+const controller = testApp.registerController('editor', TestController)
+testApp.setActiveControllers('editor')
+testApp.bindCombo(['ControlLeft', 'leftButton'], 'smartCombo', 'editor')
+
+const keyboardDevice = testApp.getDevice('keyboard')
+const mouseDevice = testApp.getDevice('mouse')
+
+const ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})
+const leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})
+
+ctrlControl.press({code: 'ControlLeft'})
+await new Promise(resolve =&gt; setTimeout(resolve, 0))
+expect(controller.smartCombo).not.toHaveBeenCalled()
+
+leftButtonControl.press()
+await new Promise(resolve =&gt; setTimeout(resolve, 0))
+expect(controller.smartCombo).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>isActionPressed and getActionControls</h3>
+            <div class="test-case">
+                <h4>isActionPressed - returns false when action not bound</h4>
+                <pre><code>expect(application.isActionPressed('nonExistent')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>isActionPressed - returns false when control not pressed</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'jump'})
+expect(application.isActionPressed('jump')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>isActionPressed - returns true when control is pressed</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'jump'})
+
+const keyboardDevice = application.getDevice('keyboard')
+const spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})
+spaceControl.press()
+
+expect(application.isActionPressed('jump')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>isActionPressed - works with multiple bindings for same action</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'jump'})
+application.bindInput({controlName: 'KeyW', actionName: 'jump'})
+
+const keyboardDevice = application.getDevice('keyboard')
+const wControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})
+wControl.press()
+
+expect(application.isActionPressed('jump')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>isActionPressed - filters by controllerName</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})
+application.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})
+
+const keyboardDevice = application.getDevice('keyboard')
+const spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})
+spaceControl.press()
+
+expect(application.isActionPressed('jump', 'player1')).toBe(true)
+expect(application.isActionPressed('jump', 'player2')).toBe(false)
+expect(application.isActionPressed('jump')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>isActionPressed - works with composite bindings</h4>
+                <pre><code>application.bindCombo(['ControlLeft', 'KeyS'], 'save')
+
+const keyboardDevice = application.getDevice('keyboard')
+const ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})
+const sControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyS'})
+
+ctrlControl.press()
+expect(application.isActionPressed('save')).toBe(false)
+
+sControl.press()
+expect(application.isActionPressed('save')).toBe(true)
+
+ctrlControl.release()
+expect(application.isActionPressed('save')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getActionControls - returns empty array when action not bound</h4>
+                <pre><code>const controls = application.getActionControls('nonExistent')
+expect(controls).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getActionControls - returns control for simple binding</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'jump'})
+
+const keyboardDevice = application.getDevice('keyboard')
+const spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})
+
+const controls = application.getActionControls('jump')
+expect(controls).toHaveLength(1)
+expect(controls[0]).toBe(spaceControl)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getActionControls - returns multiple controls for multiple bindings</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})
+application.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})
+
+const keyboardDevice = application.getDevice('keyboard')
+const spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})
+const wControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})
+
+const controls = application.getActionControls('jump')
+expect(controls).toHaveLength(2)
+expect(controls).toContain(spaceControl)
+expect(controls).toContain(wControl)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getActionControls - filters by controllerName</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})
+application.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})
+
+const keyboardDevice = application.getDevice('keyboard')
+keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})
+keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})
+
+const player1Controls = application.getActionControls('jump', 'player1')
+expect(player1Controls).toHaveLength(1)
+expect(player1Controls[0].name).toBe('Space')
+
+const player2Controls = application.getActionControls('jump', 'player2')
+expect(player2Controls).toHaveLength(1)
+expect(player2Controls[0].name).toBe('KeyW')
+
+const allControls = application.getActionControls('jump')
+expect(allControls).toHaveLength(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getActionControls - works with composite bindings</h4>
+                <pre><code>application.bindCombo(['ControlLeft', 'KeyS'], 'save')
+
+const keyboardDevice = application.getDevice('keyboard')
+const ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})
+const sControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyS'})
+
+const controls = application.getActionControls('save')
+expect(controls).toHaveLength(2)
+expect(controls).toContain(ctrlControl)
+expect(controls).toContain(sControl)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getActionControls - handles non-existent controls gracefully</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'jump'})
+
+const controls = application.getActionControls('jump')
+expect(controls).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getActionControls - works with cross-device bindings</h4>
+                <pre><code>application.bindInput({controlName: 'Space', actionName: 'action', eventType: 'pressed', controllerName: 'keyboard-input'})
+application.bindInput({controlName: 'leftButton', actionName: 'action', eventType: 'pressed', controllerName: 'mouse-input'})
+
+const keyboardDevice = application.getDevice('keyboard')
+const mouseDevice = application.getDevice('mouse')
+const spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})
+const leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})
+
+const controls = application.getActionControls('action')
+expect(controls).toHaveLength(2)
+expect(controls).toContain(spaceControl)
+expect(controls).toContain(leftButtonControl)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>controller bindings auto-registration</h3>
+            <div class="test-case">
+                <h4>registers simple bindings when controller is registered</h4>
+                <pre><code>class TestController extends PerkyModule {
+    static bindings = {
+        shoot: 'Space',
+        jump: 'KeyJ'
+    }
+
+    static normalizeBindings () {
+        return [
+            {action: 'shoot', key: 'Space', scoped: false, eventType: 'pressed', controllerName: null},
+            {action: 'jump', key: 'KeyJ', scoped: false, eventType: 'pressed', controllerName: null}
+        ]
+    }
+}
+
+const beforeBindings = application.getAllBindings()
+expect(beforeBindings.filter(b =&gt; b.actionName === 'shoot')).toHaveLength(0)
+
+application.registerController('game', TestController)
+
+const afterBindings = application.getAllBindings()
+const shootBinding = afterBindings.find(b =&gt; b.actionName === 'shoot')
+const jumpBinding = afterBindings.find(b =&gt; b.actionName === 'jump')
+
+expect(shootBinding).toBeDefined()
+expect(shootBinding.controlName).toBe('Space')
+expect(shootBinding.controllerName).toBeNull()
+
+expect(jumpBinding).toBeDefined()
+expect(jumpBinding.controlName).toBe('KeyJ')
+expect(jumpBinding.controllerName).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>registers scoped bindings with controllerName</h4>
+                <pre><code>class TestController extends PerkyModule {
+    static bindings = {
+        shoot: {keys: 'Space', scoped: true}
+    }
+
+    static normalizeBindings (controllerName) {
+        return [
+            {action: 'shoot', key: 'Space', scoped: true, eventType: 'pressed', controllerName}
+        ]
+    }
+}
+
+application.registerController('player', TestController)
+
+const bindings = application.getAllBindings()
+const shootBinding = bindings.find(b =&gt; b.actionName === 'shoot' &amp;&amp; b.controllerName === 'player')
+
+expect(shootBinding).toBeDefined()
+expect(shootBinding.controlName).toBe('Space')
+expect(shootBinding.controllerName).toBe('player')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>registers multiple keys for same action</h4>
+                <pre><code>class TestController extends PerkyModule {
+    static bindings = {
+        moveUp: ['KeyW', 'ArrowUp']
+    }
+
+    static normalizeBindings () {
+        return [
+            {action: 'moveUp', key: 'KeyW', scoped: false, eventType: 'pressed', controllerName: null},
+            {action: 'moveUp', key: 'ArrowUp', scoped: false, eventType: 'pressed', controllerName: null}
+        ]
+    }
+}
+
+application.registerController('game', TestController)
+
+const bindings = application.getAllBindings()
+const moveUpBindings = bindings.filter(b =&gt; b.actionName === 'moveUp')
+
+expect(moveUpBindings.length).toBeGreaterThanOrEqual(2)
+expect(moveUpBindings.some(b =&gt; b.controlName === 'KeyW')).toBe(true)
+expect(moveUpBindings.some(b =&gt; b.controlName === 'ArrowUp')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>registers bindings with custom eventType</h4>
+                <pre><code>class TestController extends PerkyModule {
+    static bindings = {
+        boost: {keys: 'ShiftLeft', eventType: 'released'}
+    }
+
+    static normalizeBindings () {
+        return [
+            {action: 'boost', key: 'ShiftLeft', scoped: false, eventType: 'released', controllerName: null}
+        ]
+    }
+}
+
+application.registerController('game', TestController)
+
+const bindings = application.getAllBindings()
+const boostBinding = bindings.find(b =&gt; b.actionName === 'boost')
+
+expect(boostBinding).toBeDefined()
+expect(boostBinding.eventType).toBe('released')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>allows multiple controllers with same keys (different scopes)</h4>
+                <pre><code>class GameController extends PerkyModule {
+    static bindings = {
+        move: {keys: 'ArrowUp', scoped: true}
+    }
+
+    static normalizeBindings (controllerName) {
+        return [
+            {action: 'move', key: 'ArrowUp', scoped: true, eventType: 'pressed', controllerName}
+        ]
+    }
+}
+
+class MenuController extends PerkyModule {
+    static bindings = {
+        navigate: {keys: 'ArrowUp', scoped: true}
+    }
+
+    static normalizeBindings (controllerName) {
+        return [
+            {action: 'navigate', key: 'ArrowUp', scoped: true, eventType: 'pressed', controllerName}
+        ]
+    }
+}
+
+application.registerController('game', GameController)
+application.registerController('menu', MenuController)
+
+const bindings = application.getAllBindings()
+const arrowUpBindings = bindings.filter(b =&gt; b.controlName === 'ArrowUp')
+
+expect(arrowUpBindings.length).toBeGreaterThanOrEqual(2)
+
+const gameBinding = arrowUpBindings.find(b =&gt; b.controllerName === 'game')
+const menuBinding = arrowUpBindings.find(b =&gt; b.controllerName === 'menu')
+
+expect(gameBinding).toBeDefined()
+expect(gameBinding.actionName).toBe('move')
+
+expect(menuBinding).toBeDefined()
+expect(menuBinding.actionName).toBe('navigate')</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item active" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

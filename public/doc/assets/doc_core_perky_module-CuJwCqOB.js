@@ -1,7 +1,7 @@
 import { d as doc, t as text, s as section, c as code, b as action } from "./runtime-cNJO0S24.js";
-import { P as PerkyModule } from "./perky_module-DMF0flXt.js";
+import { P as PerkyModule } from "./perky_module-uJdyZ-t_.js";
 import { l as logger } from "./logger-CkRtvmLl.js";
-import "./utils-CH_WZToG.js";
+import "./utils-DXBRLumH.js";
 const perky_module_doc = doc("PerkyModule", { context: "simple" }, () => {
   text(`
         Base class for all Perky components.

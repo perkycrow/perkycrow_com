@@ -11,7 +11,7 @@ var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn;
 import { N as Notifier } from "./logger-CkRtvmLl.js";
-import { u as uniqueId, d as delegateProperties } from "./utils-CH_WZToG.js";
+import { u as uniqueId, n as delegateProperties } from "./utils-DXBRLumH.js";
 class ObservableMap extends Notifier {
   constructor(collection) {
     super();

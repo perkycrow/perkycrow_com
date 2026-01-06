@@ -11,10 +11,10 @@ var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn;
 import { d as doc, t as text, s as section, c as code, e as container } from "./runtime-cNJO0S24.js";
-import { a as InputDevice, B as ButtonControl } from "./button_control-6nGcy2XR.js";
+import { a as InputDevice, B as ButtonControl } from "./button_control-DpZUrUro.js";
 import { l as logger } from "./logger-CkRtvmLl.js";
-import "./perky_module-DMF0flXt.js";
-import "./utils-CH_WZToG.js";
+import "./perky_module-uJdyZ-t_.js";
+import "./utils-DXBRLumH.js";
 class KeyboardDevice extends InputDevice {
   constructor(params = {}) {
     super(params);
@@ -209,9 +209,7 @@ const keyboard_device_doc = doc("KeyboardDevice", () => {
       const updateDisplay = () => {
         const pressed = keyboard.getPressedControls();
         if (pressed.length > 0) {
-          display.innerHTML = pressed.map(
-            (c) => `<span style="background:#e94560;padding:4px 8px;margin:2px;border-radius:4px">${c.name}</span>`
-          ).join("");
+          display.innerHTML = pressed.map((c) => `<span style="background:#e94560;padding:4px 8px;margin:2px;border-radius:4px">${c.name}</span>`).join("");
         } else {
           display.textContent = "";
         }

@@ -21,6 +21,16 @@
       ]
     },
     {
+      "id": "notifier",
+      "file": "/core/notifier.doc.js",
+      "category": "core",
+      "title": "Notifier",
+      "tags": [
+        "core",
+        "notifier"
+      ]
+    },
+    {
       "id": "perky_module",
       "file": "/core/perky_module.doc.js",
       "category": "core",
@@ -28,6 +38,16 @@
       "tags": [
         "core",
         "perky_module"
+      ]
+    },
+    {
+      "id": "utils",
+      "file": "/core/utils.doc.js",
+      "category": "core",
+      "title": "Utils",
+      "tags": [
+        "core",
+        "utils"
       ]
     },
     {

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random - Perky Docs</title>
+    <meta name="description" content="Documentation for Random in the Perky game framework">
+    <meta property="og:title" content="Random - Perky Docs">
+    <meta property="og:description" content="Documentation for Random in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Random</h1>
+            <section class="test-section"><h2>Random</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>random = new Random('testSeed')</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>constructor</h3>
+            <div class="test-case">
+                <h4>creates instance with default seed</h4>
+                <pre><code>const randomWithDefaultSeed = new Random()
+expect(randomWithDefaultSeed).toBeInstanceOf(Random)
+expect(randomWithDefaultSeed.getSeed()).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>creates instance with custom seed</h4>
+                <pre><code>const randomWithCustomSeed = new Random('mySeed')
+expect(randomWithCustomSeed).toBeInstanceOf(Random)
+expect(randomWithCustomSeed.getSeed()).toEqual('mySeed')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>determinism</h3>
+            <div class="test-case">
+                <h4>same seed produces same sequence</h4>
+                <pre><code>const random1 = new Random('same-seed')
+const random2 = new Random('same-seed')
+
+for (let i = 0; i &lt; 10; i++) {
+    expect(random1.between(0, 1)).toBe(random2.between(0, 1))
+}</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>different seeds produce different sequences</h4>
+                <pre><code>const random1 = new Random('seed-a')
+const random2 = new Random('seed-b')
+
+const sequence1 = Array.from({length: 5}, () =&gt; random1.between(0, 1))
+const sequence2 = Array.from({length: 5}, () =&gt; random2.between(0, 1))
+
+expect(sequence1).not.toEqual(sequence2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns numbers between 0 and 1</h4>
+                <pre><code>const testRandom = new Random('test')
+for (let i = 0; i &lt; 100; i++) {
+    const value = testRandom.between(0, 1)
+    expect(value).toBeGreaterThanOrEqual(0)
+    expect(value).toBeLessThan(1)
+}</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>setSeed &amp; getSeed</h3>
+            <div class="test-case">
+                <h4>gets and sets seed</h4>
+                <pre><code>expect(random.getSeed()).toEqual('testSeed')
+
+random.setSeed('newSeed')
+expect(random.getSeed()).toEqual('newSeed')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setSeed resets the generator</h4>
+                <pre><code>const firstSequence = [
+    random.between(0, 1),
+    random.between(0, 1),
+    random.between(0, 1)
+]
+
+random.setSeed('testSeed')
+
+const resetSequence = [
+    random.between(0, 1),
+    random.between(0, 1),
+    random.between(0, 1)
+]
+
+expect(resetSequence).toEqual(firstSequence)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setSeed returns this for chaining</h4>
+                <pre><code>expect(random.setSeed('newSeed')).toBe(random)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>setState &amp; getState</h3>
+            <div class="test-case">
+                <h4>getState returns current state with all properties</h4>
+                <pre><code>const state = random.getState()
+
+expect(state).toHaveProperty('c')
+expect(state).toHaveProperty('s0')
+expect(state).toHaveProperty('s1')
+expect(state).toHaveProperty('s2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>state changes after generating numbers</h4>
+                <pre><code>const initialState = random.getState()
+
+random.between(0, 10)
+
+const newState = random.getState()
+expect(newState).not.toEqual(initialState)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setState restores state</h4>
+                <pre><code>random.between(0, 1)
+random.between(0, 1)
+random.between(0, 1)
+
+const savedState = random.getState()
+
+const afterSave = [
+    random.between(0, 1),
+    random.between(0, 1),
+    random.between(0, 1)
+]
+
+random.setState(savedState)
+
+const afterRestore = [
+    random.between(0, 1),
+    random.between(0, 1),
+    random.between(0, 1)
+]
+
+expect(afterRestore).toEqual(afterSave)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setState returns this for chaining</h4>
+                <pre><code>const state = random.getState()
+expect(random.setState(state)).toBe(random)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>sequence reproduction with state</h4>
+                <pre><code>const initialState = random.getState()
+
+const firstSequence = [
+    random.between(0, 100),
+    random.between(10, 50),
+    random.between(-10, 10)
+]
+
+random.setState(initialState)
+
+const secondSequence = [
+    random.between(0, 100),
+    random.between(10, 50),
+    random.between(-10, 10)
+]
+
+expect(secondSequence).toEqual(firstSequence)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>fork</h3>
+            <div class="test-case">
+                <h4>creates a new Random instance</h4>
+                <pre><code>const forkedRandom = random.fork()
+expect(forkedRandom).toBeInstanceOf(Random)
+expect(forkedRandom).not.toBe(random)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>forked instance has same seed and state</h4>
+                <pre><code>random.between(0, 10)
+
+const forkedRandom = random.fork()
+expect(forkedRandom.getSeed()).toEqual(random.getSeed())
+expect(forkedRandom.getState()).toEqual(random.getState())</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>forked instance produces same sequence</h4>
+                <pre><code>random.between(0, 10)
+
+const forkedRandom = random.fork()
+
+const originalSequence = [
+    random.between(0, 100),
+    random.between(0, 100),
+    random.between(0, 100)
+]
+
+random.setState(forkedRandom.getState())
+
+const forkedSequence = [
+    forkedRandom.between(0, 100),
+    forkedRandom.between(0, 100),
+    forkedRandom.between(0, 100)
+]
+
+expect(forkedSequence).toEqual(originalSequence)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>forked instance diverges independently</h4>
+                <pre><code>random.between(0, 10)
+
+const forkedRandom = random.fork()
+
+forkedRandom.between(0, 10)
+expect(forkedRandom.getState()).not.toEqual(random.getState())</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>between</h3>
+            <div class="test-case">
+                <h4>returns value in range</h4>
+                <pre><code>const value = random.between(0, 10)
+expect(value).toBeGreaterThanOrEqual(0)
+expect(value).toBeLessThan(10)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>works with negative ranges</h4>
+                <pre><code>const negativeValue = random.between(-10, 0)
+expect(negativeValue).toBeGreaterThanOrEqual(-10)
+expect(negativeValue).toBeLessThan(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>works with decimal ranges</h4>
+                <pre><code>const value = random.between(0.5, 1.5)
+expect(value).toBeGreaterThanOrEqual(0.5)
+expect(value).toBeLessThan(1.5)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>intBetween</h3>
+            <div class="test-case">
+                <h4>returns integer in range</h4>
+                <pre><code>const value = random.intBetween(0, 10)
+expect(value).toBeGreaterThanOrEqual(0)
+expect(value).toBeLessThan(10)
+expect(Number.isInteger(value)).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns integers for many iterations</h4>
+                <pre><code>for (let i = 0; i &lt; 100; i++) {
+    const value = random.intBetween(0, 100)
+    expect(Number.isInteger(value)).toBe(true)
+}</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>pick</h3>
+            <div class="test-case">
+                <h4>returns element from array</h4>
+                <pre><code>const array = [1, 2, 3, 4, 5]
+const value = random.pick(array)
+expect(array).toContain(value)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can pick all elements over many iterations</h4>
+                <pre><code>const array = ['a', 'b', 'c']
+const picked = new Set()
+
+for (let i = 0; i &lt; 100; i++) {
+    picked.add(random.pick(array))
+}
+
+expect(picked.size).toBe(3)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>oneChanceIn</h3>
+            <div class="test-case">
+                <h4>returns boolean</h4>
+                <pre><code>const result = random.oneChanceIn(2)
+expect(typeof result).toBe('boolean')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>higher chances produce fewer true results</h4>
+                <pre><code>const testRandom = new Random('oneChanceTest')
+let trueCount2 = 0
+let trueCount10 = 0
+
+for (let i = 0; i &lt; 1000; i++) {
+    if (testRandom.oneChanceIn(2)) {
+        trueCount2++
+    }
+    if (testRandom.oneChanceIn(10)) {
+        trueCount10++
+    }
+}
+
+expect(trueCount2).toBeGreaterThan(trueCount10)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>coinToss</h3>
+            <div class="test-case">
+                <h4>returns boolean</h4>
+                <pre><code>const result = random.coinToss()
+expect(typeof result).toBe('boolean')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>produces roughly equal distribution</h4>
+                <pre><code>const testRandom = new Random('coinTossTest')
+let trueCount = 0
+
+for (let i = 0; i &lt; 1000; i++) {
+    if (testRandom.coinToss()) {
+        trueCount++
+    }
+}
+
+expect(trueCount).toBeGreaterThan(400)
+expect(trueCount).toBeLessThan(600)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>weightedChoice</h3>
+            <div class="test-case">
+                <h4>respects weights distribution</h4>
+                <pre><code>const choices = [
+    {value: 'rare', weight: 1},
+    {value: 'common', weight: 99}
+]
+
+const results = {rare: 0, common: 0}
+const testRandom = new Random('weightedTestSeed')
+
+for (let i = 0; i &lt; 1000; i++) {
+    const result = testRandom.weightedChoice(choices)
+    results[result]++
+}
+
+expect(results.common).toBeGreaterThan(results.rare)
+expect(results.rare).toBeGreaterThan(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns undefined for empty array</h4>
+                <pre><code>expect(random.weightedChoice([])).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns undefined for undefined input</h4>
+                <pre><code>expect(random.weightedChoice()).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>works with single choice</h4>
+                <pre><code>const choices = [{value: 'only', weight: 1}]
+expect(random.weightedChoice(choices)).toBe('only')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>generateSeed</h3>
+            <div class="test-case">
+                <h4>returns string of default length 10</h4>
+                <pre><code>const seed = Random.generateSeed()
+expect(typeof seed).toBe('string')
+expect(seed.length).toBe(10)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>respects custom length</h4>
+                <pre><code>const customLengthSeed = Random.generateSeed(15)
+expect(customLengthSeed.length).toBe(15)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>generates different seeds</h4>
+                <pre><code>const seed1 = Random.generateSeed()
+const seed2 = Random.generateSeed()
+expect(seed1).not.toEqual(seed2)</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item active" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameLoop - Perky Docs</title>
+    <meta name="description" content="Documentation for GameLoop in the Perky game framework">
+    <meta property="og:title" content="GameLoop - Perky Docs">
+    <meta property="og:description" content="Documentation for GameLoop in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>GameLoop</h1>
+            <section class="test-section"><h2>GameLoop</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>originalRequestAnimationFrame = global.requestAnimationFrame
+originalPerformanceNow = global.performance.now
+animationCallbacks = []
+
+let time = 0
+global.performance.now = vi.fn(() =&gt; {
+    time += 16.7 // ~60fps
+    return time
+})
+
+global.requestAnimationFrame = vi.fn(callback =&gt; {
+    animationCallbacks.push(callback)
+    return 1 // Return a dummy ID
+})
+
+vi.spyOn(PerkyModule.prototype, 'emit')
+
+gameLoop = new GameLoop()</code></pre>
+            </div>
+        
+            <div class="test-hook">
+                <h4>afterEach</h4>
+                <pre><code>vi.restoreAllMocks()
+global.requestAnimationFrame = originalRequestAnimationFrame
+global.performance.now = originalPerformanceNow
+animationCallbacks = []</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor</h4>
+                <pre><code>expect(gameLoop).toBeInstanceOf(PerkyModule)
+expect(gameLoop.frameInterval).toBe(1000 / 60)
+expect(gameLoop.paused).toBe(false)
+expect(gameLoop.maxFrameSkip).toBe(5)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with custom params</h4>
+                <pre><code>const customLoop = new GameLoop({
+    fps: 30,
+    maxFrameSkip: 3
+})
+
+expect(customLoop.frameInterval).toBe(1000 / 30)
+expect(customLoop.maxFrameSkip).toBe(3)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>running getter</h4>
+                <pre><code>expect(gameLoop.running).toBe(false)
+
+gameLoop.start()
+expect(gameLoop.running).toBe(true)
+
+gameLoop.paused = true
+expect(gameLoop.running).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>start</h4>
+                <pre><code>gameLoop.start()
+
+expect(gameLoop.started).toBe(true)
+expect(gameLoop.lastTime).toBeDefined()
+expect(gameLoop.accumulator).toBe(0)
+expect(gameLoop.frameCount).toBe(0)
+expect(global.requestAnimationFrame).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>start with already started</h4>
+                <pre><code>gameLoop.start()
+
+vi.clearAllMocks()
+const result = gameLoop.start()
+
+expect(result).toBe(false)
+expect(requestAnimationFrame).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>pause</h4>
+                <pre><code>gameLoop.start()
+gameLoop.paused = false
+
+const result = gameLoop.pause('param')
+
+expect(result).toBe(true)
+expect(gameLoop.paused).toBe(true)
+expect(gameLoop.emit).toHaveBeenCalledWith('pause', 'param')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>pause when not running</h4>
+                <pre><code>vi.clearAllMocks()
+
+const result = gameLoop.pause()
+
+expect(result).toBe(false)
+expect(gameLoop.emit).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>resume</h4>
+                <pre><code>gameLoop.start()
+gameLoop.paused = true
+
+const result = gameLoop.resume('param')
+
+expect(result).toBe(true)
+expect(gameLoop.paused).toBe(false)
+expect(gameLoop.emit).toHaveBeenCalledWith('resume', 'param')
+expect(requestAnimationFrame).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>resume when not paused</h4>
+                <pre><code>gameLoop.start()
+gameLoop.paused = false
+
+vi.clearAllMocks()
+
+const result = gameLoop.resume()
+
+expect(result).toBe(false)
+expect(gameLoop.emit).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setFps and getFps</h4>
+                <pre><code>gameLoop.setFps(30)
+
+expect(gameLoop.frameInterval).toBe(1000 / 30)
+expect(gameLoop.getFps()).toBe(30)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getCurrentFps</h4>
+                <pre><code>expect(gameLoop.getCurrentFps()).toBe(0)
+
+gameLoop.currentFps = 59
+expect(gameLoop.getCurrentFps()).toBe(59)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>update function emits events</h4>
+                <pre><code>const testLoop = new GameLoop()
+const update = vi.fn()
+const render = vi.fn()
+
+testLoop.on('update', update)
+testLoop.on('render', render)
+
+testLoop.start()
+expect(animationCallbacks.length).toBeGreaterThan(0)
+
+testLoop.lastTime = performance.now() - 50 // 50ms ago
+
+const updateFn = animationCallbacks[0]
+updateFn(performance.now())
+
+expect(update).toHaveBeenCalled()
+
+expect(render).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>update function with paused loop</h4>
+                <pre><code>const testLoop = new GameLoop()
+const update = vi.fn()
+const render = vi.fn()
+
+testLoop.on('update', update)
+testLoop.on('render', render)
+
+testLoop.start()
+expect(animationCallbacks.length).toBeGreaterThan(0)
+
+testLoop.paused = true
+
+const updateFn = animationCallbacks[0]
+const result = updateFn(performance.now())
+
+expect(result).toBe(false)
+expect(update).not.toHaveBeenCalled()
+expect(render).not.toHaveBeenCalled()</code></pre>
+            </div>
+        </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item active" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

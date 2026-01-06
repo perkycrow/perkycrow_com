@@ -10,9 +10,9 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var _paused, _fpsLimited;
 import { d as doc, t as text, s as section, c as code, b as action } from "./runtime-cNJO0S24.js";
-import { P as PerkyModule } from "./perky_module-DMF0flXt.js";
+import { P as PerkyModule } from "./perky_module-uJdyZ-t_.js";
 import { l as logger } from "./logger-CkRtvmLl.js";
-import "./utils-CH_WZToG.js";
+import "./utils-DXBRLumH.js";
 class GameLoop extends PerkyModule {
   constructor(params = {}) {
     super(params);

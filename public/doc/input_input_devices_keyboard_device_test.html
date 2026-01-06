@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyboardDevice - Perky Docs</title>
+    <meta name="description" content="Documentation for KeyboardDevice in the Perky game framework">
+    <meta property="og:title" content="KeyboardDevice - Perky Docs">
+    <meta property="og:description" content="Documentation for KeyboardDevice in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>KeyboardDevice</h1>
+            <section class="test-section"><h2>KeyboardDevice</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>mockContainer = {
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn()
+}
+
+device = new KeyboardDevice({
+    container: mockContainer,
+    $id: 'testKeyboard'
+})</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor</h4>
+                <pre><code>expect(device).toBeInstanceOf(InputDevice)
+expect(device.$id).toBe('testKeyboard')
+expect(device.container).toBe(mockContainer)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with default params</h4>
+                <pre><code>const defaultDevice = new KeyboardDevice()
+expect(defaultDevice.$id).toBe('keyboard')
+expect(defaultDevice.container).toBe(window)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>start attaches event listeners</h4>
+                <pre><code>device.start()
+
+expect(mockContainer.addEventListener).toHaveBeenCalledWith('keydown', expect.any(Function), true)
+expect(mockContainer.addEventListener).toHaveBeenCalledWith('keyup', expect.any(Function), true)
+expect(mockContainer.addEventListener).toHaveBeenCalledWith('blur', expect.any(Function))
+expect(mockContainer.addEventListener).toHaveBeenCalledTimes(3)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>stop removes event listeners</h4>
+                <pre><code>device.start()
+device.stop()
+
+expect(mockContainer.removeEventListener).toHaveBeenCalledWith('keydown', expect.any(Function), true)
+expect(mockContainer.removeEventListener).toHaveBeenCalledWith('keyup', expect.any(Function), true)
+expect(mockContainer.removeEventListener).toHaveBeenCalledWith('blur', expect.any(Function))
+expect(mockContainer.removeEventListener).toHaveBeenCalledTimes(3)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>dispose calls stop</h4>
+                <pre><code>const stopSpy = vi.spyOn(device, 'stop')
+device.start()
+device.dispose()
+expect(stopSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keydown event creates and presses control</h4>
+                <pre><code>device.start()
+
+const keydownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'keydown')[1]
+
+const event = createKeyEvent('KeyA')
+keydownListener(event)
+
+const control = device.getControl('KeyA')
+expect(control).toBeInstanceOf(ButtonControl)
+expect(control.isPressed).toBe(true)
+expect(device.isPressed('KeyA')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keydown event does not press already pressed control</h4>
+                <pre><code>device.start()
+
+const keydownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'keydown')[1]
+
+const event = createKeyEvent('KeyA')
+keydownListener(event)
+
+const control = device.getControl('KeyA')
+const pressSpy = vi.spyOn(control, 'press')
+
+keydownListener(event)
+expect(pressSpy).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keyup event releases control</h4>
+                <pre><code>device.start()
+
+const keydownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'keydown')[1]
+const keyupListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'keyup')[1]
+
+const event = createKeyEvent('KeyA')
+keydownListener(event)
+expect(device.isPressed('KeyA')).toBe(true)
+
+keyupListener(event)
+expect(device.isPressed('KeyA')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keyup event does nothing for non-existent control</h4>
+                <pre><code>device.start()
+
+const keyupListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'keyup')[1]
+
+const event = createKeyEvent('KeyA')
+expect(() =&gt; keyupListener(event)).not.toThrow()
+expect(device.getControl('KeyA')).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>blur event releases all pressed keys</h4>
+                <pre><code>device.start()
+
+const keydownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'keydown')[1]
+const blurListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'blur')[1]
+
+keydownListener(createKeyEvent('KeyA'))
+keydownListener(createKeyEvent('KeyB'))
+expect(device.isPressed('KeyA')).toBe(true)
+expect(device.isPressed('KeyB')).toBe(true)
+
+blurListener()
+expect(device.isPressed('KeyA')).toBe(false)
+expect(device.isPressed('KeyB')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>integration test - full key press cycle</h4>
+                <pre><code>const controlPressedListener = vi.fn()
+const controlReleasedListener = vi.fn()
+
+device.on('control:pressed', controlPressedListener)
+device.on('control:released', controlReleasedListener)
+
+device.start()
+
+const keydownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'keydown')[1]
+const keyupListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'keyup')[1]
+
+const event = createKeyEvent('Space')
+
+keydownListener(event)
+expect(controlPressedListener).toHaveBeenCalledTimes(1)
+expect(device.isPressed('Space')).toBe(true)
+
+keyupListener(event)
+expect(controlReleasedListener).toHaveBeenCalledTimes(1)
+expect(device.isPressed('Space')).toBe(false)</code></pre>
+            </div>
+        </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item active" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

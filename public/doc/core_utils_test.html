@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utils - Perky Docs</title>
+    <meta name="description" content="Documentation for Utils in the Perky game framework">
+    <meta property="og:title" content="Utils - Perky Docs">
+    <meta property="og:description" content="Documentation for Utils in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Utils</h1>
+            <section class="test-section"><h2>String Utils</h2>
+            <div class="test-case">
+                <h4>toCamelCase</h4>
+                <pre><code>expect(toCamelCase('hello_world')).toEqual('helloWorld')
+expect(toCamelCase('hello-world')).toEqual('helloWorld')
+expect(toCamelCase('hello world')).toEqual('helloWorld')
+expect(toCamelCase('HelloWorld')).toEqual('helloWorld')
+expect(toCamelCase('Hello')).toEqual('hello')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>toPascalCase</h4>
+                <pre><code>expect(toPascalCase('hello_world')).toEqual('HelloWorld')
+expect(toPascalCase('hello-world')).toEqual('HelloWorld')
+expect(toPascalCase('hello world')).toEqual('HelloWorld')
+expect(toPascalCase('HelloWorld')).toEqual('HelloWorld')
+expect(toPascalCase('Hello')).toEqual('Hello')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>toSnakeCase</h4>
+                <pre><code>expect(toSnakeCase('helloWorld')).toEqual('hello_world')
+expect(toSnakeCase('HelloWorld')).toEqual('hello_world')
+expect(toSnakeCase('hello-world')).toEqual('hello_world')
+expect(toSnakeCase('hello world')).toEqual('hello_world')
+expect(toSnakeCase('Hello')).toEqual('hello')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>singularize</h4>
+                <pre><code>expect(singularize('books')).toEqual('book')
+expect(singularize('cars')).toEqual('car')
+expect(singularize('houses')).toEqual('house')
+
+expect(singularize('boxes')).toEqual('box')
+expect(singularize('dishes')).toEqual('dish')
+expect(singularize('buses')).toEqual('bus')
+expect(singularize('wishes')).toEqual('wish')
+
+expect(singularize('cities')).toEqual('city')
+expect(singularize('flies')).toEqual('fly')
+expect(singularize('stories')).toEqual('story')
+
+expect(singularize('leaves')).toEqual('leaf')
+expect(singularize('lives')).toEqual('life')
+expect(singularize('wolves')).toEqual('wolf')
+
+expect(singularize('men')).toEqual('man')
+expect(singularize('women')).toEqual('woman')
+expect(singularize('children')).toEqual('child')
+expect(singularize('people')).toEqual('person')
+expect(singularize('mice')).toEqual('mouse')
+expect(singularize('feet')).toEqual('foot')
+expect(singularize('teeth')).toEqual('tooth')
+expect(singularize('cacti')).toEqual('cactus')
+
+expect(singularize('fish')).toEqual('fish')
+expect(singularize('deer')).toEqual('deer')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>uniqueId</h4>
+                <pre><code>beforeEach(() =&gt; {
+    resetUniqueId('testCollection')
+    resetUniqueId('anotherCollection')
+})
+
+const id1 = uniqueId('testCollection', 'item')
+expect(id1).toBe('item')
+
+const id2 = uniqueId('testCollection', 'item')
+expect(id2).toBe('item_1')
+
+const id3 = uniqueId('testCollection', 'item')
+expect(id3).toBe('item_2')
+
+const user1 = uniqueId('testCollection', 'user')
+expect(user1).toBe('user')
+
+const user2 = uniqueId('testCollection', 'user')
+expect(user2).toBe('user_1')
+
+const product1 = uniqueId('anotherCollection', 'product')
+expect(product1).toBe('product')
+
+const product2 = uniqueId('anotherCollection', 'product')
+expect(product2).toBe('product_1')
+
+const single1 = uniqueId('single')
+expect(single1).toBe('single')
+
+const single2 = uniqueId('single')
+expect(single2).toBe('single_1')
+
+const single3 = uniqueId('single')
+expect(single3).toBe('single_2')
+
+const other1 = uniqueId('other')
+expect(other1).toBe('other')
+
+const other2 = uniqueId('other')
+expect(other2).toBe('other_1')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>resetUniqueId</h4>
+                <pre><code>// Start fresh
+resetUniqueId('testCollection')
+
+uniqueId('testCollection', 'item')
+uniqueId('testCollection', 'item')
+uniqueId('testCollection', 'user')
+
+resetUniqueId('testCollection', 'item')
+
+const newItem = uniqueId('testCollection', 'item')
+expect(newItem).toBe('item')
+
+const newUser = uniqueId('testCollection', 'user')
+expect(newUser).toBe('user_1')
+
+resetUniqueId('testCollection')
+
+const resetItem = uniqueId('testCollection', 'item')
+expect(resetItem).toBe('item')
+
+const resetUser = uniqueId('testCollection', 'user')
+expect(resetUser).toBe('user')</code></pre>
+            </div>
+        </section><section class="test-section"><h2>Object Utils</h2>
+            <div class="test-case">
+                <h4>deepMerge</h4>
+                <pre><code>expect(deepMerge({a: 1}, {b: 2})).toEqual({a: 1, b: 2})
+expect(deepMerge({a: 1, b: 2}, {b: 3})).toEqual({a: 1, b: 3})
+
+expect(deepMerge(
+    {a: {b: 1, c: 2}},
+    {a: {c: 3, d: 4}}
+)).toEqual({a: {b: 1, c: 3, d: 4}})
+
+expect(deepMerge(
+    {a: [1, 2]},
+    {a: [3, 4]}
+)).toEqual({a: [1, 2, 3, 4]})
+
+expect(deepMerge({a: 1}, null)).toEqual({a: 1})
+expect(deepMerge({a: 1}, undefined)).toEqual({a: 1})</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>deepMerge handles circular references</h4>
+                <pre><code>const circular = {a: 1}
+circular.self = circular
+
+expect(() =&gt; {
+    deepMerge({}, circular)
+}).not.toThrow()
+
+const result = deepMerge({b: 2}, circular)
+expect(result.a).toBe(1)
+expect(result.b).toBe(2)
+expect(result.self).toBe(circular)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setDefaults</h4>
+                <pre><code>expect(setDefaults({a: 1}, {a: 0, b: 2})).toEqual({a: 1, b: 2})
+
+expect(setDefaults(
+    {a: {b: 1}},
+    {a: {b: 0, c: 2}, d: 3}
+)).toEqual({a: {b: 1, c: 2}, d: 3})
+
+expect(setDefaults({}, {a: 1, b: 2})).toEqual({a: 1, b: 2})
+
+expect(setDefaults(null, {a: 1, b: 2})).toEqual({a: 1, b: 2})
+expect(setDefaults(undefined, {a: 1, b: 2})).toEqual({a: 1, b: 2})</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getNestedValue</h4>
+                <pre><code>const obj = {
+    a: 1,
+    b: {
+        c: 2,
+        d: {
+            e: 3
+        }
+    }
+}
+
+expect(getNestedValue(obj, 'a')).toBe(1)
+expect(getNestedValue(obj, 'b.c')).toBe(2)
+expect(getNestedValue(obj, 'b.d.e')).toBe(3)
+
+expect(getNestedValue(obj, 'x')).toBeUndefined()
+expect(getNestedValue(obj, 'b.x')).toBeUndefined()
+expect(getNestedValue(obj, 'b.d.x')).toBeUndefined()
+
+expect(getNestedValue(obj)).toEqual(obj)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setNestedValue</h4>
+                <pre><code>const obj = {}
+
+setNestedValue(obj, 'a', 1)
+expect(obj).toEqual({a: 1})
+
+setNestedValue(obj, 'b.c', 2)
+expect(obj.b.c).toBe(2)
+
+setNestedValue(obj, 'b.c', 3)
+expect(obj.b.c).toBe(3)
+
+setNestedValue(obj, 'b.d.e', 4)
+expect(obj.b.d.e).toBe(4)
+expect(obj).toEqual({a: 1, b: {c: 3, d: {e: 4}}})</code></pre>
+            </div>
+        </section><section class="test-section"><h2>delegateProperties</h2>
+            <div class="test-case">
+                <h4>delegates methods with array notation</h4>
+                <pre><code>const source = {
+    method1: () =&gt; 'result1',
+    method2: () =&gt; 'result2'
+}
+const receiver = {}
+
+delegateProperties(receiver, source, ['method1', 'method2'])
+
+expect(receiver.method1()).toBe('result1')
+expect(receiver.method2()).toBe('result2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegates properties with array notation</h4>
+                <pre><code>const source = {prop1: 'value1', prop2: 'value2'}
+const receiver = {}
+
+delegateProperties(receiver, source, ['prop1', 'prop2'])
+
+expect(receiver.prop1).toBe('value1')
+expect(receiver.prop2).toBe('value2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>property changes reflect on source</h4>
+                <pre><code>const source = {prop: 'initial'}
+const receiver = {}
+
+delegateProperties(receiver, source, ['prop'])
+
+receiver.prop = 'changed'
+expect(source.prop).toBe('changed')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegates with object notation (aliasing)</h4>
+                <pre><code>const source = {
+    originalMethod: () =&gt; 'result',
+    originalProp: 'value'
+}
+const receiver = {}
+
+delegateProperties(receiver, source, {
+    originalMethod: 'aliasedMethod',
+    originalProp: 'aliasedProp'
+})
+
+expect(receiver.aliasedMethod()).toBe('result')
+expect(receiver.aliasedProp).toBe('value')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegates getters and setters</h4>
+                <pre><code>let internalValue = 10
+const source = {}
+Object.defineProperty(source, 'value', {
+    get () {
+        return internalValue
+    },
+    set (newValue) {
+        internalValue = newValue
+    },
+    enumerable: true,
+    configurable: true
+})
+
+const receiver = {}
+delegateProperties(receiver, source, ['value'])
+
+expect(receiver.value).toBe(10)
+receiver.value = 20
+expect(internalValue).toBe(20)
+expect(receiver.value).toBe(20)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>methods are bound to source context</h4>
+                <pre><code>const source = {
+    name: 'source',
+    getName () {
+        return this.name
+    }
+}
+const receiver = {name: 'receiver'}
+
+delegateProperties(receiver, source, ['getName'])
+
+expect(receiver.getName()).toBe('source')</code></pre>
+            </div>
+        </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item active" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

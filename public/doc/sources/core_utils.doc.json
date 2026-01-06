@@ -1,0 +1,102 @@
+[
+  {
+    "type": "action",
+    "title": "toCamelCase",
+    "source": "logger.log('snake_case:', toCamelCase('snake_case'))\nlogger.log('kebab-case:', toCamelCase('kebab-case'))\nlogger.log('PascalCase:', toCamelCase('PascalCase'))"
+  },
+  {
+    "type": "action",
+    "title": "toPascalCase",
+    "source": "logger.log('snake_case:', toPascalCase('snake_case'))\nlogger.log('camelCase:', toPascalCase('camelCase'))\nlogger.log('kebab-case:', toPascalCase('kebab-case'))"
+  },
+  {
+    "type": "action",
+    "title": "toSnakeCase",
+    "source": "logger.log('camelCase:', toSnakeCase('camelCase'))\nlogger.log('PascalCase:', toSnakeCase('PascalCase'))\nlogger.log('kebab-case:', toSnakeCase('kebab-case'))"
+  },
+  {
+    "type": "action",
+    "title": "toKebabCase",
+    "source": "logger.log('camelCase:', toKebabCase('camelCase'))\nlogger.log('PascalCase:', toKebabCase('PascalCase'))\nlogger.log('snake_case:', toKebabCase('snake_case'))"
+  },
+  {
+    "type": "action",
+    "title": "uniqueId",
+    "source": "resetUniqueId('demo')\nlogger.log('first:', uniqueId('demo', 'player'))\nlogger.log('second:', uniqueId('demo', 'player'))\nlogger.log('third:', uniqueId('demo', 'player'))\nlogger.log('different prefix:', uniqueId('demo', 'enemy'))"
+  },
+  {
+    "type": "action",
+    "title": "resetUniqueId",
+    "source": "resetUniqueId('demo')\nlogger.log('after reset:', uniqueId('demo', 'player'))\nlogger.log('next:', uniqueId('demo', 'player'))\nresetUniqueId('demo', 'player')\nlogger.log('after prefix reset:', uniqueId('demo', 'player'))"
+  },
+  {
+    "type": "action",
+    "title": "singularize / plural",
+    "source": "logger.log('players:', singularize('players'))\nlogger.log('enemies:', singularize('enemies'))\nlogger.log('children:', singularize('children'))\nlogger.log('player:', plural('player'))\nlogger.log('enemy:', plural('enemy'))\nlogger.log('child:', plural('child'))"
+  },
+  {
+    "type": "action",
+    "title": "pluralize (with count)",
+    "source": "logger.log('0:', pluralize('item', 0, true))\nlogger.log('1:', pluralize('item', 1, true))\nlogger.log('5:', pluralize('item', 5, true))"
+  },
+  {
+    "type": "action",
+    "title": "isPlural / isSingular",
+    "source": "logger.log('players is plural:', isPlural('players'))\nlogger.log('player is plural:', isPlural('player'))\nlogger.log('player is singular:', isSingular('player'))\nlogger.log('players is singular:', isSingular('players'))"
+  },
+  {
+    "type": "action",
+    "title": "getNestedValue",
+    "source": "const obj = {\n    player: {\n        stats: {health: 100, mana: 50},\n        position: {x: 10, y: 20}\n    }\n}\nlogger.log('player.stats.health:', getNestedValue(obj, 'player.stats.health'))\nlogger.log('player.position:', getNestedValue(obj, 'player.position'))\nlogger.log('missing path:', getNestedValue(obj, 'player.inventory.items'))"
+  },
+  {
+    "type": "action",
+    "title": "setNestedValue",
+    "source": "const obj = {player: {stats: {}}}\nsetNestedValue(obj, 'player.stats.health', 100)\nsetNestedValue(obj, 'player.position.x', 50)\nlogger.log('result:', JSON.stringify(obj))"
+  },
+  {
+    "type": "action",
+    "title": "deepMerge",
+    "source": "const target = {a: 1, nested: {x: 10}}\nconst source = {b: 2, nested: {y: 20}}\nconst result = deepMerge(target, source)\nlogger.log('merged:', JSON.stringify(result))"
+  },
+  {
+    "type": "action",
+    "title": "setDefaults",
+    "source": "const data = {name: 'Player', score: 100}\nconst defaults = {name: 'Unknown', health: 100, score: 0}\nconst result = setDefaults(data, defaults)\nlogger.log('with defaults:', JSON.stringify(result))"
+  },
+  {
+    "type": "code",
+    "title": "Array merging",
+    "source": "const target = {items: ['sword']}\nconst source = {items: ['shield']}\nconst result = deepMerge(target, source)\n\n// Arrays are concatenated: ['sword', 'shield']"
+  },
+  {
+    "type": "action",
+    "title": "exportValue",
+    "source": "const data = {\n    name: 'test',\n    nested: {value: 42},\n    items: [1, 2, 3]\n}\nlogger.log('exported:', JSON.stringify(exportValue(data)))"
+  },
+  {
+    "type": "code",
+    "title": "With export method",
+    "source": "const obj = {\n    data: 'internal',\n    export () {\n        return {result: this.data}\n    }\n}\n\n// exportValue(obj) returns {result: 'internal'}"
+  },
+  {
+    "type": "action",
+    "title": "formatNumber",
+    "source": "logger.log('integer:', formatNumber(42))\nlogger.log('float:', formatNumber(3.14159))\nlogger.log('string:', formatNumber('test'))"
+  },
+  {
+    "type": "action",
+    "title": "formatBytes",
+    "source": "logger.log('0:', formatBytes(0))\nlogger.log('500:', formatBytes(500))\nlogger.log('1024:', formatBytes(1024))\nlogger.log('1536:', formatBytes(1536))\nlogger.log('1048576:', formatBytes(1048576))\nlogger.log('1073741824:', formatBytes(1073741824))"
+  },
+  {
+    "type": "action",
+    "title": "delegateProperties (array)",
+    "source": "const source = {\n    name: 'Source',\n    getValue () {\n        return 42\n    }\n}\nconst receiver = {}\ndelegateProperties(receiver, source, ['name', 'getValue'])\nlogger.log('name:', receiver.name)\nlogger.log('getValue():', receiver.getValue())"
+  },
+  {
+    "type": "action",
+    "title": "delegateProperties (rename)",
+    "source": "const source = {x: 10, y: 20}\nconst receiver = {}\ndelegateProperties(receiver, source, {x: 'posX', y: 'posY'})\nlogger.log('posX:', receiver.posX)\nlogger.log('posY:', receiver.posY)"
+  }
+]

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifier - Perky Docs</title>
+    <meta name="description" content="Documentation for Notifier in the Perky game framework">
+    <meta property="og:title" content="Notifier - Perky Docs">
+    <meta property="og:description" content="Documentation for Notifier in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Notifier</h1>
+            <section class="test-section"><h2>Notifier</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>notifier = new Notifier()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor</h4>
+                <pre><code>expect(notifier.getListenersFor('any')).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getListenersFor</h4>
+                <pre><code>expect(notifier.getListenersFor('foo')).toBeUndefined()
+
+notifier.on('foo', () =&gt; { })
+expect(notifier.getListenersFor('foo')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>on</h4>
+                <pre><code>const listener = () =&gt; { }
+
+expect(notifier.on('foo', listener)).toBe(listener)
+expect(notifier.getListenersFor('foo')).toEqual([listener])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>once</h4>
+                <pre><code>const listener = vi.fn()
+const wrapper = notifier.once('foo', listener)
+
+expect(wrapper).not.toBe(listener)
+expect(notifier.getListenersFor('foo')).toEqual([wrapper])
+
+notifier.emit('foo', 1, 2, 3)
+expect(listener).toHaveBeenCalledWith(1, 2, 3)
+expect(notifier.getListenersFor('foo')).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>off</h4>
+                <pre><code>const listener = () =&gt; { }
+
+expect(notifier.off('foo', listener)).toBe(false)
+
+notifier.on('foo', listener)
+expect(notifier.off('foo', listener)).toBe(true)
+expect(notifier.getListenersFor('foo')).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emit</h4>
+                <pre><code>const listener = vi.fn()
+
+notifier.on('foo', listener)
+notifier.emit('foo', 1, 2, 3)
+expect(listener).toHaveBeenCalledWith(1, 2, 3)
+
+notifier.emit('bar')
+expect(listener).toHaveBeenCalledTimes(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeListeners</h4>
+                <pre><code>notifier.on('foo', () =&gt; { })
+notifier.on('bar', () =&gt; { })
+
+expect(notifier.getListenersFor('foo')).toHaveLength(1)
+expect(notifier.getListenersFor('bar')).toHaveLength(1)
+
+notifier.removeListeners()
+expect(notifier.getListenersFor('foo')).toBeUndefined()
+expect(notifier.getListenersFor('bar')).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeListenersFor</h4>
+                <pre><code>notifier.on('foo', () =&gt; { })
+notifier.on('bar', () =&gt; { })
+
+expect(notifier.getListenersFor('foo')).toHaveLength(1)
+expect(notifier.getListenersFor('bar')).toHaveLength(1)
+
+notifier.removeListenersFor('foo')
+expect(notifier.getListenersFor('foo')).toBeUndefined()
+expect(notifier.getListenersFor('bar')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>instances have separate listeners</h4>
+                <pre><code>const notifier1 = new Notifier()
+const notifier2 = new Notifier()
+
+notifier1.on('test', () =&gt; { })
+expect(notifier1.getListenersFor('test')).toHaveLength(1)
+expect(notifier2.getListenersFor('test')).toBeUndefined()
+
+notifier2.on('test', () =&gt; { })
+notifier2.on('test', () =&gt; { })
+expect(notifier1.getListenersFor('test')).toHaveLength(1)
+expect(notifier2.getListenersFor('test')).toHaveLength(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emit passes notifier as this context to listeners</h4>
+                <pre><code>let receivedContext
+
+function listener () {
+    receivedContext = this
+}
+
+notifier.on('test', listener)
+notifier.emit('test', 'arg1', 'arg2')
+
+expect(receivedContext).toBe(notifier)</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>listenTo</h3>
+            <div class="test-case">
+                <h4>should register listener on target and track it</h4>
+                <pre><code>const target = new Notifier()
+const listener = vi.fn()
+
+notifier.listenTo(target, 'test', listener)
+target.emit('test', 1, 2, 3)
+
+expect(listener).toHaveBeenCalledWith(1, 2, 3)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should track multiple listeners on same target</h4>
+                <pre><code>const target = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.listenTo(target, 'event1', listener1)
+notifier.listenTo(target, 'event2', listener2)
+
+target.emit('event1', 'a')
+target.emit('event2', 'b')
+
+expect(listener1).toHaveBeenCalledWith('a')
+expect(listener2).toHaveBeenCalledWith('b')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should track listeners on multiple targets</h4>
+                <pre><code>const target1 = new Notifier()
+const target2 = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.listenTo(target1, 'test', listener1)
+notifier.listenTo(target2, 'test', listener2)
+
+target1.emit('test', 1)
+target2.emit('test', 2)
+
+expect(listener1).toHaveBeenCalledWith(1)
+expect(listener2).toHaveBeenCalledWith(2)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>listenToOnce</h3>
+            <div class="test-case">
+                <h4>should register one-time listener on target</h4>
+                <pre><code>const target = new Notifier()
+const listener = vi.fn()
+
+notifier.listenToOnce(target, 'test', listener)
+
+target.emit('test', 1, 2, 3)
+expect(listener).toHaveBeenCalledWith(1, 2, 3)
+expect(listener).toHaveBeenCalledTimes(1)
+
+// Should not be called again
+target.emit('test', 4, 5, 6)
+expect(listener).toHaveBeenCalledTimes(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should remove from tracking after execution</h4>
+                <pre><code>const target = new Notifier()
+const listener = vi.fn()
+
+notifier.listenToOnce(target, 'test', listener)
+target.emit('test', 'data')
+
+// Cleanup should not fail even if listener already executed
+expect(() =&gt; notifier.cleanExternalListeners()).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should work with multiple one-time listeners</h4>
+                <pre><code>const target = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.listenToOnce(target, 'event1', listener1)
+notifier.listenToOnce(target, 'event2', listener2)
+
+target.emit('event1', 'a')
+target.emit('event2', 'b')
+
+expect(listener1).toHaveBeenCalledWith('a')
+expect(listener2).toHaveBeenCalledWith('b')
+expect(listener1).toHaveBeenCalledTimes(1)
+expect(listener2).toHaveBeenCalledTimes(1)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>cleanExternalListeners</h3>
+            <div class="test-case">
+                <h4>should remove all tracked listeners</h4>
+                <pre><code>const target = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.listenTo(target, 'event1', listener1)
+notifier.listenTo(target, 'event2', listener2)
+
+notifier.cleanExternalListeners()
+
+// Listeners should not be called after cleanup
+target.emit('event1', 'a')
+target.emit('event2', 'b')
+
+expect(listener1).not.toHaveBeenCalled()
+expect(listener2).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should remove listeners from multiple targets</h4>
+                <pre><code>const target1 = new Notifier()
+const target2 = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.listenTo(target1, 'test', listener1)
+notifier.listenTo(target2, 'test', listener2)
+
+notifier.cleanExternalListeners()
+
+target1.emit('test', 1)
+target2.emit('test', 2)
+
+expect(listener1).not.toHaveBeenCalled()
+expect(listener2).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should handle empty listener list</h4>
+                <pre><code>expect(() =&gt; notifier.cleanExternalListeners()).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should allow reusing notifier after cleanup</h4>
+                <pre><code>const target = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.listenTo(target, 'test', listener1)
+notifier.cleanExternalListeners()
+notifier.listenTo(target, 'test', listener2)
+
+target.emit('test', 'data')
+
+expect(listener1).not.toHaveBeenCalled()
+expect(listener2).toHaveBeenCalledWith('data')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should cleanup mix of listenTo and listenToOnce</h4>
+                <pre><code>const target = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.listenTo(target, 'event1', listener1)
+notifier.listenToOnce(target, 'event2', listener2)
+
+notifier.cleanExternalListeners()
+
+target.emit('event1', 'a')
+target.emit('event2', 'b')
+
+expect(listener1).not.toHaveBeenCalled()
+expect(listener2).not.toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>emitter</h3>
+            <div class="test-case">
+                <h4>should return a function that emits the given event</h4>
+                <pre><code>const listener = vi.fn()
+notifier.on('test', listener)
+
+const emitTest = notifier.emitter('test')
+emitTest(1, 2, 3)
+
+expect(listener).toHaveBeenCalledWith(1, 2, 3)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should pass all arguments to emit</h4>
+                <pre><code>const listener = vi.fn()
+notifier.on('foo', listener)
+
+const emitFoo = notifier.emitter('foo')
+emitFoo('a', 'b', 'c', 'd')
+
+expect(listener).toHaveBeenCalledWith('a', 'b', 'c', 'd')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should work with no arguments</h4>
+                <pre><code>const listener = vi.fn()
+notifier.on('bar', listener)
+
+const emitBar = notifier.emitter('bar')
+emitBar()
+
+expect(listener).toHaveBeenCalledWith()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should create different emitters for different events</h4>
+                <pre><code>const listener1 = vi.fn()
+const listener2 = vi.fn()
+notifier.on('event1', listener1)
+notifier.on('event2', listener2)
+
+const emit1 = notifier.emitter('event1')
+const emit2 = notifier.emitter('event2')
+
+emit1('data1')
+emit2('data2')
+
+expect(listener1).toHaveBeenCalledWith('data1')
+expect(listener2).toHaveBeenCalledWith('data2')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>delegateEvents</h3>
+            <div class="test-case">
+                <h4>should delegate events from target without namespace</h4>
+                <pre><code>const target = new Notifier()
+const listener = vi.fn()
+
+notifier.on('test', listener)
+notifier.delegateEvents(target, ['test'])
+
+target.emit('test', 1, 2, 3)
+expect(listener).toHaveBeenCalledWith(1, 2, 3)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should delegate events with namespace prefix</h4>
+                <pre><code>const target = new Notifier()
+const listener = vi.fn()
+
+notifier.on('child:test', listener)
+notifier.delegateEvents(target, ['test'], 'child')
+
+target.emit('test', 'data')
+expect(listener).toHaveBeenCalledWith('data')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should handle multiple events from array</h4>
+                <pre><code>const target = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.on('event1', listener1)
+notifier.on('event2', listener2)
+notifier.delegateEvents(target, ['event1', 'event2'])
+
+target.emit('event1', 'a')
+target.emit('event2', 'b')
+
+expect(listener1).toHaveBeenCalledWith('a')
+expect(listener2).toHaveBeenCalledWith('b')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should handle events object</h4>
+                <pre><code>const target = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.on('foo', listener1)
+notifier.on('bar', listener2)
+notifier.delegateEvents(target, {foo: true, bar: true})
+
+target.emit('foo', 1)
+target.emit('bar', 2)
+
+expect(listener1).toHaveBeenCalledWith(1)
+expect(listener2).toHaveBeenCalledWith(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should combine namespace with events object</h4>
+                <pre><code>const target = new Notifier()
+const listener1 = vi.fn()
+const listener2 = vi.fn()
+
+notifier.on('ns:foo', listener1)
+notifier.on('ns:bar', listener2)
+notifier.delegateEvents(target, {foo: true, bar: true}, 'ns')
+
+target.emit('foo', 'x')
+target.emit('bar', 'y')
+
+expect(listener1).toHaveBeenCalledWith('x')
+expect(listener2).toHaveBeenCalledWith('y')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should return early if target is null</h4>
+                <pre><code>expect(() =&gt; notifier.delegateEvents(null, ['test'])).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should return early if target is undefined</h4>
+                <pre><code>expect(() =&gt; notifier.delegateEvents(undefined, ['test'])).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should return early if events is not array or object</h4>
+                <pre><code>const target = new Notifier()
+expect(() =&gt; notifier.delegateEvents(target, 'string')).not.toThrow()
+expect(() =&gt; notifier.delegateEvents(target, 123)).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should cleanup delegated listeners</h4>
+                <pre><code>const target = new Notifier()
+const listener = vi.fn()
+
+notifier.on('test', listener)
+notifier.delegateEvents(target, ['test'])
+
+target.emit('test', 'before')
+expect(listener).toHaveBeenCalledWith('before')
+
+notifier.cleanExternalListeners()
+
+target.emit('test', 'after')
+expect(listener).toHaveBeenCalledTimes(1)</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item active" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

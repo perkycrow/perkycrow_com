@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkyModule - Perky Docs</title>
+    <meta name="description" content="Documentation for PerkyModule in the Perky game framework">
+    <meta property="og:title" content="PerkyModule - Perky Docs">
+    <meta property="og:description" content="Documentation for PerkyModule in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>PerkyModule</h1>
+            <section class="test-section"><h2>PerkyModule</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>const childrenRegistry = new Registry()
+host = {
+    started: false,
+    on: vi.fn(),
+    emit: vi.fn(),
+    childrenRegistry: childrenRegistry,
+    hasChild: vi.fn((name) =&gt; childrenRegistry.has(name)),
+    getChild: vi.fn((name) =&gt; childrenRegistry.get(name))
+}
+
+child = new PerkyModule({$id: 'testChild'})</code></pre>
+            </div>
+        
+            <div class="test-hook">
+                <h4>afterEach</h4>
+                <pre><code>vi.restoreAllMocks()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor</h4>
+                <pre><code>expect(child).toBeInstanceOf(PerkyModule)
+expect(child.$id).toBe('testChild')
+expect(child.options).toEqual({$id: 'testChild'})
+expect(child.host).toBeNull()
+expect(child.installed).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with default name</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+const ext = new TestChild()
+expect(ext.$id).toBe('TestChild')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>install</h4>
+                <pre><code>const result = child.install(host, {})
+
+expect(result).toBe(true)
+expect(child.host).toBe(host)
+expect(child.installed).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>uninstall</h4>
+                <pre><code>child.install(host, {})
+const result = child.uninstall()
+
+expect(result).toBe(true)
+expect(child.host).toBeNull()
+expect(child.installed).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>uninstall when not installed</h4>
+                <pre><code>const result = child.uninstall()
+expect(result).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>use with Child class</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+
+const result = child.create(TestChild, {
+    $id: 'test',
+    $category: 'test'
+})
+
+expect(result).toBeInstanceOf(TestChild)
+expect(result).toBe(child.getChild('test'))
+expect(child.hasChild('test')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>auto-generates unique IDs when $id not provided</h4>
+                <pre><code>class Enemy extends PerkyModule { }
+
+const enemy1 = child.create(Enemy, {$category: 'enemy'})
+const enemy2 = child.create(Enemy, {$category: 'enemy'})
+const enemy3 = child.create(Enemy, {$category: 'enemy'})
+
+expect(child.hasChild('enemy')).toBe(true)
+expect(child.getChild('enemy')).toBe(enemy1)
+
+expect(child.hasChild('enemy_1')).toBe(true)
+expect(child.getChild('enemy_1')).toBe(enemy2)
+
+expect(child.hasChild('enemy_2')).toBe(true)
+expect(child.getChild('enemy_2')).toBe(enemy3)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>explicit $id creates single instance (replacement)</h4>
+                <pre><code>class Player extends PerkyModule { }
+
+const player1 = child.create(Player, {
+    $id: 'player',
+    $category: 'player'
+})
+
+const player2 = child.create(Player, {
+    $id: 'player',
+    $category: 'player'
+})
+
+expect(child.hasChild('player')).toBe(true)
+expect(child.getChild('player')).toBe(player2)
+expect(child.getChild('player')).not.toBe(player1)
+
+expect(child.hasChild('player_1')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>unique IDs work with different categories</h4>
+                <pre><code>class Enemy extends PerkyModule { }
+class Projectile extends PerkyModule { }
+
+const enemy1 = child.create(Enemy, {$category: 'enemy'})
+const enemy1Name = child.childrenRegistry.keyFor(enemy1)
+
+const projectile1 = child.create(Projectile, {$category: 'projectile'})
+const projectile1Name = child.childrenRegistry.keyFor(projectile1)
+
+const enemy2 = child.create(Enemy, {$category: 'enemy'})
+const enemy2Name = child.childrenRegistry.keyFor(enemy2)
+
+const projectile2 = child.create(Projectile, {$category: 'projectile'})
+const projectile2Name = child.childrenRegistry.keyFor(projectile2)
+
+expect(child.hasChild(enemy1Name)).toBe(true)
+expect(child.hasChild(enemy2Name)).toBe(true)
+expect(child.hasChild(projectile1Name)).toBe(true)
+expect(child.hasChild(projectile2Name)).toBe(true)
+
+expect(enemy1).not.toBe(enemy2)
+expect(projectile1).not.toBe(projectile2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listNamesFor - single category</h4>
+                <pre><code>class TestChild1 extends PerkyModule { }
+class TestChild2 extends PerkyModule { }
+
+child.create(TestChild1, {
+    $id: 'ext1',
+    $category: 'module'
+})
+
+child.create(TestChild2, {
+    $id: 'ext2',
+    $category: 'module'
+})
+
+const modules = child.listNamesFor('module')
+
+expect(modules).toHaveLength(2)
+expect(modules).toContain('ext1')
+expect(modules).toContain('ext2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listNamesFor - mixed categories</h4>
+                <pre><code>class TestChild1 extends PerkyModule { }
+class TestChild2 extends PerkyModule { }
+class TestChild3 extends PerkyModule { }
+
+child.create(TestChild1, {
+    $id: 'ext1',
+    $category: 'module'
+})
+
+child.create(TestChild2, {
+    $id: 'ext2',
+    $category: 'service'
+})
+
+child.create(TestChild3, {
+    $id: 'ext3',
+    $category: 'module'
+})
+
+const modules = child.listNamesFor('module')
+const services = child.listNamesFor('service')
+
+expect(modules).toHaveLength(2)
+expect(modules).toContain('ext1')
+expect(modules).toContain('ext3')
+
+expect(services).toHaveLength(1)
+expect(services).toContain('ext2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listNamesFor - empty category</h4>
+                <pre><code>const parent = new PerkyModule()
+
+parent.create(PerkyModule, {$category: 'module'})
+parent.create(PerkyModule, {$category: 'module'})
+
+const services = parent.listNamesFor('service')
+expect(services).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listNamesFor - dynamic category update</h4>
+                <pre><code>const parent = new PerkyModule()
+
+const childA = parent.create(PerkyModule, {$id: 'childA', $category: 'module'})
+parent.create(PerkyModule, {$id: 'childB', $category: 'service'})
+
+expect(parent.listNamesFor('module')).toEqual(['childA'])
+expect(parent.listNamesFor('service')).toEqual(['childB'])
+
+childA.$category = 'service'
+
+expect(parent.listNamesFor('module')).toEqual([])
+const serviceChildren = parent.listNamesFor('service')
+expect(serviceChildren).toHaveLength(2)
+expect(serviceChildren).toContain('childA')
+expect(serviceChildren).toContain('childB')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>category index is automatically created</h4>
+                <pre><code>const registry = child.childrenRegistry
+
+expect(registry.hasIndex('$category')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>category index is updated when children are added</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+const registry = child.childrenRegistry
+
+child.create(TestChild, {
+    $id: 'ext1',
+    $category: 'module'
+})
+
+child.create(TestChild, {
+    $id: 'ext2',
+    $category: 'service'
+})
+
+const moduleChildren = registry.lookup('$category', 'module')
+const serviceChildren = registry.lookup('$category', 'service')
+
+expect(moduleChildren).toHaveLength(1)
+expect(serviceChildren).toHaveLength(1)
+expect(moduleChildren[0]).toBe(child.getChild('ext1'))
+expect(serviceChildren[0]).toBe(child.getChild('ext2'))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>category index is updated when children are removed</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+const registry = child.childrenRegistry
+
+child.create(TestChild, {
+    $id: 'ext1',
+    $category: 'module'
+})
+
+child.create(TestChild, {
+    $id: 'ext2',
+    $category: 'module'
+})
+
+let moduleChildren = registry.lookup('$category', 'module')
+expect(moduleChildren).toHaveLength(2)
+
+child.removeChild('ext1')
+
+moduleChildren = registry.lookup('$category', 'module')
+expect(moduleChildren).toHaveLength(1)
+expect(moduleChildren[0]).toBe(child.getChild('ext2'))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>registry key is updated when child name changes</h4>
+                <pre><code>const parent = new PerkyModule()
+
+const childModule = parent.create(PerkyModule, {
+    $id: 'oldName',
+    $category: 'module'
+})
+
+expect(parent.hasChild('oldName')).toBe(true)
+expect(parent.getChild('oldName')).toBe(childModule)
+
+childModule.$id = 'newName'
+
+expect(parent.hasChild('oldName')).toBe(false)
+expect(parent.hasChild('newName')).toBe(true)
+expect(parent.getChild('newName')).toBe(childModule)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>use with binding</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+
+child.create(TestChild, {
+    $id: 'test',
+    $bind: 'testProperty'
+})
+
+expect(child.testProperty).toBeInstanceOf(TestChild)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>binding updates automatically when $bind changes</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+
+const testChild = child.create(TestChild, {
+    $id: 'test',
+    $bind: 'oldProperty'
+})
+
+expect(child.oldProperty).toBe(testChild)
+expect(child.newProperty).toBeUndefined()
+
+testChild.$bind = 'newProperty'
+
+expect(child.oldProperty).toBeUndefined()
+expect(child.newProperty).toBe(testChild)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>use with lifecycle disabled</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+const startSpy = vi.spyOn(TestChild.prototype, 'start')
+
+child.create(TestChild, {
+    $id: 'test',
+    $lifecycle: false
+})
+
+child.start()
+
+expect(startSpy).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>use emits registration events</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+const emitSpy = vi.spyOn(child, 'emit')
+
+const granchild = child.create(TestChild, {
+    $id: 'test',
+    $category: 'testCategory'
+})
+
+expect(emitSpy).toHaveBeenCalledWith('testCategory:set', 'test', granchild)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeChild</h4>
+                <pre><code>class TestChild extends PerkyModule { }
+
+const instance = child.create(TestChild, {
+    $id: 'test',
+    $category: 'test'
+})
+
+const uninstallSpy = vi.spyOn(instance, 'uninstall')
+const disposeSpy = vi.spyOn(instance, 'dispose')
+
+
+const result = child.removeChild('test')
+
+expect(result).toBe(true)
+expect(uninstallSpy).toHaveBeenCalled()
+expect(disposeSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeChild non-existent</h4>
+                <pre><code>const result = child.removeChild('nonexistent')
+expect(result).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>lifecycle cascade</h4>
+                <pre><code>class ChildChild extends PerkyModule { }
+new ChildChild()
+
+const childChild = child.create(ChildChild, {
+    $id: 'default',
+    $lifecycle: true
+})
+
+const childStartSpy = vi.spyOn(childChild, 'start')
+const childStopSpy = vi.spyOn(childChild, 'stop')
+
+child.start()
+expect(childStartSpy).toHaveBeenCalled()
+
+child.stop()
+expect(childStopSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateTo with methods</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = new PerkyModule({$id: 'child'})
+
+childModule.method1 = vi.fn()
+childModule.method2 = vi.fn()
+
+childModule.delegateTo(hostModule, ['method1', 'method2'])
+
+expect(hostModule.method1).toBeDefined()
+expect(hostModule.method2).toBeDefined()
+expect(typeof hostModule.method1).toBe('function')
+expect(typeof hostModule.method2).toBe('function')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateTo with properties</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = new PerkyModule({$id: 'child'})
+
+childModule.prop1 = 'value1'
+childModule.prop2 = 'value2'
+
+childModule.delegateTo(hostModule, ['prop1', 'prop2'])
+
+expect(hostModule.prop1).toBe('value1')
+expect(hostModule.prop2).toBe('value2')
+
+hostModule.prop1 = 'newValue'
+expect(childModule.prop1).toBe('newValue')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateTo with mixed methods and properties</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = new PerkyModule({$id: 'child'})
+
+childModule.count = 0
+childModule.increment = function () {
+    this.count++
+}
+childModule.decrement = function () {
+    this.count--
+}
+
+childModule.delegateTo(hostModule, ['count', 'increment', 'decrement'])
+
+expect(hostModule.count).toBe(0)
+expect(typeof hostModule.increment).toBe('function')
+expect(typeof hostModule.decrement).toBe('function')
+
+hostModule.increment()
+expect(childModule.count).toBe(1)
+expect(hostModule.count).toBe(1)
+
+hostModule.decrement()
+expect(childModule.count).toBe(0)
+expect(hostModule.count).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateTo with getters and setters</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = new PerkyModule({$id: 'child'})
+
+childModule.internalValue = 10
+Object.defineProperty(childModule, 'value', {
+    get () {
+        return this.internalValue
+    },
+    set (newValue) {
+        this.internalValue = newValue
+    },
+    enumerable: true,
+    configurable: true
+})
+
+childModule.delegateTo(hostModule, ['value'])
+
+expect(hostModule.value).toBe(10)
+
+hostModule.value = 20
+expect(childModule.value).toBe(20)
+expect(hostModule.value).toBe(20)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateTo with object-based aliasing</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = new PerkyModule({$id: 'child'})
+
+childModule.originalMethod = vi.fn(() =&gt; 'result')
+childModule.originalProp = 'value'
+
+childModule.delegateTo(hostModule, {
+    originalMethod: 'aliasedMethod',
+    originalProp: 'aliasedProp'
+})
+
+expect(hostModule.aliasedMethod).toBeDefined()
+expect(typeof hostModule.aliasedMethod).toBe('function')
+expect(hostModule.aliasedMethod()).toBe('result')
+expect(childModule.originalMethod).toHaveBeenCalled()
+
+expect(hostModule.aliasedProp).toBe('value')
+
+hostModule.aliasedProp = 'new value'
+expect(childModule.originalProp).toBe('new value')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateTo cleans up delegations on uninstall</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = hostModule.create(PerkyModule, {$id: 'child'})
+
+childModule.getValue = vi.fn(() =&gt; 42)
+childModule.someData = 'test'
+
+childModule.delegateTo(hostModule, ['getValue', 'someData'])
+
+expect(hostModule.getValue).toBeDefined()
+expect(hostModule.getValue()).toBe(42)
+expect(hostModule.someData).toBe('test')
+
+childModule.uninstall()
+
+expect(hostModule.getValue).toBeUndefined()
+expect(hostModule.someData).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateTo cleans up delegations on dispose</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = hostModule.create(PerkyModule, {$id: 'child'})
+
+childModule.doSomething = vi.fn()
+
+childModule.delegateTo(hostModule, ['doSomething'])
+
+expect(hostModule.doSomething).toBeDefined()
+
+childModule.dispose()
+
+expect(hostModule.doSomething).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateTo with object-based aliasing cleans up on uninstall</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = hostModule.create(PerkyModule, {$id: 'child'})
+
+childModule.originalMethod = vi.fn(() =&gt; 'result')
+
+childModule.delegateTo(hostModule, {originalMethod: 'aliasedMethod'})
+
+expect(hostModule.aliasedMethod).toBeDefined()
+expect(hostModule.aliasedMethod()).toBe('result')
+
+childModule.uninstall()
+
+expect(hostModule.aliasedMethod).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>cleanDelegations removes all delegated properties</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = new PerkyModule({$id: 'child'})
+
+childModule.method1 = vi.fn()
+childModule.method2 = vi.fn()
+childModule.prop1 = 'value1'
+
+childModule.delegateTo(hostModule, ['method1', 'prop1'])
+childModule.delegateTo(hostModule, ['method2'])
+
+expect(hostModule.method1).toBeDefined()
+expect(hostModule.method2).toBeDefined()
+expect(hostModule.prop1).toBe('value1')
+
+childModule.cleanDelegations()
+
+expect(hostModule.method1).toBeUndefined()
+expect(hostModule.method2).toBeUndefined()
+expect(hostModule.prop1).toBeUndefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateEventsTo forwards events to host</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = hostModule.create(PerkyModule, {$id: 'child'})
+
+const updateSpy = vi.fn()
+const renderSpy = vi.fn()
+
+hostModule.on('update', updateSpy)
+hostModule.on('render', renderSpy)
+
+childModule.delegateEventsTo(hostModule, ['update', 'render'])
+
+childModule.emit('update', 0.16)
+childModule.emit('render', 1.0)
+
+expect(updateSpy).toHaveBeenCalledWith(0.16)
+expect(renderSpy).toHaveBeenCalledWith(1.0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateEventsTo with namespace prefixes events</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = hostModule.create(PerkyModule, {$id: 'child'})
+
+const spy = vi.fn()
+hostModule.on('child:update', spy)
+
+childModule.delegateEventsTo(hostModule, ['update'], 'child')
+
+childModule.emit('update', 0.16)
+
+expect(spy).toHaveBeenCalledWith(0.16)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateEventsTo cleans up on uninstall</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = hostModule.create(PerkyModule, {$id: 'child'})
+
+const spy = vi.fn()
+hostModule.on('update', spy)
+
+childModule.delegateEventsTo(hostModule, ['update'])
+
+childModule.emit('update', 0.16)
+expect(spy).toHaveBeenCalledTimes(1)
+
+childModule.uninstall()
+
+childModule.emit('update', 0.16)
+expect(spy).toHaveBeenCalledTimes(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegateEventsTo cleans up on dispose</h4>
+                <pre><code>const hostModule = new PerkyModule({$id: 'host'})
+const childModule = hostModule.create(PerkyModule, {$id: 'child'})
+
+const spy = vi.fn()
+hostModule.on('update', spy)
+
+childModule.delegateEventsTo(hostModule, ['update'])
+
+childModule.emit('update', 0.16)
+expect(spy).toHaveBeenCalledTimes(1)
+
+childModule.dispose()
+
+childModule.emit('update', 0.16)
+expect(spy).toHaveBeenCalledTimes(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>dispose calls dispose on all children in cascade</h4>
+                <pre><code>class ChildChild1 extends PerkyModule { }
+class ChildChild2 extends PerkyModule { }
+
+const child1 = child.create(ChildChild1, {
+    $id: 'child1'
+})
+
+const child2 = child.create(ChildChild2, {
+    $id: 'child2'
+})
+
+const child1DisposeSpy = vi.spyOn(child1, 'dispose')
+const child2DisposeSpy = vi.spyOn(child2, 'dispose')
+
+child.dispose()
+
+expect(child1DisposeSpy).toHaveBeenCalled()
+expect(child2DisposeSpy).toHaveBeenCalled()
+expect(child1.disposed).toBe(true)
+expect(child2.disposed).toBe(true)
+expect(child.disposed).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>dispose with multiple nested children</h4>
+                <pre><code>class Level1Child extends PerkyModule { }
+class Level2Child extends PerkyModule { }
+
+const level1 = child.create(Level1Child, {
+    $id: 'level1'
+})
+
+const level2 = child.create(Level2Child, {
+    $id: 'level2'
+})
+
+const level1DisposeSpy = vi.spyOn(level1, 'dispose')
+const level2DisposeSpy = vi.spyOn(level2, 'dispose')
+
+child.dispose()
+
+expect(level1DisposeSpy).toHaveBeenCalled()
+expect(level2DisposeSpy).toHaveBeenCalled()
+expect(level2.disposed).toBe(true)
+expect(level1.disposed).toBe(true)
+expect(child.disposed).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>dispose skips already disposed children</h4>
+                <pre><code>class ChildChild extends PerkyModule { }
+
+const childChild = new ChildChild()
+const childDisposeSpy = vi.spyOn(child, 'dispose')
+
+child.create(ChildChild, {
+    instance: childChild,
+    $id: 'default'
+})
+
+child.dispose()
+expect(childDisposeSpy).toHaveBeenCalledTimes(1)
+expect(child.disposed).toBe(true)
+
+childDisposeSpy.mockClear()
+
+childChild.dispose()
+
+expect(childDisposeSpy).not.toHaveBeenCalled()
+expect(childChild.disposed).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>dispose clears children registry after disposing all children</h4>
+                <pre><code>class ChildChild extends PerkyModule { }
+
+const childChild = new ChildChild()
+
+child.create(ChildChild, {
+    instance: childChild,
+    $id: 'default'
+})
+
+expect(child.hasChild('default')).toBe(true)
+
+child.dispose()
+
+expect(child.hasChild('default')).toBe(false)
+expect(child.childrenRegistry.size).toBe(0)</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>static $category</h3>
+            <div class="test-case">
+                <h4>uses PerkyModule default category &quot;perkyModule&quot; when not specified</h4>
+                <pre><code>const module = child.create(PerkyModule, {$id: 'test'})
+expect(module.$category).toBe('perkyModule')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>uses static $category from subclass</h4>
+                <pre><code>class GameController extends PerkyModule {
+    static $category = 'controller'
+}
+
+const controller = child.create(GameController, {$id: 'game'})
+expect(controller.$category).toBe('controller')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>explicit $category overrides static $category</h4>
+                <pre><code>class GameController extends PerkyModule {
+    static $category = 'controller'
+}
+
+const controller = child.create(GameController, {
+    $id: 'game',
+    $category: 'custom'
+})
+
+expect(controller.$category).toBe('custom')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>works with multiple levels of inheritance</h4>
+                <pre><code>class BaseController extends PerkyModule {
+    static $category = 'controller'
+}
+
+class GameController extends BaseController {
+    static $category = 'gameController'
+}
+
+const controller = child.create(GameController, {$id: 'game'})
+expect(controller.$category).toBe('gameController')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>subclass without static $category falls back to parent</h4>
+                <pre><code>class BaseController extends PerkyModule {
+    static $category = 'controller'
+}
+
+class GameController extends BaseController {
+    // No static $category override
+}
+
+const controller = child.create(GameController, {$id: 'game'})
+expect(controller.$category).toBe('controller')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>auto-generates unique IDs using static $category</h4>
+                <pre><code>class Monster extends PerkyModule {
+    static $category = 'monster'
+}
+
+// Use a fresh parent to ensure predictable ID generation
+const parent = new PerkyModule()
+const monster1 = parent.create(Monster)
+const monster2 = parent.create(Monster)
+const monster3 = parent.create(Monster)
+
+expect(monster1.$category).toBe('monster')
+expect(monster2.$category).toBe('monster')
+expect(monster3.$category).toBe('monster')
+
+expect(monster1.$id).toBe('monster')
+expect(monster2.$id).toBe('monster_1')
+expect(monster3.$id).toBe('monster_2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits correct event based on static $category</h4>
+                <pre><code>class GameController extends PerkyModule {
+    static $category = 'controller'
+}
+
+const emitSpy = vi.spyOn(child, 'emit')
+const controller = child.create(GameController, {$id: 'game'})
+
+expect(emitSpy).toHaveBeenCalledWith('controller:set', 'game', controller)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listNamesFor works with static $category</h4>
+                <pre><code>class GameController extends PerkyModule {
+    static $category = 'controller'
+}
+
+class InputController extends PerkyModule {
+    static $category = 'controller'
+}
+
+child.create(GameController, {$id: 'game'})
+child.create(InputController, {$id: 'input'})
+
+const controllers = child.listNamesFor('controller')
+expect(controllers).toHaveLength(2)
+expect(controllers).toContain('game')
+expect(controllers).toContain('input')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>$eagerStart</h3>
+            <div class="test-case">
+                <h4>default $eagerStart is true for PerkyModule</h4>
+                <pre><code>const module = child.create(PerkyModule, {$id: 'test'})
+expect(module.$eagerStart).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>child starts eagerly when parent is already started</h4>
+                <pre><code>child.start()
+
+const module = child.create(PerkyModule, {$id: 'test'})
+
+expect(module.started).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>child does not start when parent is not started</h4>
+                <pre><code>const module = child.create(PerkyModule, {$id: 'test'})
+
+expect(module.started).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>$eagerStart: false prevents automatic start</h4>
+                <pre><code>child.start()
+
+const module = child.create(PerkyModule, {
+    $id: 'test',
+    $eagerStart: false
+})
+
+expect(module.started).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>$eagerStart: true forces eager start</h4>
+                <pre><code>child.start()
+
+const module = child.create(PerkyModule, {
+    $id: 'test',
+    $eagerStart: true
+})
+
+expect(module.started).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>static $eagerStart is inherited from class</h4>
+                <pre><code>class LazyModule extends PerkyModule {
+    static $eagerStart = false
+}
+
+child.start()
+
+const module = child.create(LazyModule, {$id: 'test'})
+
+expect(module.$eagerStart).toBe(false)
+expect(module.started).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>explicit $eagerStart overrides static $eagerStart</h4>
+                <pre><code>class LazyModule extends PerkyModule {
+    static $eagerStart = false
+}
+
+child.start()
+
+const module = child.create(LazyModule, {
+    $id: 'test',
+    $eagerStart: true
+})
+
+expect(module.$eagerStart).toBe(true)
+expect(module.started).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>$eagerStart cascading: option &gt; static &gt; default</h4>
+                <pre><code>class CustomModule extends PerkyModule {
+    static $eagerStart = false
+}
+
+const module1 = child.create(CustomModule, {$id: 'test1'})
+expect(module1.$eagerStart).toBe(false)
+
+const module2 = child.create(CustomModule, {
+    $id: 'test2',
+    $eagerStart: true
+})
+expect(module2.$eagerStart).toBe(true)
+
+const module3 = child.create(PerkyModule, {$id: 'test3'})
+expect(module3.$eagerStart).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>$eagerStart works with $lifecycle: false</h4>
+                <pre><code>child.start()
+
+const module = child.create(PerkyModule, {
+    $id: 'test',
+    $eagerStart: true,
+    $lifecycle: false
+})
+
+expect(module.started).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>lazy module can be started manually later</h4>
+                <pre><code>child.start()
+
+const module = child.create(PerkyModule, {
+    $id: 'test',
+    $eagerStart: false
+})
+
+expect(module.started).toBe(false)
+
+module.start()
+
+expect(module.started).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>multiple children with mixed $eagerStart</h4>
+                <pre><code>child.start()
+
+const eager1 = child.create(PerkyModule, {
+    $id: 'eager1',
+    $eagerStart: true
+})
+
+const lazy1 = child.create(PerkyModule, {
+    $id: 'lazy1',
+    $eagerStart: false
+})
+
+const eager2 = child.create(PerkyModule, {
+    $id: 'eager2'
+})
+
+expect(eager1.started).toBe(true)
+expect(lazy1.started).toBe(false)
+expect(eager2.started).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>eagerStart getter returns correct value</h4>
+                <pre><code>const eager = child.create(PerkyModule, {
+    $id: 'eager',
+    $eagerStart: true
+})
+
+const lazy = child.create(PerkyModule, {
+    $id: 'lazy',
+    $eagerStart: false
+})
+expect(eager.$eagerStart).toBe(true)
+expect(lazy.$eagerStart).toBe(false)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>$lifecycle</h3>
+            <div class="test-case">
+                <h4>$lifecycle is true by default</h4>
+                <pre><code>const module = new PerkyModule()
+expect(module.$lifecycle).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>$lifecycle can be set to false via options</h4>
+                <pre><code>const module = new PerkyModule({$lifecycle: false})
+expect(module.$lifecycle).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>$lifecycle is true when option is explicitly true</h4>
+                <pre><code>const module = new PerkyModule({$lifecycle: true})
+expect(module.$lifecycle).toBe(true)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>$status</h3>
+            <div class="test-case">
+                <h4>returns &quot;stopped&quot; for new module</h4>
+                <pre><code>const module = new PerkyModule()
+expect(module.$status).toBe('stopped')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns &quot;started&quot; when module is running</h4>
+                <pre><code>const module = new PerkyModule()
+module.start()
+expect(module.$status).toBe('started')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns &quot;stopped&quot; after stopping a started module</h4>
+                <pre><code>const module = new PerkyModule()
+module.start()
+module.stop()
+expect(module.$status).toBe('stopped')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns &quot;disposed&quot; when module is disposed</h4>
+                <pre><code>const module = new PerkyModule()
+module.dispose()
+expect(module.$status).toBe('disposed')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns &quot;static&quot; when $lifecycle is false</h4>
+                <pre><code>const module = new PerkyModule({$lifecycle: false})
+expect(module.$status).toBe('static')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns &quot;static&quot; even if started when $lifecycle is false</h4>
+                <pre><code>const module = new PerkyModule({$lifecycle: false})
+module.start()
+expect(module.$status).toBe('static')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>disposed takes precedence over started</h4>
+                <pre><code>const module = new PerkyModule()
+module.start()
+module.dispose()
+expect(module.$status).toBe('disposed')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>$tags</h3>
+            <div class="test-case">
+                <h4>initializes with empty tags by default</h4>
+                <pre><code>const module = new PerkyModule()
+expect(module.$tags).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>initializes with tags from options</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable']})
+expect(module.$tags).toEqual(['enemy', 'collidable'])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>$tags returns array copy</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['test']})
+const tags1 = module.$tags
+const tags2 = module.$tags
+expect(tags1).not.toBe(tags2)
+expect(tags1).toEqual(tags2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>tags property returns ObservableSet</h4>
+                <pre><code>const module = new PerkyModule()
+expect(module.tags).toBeDefined()
+expect(module.tags.size).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can add tags via tags.add()</h4>
+                <pre><code>const module = new PerkyModule()
+module.tags.add('enemy')
+module.tags.add('collidable')
+
+expect(module.$tags).toEqual(['enemy', 'collidable'])
+expect(module.tags.size).toBe(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can delete tags via tags.delete()</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable', 'flying']})
+
+module.tags.delete('flying')
+
+expect(module.$tags).toEqual(['enemy', 'collidable'])
+expect(module.tags.size).toBe(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can clear tags via tags.clear()</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable']})
+
+module.tags.clear()
+
+expect(module.$tags).toEqual([])
+expect(module.tags.size).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>tags.add() emits add event</h4>
+                <pre><code>const module = new PerkyModule()
+let addedTag
+
+module.tags.on('add', (tag) =&gt; {
+    addedTag = tag
+})
+
+module.tags.add('enemy')
+
+expect(addedTag).toBe('enemy')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>tags.delete() emits delete event</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy']})
+let deletedTag
+
+module.tags.on('delete', (tag) =&gt; {
+    deletedTag = tag
+})
+
+module.tags.delete('enemy')
+
+expect(deletedTag).toBe('enemy')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>tags.clear() emits clear event</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable']})
+let clearedTags
+
+module.tags.on('clear', (tags) =&gt; {
+    clearedTags = tags
+})
+
+module.tags.clear()
+
+expect(clearedTags).toEqual(['enemy', 'collidable'])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>tags support chaining</h4>
+                <pre><code>const module = new PerkyModule()
+
+module.tags.add('enemy').add('collidable').add('flying')
+
+expect(module.$tags).toEqual(['enemy', 'collidable', 'flying'])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>tags support iteration</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['a', 'b', 'c']})
+
+const collected = []
+for (const tag of module.tags) {
+    collected.push(tag)
+}
+
+expect(collected).toEqual(['a', 'b', 'c'])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can set $tags with array</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable']})
+
+module.$tags = ['friendly', 'flying']
+
+expect(module.$tags).toEqual(['friendly', 'flying'])
+expect(module.tags.size).toBe(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setting $tags clears old tags</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['a', 'b', 'c']})
+
+module.$tags = ['x', 'y']
+
+expect(module.$tags).toEqual(['x', 'y'])
+expect(module.tags.has('a')).toBe(false)
+expect(module.tags.has('b')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setting $tags emits clear and add events</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['old']})
+let clearedTags
+let addedTags = []
+
+module.tags.on('clear', (tags) =&gt; {
+    clearedTags = tags
+})
+module.tags.on('add', (tag) =&gt; {
+    addedTags.push(tag)
+})
+
+module.$tags = ['new1', 'new2']
+
+expect(clearedTags).toEqual(['old'])
+expect(addedTags).toEqual(['new1', 'new2'])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setting $tags to empty array clears all</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['a', 'b']})
+
+module.$tags = []
+
+expect(module.$tags).toEqual([])
+expect(module.tags.size).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTag returns true when tag exists</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable']})
+expect(module.hasTag('enemy')).toBe(true)
+expect(module.hasTag('collidable')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTag returns false when tag does not exist</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy']})
+expect(module.hasTag('friendly')).toBe(false)
+expect(module.hasTag('collidable')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTag returns false when no tags set</h4>
+                <pre><code>const module = new PerkyModule()
+expect(module.hasTag('enemy')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addTag adds a tag</h4>
+                <pre><code>const module = new PerkyModule()
+module.addTag('enemy')
+expect(module.hasTag('enemy')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addTag returns true when tag is new</h4>
+                <pre><code>const module = new PerkyModule()
+expect(module.addTag('enemy')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addTag returns false when tag already exists</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy']})
+expect(module.addTag('enemy')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeTag removes a tag</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable']})
+module.removeTag('enemy')
+expect(module.hasTag('enemy')).toBe(false)
+expect(module.hasTag('collidable')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeTag returns true when tag existed</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy']})
+expect(module.removeTag('enemy')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeTag returns false when tag did not exist</h4>
+                <pre><code>const module = new PerkyModule()
+expect(module.removeTag('enemy')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTags returns true when all tags exist (array)</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable', 'flying']})
+expect(module.hasTags(['enemy', 'collidable'])).toBe(true)
+expect(module.hasTags(['enemy'])).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTags returns false when some tags missing (array)</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable']})
+expect(module.hasTags(['enemy', 'flying'])).toBe(false)
+expect(module.hasTags(['friendly', 'enemy'])).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTags returns false when no tags match (array)</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy']})
+expect(module.hasTags(['friendly', 'collidable'])).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTags fallback: accepts string and checks single tag</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy', 'collidable']})
+expect(module.hasTags('enemy')).toBe(true)
+expect(module.hasTags('collidable')).toBe(true)
+expect(module.hasTags('friendly')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTags returns true for empty array</h4>
+                <pre><code>const module = new PerkyModule({$tags: ['enemy']})
+expect(module.hasTags([])).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasTags returns false when no tags set</h4>
+                <pre><code>const module = new PerkyModule()
+expect(module.hasTags(['enemy'])).toBe(false)
+expect(module.hasTags('enemy')).toBe(false)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>composite tag indexing</h3>
+            <div class="test-case">
+                <h4>childrenByTags returns children matching all tags (without index)</h4>
+                <pre><code>const child1 = child.create(PerkyModule, {$id: 'c1', $tags: ['enemy', 'collidable', 'flying']})
+const child2 = child.create(PerkyModule, {$id: 'c2', $tags: ['enemy', 'collidable']})
+child.create(PerkyModule, {$id: 'c3', $tags: ['friendly', 'collidable']})
+
+const enemyColliders = child.childrenByTags(['enemy', 'collidable'])
+
+expect(enemyColliders).toHaveLength(2)
+expect(enemyColliders).toContain(child1)
+expect(enemyColliders).toContain(child2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>childrenByTags returns empty array for no matches</h4>
+                <pre><code>child.create(PerkyModule, {$id: 'c1', $tags: ['enemy']})
+
+const result = child.childrenByTags(['enemy', 'collidable'])
+
+expect(result).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>childrenByTags returns empty array for empty tags</h4>
+                <pre><code>const result = child.childrenByTags()
+
+expect(result).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addTagsIndex creates composite index</h4>
+                <pre><code>const result = child.addTagsIndex(['enemy', 'collidable'])
+
+expect(result).toBe(true)
+expect(child.childrenRegistry.hasIndex('collidable_enemy')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addTagsIndex normalizes tag order</h4>
+                <pre><code>child.addTagsIndex(['collidable', 'enemy'])
+
+expect(child.childrenRegistry.hasIndex('collidable_enemy')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addTagsIndex returns false if already indexed</h4>
+                <pre><code>const result1 = child.addTagsIndex(['enemy', 'collidable'])
+const result2 = child.addTagsIndex(['enemy', 'collidable'])
+
+expect(result1).toBe(true)
+expect(result2).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addTagsIndex returns false for empty array</h4>
+                <pre><code>const result = child.addTagsIndex([])
+
+expect(result).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addTagsIndex returns false for non-array</h4>
+                <pre><code>const result = child.addTagsIndex('invalid')
+
+expect(result).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>childrenByTags uses index when available</h4>
+                <pre><code>const child1 = child.create(PerkyModule, {$id: 'c1', $tags: ['enemy', 'collidable']})
+child.create(PerkyModule, {$id: 'c2', $tags: ['enemy']})
+
+child.addTagsIndex(['enemy', 'collidable'])
+
+const result = child.childrenByTags(['enemy', 'collidable'])
+
+expect(result).toHaveLength(1)
+expect(result).toContain(child1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeTagsIndex removes composite index</h4>
+                <pre><code>child.addTagsIndex(['enemy', 'collidable'])
+const result = child.removeTagsIndex(['enemy', 'collidable'])
+
+expect(result).toBe(true)
+expect(child.childrenRegistry.hasIndex('collidable_enemy')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeTagsIndex returns false if not indexed</h4>
+                <pre><code>const result = child.removeTagsIndex(['enemy', 'collidable'])
+
+expect(result).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>index automatically updates when child tags change (add)</h4>
+                <pre><code>const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})
+child.addTagsIndex(['enemy', 'collidable'])
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)
+
+testChild.tags.add('collidable')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+expect(child.childrenByTags(['enemy', 'collidable'])).toContain(testChild)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>index automatically updates when child tags change (delete)</h4>
+                <pre><code>const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable']})
+child.addTagsIndex(['enemy', 'collidable'])
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+
+testChild.tags.delete('collidable')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>index automatically updates when child tags change (clear)</h4>
+                <pre><code>const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable']})
+child.addTagsIndex(['enemy', 'collidable'])
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+
+testChild.tags.clear()
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>index updates when $tags is reassigned</h4>
+                <pre><code>const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})
+child.addTagsIndex(['enemy', 'collidable'])
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)
+
+testChild.$tags = ['enemy', 'collidable']
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>multiple composite indexes work independently</h4>
+                <pre><code>const enemy = child.create(PerkyModule, {$id: 'enemy', $tags: ['enemy', 'collidable']})
+const friendly = child.create(PerkyModule, {$id: 'friendly', $tags: ['friendly', 'collidable']})
+
+child.addTagsIndex(['enemy', 'collidable'])
+child.addTagsIndex(['friendly', 'collidable'])
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toEqual([enemy])
+expect(child.childrenByTags(['friendly', 'collidable'])).toEqual([friendly])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>events are cleaned up when child is removed</h4>
+                <pre><code>const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable']})
+child.addTagsIndex(['enemy', 'collidable'])
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+
+child.removeChild('test')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)
+
+testChild.tags.add('flying')
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>index hooks are added to existing children</h4>
+                <pre><code>const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})
+
+child.addTagsIndex(['enemy', 'collidable'])
+
+testChild.tags.add('collidable')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>single tag query works</h4>
+                <pre><code>const child1 = child.create(PerkyModule, {$id: 'c1', $tags: ['enemy']})
+const child2 = child.create(PerkyModule, {$id: 'c2', $tags: ['enemy', 'flying']})
+child.create(PerkyModule, {$id: 'c3', $tags: ['friendly']})
+
+const enemies = child.childrenByTags('enemy')
+
+expect(enemies).toHaveLength(2)
+expect(enemies).toContain(child1)
+expect(enemies).toContain(child2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>works with children without tags</h4>
+                <pre><code>child.create(PerkyModule, {$id: 'c1'})
+const child2 = child.create(PerkyModule, {$id: 'c2', $tags: ['enemy']})
+
+const result = child.childrenByTags('enemy')
+
+expect(result).toEqual([child2])</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>#setupTagIndexListeners</h3>
+            <div class="test-case">
+                <h4>listeners are set up when creating a child with tags and indexes exist</h4>
+                <pre><code>child.addTagsIndex(['enemy', 'collidable'])
+
+const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})
+
+testChild.tags.add('collidable')
+
+const result = child.childrenByTags(['enemy', 'collidable'])
+expect(result).toHaveLength(1)
+expect(result).toContain(testChild)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listeners ARE set up when addTagsIndex is called for existing children</h4>
+                <pre><code>const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})
+
+child.addTagsIndex(['enemy', 'collidable'])
+
+testChild.tags.add('collidable')
+
+const result = child.childrenByTags(['enemy', 'collidable'])
+expect(result).toHaveLength(1)
+expect(result).toContain(testChild)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listeners ARE set up for children even without initial tags</h4>
+                <pre><code>child.addTagsIndex(['enemy', 'collidable'])
+
+const testChild = child.create(PerkyModule, {$id: 'test'})
+
+testChild.tags.add('enemy')
+testChild.tags.add('collidable')
+
+const result = child.childrenByTags(['enemy', 'collidable'])
+expect(result).toHaveLength(1)
+expect(result).toContain(testChild)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>adding a tag triggers index update for all registered indexes</h4>
+                <pre><code>child.addTagsIndex(['enemy', 'collidable'])
+child.addTagsIndex(['enemy', 'flying'])
+
+const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)
+expect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(0)
+
+testChild.tags.add('collidable')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+expect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(0)
+
+testChild.tags.add('flying')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+expect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>deleting a tag triggers index update for all registered indexes</h4>
+                <pre><code>child.addTagsIndex(['enemy', 'collidable'])
+child.addTagsIndex(['enemy', 'flying'])
+
+const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable', 'flying']})
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+expect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(1)
+
+testChild.tags.delete('collidable')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)
+expect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(1)
+
+testChild.tags.delete('flying')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)
+expect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clearing tags triggers index update for all registered indexes</h4>
+                <pre><code>child.addTagsIndex(['enemy', 'collidable'])
+child.addTagsIndex(['enemy', 'flying'])
+
+const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable', 'flying']})
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+expect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(1)
+
+testChild.tags.clear()
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)
+expect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>multiple children with different tag combinations</h4>
+                <pre><code>child.addTagsIndex(['enemy', 'collidable'])
+child.addTagsIndex(['friendly', 'collidable'])
+
+const enemy = child.create(PerkyModule, {$id: 'enemy', $tags: ['enemy']})
+const friendly = child.create(PerkyModule, {$id: 'friendly', $tags: ['friendly']})
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)
+expect(child.childrenByTags(['friendly', 'collidable'])).toHaveLength(0)
+
+enemy.tags.add('collidable')
+friendly.tags.add('collidable')
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)
+expect(child.childrenByTags(['enemy', 'collidable'])).toContain(enemy)
+
+expect(child.childrenByTags(['friendly', 'collidable'])).toHaveLength(1)
+expect(child.childrenByTags(['friendly', 'collidable'])).toContain(friendly)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>tag changes work correctly when adding index before creating children</h4>
+                <pre><code>child.addTagsIndex(['enemy', 'collidable'])
+
+const enemy1 = child.create(PerkyModule, {$id: 'enemy1', $tags: ['enemy']})
+const enemy2 = child.create(PerkyModule, {$id: 'enemy2', $tags: ['enemy', 'collidable']})
+
+expect(child.childrenByTags(['enemy', 'collidable'])).toEqual([enemy2])
+
+enemy1.tags.add('collidable')
+
+const result = child.childrenByTags(['enemy', 'collidable'])
+expect(result).toHaveLength(2)
+expect(result).toContain(enemy1)
+expect(result).toContain(enemy2)
+
+enemy2.tags.delete('enemy')
+
+const result2 = child.childrenByTags(['enemy', 'collidable'])
+expect(result2).toHaveLength(1)
+expect(result2).toContain(enemy1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listeners are set up for existing children when adding a new index</h4>
+                <pre><code>const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})
+
+child.addTagsIndex(['enemy', 'collidable'])
+
+testChild.tags.add('collidable')
+
+const result = child.childrenByTags(['enemy', 'collidable'])
+expect(result).toHaveLength(1)
+expect(result).toContain(testChild)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>query and queryAll</h3>
+            <div class="test-case">
+                <h4>query finds direct child by id</h4>
+                <pre><code>const player = child.create(PerkyModule, {$id: 'player'})
+
+const result = child.query('#player')
+
+expect(result).toBe(player)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>query returns null when not found</h4>
+                <pre><code>child.create(PerkyModule, {$id: 'player'})
+
+const result = child.query('#enemy')
+
+expect(result).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>query finds child by tag</h4>
+                <pre><code>const enemy = child.create(PerkyModule, {$id: 'e1', $tags: ['enemy']})
+
+const result = child.query('.enemy')
+
+expect(result).toBe(enemy)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>query finds nested children</h4>
+                <pre><code>const world = child.create(PerkyModule, {$id: 'world'})
+const player = world.create(PerkyModule, {$id: 'player'})
+
+const result = child.query('#world #player')
+
+expect(result).toBe(player)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>queryAll finds all matching children</h4>
+                <pre><code>const enemy1 = child.create(PerkyModule, {$id: 'e1', $tags: ['enemy']})
+const enemy2 = child.create(PerkyModule, {$id: 'e2', $tags: ['enemy']})
+child.create(PerkyModule, {$id: 'player'})
+
+const result = child.queryAll('.enemy')
+
+expect(result).toHaveLength(2)
+expect(result).toContain(enemy1)
+expect(result).toContain(enemy2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>queryAll returns empty array when none found</h4>
+                <pre><code>child.create(PerkyModule, {$id: 'player'})
+
+const result = child.queryAll('.enemy')
+
+expect(result).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>queryAll finds nested children from multiple parents</h4>
+                <pre><code>const scene1 = child.create(PerkyModule, {$id: 's1', $category: 'scene'})
+const scene2 = child.create(PerkyModule, {$id: 's2', $category: 'scene'})
+const enemy1 = scene1.create(PerkyModule, {$id: 'e1', $tags: ['enemy']})
+const enemy2 = scene2.create(PerkyModule, {$id: 'e2', $tags: ['enemy']})
+
+const result = child.queryAll('@scene .enemy')
+
+expect(result).toHaveLength(2)
+expect(result).toContain(enemy1)
+expect(result).toContain(enemy2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>query with combined selectors</h4>
+                <pre><code>child.create(PerkyModule, {$id: 'e1', $tags: ['enemy']})
+const boss = child.create(PerkyModule, {$id: 'e2', $tags: ['enemy', 'boss']})
+
+const result = child.query('.enemy.boss')
+
+expect(result).toBe(boss)</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item active" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

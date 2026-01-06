@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MouseDevice - Perky Docs</title>
+    <meta name="description" content="Documentation for MouseDevice in the Perky game framework">
+    <meta property="og:title" content="MouseDevice - Perky Docs">
+    <meta property="og:description" content="Documentation for MouseDevice in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>MouseDevice</h1>
+            <section class="test-section"><h2>MouseDevice</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>mockContainer = {
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn()
+}
+
+device = new MouseDevice({
+    container: mockContainer,
+    $id: 'testMouse'
+})</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor</h4>
+                <pre><code>expect(device).toBeInstanceOf(InputDevice)
+expect(device.$id).toBe('testMouse')
+expect(device.container).toBe(mockContainer)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with default params</h4>
+                <pre><code>const defaultDevice = new MouseDevice()
+expect(defaultDevice.$id).toBe('mouse')
+expect(defaultDevice.container).toBe(window)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>creates all mouse controls</h4>
+                <pre><code>expect(device.getControl('leftButton')).toBeInstanceOf(ButtonControl)
+expect(device.getControl('rightButton')).toBeInstanceOf(ButtonControl)
+expect(device.getControl('middleButton')).toBeInstanceOf(ButtonControl)
+expect(device.getControl('backButton')).toBeInstanceOf(ButtonControl)
+expect(device.getControl('forwardButton')).toBeInstanceOf(ButtonControl)
+expect(device.getControl('position')).toBeInstanceOf(Vec2Control)
+expect(device.getControl('navigation')).toBeInstanceOf(NavigationControl)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>start attaches event listeners</h4>
+                <pre><code>device.start()
+
+expect(mockContainer.addEventListener).toHaveBeenCalledWith('mousedown', expect.any(Function))
+expect(mockContainer.addEventListener).toHaveBeenCalledWith('mouseup', expect.any(Function))
+expect(mockContainer.addEventListener).toHaveBeenCalledWith('mousemove', expect.any(Function))
+expect(mockContainer.addEventListener).toHaveBeenCalledWith('contextmenu', expect.any(Function))
+expect(mockContainer.addEventListener).toHaveBeenCalledWith('wheel', expect.any(Function), {passive: false})
+expect(mockContainer.addEventListener).toHaveBeenCalledTimes(5)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>stop removes event listeners</h4>
+                <pre><code>device.start()
+device.stop()
+
+expect(mockContainer.removeEventListener).toHaveBeenCalledWith('mousedown', expect.any(Function))
+expect(mockContainer.removeEventListener).toHaveBeenCalledWith('mouseup', expect.any(Function))
+expect(mockContainer.removeEventListener).toHaveBeenCalledWith('mousemove', expect.any(Function))
+expect(mockContainer.removeEventListener).toHaveBeenCalledWith('contextmenu', expect.any(Function))
+expect(mockContainer.removeEventListener).toHaveBeenCalledWith('wheel', expect.any(Function), {passive: false})
+expect(mockContainer.removeEventListener).toHaveBeenCalledTimes(5)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>dispose calls stop</h4>
+                <pre><code>const stopSpy = vi.spyOn(device, 'stop')
+device.dispose()
+expect(stopSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>mousedown event presses correct button</h4>
+                <pre><code>device.start()
+
+const mousedownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mousedown')[1]
+
+mousedownListener(createMockEvent({button: 0}))
+expect(device.isPressed('leftButton')).toBe(true)
+
+mousedownListener(createMockEvent({button: 2}))
+expect(device.isPressed('rightButton')).toBe(true)
+
+mousedownListener(createMockEvent({button: 1}))
+expect(device.isPressed('middleButton')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>mouseup event releases correct button</h4>
+                <pre><code>device.start()
+
+const mousedownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mousedown')[1]
+const mouseupListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mouseup')[1]
+
+mousedownListener(createMockEvent({button: 0}))
+expect(device.isPressed('leftButton')).toBe(true)
+
+mouseupListener(createMockEvent({button: 0}))
+expect(device.isPressed('leftButton')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>side buttons work correctly</h4>
+                <pre><code>device.start()
+
+const mousedownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mousedown')[1]
+
+mousedownListener(createMockEvent({button: 3}))
+expect(device.isPressed('backButton')).toBe(true)
+
+mousedownListener(createMockEvent({button: 4}))
+expect(device.isPressed('forwardButton')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>mousemove updates position</h4>
+                <pre><code>device.start()
+
+const mousemoveListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mousemove')[1]
+
+const positionControl = device.getControl('position')
+expect(positionControl.value.x).toBe(0)
+expect(positionControl.value.y).toBe(0)
+
+mousemoveListener(createMockEvent({clientX: 100, clientY: 200}))
+expect(positionControl.value.x).toBe(100)
+expect(positionControl.value.y).toBe(200)
+
+mousemoveListener(createMockEvent({clientX: 300, clientY: 400}))
+expect(positionControl.value.x).toBe(300)
+expect(positionControl.value.y).toBe(400)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>mousedown does not press already pressed button</h4>
+                <pre><code>device.start()
+
+const mousedownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mousedown')[1]
+
+mousedownListener(createMockEvent({button: 0}))
+const leftButton = device.getControl('leftButton')
+const pressSpy = vi.spyOn(leftButton, 'press')
+
+mousedownListener(createMockEvent({button: 0}))
+expect(pressSpy).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>wheel event updates navigation control</h4>
+                <pre><code>device.start()
+
+const wheelListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'wheel')[1]
+
+const navigationControl = device.getControl('navigation')
+expect(navigationControl.value).toEqual({deltaX: 0, deltaY: 0, deltaZ: 0, event: null})
+
+const mockEvent = createMockEvent({deltaX: 10, deltaY: -50, deltaZ: 0})
+wheelListener(mockEvent)
+expect(navigationControl.value).toEqual({deltaX: 10, deltaY: -50, deltaZ: 0, event: mockEvent})</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>integration test - full mouse interaction</h4>
+                <pre><code>const controlPressedListener = vi.fn()
+const controlReleasedListener = vi.fn()
+const controlUpdatedListener = vi.fn()
+
+device.on('control:pressed', controlPressedListener)
+device.on('control:released', controlReleasedListener)
+device.on('control:updated', controlUpdatedListener)
+
+device.start()
+
+const mousedownListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mousedown')[1]
+const mouseupListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mouseup')[1]
+const mousemoveListener = mockContainer.addEventListener.mock.calls
+    .find(call =&gt; call[0] === 'mousemove')[1]
+
+mousemoveListener(createMockEvent({clientX: 50, clientY: 75}))
+expect(controlUpdatedListener).toHaveBeenCalledTimes(1)
+
+mousedownListener(createMockEvent({button: 0}))
+expect(controlPressedListener).toHaveBeenCalledTimes(1)
+expect(device.isPressed('leftButton')).toBe(true)
+
+mouseupListener(createMockEvent({button: 0}))
+expect(controlReleasedListener).toHaveBeenCalledTimes(1)
+expect(device.isPressed('leftButton')).toBe(false)</code></pre>
+            </div>
+        </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item active" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

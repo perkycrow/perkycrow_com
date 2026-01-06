@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkyLogger - Perky Docs</title>
+    <meta name="description" content="Documentation for PerkyLogger in the Perky game framework">
+    <meta property="og:title" content="PerkyLogger - Perky Docs">
+    <meta property="og:description" content="Documentation for PerkyLogger in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>PerkyLogger</h1>
+            <section class="test-section"><h2>PerkyLogger</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>logger = new PerkyLogger()
+document.body.appendChild(logger)</code></pre>
+            </div>
+        
+            <div class="test-hook">
+                <h4>afterEach</h4>
+                <pre><code>document.body.innerHTML = ''</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>custom element creation</h4>
+                <pre><code>expect(logger).toBeInstanceOf(PerkyLogger)
+expect(logger.tagName).toBe('PERKY-LOGGER')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor initializes with default options</h4>
+                <pre><code>expect(logger.maxEntries).toBe(50)
+expect(logger.position).toBe('bottom')
+expect(logger.timestamp).toBe(false)
+expect(logger.entries).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor accepts custom attributes</h4>
+                <pre><code>const customLogger = new PerkyLogger()
+customLogger.maxEntries = 100
+customLogger.position = 'top'
+customLogger.timestamp = true
+
+expect(customLogger.maxEntries).toBe(100)
+expect(customLogger.position).toBe('top')
+expect(customLogger.timestamp).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>log creates a log entry with the specified type</h4>
+                <pre><code>const message = 'Test message'
+const type = 'info'
+
+const entry = logger.log(message, type)
+
+expect(entry.className).toContain('logger-entry')
+expect(entry.className).toContain('log-info')
+expect(entry.querySelector('.logger-message').textContent).toBe(message)
+expect(logger.entries.length).toBe(1)
+expect(logger.entries[0]).toBe(entry)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>log creates timestamp when enabled</h4>
+                <pre><code>logger.timestamp = true
+const message = 'Test message with timestamp'
+
+const entry = logger.log(message, 'info')
+
+const timestamp = entry.querySelector('.logger-timestamp')
+expect(timestamp).not.toBeNull()
+expect(entry.textContent).toContain(message)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>log removes oldest entries when limit is reached</h4>
+                <pre><code>logger.maxEntries = 3
+
+const entry1 = logger.log('Message 1', 'info')
+const entry2 = logger.log('Message 2', 'info')
+const entry3 = logger.log('Message 3', 'info')
+const entry4 = logger.log('Message 4', 'info')
+
+expect(logger.entries.length).toBe(3)
+expect(logger.entries).not.toContain(entry1)
+expect(logger.entries).toContain(entry2)
+expect(logger.entries).toContain(entry3)
+expect(logger.entries).toContain(entry4)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>info logs a message with info type</h4>
+                <pre><code>vi.spyOn(logger, 'log')
+
+logger.info('Info message')
+
+expect(logger.log).toHaveBeenCalledWith('Info message', 'info')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>warn logs a message with warn type</h4>
+                <pre><code>vi.spyOn(logger, 'log')
+
+logger.warn('Warning message')
+
+expect(logger.log).toHaveBeenCalledWith('Warning message', 'warn')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>error logs a message with error type</h4>
+                <pre><code>vi.spyOn(logger, 'log')
+
+logger.error('Error message')
+
+expect(logger.log).toHaveBeenCalledWith('Error message', 'error')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>success logs a message with success type</h4>
+                <pre><code>vi.spyOn(logger, 'log')
+
+logger.success('Success message')
+
+expect(logger.log).toHaveBeenCalledWith('Success message', 'success')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>notice logs a message with notice type</h4>
+                <pre><code>vi.spyOn(logger, 'log')
+
+logger.notice('Notice message')
+
+expect(logger.log).toHaveBeenCalledWith('Notice message', 'notice')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>spacer creates a spacer entry</h4>
+                <pre><code>logger.spacer()
+
+expect(logger.entries.length).toBe(1)
+expect(logger.entries[0].className).toContain('logger-spacer')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>title creates a title entry</h4>
+                <pre><code>logger.title('Test Title')
+
+expect(logger.entries.length).toBe(1)
+expect(logger.entries[0].className).toContain('logger-title-entry')
+expect(logger.entries[0].textContent).toBe('Test Title')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clear removes all entries</h4>
+                <pre><code>logger.log('Message 1', 'info')
+logger.log('Message 2', 'warn')
+logger.log('Message 3', 'error')
+
+expect(logger.entries.length).toBe(3)
+
+logger.clear()
+
+expect(logger.entries.length).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>render displays correct structure</h4>
+                <pre><code>const loggerDiv = logger.shadowRoot.querySelector('.logger')
+const content = logger.shadowRoot.querySelector('.logger-content')
+
+expect(loggerDiv).toBeTruthy()
+expect(content).toBeTruthy()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>entries are rendered in content</h4>
+                <pre><code>logger.log('Test message', 'info')
+
+const content = logger.shadowRoot.querySelector('.logger-content')
+expect(content.children.length).toBe(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>position updates logger classes</h4>
+                <pre><code>logger.position = 'top'
+
+const loggerDiv = logger.shadowRoot.querySelector('.logger')
+
+expect(loggerDiv.className).toContain('logger')
+expect(loggerDiv.className).toContain('logger-top')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>multiple message arguments are formatted correctly</h4>
+                <pre><code>logger.info('Message', 123, {key: 'value'})
+
+expect(logger.entries.length).toBe(1)
+expect(logger.entries[0].textContent).toContain('Message')
+expect(logger.entries[0].textContent).toContain('123')
+expect(logger.entries[0].textContent).toContain('key')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can be used like a DOM element</h4>
+                <pre><code>const container = document.createElement('div')
+const newLogger = new PerkyLogger()
+
+container.appendChild(newLogger)
+
+expect(container.contains(newLogger)).toBe(true)
+expect(newLogger.parentElement).toBe(container)
+
+newLogger.info('Test message')
+expect(newLogger.entries.length).toBe(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>theme property works correctly</h4>
+                <pre><code>expect(logger.theme).toBe('')
+
+logger.theme = 'light'
+
+expect(logger.theme).toBe('light')
+expect(logger.hasAttribute('theme')).toBe(true)
+expect(logger.getAttribute('theme')).toBe('light')
+
+logger.theme = ''
+
+expect(logger.theme).toBe('')
+expect(logger.hasAttribute('theme')).toBe(false)</code></pre>
+            </div>
+        </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item active" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-DS6PagYC.js"></script>
+</body>
+</html>

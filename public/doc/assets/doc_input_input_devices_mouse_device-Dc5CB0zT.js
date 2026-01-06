@@ -11,11 +11,11 @@ var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn;
 import { d as doc, t as text, s as section, c as code, e as container } from "./runtime-cNJO0S24.js";
-import { I as InputControl, a as InputDevice, B as ButtonControl } from "./button_control-6nGcy2XR.js";
+import { I as InputControl, a as InputDevice, B as ButtonControl } from "./button_control-DpZUrUro.js";
 import { V as Vec2 } from "./vec2-BvD8ope7.js";
 import { l as logger } from "./logger-CkRtvmLl.js";
-import "./perky_module-DMF0flXt.js";
-import "./utils-CH_WZToG.js";
+import "./perky_module-uJdyZ-t_.js";
+import "./utils-DXBRLumH.js";
 const { VALUE: VALUE$1, OLD_VALUE: OLD_VALUE$1 } = InputControl;
 class Vec2Control extends InputControl {
   getDefaultValue() {

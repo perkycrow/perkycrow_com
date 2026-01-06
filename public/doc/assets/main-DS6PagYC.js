@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./doc_application_application-FtJJSF-t.js","./runtime-cNJO0S24.js","./doc_application_perky_view-CD7JesZ_.js","./doc_core_perky_module-Dd_iiZcX.js","./perky_module-DMF0flXt.js","./logger-CkRtvmLl.js","./utils-CH_WZToG.js","./doc_editor_perky_logger-BD0NWDn6.js","./vec2-BvD8ope7.js","./doc_game_game_loop-Dzny1FOg.js","./doc_input_input_devices_keyboard_device-CsmLagee.js","./button_control-6nGcy2XR.js","./doc_input_input_devices_mouse_device-BA5OWm-x.js","./doc_math_random-B4IfH7OH.js","./doc_math_vec2-CH6xmP3U.js","./doc_render_webgl_canvas_2d-DzbWLZPU.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./doc_application_application-FtJJSF-t.js","./runtime-cNJO0S24.js","./doc_application_perky_view-CD7JesZ_.js","./doc_core_notifier-Bn2CgPxr.js","./logger-CkRtvmLl.js","./doc_core_perky_module-CuJwCqOB.js","./perky_module-uJdyZ-t_.js","./utils-DXBRLumH.js","./doc_core_utils-N5NrRT8-.js","./doc_editor_perky_logger-BD0NWDn6.js","./vec2-BvD8ope7.js","./doc_game_game_loop-BUWBYBbg.js","./doc_input_input_devices_keyboard_device-BJSLgquX.js","./button_control-DpZUrUro.js","./doc_input_input_devices_mouse_device-Dc5CB0zT.js","./doc_math_random-B4IfH7OH.js","./doc_math_vec2-CH6xmP3U.js","./doc_render_webgl_canvas_2d-B9pnLoVi.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
@@ -10,9 +10,9 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _src, _code, _title, _theme, _noHeader, _loading, _error, _formattedCode, _containerEl, _preEl, _copyBtnEl, _titleEl, _copyTimeoutId, _PerkyCode_instances, handleSrc_fn, handleCode_fn, handleTitle_fn, handleTheme_fn, handleNoHeader_fn, updateHeaderVisibility_fn, handleAttributeChange_fn, buildDOM_fn, createHeader_fn, createContent_fn, updateView_fn, _doc, _api, _sources, _activeTab, _contentEl, _tocEl, _containerEl2, _currentApp, _containers, _DocPage_instances, setupAnchorNavigation_fn, disposeAll_fn, buildDOM_fn2, render_fn, scrollToHash_fn, createTab_fn, getTabUrl_fn, switchTab_fn, renderDocContent_fn, renderApiContent_fn, renderBlock_fn, getSourceFor_fn, renderContainer_fn, renderSection_fn, _maxEntries, _position, _timestamp, _theme2, _entries, _containerEl3, _contentEl2, _controlsEl, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn2, handleAttributeChange_fn2, buildDOM_fn3, togglePin_fn, updateControlsVisibility_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn;
+var _src, _code, _title, _theme, _noHeader, _loading, _error, _formattedCode, _containerEl, _preEl, _copyBtnEl, _titleEl, _copyTimeoutId, _PerkyCode_instances, handleSrc_fn, handleCode_fn, handleTitle_fn, handleTheme_fn, handleNoHeader_fn, updateHeaderVisibility_fn, handleAttributeChange_fn, buildDOM_fn, createHeader_fn, createContent_fn, updateView_fn, _doc, _api, _tests, _sources, _activeTab, _contentEl, _tocEl, _containerEl2, _currentApp, _containers, _DocPage_instances, setupAnchorNavigation_fn, disposeAll_fn, buildDOM_fn2, render_fn, scrollToHash_fn, createTab_fn, getTabUrl_fn, switchTab_fn, renderDocContent_fn, renderApiContent_fn, renderTestContent_fn, renderDescribe_fn, renderTestHook_fn, renderTest_fn, renderBlock_fn, getSourceFor_fn, renderContainer_fn, renderSection_fn, _maxEntries, _position, _timestamp, _theme2, _entries, _containerEl3, _contentEl2, _controlsEl, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn2, handleAttributeChange_fn2, buildDOM_fn3, togglePin_fn, updateControlsVisibility_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn;
 import { l as logger } from "./logger-CkRtvmLl.js";
-import { t as toKebabCase } from "./utils-CH_WZToG.js";
+import { t as toKebabCase } from "./utils-DXBRLumH.js";
 import { V as Vec2 } from "./vec2-BvD8ope7.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
@@ -704,6 +704,7 @@ class DocPage extends HTMLElement {
     __privateAdd(this, _DocPage_instances);
     __privateAdd(this, _doc, null);
     __privateAdd(this, _api, null);
+    __privateAdd(this, _tests, null);
     __privateAdd(this, _sources, null);
     __privateAdd(this, _activeTab, "doc");
     __privateAdd(this, _contentEl, null);
@@ -744,14 +745,21 @@ class DocPage extends HTMLElement {
   get sources() {
     return __privateGet(this, _sources);
   }
+  set tests(value) {
+    __privateSet(this, _tests, value);
+  }
+  get tests() {
+    return __privateGet(this, _tests);
+  }
   set initialTab(value) {
-    if (value === "api" || value === "doc") {
+    if (value === "api" || value === "doc" || value === "test") {
       __privateSet(this, _activeTab, value);
     }
   }
 }
 _doc = new WeakMap();
 _api = new WeakMap();
+_tests = new WeakMap();
 _sources = new WeakMap();
 _activeTab = new WeakMap();
 _contentEl = new WeakMap();
@@ -821,13 +829,19 @@ render_fn = function() {
     titleRow.appendChild(context);
   }
   header.appendChild(titleRow);
-  if (__privateGet(this, _api)) {
+  if (__privateGet(this, _api) || __privateGet(this, _tests)) {
     const tabs = document.createElement("div");
     tabs.className = "doc-tabs";
     const docTab = __privateMethod(this, _DocPage_instances, createTab_fn).call(this, "Doc", "doc");
-    const apiTab = __privateMethod(this, _DocPage_instances, createTab_fn).call(this, "API", "api");
     tabs.appendChild(docTab);
-    tabs.appendChild(apiTab);
+    if (__privateGet(this, _api)) {
+      const apiTab = __privateMethod(this, _DocPage_instances, createTab_fn).call(this, "API", "api");
+      tabs.appendChild(apiTab);
+    }
+    if (__privateGet(this, _tests)) {
+      const testTab = __privateMethod(this, _DocPage_instances, createTab_fn).call(this, "Test", "test");
+      tabs.appendChild(testTab);
+    }
     header.appendChild(tabs);
   }
   main.appendChild(header);
@@ -841,8 +855,10 @@ render_fn = function() {
   container.appendChild(layout);
   if (__privateGet(this, _activeTab) === "doc") {
     __privateMethod(this, _DocPage_instances, renderDocContent_fn).call(this);
-  } else {
+  } else if (__privateGet(this, _activeTab) === "api") {
     __privateMethod(this, _DocPage_instances, renderApiContent_fn).call(this);
+  } else if (__privateGet(this, _activeTab) === "test") {
+    __privateMethod(this, _DocPage_instances, renderTestContent_fn).call(this);
   }
   __privateMethod(this, _DocPage_instances, scrollToHash_fn).call(this);
 };
@@ -872,9 +888,12 @@ createTab_fn = function(label, tab) {
 getTabUrl_fn = function(tab) {
   const pathname = window.location.pathname;
   const filename = pathname.split("/").pop();
-  const baseName = filename.replace("_api.html", "").replace(".html", "");
+  const baseName = filename.replace("_api.html", "").replace("_test.html", "").replace(".html", "");
   if (tab === "api") {
     return `${baseName}_api.html`;
+  }
+  if (tab === "test") {
+    return `${baseName}_test.html`;
   }
   return `${baseName}.html`;
 };
@@ -926,7 +945,7 @@ renderApiContent_fn = function() {
     fileEl.textContent = api.file;
     __privateGet(this, _contentEl).appendChild(fileEl);
   }
-  const categories = [
+  const categories = api.type === "module" ? [{ key: "functions", title: "Functions" }] : [
     { key: "statics", title: "Static" },
     { key: "constructor", title: "Constructor", single: true },
     { key: "methods", title: "Methods" },
@@ -963,6 +982,77 @@ renderApiContent_fn = function() {
     tocList.appendChild(tocLink);
   }
   __privateGet(this, _tocEl).appendChild(tocList);
+};
+renderTestContent_fn = function() {
+  __privateGet(this, _contentEl).innerHTML = "";
+  __privateGet(this, _tocEl).innerHTML = "";
+  if (!__privateGet(this, _tests)) {
+    return;
+  }
+  const tocTitle = document.createElement("div");
+  tocTitle.className = "doc-toc-title";
+  tocTitle.textContent = "Tests";
+  __privateGet(this, _tocEl).appendChild(tocTitle);
+  const tocList = document.createElement("nav");
+  tocList.className = "doc-toc-list";
+  for (const describe of __privateGet(this, _tests).describes) {
+    __privateGet(this, _contentEl).appendChild(__privateMethod(this, _DocPage_instances, renderDescribe_fn).call(this, describe, tocList));
+  }
+  __privateGet(this, _tocEl).appendChild(tocList);
+};
+renderDescribe_fn = function(describe, tocList = null, depth = 0) {
+  const sectionId = toKebabCase(describe.title);
+  const wrapper = document.createElement("div");
+  wrapper.className = depth === 0 ? "test-describe" : "test-describe-nested";
+  wrapper.id = depth <= 1 ? sectionId : "";
+  const header = document.createElement("h2");
+  header.className = depth === 0 ? "test-describe-title" : "test-describe-subtitle";
+  header.textContent = describe.title;
+  wrapper.appendChild(header);
+  if (tocList && depth <= 1) {
+    const tocLink = document.createElement("a");
+    tocLink.className = depth === 0 ? "doc-toc-link doc-toc-root" : "doc-toc-link";
+    tocLink.textContent = describe.title;
+    tocLink.href = `#${sectionId}`;
+    tocList.appendChild(tocLink);
+  }
+  if (describe.beforeEach) {
+    wrapper.appendChild(__privateMethod(this, _DocPage_instances, renderTestHook_fn).call(this, "beforeEach", describe.beforeEach));
+  }
+  if (describe.afterEach) {
+    wrapper.appendChild(__privateMethod(this, _DocPage_instances, renderTestHook_fn).call(this, "afterEach", describe.afterEach));
+  }
+  for (const test of describe.tests) {
+    wrapper.appendChild(__privateMethod(this, _DocPage_instances, renderTest_fn).call(this, test));
+  }
+  for (const nested of describe.describes) {
+    wrapper.appendChild(__privateMethod(this, _DocPage_instances, renderDescribe_fn).call(this, nested, tocList, depth + 1));
+  }
+  return wrapper;
+};
+renderTestHook_fn = function(name, hook) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "test-hook";
+  const label = document.createElement("div");
+  label.className = "test-hook-label";
+  label.textContent = name;
+  wrapper.appendChild(label);
+  if (hook.source) {
+    const codeEl = document.createElement("perky-code");
+    codeEl.setAttribute("title", name);
+    codeEl.code = hook.source;
+    wrapper.appendChild(codeEl);
+  }
+  return wrapper;
+};
+renderTest_fn = function(test) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "test-case";
+  const codeEl = document.createElement("perky-code");
+  codeEl.setAttribute("title", test.title);
+  codeEl.code = test.source || "";
+  wrapper.appendChild(codeEl);
+  return wrapper;
 };
 renderBlock_fn = function(block, setup = null) {
   switch (block.type) {
@@ -1445,7 +1535,7 @@ const STYLES$1 = buildEditorStyles(
         position: relative;
     }
 
-    /* API View */
+
     .api-extends {
         font-size: 0.85rem;
         color: var(--fg-muted);
@@ -1551,6 +1641,58 @@ const STYLES$1 = buildEditorStyles(
         margin: 0;
         border: none;
         border-radius: 0;
+    }
+
+
+    .test-describe {
+        margin-bottom: 2rem;
+    }
+
+    .test-describe-title {
+        font-family: var(--font-mono);
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--fg-primary);
+        margin: 0 0 1rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .test-describe-nested {
+        margin: 1.5rem 0;
+        padding-left: 1rem;
+        border-left: 2px solid var(--border);
+    }
+
+    .test-describe-subtitle {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--fg-secondary);
+        margin: 0 0 0.75rem 0;
+    }
+
+    .test-hook {
+        margin-bottom: 1rem;
+        opacity: 0.7;
+    }
+
+    .test-hook-label {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--fg-muted);
+        margin-bottom: 0.25rem;
+    }
+
+    .test-case {
+        margin-bottom: 0.75rem;
+    }
+
+    .test-case perky-code {
+        margin: 0;
     }
 
     @media (max-width: 900px) {
@@ -2671,7 +2813,7 @@ const STYLES = buildEditorStyles(
 `
 );
 customElements.define("perky-logger", PerkyLogger);
-const docModules = /* @__PURE__ */ Object.assign({ "../application/application.doc.js": () => __vitePreload(() => import("./doc_application_application-FtJJSF-t.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url), "../application/perky_view.doc.js": () => __vitePreload(() => import("./doc_application_perky_view-CD7JesZ_.js"), true ? __vite__mapDeps([2,1]) : void 0, import.meta.url), "../core/perky_module.doc.js": () => __vitePreload(() => import("./doc_core_perky_module-Dd_iiZcX.js"), true ? __vite__mapDeps([3,1,4,5,6]) : void 0, import.meta.url), "../editor/perky_logger.doc.js": () => __vitePreload(() => import("./doc_editor_perky_logger-BD0NWDn6.js"), true ? __vite__mapDeps([7,1,8,5]) : void 0, import.meta.url), "../game/game_loop.doc.js": () => __vitePreload(() => import("./doc_game_game_loop-Dzny1FOg.js"), true ? __vite__mapDeps([9,1,4,5,6]) : void 0, import.meta.url), "../input/input_devices/keyboard_device.doc.js": () => __vitePreload(() => import("./doc_input_input_devices_keyboard_device-CsmLagee.js"), true ? __vite__mapDeps([10,1,11,4,5,6]) : void 0, import.meta.url), "../input/input_devices/mouse_device.doc.js": () => __vitePreload(() => import("./doc_input_input_devices_mouse_device-BA5OWm-x.js"), true ? __vite__mapDeps([12,1,11,4,5,6,8]) : void 0, import.meta.url), "../math/random.doc.js": () => __vitePreload(() => import("./doc_math_random-B4IfH7OH.js"), true ? __vite__mapDeps([13,1,5]) : void 0, import.meta.url), "../math/vec2.doc.js": () => __vitePreload(() => import("./doc_math_vec2-CH6xmP3U.js"), true ? __vite__mapDeps([14,1,8,5]) : void 0, import.meta.url), "../render/webgl_canvas_2d.doc.js": () => __vitePreload(() => import("./doc_render_webgl_canvas_2d-DzbWLZPU.js"), true ? __vite__mapDeps([15,1,4,5,6]) : void 0, import.meta.url) });
+const docModules = /* @__PURE__ */ Object.assign({ "../application/application.doc.js": () => __vitePreload(() => import("./doc_application_application-FtJJSF-t.js"), true ? __vite__mapDeps([0,1]) : void 0, import.meta.url), "../application/perky_view.doc.js": () => __vitePreload(() => import("./doc_application_perky_view-CD7JesZ_.js"), true ? __vite__mapDeps([2,1]) : void 0, import.meta.url), "../core/notifier.doc.js": () => __vitePreload(() => import("./doc_core_notifier-Bn2CgPxr.js"), true ? __vite__mapDeps([3,1,4]) : void 0, import.meta.url), "../core/perky_module.doc.js": () => __vitePreload(() => import("./doc_core_perky_module-CuJwCqOB.js"), true ? __vite__mapDeps([5,1,6,4,7]) : void 0, import.meta.url), "../core/utils.doc.js": () => __vitePreload(() => import("./doc_core_utils-N5NrRT8-.js"), true ? __vite__mapDeps([8,1,7,4]) : void 0, import.meta.url), "../editor/perky_logger.doc.js": () => __vitePreload(() => import("./doc_editor_perky_logger-BD0NWDn6.js"), true ? __vite__mapDeps([9,1,10,4]) : void 0, import.meta.url), "../game/game_loop.doc.js": () => __vitePreload(() => import("./doc_game_game_loop-BUWBYBbg.js"), true ? __vite__mapDeps([11,1,6,4,7]) : void 0, import.meta.url), "../input/input_devices/keyboard_device.doc.js": () => __vitePreload(() => import("./doc_input_input_devices_keyboard_device-BJSLgquX.js"), true ? __vite__mapDeps([12,1,13,6,4,7]) : void 0, import.meta.url), "../input/input_devices/mouse_device.doc.js": () => __vitePreload(() => import("./doc_input_input_devices_mouse_device-Dc5CB0zT.js"), true ? __vite__mapDeps([14,1,13,6,4,7,10]) : void 0, import.meta.url), "../math/random.doc.js": () => __vitePreload(() => import("./doc_math_random-B4IfH7OH.js"), true ? __vite__mapDeps([15,1,4]) : void 0, import.meta.url), "../math/vec2.doc.js": () => __vitePreload(() => import("./doc_math_vec2-CH6xmP3U.js"), true ? __vite__mapDeps([16,1,10,4]) : void 0, import.meta.url), "../render/webgl_canvas_2d.doc.js": () => __vitePreload(() => import("./doc_render_webgl_canvas_2d-B9pnLoVi.js"), true ? __vite__mapDeps([17,1,6,4,7]) : void 0, import.meta.url) });
 class DocViewer {
   constructor() {
     this.container = document.getElementById("doc-container");
@@ -2679,11 +2821,13 @@ class DocViewer {
     this.searchInput = document.querySelector(".sidebar-search .search-input");
     this.docs = [];
     this.apiData = {};
+    this.testsData = {};
     this.currentDoc = null;
   }
   async init() {
     await this.loadDocs();
     await this.loadApiData();
+    await this.loadTestsData();
     this.buildNav();
     this.setupSearch();
     this.route();
@@ -2705,6 +2849,15 @@ class DocViewer {
     } catch (error) {
       console.error("Failed to load api.json:", error);
       this.apiData = {};
+    }
+  }
+  async loadTestsData() {
+    try {
+      const response = await fetch("./tests.json");
+      this.testsData = await response.json();
+    } catch (error) {
+      console.error("Failed to load tests.json:", error);
+      this.testsData = {};
     }
   }
   async loadSourcesFor(docPath) {
@@ -2758,9 +2911,7 @@ class DocViewer {
     if (!docPath) {
       const fromFilename = this.getDocPathFromFilename();
       docPath = fromFilename.docPath;
-      if (fromFilename.isApiPage) {
-        tab = "api";
-      }
+      tab = fromFilename.tab;
     }
     if (docPath) {
       this.showDoc(docPath, tab);
@@ -2773,15 +2924,23 @@ class DocViewer {
     const pathname = window.location.pathname;
     const filename = pathname.split("/").pop();
     if (!filename || filename === "index.html" || !filename.endsWith(".html")) {
-      return { docPath: null, isApiPage: false };
+      return { docPath: null, tab: "doc" };
     }
     const isApiPage = filename.endsWith("_api.html");
-    const baseName = filename.replace("_api.html", "").replace(".html", "");
+    const isTestPage = filename.endsWith("_test.html");
+    const baseName = filename.replace("_api.html", "").replace("_test.html", "").replace(".html", "");
     const doc = this.docs.find((d) => {
       const docBaseName = d.file.slice(1).replace(/\//g, "_").replace(".doc.js", "");
       return docBaseName === baseName;
     });
-    return { docPath: doc ? doc.file : null, isApiPage };
+    let tab = "doc";
+    if (isApiPage) {
+      tab = "api";
+    }
+    if (isTestPage) {
+      tab = "test";
+    }
+    return { docPath: doc ? doc.file : null, tab };
   }
   getDocUrl(docFile) {
     {
@@ -2825,6 +2984,10 @@ class DocViewer {
       const sources = await this.loadSourcesFor(docPath);
       if (sources) {
         docPage.sources = sources;
+      }
+      const tests = this.testsData[docPath];
+      if (tests) {
+        docPage.tests = tests;
       }
       this.container.appendChild(docPage);
       this.currentDoc = docPath;
