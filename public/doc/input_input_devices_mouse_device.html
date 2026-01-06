@@ -36,6 +36,140 @@ mouse.start()</code></pre>
             </div>
         
             <div class="doc-block">
+                <h3>Mouse buttons</h3>
+                <pre><code>ctx.container.style.display = 'flex'
+ctx.container.style.flexDirection = 'column'
+ctx.container.style.alignItems = 'center'
+ctx.container.style.justifyContent = 'center'
+ctx.container.style.background = '#1a1a2e'
+ctx.container.style.color = '#fff'
+ctx.container.style.fontFamily = 'monospace'
+ctx.container.style.userSelect = 'none'
+
+const hint = document.createElement('div')
+hint.textContent = 'Click with different mouse buttons'
+hint.style.fontSize = '12px'
+hint.style.opacity = '0.6'
+hint.style.marginBottom = '16px'
+ctx.container.appendChild(hint)
+
+const display = document.createElement('div')
+display.style.fontSize = '20px'
+display.style.minHeight = '28px'
+ctx.container.appendChild(display)
+
+const mouse = new MouseDevice({
+    container: ctx.container
+})
+
+mouse.on('control:pressed', (control) =&gt; {
+    if (control.name.includes('Button')) {
+        display.textContent = control.name
+        logger.log('pressed:', control.name)
+    }
+})
+
+mouse.on('control:released', (control) =&gt; {
+    if (control.name.includes('Button')) {
+        display.textContent = ''
+        logger.log('released:', control.name)
+    }
+})
+
+mouse.start()
+ctx.setApp(mouse)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Cursor position</h3>
+                <pre><code>ctx.container.style.display = 'flex'
+ctx.container.style.flexDirection = 'column'
+ctx.container.style.alignItems = 'center'
+ctx.container.style.justifyContent = 'center'
+ctx.container.style.background = '#16213e'
+ctx.container.style.color = '#fff'
+ctx.container.style.fontFamily = 'monospace'
+
+const hint = document.createElement('div')
+hint.textContent = 'Move cursor inside this area'
+hint.style.fontSize = '12px'
+hint.style.opacity = '0.6'
+hint.style.marginBottom = '16px'
+ctx.container.appendChild(hint)
+
+const display = document.createElement('div')
+display.style.fontSize = '24px'
+ctx.container.appendChild(display)
+
+const mouse = new MouseDevice({
+    container: ctx.container
+})
+
+const positionControl = mouse.getControl('position')
+positionControl.on('updated', (pos) =&gt; {
+    const rect = ctx.container.getBoundingClientRect()
+    const localX = Math.round(pos.x - rect.left)
+    const localY = Math.round(pos.y - rect.top)
+    display.textContent = `${localX}, ${localY}`
+})
+
+mouse.start()
+ctx.setApp(mouse)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Wheel events</h3>
+                <pre><code>ctx.container.style.display = 'flex'
+ctx.container.style.flexDirection = 'column'
+ctx.container.style.alignItems = 'center'
+ctx.container.style.justifyContent = 'center'
+ctx.container.style.background = '#1a1a2e'
+ctx.container.style.color = '#fff'
+ctx.container.style.fontFamily = 'monospace'
+ctx.container.style.gap = '8px'
+
+const hint = document.createElement('div')
+hint.textContent = 'Scroll or use trackpad'
+hint.style.fontSize = '12px'
+hint.style.opacity = '0.6'
+ctx.container.appendChild(hint)
+
+const deltaDisplay = document.createElement('div')
+deltaDisplay.style.fontSize = '18px'
+ctx.container.appendChild(deltaDisplay)
+
+const typeDisplay = document.createElement('div')
+typeDisplay.style.fontSize = '14px'
+typeDisplay.style.color = '#e94560'
+ctx.container.appendChild(typeDisplay)
+
+const mouse = new MouseDevice({
+    container: ctx.container,
+    shouldPreventDefault: true
+})
+
+const navControl = mouse.getControl('navigation')
+navControl.on('updated', () =&gt; {
+    const dX = navControl.deltaX.toFixed(1)
+    const dY = navControl.deltaY.toFixed(1)
+    deltaDisplay.textContent = `deltaX: ${dX}  deltaY: ${dY}`
+
+    if (navControl.isTrackpadPinchZoom) {
+        typeDisplay.textContent = 'trackpad pinch zoom'
+    } else if (navControl.isTrackpadPan) {
+        typeDisplay.textContent = 'trackpad pan'
+    } else if (navControl.isMouseWheelZoom) {
+        typeDisplay.textContent = 'mouse wheel'
+    } else {
+        typeDisplay.textContent = ''
+    }
+})
+
+mouse.start()
+ctx.setApp(mouse)</code></pre>
+            </div>
+        
+            <div class="doc-block">
                 <h3>Navigation control API</h3>
                 <pre><code>const mouse = new MouseDevice()
 const nav = mouse.getControl('navigation')
@@ -92,6 +226,6 @@ nav.isMouseWheelZoom     // vertical wheel only</code></pre>
         </main>
     </div>
 
-    <script type="module" src="assets/main-DS6PagYC.js"></script>
+    <script type="module" src="assets/main-woiL4Dlz.js"></script>
 </body>
 </html>

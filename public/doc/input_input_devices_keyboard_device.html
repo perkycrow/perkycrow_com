@@ -36,6 +36,131 @@ keyboard.start()</code></pre>
             </div>
         
             <div class="doc-block">
+                <h3>Interactive keyboard</h3>
+                <pre><code>ctx.container.tabIndex = 0
+ctx.container.style.outline = 'none'
+ctx.container.style.display = 'flex'
+ctx.container.style.flexDirection = 'column'
+ctx.container.style.alignItems = 'center'
+ctx.container.style.justifyContent = 'center'
+ctx.container.style.background = '#1a1a2e'
+ctx.container.style.color = '#fff'
+ctx.container.style.fontFamily = 'monospace'
+ctx.container.style.cursor = 'pointer'
+
+const hint = document.createElement('div')
+hint.textContent = 'Click here, then press keys'
+hint.style.fontSize = '12px'
+hint.style.opacity = '0.6'
+hint.style.marginBottom = '16px'
+ctx.container.appendChild(hint)
+
+const display = document.createElement('div')
+display.style.fontSize = '24px'
+display.style.minHeight = '32px'
+ctx.container.appendChild(display)
+
+const keyboard = new KeyboardDevice({
+    container: ctx.container
+})
+
+keyboard.on('control:pressed', (control) =&gt; {
+    display.textContent = control.name
+    logger.log('pressed:', control.name)
+})
+
+keyboard.on('control:released', (control) =&gt; {
+    display.textContent = ''
+    logger.log('released:', control.name)
+})
+
+keyboard.start()
+ctx.setApp(keyboard)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Key codes</h3>
+                <pre><code>ctx.container.tabIndex = 0
+ctx.container.style.outline = 'none'
+ctx.container.style.display = 'flex'
+ctx.container.style.flexDirection = 'column'
+ctx.container.style.alignItems = 'center'
+ctx.container.style.justifyContent = 'center'
+ctx.container.style.background = '#16213e'
+ctx.container.style.color = '#fff'
+ctx.container.style.fontFamily = 'monospace'
+
+const hint = document.createElement('div')
+hint.textContent = 'Press any key to see its code'
+hint.style.fontSize = '12px'
+hint.style.opacity = '0.6'
+hint.style.marginBottom = '16px'
+ctx.container.appendChild(hint)
+
+const codeDisplay = document.createElement('div')
+codeDisplay.style.fontSize = '20px'
+codeDisplay.style.color = '#e94560'
+ctx.container.appendChild(codeDisplay)
+
+const keyboard = new KeyboardDevice({
+    container: ctx.container
+})
+
+keyboard.on('control:pressed', (control) =&gt; {
+    codeDisplay.textContent = control.name
+})
+
+keyboard.start()
+ctx.setApp(keyboard)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Multiple keys</h3>
+                <pre><code>ctx.container.tabIndex = 0
+ctx.container.style.outline = 'none'
+ctx.container.style.display = 'flex'
+ctx.container.style.flexDirection = 'column'
+ctx.container.style.alignItems = 'center'
+ctx.container.style.justifyContent = 'center'
+ctx.container.style.background = '#1a1a2e'
+ctx.container.style.color = '#fff'
+ctx.container.style.fontFamily = 'monospace'
+ctx.container.style.gap = '12px'
+
+const hint = document.createElement('div')
+hint.textContent = 'Hold multiple keys'
+hint.style.fontSize = '12px'
+hint.style.opacity = '0.6'
+ctx.container.appendChild(hint)
+
+const display = document.createElement('div')
+display.style.fontSize = '16px'
+display.style.textAlign = 'center'
+display.style.minHeight = '48px'
+ctx.container.appendChild(display)
+
+const keyboard = new KeyboardDevice({
+    container: ctx.container
+})
+
+const updateDisplay = () =&gt; {
+    const pressed = keyboard.getPressedControls()
+    if (pressed.length &gt; 0) {
+        display.innerHTML = pressed.map(c =&gt;
+            `&lt;span style=&quot;background:#e94560;padding:4px 8px;margin:2px;border-radius:4px&quot;&gt;${c.name}&lt;/span&gt;`).join('')
+    } else {
+        display.textContent = ''
+    }
+}
+
+keyboard.on('control:pressed', updateDisplay)
+keyboard.on('control:released', updateDisplay)
+
+keyboard.start()
+ctx.setApp(keyboard)</code></pre>
+            </div>
+        
+            <div class="doc-block">
                 <h3>API methods</h3>
                 <pre><code>const keyboard = new KeyboardDevice()
 keyboard.start()
@@ -93,6 +218,6 @@ const value = keyboard.getValueFor('KeyW')</code></pre>
         </main>
     </div>
 
-    <script type="module" src="assets/main-DS6PagYC.js"></script>
+    <script type="module" src="assets/main-woiL4Dlz.js"></script>
 </body>
 </html>
