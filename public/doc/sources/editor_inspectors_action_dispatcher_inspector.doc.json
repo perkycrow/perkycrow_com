@@ -2,7 +2,7 @@
   {
     "type": "code",
     "title": "Setup",
-    "source": "const inspector = document.createElement('action-dispatcher-inspector')\n\nconst dispatcher = new ActionDispatcher({$id: 'dispatcher'})\nconst main = dispatcher.register('main')\nmain.addAction('save', () => console.log('Saving...'))\n\ninspector.setModule(dispatcher)\ndocument.body.appendChild(inspector)"
+    "source": "const inspector = document.createElement('action-dispatcher-inspector')\n\nconst dispatcher = new ActionDispatcher({$id: 'dispatcher'})\nconst main = dispatcher.register('main')\nmain.addAction('save', () => logger.log('Saving...'))\n\ninspector.setModule(dispatcher)\ndocument.body.appendChild(inspector)"
   },
   {
     "type": "container",

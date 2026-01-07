@@ -7,31 +7,31 @@
   {
     "type": "code",
     "title": "Create and mount",
-    "source": "const app = new Application({$id: 'demo'})\nconst container = document.getElementById('app')\n\napp.mount(container)\napp.start()\n\nconsole.log(app.mounted) // true\nconsole.log(app.element.tagName) // 'DIV'\nconsole.log(app.perkyView.width, app.perkyView.height)"
+    "source": "const app = new Application({$id: 'demo'})\nconst container = document.getElementById('app')\n\napp.mount(container)\napp.start()\n\nlogger.log(app.mounted) // true\nlogger.log(app.element.tagName) // 'DIV'\nlogger.log(app.perkyView.width, app.perkyView.height)"
   },
   {
     "type": "code",
     "title": "List children",
-    "source": "const app = new Application({$id: 'demo'})\n\nfor (const child of app.children) {\n    console.log(`${child.$id} (${child.$category})`)\n}\n\napp.dispose()"
+    "source": "const app = new Application({$id: 'demo'})\n\nfor (const child of app.children) {\n    logger.log(`${child.$id} (${child.$category})`)\n}\n\napp.dispose()"
   },
   {
     "type": "code",
     "title": "Access systems",
-    "source": "const app = new Application({$id: 'demo'})\n\nconsole.log(app.manifest.$id)\nconsole.log(app.perkyView.$id)\nconsole.log(app.inputSystem.$id)\n\napp.dispose()"
+    "source": "const app = new Application({$id: 'demo'})\n\nlogger.log(app.manifest.$id)\nlogger.log(app.perkyView.$id)\nlogger.log(app.inputSystem.$id)\n\napp.dispose()"
   },
   {
     "type": "code",
     "title": "start / stop",
-    "source": "const app = new Application({$id: 'demo'})\n\napp.on('start', () => console.log('app started'))\napp.on('stop', () => console.log('app stopped'))\n\napp.start()\nconsole.log(app.running) // true\n\napp.stop()\nconsole.log(app.running) // false\n\napp.dispose()"
+    "source": "const app = new Application({$id: 'demo'})\n\napp.on('start', () => logger.log('app started'))\napp.on('stop', () => logger.log('app stopped'))\n\napp.start()\nlogger.log(app.running) // true\n\napp.stop()\nlogger.log(app.running) // false\n\napp.dispose()"
   },
   {
     "type": "code",
     "title": "View properties",
-    "source": "const app = new Application({$id: 'demo'})\n\nconsole.log(app.perkyView.width)\nconsole.log(app.perkyView.height)\nconsole.log(app.perkyView.aspectRatio)"
+    "source": "const app = new Application({$id: 'demo'})\n\nlogger.log(app.perkyView.width)\nlogger.log(app.perkyView.height)\nlogger.log(app.perkyView.aspectRatio)"
   },
   {
     "type": "code",
     "title": "Resize event",
-    "source": "const app = new Application({$id: 'demo'})\n\napp.on('resize', ({width, height}) => {\n    console.log('resized to:', width, height)\n})\n\napp.perkyView.setSize({width: 800, height: 600})"
+    "source": "const app = new Application({$id: 'demo'})\n\napp.on('resize', ({width, height}) => {\n    logger.log('resized to:', width, height)\n})\n\napp.perkyView.setSize({width: 800, height: 600})"
   }
 ]

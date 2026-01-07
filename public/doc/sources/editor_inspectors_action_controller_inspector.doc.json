@@ -2,7 +2,7 @@
   {
     "type": "code",
     "title": "Setup",
-    "source": "const inspector = document.createElement('action-controller-inspector')\n\nconst controller = new ActionController({$id: 'main'})\ncontroller.addAction('save', () => console.log('Saving...'))\n\ninspector.setModule(controller)\ndocument.body.appendChild(inspector)"
+    "source": "const inspector = document.createElement('action-controller-inspector')\n\nconst controller = new ActionController({$id: 'main'})\ncontroller.addAction('save', () => logger.log('Saving...'))\n\ninspector.setModule(controller)\ndocument.body.appendChild(inspector)"
   },
   {
     "type": "container",

@@ -17,6 +17,6 @@
   {
     "type": "code",
     "title": "Focus on a module",
-    "source": "const explorer = document.createElement('perky-explorer')\n// const app = new Application()\n// explorer.setModule(app)\n\n// Focus on a child module\n// explorer.focusModule(app.inputSystem)"
+    "source": "const explorer = document.createElement('perky-explorer')\n\n// const app = new Application()\n// explorer.setModule(app)\n\n// Focus on a child module\n// explorer.focusModule(app.inputSystem)"
   }
 ]

@@ -1,599 +1,4 @@
 {
-  "/application/application.doc.js": {
-    "file": "/application/application.test.js",
-    "describes": [
-      {
-        "title": "Application",
-        "line": 12,
-        "beforeEach": {
-          "line": 17,
-          "source": "mockManifest = {\n    getAsset: vi.fn(),\n    getSource: vi.fn(),\n    getConfig: vi.fn(),\n    setConfig: vi.fn()\n}\n\nvi.spyOn(Manifest.prototype, 'getAsset').mockImplementation((...args) => {\n    return mockManifest.getAsset(...args)\n})\n\nvi.spyOn(Manifest.prototype, 'getSource').mockImplementation((...args) => {\n    return mockManifest.getSource(...args)\n})\n\nvi.spyOn(Manifest.prototype, 'getConfig').mockImplementation((path) => {\n    return mockManifest.getConfig(path)\n})\n\nvi.spyOn(Manifest.prototype, 'setConfig').mockImplementation((path, value) => {\n    return mockManifest.setConfig(path, value)\n})\n\nconst mockPerkyViewElement = document.createElement('div')\nmockPerkyViewElement.exitFullscreenMode = vi.fn()\nmockPerkyViewElement.enterFullscreenMode = vi.fn()\nvi.spyOn(PerkyView.prototype, 'mount').mockReturnValue(null)\nvi.spyOn(PerkyView, 'defaultElement').mockReturnValue(mockPerkyViewElement)\n\napplication = new Application()"
-        },
-        "afterEach": {
-          "line": 51,
-          "source": "vi.restoreAllMocks()"
-        },
-        "tests": [
-          {
-            "title": "constructor",
-            "line": 56,
-            "source": "expect(application).toBeInstanceOf(PerkyModule)\nexpect(application.manifest).toBeInstanceOf(Manifest)\nexpect(application.actionDispatcher).toBeDefined()\nexpect(application.loaders).toBeInstanceOf(Registry)\nexpect(application.perkyView).toBeInstanceOf(PerkyView)\nexpect(application.sourceManager).toBeDefined()"
-          },
-          {
-            "title": "constructor with custom manifest",
-            "line": 66,
-            "source": "vi.restoreAllMocks()\n\nconst customManifestData = {\n    config: {name: 'Test App'}\n}\n\nconst customApp = new Application({manifest: customManifestData})\n\nexpect(customApp.manifest).toBeDefined()\nexpect(customApp.manifest.getConfig('name')).toBe('Test App')"
-          },
-          {
-            "title": "constructor with manifest instance",
-            "line": 80,
-            "source": "vi.restoreAllMocks()\n\nconst manifest = new Manifest({\n    data: {\n        config: {name: 'Test App Instance'}\n    }\n})\nconst customApp = new Application({manifest})\n\nexpect(customApp.manifest).toBeInstanceOf(Manifest)\nexpect(customApp.manifest.getConfig('name')).toBe('Test App Instance')"
-          },
-          {
-            "title": "constructor with static manifest",
-            "line": 95,
-            "source": "vi.restoreAllMocks()\n\nclass CustomApp extends Application {\n    static manifest = {\n        config: {name: 'Static Manifest App'}\n    }\n}\n\nconst customApp = new CustomApp()\n\nexpect(customApp.manifest).toBeInstanceOf(Manifest)\nexpect(customApp.manifest.getConfig('name')).toBe('Static Manifest App')"
-          },
-          {
-            "title": "constructor registers keyboard and mouse devices",
-            "line": 111,
-            "source": "const testApp = new Application()\n\nexpect(testApp.getDevice('keyboard')).toBeInstanceOf(KeyboardDevice)\nexpect(testApp.getDevice('mouse')).toBeInstanceOf(MouseDevice)"
-          },
-          {
-            "title": "constructor calls configure if defined",
-            "line": 119,
-            "source": "class ConfiguredApp extends Application {\n    constructor () {\n        super()\n    }\n\n    configureApplication () {\n        this.configureCalled = true\n    }\n}\n\nconst app = new ConfiguredApp()\nexpect(app.configureCalled).toBe(true)"
-          },
-          {
-            "title": "loadAsset",
-            "line": 136,
-            "source": "vi.spyOn(application, 'loadAsset').mockResolvedValue('loaded')\n\nconst promise = application.loadAsset('logo')\n\nexpect(application.loadAsset).toHaveBeenCalledWith('logo')\nawait expect(promise).resolves.toBe('loaded')"
-          },
-          {
-            "title": "loadTag",
-            "line": 146,
-            "source": "vi.spyOn(application, 'loadTag').mockResolvedValue('loaded')\n\nconst promise = application.loadTag('mainScene')\n\nexpect(application.loadTag).toHaveBeenCalledWith('mainScene')\nawait expect(promise).resolves.toBe('loaded')"
-          },
-          {
-            "title": "loadAll",
-            "line": 156,
-            "source": "vi.spyOn(application, 'loadAll').mockResolvedValue('loaded')\n\nconst promise = application.loadAll()\n\nexpect(application.loadAll).toHaveBeenCalled()\nawait expect(promise).resolves.toBe('loaded')"
-          },
-          {
-            "title": "getSource",
-            "line": 166,
-            "source": "application.getSource('logo')\n\nexpect(mockManifest.getSource).toHaveBeenCalledWith('logo')"
-          },
-          {
-            "title": "config",
-            "line": 173,
-            "source": "application.setConfig('debug', true)\n\nexpect(mockManifest.setConfig).toHaveBeenCalledWith('debug', true)"
-          },
-          {
-            "title": "dispose calls perkyView.dispose() which dismounts",
-            "line": 180,
-            "source": "const perkyView = application.perkyView\nvi.spyOn(perkyView, 'dispose')\nvi.spyOn(perkyView, 'dismount')\n\napplication.dispose()\n\nexpect(perkyView.dispose).toHaveBeenCalled()\nexpect(perkyView.dismount).toHaveBeenCalled()"
-          },
-          {
-            "title": "input event handling integration",
-            "line": 192,
-            "source": "class TestController extends PerkyModule {\n    jump = vi.fn()\n}\n\nconst testApp = new Application()\nconst controller = testApp.registerController('game', TestController)\ntestApp.setActiveControllers('game')\ntestApp.bindInput({\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump',\n    controllerName: 'game'\n})\n\nconst keyboardDevice = testApp.getDevice('keyboard')\nexpect(keyboardDevice).toBeDefined()\n\nconst spaceControl = keyboardDevice.getControl('Space') || keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\n\nspaceControl.press({code: 'Space'})\n\nawait new Promise(resolve => setTimeout(resolve, 0))\nexpect(controller.jump).toHaveBeenCalled()"
-          },
-          {
-            "title": "inputSystem alias provides access to InputSystem",
-            "line": 219,
-            "source": "expect(application.inputSystem.getDevice('keyboard')).toBeDefined()\nexpect(application.inputSystem.getDevice('mouse')).toBeDefined()"
-          },
-          {
-            "title": "inputSystem and inputBinder getters",
-            "line": 225,
-            "source": "expect(application.inputSystem).toBeDefined()\nexpect(application.inputBinder).toBeDefined()"
-          },
-          {
-            "title": "bind and unbind",
-            "line": 231,
-            "source": "const binding = application.bindInput({\n    deviceName: 'keyboard',\n    controlName: 'Enter',\n    actionName: 'select'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.actionName).toBe('select')\nexpect(application.getAllBindings()).toHaveLength(1)\n\nconst result = application.unbind({actionName: 'select'})\nexpect(result).toBe(true)\nexpect(application.getAllBindings()).toHaveLength(0)"
-          },
-          {
-            "title": "getBinding and hasBinding",
-            "line": 248,
-            "source": "application.bindInput({\n    deviceName: 'keyboard',\n    controlName: 'Tab',\n    actionName: 'nextTab'\n})\n\nexpect(application.hasBinding({actionName: 'nextTab'})).toBe(true)\n\nconst binding = application.getBinding({actionName: 'nextTab'})\nexpect(binding).toBeDefined()\nexpect(binding.actionName).toBe('nextTab')\n\nexpect(application.hasBinding({actionName: 'nonExistent'})).toBe(false)\nexpect(application.getBinding({actionName: 'nonExistent'})).toBeNull()"
-          },
-          {
-            "title": "getBindingsForInput",
-            "line": 266,
-            "source": "application.bindInput({\n    deviceName: 'keyboard',\n    controlName: 'F1',\n    actionName: 'help'\n})\n\nconst bindings = application.getBindingsForInput({\n    deviceName: 'keyboard',\n    controlName: 'F1',\n    eventType: 'pressed'\n})\n\nexpect(bindings).toHaveLength(1)\nexpect(bindings[0].actionName).toBe('help')"
-          },
-          {
-            "title": "clearBindings",
-            "line": 284,
-            "source": "application.bindInput({deviceName: 'keyboard', controlName: 'A', actionName: 'action1'})\napplication.bindInput({deviceName: 'keyboard', controlName: 'B', actionName: 'action2'})\n\nexpect(application.getAllBindings()).toHaveLength(2)\n\napplication.clearBindings()\nexpect(application.getAllBindings()).toHaveLength(0)"
-          },
-          {
-            "title": "device management",
-            "line": 295,
-            "source": "expect(application.registerDevice).toBeDefined()\nexpect(application.getDevice).toBeDefined()\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst mouseDevice = application.getDevice('mouse')\nexpect(keyboardDevice).toBeInstanceOf(KeyboardDevice)\nexpect(mouseDevice).toBeInstanceOf(MouseDevice)\nexpect(application.getDevice('nonExistent')).toBeNull()"
-          },
-          {
-            "title": "input state queries",
-            "line": 307,
-            "source": "expect(application.isPressed('keyboard', 'Space')).toBe(false)\nexpect(application.isPressedAny('Jump')).toBe(false)\nexpect(application.getInputValue('mouse', 'leftButton')).toBe(0)\nexpect(application.getInputValueAny('Fire')).toBeUndefined()\nexpect(application.getControl('keyboard', 'Space')).toBeNull()\nexpect(application.getControlAny('Jump')).toBeNull()"
-          },
-          {
-            "title": "input state shortcuts - isKeyPressed and isMousePressed",
-            "line": 317,
-            "source": "expect(application.isKeyPressed('Space')).toBe(false)\nexpect(application.isKeyPressed('ArrowLeft')).toBe(false)\nexpect(application.isKeyPressed('KeyW')).toBe(false)\n\nexpect(application.isMousePressed('leftButton')).toBe(false)\nexpect(application.isMousePressed('rightButton')).toBe(false)\nexpect(application.isMousePressed('middleButton')).toBe(false)\n\nexpect(application.isKeyPressed('Space')).toBe(application.isPressed('keyboard', 'Space'))\nexpect(application.isMousePressed('leftButton')).toBe(application.isPressed('mouse', 'leftButton'))"
-          },
-          {
-            "title": "input value shortcuts - getKeyValue and getMouseValue",
-            "line": 331,
-            "source": "expect(application.getKeyValue('Space')).toBeUndefined()\nexpect(application.getKeyValue('ArrowLeft')).toBeUndefined()\nexpect(application.getKeyValue('KeyW')).toBeUndefined()\n\nexpect(application.getMouseValue('leftButton')).toBe(application.getInputValue('mouse', 'leftButton'))\nexpect(application.getMouseValue('rightButton')).toBe(application.getInputValue('mouse', 'rightButton'))\nexpect(application.getMouseValue('position')).toBe(application.getInputValue('mouse', 'position'))\n\nexpect(application.getKeyValue('Space')).toBe(application.getInputValue('keyboard', 'Space'))\nexpect(application.getMouseValue('leftButton')).toBe(application.getInputValue('mouse', 'leftButton'))\nexpect(application.getMouseValue('unknownControl')).toBe(application.getInputValue('mouse', 'unknownControl'))"
-          },
-          {
-            "title": "input shortcuts with simulated key presses",
-            "line": 346,
-            "source": "const keyboardDevice = application.getDevice('keyboard')\nconst mouseDevice = application.getDevice('mouse')\n\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(application.isKeyPressed('Space')).toBe(true)\nexpect(application.getKeyValue('Space')).toBe(1)\nexpect(application.isPressed('keyboard', 'Space')).toBe(true)\n\nconst leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})\nleftButtonControl.press()\n\nexpect(application.isMousePressed('leftButton')).toBe(true)\nexpect(application.getMouseValue('leftButton')).toBe(1)\nexpect(application.isPressed('mouse', 'leftButton')).toBe(true)\n\nspaceControl.release()\nleftButtonControl.release()\n\nexpect(application.isKeyPressed('Space')).toBe(false)\nexpect(application.getKeyValue('Space')).toBe(0)\nexpect(application.isMousePressed('leftButton')).toBe(false)\nexpect(application.getMouseValue('leftButton')).toBe(0)"
-          },
-          {
-            "title": "input shortcuts consistency verification",
-            "line": 374,
-            "source": "const testCases = [\n    {key: 'Space', device: 'keyboard'},\n    {key: 'ArrowLeft', device: 'keyboard'},\n    {key: 'KeyW', device: 'keyboard'},\n    {key: 'leftButton', device: 'mouse'},\n    {key: 'rightButton', device: 'mouse'},\n    {key: 'unknownControl', device: 'keyboard'},\n    {key: 'unknownControl', device: 'mouse'}\n]\n\ntestCases.forEach(({key, device}) => {\n    if (device === 'keyboard') {\n        expect(application.isKeyPressed(key)).toBe(application.isPressed('keyboard', key))\n        expect(application.getKeyValue(key)).toBe(application.getInputValue('keyboard', key))\n    } else {\n        expect(application.isMousePressed(key)).toBe(application.isPressed('mouse', key))\n        expect(application.getMouseValue(key)).toBe(application.getInputValue('mouse', key))\n    }\n})\n\nexpect(application.isKeyPressed('NonExistentKey')).toBe(false)\nexpect(application.isMousePressed('NonExistentButton')).toBe(false)"
-          },
-          {
-            "title": "bindKey convenience method",
-            "line": 400,
-            "source": "const binding = application.bindInput({controlName: 'Escape', actionName: 'pause'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('Escape')\nexpect(binding.actionName).toBe('pause')\nexpect(binding.eventType).toBe('pressed')\n\nconst releasedBinding = application.bindInput({controlName: 'Escape', actionName: 'resume', eventType: 'released'})\nexpect(releasedBinding.eventType).toBe('released')"
-          },
-          {
-            "title": "bindMouse convenience method",
-            "line": 414,
-            "source": "const binding = application.bindInput({controlName: 'leftButton', actionName: 'shoot'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('leftButton')\nexpect(binding.actionName).toBe('shoot')\nexpect(binding.eventType).toBe('pressed')\n\nconst releasedBinding = application.bindInput({controlName: 'rightButton', actionName: 'aim', eventType: 'released'})\nexpect(releasedBinding.eventType).toBe('released')"
-          },
-          {
-            "title": "addControl",
-            "line": 428,
-            "source": "const control = application.addControl('keyboard', ButtonControl, {name: 'CustomKey'})\n\nexpect(control).toBeInstanceOf(ButtonControl)\nexpect(control.name).toBe('CustomKey')\n\nconst keyboardDevice = application.getDevice('keyboard')\nexpect(keyboardDevice.getControl('CustomKey')).toBe(control)"
-          },
-          {
-            "title": "use method installs child class",
-            "line": 439,
-            "source": "class TestChild extends PerkyModule {\n    constructor (options) {\n        super({...options, $id: 'testChild'})\n    }\n}\n\napplication.create(TestChild, {$id: 'testChild', $category: 'default'})\n\nexpect(application.hasChild('testChild')).toBe(true)"
-          },
-          {
-            "title": "use method installs child instance",
-            "line": 452,
-            "source": "class TestChild extends PerkyModule {\n    constructor (options) {\n        super({...options, $id: 'testChild'})\n    }\n}\n\napplication.create(TestChild, {\n    $id: 'testChild',\n    $category: 'default'\n})\n\nexpect(application.hasChild('testChild')).toBe(true)"
-          },
-          {
-            "title": "use method with options",
-            "line": 468,
-            "source": "class TestChild extends PerkyModule {\n    constructor (options) {\n        super({...options, $id: 'testChild'})\n    }\n}\n\napplication.create(TestChild, {\n    $id: 'testChild',\n    $category: 'default',\n    someOption: true\n})\n\nconst child = application.getChild('testChild')\nexpect(child.options.someOption).toBe(true)"
-          }
-        ],
-        "describes": [
-          {
-            "title": "bindKey flexible API",
-            "line": 486,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "parameter format with controllerName",
-                "line": 488,
-                "source": "const binding = application.bindInput({controlName: 'KeyF', actionName: 'fire', eventType: 'pressed', controllerName: 'player1'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyF')\nexpect(binding.actionName).toBe('fire')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('player1')"
-              },
-              {
-                "title": "parameter format with eventType and no controllerName",
-                "line": 499,
-                "source": "const binding = application.bindInput({controlName: 'KeyG', actionName: 'grenade', eventType: 'released'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyG')\nexpect(binding.actionName).toBe('grenade')\nexpect(binding.eventType).toBe('released')\nexpect(binding.controllerName).toBeNull()"
-              },
-              {
-                "title": "object format with actionName only",
-                "line": 510,
-                "source": "const binding = application.bindInput({controlName: 'KeyH', actionName: 'heal'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyH')\nexpect(binding.actionName).toBe('heal')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBeNull()"
-              },
-              {
-                "title": "object format with actionName and eventType",
-                "line": 521,
-                "source": "const binding = application.bindInput({\n    controlName: 'KeyI',\n    actionName: 'inventory',\n    eventType: 'released'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyI')\nexpect(binding.actionName).toBe('inventory')\nexpect(binding.eventType).toBe('released')\nexpect(binding.controllerName).toBeNull()"
-              },
-              {
-                "title": "object format with all options",
-                "line": 536,
-                "source": "const binding = application.bindInput({\n    controlName: 'KeyJ',\n    actionName: 'jump',\n    eventType: 'pressed',\n    controllerName: 'player2'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyJ')\nexpect(binding.actionName).toBe('jump')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('player2')"
-              },
-              {
-                "title": "object format with partial options uses defaults",
-                "line": 552,
-                "source": "const binding = application.bindInput({\n    controlName: 'KeyK',\n    actionName: 'kick',\n    controllerName: 'player3'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyK')\nexpect(binding.actionName).toBe('kick')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('player3')"
-              },
-              {
-                "title": "backwards compatibility - original format still works",
-                "line": 567,
-                "source": "const binding = application.bindInput({controlName: 'KeyL', actionName: 'look'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyL')\nexpect(binding.actionName).toBe('look')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBeNull()"
-              }
-            ],
-            "describes": []
-          },
-          {
-            "title": "bindMouse flexible API",
-            "line": 581,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "parameter format with controllerName",
-                "line": 583,
-                "source": "const binding = application.bindInput({controlName: 'middleButton', actionName: 'zoom', eventType: 'pressed', controllerName: 'camera'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('middleButton')\nexpect(binding.actionName).toBe('zoom')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('camera')"
-              },
-              {
-                "title": "parameter format with eventType and no controllerName",
-                "line": 594,
-                "source": "const binding = application.bindInput({controlName: 'rightButton', actionName: 'context', eventType: 'released'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('rightButton')\nexpect(binding.actionName).toBe('context')\nexpect(binding.eventType).toBe('released')\nexpect(binding.controllerName).toBeNull()"
-              },
-              {
-                "title": "object format with actionName only",
-                "line": 605,
-                "source": "const binding = application.bindInput({controlName: 'leftButton', actionName: 'select'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('leftButton')\nexpect(binding.actionName).toBe('select')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBeNull()"
-              },
-              {
-                "title": "object format with actionName and eventType",
-                "line": 616,
-                "source": "const binding = application.bindInput({\n    controlName: 'rightButton',\n    actionName: 'menu',\n    eventType: 'released'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('rightButton')\nexpect(binding.actionName).toBe('menu')\nexpect(binding.eventType).toBe('released')\nexpect(binding.controllerName).toBeNull()"
-              },
-              {
-                "title": "object format with all options",
-                "line": 631,
-                "source": "const binding = application.bindInput({\n    controlName: 'leftButton',\n    actionName: 'fire',\n    eventType: 'pressed',\n    controllerName: 'weapon'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('leftButton')\nexpect(binding.actionName).toBe('fire')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('weapon')"
-              },
-              {
-                "title": "object format with partial options uses defaults",
-                "line": 647,
-                "source": "const binding = application.bindInput({\n    controlName: 'middleButton',\n    actionName: 'special',\n    controllerName: 'ui'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('middleButton')\nexpect(binding.actionName).toBe('special')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('ui')"
-              },
-              {
-                "title": "backwards compatibility - original format still works",
-                "line": 662,
-                "source": "const binding = application.bindInput({controlName: 'rightButton', actionName: 'aim'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('rightButton')\nexpect(binding.actionName).toBe('aim')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBeNull()"
-              },
-              {
-                "title": "object format validation - empty object should throw",
-                "line": 673,
-                "source": "expect(() => {\n    application.bindMouse('leftButton', {})\n}).toThrow()"
-              },
-              {
-                "title": "object format validation - undefined actionName should throw",
-                "line": 679,
-                "source": "expect(() => {\n    application.bindMouse('rightButton', {actionName: undefined})\n}).toThrow()"
-              },
-              {
-                "title": "parameter format validation - undefined actionName should throw",
-                "line": 685,
-                "source": "expect(() => {\n    application.bindMouse('middleButton', undefined)\n}).toThrow()"
-              }
-            ],
-            "describes": []
-          },
-          {
-            "title": "flexible API edge cases",
-            "line": 694,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "mixed usage in same application",
-                "line": 696,
-                "source": "const binding1 = application.bindInput({controlName: 'Digit1', actionName: 'slot1', eventType: 'pressed', controllerName: 'inventory'})\n\nconst binding2 = application.bindInput({\n    controlName: 'Digit2',\n    actionName: 'slot2',\n    eventType: 'pressed',\n    controllerName: 'inventory'\n})\n\nexpect(binding1.actionName).toBe('slot1')\nexpect(binding1.controllerName).toBe('inventory')\nexpect(binding2.actionName).toBe('slot2')\nexpect(binding2.controllerName).toBe('inventory')\n\nconst allBindings = application.getAllBindings()\nconst inventoryBindings = allBindings.filter(b => b.controllerName === 'inventory')\nexpect(inventoryBindings).toHaveLength(2)"
-              },
-              {
-                "title": "object format with empty object defaults everything",
-                "line": 716,
-                "source": "expect(() => {\n    application.bindKey('KeyEmpty', {})\n}).toThrow()"
-              },
-              {
-                "title": "object format with undefined actionName",
-                "line": 722,
-                "source": "expect(() => {\n    application.bindKey('KeyUndef', {actionName: undefined})\n}).toThrow()"
-              },
-              {
-                "title": "object format with null actionName",
-                "line": 728,
-                "source": "expect(() => {\n    application.bindKey('KeyNull', {actionName: null})\n}).toThrow()"
-              },
-              {
-                "title": "object format with empty string actionName",
-                "line": 734,
-                "source": "expect(() => {\n    application.bindKey('KeyEmpty', {actionName: ''})\n}).toThrow()"
-              },
-              {
-                "title": "parameter format with undefined actionName",
-                "line": 740,
-                "source": "expect(() => {\n    application.bindKey('KeyParamUndef', undefined)\n}).toThrow()"
-              },
-              {
-                "title": "parameter format with null actionName",
-                "line": 746,
-                "source": "expect(() => {\n    application.bindKey('KeyParamNull', null)\n}).toThrow()"
-              }
-            ],
-            "describes": []
-          },
-          {
-            "title": "bindCombo",
-            "line": 755,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "accepts string format with auto-detection",
-                "line": 757,
-                "source": "const combo = application.bindCombo(['ShiftLeft', 'leftButton'], 'shiftClick')\n\nexpect(combo).toBeDefined()\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls[0].deviceName).toBe('keyboard')\nexpect(combo.controls[0].controlName).toBe('ShiftLeft')\nexpect(combo.controls[1].deviceName).toBe('mouse')\nexpect(combo.controls[1].controlName).toBe('leftButton')\nexpect(combo.actionName).toBe('shiftClick')"
-              },
-              {
-                "title": "accepts object format",
-                "line": 770,
-                "source": "const combo = application.bindCombo([\n    {deviceName: 'keyboard', controlName: 'ControlLeft'},\n    {deviceName: 'mouse', controlName: 'rightButton'}\n], 'ctrlRightClick')\n\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls[0].deviceName).toBe('keyboard')\nexpect(combo.controls[1].deviceName).toBe('mouse')"
-              },
-              {
-                "title": "accepts mixed string and object formats",
-                "line": 782,
-                "source": "const combo = application.bindCombo([\n    'ControlLeft',\n    {deviceName: 'mouse', controlName: 'leftButton'}\n], 'mixedCombo')\n\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls[0].deviceName).toBe('keyboard')\nexpect(combo.controls[0].controlName).toBe('ControlLeft')\nexpect(combo.controls[1].deviceName).toBe('mouse')\nexpect(combo.controls[1].controlName).toBe('leftButton')"
-              },
-              {
-                "title": "works with keyboard-only combinations",
-                "line": 796,
-                "source": "const combo = application.bindCombo(['ControlLeft', 'KeyS'], 'save')\n\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls.every(c => c.deviceName === 'keyboard')).toBe(true)"
-              },
-              {
-                "title": "works with mouse-only combinations",
-                "line": 804,
-                "source": "const combo = application.bindCombo(['leftButton', 'rightButton'], 'bothButtons')\n\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls.every(c => c.deviceName === 'mouse')).toBe(true)"
-              },
-              {
-                "title": "supports controller and eventType",
-                "line": 812,
-                "source": "const combo = application.bindCombo(\n    ['AltLeft', 'middleButton'],\n    'special',\n    'editor',\n    'released'\n)\n\nexpect(combo.controllerName).toBe('editor')\nexpect(combo.eventType).toBe('released')"
-              },
-              {
-                "title": "integration test - triggers when all controls are pressed",
-                "line": 825,
-                "source": "class TestController extends PerkyModule {\n    smartCombo = vi.fn()\n}\n\nconst testApp = new Application()\n\n\nconst controller = testApp.registerController('editor', TestController)\ntestApp.setActiveControllers('editor')\ntestApp.bindCombo(['ControlLeft', 'leftButton'], 'smartCombo', 'editor')\n\nconst keyboardDevice = testApp.getDevice('keyboard')\nconst mouseDevice = testApp.getDevice('mouse')\n\nconst ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})\nconst leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})\n\nctrlControl.press({code: 'ControlLeft'})\nawait new Promise(resolve => setTimeout(resolve, 0))\nexpect(controller.smartCombo).not.toHaveBeenCalled()\n\nleftButtonControl.press()\nawait new Promise(resolve => setTimeout(resolve, 0))\nexpect(controller.smartCombo).toHaveBeenCalled()"
-              }
-            ],
-            "describes": []
-          },
-          {
-            "title": "isActionPressed and getActionControls",
-            "line": 855,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "isActionPressed - returns false when action not bound",
-                "line": 857,
-                "source": "expect(application.isActionPressed('nonExistent')).toBe(false)"
-              },
-              {
-                "title": "isActionPressed - returns false when control not pressed",
-                "line": 862,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\nexpect(application.isActionPressed('jump')).toBe(false)"
-              },
-              {
-                "title": "isActionPressed - returns true when control is pressed",
-                "line": 868,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(application.isActionPressed('jump')).toBe(true)"
-              },
-              {
-                "title": "isActionPressed - works with multiple bindings for same action",
-                "line": 879,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\napplication.bindInput({controlName: 'KeyW', actionName: 'jump'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst wControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nwControl.press()\n\nexpect(application.isActionPressed('jump')).toBe(true)"
-              },
-              {
-                "title": "isActionPressed - filters by controllerName",
-                "line": 891,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})\napplication.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(application.isActionPressed('jump', 'player1')).toBe(true)\nexpect(application.isActionPressed('jump', 'player2')).toBe(false)\nexpect(application.isActionPressed('jump')).toBe(true)"
-              },
-              {
-                "title": "isActionPressed - works with composite bindings",
-                "line": 905,
-                "source": "application.bindCombo(['ControlLeft', 'KeyS'], 'save')\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})\nconst sControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyS'})\n\nctrlControl.press()\nexpect(application.isActionPressed('save')).toBe(false)\n\nsControl.press()\nexpect(application.isActionPressed('save')).toBe(true)\n\nctrlControl.release()\nexpect(application.isActionPressed('save')).toBe(false)"
-              },
-              {
-                "title": "getActionControls - returns empty array when action not bound",
-                "line": 923,
-                "source": "const controls = application.getActionControls('nonExistent')\nexpect(controls).toHaveLength(0)"
-              },
-              {
-                "title": "getActionControls - returns control for simple binding",
-                "line": 929,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\n\nconst controls = application.getActionControls('jump')\nexpect(controls).toHaveLength(1)\nexpect(controls[0]).toBe(spaceControl)"
-              },
-              {
-                "title": "getActionControls - returns multiple controls for multiple bindings",
-                "line": 941,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})\napplication.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nconst wControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})\n\nconst controls = application.getActionControls('jump')\nexpect(controls).toHaveLength(2)\nexpect(controls).toContain(spaceControl)\nexpect(controls).toContain(wControl)"
-              },
-              {
-                "title": "getActionControls - filters by controllerName",
-                "line": 956,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})\napplication.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nkeyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nkeyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})\n\nconst player1Controls = application.getActionControls('jump', 'player1')\nexpect(player1Controls).toHaveLength(1)\nexpect(player1Controls[0].name).toBe('Space')\n\nconst player2Controls = application.getActionControls('jump', 'player2')\nexpect(player2Controls).toHaveLength(1)\nexpect(player2Controls[0].name).toBe('KeyW')\n\nconst allControls = application.getActionControls('jump')\nexpect(allControls).toHaveLength(2)"
-              },
-              {
-                "title": "getActionControls - works with composite bindings",
-                "line": 977,
-                "source": "application.bindCombo(['ControlLeft', 'KeyS'], 'save')\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})\nconst sControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyS'})\n\nconst controls = application.getActionControls('save')\nexpect(controls).toHaveLength(2)\nexpect(controls).toContain(ctrlControl)\nexpect(controls).toContain(sControl)"
-              },
-              {
-                "title": "getActionControls - handles non-existent controls gracefully",
-                "line": 991,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst controls = application.getActionControls('jump')\nexpect(controls).toHaveLength(0)"
-              },
-              {
-                "title": "getActionControls - works with cross-device bindings",
-                "line": 999,
-                "source": "application.bindInput({controlName: 'Space', actionName: 'action', eventType: 'pressed', controllerName: 'keyboard-input'})\napplication.bindInput({controlName: 'leftButton', actionName: 'action', eventType: 'pressed', controllerName: 'mouse-input'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst mouseDevice = application.getDevice('mouse')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nconst leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})\n\nconst controls = application.getActionControls('action')\nexpect(controls).toHaveLength(2)\nexpect(controls).toContain(spaceControl)\nexpect(controls).toContain(leftButtonControl)"
-              }
-            ],
-            "describes": []
-          },
-          {
-            "title": "controller bindings auto-registration",
-            "line": 1017,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "registers simple bindings when controller is registered",
-                "line": 1019,
-                "source": "class TestController extends PerkyModule {\n    static bindings = {\n        shoot: 'Space',\n        jump: 'KeyJ'\n    }\n\n    static normalizeBindings () {\n        return [\n            {action: 'shoot', key: 'Space', scoped: false, eventType: 'pressed', controllerName: null},\n            {action: 'jump', key: 'KeyJ', scoped: false, eventType: 'pressed', controllerName: null}\n        ]\n    }\n}\n\nconst beforeBindings = application.getAllBindings()\nexpect(beforeBindings.filter(b => b.actionName === 'shoot')).toHaveLength(0)\n\napplication.registerController('game', TestController)\n\nconst afterBindings = application.getAllBindings()\nconst shootBinding = afterBindings.find(b => b.actionName === 'shoot')\nconst jumpBinding = afterBindings.find(b => b.actionName === 'jump')\n\nexpect(shootBinding).toBeDefined()\nexpect(shootBinding.controlName).toBe('Space')\nexpect(shootBinding.controllerName).toBeNull()\n\nexpect(jumpBinding).toBeDefined()\nexpect(jumpBinding.controlName).toBe('KeyJ')\nexpect(jumpBinding.controllerName).toBeNull()"
-              },
-              {
-                "title": "registers scoped bindings with controllerName",
-                "line": 1053,
-                "source": "class TestController extends PerkyModule {\n    static bindings = {\n        shoot: {keys: 'Space', scoped: true}\n    }\n\n    static normalizeBindings (controllerName) {\n        return [\n            {action: 'shoot', key: 'Space', scoped: true, eventType: 'pressed', controllerName}\n        ]\n    }\n}\n\napplication.registerController('player', TestController)\n\nconst bindings = application.getAllBindings()\nconst shootBinding = bindings.find(b => b.actionName === 'shoot' && b.controllerName === 'player')\n\nexpect(shootBinding).toBeDefined()\nexpect(shootBinding.controlName).toBe('Space')\nexpect(shootBinding.controllerName).toBe('player')"
-              },
-              {
-                "title": "registers multiple keys for same action",
-                "line": 1077,
-                "source": "class TestController extends PerkyModule {\n    static bindings = {\n        moveUp: ['KeyW', 'ArrowUp']\n    }\n\n    static normalizeBindings () {\n        return [\n            {action: 'moveUp', key: 'KeyW', scoped: false, eventType: 'pressed', controllerName: null},\n            {action: 'moveUp', key: 'ArrowUp', scoped: false, eventType: 'pressed', controllerName: null}\n        ]\n    }\n}\n\napplication.registerController('game', TestController)\n\nconst bindings = application.getAllBindings()\nconst moveUpBindings = bindings.filter(b => b.actionName === 'moveUp')\n\nexpect(moveUpBindings.length).toBeGreaterThanOrEqual(2)\nexpect(moveUpBindings.some(b => b.controlName === 'KeyW')).toBe(true)\nexpect(moveUpBindings.some(b => b.controlName === 'ArrowUp')).toBe(true)"
-              },
-              {
-                "title": "registers bindings with custom eventType",
-                "line": 1102,
-                "source": "class TestController extends PerkyModule {\n    static bindings = {\n        boost: {keys: 'ShiftLeft', eventType: 'released'}\n    }\n\n    static normalizeBindings () {\n        return [\n            {action: 'boost', key: 'ShiftLeft', scoped: false, eventType: 'released', controllerName: null}\n        ]\n    }\n}\n\napplication.registerController('game', TestController)\n\nconst bindings = application.getAllBindings()\nconst boostBinding = bindings.find(b => b.actionName === 'boost')\n\nexpect(boostBinding).toBeDefined()\nexpect(boostBinding.eventType).toBe('released')"
-              },
-              {
-                "title": "allows multiple controllers with same keys (different scopes)",
-                "line": 1125,
-                "source": "class GameController extends PerkyModule {\n    static bindings = {\n        move: {keys: 'ArrowUp', scoped: true}\n    }\n\n    static normalizeBindings (controllerName) {\n        return [\n            {action: 'move', key: 'ArrowUp', scoped: true, eventType: 'pressed', controllerName}\n        ]\n    }\n}\n\nclass MenuController extends PerkyModule {\n    static bindings = {\n        navigate: {keys: 'ArrowUp', scoped: true}\n    }\n\n    static normalizeBindings (controllerName) {\n        return [\n            {action: 'navigate', key: 'ArrowUp', scoped: true, eventType: 'pressed', controllerName}\n        ]\n    }\n}\n\napplication.registerController('game', GameController)\napplication.registerController('menu', MenuController)\n\nconst bindings = application.getAllBindings()\nconst arrowUpBindings = bindings.filter(b => b.controlName === 'ArrowUp')\n\nexpect(arrowUpBindings.length).toBeGreaterThanOrEqual(2)\n\nconst gameBinding = arrowUpBindings.find(b => b.controllerName === 'game')\nconst menuBinding = arrowUpBindings.find(b => b.controllerName === 'menu')\n\nexpect(gameBinding).toBeDefined()\nexpect(gameBinding.actionName).toBe('move')\n\nexpect(menuBinding).toBeDefined()\nexpect(menuBinding.actionName).toBe('navigate')"
-              }
-            ],
-            "describes": []
-          }
-        ]
-      }
-    ]
-  },
-  "/application/perky_view.doc.js": {
-    "file": "/application/perky_view.test.js",
-    "describes": [
-      {
-        "title": "PerkyView",
-        "line": 6,
-        "beforeEach": {
-          "line": 11,
-          "source": "element = document.createElement('div')\nelement.id = 'test-view'\n\ncontainer = document.createElement('div')\ncontainer.id = 'test-container'\ndocument.body.appendChild(container)\n\nvi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(0)\nvi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(0)\nvi.spyOn(element, 'getBoundingClientRect').mockReturnValue({\n    left: 0,\n    top: 0,\n    width: 0,\n    height: 0,\n    right: 0,\n    bottom: 0,\n    x: 0,\n    y: 0\n})\n\nvi.spyOn(PerkyModule.prototype, 'emit')\n\nview = new PerkyView({element})"
-        },
-        "afterEach": {
-          "line": 38,
-          "source": "vi.restoreAllMocks()\ndocument.body.innerHTML = ''"
-        },
-        "tests": [
-          {
-            "title": "constructor with element",
-            "line": 44,
-            "source": "expect(view.element).toBe(element)"
-          },
-          {
-            "title": "constructor with container",
-            "line": 49,
-            "source": "const viewWithContainer = new PerkyView({\n    element,\n    container\n})\n\nexpect(container.contains(element)).toBe(true)\nexpect(viewWithContainer.container).toBe(container)"
-          },
-          {
-            "title": "constructor with default element",
-            "line": 60,
-            "source": "const defaultView = new PerkyView()\n\nexpect(defaultView.element.tagName).toBe('DIV')\nexpect(defaultView.element.className).toBe('perky-view')"
-          },
-          {
-            "title": "html getter",
-            "line": 68,
-            "source": "element.innerHTML = '<div>test content</div>'\nexpect(view.html).toBe('<div>test content</div>')"
-          },
-          {
-            "title": "width getter",
-            "line": 74,
-            "source": "element.style.width = '300px'\nvi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(300)\nexpect(view.width).toBe(300)"
-          },
-          {
-            "title": "height getter",
-            "line": 81,
-            "source": "element.style.height = '400px'\nvi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(400)\nexpect(view.height).toBe(400)"
-          },
-          {
-            "title": "aspectRatio getter",
-            "line": 88,
-            "source": "element.style.width = '300px'\nelement.style.height = '400px'\nvi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(300)\nvi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(400)\nexpect(view.aspectRatio).toBe(300 / 400)"
-          },
-          {
-            "title": "size getter",
-            "line": 97,
-            "source": "element.style.width = '300px'\nelement.style.height = '400px'\nvi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(300)\nvi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(400)\nexpect(view.size).toEqual({\n    width: 300,\n    height: 400\n})"
-          },
-          {
-            "title": "addClass",
-            "line": 109,
-            "source": "view.addClass('test-class')\nexpect(element.classList.contains('test-class')).toBe(true)"
-          },
-          {
-            "title": "removeClass",
-            "line": 115,
-            "source": "element.classList.add('test-class')\nview.removeClass('test-class')\nexpect(element.classList.contains('test-class')).toBe(false)"
-          },
-          {
-            "title": "hasClass",
-            "line": 122,
-            "source": "element.classList.add('test-class')\nexpect(view.hasClass('test-class')).toBe(true)"
-          },
-          {
-            "title": "setSize",
-            "line": 128,
-            "source": "view.setSize({width: 100, height: 200})\n\nexpect(element.style.width).toBe('100px')\nexpect(element.style.height).toBe('200px')"
-          },
-          {
-            "title": "setSize with custom unit",
-            "line": 136,
-            "source": "view.setSize({width: 100, height: 200, unit: '%'})\n\nexpect(element.style.width).toBe('100%')\nexpect(element.style.height).toBe('200%')"
-          },
-          {
-            "title": "fit",
-            "line": 144,
-            "source": "container.style.width = '500px'\ncontainer.style.height = '600px'\ncontainer.appendChild(element)\n\nvi.spyOn(container, 'getBoundingClientRect').mockReturnValue({\n    width: 500,\n    height: 600,\n    left: 0,\n    top: 0,\n    right: 500,\n    bottom: 600,\n    x: 0,\n    y: 0\n})\n\nview.fit()\n\nexpect(element.style.width).toBe('500px')\nexpect(element.style.height).toBe('600px')"
-          },
-          {
-            "title": "mount",
-            "line": 167,
-            "source": "view.mount(container)\n\nexpect(container.contains(element)).toBe(true)\nexpect(view.container).toBe(container)\nexpect(view.emit).toHaveBeenCalledWith('mount', {container})"
-          },
-          {
-            "title": "isVisible",
-            "line": 176,
-            "source": "element.style.display = 'block'\nexpect(view.isVisible()).toBe(true)\n\nelement.style.display = 'none'\nexpect(view.isVisible()).toBe(false)"
-          },
-          {
-            "title": "display getter and setter",
-            "line": 185,
-            "source": "view.display = 'flex'\nexpect(element.style.display).toBe('flex')\nexpect(view.display).toBe('flex')\nexpect(view.display = 'flex').toBe('flex')"
-          },
-          {
-            "title": "hide",
-            "line": 193,
-            "source": "element.style.display = 'flex'\nview.hide()\n\nexpect(element.style.display).toBe('none')"
-          },
-          {
-            "title": "show restores previous display",
-            "line": 201,
-            "source": "element.style.display = 'flex'\nview.hide()\nview.show()\n\nexpect(element.style.display).toBe('flex')"
-          },
-          {
-            "title": "show without previous display",
-            "line": 210,
-            "source": "view.show()\nexpect(element.style.display).toBe('')"
-          }
-        ],
-        "describes": []
-      }
-    ]
-  },
   "/core/action_controller.doc.js": {
     "file": "/core/action_controller.test.js",
     "describes": [
@@ -662,66 +67,86 @@
             "source": "const actions = controller.listActions()\n\nexpect(actions).not.toContain('start')\nexpect(actions).not.toContain('stop')\nexpect(actions).not.toContain('addAction')\nexpect(actions).not.toContain('execute')"
           },
           {
-            "title": "execute with existing registered action",
+            "title": "listActionsWithParams - returns actions with parameters",
             "line": 114,
+            "source": "const testController = new ActionController()\ntestController.addAction('jump', (height, force = 10) => [height, force])\ntestController.addAction('move', (x, y) => [x, y])\n\nconst actionsWithParams = testController.listActionsWithParams()\n\nconst jumpAction = actionsWithParams.find(a => a.name === 'jump')\nexpect(jumpAction).toBeDefined()\nexpect(jumpAction.params).toEqual([\n    {name: 'height', defaultValue: null},\n    {name: 'force', defaultValue: '10'}\n])\n\nconst moveAction = actionsWithParams.find(a => a.name === 'move')\nexpect(moveAction).toBeDefined()\nexpect(moveAction.params).toEqual([\n    {name: 'x', defaultValue: null},\n    {name: 'y', defaultValue: null}\n])"
+          },
+          {
+            "title": "listActionsWithParams - includes registered actions",
+            "line": 137,
+            "source": "controller.addAction('customAction', (value) => value * 2)\n\nconst actionsWithParams = controller.listActionsWithParams()\n\nconst customAction = actionsWithParams.find(a => a.name === 'customAction')\nexpect(customAction).toBeDefined()\nexpect(customAction.params).toEqual([{name: 'value', defaultValue: null}])"
+          },
+          {
+            "title": "listActionsWithParams - handles functions with no params",
+            "line": 148,
+            "source": "controller.addAction('noParams', () => {})\n\nconst actionsWithParams = controller.listActionsWithParams()\n\nconst noParamsAction = actionsWithParams.find(a => a.name === 'noParams')\nexpect(noParamsAction).toBeDefined()\nexpect(noParamsAction.params).toEqual([])"
+          },
+          {
+            "title": "listActionsWithParams - handles rest parameters",
+            "line": 159,
+            "source": "controller.addAction('withRest', (first, ...rest) => [first, rest])\n\nconst actionsWithParams = controller.listActionsWithParams()\n\nconst action = actionsWithParams.find(a => a.name === 'withRest')\nexpect(action).toBeDefined()\nexpect(action.params).toEqual([{name: 'first', defaultValue: null}])"
+          },
+          {
+            "title": "execute with existing registered action",
+            "line": 170,
             "source": "const action = vi.fn()\nconst actionListener = vi.fn()\nconst genericListener = vi.fn()\n\ncontroller.addAction('testAction', action)\ncontroller.on('testAction', actionListener)\ncontroller.on('action', genericListener)\n\ncontroller.execute('testAction', 'arg1', 'arg2')\n\nexpect(action).toHaveBeenCalledWith('arg1', 'arg2')\nexpect(actionListener).toHaveBeenCalledWith('arg1', 'arg2')\nexpect(genericListener).toHaveBeenCalledWith('testAction', 'arg1', 'arg2')"
           },
           {
             "title": "execute with method action",
-            "line": 131,
+            "line": 187,
             "source": "const action = vi.fn()\nconst actionListener = vi.fn()\n\ncontroller.addAction('testMethod', action)\ncontroller.on('testMethod', actionListener)\n\ncontroller.execute('testMethod', 'arg1')\n\nexpect(action).toHaveBeenCalledWith('arg1')\nexpect(actionListener).toHaveBeenCalledWith('arg1')"
           },
           {
             "title": "execute with non-existent action still emits events",
-            "line": 145,
+            "line": 201,
             "source": "const actionListener = vi.fn()\nconst genericListener = vi.fn()\n\ncontroller.on('nonExistentAction', actionListener)\ncontroller.on('action', genericListener)\n\ncontroller.execute('nonExistentAction', 'arg1', 'arg2')\n\nexpect(actionListener).toHaveBeenCalledWith('arg1', 'arg2')\nexpect(genericListener).toHaveBeenCalledWith('nonExistentAction', 'arg1', 'arg2')"
           },
           {
             "title": "multiple event listeners",
-            "line": 159,
+            "line": 215,
             "source": "const action = vi.fn()\nconst listener1 = vi.fn()\nconst listener2 = vi.fn()\nconst genericListener = vi.fn()\n\ncontroller.addAction('testAction', action)\ncontroller.on('testAction', listener1)\ncontroller.on('testAction', listener2)\ncontroller.on('action', genericListener)\n\ncontroller.execute('testAction', 'arg')\n\nexpect(action).toHaveBeenCalledWith('arg')\nexpect(listener1).toHaveBeenCalledWith('arg')\nexpect(listener2).toHaveBeenCalledWith('arg')\nexpect(genericListener).toHaveBeenCalledWith('testAction', 'arg')"
           }
         ],
         "describes": [
           {
             "title": "normalizeBindings",
-            "line": 179,
+            "line": 235,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "empty bindings",
-                "line": 181,
+                "line": 237,
                 "source": "class TestController extends ActionController {\n    static bindings = {}\n}\n\nconst normalized = TestController.normalizeBindings('test')\nexpect(normalized).toEqual([])"
               },
               {
                 "title": "simple string binding",
-                "line": 191,
+                "line": 247,
                 "source": "class TestController extends ActionController {\n    static bindings = {\n        shoot: 'Space'\n    }\n}\n\nconst normalized = TestController.normalizeBindings('test')\nexpect(normalized).toEqual([\n    {\n        action: 'shoot',\n        key: 'Space',\n        scoped: false,\n        eventType: 'pressed',\n        controllerName: null\n    }\n])"
               },
               {
                 "title": "array of keys binding",
-                "line": 211,
+                "line": 267,
                 "source": "class TestController extends ActionController {\n    static bindings = {\n        moveUp: ['KeyW', 'ArrowUp']\n    }\n}\n\nconst normalized = TestController.normalizeBindings('test')\nexpect(normalized).toEqual([\n    {\n        action: 'moveUp',\n        key: 'KeyW',\n        scoped: false,\n        eventType: 'pressed',\n        controllerName: null\n    },\n    {\n        action: 'moveUp',\n        key: 'ArrowUp',\n        scoped: false,\n        eventType: 'pressed',\n        controllerName: null\n    }\n])"
               },
               {
                 "title": "scoped binding",
-                "line": 238,
+                "line": 294,
                 "source": "class TestController extends ActionController {\n    static bindings = {\n        shoot: {keys: 'Space', scoped: true}\n    }\n}\n\nconst normalized = TestController.normalizeBindings('game')\nexpect(normalized).toEqual([\n    {\n        action: 'shoot',\n        key: 'Space',\n        scoped: true,\n        eventType: 'pressed',\n        controllerName: 'game'\n    }\n])"
               },
               {
                 "title": "scoped binding with multiple keys",
-                "line": 258,
+                "line": 314,
                 "source": "class TestController extends ActionController {\n    static bindings = {\n        move: {keys: ['KeyW', 'KeyS'], scoped: true}\n    }\n}\n\nconst normalized = TestController.normalizeBindings('game')\nexpect(normalized).toEqual([\n    {\n        action: 'move',\n        key: 'KeyW',\n        scoped: true,\n        eventType: 'pressed',\n        controllerName: 'game'\n    },\n    {\n        action: 'move',\n        key: 'KeyS',\n        scoped: true,\n        eventType: 'pressed',\n        controllerName: 'game'\n    }\n])"
               },
               {
                 "title": "custom eventType",
-                "line": 285,
+                "line": 341,
                 "source": "class TestController extends ActionController {\n    static bindings = {\n        shoot: {keys: 'Space', eventType: 'released'}\n    }\n}\n\nconst normalized = TestController.normalizeBindings('test')\nexpect(normalized).toEqual([\n    {\n        action: 'shoot',\n        key: 'Space',\n        scoped: false,\n        eventType: 'released',\n        controllerName: null\n    }\n])"
               },
               {
                 "title": "mixed binding formats",
-                "line": 305,
+                "line": 361,
                 "source": "class TestController extends ActionController {\n    static bindings = {\n        shoot: 'Space',\n        moveUp: ['KeyW', 'ArrowUp'],\n        jump: {keys: 'KeyJ', scoped: true},\n        dash: {keys: ['KeyD', 'ShiftLeft'], scoped: false, eventType: 'released'}\n    }\n}\n\nconst normalized = TestController.normalizeBindings('player')\nexpect(normalized).toHaveLength(6)\n\nexpect(normalized).toContainEqual({\n    action: 'shoot',\n    key: 'Space',\n    scoped: false,\n    eventType: 'pressed',\n    controllerName: null\n})\n\nexpect(normalized).toContainEqual({\n    action: 'jump',\n    key: 'KeyJ',\n    scoped: true,\n    eventType: 'pressed',\n    controllerName: 'player'\n})"
               }
             ],
@@ -917,6 +342,26 @@
             "title": "listAllActions",
             "line": 448,
             "source": "class GameController extends ActionController {\n    jump () { }\n    move () { }\n}\n\nconst gameController = dispatcher.register('game', GameController)\ngameController.addAction('shoot', vi.fn())\n\nconst allActions = dispatcher.listAllActions()\nconst actionNames = allActions.get('game').map(a => a.name)\n\nexpect(actionNames).toContain('jump')\nexpect(actionNames).toContain('move')\nexpect(actionNames).toContain('shoot')"
+          },
+          {
+            "title": "addAction delegates to main controller",
+            "line": 466,
+            "source": "const host = new PerkyModule()\nconst newDispatcher = new ActionDispatcher()\nnewDispatcher.install(host, {main: true})\n\nconst action = vi.fn()\nnewDispatcher.addAction('customAction', action)\n\nexpect(newDispatcher.mainController.getAction('customAction')).toBe(action)"
+          },
+          {
+            "title": "addAction returns false without main controller",
+            "line": 478,
+            "source": "const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})\n\nconst result = dispatcher.addAction('customAction', vi.fn())\n\nexpect(result).toBe(false)\nexpect(consoleSpy).toHaveBeenCalled()\n\nconsoleSpy.mockRestore()"
+          },
+          {
+            "title": "removeAction delegates to main controller",
+            "line": 490,
+            "source": "const host = new PerkyModule()\nconst newDispatcher = new ActionDispatcher()\nnewDispatcher.install(host, {main: true})\n\nconst action = vi.fn()\nnewDispatcher.addAction('customAction', action)\nnewDispatcher.removeAction('customAction')\n\nexpect(newDispatcher.mainController.getAction('customAction')).toBeUndefined()"
+          },
+          {
+            "title": "removeAction returns false without main controller",
+            "line": 503,
+            "source": "const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})\n\nconst result = dispatcher.removeAction('customAction')\n\nexpect(result).toBe(false)\nexpect(consoleSpy).toHaveBeenCalled()\n\nconsoleSpy.mockRestore()"
           }
         ],
         "describes": []
@@ -1939,6 +1384,44 @@
               }
             ],
             "describes": []
+          },
+          {
+            "title": "childrenByCategory",
+            "line": 1849,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns children matching category",
+                "line": 1851,
+                "source": "const controller1 = child.create(PerkyModule, {$id: 'c1', $category: 'controller'})\nconst controller2 = child.create(PerkyModule, {$id: 'c2', $category: 'controller'})\nchild.create(PerkyModule, {$id: 's1', $category: 'service'})\n\nconst controllers = child.childrenByCategory('controller')\n\nexpect(controllers).toHaveLength(2)\nexpect(controllers).toContain(controller1)\nexpect(controllers).toContain(controller2)"
+              },
+              {
+                "title": "returns empty array for non-existent category",
+                "line": 1864,
+                "source": "child.create(PerkyModule, {$id: 'c1', $category: 'controller'})\n\nconst result = child.childrenByCategory('nonexistent')\n\nexpect(result).toEqual([])"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "cleanEventDelegations",
+            "line": 1875,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "removes all event delegations",
+                "line": 1877,
+                "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nconst spy = vi.fn()\nhostModule.on('update', spy)\n\nchildModule.delegateEventsTo(hostModule, ['update'])\n\nchildModule.emit('update', 1)\nexpect(spy).toHaveBeenCalledTimes(1)\n\nchildModule.cleanEventDelegations()\n\nchildModule.emit('update', 2)\nexpect(spy).toHaveBeenCalledTimes(1)"
+              },
+              {
+                "title": "cleanEventDelegations clears delegation list",
+                "line": 1896,
+                "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = new PerkyModule({$id: 'child'})\n\nchildModule.delegateEventsTo(hostModule, ['update', 'render'])\n\nchildModule.cleanEventDelegations()\n\nchildModule.delegateEventsTo(hostModule, ['update'])\n\nconst spy = vi.fn()\nhostModule.on('update', spy)\nchildModule.emit('update')\nexpect(spy).toHaveBeenCalledTimes(1)"
+              }
+            ],
+            "describes": []
           }
         ]
       }
@@ -1949,38 +1432,68 @@
     "describes": [
       {
         "title": "String Utils",
-        "line": 17,
+        "line": 26,
         "beforeEach": null,
         "afterEach": null,
         "tests": [
           {
             "title": "toCamelCase",
-            "line": 19,
+            "line": 28,
             "source": "expect(toCamelCase('hello_world')).toEqual('helloWorld')\nexpect(toCamelCase('hello-world')).toEqual('helloWorld')\nexpect(toCamelCase('hello world')).toEqual('helloWorld')\nexpect(toCamelCase('HelloWorld')).toEqual('helloWorld')\nexpect(toCamelCase('Hello')).toEqual('hello')"
           },
           {
             "title": "toPascalCase",
-            "line": 28,
+            "line": 37,
             "source": "expect(toPascalCase('hello_world')).toEqual('HelloWorld')\nexpect(toPascalCase('hello-world')).toEqual('HelloWorld')\nexpect(toPascalCase('hello world')).toEqual('HelloWorld')\nexpect(toPascalCase('HelloWorld')).toEqual('HelloWorld')\nexpect(toPascalCase('Hello')).toEqual('Hello')"
           },
           {
             "title": "toSnakeCase",
-            "line": 37,
+            "line": 46,
             "source": "expect(toSnakeCase('helloWorld')).toEqual('hello_world')\nexpect(toSnakeCase('HelloWorld')).toEqual('hello_world')\nexpect(toSnakeCase('hello-world')).toEqual('hello_world')\nexpect(toSnakeCase('hello world')).toEqual('hello_world')\nexpect(toSnakeCase('Hello')).toEqual('hello')"
           },
           {
+            "title": "toKebabCase",
+            "line": 55,
+            "source": "expect(toKebabCase('helloWorld')).toEqual('hello-world')\nexpect(toKebabCase('HelloWorld')).toEqual('hello-world')\nexpect(toKebabCase('hello_world')).toEqual('hello-world')\nexpect(toKebabCase('hello world')).toEqual('hello-world')\nexpect(toKebabCase('Hello')).toEqual('hello')"
+          },
+          {
+            "title": "toHumanCase",
+            "line": 64,
+            "source": "expect(toHumanCase('GettingStarted')).toEqual('Getting Started')\nexpect(toHumanCase('helloWorld')).toEqual('hello World')\nexpect(toHumanCase('hello_world')).toEqual('hello world')\nexpect(toHumanCase('hello-world')).toEqual('hello world')\nexpect(toHumanCase('HTMLParser')).toEqual('HTML Parser')\nexpect(toHumanCase('Hello')).toEqual('Hello')"
+          },
+          {
             "title": "singularize",
-            "line": 46,
+            "line": 74,
             "source": "expect(singularize('books')).toEqual('book')\nexpect(singularize('cars')).toEqual('car')\nexpect(singularize('houses')).toEqual('house')\n\nexpect(singularize('boxes')).toEqual('box')\nexpect(singularize('dishes')).toEqual('dish')\nexpect(singularize('buses')).toEqual('bus')\nexpect(singularize('wishes')).toEqual('wish')\n\nexpect(singularize('cities')).toEqual('city')\nexpect(singularize('flies')).toEqual('fly')\nexpect(singularize('stories')).toEqual('story')\n\nexpect(singularize('leaves')).toEqual('leaf')\nexpect(singularize('lives')).toEqual('life')\nexpect(singularize('wolves')).toEqual('wolf')\n\nexpect(singularize('men')).toEqual('man')\nexpect(singularize('women')).toEqual('woman')\nexpect(singularize('children')).toEqual('child')\nexpect(singularize('people')).toEqual('person')\nexpect(singularize('mice')).toEqual('mouse')\nexpect(singularize('feet')).toEqual('foot')\nexpect(singularize('teeth')).toEqual('tooth')\nexpect(singularize('cacti')).toEqual('cactus')\n\nexpect(singularize('fish')).toEqual('fish')\nexpect(singularize('deer')).toEqual('deer')"
           },
           {
+            "title": "pluralize",
+            "line": 106,
+            "source": "expect(pluralize('cat', 1)).toEqual('cat')\nexpect(pluralize('cat', 2)).toEqual('cats')\nexpect(pluralize('cat', 0)).toEqual('cats')\nexpect(pluralize('child', 1)).toEqual('child')\nexpect(pluralize('child', 5)).toEqual('children')\nexpect(pluralize('cat', 1, true)).toEqual('1 cat')\nexpect(pluralize('cat', 3, true)).toEqual('3 cats')"
+          },
+          {
+            "title": "plural",
+            "line": 117,
+            "source": "expect(plural('cat')).toEqual('cats')\nexpect(plural('child')).toEqual('children')\nexpect(plural('person')).toEqual('people')\nexpect(plural('fish')).toEqual('fish')"
+          },
+          {
+            "title": "isPlural",
+            "line": 125,
+            "source": "expect(isPlural('cats')).toBe(true)\nexpect(isPlural('children')).toBe(true)\nexpect(isPlural('cat')).toBe(false)\nexpect(isPlural('child')).toBe(false)"
+          },
+          {
+            "title": "isSingular",
+            "line": 133,
+            "source": "expect(isSingular('cat')).toBe(true)\nexpect(isSingular('child')).toBe(true)\nexpect(isSingular('cats')).toBe(false)\nexpect(isSingular('children')).toBe(false)"
+          },
+          {
             "title": "uniqueId",
-            "line": 78,
+            "line": 141,
             "source": "beforeEach(() => {\n    resetUniqueId('testCollection')\n    resetUniqueId('anotherCollection')\n})\n\nconst id1 = uniqueId('testCollection', 'item')\nexpect(id1).toBe('item')\n\nconst id2 = uniqueId('testCollection', 'item')\nexpect(id2).toBe('item_1')\n\nconst id3 = uniqueId('testCollection', 'item')\nexpect(id3).toBe('item_2')\n\nconst user1 = uniqueId('testCollection', 'user')\nexpect(user1).toBe('user')\n\nconst user2 = uniqueId('testCollection', 'user')\nexpect(user2).toBe('user_1')\n\nconst product1 = uniqueId('anotherCollection', 'product')\nexpect(product1).toBe('product')\n\nconst product2 = uniqueId('anotherCollection', 'product')\nexpect(product2).toBe('product_1')\n\nconst single1 = uniqueId('single')\nexpect(single1).toBe('single')\n\nconst single2 = uniqueId('single')\nexpect(single2).toBe('single_1')\n\nconst single3 = uniqueId('single')\nexpect(single3).toBe('single_2')\n\nconst other1 = uniqueId('other')\nexpect(other1).toBe('other')\n\nconst other2 = uniqueId('other')\nexpect(other2).toBe('other_1')"
           },
           {
             "title": "resetUniqueId",
-            "line": 122,
+            "line": 185,
             "source": "// Start fresh\nresetUniqueId('testCollection')\n\nuniqueId('testCollection', 'item')\nuniqueId('testCollection', 'item')\nuniqueId('testCollection', 'user')\n\nresetUniqueId('testCollection', 'item')\n\nconst newItem = uniqueId('testCollection', 'item')\nexpect(newItem).toBe('item')\n\nconst newUser = uniqueId('testCollection', 'user')\nexpect(newUser).toBe('user_1')\n\nresetUniqueId('testCollection')\n\nconst resetItem = uniqueId('testCollection', 'item')\nexpect(resetItem).toBe('item')\n\nconst resetUser = uniqueId('testCollection', 'user')\nexpect(resetUser).toBe('user')"
           }
         ],
@@ -1988,33 +1501,33 @@
       },
       {
         "title": "Object Utils",
-        "line": 150,
+        "line": 213,
         "beforeEach": null,
         "afterEach": null,
         "tests": [
           {
             "title": "deepMerge",
-            "line": 152,
+            "line": 215,
             "source": "expect(deepMerge({a: 1}, {b: 2})).toEqual({a: 1, b: 2})\nexpect(deepMerge({a: 1, b: 2}, {b: 3})).toEqual({a: 1, b: 3})\n\nexpect(deepMerge(\n    {a: {b: 1, c: 2}},\n    {a: {c: 3, d: 4}}\n)).toEqual({a: {b: 1, c: 3, d: 4}})\n\nexpect(deepMerge(\n    {a: [1, 2]},\n    {a: [3, 4]}\n)).toEqual({a: [1, 2, 3, 4]})\n\nexpect(deepMerge({a: 1}, null)).toEqual({a: 1})\nexpect(deepMerge({a: 1}, undefined)).toEqual({a: 1})"
           },
           {
             "title": "deepMerge handles circular references",
-            "line": 171,
+            "line": 234,
             "source": "const circular = {a: 1}\ncircular.self = circular\n\nexpect(() => {\n    deepMerge({}, circular)\n}).not.toThrow()\n\nconst result = deepMerge({b: 2}, circular)\nexpect(result.a).toBe(1)\nexpect(result.b).toBe(2)\nexpect(result.self).toBe(circular)"
           },
           {
             "title": "setDefaults",
-            "line": 186,
+            "line": 249,
             "source": "expect(setDefaults({a: 1}, {a: 0, b: 2})).toEqual({a: 1, b: 2})\n\nexpect(setDefaults(\n    {a: {b: 1}},\n    {a: {b: 0, c: 2}, d: 3}\n)).toEqual({a: {b: 1, c: 2}, d: 3})\n\nexpect(setDefaults({}, {a: 1, b: 2})).toEqual({a: 1, b: 2})\n\nexpect(setDefaults(null, {a: 1, b: 2})).toEqual({a: 1, b: 2})\nexpect(setDefaults(undefined, {a: 1, b: 2})).toEqual({a: 1, b: 2})"
           },
           {
             "title": "getNestedValue",
-            "line": 201,
+            "line": 264,
             "source": "const obj = {\n    a: 1,\n    b: {\n        c: 2,\n        d: {\n            e: 3\n        }\n    }\n}\n\nexpect(getNestedValue(obj, 'a')).toBe(1)\nexpect(getNestedValue(obj, 'b.c')).toBe(2)\nexpect(getNestedValue(obj, 'b.d.e')).toBe(3)\n\nexpect(getNestedValue(obj, 'x')).toBeUndefined()\nexpect(getNestedValue(obj, 'b.x')).toBeUndefined()\nexpect(getNestedValue(obj, 'b.d.x')).toBeUndefined()\n\nexpect(getNestedValue(obj)).toEqual(obj)"
           },
           {
             "title": "setNestedValue",
-            "line": 224,
+            "line": 287,
             "source": "const obj = {}\n\nsetNestedValue(obj, 'a', 1)\nexpect(obj).toEqual({a: 1})\n\nsetNestedValue(obj, 'b.c', 2)\nexpect(obj.b.c).toBe(2)\n\nsetNestedValue(obj, 'b.c', 3)\nexpect(obj.b.c).toBe(3)\n\nsetNestedValue(obj, 'b.d.e', 4)\nexpect(obj.b.d.e).toBe(4)\nexpect(obj).toEqual({a: 1, b: {c: 3, d: {e: 4}}})"
           }
         ],
@@ -2022,145 +1535,599 @@
       },
       {
         "title": "delegateProperties",
-        "line": 244,
+        "line": 307,
         "beforeEach": null,
         "afterEach": null,
         "tests": [
           {
             "title": "delegates methods with array notation",
-            "line": 246,
+            "line": 309,
             "source": "const source = {\n    method1: () => 'result1',\n    method2: () => 'result2'\n}\nconst receiver = {}\n\ndelegateProperties(receiver, source, ['method1', 'method2'])\n\nexpect(receiver.method1()).toBe('result1')\nexpect(receiver.method2()).toBe('result2')"
           },
           {
             "title": "delegates properties with array notation",
-            "line": 260,
+            "line": 323,
             "source": "const source = {prop1: 'value1', prop2: 'value2'}\nconst receiver = {}\n\ndelegateProperties(receiver, source, ['prop1', 'prop2'])\n\nexpect(receiver.prop1).toBe('value1')\nexpect(receiver.prop2).toBe('value2')"
           },
           {
             "title": "property changes reflect on source",
-            "line": 271,
+            "line": 334,
             "source": "const source = {prop: 'initial'}\nconst receiver = {}\n\ndelegateProperties(receiver, source, ['prop'])\n\nreceiver.prop = 'changed'\nexpect(source.prop).toBe('changed')"
           },
           {
             "title": "delegates with object notation (aliasing)",
-            "line": 282,
+            "line": 345,
             "source": "const source = {\n    originalMethod: () => 'result',\n    originalProp: 'value'\n}\nconst receiver = {}\n\ndelegateProperties(receiver, source, {\n    originalMethod: 'aliasedMethod',\n    originalProp: 'aliasedProp'\n})\n\nexpect(receiver.aliasedMethod()).toBe('result')\nexpect(receiver.aliasedProp).toBe('value')"
           },
           {
             "title": "delegates getters and setters",
-            "line": 299,
+            "line": 362,
             "source": "let internalValue = 10\nconst source = {}\nObject.defineProperty(source, 'value', {\n    get () {\n        return internalValue\n    },\n    set (newValue) {\n        internalValue = newValue\n    },\n    enumerable: true,\n    configurable: true\n})\n\nconst receiver = {}\ndelegateProperties(receiver, source, ['value'])\n\nexpect(receiver.value).toBe(10)\nreceiver.value = 20\nexpect(internalValue).toBe(20)\nexpect(receiver.value).toBe(20)"
           },
           {
             "title": "methods are bound to source context",
-            "line": 323,
+            "line": 386,
             "source": "const source = {\n    name: 'source',\n    getName () {\n        return this.name\n    }\n}\nconst receiver = {name: 'receiver'}\n\ndelegateProperties(receiver, source, ['getName'])\n\nexpect(receiver.getName()).toBe('source')"
+          }
+        ],
+        "describes": []
+      },
+      {
+        "title": "exportValue",
+        "line": 403,
+        "beforeEach": null,
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "returns primitive values as-is",
+            "line": 405,
+            "source": "expect(exportValue(42)).toBe(42)\nexpect(exportValue('hello')).toBe('hello')\nexpect(exportValue(true)).toBe(true)\nexpect(exportValue(null)).toBe(null)\nexpect(exportValue(undefined)).toBe(undefined)"
+          },
+          {
+            "title": "calls export method if available",
+            "line": 414,
+            "source": "const obj = {\n    value: 42,\n    export () {\n        return {exported: this.value}\n    }\n}\n\nexpect(exportValue(obj)).toEqual({exported: 42})"
+          },
+          {
+            "title": "recursively exports arrays",
+            "line": 426,
+            "source": "const arr = [1, 2, {value: 3, export: () => 'exported'}]\n\nexpect(exportValue(arr)).toEqual([1, 2, 'exported'])"
+          },
+          {
+            "title": "recursively exports object properties",
+            "line": 433,
+            "source": "const obj = {\n    a: 1,\n    b: {\n        c: 2,\n        export: () => 'nested'\n    }\n}\n\nexpect(exportValue(obj)).toEqual({a: 1, b: 'nested'})"
+          }
+        ],
+        "describes": []
+      },
+      {
+        "title": "formatNumber",
+        "line": 448,
+        "beforeEach": null,
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "formats integers without decimals",
+            "line": 450,
+            "source": "expect(formatNumber(42)).toBe('42')\nexpect(formatNumber(1000)).toBe('1000')\nexpect(formatNumber(0)).toBe('0')"
+          },
+          {
+            "title": "formats floats with 2 decimal places",
+            "line": 457,
+            "source": "expect(formatNumber(3.14159)).toBe('3.14')\nexpect(formatNumber(42.5)).toBe('42.50')\nexpect(formatNumber(0.123)).toBe('0.12')"
+          },
+          {
+            "title": "handles non-numbers",
+            "line": 464,
+            "source": "expect(formatNumber('hello')).toBe('hello')\nexpect(formatNumber(null)).toBe('null')"
+          }
+        ],
+        "describes": []
+      },
+      {
+        "title": "formatBytes",
+        "line": 472,
+        "beforeEach": null,
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "formats 0 bytes",
+            "line": 474,
+            "source": "expect(formatBytes(0)).toBe('0 B')"
+          },
+          {
+            "title": "formats bytes",
+            "line": 479,
+            "source": "expect(formatBytes(500)).toBe('500 B')\nexpect(formatBytes(1023)).toBe('1023 B')"
+          },
+          {
+            "title": "formats kilobytes",
+            "line": 485,
+            "source": "expect(formatBytes(1024)).toBe('1 KB')\nexpect(formatBytes(2048)).toBe('2 KB')"
+          },
+          {
+            "title": "formats megabytes",
+            "line": 491,
+            "source": "expect(formatBytes(1024 * 1024)).toBe('1.00 MB')\nexpect(formatBytes(1.5 * 1024 * 1024)).toBe('1.50 MB')"
+          },
+          {
+            "title": "formats gigabytes",
+            "line": 497,
+            "source": "expect(formatBytes(1024 * 1024 * 1024)).toBe('1.00 GB')\nexpect(formatBytes(2.5 * 1024 * 1024 * 1024)).toBe('2.50 GB')"
           }
         ],
         "describes": []
       }
     ]
   },
-  "/editor/inspectors/action_controller_inspector.doc.js": {
-    "file": "/editor/inspectors/action_controller_inspector.test.js",
+  "/application/application.doc.js": {
+    "file": "/application/application.test.js",
     "describes": [
       {
-        "title": "ActionControllerInspector",
-        "line": 34,
+        "title": "Application",
+        "line": 12,
         "beforeEach": {
-          "line": 40,
-          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\ninspector = document.createElement('action-controller-inspector')\ncontainer.appendChild(inspector)"
+          "line": 17,
+          "source": "mockManifest = {\n    getAsset: vi.fn(),\n    getSource: vi.fn(),\n    getConfig: vi.fn(),\n    setConfig: vi.fn()\n}\n\nvi.spyOn(Manifest.prototype, 'getAsset').mockImplementation((...args) => {\n    return mockManifest.getAsset(...args)\n})\n\nvi.spyOn(Manifest.prototype, 'getSource').mockImplementation((...args) => {\n    return mockManifest.getSource(...args)\n})\n\nvi.spyOn(Manifest.prototype, 'getConfig').mockImplementation((path) => {\n    return mockManifest.getConfig(path)\n})\n\nvi.spyOn(Manifest.prototype, 'setConfig').mockImplementation((path, value) => {\n    return mockManifest.setConfig(path, value)\n})\n\nconst mockPerkyViewElement = document.createElement('div')\nmockPerkyViewElement.exitFullscreenMode = vi.fn()\nmockPerkyViewElement.enterFullscreenMode = vi.fn()\nvi.spyOn(PerkyView.prototype, 'mount').mockReturnValue(null)\nvi.spyOn(PerkyView, 'defaultElement').mockReturnValue(mockPerkyViewElement)\n\napplication = new Application()"
         },
         "afterEach": {
-          "line": 49,
-          "source": "container.remove()"
+          "line": 51,
+          "source": "vi.restoreAllMocks()"
         },
         "tests": [
           {
-            "title": "matches returns true for ActionController instances",
-            "line": 73,
-            "source": "const mock = new MockActionController()\nObject.setPrototypeOf(mock, {constructor: {name: 'ActionController'}})\n\nconst matches = ActionControllerInspector.matches\nexpect(typeof matches).toBe('function')"
+            "title": "constructor",
+            "line": 56,
+            "source": "expect(application).toBeInstanceOf(PerkyModule)\nexpect(application.manifest).toBeInstanceOf(Manifest)\nexpect(application.actionDispatcher).toBeDefined()\nexpect(application.loaders).toBeInstanceOf(Registry)\nexpect(application.perkyView).toBeInstanceOf(PerkyView)\nexpect(application.sourceManager).toBeDefined()"
           },
           {
-            "title": "execute button calls module.execute when clicked",
-            "line": 157,
-            "source": "const module = new MockActionController(['jump'])\nmodule.execute = vi.fn()\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nbtn.click()\n\nexpect(module.execute).toHaveBeenCalledWith('jump')"
+            "title": "constructor with custom manifest",
+            "line": 66,
+            "source": "vi.restoreAllMocks()\n\nconst customManifestData = {\n    config: {name: 'Test App'}\n}\n\nconst customApp = new Application({manifest: customManifestData})\n\nexpect(customApp.manifest).toBeDefined()\nexpect(customApp.manifest.getConfig('name')).toBe('Test App')"
+          },
+          {
+            "title": "constructor with manifest instance",
+            "line": 80,
+            "source": "vi.restoreAllMocks()\n\nconst manifest = new Manifest({\n    data: {\n        config: {name: 'Test App Instance'}\n    }\n})\nconst customApp = new Application({manifest})\n\nexpect(customApp.manifest).toBeInstanceOf(Manifest)\nexpect(customApp.manifest.getConfig('name')).toBe('Test App Instance')"
+          },
+          {
+            "title": "constructor with static manifest",
+            "line": 95,
+            "source": "vi.restoreAllMocks()\n\nclass CustomApp extends Application {\n    static manifest = {\n        config: {name: 'Static Manifest App'}\n    }\n}\n\nconst customApp = new CustomApp()\n\nexpect(customApp.manifest).toBeInstanceOf(Manifest)\nexpect(customApp.manifest.getConfig('name')).toBe('Static Manifest App')"
+          },
+          {
+            "title": "constructor registers keyboard and mouse devices",
+            "line": 111,
+            "source": "const testApp = new Application()\n\nexpect(testApp.getDevice('keyboard')).toBeInstanceOf(KeyboardDevice)\nexpect(testApp.getDevice('mouse')).toBeInstanceOf(MouseDevice)"
+          },
+          {
+            "title": "constructor calls configure if defined",
+            "line": 119,
+            "source": "class ConfiguredApp extends Application {\n    constructor () {\n        super()\n    }\n\n    configureApplication () {\n        this.configureCalled = true\n    }\n}\n\nconst app = new ConfiguredApp()\nexpect(app.configureCalled).toBe(true)"
+          },
+          {
+            "title": "loadAsset",
+            "line": 136,
+            "source": "vi.spyOn(application, 'loadAsset').mockResolvedValue('loaded')\n\nconst promise = application.loadAsset('logo')\n\nexpect(application.loadAsset).toHaveBeenCalledWith('logo')\nawait expect(promise).resolves.toBe('loaded')"
+          },
+          {
+            "title": "loadTag",
+            "line": 146,
+            "source": "vi.spyOn(application, 'loadTag').mockResolvedValue('loaded')\n\nconst promise = application.loadTag('mainScene')\n\nexpect(application.loadTag).toHaveBeenCalledWith('mainScene')\nawait expect(promise).resolves.toBe('loaded')"
+          },
+          {
+            "title": "loadAll",
+            "line": 156,
+            "source": "vi.spyOn(application, 'loadAll').mockResolvedValue('loaded')\n\nconst promise = application.loadAll()\n\nexpect(application.loadAll).toHaveBeenCalled()\nawait expect(promise).resolves.toBe('loaded')"
+          },
+          {
+            "title": "getSource",
+            "line": 166,
+            "source": "application.getSource('logo')\n\nexpect(mockManifest.getSource).toHaveBeenCalledWith('logo')"
+          },
+          {
+            "title": "config",
+            "line": 173,
+            "source": "application.setConfig('debug', true)\n\nexpect(mockManifest.setConfig).toHaveBeenCalledWith('debug', true)"
+          },
+          {
+            "title": "dispose calls perkyView.dispose() which dismounts",
+            "line": 180,
+            "source": "const perkyView = application.perkyView\nvi.spyOn(perkyView, 'dispose')\nvi.spyOn(perkyView, 'dismount')\n\napplication.dispose()\n\nexpect(perkyView.dispose).toHaveBeenCalled()\nexpect(perkyView.dismount).toHaveBeenCalled()"
+          },
+          {
+            "title": "input event handling integration",
+            "line": 192,
+            "source": "class TestController extends PerkyModule {\n    jump = vi.fn()\n}\n\nconst testApp = new Application()\nconst controller = testApp.registerController('game', TestController)\ntestApp.setActiveControllers('game')\ntestApp.bindInput({\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump',\n    controllerName: 'game'\n})\n\nconst keyboardDevice = testApp.getDevice('keyboard')\nexpect(keyboardDevice).toBeDefined()\n\nconst spaceControl = keyboardDevice.getControl('Space') || keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\n\nspaceControl.press({code: 'Space'})\n\nawait new Promise(resolve => setTimeout(resolve, 0))\nexpect(controller.jump).toHaveBeenCalled()"
+          },
+          {
+            "title": "inputSystem alias provides access to InputSystem",
+            "line": 219,
+            "source": "expect(application.inputSystem.getDevice('keyboard')).toBeDefined()\nexpect(application.inputSystem.getDevice('mouse')).toBeDefined()"
+          },
+          {
+            "title": "inputSystem and inputBinder getters",
+            "line": 225,
+            "source": "expect(application.inputSystem).toBeDefined()\nexpect(application.inputBinder).toBeDefined()"
+          },
+          {
+            "title": "bind and unbind",
+            "line": 231,
+            "source": "const binding = application.bindInput({\n    deviceName: 'keyboard',\n    controlName: 'Enter',\n    actionName: 'select'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.actionName).toBe('select')\nexpect(application.getAllBindings()).toHaveLength(1)\n\nconst result = application.unbind({actionName: 'select'})\nexpect(result).toBe(true)\nexpect(application.getAllBindings()).toHaveLength(0)"
+          },
+          {
+            "title": "getBinding and hasBinding",
+            "line": 248,
+            "source": "application.bindInput({\n    deviceName: 'keyboard',\n    controlName: 'Tab',\n    actionName: 'nextTab'\n})\n\nexpect(application.hasBinding({actionName: 'nextTab'})).toBe(true)\n\nconst binding = application.getBinding({actionName: 'nextTab'})\nexpect(binding).toBeDefined()\nexpect(binding.actionName).toBe('nextTab')\n\nexpect(application.hasBinding({actionName: 'nonExistent'})).toBe(false)\nexpect(application.getBinding({actionName: 'nonExistent'})).toBeNull()"
+          },
+          {
+            "title": "getBindingsForInput",
+            "line": 266,
+            "source": "application.bindInput({\n    deviceName: 'keyboard',\n    controlName: 'F1',\n    actionName: 'help'\n})\n\nconst bindings = application.getBindingsForInput({\n    deviceName: 'keyboard',\n    controlName: 'F1',\n    eventType: 'pressed'\n})\n\nexpect(bindings).toHaveLength(1)\nexpect(bindings[0].actionName).toBe('help')"
+          },
+          {
+            "title": "clearBindings",
+            "line": 284,
+            "source": "application.bindInput({deviceName: 'keyboard', controlName: 'A', actionName: 'action1'})\napplication.bindInput({deviceName: 'keyboard', controlName: 'B', actionName: 'action2'})\n\nexpect(application.getAllBindings()).toHaveLength(2)\n\napplication.clearBindings()\nexpect(application.getAllBindings()).toHaveLength(0)"
+          },
+          {
+            "title": "device management",
+            "line": 295,
+            "source": "expect(application.registerDevice).toBeDefined()\nexpect(application.getDevice).toBeDefined()\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst mouseDevice = application.getDevice('mouse')\nexpect(keyboardDevice).toBeInstanceOf(KeyboardDevice)\nexpect(mouseDevice).toBeInstanceOf(MouseDevice)\nexpect(application.getDevice('nonExistent')).toBeNull()"
+          },
+          {
+            "title": "input state queries",
+            "line": 307,
+            "source": "expect(application.isPressed('keyboard', 'Space')).toBe(false)\nexpect(application.isPressedAny('Jump')).toBe(false)\nexpect(application.getInputValue('mouse', 'leftButton')).toBe(0)\nexpect(application.getInputValueAny('Fire')).toBeUndefined()\nexpect(application.getControl('keyboard', 'Space')).toBeNull()\nexpect(application.getControlAny('Jump')).toBeNull()"
+          },
+          {
+            "title": "input state shortcuts - isKeyPressed and isMousePressed",
+            "line": 317,
+            "source": "expect(application.isKeyPressed('Space')).toBe(false)\nexpect(application.isKeyPressed('ArrowLeft')).toBe(false)\nexpect(application.isKeyPressed('KeyW')).toBe(false)\n\nexpect(application.isMousePressed('leftButton')).toBe(false)\nexpect(application.isMousePressed('rightButton')).toBe(false)\nexpect(application.isMousePressed('middleButton')).toBe(false)\n\nexpect(application.isKeyPressed('Space')).toBe(application.isPressed('keyboard', 'Space'))\nexpect(application.isMousePressed('leftButton')).toBe(application.isPressed('mouse', 'leftButton'))"
+          },
+          {
+            "title": "input value shortcuts - getKeyValue and getMouseValue",
+            "line": 331,
+            "source": "expect(application.getKeyValue('Space')).toBeUndefined()\nexpect(application.getKeyValue('ArrowLeft')).toBeUndefined()\nexpect(application.getKeyValue('KeyW')).toBeUndefined()\n\nexpect(application.getMouseValue('leftButton')).toBe(application.getInputValue('mouse', 'leftButton'))\nexpect(application.getMouseValue('rightButton')).toBe(application.getInputValue('mouse', 'rightButton'))\nexpect(application.getMouseValue('position')).toBe(application.getInputValue('mouse', 'position'))\n\nexpect(application.getKeyValue('Space')).toBe(application.getInputValue('keyboard', 'Space'))\nexpect(application.getMouseValue('leftButton')).toBe(application.getInputValue('mouse', 'leftButton'))\nexpect(application.getMouseValue('unknownControl')).toBe(application.getInputValue('mouse', 'unknownControl'))"
+          },
+          {
+            "title": "input shortcuts with simulated key presses",
+            "line": 346,
+            "source": "const keyboardDevice = application.getDevice('keyboard')\nconst mouseDevice = application.getDevice('mouse')\n\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(application.isKeyPressed('Space')).toBe(true)\nexpect(application.getKeyValue('Space')).toBe(1)\nexpect(application.isPressed('keyboard', 'Space')).toBe(true)\n\nconst leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})\nleftButtonControl.press()\n\nexpect(application.isMousePressed('leftButton')).toBe(true)\nexpect(application.getMouseValue('leftButton')).toBe(1)\nexpect(application.isPressed('mouse', 'leftButton')).toBe(true)\n\nspaceControl.release()\nleftButtonControl.release()\n\nexpect(application.isKeyPressed('Space')).toBe(false)\nexpect(application.getKeyValue('Space')).toBe(0)\nexpect(application.isMousePressed('leftButton')).toBe(false)\nexpect(application.getMouseValue('leftButton')).toBe(0)"
+          },
+          {
+            "title": "input shortcuts consistency verification",
+            "line": 374,
+            "source": "const testCases = [\n    {key: 'Space', device: 'keyboard'},\n    {key: 'ArrowLeft', device: 'keyboard'},\n    {key: 'KeyW', device: 'keyboard'},\n    {key: 'leftButton', device: 'mouse'},\n    {key: 'rightButton', device: 'mouse'},\n    {key: 'unknownControl', device: 'keyboard'},\n    {key: 'unknownControl', device: 'mouse'}\n]\n\ntestCases.forEach(({key, device}) => {\n    if (device === 'keyboard') {\n        expect(application.isKeyPressed(key)).toBe(application.isPressed('keyboard', key))\n        expect(application.getKeyValue(key)).toBe(application.getInputValue('keyboard', key))\n    } else {\n        expect(application.isMousePressed(key)).toBe(application.isPressed('mouse', key))\n        expect(application.getMouseValue(key)).toBe(application.getInputValue('mouse', key))\n    }\n})\n\nexpect(application.isKeyPressed('NonExistentKey')).toBe(false)\nexpect(application.isMousePressed('NonExistentButton')).toBe(false)"
+          },
+          {
+            "title": "bindKey convenience method",
+            "line": 400,
+            "source": "const binding = application.bindInput({controlName: 'Escape', actionName: 'pause'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('Escape')\nexpect(binding.actionName).toBe('pause')\nexpect(binding.eventType).toBe('pressed')\n\nconst releasedBinding = application.bindInput({controlName: 'Escape', actionName: 'resume', eventType: 'released'})\nexpect(releasedBinding.eventType).toBe('released')"
+          },
+          {
+            "title": "bindMouse convenience method",
+            "line": 414,
+            "source": "const binding = application.bindInput({controlName: 'leftButton', actionName: 'shoot'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('leftButton')\nexpect(binding.actionName).toBe('shoot')\nexpect(binding.eventType).toBe('pressed')\n\nconst releasedBinding = application.bindInput({controlName: 'rightButton', actionName: 'aim', eventType: 'released'})\nexpect(releasedBinding.eventType).toBe('released')"
+          },
+          {
+            "title": "addControl",
+            "line": 428,
+            "source": "const control = application.addControl('keyboard', ButtonControl, {name: 'CustomKey'})\n\nexpect(control).toBeInstanceOf(ButtonControl)\nexpect(control.name).toBe('CustomKey')\n\nconst keyboardDevice = application.getDevice('keyboard')\nexpect(keyboardDevice.getControl('CustomKey')).toBe(control)"
+          },
+          {
+            "title": "use method installs child class",
+            "line": 439,
+            "source": "class TestChild extends PerkyModule {\n    constructor (options) {\n        super({...options, $id: 'testChild'})\n    }\n}\n\napplication.create(TestChild, {$id: 'testChild', $category: 'default'})\n\nexpect(application.hasChild('testChild')).toBe(true)"
+          },
+          {
+            "title": "use method installs child instance",
+            "line": 452,
+            "source": "class TestChild extends PerkyModule {\n    constructor (options) {\n        super({...options, $id: 'testChild'})\n    }\n}\n\napplication.create(TestChild, {\n    $id: 'testChild',\n    $category: 'default'\n})\n\nexpect(application.hasChild('testChild')).toBe(true)"
+          },
+          {
+            "title": "use method with options",
+            "line": 468,
+            "source": "class TestChild extends PerkyModule {\n    constructor (options) {\n        super({...options, $id: 'testChild'})\n    }\n}\n\napplication.create(TestChild, {\n    $id: 'testChild',\n    $category: 'default',\n    someOption: true\n})\n\nconst child = application.getChild('testChild')\nexpect(child.options.someOption).toBe(true)"
           }
         ],
         "describes": [
           {
-            "title": "initialization",
-            "line": 54,
+            "title": "bindKey flexible API",
+            "line": 486,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
-                "title": "extends HTMLElement",
-                "line": 56,
-                "source": "expect(inspector).toBeInstanceOf(HTMLElement)"
+                "title": "parameter format with controllerName",
+                "line": 488,
+                "source": "const binding = application.bindInput({controlName: 'KeyF', actionName: 'fire', eventType: 'pressed', controllerName: 'player1'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyF')\nexpect(binding.actionName).toBe('fire')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('player1')"
               },
               {
-                "title": "has shadow DOM",
-                "line": 61,
-                "source": "expect(inspector.shadowRoot).not.toBeNull()"
+                "title": "parameter format with eventType and no controllerName",
+                "line": 499,
+                "source": "const binding = application.bindInput({controlName: 'KeyG', actionName: 'grenade', eventType: 'released'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyG')\nexpect(binding.actionName).toBe('grenade')\nexpect(binding.eventType).toBe('released')\nexpect(binding.controllerName).toBeNull()"
               },
               {
-                "title": "hides gridEl",
-                "line": 66,
-                "source": "expect(inspector.gridEl.style.display).toBe('none')"
+                "title": "object format with actionName only",
+                "line": 510,
+                "source": "const binding = application.bindInput({controlName: 'KeyH', actionName: 'heal'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyH')\nexpect(binding.actionName).toBe('heal')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBeNull()"
+              },
+              {
+                "title": "object format with actionName and eventType",
+                "line": 521,
+                "source": "const binding = application.bindInput({\n    controlName: 'KeyI',\n    actionName: 'inventory',\n    eventType: 'released'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyI')\nexpect(binding.actionName).toBe('inventory')\nexpect(binding.eventType).toBe('released')\nexpect(binding.controllerName).toBeNull()"
+              },
+              {
+                "title": "object format with all options",
+                "line": 536,
+                "source": "const binding = application.bindInput({\n    controlName: 'KeyJ',\n    actionName: 'jump',\n    eventType: 'pressed',\n    controllerName: 'player2'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyJ')\nexpect(binding.actionName).toBe('jump')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('player2')"
+              },
+              {
+                "title": "object format with partial options uses defaults",
+                "line": 552,
+                "source": "const binding = application.bindInput({\n    controlName: 'KeyK',\n    actionName: 'kick',\n    controllerName: 'player3'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyK')\nexpect(binding.actionName).toBe('kick')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('player3')"
+              },
+              {
+                "title": "backwards compatibility - original format still works",
+                "line": 567,
+                "source": "const binding = application.bindInput({controlName: 'KeyL', actionName: 'look'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('KeyL')\nexpect(binding.actionName).toBe('look')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBeNull()"
               }
             ],
             "describes": []
           },
           {
-            "title": "setModule",
-            "line": 82,
+            "title": "bindMouse flexible API",
+            "line": 581,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
-                "title": "stores the module",
-                "line": 84,
-                "source": "const module = new MockActionController(['jump'])\ninspector.setModule(module)\nexpect(inspector.getModule()).toBe(module)"
+                "title": "parameter format with controllerName",
+                "line": 583,
+                "source": "const binding = application.bindInput({controlName: 'middleButton', actionName: 'zoom', eventType: 'pressed', controllerName: 'camera'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('middleButton')\nexpect(binding.actionName).toBe('zoom')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('camera')"
               },
               {
-                "title": "renders actions when module is set",
-                "line": 91,
-                "source": "const module = new MockActionController(['jump', 'run'])\ninspector.setModule(module)\n\nconst actionCards = inspector.shadowRoot.querySelectorAll('.action-card')\nexpect(actionCards.length).toBe(2)"
+                "title": "parameter format with eventType and no controllerName",
+                "line": 594,
+                "source": "const binding = application.bindInput({controlName: 'rightButton', actionName: 'context', eventType: 'released'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('rightButton')\nexpect(binding.actionName).toBe('context')\nexpect(binding.eventType).toBe('released')\nexpect(binding.controllerName).toBeNull()"
+              },
+              {
+                "title": "object format with actionName only",
+                "line": 605,
+                "source": "const binding = application.bindInput({controlName: 'leftButton', actionName: 'select'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('leftButton')\nexpect(binding.actionName).toBe('select')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBeNull()"
+              },
+              {
+                "title": "object format with actionName and eventType",
+                "line": 616,
+                "source": "const binding = application.bindInput({\n    controlName: 'rightButton',\n    actionName: 'menu',\n    eventType: 'released'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('rightButton')\nexpect(binding.actionName).toBe('menu')\nexpect(binding.eventType).toBe('released')\nexpect(binding.controllerName).toBeNull()"
+              },
+              {
+                "title": "object format with all options",
+                "line": 631,
+                "source": "const binding = application.bindInput({\n    controlName: 'leftButton',\n    actionName: 'fire',\n    eventType: 'pressed',\n    controllerName: 'weapon'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('leftButton')\nexpect(binding.actionName).toBe('fire')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('weapon')"
+              },
+              {
+                "title": "object format with partial options uses defaults",
+                "line": 647,
+                "source": "const binding = application.bindInput({\n    controlName: 'middleButton',\n    actionName: 'special',\n    controllerName: 'ui'\n})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('middleButton')\nexpect(binding.actionName).toBe('special')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBe('ui')"
+              },
+              {
+                "title": "backwards compatibility - original format still works",
+                "line": 662,
+                "source": "const binding = application.bindInput({controlName: 'rightButton', actionName: 'aim'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('rightButton')\nexpect(binding.actionName).toBe('aim')\nexpect(binding.eventType).toBe('pressed')\nexpect(binding.controllerName).toBeNull()"
+              },
+              {
+                "title": "object format validation - empty object should throw",
+                "line": 673,
+                "source": "expect(() => {\n    application.bindMouse('leftButton', {})\n}).toThrow()"
+              },
+              {
+                "title": "object format validation - undefined actionName should throw",
+                "line": 679,
+                "source": "expect(() => {\n    application.bindMouse('rightButton', {actionName: undefined})\n}).toThrow()"
+              },
+              {
+                "title": "parameter format validation - undefined actionName should throw",
+                "line": 685,
+                "source": "expect(() => {\n    application.bindMouse('middleButton', undefined)\n}).toThrow()"
               }
             ],
             "describes": []
           },
           {
-            "title": "rendering",
-            "line": 102,
+            "title": "flexible API edge cases",
+            "line": 694,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
-                "title": "shows header with action count",
-                "line": 104,
-                "source": "const module = new MockActionController(['a', 'b', 'c'])\ninspector.setModule(module)\n\nconst header = inspector.shadowRoot.querySelector('.actions-header')\nexpect(header).not.toBeNull()\nexpect(header.textContent).toContain('3')"
+                "title": "mixed usage in same application",
+                "line": 696,
+                "source": "const binding1 = application.bindInput({controlName: 'Digit1', actionName: 'slot1', eventType: 'pressed', controllerName: 'inventory'})\n\nconst binding2 = application.bindInput({\n    controlName: 'Digit2',\n    actionName: 'slot2',\n    eventType: 'pressed',\n    controllerName: 'inventory'\n})\n\nexpect(binding1.actionName).toBe('slot1')\nexpect(binding1.controllerName).toBe('inventory')\nexpect(binding2.actionName).toBe('slot2')\nexpect(binding2.controllerName).toBe('inventory')\n\nconst allBindings = application.getAllBindings()\nconst inventoryBindings = allBindings.filter(b => b.controllerName === 'inventory')\nexpect(inventoryBindings).toHaveLength(2)"
               },
               {
-                "title": "shows empty message when no actions",
-                "line": 114,
-                "source": "const module = new MockActionController([])\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No actions defined')"
+                "title": "object format with empty object defaults everything",
+                "line": 716,
+                "source": "expect(() => {\n    application.bindKey('KeyEmpty', {})\n}).toThrow()"
               },
               {
-                "title": "renders action names",
-                "line": 124,
-                "source": "const module = new MockActionController(['jump', 'attack'])\ninspector.setModule(module)\n\nconst names = inspector.shadowRoot.querySelectorAll('.action-name')\nexpect(names.length).toBe(2)\nexpect(names[0].textContent).toBe('jump')\nexpect(names[1].textContent).toBe('attack')"
+                "title": "object format with undefined actionName",
+                "line": 722,
+                "source": "expect(() => {\n    application.bindKey('KeyUndef', {actionName: undefined})\n}).toThrow()"
               },
               {
-                "title": "shows propagable badge for propagable actions",
-                "line": 135,
-                "source": "const module = new MockActionController(['jump', 'attack'], ['jump'])\ninspector.setModule(module)\n\nconst badges = inspector.shadowRoot.querySelectorAll('.action-badge.propagable')\nexpect(badges.length).toBe(1)\nexpect(badges[0].textContent).toBe('propagable')"
+                "title": "object format with null actionName",
+                "line": 728,
+                "source": "expect(() => {\n    application.bindKey('KeyNull', {actionName: null})\n}).toThrow()"
               },
               {
-                "title": "renders execute button for each action",
-                "line": 145,
-                "source": "const module = new MockActionController(['jump'])\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nexpect(btn).not.toBeNull()\nexpect(btn.textContent).toContain('Run')"
+                "title": "object format with empty string actionName",
+                "line": 734,
+                "source": "expect(() => {\n    application.bindKey('KeyEmpty', {actionName: ''})\n}).toThrow()"
+              },
+              {
+                "title": "parameter format with undefined actionName",
+                "line": 740,
+                "source": "expect(() => {\n    application.bindKey('KeyParamUndef', undefined)\n}).toThrow()"
+              },
+              {
+                "title": "parameter format with null actionName",
+                "line": 746,
+                "source": "expect(() => {\n    application.bindKey('KeyParamNull', null)\n}).toThrow()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "bindCombo",
+            "line": 755,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "accepts string format with auto-detection",
+                "line": 757,
+                "source": "const combo = application.bindCombo(['ShiftLeft', 'leftButton'], 'shiftClick')\n\nexpect(combo).toBeDefined()\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls[0].deviceName).toBe('keyboard')\nexpect(combo.controls[0].controlName).toBe('ShiftLeft')\nexpect(combo.controls[1].deviceName).toBe('mouse')\nexpect(combo.controls[1].controlName).toBe('leftButton')\nexpect(combo.actionName).toBe('shiftClick')"
+              },
+              {
+                "title": "accepts object format",
+                "line": 770,
+                "source": "const combo = application.bindCombo([\n    {deviceName: 'keyboard', controlName: 'ControlLeft'},\n    {deviceName: 'mouse', controlName: 'rightButton'}\n], 'ctrlRightClick')\n\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls[0].deviceName).toBe('keyboard')\nexpect(combo.controls[1].deviceName).toBe('mouse')"
+              },
+              {
+                "title": "accepts mixed string and object formats",
+                "line": 782,
+                "source": "const combo = application.bindCombo([\n    'ControlLeft',\n    {deviceName: 'mouse', controlName: 'leftButton'}\n], 'mixedCombo')\n\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls[0].deviceName).toBe('keyboard')\nexpect(combo.controls[0].controlName).toBe('ControlLeft')\nexpect(combo.controls[1].deviceName).toBe('mouse')\nexpect(combo.controls[1].controlName).toBe('leftButton')"
+              },
+              {
+                "title": "works with keyboard-only combinations",
+                "line": 796,
+                "source": "const combo = application.bindCombo(['ControlLeft', 'KeyS'], 'save')\n\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls.every(c => c.deviceName === 'keyboard')).toBe(true)"
+              },
+              {
+                "title": "works with mouse-only combinations",
+                "line": 804,
+                "source": "const combo = application.bindCombo(['leftButton', 'rightButton'], 'bothButtons')\n\nexpect(combo.controls).toHaveLength(2)\nexpect(combo.controls.every(c => c.deviceName === 'mouse')).toBe(true)"
+              },
+              {
+                "title": "supports controller and eventType",
+                "line": 812,
+                "source": "const combo = application.bindCombo(\n    ['AltLeft', 'middleButton'],\n    'special',\n    'editor',\n    'released'\n)\n\nexpect(combo.controllerName).toBe('editor')\nexpect(combo.eventType).toBe('released')"
+              },
+              {
+                "title": "integration test - triggers when all controls are pressed",
+                "line": 825,
+                "source": "class TestController extends PerkyModule {\n    smartCombo = vi.fn()\n}\n\nconst testApp = new Application()\n\n\nconst controller = testApp.registerController('editor', TestController)\ntestApp.setActiveControllers('editor')\ntestApp.bindCombo(['ControlLeft', 'leftButton'], 'smartCombo', 'editor')\n\nconst keyboardDevice = testApp.getDevice('keyboard')\nconst mouseDevice = testApp.getDevice('mouse')\n\nconst ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})\nconst leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})\n\nctrlControl.press({code: 'ControlLeft'})\nawait new Promise(resolve => setTimeout(resolve, 0))\nexpect(controller.smartCombo).not.toHaveBeenCalled()\n\nleftButtonControl.press()\nawait new Promise(resolve => setTimeout(resolve, 0))\nexpect(controller.smartCombo).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "isActionPressed and getActionControls",
+            "line": 855,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "isActionPressed - returns false when action not bound",
+                "line": 857,
+                "source": "expect(application.isActionPressed('nonExistent')).toBe(false)"
+              },
+              {
+                "title": "isActionPressed - returns false when control not pressed",
+                "line": 862,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\nexpect(application.isActionPressed('jump')).toBe(false)"
+              },
+              {
+                "title": "isActionPressed - returns true when control is pressed",
+                "line": 868,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(application.isActionPressed('jump')).toBe(true)"
+              },
+              {
+                "title": "isActionPressed - works with multiple bindings for same action",
+                "line": 879,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\napplication.bindInput({controlName: 'KeyW', actionName: 'jump'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst wControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nwControl.press()\n\nexpect(application.isActionPressed('jump')).toBe(true)"
+              },
+              {
+                "title": "isActionPressed - filters by controllerName",
+                "line": 891,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})\napplication.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(application.isActionPressed('jump', 'player1')).toBe(true)\nexpect(application.isActionPressed('jump', 'player2')).toBe(false)\nexpect(application.isActionPressed('jump')).toBe(true)"
+              },
+              {
+                "title": "isActionPressed - works with composite bindings",
+                "line": 905,
+                "source": "application.bindCombo(['ControlLeft', 'KeyS'], 'save')\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})\nconst sControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyS'})\n\nctrlControl.press()\nexpect(application.isActionPressed('save')).toBe(false)\n\nsControl.press()\nexpect(application.isActionPressed('save')).toBe(true)\n\nctrlControl.release()\nexpect(application.isActionPressed('save')).toBe(false)"
+              },
+              {
+                "title": "getActionControls - returns empty array when action not bound",
+                "line": 923,
+                "source": "const controls = application.getActionControls('nonExistent')\nexpect(controls).toHaveLength(0)"
+              },
+              {
+                "title": "getActionControls - returns control for simple binding",
+                "line": 929,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\n\nconst controls = application.getActionControls('jump')\nexpect(controls).toHaveLength(1)\nexpect(controls[0]).toBe(spaceControl)"
+              },
+              {
+                "title": "getActionControls - returns multiple controls for multiple bindings",
+                "line": 941,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})\napplication.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nconst wControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})\n\nconst controls = application.getActionControls('jump')\nexpect(controls).toHaveLength(2)\nexpect(controls).toContain(spaceControl)\nexpect(controls).toContain(wControl)"
+              },
+              {
+                "title": "getActionControls - filters by controllerName",
+                "line": 956,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'jump', eventType: 'pressed', controllerName: 'player1'})\napplication.bindInput({controlName: 'KeyW', actionName: 'jump', eventType: 'pressed', controllerName: 'player2'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nkeyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nkeyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyW'})\n\nconst player1Controls = application.getActionControls('jump', 'player1')\nexpect(player1Controls).toHaveLength(1)\nexpect(player1Controls[0].name).toBe('Space')\n\nconst player2Controls = application.getActionControls('jump', 'player2')\nexpect(player2Controls).toHaveLength(1)\nexpect(player2Controls[0].name).toBe('KeyW')\n\nconst allControls = application.getActionControls('jump')\nexpect(allControls).toHaveLength(2)"
+              },
+              {
+                "title": "getActionControls - works with composite bindings",
+                "line": 977,
+                "source": "application.bindCombo(['ControlLeft', 'KeyS'], 'save')\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst ctrlControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'ControlLeft'})\nconst sControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'KeyS'})\n\nconst controls = application.getActionControls('save')\nexpect(controls).toHaveLength(2)\nexpect(controls).toContain(ctrlControl)\nexpect(controls).toContain(sControl)"
+              },
+              {
+                "title": "getActionControls - handles non-existent controls gracefully",
+                "line": 991,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst controls = application.getActionControls('jump')\nexpect(controls).toHaveLength(0)"
+              },
+              {
+                "title": "getActionControls - works with cross-device bindings",
+                "line": 999,
+                "source": "application.bindInput({controlName: 'Space', actionName: 'action', eventType: 'pressed', controllerName: 'keyboard-input'})\napplication.bindInput({controlName: 'leftButton', actionName: 'action', eventType: 'pressed', controllerName: 'mouse-input'})\n\nconst keyboardDevice = application.getDevice('keyboard')\nconst mouseDevice = application.getDevice('mouse')\nconst spaceControl = keyboardDevice.findOrCreateControl(ButtonControl, {name: 'Space'})\nconst leftButtonControl = mouseDevice.findOrCreateControl(ButtonControl, {name: 'leftButton'})\n\nconst controls = application.getActionControls('action')\nexpect(controls).toHaveLength(2)\nexpect(controls).toContain(spaceControl)\nexpect(controls).toContain(leftButtonControl)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "controller bindings auto-registration",
+            "line": 1017,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "registers simple bindings when controller is registered",
+                "line": 1019,
+                "source": "class TestController extends PerkyModule {\n    static bindings = {\n        shoot: 'Space',\n        jump: 'KeyJ'\n    }\n\n    static normalizeBindings () {\n        return [\n            {action: 'shoot', key: 'Space', scoped: false, eventType: 'pressed', controllerName: null},\n            {action: 'jump', key: 'KeyJ', scoped: false, eventType: 'pressed', controllerName: null}\n        ]\n    }\n}\n\nconst beforeBindings = application.getAllBindings()\nexpect(beforeBindings.filter(b => b.actionName === 'shoot')).toHaveLength(0)\n\napplication.registerController('game', TestController)\n\nconst afterBindings = application.getAllBindings()\nconst shootBinding = afterBindings.find(b => b.actionName === 'shoot')\nconst jumpBinding = afterBindings.find(b => b.actionName === 'jump')\n\nexpect(shootBinding).toBeDefined()\nexpect(shootBinding.controlName).toBe('Space')\nexpect(shootBinding.controllerName).toBeNull()\n\nexpect(jumpBinding).toBeDefined()\nexpect(jumpBinding.controlName).toBe('KeyJ')\nexpect(jumpBinding.controllerName).toBeNull()"
+              },
+              {
+                "title": "registers scoped bindings with controllerName",
+                "line": 1053,
+                "source": "class TestController extends PerkyModule {\n    static bindings = {\n        shoot: {keys: 'Space', scoped: true}\n    }\n\n    static normalizeBindings (controllerName) {\n        return [\n            {action: 'shoot', key: 'Space', scoped: true, eventType: 'pressed', controllerName}\n        ]\n    }\n}\n\napplication.registerController('player', TestController)\n\nconst bindings = application.getAllBindings()\nconst shootBinding = bindings.find(b => b.actionName === 'shoot' && b.controllerName === 'player')\n\nexpect(shootBinding).toBeDefined()\nexpect(shootBinding.controlName).toBe('Space')\nexpect(shootBinding.controllerName).toBe('player')"
+              },
+              {
+                "title": "registers multiple keys for same action",
+                "line": 1077,
+                "source": "class TestController extends PerkyModule {\n    static bindings = {\n        moveUp: ['KeyW', 'ArrowUp']\n    }\n\n    static normalizeBindings () {\n        return [\n            {action: 'moveUp', key: 'KeyW', scoped: false, eventType: 'pressed', controllerName: null},\n            {action: 'moveUp', key: 'ArrowUp', scoped: false, eventType: 'pressed', controllerName: null}\n        ]\n    }\n}\n\napplication.registerController('game', TestController)\n\nconst bindings = application.getAllBindings()\nconst moveUpBindings = bindings.filter(b => b.actionName === 'moveUp')\n\nexpect(moveUpBindings.length).toBeGreaterThanOrEqual(2)\nexpect(moveUpBindings.some(b => b.controlName === 'KeyW')).toBe(true)\nexpect(moveUpBindings.some(b => b.controlName === 'ArrowUp')).toBe(true)"
+              },
+              {
+                "title": "registers bindings with custom eventType",
+                "line": 1102,
+                "source": "class TestController extends PerkyModule {\n    static bindings = {\n        boost: {keys: 'ShiftLeft', eventType: 'released'}\n    }\n\n    static normalizeBindings () {\n        return [\n            {action: 'boost', key: 'ShiftLeft', scoped: false, eventType: 'released', controllerName: null}\n        ]\n    }\n}\n\napplication.registerController('game', TestController)\n\nconst bindings = application.getAllBindings()\nconst boostBinding = bindings.find(b => b.actionName === 'boost')\n\nexpect(boostBinding).toBeDefined()\nexpect(boostBinding.eventType).toBe('released')"
+              },
+              {
+                "title": "allows multiple controllers with same keys (different scopes)",
+                "line": 1125,
+                "source": "class GameController extends PerkyModule {\n    static bindings = {\n        move: {keys: 'ArrowUp', scoped: true}\n    }\n\n    static normalizeBindings (controllerName) {\n        return [\n            {action: 'move', key: 'ArrowUp', scoped: true, eventType: 'pressed', controllerName}\n        ]\n    }\n}\n\nclass MenuController extends PerkyModule {\n    static bindings = {\n        navigate: {keys: 'ArrowUp', scoped: true}\n    }\n\n    static normalizeBindings (controllerName) {\n        return [\n            {action: 'navigate', key: 'ArrowUp', scoped: true, eventType: 'pressed', controllerName}\n        ]\n    }\n}\n\napplication.registerController('game', GameController)\napplication.registerController('menu', MenuController)\n\nconst bindings = application.getAllBindings()\nconst arrowUpBindings = bindings.filter(b => b.controlName === 'ArrowUp')\n\nexpect(arrowUpBindings.length).toBeGreaterThanOrEqual(2)\n\nconst gameBinding = arrowUpBindings.find(b => b.controllerName === 'game')\nconst menuBinding = arrowUpBindings.find(b => b.controllerName === 'menu')\n\nexpect(gameBinding).toBeDefined()\nexpect(gameBinding.actionName).toBe('move')\n\nexpect(menuBinding).toBeDefined()\nexpect(menuBinding.actionName).toBe('navigate')"
               }
             ],
             "describes": []
@@ -2169,155 +2136,278 @@
       }
     ]
   },
-  "/editor/inspectors/action_dispatcher_inspector.doc.js": {
-    "file": "/editor/inspectors/action_dispatcher_inspector.test.js",
+  "/application/perky_view.doc.js": {
+    "file": "/application/perky_view.test.js",
     "describes": [
       {
-        "title": "ActionDispatcherInspector",
-        "line": 39,
+        "title": "PerkyView",
+        "line": 6,
         "beforeEach": {
-          "line": 45,
-          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\ninspector = document.createElement('action-dispatcher-inspector')\ncontainer.appendChild(inspector)"
+          "line": 11,
+          "source": "element = document.createElement('div')\nelement.id = 'test-view'\n\ncontainer = document.createElement('div')\ncontainer.id = 'test-container'\ndocument.body.appendChild(container)\n\nvi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(0)\nvi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(0)\nvi.spyOn(element, 'getBoundingClientRect').mockReturnValue({\n    left: 0,\n    top: 0,\n    width: 0,\n    height: 0,\n    right: 0,\n    bottom: 0,\n    x: 0,\n    y: 0\n})\n\nvi.spyOn(PerkyModule.prototype, 'emit')\n\nview = new PerkyView({element})"
         },
         "afterEach": {
-          "line": 54,
-          "source": "container.remove()"
+          "line": 38,
+          "source": "vi.restoreAllMocks()\ndocument.body.innerHTML = ''"
         },
         "tests": [
           {
-            "title": "matches static matches method exists",
-            "line": 78,
-            "source": "expect(typeof ActionDispatcherInspector.matches).toBe('function')"
+            "title": "constructor with element",
+            "line": 44,
+            "source": "expect(view.element).toBe(element)"
           },
           {
-            "title": "execute button calls module.executeTo when clicked",
+            "title": "constructor with container",
+            "line": 49,
+            "source": "const viewWithContainer = new PerkyView({\n    element,\n    container\n})\n\nexpect(container.contains(element)).toBe(true)\nexpect(viewWithContainer.container).toBe(container)"
+          },
+          {
+            "title": "constructor with default element",
+            "line": 60,
+            "source": "const defaultView = new PerkyView()\n\nexpect(defaultView.element.tagName).toBe('DIV')\nexpect(defaultView.element.className).toBe('perky-view')"
+          },
+          {
+            "title": "html getter",
+            "line": 68,
+            "source": "element.innerHTML = '<div>test content</div>'\nexpect(view.html).toBe('<div>test content</div>')"
+          },
+          {
+            "title": "width getter",
+            "line": 74,
+            "source": "element.style.width = '300px'\nvi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(300)\nexpect(view.width).toBe(300)"
+          },
+          {
+            "title": "height getter",
+            "line": 81,
+            "source": "element.style.height = '400px'\nvi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(400)\nexpect(view.height).toBe(400)"
+          },
+          {
+            "title": "aspectRatio getter",
+            "line": 88,
+            "source": "element.style.width = '300px'\nelement.style.height = '400px'\nvi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(300)\nvi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(400)\nexpect(view.aspectRatio).toBe(300 / 400)"
+          },
+          {
+            "title": "size getter",
+            "line": 97,
+            "source": "element.style.width = '300px'\nelement.style.height = '400px'\nvi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(300)\nvi.spyOn(element, 'offsetHeight', 'get').mockReturnValue(400)\nexpect(view.size).toEqual({\n    width: 300,\n    height: 400\n})"
+          },
+          {
+            "title": "addClass",
+            "line": 109,
+            "source": "view.addClass('test-class')\nexpect(element.classList.contains('test-class')).toBe(true)"
+          },
+          {
+            "title": "removeClass",
+            "line": 115,
+            "source": "element.classList.add('test-class')\nview.removeClass('test-class')\nexpect(element.classList.contains('test-class')).toBe(false)"
+          },
+          {
+            "title": "hasClass",
+            "line": 122,
+            "source": "element.classList.add('test-class')\nexpect(view.hasClass('test-class')).toBe(true)"
+          },
+          {
+            "title": "setSize",
+            "line": 128,
+            "source": "view.setSize({width: 100, height: 200})\n\nexpect(element.style.width).toBe('100px')\nexpect(element.style.height).toBe('200px')"
+          },
+          {
+            "title": "setSize with custom unit",
+            "line": 136,
+            "source": "view.setSize({width: 100, height: 200, unit: '%'})\n\nexpect(element.style.width).toBe('100%')\nexpect(element.style.height).toBe('200%')"
+          },
+          {
+            "title": "fit",
+            "line": 144,
+            "source": "container.style.width = '500px'\ncontainer.style.height = '600px'\ncontainer.appendChild(element)\n\nvi.spyOn(container, 'getBoundingClientRect').mockReturnValue({\n    width: 500,\n    height: 600,\n    left: 0,\n    top: 0,\n    right: 500,\n    bottom: 600,\n    x: 0,\n    y: 0\n})\n\nview.fit()\n\nexpect(element.style.width).toBe('500px')\nexpect(element.style.height).toBe('600px')"
+          },
+          {
+            "title": "mount",
+            "line": 167,
+            "source": "view.mount(container)\n\nexpect(container.contains(element)).toBe(true)\nexpect(view.container).toBe(container)\nexpect(view.emit).toHaveBeenCalledWith('mount', {container})"
+          },
+          {
+            "title": "isVisible",
             "line": 176,
-            "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\nmodule.executeTo = vi.fn()\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nbtn.click()\n\nexpect(module.executeTo).toHaveBeenCalledWith('player', 'jump')"
+            "source": "element.style.display = 'block'\nexpect(view.isVisible()).toBe(true)\n\nelement.style.display = 'none'\nexpect(view.isVisible()).toBe(false)"
+          },
+          {
+            "title": "display getter and setter",
+            "line": 185,
+            "source": "view.display = 'flex'\nexpect(element.style.display).toBe('flex')\nexpect(view.display).toBe('flex')\nexpect(view.display = 'flex').toBe('flex')"
+          },
+          {
+            "title": "hide",
+            "line": 193,
+            "source": "element.style.display = 'flex'\nview.hide()\n\nexpect(element.style.display).toBe('none')"
+          },
+          {
+            "title": "show restores previous display",
+            "line": 201,
+            "source": "element.style.display = 'flex'\nview.hide()\nview.show()\n\nexpect(element.style.display).toBe('flex')"
+          },
+          {
+            "title": "show without previous display",
+            "line": 210,
+            "source": "view.show()\nexpect(element.style.display).toBe('')"
+          },
+          {
+            "title": "dismount removes element from container",
+            "line": 216,
+            "source": "view.mount(container)\nexpect(container.contains(element)).toBe(true)\n\nview.dismount()\n\nexpect(container.contains(element)).toBe(false)\nexpect(view.emit).toHaveBeenCalledWith('dismount', {container: null})"
+          },
+          {
+            "title": "dismount when not mounted does nothing",
+            "line": 227,
+            "source": "view.dismount()\n\nexpect(view.emit).not.toHaveBeenCalledWith('dismount', expect.anything())"
+          },
+          {
+            "title": "setDisplayMode normal calls exitFullscreenMode",
+            "line": 234,
+            "source": "vi.spyOn(view, 'exitFullscreenMode')\n\nview.setDisplayMode('normal')\n\nexpect(view.exitFullscreenMode).toHaveBeenCalled()"
+          },
+          {
+            "title": "setDisplayMode fullscreen calls enterFullscreenMode",
+            "line": 243,
+            "source": "vi.spyOn(view, 'enterFullscreenMode')\n\nview.setDisplayMode('fullscreen')\n\nexpect(view.enterFullscreenMode).toHaveBeenCalled()"
+          },
+          {
+            "title": "setDisplayMode with invalid mode does nothing",
+            "line": 252,
+            "source": "vi.spyOn(view, 'enterFullscreenMode')\nvi.spyOn(view, 'exitFullscreenMode')\n\nview.setDisplayMode('invalid')\n\nexpect(view.enterFullscreenMode).not.toHaveBeenCalled()\nexpect(view.exitFullscreenMode).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "enterFullscreenMode sets fullscreen styles",
+            "line": 263,
+            "source": "element.requestFullscreen = vi.fn()\n\nview.enterFullscreenMode()\n\nexpect(view.displayMode).toBe('fullscreen')\nexpect(element.style.position).toBe('fixed')\nexpect(element.style.top).toBe('0px')\nexpect(element.style.left).toBe('0px')\nexpect(element.style.width).toBe('100vw')\nexpect(element.style.height).toBe('100vh')\nexpect(element.style.zIndex).toBe('10000')\nexpect(document.body.classList.contains('fullscreen-mode')).toBe(true)\nexpect(element.requestFullscreen).toHaveBeenCalled()"
+          },
+          {
+            "title": "enterFullscreenMode does nothing if already fullscreen",
+            "line": 280,
+            "source": "element.requestFullscreen = vi.fn()\nview.displayMode = 'fullscreen'\n\nview.enterFullscreenMode()\n\nexpect(element.requestFullscreen).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "exitFullscreenMode restores previous styles",
+            "line": 290,
+            "source": "element.requestFullscreen = vi.fn()\nelement.style.position = 'relative'\nelement.style.width = '200px'\nelement.style.height = '300px'\n\nview.enterFullscreenMode()\nview.exitFullscreenMode()\n\nexpect(view.displayMode).toBe('normal')\nexpect(element.style.position).toBe('relative')\nexpect(element.style.width).toBe('200px')\nexpect(element.style.height).toBe('300px')\nexpect(document.body.classList.contains('fullscreen-mode')).toBe(false)"
+          },
+          {
+            "title": "exitFullscreenMode does nothing if already normal",
+            "line": 307,
+            "source": "view.displayMode = 'normal'\n\nview.exitFullscreenMode()\n\nexpect(view.displayMode).toBe('normal')"
+          },
+          {
+            "title": "toggleFullscreen enters fullscreen from normal",
+            "line": 316,
+            "source": "vi.spyOn(view, 'enterFullscreenMode')\n\nview.toggleFullscreen()\n\nexpect(view.enterFullscreenMode).toHaveBeenCalled()"
+          },
+          {
+            "title": "toggleFullscreen exits fullscreen from fullscreen",
+            "line": 325,
+            "source": "vi.spyOn(view, 'exitFullscreenMode')\nview.displayMode = 'fullscreen'\n\nview.toggleFullscreen()\n\nexpect(view.exitFullscreenMode).toHaveBeenCalled()"
           }
         ],
-        "describes": [
+        "describes": []
+      }
+    ]
+  },
+  "/game/game_loop.doc.js": {
+    "file": "/game/game_loop.test.js",
+    "describes": [
+      {
+        "title": "GameLoop",
+        "line": 6,
+        "beforeEach": {
+          "line": 12,
+          "source": "originalRequestAnimationFrame = global.requestAnimationFrame\noriginalPerformanceNow = global.performance.now\nanimationCallbacks = []\n\nlet time = 0\nglobal.performance.now = vi.fn(() => {\n    time += 16.7 // ~60fps\n    return time\n})\n\nglobal.requestAnimationFrame = vi.fn(callback => {\n    animationCallbacks.push(callback)\n    return 1 // Return a dummy ID\n})\n\nvi.spyOn(PerkyModule.prototype, 'emit')\n\ngameLoop = new GameLoop()"
+        },
+        "afterEach": {
+          "line": 34,
+          "source": "vi.restoreAllMocks()\nglobal.requestAnimationFrame = originalRequestAnimationFrame\nglobal.performance.now = originalPerformanceNow\nanimationCallbacks = []"
+        },
+        "tests": [
           {
-            "title": "initialization",
-            "line": 59,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "extends HTMLElement",
-                "line": 61,
-                "source": "expect(inspector).toBeInstanceOf(HTMLElement)"
-              },
-              {
-                "title": "has shadow DOM",
-                "line": 66,
-                "source": "expect(inspector.shadowRoot).not.toBeNull()"
-              },
-              {
-                "title": "hides gridEl",
-                "line": 71,
-                "source": "expect(inspector.gridEl.style.display).toBe('none')"
-              }
-            ],
-            "describes": []
+            "title": "constructor",
+            "line": 42,
+            "source": "expect(gameLoop).toBeInstanceOf(PerkyModule)\nexpect(gameLoop.frameInterval).toBe(1000 / 60)\nexpect(gameLoop.paused).toBe(false)\nexpect(gameLoop.maxFrameSkip).toBe(5)"
           },
           {
-            "title": "setModule",
+            "title": "constructor with custom params",
+            "line": 50,
+            "source": "const customLoop = new GameLoop({\n    fps: 30,\n    maxFrameSkip: 3\n})\n\nexpect(customLoop.frameInterval).toBe(1000 / 30)\nexpect(customLoop.maxFrameSkip).toBe(3)"
+          },
+          {
+            "title": "running getter",
+            "line": 61,
+            "source": "expect(gameLoop.running).toBe(false)\n\ngameLoop.start()\nexpect(gameLoop.running).toBe(true)\n\ngameLoop.paused = true\nexpect(gameLoop.running).toBe(false)"
+          },
+          {
+            "title": "start",
+            "line": 72,
+            "source": "gameLoop.start()\n\nexpect(gameLoop.started).toBe(true)\nexpect(gameLoop.lastTime).toBeDefined()\nexpect(gameLoop.accumulator).toBe(0)\nexpect(gameLoop.frameCount).toBe(0)\nexpect(global.requestAnimationFrame).toHaveBeenCalled()"
+          },
+          {
+            "title": "start with already started",
             "line": 83,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "stores the module",
-                "line": 85,
-                "source": "const module = new MockActionDispatcher()\ninspector.setModule(module)\nexpect(inspector.getModule()).toBe(module)"
-              },
-              {
-                "title": "renders controller groups when module is set",
-                "line": 92,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'run'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst groups = inspector.shadowRoot.querySelectorAll('.controller-group')\nexpect(groups.length).toBe(2)"
-              }
-            ],
-            "describes": []
+            "source": "gameLoop.start()\n\nvi.clearAllMocks()\nconst result = gameLoop.start()\n\nexpect(result).toBe(false)\nexpect(requestAnimationFrame).not.toHaveBeenCalled()"
           },
           {
-            "title": "rendering",
-            "line": 107,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "shows header with total action and controller count",
-                "line": 109,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'run'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst header = inspector.shadowRoot.querySelector('.actions-header')\nexpect(header).not.toBeNull()\nexpect(header.textContent).toContain('3')\nexpect(header.textContent).toContain('2')"
-              },
-              {
-                "title": "shows empty message when no controllers",
-                "line": 124,
-                "source": "const module = new MockActionDispatcher(new Map())\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No controllers registered')"
-              },
-              {
-                "title": "renders controller group headers",
-                "line": 134,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst groupName = inspector.shadowRoot.querySelector('.group-name')\nexpect(groupName).not.toBeNull()\nexpect(groupName.textContent).toBe('player')"
-              },
-              {
-                "title": "renders action cards with names",
-                "line": 147,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst names = inspector.shadowRoot.querySelectorAll('.action-name')\nexpect(names.length).toBe(2)\nexpect(names[0].textContent).toBe('jump')\nexpect(names[1].textContent).toBe('attack')"
-              },
-              {
-                "title": "shows empty message in group when controller has no actions",
-                "line": 161,
-                "source": "const actionsMap = new Map([\n    ['player', []]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.controller-group .empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No actions')"
-              }
-            ],
-            "describes": []
+            "title": "pause",
+            "line": 94,
+            "source": "gameLoop.start()\ngameLoop.paused = false\n\nconst result = gameLoop.pause('param')\n\nexpect(result).toBe(true)\nexpect(gameLoop.paused).toBe(true)\nexpect(gameLoop.emit).toHaveBeenCalledWith('pause', 'param')"
           },
           {
-            "title": "active controller toggle",
-            "line": 191,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "renders toggle for each controller group",
-                "line": 193,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst toggles = inspector.shadowRoot.querySelectorAll('toggle-input')\nexpect(toggles.length).toBe(2)"
-              },
-              {
-                "title": "toggle is checked when controller is active",
-                "line": 206,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\nexpect(toggle.checked).toBe(true)"
-              },
-              {
-                "title": "toggle is unchecked when controller is inactive",
-                "line": 218,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\nexpect(toggle.checked).toBe(false)"
-              },
-              {
-                "title": "inactive controller group has group-inactive class",
-                "line": 230,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\ninspector.setModule(module)\n\nconst group = inspector.shadowRoot.querySelector('.controller-group')\nexpect(group.classList.contains('group-inactive')).toBe(true)"
-              },
-              {
-                "title": "active controller group does not have group-inactive class",
-                "line": 242,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst group = inspector.shadowRoot.querySelector('.controller-group')\nexpect(group.classList.contains('group-inactive')).toBe(false)"
-              },
-              {
-                "title": "clicking toggle activates inactive controller",
-                "line": 254,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\nmodule.setActive = vi.fn()\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\ntoggle.dispatchEvent(new CustomEvent('change', {detail: {checked: true}}))\n\nexpect(module.setActive).toHaveBeenCalledWith(['player'])"
-              },
-              {
-                "title": "clicking toggle deactivates active controller",
-                "line": 269,
-                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player', 'enemy'])\nmodule.setActive = vi.fn()\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\ntoggle.dispatchEvent(new CustomEvent('change', {detail: {checked: false}}))\n\nexpect(module.setActive).toHaveBeenCalledWith(['enemy'])"
-              }
-            ],
-            "describes": []
+            "title": "pause when not running",
+            "line": 106,
+            "source": "vi.clearAllMocks()\n\nconst result = gameLoop.pause()\n\nexpect(result).toBe(false)\nexpect(gameLoop.emit).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "resume",
+            "line": 116,
+            "source": "gameLoop.start()\ngameLoop.paused = true\n\nconst result = gameLoop.resume('param')\n\nexpect(result).toBe(true)\nexpect(gameLoop.paused).toBe(false)\nexpect(gameLoop.emit).toHaveBeenCalledWith('resume', 'param')\nexpect(requestAnimationFrame).toHaveBeenCalled()"
+          },
+          {
+            "title": "resume when not paused",
+            "line": 129,
+            "source": "gameLoop.start()\ngameLoop.paused = false\n\nvi.clearAllMocks()\n\nconst result = gameLoop.resume()\n\nexpect(result).toBe(false)\nexpect(gameLoop.emit).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "setFps and getFps",
+            "line": 142,
+            "source": "gameLoop.setFps(30)\n\nexpect(gameLoop.frameInterval).toBe(1000 / 30)\nexpect(gameLoop.getFps()).toBe(30)"
+          },
+          {
+            "title": "getCurrentFps",
+            "line": 150,
+            "source": "expect(gameLoop.getCurrentFps()).toBe(0)\n\ngameLoop.currentFps = 59\nexpect(gameLoop.getCurrentFps()).toBe(59)"
+          },
+          {
+            "title": "update function emits events",
+            "line": 158,
+            "source": "const testLoop = new GameLoop()\nconst update = vi.fn()\nconst render = vi.fn()\n\ntestLoop.on('update', update)\ntestLoop.on('render', render)\n\ntestLoop.start()\nexpect(animationCallbacks.length).toBeGreaterThan(0)\n\ntestLoop.lastTime = performance.now() - 50 // 50ms ago\n\nconst updateFn = animationCallbacks[0]\nupdateFn(performance.now())\n\nexpect(update).toHaveBeenCalled()\n\nexpect(render).toHaveBeenCalled()"
+          },
+          {
+            "title": "update function with paused loop",
+            "line": 179,
+            "source": "const testLoop = new GameLoop()\nconst update = vi.fn()\nconst render = vi.fn()\n\ntestLoop.on('update', update)\ntestLoop.on('render', render)\n\ntestLoop.start()\nexpect(animationCallbacks.length).toBeGreaterThan(0)\n\ntestLoop.paused = true\n\nconst updateFn = animationCallbacks[0]\nconst result = updateFn(performance.now())\n\nexpect(result).toBe(false)\nexpect(update).not.toHaveBeenCalled()\nexpect(render).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "getScreenFps",
+            "line": 201,
+            "source": "expect(gameLoop.getScreenFps()).toBe(0)\n\ngameLoop.screenFps = 120\nexpect(gameLoop.getScreenFps()).toBe(120)"
+          },
+          {
+            "title": "setFpsLimited",
+            "line": 209,
+            "source": "expect(gameLoop.fpsLimited).toBe(false)\n\ngameLoop.setFpsLimited(true)\n\nexpect(gameLoop.fpsLimited).toBe(true)\nexpect(gameLoop.emit).toHaveBeenCalledWith('changed:fpsLimited', true)"
+          },
+          {
+            "title": "constructor with fpsLimited param",
+            "line": 219,
+            "source": "const limitedLoop = new GameLoop({fpsLimited: true})\n\nexpect(limitedLoop.fpsLimited).toBe(true)"
           }
-        ]
+        ],
+        "describes": []
       }
     ]
   },
@@ -2520,6 +2610,30 @@
                 "title": "should clean up listeners when setting new module",
                 "line": 387,
                 "source": "const module1 = new PerkyModule({$id: 'first'})\nconst module2 = new PerkyModule({$id: 'second'})\n\nexplorer.setModule(module1)\n\nconst rootNode = getRootNode(explorer)\nconst offSpy = vi.spyOn(module1, 'off')\n\nrootNode.setModule(module2)\n\nexpect(offSpy).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "focusModule",
+            "line": 404,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should change root to focused module",
+                "line": 406,
+                "source": "const parent = new PerkyModule({$id: 'parent'})\nconst child = parent.create(PerkyModule, {$id: 'child', $category: 'test'})\n\nexplorer.setModule(parent)\n\nconst rootNode = getRootNode(explorer)\nlet nodeIds = collectAllNodeIds(rootNode)\nexpect(nodeIds).toContain('parent')\nexpect(nodeIds).toContain('child')\n\nexplorer.focusModule(child)\n\nconst focusedRootNode = getRootNode(explorer)\nconst focusedId = getNodeId(focusedRootNode)\nexpect(focusedId.textContent).toBe('child')"
+              },
+              {
+                "title": "should do nothing if module is null",
+                "line": 425,
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst idBefore = getNodeId(rootNode).textContent\n\nexplorer.focusModule(null)\n\nconst idAfter = getNodeId(getRootNode(explorer)).textContent\nexpect(idAfter).toBe(idBefore)"
+              },
+              {
+                "title": "should expand focused module",
+                "line": 439,
+                "source": "const parent = new PerkyModule({$id: 'parent'})\nconst child = parent.create(PerkyModule, {$id: 'child', $category: 'test'})\nchild.create(PerkyModule, {$id: 'grandchild', $category: 'test'})\n\nexplorer.setModule(parent)\nexplorer.focusModule(child)\n\nconst rootNode = getRootNode(explorer)\nconst childrenContainer = getNodeChildren(rootNode)\nexpect(childrenContainer.classList.contains('expanded')).toBe(true)"
               }
             ],
             "describes": []
@@ -2897,88 +3011,263 @@
       }
     ]
   },
-  "/game/game_loop.doc.js": {
-    "file": "/game/game_loop.test.js",
+  "/editor/inspectors/action_controller_inspector.doc.js": {
+    "file": "/editor/inspectors/action_controller_inspector.test.js",
     "describes": [
       {
-        "title": "GameLoop",
-        "line": 6,
+        "title": "ActionControllerInspector",
+        "line": 34,
         "beforeEach": {
-          "line": 12,
-          "source": "originalRequestAnimationFrame = global.requestAnimationFrame\noriginalPerformanceNow = global.performance.now\nanimationCallbacks = []\n\nlet time = 0\nglobal.performance.now = vi.fn(() => {\n    time += 16.7 // ~60fps\n    return time\n})\n\nglobal.requestAnimationFrame = vi.fn(callback => {\n    animationCallbacks.push(callback)\n    return 1 // Return a dummy ID\n})\n\nvi.spyOn(PerkyModule.prototype, 'emit')\n\ngameLoop = new GameLoop()"
+          "line": 40,
+          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\ninspector = document.createElement('action-controller-inspector')\ncontainer.appendChild(inspector)"
         },
         "afterEach": {
-          "line": 34,
-          "source": "vi.restoreAllMocks()\nglobal.requestAnimationFrame = originalRequestAnimationFrame\nglobal.performance.now = originalPerformanceNow\nanimationCallbacks = []"
+          "line": 49,
+          "source": "container.remove()"
         },
         "tests": [
           {
-            "title": "constructor",
-            "line": 42,
-            "source": "expect(gameLoop).toBeInstanceOf(PerkyModule)\nexpect(gameLoop.frameInterval).toBe(1000 / 60)\nexpect(gameLoop.paused).toBe(false)\nexpect(gameLoop.maxFrameSkip).toBe(5)"
+            "title": "matches returns true for ActionController instances",
+            "line": 73,
+            "source": "const mock = new MockActionController()\nObject.setPrototypeOf(mock, {constructor: {name: 'ActionController'}})\n\nconst matches = ActionControllerInspector.matches\nexpect(typeof matches).toBe('function')"
           },
           {
-            "title": "constructor with custom params",
-            "line": 50,
-            "source": "const customLoop = new GameLoop({\n    fps: 30,\n    maxFrameSkip: 3\n})\n\nexpect(customLoop.frameInterval).toBe(1000 / 30)\nexpect(customLoop.maxFrameSkip).toBe(3)"
-          },
-          {
-            "title": "running getter",
-            "line": 61,
-            "source": "expect(gameLoop.running).toBe(false)\n\ngameLoop.start()\nexpect(gameLoop.running).toBe(true)\n\ngameLoop.paused = true\nexpect(gameLoop.running).toBe(false)"
-          },
-          {
-            "title": "start",
-            "line": 72,
-            "source": "gameLoop.start()\n\nexpect(gameLoop.started).toBe(true)\nexpect(gameLoop.lastTime).toBeDefined()\nexpect(gameLoop.accumulator).toBe(0)\nexpect(gameLoop.frameCount).toBe(0)\nexpect(global.requestAnimationFrame).toHaveBeenCalled()"
-          },
-          {
-            "title": "start with already started",
-            "line": 83,
-            "source": "gameLoop.start()\n\nvi.clearAllMocks()\nconst result = gameLoop.start()\n\nexpect(result).toBe(false)\nexpect(requestAnimationFrame).not.toHaveBeenCalled()"
-          },
-          {
-            "title": "pause",
-            "line": 94,
-            "source": "gameLoop.start()\ngameLoop.paused = false\n\nconst result = gameLoop.pause('param')\n\nexpect(result).toBe(true)\nexpect(gameLoop.paused).toBe(true)\nexpect(gameLoop.emit).toHaveBeenCalledWith('pause', 'param')"
-          },
-          {
-            "title": "pause when not running",
-            "line": 106,
-            "source": "vi.clearAllMocks()\n\nconst result = gameLoop.pause()\n\nexpect(result).toBe(false)\nexpect(gameLoop.emit).not.toHaveBeenCalled()"
-          },
-          {
-            "title": "resume",
-            "line": 116,
-            "source": "gameLoop.start()\ngameLoop.paused = true\n\nconst result = gameLoop.resume('param')\n\nexpect(result).toBe(true)\nexpect(gameLoop.paused).toBe(false)\nexpect(gameLoop.emit).toHaveBeenCalledWith('resume', 'param')\nexpect(requestAnimationFrame).toHaveBeenCalled()"
-          },
-          {
-            "title": "resume when not paused",
-            "line": 129,
-            "source": "gameLoop.start()\ngameLoop.paused = false\n\nvi.clearAllMocks()\n\nconst result = gameLoop.resume()\n\nexpect(result).toBe(false)\nexpect(gameLoop.emit).not.toHaveBeenCalled()"
-          },
-          {
-            "title": "setFps and getFps",
-            "line": 142,
-            "source": "gameLoop.setFps(30)\n\nexpect(gameLoop.frameInterval).toBe(1000 / 30)\nexpect(gameLoop.getFps()).toBe(30)"
-          },
-          {
-            "title": "getCurrentFps",
-            "line": 150,
-            "source": "expect(gameLoop.getCurrentFps()).toBe(0)\n\ngameLoop.currentFps = 59\nexpect(gameLoop.getCurrentFps()).toBe(59)"
-          },
-          {
-            "title": "update function emits events",
-            "line": 158,
-            "source": "const testLoop = new GameLoop()\nconst update = vi.fn()\nconst render = vi.fn()\n\ntestLoop.on('update', update)\ntestLoop.on('render', render)\n\ntestLoop.start()\nexpect(animationCallbacks.length).toBeGreaterThan(0)\n\ntestLoop.lastTime = performance.now() - 50 // 50ms ago\n\nconst updateFn = animationCallbacks[0]\nupdateFn(performance.now())\n\nexpect(update).toHaveBeenCalled()\n\nexpect(render).toHaveBeenCalled()"
-          },
-          {
-            "title": "update function with paused loop",
-            "line": 179,
-            "source": "const testLoop = new GameLoop()\nconst update = vi.fn()\nconst render = vi.fn()\n\ntestLoop.on('update', update)\ntestLoop.on('render', render)\n\ntestLoop.start()\nexpect(animationCallbacks.length).toBeGreaterThan(0)\n\ntestLoop.paused = true\n\nconst updateFn = animationCallbacks[0]\nconst result = updateFn(performance.now())\n\nexpect(result).toBe(false)\nexpect(update).not.toHaveBeenCalled()\nexpect(render).not.toHaveBeenCalled()"
+            "title": "execute button calls module.execute when clicked",
+            "line": 157,
+            "source": "const module = new MockActionController(['jump'])\nmodule.execute = vi.fn()\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nbtn.click()\n\nexpect(module.execute).toHaveBeenCalledWith('jump')"
           }
         ],
-        "describes": []
+        "describes": [
+          {
+            "title": "initialization",
+            "line": 54,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "extends HTMLElement",
+                "line": 56,
+                "source": "expect(inspector).toBeInstanceOf(HTMLElement)"
+              },
+              {
+                "title": "has shadow DOM",
+                "line": 61,
+                "source": "expect(inspector.shadowRoot).not.toBeNull()"
+              },
+              {
+                "title": "hides gridEl",
+                "line": 66,
+                "source": "expect(inspector.gridEl.style.display).toBe('none')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setModule",
+            "line": 82,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "stores the module",
+                "line": 84,
+                "source": "const module = new MockActionController(['jump'])\ninspector.setModule(module)\nexpect(inspector.getModule()).toBe(module)"
+              },
+              {
+                "title": "renders actions when module is set",
+                "line": 91,
+                "source": "const module = new MockActionController(['jump', 'run'])\ninspector.setModule(module)\n\nconst actionCards = inspector.shadowRoot.querySelectorAll('.action-card')\nexpect(actionCards.length).toBe(2)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "rendering",
+            "line": 102,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "shows header with action count",
+                "line": 104,
+                "source": "const module = new MockActionController(['a', 'b', 'c'])\ninspector.setModule(module)\n\nconst header = inspector.shadowRoot.querySelector('.actions-header')\nexpect(header).not.toBeNull()\nexpect(header.textContent).toContain('3')"
+              },
+              {
+                "title": "shows empty message when no actions",
+                "line": 114,
+                "source": "const module = new MockActionController([])\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No actions defined')"
+              },
+              {
+                "title": "renders action names",
+                "line": 124,
+                "source": "const module = new MockActionController(['jump', 'attack'])\ninspector.setModule(module)\n\nconst names = inspector.shadowRoot.querySelectorAll('.action-name')\nexpect(names.length).toBe(2)\nexpect(names[0].textContent).toBe('jump')\nexpect(names[1].textContent).toBe('attack')"
+              },
+              {
+                "title": "shows propagable badge for propagable actions",
+                "line": 135,
+                "source": "const module = new MockActionController(['jump', 'attack'], ['jump'])\ninspector.setModule(module)\n\nconst badges = inspector.shadowRoot.querySelectorAll('.action-badge.propagable')\nexpect(badges.length).toBe(1)\nexpect(badges[0].textContent).toBe('propagable')"
+              },
+              {
+                "title": "renders execute button for each action",
+                "line": 145,
+                "source": "const module = new MockActionController(['jump'])\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nexpect(btn).not.toBeNull()\nexpect(btn.textContent).toContain('Run')"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/editor/inspectors/action_dispatcher_inspector.doc.js": {
+    "file": "/editor/inspectors/action_dispatcher_inspector.test.js",
+    "describes": [
+      {
+        "title": "ActionDispatcherInspector",
+        "line": 39,
+        "beforeEach": {
+          "line": 45,
+          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\ninspector = document.createElement('action-dispatcher-inspector')\ncontainer.appendChild(inspector)"
+        },
+        "afterEach": {
+          "line": 54,
+          "source": "container.remove()"
+        },
+        "tests": [
+          {
+            "title": "matches static matches method exists",
+            "line": 78,
+            "source": "expect(typeof ActionDispatcherInspector.matches).toBe('function')"
+          },
+          {
+            "title": "execute button calls module.executeTo when clicked",
+            "line": 176,
+            "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\nmodule.executeTo = vi.fn()\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nbtn.click()\n\nexpect(module.executeTo).toHaveBeenCalledWith('player', 'jump')"
+          }
+        ],
+        "describes": [
+          {
+            "title": "initialization",
+            "line": 59,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "extends HTMLElement",
+                "line": 61,
+                "source": "expect(inspector).toBeInstanceOf(HTMLElement)"
+              },
+              {
+                "title": "has shadow DOM",
+                "line": 66,
+                "source": "expect(inspector.shadowRoot).not.toBeNull()"
+              },
+              {
+                "title": "hides gridEl",
+                "line": 71,
+                "source": "expect(inspector.gridEl.style.display).toBe('none')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setModule",
+            "line": 83,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "stores the module",
+                "line": 85,
+                "source": "const module = new MockActionDispatcher()\ninspector.setModule(module)\nexpect(inspector.getModule()).toBe(module)"
+              },
+              {
+                "title": "renders controller groups when module is set",
+                "line": 92,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'run'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst groups = inspector.shadowRoot.querySelectorAll('.controller-group')\nexpect(groups.length).toBe(2)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "rendering",
+            "line": 107,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "shows header with total action and controller count",
+                "line": 109,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'run'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst header = inspector.shadowRoot.querySelector('.actions-header')\nexpect(header).not.toBeNull()\nexpect(header.textContent).toContain('3')\nexpect(header.textContent).toContain('2')"
+              },
+              {
+                "title": "shows empty message when no controllers",
+                "line": 124,
+                "source": "const module = new MockActionDispatcher(new Map())\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No controllers registered')"
+              },
+              {
+                "title": "renders controller group headers",
+                "line": 134,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst groupName = inspector.shadowRoot.querySelector('.group-name')\nexpect(groupName).not.toBeNull()\nexpect(groupName.textContent).toBe('player')"
+              },
+              {
+                "title": "renders action cards with names",
+                "line": 147,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst names = inspector.shadowRoot.querySelectorAll('.action-name')\nexpect(names.length).toBe(2)\nexpect(names[0].textContent).toBe('jump')\nexpect(names[1].textContent).toBe('attack')"
+              },
+              {
+                "title": "shows empty message in group when controller has no actions",
+                "line": 161,
+                "source": "const actionsMap = new Map([\n    ['player', []]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.controller-group .empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No actions')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "active controller toggle",
+            "line": 191,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "renders toggle for each controller group",
+                "line": 193,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst toggles = inspector.shadowRoot.querySelectorAll('toggle-input')\nexpect(toggles.length).toBe(2)"
+              },
+              {
+                "title": "toggle is checked when controller is active",
+                "line": 206,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\nexpect(toggle.checked).toBe(true)"
+              },
+              {
+                "title": "toggle is unchecked when controller is inactive",
+                "line": 218,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\nexpect(toggle.checked).toBe(false)"
+              },
+              {
+                "title": "inactive controller group has group-inactive class",
+                "line": 230,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\ninspector.setModule(module)\n\nconst group = inspector.shadowRoot.querySelector('.controller-group')\nexpect(group.classList.contains('group-inactive')).toBe(true)"
+              },
+              {
+                "title": "active controller group does not have group-inactive class",
+                "line": 242,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst group = inspector.shadowRoot.querySelector('.controller-group')\nexpect(group.classList.contains('group-inactive')).toBe(false)"
+              },
+              {
+                "title": "clicking toggle activates inactive controller",
+                "line": 254,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\nmodule.setActive = vi.fn()\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\ntoggle.dispatchEvent(new CustomEvent('change', {detail: {checked: true}}))\n\nexpect(module.setActive).toHaveBeenCalledWith(['player'])"
+              },
+              {
+                "title": "clicking toggle deactivates active controller",
+                "line": 269,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player', 'enemy'])\nmodule.setActive = vi.fn()\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\ntoggle.dispatchEvent(new CustomEvent('change', {detail: {checked: false}}))\n\nexpect(module.setActive).toHaveBeenCalledWith(['enemy'])"
+              }
+            ],
+            "describes": []
+          }
+        ]
       }
     ]
   },
@@ -4102,6 +4391,16 @@
             "title": "render with scale",
             "line": 297,
             "source": "const scene = new Group2D()\nconst circle = new Circle({\n    x: 0,\n    y: 0,\n    radius: 10,\n    scaleX: 2,\n    scaleY: 3,\n    color: '#ff0000'\n})\nscene.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
+          },
+          {
+            "title": "registerRenderer adds renderer for object types",
+            "line": 313,
+            "source": "class CustomObject {}\nconst customRenderer = {\n    constructor: {handles: [CustomObject]},\n    init: vi.fn(),\n    reset: vi.fn(),\n    flush: vi.fn(),\n    dispose: vi.fn()\n}\n\nconst result = renderer.registerRenderer(customRenderer)\n\nexpect(result).toBe(renderer)\nexpect(customRenderer.init).toHaveBeenCalled()"
+          },
+          {
+            "title": "unregisterRenderer removes renderer",
+            "line": 330,
+            "source": "class CustomObject {}\nconst customRenderer = {\n    constructor: {handles: [CustomObject]},\n    init: vi.fn(),\n    reset: vi.fn(),\n    flush: vi.fn(),\n    dispose: vi.fn()\n}\n\nrenderer.registerRenderer(customRenderer)\nconst result = renderer.unregisterRenderer(customRenderer)\n\nexpect(result).toBe(renderer)\nexpect(customRenderer.dispose).toHaveBeenCalled()"
           }
         ],
         "describes": []
@@ -4313,6 +4612,73 @@
                 "title": "renders with background color",
                 "line": 267,
                 "source": "renderer.backgroundColor = '#0000FF'\nconst scene = new Group2D()\nexpect(() => renderer.render(scene)).not.toThrow()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "registerRenderer and unregisterRenderer",
+            "line": 289,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "registerRenderer adds custom renderer",
+                "line": 291,
+                "source": "class CustomObject {}\nclass CustomRenderer {\n    static get handles () {\n        return [CustomObject]\n    }\n\n    init = vi.fn()\n    reset = vi.fn()\n    flush = vi.fn()\n    dispose = vi.fn()\n}\n\nconst customRenderer = new CustomRenderer()\nconst result = renderer.registerRenderer(customRenderer)\n\nexpect(result).toBe(renderer)\nexpect(customRenderer.init).toHaveBeenCalled()"
+              },
+              {
+                "title": "unregisterRenderer removes renderer",
+                "line": 312,
+                "source": "class CustomObject {}\nclass CustomRenderer {\n    static get handles () {\n        return [CustomObject]\n    }\n\n    init = vi.fn()\n    reset = vi.fn()\n    flush = vi.fn()\n    dispose = vi.fn()\n}\n\nconst customRenderer = new CustomRenderer()\nrenderer.registerRenderer(customRenderer)\n\nconst result = renderer.unregisterRenderer(customRenderer)\n\nexpect(result).toBe(renderer)\nexpect(customRenderer.dispose).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "applyPixelRatio",
+            "line": 337,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "applyPixelRatio updates viewport",
+                "line": 339,
+                "source": "renderer.pixelRatio = 2\nexpect(() => renderer.applyPixelRatio()).not.toThrow()"
+              },
+              {
+                "title": "applyPixelRatio resizes post processor",
+                "line": 345,
+                "source": "const originalWidth = canvas.width\nconst originalHeight = canvas.height\n\nrenderer.applyPixelRatio()\n\nexpect(renderer.gl).toBeDefined()\nexpect(canvas.width).toBe(originalWidth)\nexpect(canvas.height).toBe(originalHeight)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setRenderGroups and clearRenderGroups",
+            "line": 359,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "setRenderGroups creates render groups",
+                "line": 361,
+                "source": "const scene = new Group2D()\n\nrenderer.setRenderGroups([\n    {$id: 'background', content: scene},\n    {$id: 'foreground', content: scene}\n])\n\nexpect(renderer.renderGroups.length).toBe(2)"
+              },
+              {
+                "title": "setRenderGroups returns this for chaining",
+                "line": 373,
+                "source": "const scene = new Group2D()\n\nconst result = renderer.setRenderGroups([\n    {$id: 'test', content: scene}\n])\n\nexpect(result).toBe(renderer)"
+              },
+              {
+                "title": "clearRenderGroups removes all render groups",
+                "line": 384,
+                "source": "const scene = new Group2D()\n\nrenderer.setRenderGroups([\n    {$id: 'group1', content: scene},\n    {$id: 'group2', content: scene}\n])\n\nexpect(renderer.renderGroups.length).toBe(2)\n\nconst result = renderer.clearRenderGroups()\n\nexpect(result).toBe(renderer)\nexpect(renderer.renderGroups.length).toBe(0)"
+              },
+              {
+                "title": "setRenderGroups clears previous groups",
+                "line": 401,
+                "source": "const scene = new Group2D()\n\nrenderer.setRenderGroups([\n    {$id: 'oldGroup', content: scene}\n])\n\nrenderer.setRenderGroups([\n    {$id: 'newGroup', content: scene}\n])\n\nexpect(renderer.renderGroups.length).toBe(1)\nexpect(renderer.renderGroups[0].$id).toBe('newGroup')"
               }
             ],
             "describes": []

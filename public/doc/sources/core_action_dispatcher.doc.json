@@ -2,7 +2,7 @@
   {
     "type": "code",
     "title": "Creation",
-    "source": "const dispatcher = new ActionDispatcher({$id: 'dispatcher'})\n\n// Register a controller and add an action\nconst main = dispatcher.register('main')\nmain.addAction('jump', () => {\n    console.log('Jump!')\n})\n\n// Set it active and execute\ndispatcher.setActive('main')\ndispatcher.execute('jump')"
+    "source": "const dispatcher = new ActionDispatcher({$id: 'dispatcher'})\n\n// Register a controller and add an action\nconst main = dispatcher.register('main')\nmain.addAction('jump', () => {\n    logger.log('Jump!')\n})\n\n// Set it active and execute\ndispatcher.setActive('main')\ndispatcher.execute('jump')"
   },
   {
     "type": "action",
@@ -12,7 +12,7 @@
   {
     "type": "code",
     "title": "Multiple controllers",
-    "source": "const dispatcher = new ActionDispatcher({$id: 'dispatcher'})\n\n// Register a game controller\nconst gameCtrl = dispatcher.register('game')\ngameCtrl.addAction('pause', () => console.log('Paused'))\n\n// Register a menu controller\nconst menuCtrl = dispatcher.register('menu')\nmenuCtrl.addAction('select', () => console.log('Selected'))\n\n// Set active controllers\ndispatcher.setActive(['game', 'menu'])"
+    "source": "const dispatcher = new ActionDispatcher({$id: 'dispatcher'})\n\n// Register a game controller\nconst gameCtrl = dispatcher.register('game')\ngameCtrl.addAction('pause', () => logger.log('Paused'))\n\n// Register a menu controller\nconst menuCtrl = dispatcher.register('menu')\nmenuCtrl.addAction('select', () => logger.log('Selected'))\n\n// Set active controllers\ndispatcher.setActive(['game', 'menu'])"
   },
   {
     "type": "action",
@@ -27,7 +27,7 @@
   {
     "type": "code",
     "title": "Custom controller class",
-    "source": "class GameController extends ActionController {\n    shoot () {\n        console.log('Shooting!')\n    }\n\n    jump (height = 1) {\n        console.log(`Jumping ${height} units`)\n    }\n\n    setSpeed (speed) {\n        this.speed = speed\n    }\n}\n\nconst dispatcher = new ActionDispatcher({$id: 'dispatcher'})\nconst ctrl = dispatcher.register('game', GameController)\n\ndispatcher.setActive('game')\ndispatcher.execute('shoot')\ndispatcher.execute('jump', 2)"
+    "source": "class GameController extends ActionController {\n    shoot () {\n        logger.log('Shooting!')\n    }\n\n    jump (height = 1) {\n        logger.log(`Jumping ${height} units`)\n    }\n\n    setSpeed (speed) {\n        this.speed = speed\n    }\n}\n\nconst dispatcher = new ActionDispatcher({$id: 'dispatcher'})\nconst ctrl = dispatcher.register('game', GameController)\n\ndispatcher.setActive('game')\ndispatcher.execute('shoot')\ndispatcher.execute('jump', 2)"
   },
   {
     "type": "action",

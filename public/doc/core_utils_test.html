@@ -7,7 +7,7 @@
     <meta name="description" content="Documentation for Utils in the Perky game framework">
     <meta property="og:title" content="Utils - Perky Docs">
     <meta property="og:description" content="Documentation for Utils in the Perky game framework">
-    <link rel="stylesheet" href="assets/main-BJLA8TVm.css">
+    <link rel="stylesheet" href="assets/main-BCH7HCcF.css">
 </head>
 <body>
     <noscript>
@@ -54,6 +54,25 @@ expect(toSnakeCase('Hello')).toEqual('hello')</code></pre>
             </div>
         
             <div class="test-case">
+                <h4>toKebabCase</h4>
+                <pre><code>expect(toKebabCase('helloWorld')).toEqual('hello-world')
+expect(toKebabCase('HelloWorld')).toEqual('hello-world')
+expect(toKebabCase('hello_world')).toEqual('hello-world')
+expect(toKebabCase('hello world')).toEqual('hello-world')
+expect(toKebabCase('Hello')).toEqual('hello')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>toHumanCase</h4>
+                <pre><code>expect(toHumanCase('GettingStarted')).toEqual('Getting Started')
+expect(toHumanCase('helloWorld')).toEqual('hello World')
+expect(toHumanCase('hello_world')).toEqual('hello world')
+expect(toHumanCase('hello-world')).toEqual('hello world')
+expect(toHumanCase('HTMLParser')).toEqual('HTML Parser')
+expect(toHumanCase('Hello')).toEqual('Hello')</code></pre>
+            </div>
+        
+            <div class="test-case">
                 <h4>singularize</h4>
                 <pre><code>expect(singularize('books')).toEqual('book')
 expect(singularize('cars')).toEqual('car')
@@ -83,6 +102,41 @@ expect(singularize('cacti')).toEqual('cactus')
 
 expect(singularize('fish')).toEqual('fish')
 expect(singularize('deer')).toEqual('deer')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>pluralize</h4>
+                <pre><code>expect(pluralize('cat', 1)).toEqual('cat')
+expect(pluralize('cat', 2)).toEqual('cats')
+expect(pluralize('cat', 0)).toEqual('cats')
+expect(pluralize('child', 1)).toEqual('child')
+expect(pluralize('child', 5)).toEqual('children')
+expect(pluralize('cat', 1, true)).toEqual('1 cat')
+expect(pluralize('cat', 3, true)).toEqual('3 cats')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>plural</h4>
+                <pre><code>expect(plural('cat')).toEqual('cats')
+expect(plural('child')).toEqual('children')
+expect(plural('person')).toEqual('people')
+expect(plural('fish')).toEqual('fish')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>isPlural</h4>
+                <pre><code>expect(isPlural('cats')).toBe(true)
+expect(isPlural('children')).toBe(true)
+expect(isPlural('cat')).toBe(false)
+expect(isPlural('child')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>isSingular</h4>
+                <pre><code>expect(isSingular('cat')).toBe(true)
+expect(isSingular('child')).toBe(true)
+expect(isSingular('cats')).toBe(false)
+expect(isSingular('children')).toBe(false)</code></pre>
             </div>
         
             <div class="test-case">
@@ -336,6 +390,96 @@ delegateProperties(receiver, source, ['getName'])
 
 expect(receiver.getName()).toBe('source')</code></pre>
             </div>
+        </section><section class="test-section"><h2>exportValue</h2>
+            <div class="test-case">
+                <h4>returns primitive values as-is</h4>
+                <pre><code>expect(exportValue(42)).toBe(42)
+expect(exportValue('hello')).toBe('hello')
+expect(exportValue(true)).toBe(true)
+expect(exportValue(null)).toBe(null)
+expect(exportValue(undefined)).toBe(undefined)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>calls export method if available</h4>
+                <pre><code>const obj = {
+    value: 42,
+    export () {
+        return {exported: this.value}
+    }
+}
+
+expect(exportValue(obj)).toEqual({exported: 42})</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>recursively exports arrays</h4>
+                <pre><code>const arr = [1, 2, {value: 3, export: () =&gt; 'exported'}]
+
+expect(exportValue(arr)).toEqual([1, 2, 'exported'])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>recursively exports object properties</h4>
+                <pre><code>const obj = {
+    a: 1,
+    b: {
+        c: 2,
+        export: () =&gt; 'nested'
+    }
+}
+
+expect(exportValue(obj)).toEqual({a: 1, b: 'nested'})</code></pre>
+            </div>
+        </section><section class="test-section"><h2>formatNumber</h2>
+            <div class="test-case">
+                <h4>formats integers without decimals</h4>
+                <pre><code>expect(formatNumber(42)).toBe('42')
+expect(formatNumber(1000)).toBe('1000')
+expect(formatNumber(0)).toBe('0')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>formats floats with 2 decimal places</h4>
+                <pre><code>expect(formatNumber(3.14159)).toBe('3.14')
+expect(formatNumber(42.5)).toBe('42.50')
+expect(formatNumber(0.123)).toBe('0.12')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>handles non-numbers</h4>
+                <pre><code>expect(formatNumber('hello')).toBe('hello')
+expect(formatNumber(null)).toBe('null')</code></pre>
+            </div>
+        </section><section class="test-section"><h2>formatBytes</h2>
+            <div class="test-case">
+                <h4>formats 0 bytes</h4>
+                <pre><code>expect(formatBytes(0)).toBe('0 B')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>formats bytes</h4>
+                <pre><code>expect(formatBytes(500)).toBe('500 B')
+expect(formatBytes(1023)).toBe('1023 B')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>formats kilobytes</h4>
+                <pre><code>expect(formatBytes(1024)).toBe('1 KB')
+expect(formatBytes(2048)).toBe('2 KB')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>formats megabytes</h4>
+                <pre><code>expect(formatBytes(1024 * 1024)).toBe('1.00 MB')
+expect(formatBytes(1.5 * 1024 * 1024)).toBe('1.50 MB')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>formats gigabytes</h4>
+                <pre><code>expect(formatBytes(1024 * 1024 * 1024)).toBe('1.00 GB')
+expect(formatBytes(2.5 * 1024 * 1024 * 1024)).toBe('2.50 GB')</code></pre>
+            </div>
         </section>
         </div>
     </noscript>
@@ -343,15 +487,16 @@ expect(receiver.getName()).toBe('source')</code></pre>
         <aside class="docs-sidebar">
             <div class="sidebar-header">
                 <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
             </div>
-            <div class="sidebar-search">
-                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-                <input type="text" class="search-input" placeholder="Search...">
-            </div>
-            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item active" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor">ActionDispatcherInspector</a><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor">Vec2LogRenderer</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item active" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">general</div><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/philosophy.guide.js" data-title="philosophy" data-category="general">Philosophy</a><a class="nav-item" href="guide_getting_started.html" data-file="/doc/guides/getting_started.guide.js" data-title="gettingstarted" data-category="general">Getting Started</a><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a></div></nav>
         </aside>
 
         <main class="docs-main">
@@ -362,6 +507,6 @@ expect(receiver.getName()).toBe('source')</code></pre>
         </main>
     </div>
 
-    <script type="module" src="assets/main-CWGy973H.js"></script>
+    <script type="module" src="assets/main-kqcR_Slv.js"></script>
 </body>
 </html>

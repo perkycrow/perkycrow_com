@@ -7,7 +7,7 @@
     <meta name="description" content="Documentation for WebglCanvas2d in the Perky game framework">
     <meta property="og:title" content="WebglCanvas2d - Perky Docs">
     <meta property="og:description" content="Documentation for WebglCanvas2d in the Perky game framework">
-    <link rel="stylesheet" href="assets/main-BJLA8TVm.css">
+    <link rel="stylesheet" href="assets/main-BCH7HCcF.css">
 </head>
 <body>
     <noscript>
@@ -26,14 +26,14 @@
         <div class="seo-content">
             <h1>WebglCanvas2d</h1>
             <p class="api-extends">extends <code>BaseRenderer</code></p><section class="api-section"><h2>Static</h2>
-                <div class="api-member">
-                    <h3><code>$name</code></h3>
-                    <pre><code>static $name = 'webGLCanvas2D'</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Constructor</h2>
-                <div class="api-member">
-                    <h3><code>constructor(options = ...)</code></h3>
-                    <pre><code>constructor (options = {}) {
+        <div class="api-member">
+            <h3><code>$name</code></h3>
+            <pre><code>static $name = 'webGLCanvas2D'</code></pre>
+        </div>
+    </section><section class="api-section"><h2>Constructor</h2>
+        <div class="api-member">
+            <h3><code>constructor(options = ...)</code></h3>
+            <pre><code>constructor (options = {}) {
     const {autoFit, ...parentOptions} = options
     super(parentOptions)
 
@@ -56,11 +56,11 @@
         this.autoFitEnabled = true
     }
 }</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Methods</h2>
-                <div class="api-member">
-                    <h3><code>registerRenderer(renderer)</code></h3>
-                    <pre><code>registerRenderer (renderer) {
+        </div>
+    </section><section class="api-section"><h2>Methods</h2>
+        <div class="api-member">
+            <h3><code>registerRenderer(renderer)</code></h3>
+            <pre><code>registerRenderer (renderer) {
     const context = {
         gl: this.gl,
         spriteProgram: this.spriteProgram,
@@ -81,11 +81,11 @@
 
     return this
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>unregisterRenderer(renderer)</code></h3>
-                    <pre><code>unregisterRenderer (renderer) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>unregisterRenderer(renderer)</code></h3>
+            <pre><code>unregisterRenderer (renderer) {
     for (const ObjectClass of renderer.constructor.handles) {
         if (this.#rendererRegistry.get(ObjectClass) === renderer) {
             this.#rendererRegistry.delete(ObjectClass)
@@ -100,11 +100,11 @@
     renderer.dispose()
     return this
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>applyPixelRatio()</code></h3>
-                    <pre><code>applyPixelRatio () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>applyPixelRatio()</code></h3>
+            <pre><code>applyPixelRatio () {
     super.applyPixelRatio()
 
     if (this.gl) {
@@ -115,63 +115,63 @@
         this.#postProcessor.resize(this.canvas.width, this.canvas.height)
     }
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>registerShaderEffect(EffectClass)</code></h3>
-                    <pre><code>registerShaderEffect (EffectClass) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>registerShaderEffect(EffectClass)</code></h3>
+            <pre><code>registerShaderEffect (EffectClass) {
     return this.#shaderEffectRegistry.register(EffectClass)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>setUniform(name, value, type = ...)</code></h3>
-                    <pre><code>setUniform (name, value, type = null) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>setUniform(name, value, type = ...)</code></h3>
+            <pre><code>setUniform (name, value, type = null) {
     this.#shaderEffectRegistry.setUniform(name, value, type)
     return this
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>getUniform(name)</code></h3>
-                    <pre><code>getUniform (name) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getUniform(name)</code></h3>
+            <pre><code>getUniform (name) {
     return this.#shaderEffectRegistry.getUniform(name)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>registerShader(id, definition)</code></h3>
-                    <pre><code>registerShader (id, definition) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>registerShader(id, definition)</code></h3>
+            <pre><code>registerShader (id, definition) {
     return this.#shaderRegistry.register(id, definition)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>getShader(id)</code></h3>
-                    <pre><code>getShader (id) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getShader(id)</code></h3>
+            <pre><code>getShader (id) {
     return this.#shaderRegistry.get(id)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>addPostPass(pass)</code></h3>
-                    <pre><code>addPostPass (pass) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addPostPass(pass)</code></h3>
+            <pre><code>addPostPass (pass) {
     this.#postProcessor.addPass(pass)
     return this
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>removePostPass(pass)</code></h3>
-                    <pre><code>removePostPass (pass) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>removePostPass(pass)</code></h3>
+            <pre><code>removePostPass (pass) {
     this.#postProcessor.removePass(pass)
     return this
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>setRenderGroups(configs)</code></h3>
-                    <pre><code>setRenderGroups (configs) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>setRenderGroups(configs)</code></h3>
+            <pre><code>setRenderGroups (configs) {
     this.clearRenderGroups()
 
     if (!this.#compositeProgram) {
@@ -187,22 +187,22 @@
 
     return this
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>clearRenderGroups()</code></h3>
-                    <pre><code>clearRenderGroups () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>clearRenderGroups()</code></h3>
+            <pre><code>clearRenderGroups () {
     const groups = this.renderGroups
     for (const group of groups) {
         this.removeChild(group.$id)
     }
     return this
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>onDispose()</code></h3>
-                    <pre><code>onDispose () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>onDispose()</code></h3>
+            <pre><code>onDispose () {
     for (const renderer of this.#renderers) {
         renderer.dispose()
     }
@@ -239,61 +239,62 @@
     super.onDispose()
     this.gl = null
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>render(scene)</code></h3>
-                    <pre><code>render (scene) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>render(scene)</code></h3>
+            <pre><code>render (scene) {
     if (this.renderGroups.length &gt; 0 &amp;&amp; !scene) {
         return this.#renderWithGroups()
     }
     return this.#renderSingleScene(scene)
 }</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Getters</h2>
-                <div class="api-member">
-                    <h3><code>shaderRegistry()</code></h3>
-                    <pre><code>get shaderRegistry () {
+        </div>
+    </section><section class="api-section"><h2>Getters</h2>
+        <div class="api-member">
+            <h3><code>shaderRegistry()</code></h3>
+            <pre><code>get shaderRegistry () {
     return this.#shaderRegistry
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>shaderEffectRegistry()</code></h3>
-                    <pre><code>get shaderEffectRegistry () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>shaderEffectRegistry()</code></h3>
+            <pre><code>get shaderEffectRegistry () {
     return this.#shaderEffectRegistry
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>postProcessor()</code></h3>
-                    <pre><code>get postProcessor () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>postProcessor()</code></h3>
+            <pre><code>get postProcessor () {
     return this.#postProcessor
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>renderGroups()</code></h3>
-                    <pre><code>get renderGroups () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>renderGroups()</code></h3>
+            <pre><code>get renderGroups () {
     return this.childrenByCategory('renderGroup')
 }</code></pre>
-                </div>
-            </section>
+        </div>
+    </section>
         </div>
     </noscript>
     <div class="docs-layout">
         <aside class="docs-sidebar">
             <div class="sidebar-header">
                 <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
             </div>
-            <div class="sidebar-search">
-                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-                <input type="text" class="search-input" placeholder="Search...">
-            </div>
-            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor">ActionDispatcherInspector</a><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor">Vec2LogRenderer</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item active" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item active" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">general</div><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/philosophy.guide.js" data-title="philosophy" data-category="general">Philosophy</a><a class="nav-item" href="guide_getting_started.html" data-file="/doc/guides/getting_started.guide.js" data-title="gettingstarted" data-category="general">Getting Started</a><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a></div></nav>
         </aside>
 
         <main class="docs-main">
@@ -304,6 +305,6 @@
         </main>
     </div>
 
-    <script type="module" src="assets/main-CWGy973H.js"></script>
+    <script type="module" src="assets/main-kqcR_Slv.js"></script>
 </body>
 </html>

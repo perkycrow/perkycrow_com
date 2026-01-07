@@ -42,7 +42,7 @@
   {
     "type": "code",
     "title": "Culling options",
-    "source": "const renderer = new Canvas2D({\n    enableCulling: true\n})\n\n// After render, check stats\nrenderer.render(scene)\nconsole.log(renderer.stats.totalObjects)\nconsole.log(renderer.stats.renderedObjects)\nconsole.log(renderer.stats.culledObjects)"
+    "source": "const renderer = new Canvas2D({\n    enableCulling: true\n})\n\n// After render, check stats\nrenderer.render(scene)\nlogger.log(renderer.stats.totalObjects)\nlogger.log(renderer.stats.renderedObjects)\nlogger.log(renderer.stats.culledObjects)"
   },
   {
     "type": "code",

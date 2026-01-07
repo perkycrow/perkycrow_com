@@ -2,7 +2,7 @@
   {
     "type": "code",
     "title": "Setup",
-    "source": "const input = document.createElement('vec2-input')\ninput.value = new Vec2(10, 20)\ninput.addEventListener('change', (e) => {\n    console.log('Value:', e.detail.value)\n})\ndocument.body.appendChild(input)"
+    "source": "const input = document.createElement('vec2-input')\ninput.value = new Vec2(10, 20)\ninput.addEventListener('change', (e) => {\n    logger.log('Value:', e.detail.value)\n})\ndocument.body.appendChild(input)"
   },
   {
     "type": "container",

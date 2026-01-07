@@ -1,0 +1,42 @@
+[
+  {
+    "type": "action",
+    "title": "Create a module",
+    "source": "const module = new PerkyModule({$id: 'myModule'})\n\nlogger.log('$id:', module.$id)\nlogger.log('$status:', module.$status)"
+  },
+  {
+    "type": "action",
+    "title": "Add children",
+    "source": "const game = new PerkyModule({$id: 'game'})\n\nconst player = game.create(PerkyModule, {$id: 'player'})\nconst enemy = game.create(PerkyModule, {$id: 'enemy'})\n\nlogger.log('children:', game.children.length)\nlogger.log('player host:', player.host.$id)"
+  },
+  {
+    "type": "action",
+    "title": "Start and stop",
+    "source": "const game = new PerkyModule({$id: 'game'})\nconst player = game.create(PerkyModule, {$id: 'player'})\n\nplayer.on('start', () => logger.log('player started'))\nplayer.on('stop', () => logger.log('player stopped'))\n\ngame.start()\ngame.stop()"
+  },
+  {
+    "type": "action",
+    "title": "Basic events",
+    "source": "const player = new PerkyModule({$id: 'player'})\n\nplayer.on('damage', (amount) => {\n    logger.log('took damage:', amount)\n})\n\nplayer.emit('damage', 25)\nplayer.emit('damage', 50)"
+  },
+  {
+    "type": "action",
+    "title": "Listen to other modules",
+    "source": "const player = new PerkyModule({$id: 'player'})\nconst enemy = new PerkyModule({$id: 'enemy'})\n\nplayer.listenTo(enemy, 'attack', (damage) => {\n    logger.log('enemy attacked for', damage)\n})\n\nenemy.emit('attack', 30)"
+  },
+  {
+    "type": "action",
+    "title": "Position and velocity",
+    "source": "const player = new Entity({x: 0, y: 0})\n\nlogger.log('position:', player.x, player.y)\n\nplayer.velocity.set(1, 0.5)\nplayer.position.add(player.velocity)\n\nlogger.log('after move:', player.x, player.y)"
+  },
+  {
+    "type": "action",
+    "title": "Find modules",
+    "source": "const game = new PerkyModule({$id: 'game'})\ngame.create(PerkyModule, {$id: 'player', $category: 'entity', $tags: ['controllable']})\ngame.create(PerkyModule, {$id: 'enemy1', $category: 'entity', $tags: ['hostile']})\ngame.create(PerkyModule, {$id: 'enemy2', $category: 'entity', $tags: ['hostile']})\n\nlogger.log('by id:', game.query('#player')?.$id)\nlogger.log('by category:', game.queryAll('entity').map(e => e.$id))\nlogger.log('by tag:', game.queryAll('.hostile').map(e => e.$id))"
+  },
+  {
+    "type": "code",
+    "title": "Game class structure",
+    "source": "class MyGame extends Game {\n\n    static $name = 'myGame'\n\n    configureGame () {\n        this.world = this.create(PerkyModule, {$id: 'world'})\n\n        this.on('update', (delta) => {\n            // Game logic here\n        })\n\n        this.on('render', () => {\n            // Rendering here\n        })\n    }\n\n\n    onStart () {\n        // Called when game starts\n    }\n\n}"
+  }
+]

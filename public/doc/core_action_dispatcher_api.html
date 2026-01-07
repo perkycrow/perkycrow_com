@@ -7,7 +7,7 @@
     <meta name="description" content="Documentation for ActionDispatcher in the Perky game framework">
     <meta property="og:title" content="ActionDispatcher - Perky Docs">
     <meta property="og:description" content="Documentation for ActionDispatcher in the Perky game framework">
-    <link rel="stylesheet" href="assets/main-BJLA8TVm.css">
+    <link rel="stylesheet" href="assets/main-BCH7HCcF.css">
 </head>
 <body>
     <noscript>
@@ -26,14 +26,14 @@
         <div class="seo-content">
             <h1>ActionDispatcher</h1>
             <p class="api-extends">extends <code>PerkyModule</code></p><section class="api-section"><h2>Static</h2>
-                <div class="api-member">
-                    <h3><code>$category</code></h3>
-                    <pre><code>static $category = 'actionDispatcher'</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Methods</h2>
-                <div class="api-member">
-                    <h3><code>onInstall(host, options)</code></h3>
-                    <pre><code>onInstall (host, options) {
+        <div class="api-member">
+            <h3><code>$category</code></h3>
+            <pre><code>static $category = 'actionDispatcher'</code></pre>
+        </div>
+    </section><section class="api-section"><h2>Methods</h2>
+        <div class="api-member">
+            <h3><code>onInstall(host, options)</code></h3>
+            <pre><code>onInstall (host, options) {
     this.#setupMainController(options)
 
     this.listenTo(host, 'input:triggered', this.dispatchAction.bind(this))
@@ -57,43 +57,43 @@
         removeAction: 'removeAction'
     })
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>addAction(actionName, action)</code></h3>
-                    <pre><code>addAction (actionName, action) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addAction(actionName, action)</code></h3>
+            <pre><code>addAction (actionName, action) {
     if (!this.mainController) {
         logger.warn('No main controller available. Cannot add action.')
         return false
     }
     return this.mainController.addAction(actionName, action)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>removeAction(actionName)</code></h3>
-                    <pre><code>removeAction (actionName) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>removeAction(actionName)</code></h3>
+            <pre><code>removeAction (actionName) {
     if (!this.mainController) {
         logger.warn('No main controller available. Cannot remove action.')
         return false
     }
     return this.mainController.removeAction(actionName)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>register(name, Controller = ...)</code></h3>
-                    <pre><code>register (name, Controller = ActionController) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>register(name, Controller = ...)</code></h3>
+            <pre><code>register (name, Controller = ActionController) {
     return this.create(Controller, {
         $id: name,
         $category: 'controller'
     })
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>unregister(name)</code></h3>
-                    <pre><code>unregister (name) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>unregister(name)</code></h3>
+            <pre><code>unregister (name) {
     const controller = this.getChild(name)
 
     if (!controller) {
@@ -107,18 +107,18 @@
 
     return this.removeChild(name)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>getController(name)</code></h3>
-                    <pre><code>getController (name) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getController(name)</code></h3>
+            <pre><code>getController (name) {
     return this.getChild(name)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>setActive(names)</code></h3>
-                    <pre><code>setActive (names) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>setActive(names)</code></h3>
+            <pre><code>setActive (names) {
     const nameArray = Array.isArray(names) ? names : [names]
 
     for (const name of nameArray) {
@@ -133,18 +133,18 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>getActive()</code></h3>
-                    <pre><code>getActive () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getActive()</code></h3>
+            <pre><code>getActive () {
     return [...this.#activeControllers]
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>pushActive(name)</code></h3>
-                    <pre><code>pushActive (name) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>pushActive(name)</code></h3>
+            <pre><code>pushActive (name) {
     if (!this.hasChild(name)) {
         logger.warn(`Controller &quot;${name}&quot; not found`)
         return false
@@ -159,11 +159,11 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>popActive()</code></h3>
-                    <pre><code>popActive () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>popActive()</code></h3>
+            <pre><code>popActive () {
     if (this.#activeControllers.length === 0) {
         logger.warn('Active controllers stack is empty')
         return null
@@ -174,19 +174,19 @@
 
     return popped
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>clearActive()</code></h3>
-                    <pre><code>clearActive () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>clearActive()</code></h3>
+            <pre><code>clearActive () {
     this.#activeControllers = []
     this.emit('controllers:cleared')
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>execute(actionName, ...args)</code></h3>
-                    <pre><code>execute (actionName, ...args) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>execute(actionName, ...args)</code></h3>
+            <pre><code>execute (actionName, ...args) {
     if (this.#activeControllers.length === 0) {
         logger.warn('No active controllers')
         return
@@ -212,11 +212,11 @@
         }
     }
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>executeTo(name, actionName, ...args)</code></h3>
-                    <pre><code>executeTo (name, actionName, ...args) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>executeTo(name, actionName, ...args)</code></h3>
+            <pre><code>executeTo (name, actionName, ...args) {
     const controller = this.getController(name)
 
     if (controller &amp;&amp; this.#isControllerActive(name)) {
@@ -227,29 +227,29 @@
         }
     }
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>dispatchAction(binding, ...args)</code></h3>
-                    <pre><code>dispatchAction (binding, ...args) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>dispatchAction(binding, ...args)</code></h3>
+            <pre><code>dispatchAction (binding, ...args) {
     if (binding.controllerName) {
         this.executeTo(binding.controllerName, binding.actionName, ...args)
     } else {
         this.execute(binding.actionName, ...args)
     }
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>listControllers()</code></h3>
-                    <pre><code>listControllers () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>listControllers()</code></h3>
+            <pre><code>listControllers () {
     return this.listNamesFor('controller')
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>listAllActions()</code></h3>
-                    <pre><code>listAllActions () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>listAllActions()</code></h3>
+            <pre><code>listAllActions () {
     const allActions = new Map()
     const registry = this.childrenRegistry
 
@@ -263,37 +263,38 @@
 
     return allActions
 }</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Getters</h2>
-                <div class="api-member">
-                    <h3><code>engine()</code></h3>
-                    <pre><code>get engine () {
+        </div>
+    </section><section class="api-section"><h2>Getters</h2>
+        <div class="api-member">
+            <h3><code>engine()</code></h3>
+            <pre><code>get engine () {
     return this.host
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>mainController()</code></h3>
-                    <pre><code>get mainController () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>mainController()</code></h3>
+            <pre><code>get mainController () {
     return this.getController(this.mainControllerName)
 }</code></pre>
-                </div>
-            </section>
+        </div>
+    </section>
         </div>
     </noscript>
     <div class="docs-layout">
         <aside class="docs-sidebar">
             <div class="sidebar-header">
                 <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
             </div>
-            <div class="sidebar-search">
-                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-                <input type="text" class="search-input" placeholder="Search...">
-            </div>
-            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item active" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor">ActionDispatcherInspector</a><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor">Vec2LogRenderer</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item active" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">general</div><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/philosophy.guide.js" data-title="philosophy" data-category="general">Philosophy</a><a class="nav-item" href="guide_getting_started.html" data-file="/doc/guides/getting_started.guide.js" data-title="gettingstarted" data-category="general">Getting Started</a><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a></div></nav>
         </aside>
 
         <main class="docs-main">
@@ -304,6 +305,6 @@
         </main>
     </div>
 
-    <script type="module" src="assets/main-CWGy973H.js"></script>
+    <script type="module" src="assets/main-kqcR_Slv.js"></script>
 </body>
 </html>

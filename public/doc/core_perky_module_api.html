@@ -7,7 +7,7 @@
     <meta name="description" content="Documentation for PerkyModule in the Perky game framework">
     <meta property="og:title" content="PerkyModule - Perky Docs">
     <meta property="og:description" content="Documentation for PerkyModule in the Perky game framework">
-    <link rel="stylesheet" href="assets/main-BJLA8TVm.css">
+    <link rel="stylesheet" href="assets/main-BCH7HCcF.css">
 </head>
 <body>
     <noscript>
@@ -26,34 +26,34 @@
         <div class="seo-content">
             <h1>PerkyModule</h1>
             <p class="api-extends">extends <code>Notifier</code></p><section class="api-section"><h2>Static</h2>
-                <div class="api-member">
-                    <h3><code>$category</code></h3>
-                    <pre><code>static $category = 'perkyModule'</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$name</code></h3>
-                    <pre><code>static $name = null</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$lifecycle</code></h3>
-                    <pre><code>static $lifecycle = true</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$eagerStart</code></h3>
-                    <pre><code>static $eagerStart = true</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$tags</code></h3>
-                    <pre><code>static $tags = []</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>perkyModuleMethods</code></h3>
-                    <pre><code>static perkyModuleMethods = Notifier.notifierMethods.concat([
+        <div class="api-member">
+            <h3><code>$category</code></h3>
+            <pre><code>static $category = 'perkyModule'</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$name</code></h3>
+            <pre><code>static $name = null</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$lifecycle</code></h3>
+            <pre><code>static $lifecycle = true</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$eagerStart</code></h3>
+            <pre><code>static $eagerStart = true</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$tags</code></h3>
+            <pre><code>static $tags = []</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>perkyModuleMethods</code></h3>
+            <pre><code>static perkyModuleMethods = Notifier.notifierMethods.concat([
     'start',
     'stop',
     'dispose',
@@ -80,11 +80,11 @@
     'query',
     'queryAll'
 ])</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Constructor</h2>
-                <div class="api-member">
-                    <h3><code>constructor(options = ...)</code></h3>
-                    <pre><code>constructor (options = {}) {
+        </div>
+    </section><section class="api-section"><h2>Constructor</h2>
+        <div class="api-member">
+            <h3><code>constructor(options = ...)</code></h3>
+            <pre><code>constructor (options = {}) {
     super()
 
     this.options = {...options}
@@ -103,11 +103,11 @@
     this.#childrenRegistry = new Registry()
     this.#childrenRegistry.addIndex('$category')
 }</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Methods</h2>
-                <div class="api-member">
-                    <h3><code>start()</code></h3>
-                    <pre><code>start () {
+        </div>
+    </section><section class="api-section"><h2>Methods</h2>
+        <div class="api-member">
+            <h3><code>start()</code></h3>
+            <pre><code>start () {
     if (this.#started) {
         return false
     }
@@ -118,11 +118,11 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>stop()</code></h3>
-                    <pre><code>stop () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>stop()</code></h3>
+            <pre><code>stop () {
     if (!this.#started) {
         return false
     }
@@ -133,11 +133,11 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>dispose()</code></h3>
-                    <pre><code>dispose () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>dispose()</code></h3>
+            <pre><code>dispose () {
     if (this.#disposed) {
         return false
     }
@@ -160,11 +160,11 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>install(host, options)</code></h3>
-                    <pre><code>install (host, options) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>install(host, options)</code></h3>
+            <pre><code>install (host, options) {
     if (this.#installed) {
         return this.uninstall()
     }
@@ -179,11 +179,11 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>uninstall()</code></h3>
-                    <pre><code>uninstall () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>uninstall()</code></h3>
+            <pre><code>uninstall () {
     if (!this.#installed) {
         return false
     }
@@ -196,11 +196,11 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>create(Child, options = ...)</code></h3>
-                    <pre><code>create (Child, options = {}) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>create(Child, options = ...)</code></h3>
+            <pre><code>create (Child, options = {}) {
     options.$category ||= Child.$category
     options.$name ||= Child.$name || options.$category
     options.$id ||= uniqueId(this.#childrenRegistry, options.$name)
@@ -209,25 +209,25 @@
 
     return this.#addChild(new Child(options), options)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>getChild(name)</code></h3>
-                    <pre><code>getChild (name) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getChild(name)</code></h3>
+            <pre><code>getChild (name) {
     return this.#childrenRegistry.get(name) || null
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>hasChild(name)</code></h3>
-                    <pre><code>hasChild (name) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>hasChild(name)</code></h3>
+            <pre><code>hasChild (name) {
     return this.#childrenRegistry.has(name)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>removeChild(name)</code></h3>
-                    <pre><code>removeChild (name) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>removeChild(name)</code></h3>
+            <pre><code>removeChild (name) {
     const child = this.#childrenRegistry.get(name)
 
     if (!child) {
@@ -238,68 +238,68 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>listNamesFor(key, indexName = ...)</code></h3>
-                    <pre><code>listNamesFor (key, indexName = '$category') {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>listNamesFor(key, indexName = ...)</code></h3>
+            <pre><code>listNamesFor (key, indexName = '$category') {
     return this.#childrenRegistry.lookupKeys(indexName, key)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>lookup(indexName, key)</code></h3>
-                    <pre><code>lookup (indexName, key) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>lookup(indexName, key)</code></h3>
+            <pre><code>lookup (indexName, key) {
     return this.#childrenRegistry.lookup(indexName, key)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>childrenByCategory(category)</code></h3>
-                    <pre><code>childrenByCategory (category) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>childrenByCategory(category)</code></h3>
+            <pre><code>childrenByCategory (category) {
     return this.lookup('$category', category)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>hasTag(tag)</code></h3>
-                    <pre><code>hasTag (tag) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>hasTag(tag)</code></h3>
+            <pre><code>hasTag (tag) {
     return this.#tags.has(tag)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>addTag(tag)</code></h3>
-                    <pre><code>addTag (tag) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addTag(tag)</code></h3>
+            <pre><code>addTag (tag) {
     if (this.#tags.has(tag)) {
         return false
     }
     this.#tags.add(tag)
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>removeTag(tag)</code></h3>
-                    <pre><code>removeTag (tag) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>removeTag(tag)</code></h3>
+            <pre><code>removeTag (tag) {
     return this.#tags.delete(tag)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>hasTags(tags)</code></h3>
-                    <pre><code>hasTags (tags) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>hasTags(tags)</code></h3>
+            <pre><code>hasTags (tags) {
     if (typeof tags === 'string') {
         return this.hasTag(tags)
     }
 
     return Array.isArray(tags) &amp;&amp; tags.every(tag =&gt; this.#tags.has(tag))
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>childrenByTags(tags)</code></h3>
-                    <pre><code>childrenByTags (tags) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>childrenByTags(tags)</code></h3>
+            <pre><code>childrenByTags (tags) {
     const tagArray = Array.isArray(tags) ? tags : [tags]
 
     if (tagArray.length === 0) {
@@ -316,11 +316,11 @@
         child =&gt; tagArray.every(tag =&gt; child.$tags?.includes(tag))
     )
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>addTagsIndex(tags)</code></h3>
-                    <pre><code>addTagsIndex (tags) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addTagsIndex(tags)</code></h3>
+            <pre><code>addTagsIndex (tags) {
     if (!Array.isArray(tags) || tags.length === 0) {
         return false
     }
@@ -346,11 +346,11 @@
 
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>removeTagsIndex(tags)</code></h3>
-                    <pre><code>removeTagsIndex (tags) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>removeTagsIndex(tags)</code></h3>
+            <pre><code>removeTagsIndex (tags) {
     const indexKey = getTagIndexKey(tags)
 
     if (!this.#tagIndexes.has(indexKey)) {
@@ -361,11 +361,11 @@
     this.#tagIndexes.delete(indexKey)
     return true
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>delegateTo(host, names)</code></h3>
-                    <pre><code>delegateTo (host, names) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>delegateTo(host, names)</code></h3>
+            <pre><code>delegateTo (host, names) {
     delegateProperties(host, this, names)
 
     const propertyNames = Array.isArray(names)
@@ -374,11 +374,11 @@
 
     this.#delegations.push({host, propertyNames})
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>cleanDelegations()</code></h3>
-                    <pre><code>cleanDelegations () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>cleanDelegations()</code></h3>
+            <pre><code>cleanDelegations () {
     for (const {host, propertyNames} of this.#delegations) {
         for (const name of propertyNames) {
             delete host[name]
@@ -386,11 +386,11 @@
     }
     this.#delegations.length = 0
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>delegateEventsTo(host, events, namespace)</code></h3>
-                    <pre><code>delegateEventsTo (host, events, namespace) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>delegateEventsTo(host, events, namespace)</code></h3>
+            <pre><code>delegateEventsTo (host, events, namespace) {
     const eventArray = Array.isArray(events) ? events : Object.keys(events)
     const callbacks = []
 
@@ -403,11 +403,11 @@
 
     this.#eventDelegations.push({callbacks})
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>cleanEventDelegations()</code></h3>
-                    <pre><code>cleanEventDelegations () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>cleanEventDelegations()</code></h3>
+            <pre><code>cleanEventDelegations () {
     for (const {callbacks} of this.#eventDelegations) {
         for (const {event, callback} of callbacks) {
             this.off(event, callback)
@@ -415,95 +415,95 @@
     }
     this.#eventDelegations.length = 0
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>query(selector)</code></h3>
-                    <pre><code>query (selector) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>query(selector)</code></h3>
+            <pre><code>query (selector) {
     return perkyQuery(this, selector)
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>queryAll(selector)</code></h3>
-                    <pre><code>queryAll (selector) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>queryAll(selector)</code></h3>
+            <pre><code>queryAll (selector) {
     return perkyQueryAll(this, selector)
 }</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Getters</h2>
-                <div class="api-member">
-                    <h3><code>$id()</code></h3>
-                    <pre><code>get $id () {
+        </div>
+    </section><section class="api-section"><h2>Getters</h2>
+        <div class="api-member">
+            <h3><code>$id()</code></h3>
+            <pre><code>get $id () {
     return this.#id
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$name()</code></h3>
-                    <pre><code>get $name () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$name()</code></h3>
+            <pre><code>get $name () {
     return this.#name
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$category()</code></h3>
-                    <pre><code>get $category () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$category()</code></h3>
+            <pre><code>get $category () {
     return this.#category
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$bind()</code></h3>
-                    <pre><code>get $bind () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$bind()</code></h3>
+            <pre><code>get $bind () {
     return this.#bind
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>host()</code></h3>
-                    <pre><code>get host () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>host()</code></h3>
+            <pre><code>get host () {
     return this.#host
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>started()</code></h3>
-                    <pre><code>get started () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>started()</code></h3>
+            <pre><code>get started () {
     return this.#started
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>disposed()</code></h3>
-                    <pre><code>get disposed () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>disposed()</code></h3>
+            <pre><code>get disposed () {
     return this.#disposed
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>installed()</code></h3>
-                    <pre><code>get installed () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>installed()</code></h3>
+            <pre><code>get installed () {
     return this.#installed
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$eagerStart()</code></h3>
-                    <pre><code>get $eagerStart () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$eagerStart()</code></h3>
+            <pre><code>get $eagerStart () {
     return this.#eagerStart
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$lifecycle()</code></h3>
-                    <pre><code>get $lifecycle () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$lifecycle()</code></h3>
+            <pre><code>get $lifecycle () {
     return this.#lifecycle
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$status()</code></h3>
-                    <pre><code>get $status () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$status()</code></h3>
+            <pre><code>get $status () {
     if (!this.#lifecycle) {
         return 'static'
     }
@@ -518,46 +518,46 @@
 
     return 'stopped'
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>running()</code></h3>
-                    <pre><code>get running () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>running()</code></h3>
+            <pre><code>get running () {
     return this.#started
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>children()</code></h3>
-                    <pre><code>get children () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>children()</code></h3>
+            <pre><code>get children () {
     return this.#childrenRegistry.all
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>childrenRegistry()</code></h3>
-                    <pre><code>get childrenRegistry () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>childrenRegistry()</code></h3>
+            <pre><code>get childrenRegistry () {
     return this.#childrenRegistry
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$tags()</code></h3>
-                    <pre><code>get $tags () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$tags()</code></h3>
+            <pre><code>get $tags () {
     return this.#tags.toArray()
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>tags()</code></h3>
-                    <pre><code>get tags () {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>tags()</code></h3>
+            <pre><code>get tags () {
     return this.#tags
 }</code></pre>
-                </div>
-            </section><section class="api-section"><h2>Setters</h2>
-                <div class="api-member">
-                    <h3><code>$id(newId)</code></h3>
-                    <pre><code>set $id (newId) {
+        </div>
+    </section><section class="api-section"><h2>Setters</h2>
+        <div class="api-member">
+            <h3><code>$id(newId)</code></h3>
+            <pre><code>set $id (newId) {
     const oldId = this.#id
 
     if (oldId !== newId) {
@@ -565,11 +565,11 @@
         this.emit('$id:changed', newId, oldId)
     }
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$name(newName)</code></h3>
-                    <pre><code>set $name (newName) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$name(newName)</code></h3>
+            <pre><code>set $name (newName) {
     const oldName = this.#name
 
     if (oldName !== newName) {
@@ -577,11 +577,11 @@
         this.emit('$name:changed', newName, oldName)
     }
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$category(newCategory)</code></h3>
-                    <pre><code>set $category (newCategory) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$category(newCategory)</code></h3>
+            <pre><code>set $category (newCategory) {
     const oldCategory = this.#category
 
     if (oldCategory !== newCategory) {
@@ -589,11 +589,11 @@
         this.emit('$category:changed', newCategory, oldCategory)
     }
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$bind(newBind)</code></h3>
-                    <pre><code>set $bind (newBind) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$bind(newBind)</code></h3>
+            <pre><code>set $bind (newBind) {
     const oldBind = this.#bind
 
     if (oldBind !== newBind) {
@@ -601,33 +601,34 @@
         this.emit('$bind:changed', newBind, oldBind)
     }
 }</code></pre>
-                </div>
-            
-                <div class="api-member">
-                    <h3><code>$tags(newTags)</code></h3>
-                    <pre><code>set $tags (newTags) {
+        </div>
+    
+        <div class="api-member">
+            <h3><code>$tags(newTags)</code></h3>
+            <pre><code>set $tags (newTags) {
     this.#tags.clear()
     if (Array.isArray(newTags)) {
         newTags.forEach(tag =&gt; this.#tags.add(tag))
     }
 }</code></pre>
-                </div>
-            </section>
+        </div>
+    </section>
         </div>
     </noscript>
     <div class="docs-layout">
         <aside class="docs-sidebar">
             <div class="sidebar-header">
                 <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
             </div>
-            <div class="sidebar-search">
-                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-                <input type="text" class="search-input" placeholder="Search...">
-            </div>
-            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item active" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor">ActionDispatcherInspector</a><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor">Vec2LogRenderer</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item active" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">general</div><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/philosophy.guide.js" data-title="philosophy" data-category="general">Philosophy</a><a class="nav-item" href="guide_getting_started.html" data-file="/doc/guides/getting_started.guide.js" data-title="gettingstarted" data-category="general">Getting Started</a><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a></div></nav>
         </aside>
 
         <main class="docs-main">
@@ -638,6 +639,6 @@
         </main>
     </div>
 
-    <script type="module" src="assets/main-CWGy973H.js"></script>
+    <script type="module" src="assets/main-kqcR_Slv.js"></script>
 </body>
 </html>

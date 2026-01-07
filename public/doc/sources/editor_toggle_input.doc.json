@@ -2,7 +2,7 @@
   {
     "type": "code",
     "title": "Setup",
-    "source": "const toggle = document.createElement('toggle-input')\ntoggle.addEventListener('change', (e) => {\n    console.log('Checked:', e.detail.checked)\n})\ndocument.body.appendChild(toggle)"
+    "source": "const toggle = document.createElement('toggle-input')\ntoggle.addEventListener('change', (e) => {\n    logger.log('Checked:', e.detail.checked)\n})\ndocument.body.appendChild(toggle)"
   },
   {
     "type": "container",
