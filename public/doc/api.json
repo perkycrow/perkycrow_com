@@ -284,6 +284,314 @@
     },
     "isDefault": true
   },
+  "/core/action_controller.doc.js": {
+    "type": "class",
+    "file": "/core/action_controller.js",
+    "name": "ActionController",
+    "line": 5,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "propagable",
+        "line": 7,
+        "source": "static propagable = []",
+        "kind": "property",
+        "value": "[]"
+      },
+      {
+        "name": "bindings",
+        "line": 8,
+        "source": "static bindings = {}",
+        "kind": "property",
+        "value": "{}"
+      },
+      {
+        "name": "$category",
+        "line": 9,
+        "source": "static $category = 'actionController'",
+        "kind": "property",
+        "value": "'actionController'"
+      },
+      {
+        "name": "normalizeBindings",
+        "line": 82,
+        "source": "static normalizeBindings (controllerName) {\n    const bindings = this.bindings\n    const normalized = []\n\n    for (const [actionName, bindingDef] of Object.entries(bindings)) {\n        const bindingConfigs = normalizeBindingDefinition(bindingDef)\n\n        for (const config of bindingConfigs) {\n            normalized.push({\n                action: actionName,\n                key: config.key,\n                scoped: config.scoped ?? false,\n                eventType: config.eventType ?? 'pressed',\n                controllerName: config.scoped ? controllerName : null\n            })\n        }\n    }\n\n    return normalized\n}",
+        "kind": "method",
+        "params": [
+          "controllerName"
+        ]
+      },
+      {
+        "name": "actionControllerMethods",
+        "line": 103,
+        "source": "static actionControllerMethods = this.perkyModuleMethods.concat([\n    'addAction',\n    'getAction',\n    'removeAction',\n    'hasAction',\n    'shouldPropagate',\n    'listActions',\n    'listActionsWithParams',\n    'execute',\n    'context'\n])",
+        "kind": "property",
+        "value": "this.perkyModuleMethods.concat([\n    'addAction',\n    'getAction',\n    'removeAction',\n    'hasAction',\n    'shouldPropagate',\n    'listActions',\n    'listActionsWithParams',\n    'execute',\n    'context'\n])"
+      }
+    ],
+    "methods": [
+      {
+        "name": "addAction",
+        "line": 21,
+        "source": "addAction (actionName, action) {\n    if (!this.#actionList.includes(actionName)) {\n        this.#actionList.push(actionName)\n    }\n    return this.#actions.set(actionName, action)\n}",
+        "kind": "method",
+        "params": [
+          "actionName",
+          "action"
+        ]
+      },
+      {
+        "name": "getAction",
+        "line": 29,
+        "source": "getAction (actionName) {\n    return this.#actions.get(actionName)\n}",
+        "kind": "method",
+        "params": [
+          "actionName"
+        ]
+      },
+      {
+        "name": "removeAction",
+        "line": 34,
+        "source": "removeAction (actionName) {\n    return this.#actions.delete(actionName)\n}",
+        "kind": "method",
+        "params": [
+          "actionName"
+        ]
+      },
+      {
+        "name": "hasAction",
+        "line": 39,
+        "source": "hasAction (actionName) {\n    return this.getAction(actionName) !== undefined || typeof this[actionName] === 'function'\n}",
+        "kind": "method",
+        "params": [
+          "actionName"
+        ]
+      },
+      {
+        "name": "shouldPropagate",
+        "line": 44,
+        "source": "shouldPropagate (actionName) {\n    const ControllerClass = this.constructor\n    return ControllerClass.propagable && Array.isArray(ControllerClass.propagable)\n        ? ControllerClass.propagable.includes(actionName)\n        : false\n}",
+        "kind": "method",
+        "params": [
+          "actionName"
+        ]
+      },
+      {
+        "name": "listActions",
+        "line": 52,
+        "source": "listActions () {\n    return [...this.#actionList]\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "listActionsWithParams",
+        "line": 57,
+        "source": "listActionsWithParams () {\n    const result = []\n\n    for (const actionName of this.#actionList) {\n        const action = this.getAction(actionName) || this[actionName]\n        const params = typeof action === 'function' ? extractFunctionParams(action) : []\n        result.push({name: actionName, params})\n    }\n\n    return result\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "execute",
+        "line": 70,
+        "source": "execute (actionName, ...args) {\n    const action = this.getAction(actionName) || this[actionName]\n\n    if (typeof action === 'function') {\n        action.call(this, ...args)\n    }\n\n    this.emit(actionName, ...args)\n    this.emit('action', actionName, ...args)\n}",
+        "kind": "method",
+        "params": [
+          "actionName",
+          "...args"
+        ]
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 14,
+      "source": "constructor (options = {}) {\n    super(options)\n    this.context = {}\n    this.#actionList = extractPrototypeMethods(this)\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/core/action_dispatcher.doc.js": {
+    "type": "class",
+    "file": "/core/action_dispatcher.js",
+    "name": "ActionDispatcher",
+    "line": 6,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "$category",
+        "line": 8,
+        "source": "static $category = 'actionDispatcher'",
+        "kind": "property",
+        "value": "'actionDispatcher'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "onInstall",
+        "line": 13,
+        "source": "onInstall (host, options) {\n    this.#setupMainController(options)\n\n    this.listenTo(host, 'input:triggered', this.dispatchAction.bind(this))\n\n    this.delegateTo(host, {\n        register: 'registerController',\n        unregister: 'unregisterController',\n        getController: 'getController',\n        list: 'listControllers',\n        setActive: 'setActiveControllers',\n        getActive: 'getActiveControllers',\n        pushActive: 'pushActiveController',\n        popActive: 'popActiveController',\n        clearActive: 'clearActiveControllers',\n        execute: 'execute',\n        executeTo: 'executeTo',\n        dispatchAction: 'dispatchAction',\n        listActions: 'listAllActions',\n        mainController: 'mainController',\n        addAction: 'addAction',\n        removeAction: 'removeAction'\n    })\n}",
+        "kind": "method",
+        "params": [
+          "host",
+          "options"
+        ]
+      },
+      {
+        "name": "addAction",
+        "line": 62,
+        "source": "addAction (actionName, action) {\n    if (!this.mainController) {\n        logger.warn('No main controller available. Cannot add action.')\n        return false\n    }\n    return this.mainController.addAction(actionName, action)\n}",
+        "kind": "method",
+        "params": [
+          "actionName",
+          "action"
+        ]
+      },
+      {
+        "name": "removeAction",
+        "line": 71,
+        "source": "removeAction (actionName) {\n    if (!this.mainController) {\n        logger.warn('No main controller available. Cannot remove action.')\n        return false\n    }\n    return this.mainController.removeAction(actionName)\n}",
+        "kind": "method",
+        "params": [
+          "actionName"
+        ]
+      },
+      {
+        "name": "register",
+        "line": 80,
+        "source": "register (name, Controller = ActionController) {\n    return this.create(Controller, {\n        $id: name,\n        $category: 'controller'\n    })\n}",
+        "kind": "method",
+        "params": [
+          "name",
+          "Controller = ..."
+        ]
+      },
+      {
+        "name": "unregister",
+        "line": 88,
+        "source": "unregister (name) {\n    const controller = this.getChild(name)\n\n    if (!controller) {\n        return false\n    }\n\n    const stackIndex = this.#activeControllers.indexOf(name)\n    if (stackIndex !== -1) {\n        this.#activeControllers.splice(stackIndex, 1)\n    }\n\n    return this.removeChild(name)\n}",
+        "kind": "method",
+        "params": [
+          "name"
+        ]
+      },
+      {
+        "name": "getController",
+        "line": 104,
+        "source": "getController (name) {\n    return this.getChild(name)\n}",
+        "kind": "method",
+        "params": [
+          "name"
+        ]
+      },
+      {
+        "name": "setActive",
+        "line": 109,
+        "source": "setActive (names) {\n    const nameArray = Array.isArray(names) ? names : [names]\n\n    for (const name of nameArray) {\n        if (!this.hasChild(name)) {\n            logger.warn(`Controller \"${name}\" not found. Cannot set as active controller.`)\n            return false\n        }\n    }\n\n    this.#activeControllers = [...nameArray]\n    this.emit('controllers:activated', nameArray)\n\n    return true\n}",
+        "kind": "method",
+        "params": [
+          "names"
+        ]
+      },
+      {
+        "name": "getActive",
+        "line": 126,
+        "source": "getActive () {\n    return [...this.#activeControllers]\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "pushActive",
+        "line": 131,
+        "source": "pushActive (name) {\n    if (!this.hasChild(name)) {\n        logger.warn(`Controller \"${name}\" not found`)\n        return false\n    }\n\n    if (this.#activeControllers.includes(name)) {\n        return false\n    }\n\n    this.#activeControllers.push(name)\n    this.emit('controller:pushed', name, this.#activeControllers.length)\n\n    return true\n}",
+        "kind": "method",
+        "params": [
+          "name"
+        ]
+      },
+      {
+        "name": "popActive",
+        "line": 148,
+        "source": "popActive () {\n    if (this.#activeControllers.length === 0) {\n        logger.warn('Active controllers stack is empty')\n        return null\n    }\n\n    const popped = this.#activeControllers.pop()\n    this.emit('controller:popped', popped, this.#activeControllers.length)\n\n    return popped\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "clearActive",
+        "line": 161,
+        "source": "clearActive () {\n    this.#activeControllers = []\n    this.emit('controllers:cleared')\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "execute",
+        "line": 167,
+        "source": "execute (actionName, ...args) {\n    if (this.#activeControllers.length === 0) {\n        logger.warn('No active controllers')\n        return\n    }\n\n    const registry = this.childrenRegistry\n\n    for (let i = this.#activeControllers.length - 1; i >= 0; i--) {\n        const controllerName = this.#activeControllers[i]\n        const controller = registry.get(controllerName)\n\n        if (!controller) {\n            logger.warn(`Controller \"${controllerName}\" not found in registry but present in active stack`)\n            continue\n        }\n\n        const hasAction = controller.hasAction(actionName)\n\n        controller.execute(actionName, ...args)\n\n        if (hasAction && !controller.shouldPropagate(actionName)) {\n            return\n        }\n    }\n}",
+        "kind": "method",
+        "params": [
+          "actionName",
+          "...args"
+        ]
+      },
+      {
+        "name": "executeTo",
+        "line": 195,
+        "source": "executeTo (name, actionName, ...args) {\n    const controller = this.getController(name)\n\n    if (controller && this.#isControllerActive(name)) {\n        if (typeof controller.execute === 'function') {\n            controller.execute(actionName, ...args)\n        } else if (typeof controller[actionName] === 'function') {\n            controller[actionName](...args)\n        }\n    }\n}",
+        "kind": "method",
+        "params": [
+          "name",
+          "actionName",
+          "...args"
+        ]
+      },
+      {
+        "name": "dispatchAction",
+        "line": 208,
+        "source": "dispatchAction (binding, ...args) {\n    if (binding.controllerName) {\n        this.executeTo(binding.controllerName, binding.actionName, ...args)\n    } else {\n        this.execute(binding.actionName, ...args)\n    }\n}",
+        "kind": "method",
+        "params": [
+          "binding",
+          "...args"
+        ]
+      },
+      {
+        "name": "listControllers",
+        "line": 222,
+        "source": "listControllers () {\n    return this.listNamesFor('controller')\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "listAllActions",
+        "line": 227,
+        "source": "listAllActions () {\n    const allActions = new Map()\n    const registry = this.childrenRegistry\n\n    for (const [name, controller] of registry.entries) {\n        if (typeof controller.listActionsWithParams === 'function') {\n            allActions.set(name, controller.listActionsWithParams())\n        } else if (typeof controller.listActions === 'function') {\n            allActions.set(name, controller.listActions().map(n => ({name: n, params: []})))\n        }\n    }\n\n    return allActions\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [
+      {
+        "name": "engine",
+        "line": 39,
+        "source": "get engine () {\n    return this.host\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "mainController",
+        "line": 57,
+        "source": "get mainController () {\n    return this.getController(this.mainControllerName)\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [],
+    "constructor": null,
+    "isDefault": true
+  },
   "/core/notifier.doc.js": {
     "type": "class",
     "file": "/core/notifier.js",
@@ -1124,6 +1432,188 @@
     ],
     "exports": []
   },
+  "/editor/inspectors/action_controller_inspector.doc.js": {
+    "type": "class",
+    "file": "/editor/inspectors/action_controller_inspector.js",
+    "name": "ActionControllerInspector",
+    "line": 87,
+    "extends": "BaseInspector",
+    "statics": [
+      {
+        "name": "matches",
+        "line": 89,
+        "source": "static matches (module) {\n    return module instanceof ActionController\n}",
+        "kind": "method",
+        "params": [
+          "module"
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "buildDOM",
+        "line": 101,
+        "source": "buildDOM () {\n    super.buildDOM()\n\n    this.#containerEl = document.createElement('div')\n    this.shadowRoot.insertBefore(this.#containerEl, this.gridEl)\n    this.gridEl.style.display = 'none'\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "onModuleSet",
+        "line": 110,
+        "source": "onModuleSet (module) {\n    if (module) {\n        this.#update()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "module"
+        ]
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 95,
+      "source": "constructor () {\n    super(customStyles)\n    this.buildDOM()\n}",
+      "kind": "constructor",
+      "params": []
+    },
+    "isDefault": true
+  },
+  "/editor/inspectors/action_dispatcher_inspector.doc.js": {
+    "type": "class",
+    "file": "/editor/inspectors/action_dispatcher_inspector.js",
+    "name": "ActionDispatcherInspector",
+    "line": 105,
+    "extends": "BaseInspector",
+    "statics": [
+      {
+        "name": "matches",
+        "line": 107,
+        "source": "static matches (module) {\n    return module instanceof ActionDispatcher\n}",
+        "kind": "method",
+        "params": [
+          "module"
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "buildDOM",
+        "line": 119,
+        "source": "buildDOM () {\n    super.buildDOM()\n\n    this.#containerEl = document.createElement('div')\n    this.shadowRoot.insertBefore(this.#containerEl, this.gridEl)\n    this.gridEl.style.display = 'none'\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "onModuleSet",
+        "line": 128,
+        "source": "onModuleSet (module) {\n    if (module) {\n        this.#update()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "module"
+        ]
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 113,
+      "source": "constructor () {\n    super(customStyles)\n    this.buildDOM()\n}",
+      "kind": "constructor",
+      "params": []
+    },
+    "isDefault": true
+  },
+  "/editor/perky_explorer.doc.js": {
+    "type": "class",
+    "file": "/editor/perky_explorer.js",
+    "name": "PerkyExplorer",
+    "line": 10,
+    "extends": "BaseEditorComponent",
+    "statics": [
+      {
+        "name": "observedAttributes",
+        "line": 12,
+        "source": "static observedAttributes = ['embedded']",
+        "kind": "property",
+        "value": "['embedded']"
+      }
+    ],
+    "methods": [
+      {
+        "name": "connectedCallback",
+        "line": 36,
+        "source": "connectedCallback () {\n    this.#buildDOM()\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "disconnectedCallback",
+        "line": 41,
+        "source": "disconnectedCallback () {\n    if (this.#contextMenuEl && this.#contextMenuEl.parentNode) {\n        this.#contextMenuEl.parentNode.removeChild(this.#contextMenuEl)\n    }\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "attributeChangedCallback",
+        "line": 48,
+        "source": "attributeChangedCallback (name, oldValue, newValue) {\n    if (oldValue === newValue) {\n        return\n    }\n\n    if (name === 'embedded') {\n        this.#embedded = newValue !== null\n        this.#updateEmbeddedMode()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "name",
+          "oldValue",
+          "newValue"
+        ]
+      },
+      {
+        "name": "setModule",
+        "line": 76,
+        "source": "setModule (module) {\n    this.#module = module\n    this.#rootModule = module\n    this.#selectedModule = null\n\n    if (this.#rootNode) {\n        this.#rootNode.setModule(module, 0)\n        if (module) {\n            this.#rootNode.setExpanded(true)\n        }\n    }\n\n    this.#updateTreeVisibility()\n    this.#updateDetails()\n    this.#updateHeaderControls()\n    this.#closeSceneTree()\n}",
+        "kind": "method",
+        "params": [
+          "module"
+        ]
+      },
+      {
+        "name": "getModule",
+        "line": 95,
+        "source": "getModule () {\n    return this.#module\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "focusModule",
+        "line": 466,
+        "source": "focusModule (module) {\n    if (!module) {\n        return\n    }\n\n    this.#rootModule = module\n    this.#rootNode.setModule(module, 0)\n    this.#rootNode.setExpanded(true)\n    this.#updateHeaderControls()\n\n\n    if (this.#selectedModule) {\n        const node = this.#rootNode.findNode(n => n.getModule() === this.#selectedModule)\n        if (node) {\n            node.setSelected(true)\n        } else {\n\n\n            this.#handleNodeSelect(module)\n        }\n    }\n}",
+        "kind": "method",
+        "params": [
+          "module"
+        ]
+      }
+    ],
+    "getters": [
+      {
+        "name": "embedded",
+        "line": 60,
+        "source": "get embedded () {\n    return this.#embedded\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [
+      {
+        "name": "embedded",
+        "line": 65,
+        "source": "set embedded (value) {\n    this.#embedded = value\n    if (value) {\n        this.setAttribute('embedded', '')\n    } else {\n        this.removeAttribute('embedded')\n    }\n    this.#updateEmbeddedMode()\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      }
+    ],
+    "constructor": null,
+    "isDefault": true
+  },
   "/editor/perky_logger.doc.js": {
     "type": "class",
     "file": "/editor/perky_logger.js",
@@ -1329,6 +1819,176 @@
       "params": []
     },
     "isDefault": true
+  },
+  "/editor/toggle_input.doc.js": {
+    "type": "class",
+    "file": "/editor/toggle_input.js",
+    "name": "ToggleInput",
+    "line": 67,
+    "extends": "HTMLElement",
+    "statics": [
+      {
+        "name": "observedAttributes",
+        "line": 75,
+        "source": "static get observedAttributes () {\n    return ['checked', 'label']\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "methods": [
+      {
+        "name": "connectedCallback",
+        "line": 87,
+        "source": "connectedCallback () {\n    this.#updateDisplay()\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "attributeChangedCallback",
+        "line": 92,
+        "source": "attributeChangedCallback (name, oldValue, newValue) {\n    handleAttributeChange(this, name, oldValue, newValue)\n}",
+        "kind": "method",
+        "params": [
+          "name",
+          "oldValue",
+          "newValue"
+        ]
+      },
+      {
+        "name": "setChecked",
+        "line": 111,
+        "source": "setChecked (val) {\n    this.#checked = val\n    this.#updateDisplay()\n}",
+        "kind": "method",
+        "params": [
+          "val"
+        ]
+      },
+      {
+        "name": "setLabel",
+        "line": 117,
+        "source": "setLabel (val) {\n    this.#label = val\n    if (this.#labelEl) {\n        this.#labelEl.textContent = this.#label\n    }\n}",
+        "kind": "method",
+        "params": [
+          "val"
+        ]
+      }
+    ],
+    "getters": [
+      {
+        "name": "checked",
+        "line": 97,
+        "source": "get checked () {\n    return this.#checked\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [
+      {
+        "name": "checked",
+        "line": 102,
+        "source": "set checked (val) {\n    const newChecked = Boolean(val)\n    if (this.#checked !== newChecked) {\n        this.#checked = newChecked\n        this.#updateDisplay()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "val"
+        ]
+      }
+    ],
+    "constructor": {
+      "name": "constructor",
+      "line": 80,
+      "source": "constructor () {\n    super()\n    this.attachShadow({mode: 'open'})\n    this.#buildDOM()\n}",
+      "kind": "constructor",
+      "params": []
+    },
+    "isDefault": true
+  },
+  "/editor/vec2_input.doc.js": {
+    "type": "class",
+    "file": "/editor/vec2_input.js",
+    "name": "Vec2Input",
+    "line": 43,
+    "extends": "HTMLElement",
+    "statics": [
+      {
+        "name": "observedAttributes",
+        "line": 51,
+        "source": "static get observedAttributes () {\n    return ['label']\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "methods": [
+      {
+        "name": "connectedCallback",
+        "line": 63,
+        "source": "connectedCallback () {\n    this.#updateDisplay()\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "attributeChangedCallback",
+        "line": 68,
+        "source": "attributeChangedCallback (name, oldValue, newValue) {\n    handleAttributeChange(this, name, oldValue, newValue)\n}",
+        "kind": "method",
+        "params": [
+          "name",
+          "oldValue",
+          "newValue"
+        ]
+      },
+      {
+        "name": "setLabel",
+        "line": 84,
+        "source": "setLabel (val) {\n    this.#label = val\n    if (this.#labelEl) {\n        this.#labelEl.textContent = this.#label\n    }\n}",
+        "kind": "method",
+        "params": [
+          "val"
+        ]
+      }
+    ],
+    "getters": [
+      {
+        "name": "value",
+        "line": 73,
+        "source": "get value () {\n    return this.#vec2\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [
+      {
+        "name": "value",
+        "line": 78,
+        "source": "set value (vec2) {\n    this.#vec2 = vec2\n    this.#updateDisplay()\n}",
+        "kind": "method",
+        "params": [
+          "vec2"
+        ]
+      }
+    ],
+    "constructor": {
+      "name": "constructor",
+      "line": 56,
+      "source": "constructor () {\n    super()\n    this.attachShadow({mode: 'open'})\n    this.#buildDOM()\n}",
+      "kind": "constructor",
+      "params": []
+    },
+    "isDefault": true
+  },
+  "/editor/log_renderers/vec2_log_renderer.doc.js": {
+    "type": "module",
+    "file": "/editor/log_renderers/vec2_log_renderer.js",
+    "functions": [
+      {
+        "name": "formatNumber",
+        "line": 5,
+        "params": [
+          "n"
+        ],
+        "source": "function formatNumber (n) {\n    if (Number.isInteger(n)) {\n        return String(n)\n    }\n    return n.toFixed(2)\n}"
+      }
+    ],
+    "exports": []
   },
   "/game/game_loop.doc.js": {
     "type": "class",
@@ -2160,6 +2820,70 @@
       "params": [
         "x = ...",
         "y = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/canvas_2d.doc.js": {
+    "type": "class",
+    "file": "/render/canvas_2d.js",
+    "name": "Canvas2D",
+    "line": 11,
+    "extends": "BaseRenderer",
+    "statics": [
+      {
+        "name": "$name",
+        "line": 13,
+        "source": "static $name = 'canvas2D'",
+        "kind": "property",
+        "value": "'canvas2D'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "registerRenderer",
+        "line": 50,
+        "source": "registerRenderer (renderer) {\n    renderer.init({ctx: this.ctx, canvas: this.canvas})\n\n    for (const ObjectClass of renderer.constructor.handles) {\n        this.#rendererRegistry.set(ObjectClass, renderer)\n    }\n\n    if (!this.#renderers.includes(renderer)) {\n        this.#renderers.push(renderer)\n    }\n\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "renderer"
+        ]
+      },
+      {
+        "name": "unregisterRenderer",
+        "line": 65,
+        "source": "unregisterRenderer (renderer) {\n    for (const ObjectClass of renderer.constructor.handles) {\n        if (this.#rendererRegistry.get(ObjectClass) === renderer) {\n            this.#rendererRegistry.delete(ObjectClass)\n        }\n    }\n\n    const index = this.#renderers.indexOf(renderer)\n    if (index !== -1) {\n        this.#renderers.splice(index, 1)\n    }\n\n    renderer.dispose()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "renderer"
+        ]
+      },
+      {
+        "name": "onDispose",
+        "line": 82,
+        "source": "onDispose () {\n    for (const renderer of this.#renderers) {\n        renderer.dispose()\n    }\n    this.#renderers = []\n    this.#rendererRegistry.clear()\n\n    if (this.#debugGizmoRenderer) {\n        this.#debugGizmoRenderer.dispose()\n        this.#debugGizmoRenderer = null\n    }\n\n    super.onDispose()\n    this.ctx = null\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "render",
+        "line": 99,
+        "source": "render (scene) {\n    const ctx = this.ctx\n\n    this.stats.totalObjects = 0\n    this.stats.renderedObjects = 0\n    this.stats.culledObjects = 0\n\n    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)\n\n    if (this.backgroundColor && this.backgroundColor !== 'transparent') {\n        ctx.fillStyle = this.backgroundColor\n        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)\n    }\n\n    this.camera.update()\n\n    ctx.save()\n    this.camera.applyToContext(ctx, this.pixelRatio)\n\n    scene.updateWorldMatrix(false)\n\n    for (const renderer of this.#renderers) {\n        renderer.reset()\n    }\n\n    const debugGizmoRenderer = this.enableDebugGizmos ? this.#debugGizmoRenderer : null\n    if (debugGizmoRenderer) {\n        debugGizmoRenderer.reset()\n    }\n\n    traverseAndCollect(scene, this.#rendererRegistry, {\n        camera: this.camera,\n        enableCulling: this.enableCulling,\n        stats: this.stats,\n        debugGizmoRenderer\n    })\n\n    for (const renderer of this.#renderers) {\n        renderer.flush()\n    }\n\n    if (debugGizmoRenderer) {\n        debugGizmoRenderer.flush()\n    }\n\n    ctx.restore()\n}",
+        "kind": "method",
+        "params": [
+          "scene"
+        ]
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 19,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    this.ctx = this.canvas.getContext('2d')\n\n    this.#setupDefaultRenderers()\n    this.applyPixelRatio()\n\n    this.backgroundColor = options.backgroundColor ?? null\n    this.enableCulling = options.enableCulling ?? false\n    this.enableDebugGizmos = options.enableDebugGizmos ?? true\n\n    this.stats = {\n        totalObjects: 0,\n        renderedObjects: 0,\n        culledObjects: 0\n    }\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
       ]
     },
     "isDefault": true

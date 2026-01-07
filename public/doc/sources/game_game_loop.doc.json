@@ -37,11 +37,11 @@
   {
     "type": "code",
     "title": "Listen to all events",
-    "source": "const gameLoop = new GameLoop()\n\ngameLoop.on('update', (dt) => {/* game logic */})\ngameLoop.on('render', (progress) => {/* rendering */})\ngameLoop.on('pause', () => {/* handle pause */})\ngameLoop.on('resume', () => {/* handle resume */})\ngameLoop.on('changed:fps', (fps) => {/* fps changed */})\ngameLoop.on('changed:fpsLimited', (limited) => {/* mode changed */})"
+    "source": "const gameLoop = new GameLoop()\n\ngameLoop.on('update', (dt) => {}) // game logic\ngameLoop.on('render', (progress) => {}) // rendering\ngameLoop.on('pause', () => {}) // handle pause\ngameLoop.on('resume', () => {}) // handle resume\ngameLoop.on('changed:fps', (fps) => {}) // fps changed\ngameLoop.on('changed:fpsLimited', (limited) => {}) // mode changed"
   },
   {
     "type": "code",
     "title": "Using with Application",
-    "source": "// const app = new Application()\n// app.install(new GameLoop())\n\n// Methods are delegated to app:\n// app.pause()\n// app.resume()\n// app.setFps(30)\n// app.getFps()\n// app.getCurrentFps()\n// app.getScreenFps()\n// app.setFpsLimited(true)\n\n// Events are also delegated:\n// app.on('update', (dt) => { ... })\n// app.on('render', (progress) => { ... })"
+    "source": "// const app = new Application()\n// app.create(GameLoop)\n\n// Methods are delegated to app:\n// app.pause()\n// app.resume()\n// app.setFps(30)\n// app.getFps()\n// app.getCurrentFps()\n// app.getScreenFps()\n// app.setFpsLimited(true)\n\n// Events are also delegated:\n// app.on('update', (dt) => {})\n// app.on('render', (progress) => {})"
   }
 ]

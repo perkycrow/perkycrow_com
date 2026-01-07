@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Setup",
+    "source": "const inspector = document.createElement('action-dispatcher-inspector')\n\nconst dispatcher = new ActionDispatcher({$id: 'dispatcher'})\nconst main = dispatcher.register('main')\nmain.addAction('save', () => console.log('Saving...'))\n\ninspector.setModule(dispatcher)\ndocument.body.appendChild(inspector)"
+  },
+  {
+    "type": "container",
+    "title": "Inspector demo",
+    "source": "class GameController extends ActionController {\n    shoot () {\n        logger.log('Shooting!')\n    }\n\n    jump () {\n        logger.log('Jumping!')\n    }\n\n    pause () {\n        logger.log('Game paused')\n    }\n}\n\nconst dispatcher = new ActionDispatcher({$id: 'dispatcher'})\n\nconst main = dispatcher.register('main')\nmain.addAction('save', () => logger.log('Saving...'))\nmain.addAction('load', () => logger.log('Loading...'))\n\ndispatcher.register('game', GameController)\n\ndispatcher.setActive(['main', 'game'])\n\nconst inspector = document.createElement('action-dispatcher-inspector')\ninspector.setModule(dispatcher)\nctx.container.appendChild(inspector)"
+  },
+  {
+    "type": "container",
+    "title": "Toggle controllers",
+    "source": "class PlayerController extends ActionController {\n    move () {\n        logger.log('Player moving')\n    }\n\n    attack () {\n        logger.log('Player attacking')\n    }\n}\n\nclass UIController extends ActionController {\n    openMenu () {\n        logger.log('Menu opened')\n    }\n\n    closeMenu () {\n        logger.log('Menu closed')\n    }\n\n    showInventory () {\n        logger.log('Inventory shown')\n    }\n}\n\nconst dispatcher = new ActionDispatcher({$id: 'dispatcher'})\n\ndispatcher.register('player', PlayerController)\ndispatcher.register('ui', UIController)\n\nconst system = dispatcher.register('system')\nsystem.addAction('quit', () => logger.log('Quitting...'))\n\ndispatcher.setActive(['player'])\n\nconst inspector = document.createElement('action-dispatcher-inspector')\ninspector.setModule(dispatcher)\nctx.container.appendChild(inspector)\n\nsetTimeout(() => {\n    dispatcher.setActive(['player', 'ui'])\n    inspector.setModule(dispatcher)\n}, 500)"
+  },
+  {
+    "type": "container",
+    "title": "No controllers",
+    "source": "const dispatcher = new ActionDispatcher({$id: 'empty', main: false})\n\nconst inspector = document.createElement('action-dispatcher-inspector')\ninspector.setModule(dispatcher)\nctx.container.appendChild(inspector)"
+  }
+]

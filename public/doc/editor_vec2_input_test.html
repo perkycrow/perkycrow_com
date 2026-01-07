@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vec2Input - Perky Docs</title>
+    <meta name="description" content="Documentation for Vec2Input in the Perky game framework">
+    <meta property="og:title" content="Vec2Input - Perky Docs">
+    <meta property="og:description" content="Documentation for Vec2Input in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-BJLA8TVm.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Vec2Input</h1>
+            <section class="test-section"><h2>Vec2Input</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>container = document.createElement('div')
+document.body.appendChild(container)
+
+vec2Input = document.createElement('vec2-input')
+container.appendChild(vec2Input)</code></pre>
+            </div>
+        
+            <div class="test-hook">
+                <h4>afterEach</h4>
+                <pre><code>container.remove()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>value property should get and set value</h4>
+                <pre><code>const vec = {x: 10, y: 20}
+vec2Input.value = vec
+expect(vec2Input.value).toBe(vec)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setLabel should set label text</h4>
+                <pre><code>vec2Input.setLabel('Position')
+const label = vec2Input.shadowRoot.querySelector('.vec2-input-label')
+expect(label.textContent).toBe('Position')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>observedAttributes should include expected attributes</h4>
+                <pre><code>const observed = vec2Input.constructor.observedAttributes
+expect(observed).toContain('label')</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>initialization</h3>
+            <div class="test-case">
+                <h4>should extend HTMLElement</h4>
+                <pre><code>expect(vec2Input).toBeInstanceOf(HTMLElement)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should have shadow DOM</h4>
+                <pre><code>expect(vec2Input.shadowRoot).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should have null default value</h4>
+                <pre><code>expect(vec2Input.value).toBeNull()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>sub-inputs</h3>
+            <div class="test-case">
+                <h4>should have x number input</h4>
+                <pre><code>const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')
+const xInput = Array.from(inputs).find(i =&gt; i.getAttribute('label') === 'x')
+expect(xInput).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should have y number input</h4>
+                <pre><code>const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')
+const yInput = Array.from(inputs).find(i =&gt; i.getAttribute('label') === 'y')
+expect(yInput).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should update x input when value set</h4>
+                <pre><code>vec2Input.value = {x: 100, y: 200}
+const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')
+const xInput = Array.from(inputs).find(i =&gt; i.getAttribute('label') === 'x')
+expect(xInput.value).toBe(100)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should update y input when value set</h4>
+                <pre><code>vec2Input.value = {x: 100, y: 200}
+const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')
+const yInput = Array.from(inputs).find(i =&gt; i.getAttribute('label') === 'y')
+expect(yInput.value).toBe(200)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>change event</h3>
+            <div class="test-case">
+                <h4>should emit change event when x changes</h4>
+                <pre><code>const vec = {x: 0, y: 0}
+vec2Input.value = vec
+
+const handler = vi.fn()
+vec2Input.addEventListener('change', handler)
+
+const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')
+const xInput = Array.from(inputs).find(i =&gt; i.getAttribute('label') === 'x')
+xInput.dispatchEvent(new CustomEvent('change', {
+    detail: {value: 50}
+}))
+
+expect(handler).toHaveBeenCalled()
+expect(handler.mock.calls[0][0].detail.axis).toBe('x')
+expect(handler.mock.calls[0][0].detail.componentValue).toBe(50)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should emit change event when y changes</h4>
+                <pre><code>const vec = {x: 0, y: 0}
+vec2Input.value = vec
+
+const handler = vi.fn()
+vec2Input.addEventListener('change', handler)
+
+const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')
+const yInput = Array.from(inputs).find(i =&gt; i.getAttribute('label') === 'y')
+yInput.dispatchEvent(new CustomEvent('change', {
+    detail: {value: 75}
+}))
+
+expect(handler).toHaveBeenCalled()
+expect(handler.mock.calls[0][0].detail.axis).toBe('y')
+expect(handler.mock.calls[0][0].detail.componentValue).toBe(75)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should update vec2 object when sub-input changes</h4>
+                <pre><code>const vec = {x: 0, y: 0}
+vec2Input.value = vec
+
+const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')
+const xInput = Array.from(inputs).find(i =&gt; i.getAttribute('label') === 'x')
+xInput.dispatchEvent(new CustomEvent('change', {
+    detail: {value: 123}
+}))
+
+expect(vec.x).toBe(123)</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor">ActionDispatcherInspector</a><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item active" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor">Vec2LogRenderer</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-CWGy973H.js"></script>
+</body>
+</html>

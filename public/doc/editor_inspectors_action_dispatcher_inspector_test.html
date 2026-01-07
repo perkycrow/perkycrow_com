@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActionDispatcherInspector - Perky Docs</title>
+    <meta name="description" content="Documentation for ActionDispatcherInspector in the Perky game framework">
+    <meta property="og:title" content="ActionDispatcherInspector - Perky Docs">
+    <meta property="og:description" content="Documentation for ActionDispatcherInspector in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-BJLA8TVm.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>ActionDispatcherInspector</h1>
+            <section class="test-section"><h2>ActionDispatcherInspector</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>container = document.createElement('div')
+document.body.appendChild(container)
+
+inspector = document.createElement('action-dispatcher-inspector')
+container.appendChild(inspector)</code></pre>
+            </div>
+        
+            <div class="test-hook">
+                <h4>afterEach</h4>
+                <pre><code>container.remove()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>matches static matches method exists</h4>
+                <pre><code>expect(typeof ActionDispatcherInspector.matches).toBe('function')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>execute button calls module.executeTo when clicked</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]]
+])
+const module = new MockActionDispatcher(actionsMap, ['player'])
+module.executeTo = vi.fn()
+inspector.setModule(module)
+
+const btn = inspector.shadowRoot.querySelector('.execute-btn')
+btn.click()
+
+expect(module.executeTo).toHaveBeenCalledWith('player', 'jump')</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>initialization</h3>
+            <div class="test-case">
+                <h4>extends HTMLElement</h4>
+                <pre><code>expect(inspector).toBeInstanceOf(HTMLElement)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>has shadow DOM</h4>
+                <pre><code>expect(inspector.shadowRoot).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hides gridEl</h4>
+                <pre><code>expect(inspector.gridEl.style.display).toBe('none')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>setModule</h3>
+            <div class="test-case">
+                <h4>stores the module</h4>
+                <pre><code>const module = new MockActionDispatcher()
+inspector.setModule(module)
+expect(inspector.getModule()).toBe(module)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>renders controller groups when module is set</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}, {name: 'run'}]],
+    ['enemy', [{name: 'attack'}]]
+])
+const module = new MockActionDispatcher(actionsMap)
+inspector.setModule(module)
+
+const groups = inspector.shadowRoot.querySelectorAll('.controller-group')
+expect(groups.length).toBe(2)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>rendering</h3>
+            <div class="test-case">
+                <h4>shows header with total action and controller count</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}, {name: 'run'}]],
+    ['enemy', [{name: 'attack'}]]
+])
+const module = new MockActionDispatcher(actionsMap)
+inspector.setModule(module)
+
+const header = inspector.shadowRoot.querySelector('.actions-header')
+expect(header).not.toBeNull()
+expect(header.textContent).toContain('3')
+expect(header.textContent).toContain('2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>shows empty message when no controllers</h4>
+                <pre><code>const module = new MockActionDispatcher(new Map())
+inspector.setModule(module)
+
+const empty = inspector.shadowRoot.querySelector('.empty-message')
+expect(empty).not.toBeNull()
+expect(empty.textContent).toBe('No controllers registered')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>renders controller group headers</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]]
+])
+const module = new MockActionDispatcher(actionsMap)
+inspector.setModule(module)
+
+const groupName = inspector.shadowRoot.querySelector('.group-name')
+expect(groupName).not.toBeNull()
+expect(groupName.textContent).toBe('player')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>renders action cards with names</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}, {name: 'attack'}]]
+])
+const module = new MockActionDispatcher(actionsMap)
+inspector.setModule(module)
+
+const names = inspector.shadowRoot.querySelectorAll('.action-name')
+expect(names.length).toBe(2)
+expect(names[0].textContent).toBe('jump')
+expect(names[1].textContent).toBe('attack')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>shows empty message in group when controller has no actions</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', []]
+])
+const module = new MockActionDispatcher(actionsMap)
+inspector.setModule(module)
+
+const empty = inspector.shadowRoot.querySelector('.controller-group .empty-message')
+expect(empty).not.toBeNull()
+expect(empty.textContent).toBe('No actions')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>active controller toggle</h3>
+            <div class="test-case">
+                <h4>renders toggle for each controller group</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]],
+    ['enemy', [{name: 'attack'}]]
+])
+const module = new MockActionDispatcher(actionsMap, ['player'])
+inspector.setModule(module)
+
+const toggles = inspector.shadowRoot.querySelectorAll('toggle-input')
+expect(toggles.length).toBe(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>toggle is checked when controller is active</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]]
+])
+const module = new MockActionDispatcher(actionsMap, ['player'])
+inspector.setModule(module)
+
+const toggle = inspector.shadowRoot.querySelector('toggle-input')
+expect(toggle.checked).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>toggle is unchecked when controller is inactive</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]]
+])
+const module = new MockActionDispatcher(actionsMap, [])
+inspector.setModule(module)
+
+const toggle = inspector.shadowRoot.querySelector('toggle-input')
+expect(toggle.checked).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>inactive controller group has group-inactive class</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]]
+])
+const module = new MockActionDispatcher(actionsMap, [])
+inspector.setModule(module)
+
+const group = inspector.shadowRoot.querySelector('.controller-group')
+expect(group.classList.contains('group-inactive')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>active controller group does not have group-inactive class</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]]
+])
+const module = new MockActionDispatcher(actionsMap, ['player'])
+inspector.setModule(module)
+
+const group = inspector.shadowRoot.querySelector('.controller-group')
+expect(group.classList.contains('group-inactive')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clicking toggle activates inactive controller</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]]
+])
+const module = new MockActionDispatcher(actionsMap, [])
+module.setActive = vi.fn()
+inspector.setModule(module)
+
+const toggle = inspector.shadowRoot.querySelector('toggle-input')
+toggle.dispatchEvent(new CustomEvent('change', {detail: {checked: true}}))
+
+expect(module.setActive).toHaveBeenCalledWith(['player'])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clicking toggle deactivates active controller</h4>
+                <pre><code>const actionsMap = new Map([
+    ['player', [{name: 'jump'}]],
+    ['enemy', [{name: 'attack'}]]
+])
+const module = new MockActionDispatcher(actionsMap, ['player', 'enemy'])
+module.setActive = vi.fn()
+inspector.setModule(module)
+
+const toggle = inspector.shadowRoot.querySelector('toggle-input')
+toggle.dispatchEvent(new CustomEvent('change', {detail: {checked: false}}))
+
+expect(module.setActive).toHaveBeenCalledWith(['enemy'])</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor">ActionControllerInspector</a><a class="nav-item active" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor">ActionDispatcherInspector</a><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor">Vec2LogRenderer</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-CWGy973H.js"></script>
+</body>
+</html>

@@ -21,6 +21,26 @@
       ]
     },
     {
+      "id": "action_controller",
+      "file": "/core/action_controller.doc.js",
+      "category": "core",
+      "title": "ActionController",
+      "tags": [
+        "core",
+        "action_controller"
+      ]
+    },
+    {
+      "id": "action_dispatcher",
+      "file": "/core/action_dispatcher.doc.js",
+      "category": "core",
+      "title": "ActionDispatcher",
+      "tags": [
+        "core",
+        "action_dispatcher"
+      ]
+    },
+    {
       "id": "notifier",
       "file": "/core/notifier.doc.js",
       "category": "core",
@@ -51,6 +71,36 @@
       ]
     },
     {
+      "id": "action_controller_inspector",
+      "file": "/editor/inspectors/action_controller_inspector.doc.js",
+      "category": "editor",
+      "title": "ActionControllerInspector",
+      "tags": [
+        "editor",
+        "action_controller_inspector"
+      ]
+    },
+    {
+      "id": "action_dispatcher_inspector",
+      "file": "/editor/inspectors/action_dispatcher_inspector.doc.js",
+      "category": "editor",
+      "title": "ActionDispatcherInspector",
+      "tags": [
+        "editor",
+        "action_dispatcher_inspector"
+      ]
+    },
+    {
+      "id": "perky_explorer",
+      "file": "/editor/perky_explorer.doc.js",
+      "category": "editor",
+      "title": "PerkyExplorer",
+      "tags": [
+        "editor",
+        "perky_explorer"
+      ]
+    },
+    {
       "id": "perky_logger",
       "file": "/editor/perky_logger.doc.js",
       "category": "editor",
@@ -58,6 +108,36 @@
       "tags": [
         "editor",
         "perky_logger"
+      ]
+    },
+    {
+      "id": "toggle_input",
+      "file": "/editor/toggle_input.doc.js",
+      "category": "editor",
+      "title": "ToggleInput",
+      "tags": [
+        "editor",
+        "toggle_input"
+      ]
+    },
+    {
+      "id": "vec2_input",
+      "file": "/editor/vec2_input.doc.js",
+      "category": "editor",
+      "title": "Vec2Input",
+      "tags": [
+        "editor",
+        "vec2_input"
+      ]
+    },
+    {
+      "id": "vec2_log_renderer",
+      "file": "/editor/log_renderers/vec2_log_renderer.doc.js",
+      "category": "editor",
+      "title": "Vec2LogRenderer",
+      "tags": [
+        "editor",
+        "vec2_log_renderer"
       ]
     },
     {
@@ -108,6 +188,16 @@
       "tags": [
         "math",
         "vec2"
+      ]
+    },
+    {
+      "id": "canvas_2d",
+      "file": "/render/canvas_2d.doc.js",
+      "category": "render",
+      "title": "Canvas2d",
+      "tags": [
+        "render",
+        "canvas_2d"
       ]
     },
     {

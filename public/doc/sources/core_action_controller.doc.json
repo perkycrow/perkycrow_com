@@ -1,0 +1,52 @@
+[
+  {
+    "type": "code",
+    "title": "Creating a controller",
+    "source": "class PlayerController extends ActionController {\n    jump () {\n        console.log('Player jumps!')\n    }\n\n    shoot () {\n        console.log('Player shoots!')\n    }\n}\n\nconst controller = new PlayerController({$id: 'player'})\ncontroller.execute('jump')\ncontroller.execute('shoot')"
+  },
+  {
+    "type": "action",
+    "title": "Execute actions",
+    "source": "class GameController extends ActionController {\n    start () {\n        logger.log('Game started')\n    }\n\n    pause () {\n        logger.log('Game paused')\n    }\n}\n\nconst controller = new GameController({$id: 'game'})\ncontroller.execute('start')\ncontroller.execute('pause')\ncontroller.dispose()"
+  },
+  {
+    "type": "code",
+    "title": "Adding actions",
+    "source": "const controller = new ActionController({$id: 'main'})\n\ncontroller.addAction('save', () => {\n    console.log('Saving...')\n})\n\ncontroller.addAction('load', () => {\n    console.log('Loading...')\n})\n\ncontroller.execute('save')"
+  },
+  {
+    "type": "action",
+    "title": "Dynamic actions",
+    "source": "const controller = new ActionController({$id: 'main'})\n\ncontroller.addAction('greet', (name) => {\n    logger.log('Hello,', name)\n})\n\ncontroller.execute('greet', 'World')\ncontroller.dispose()"
+  },
+  {
+    "type": "code",
+    "title": "With parameters",
+    "source": "class PlayerController extends ActionController {\n    move (x, y) {\n        console.log(`Moving to ${x}, ${y}`)\n    }\n\n    heal (amount = 10) {\n        console.log(`Healing ${amount} HP`)\n    }\n}\n\nconst controller = new PlayerController({$id: 'player'})\ncontroller.execute('move', 5, 10)\ncontroller.execute('heal', 25)\ncontroller.execute('heal') // Uses default value"
+  },
+  {
+    "type": "action",
+    "title": "Parameters demo",
+    "source": "class MathController extends ActionController {\n    add (a, b) {\n        logger.log(`${a} + ${b} =`, a + b)\n    }\n\n    multiply (a, b = 2) {\n        logger.log(`${a} × ${b} =`, a * b)\n    }\n}\n\nconst controller = new MathController({$id: 'math'})\ncontroller.execute('add', 3, 4)\ncontroller.execute('multiply', 5, 3)\ncontroller.execute('multiply', 10)\ncontroller.dispose()"
+  },
+  {
+    "type": "action",
+    "title": "List actions",
+    "source": "class GameController extends ActionController {\n    shoot () {}\n    jump (height = 1) {}\n    move (x, y) {}\n}\n\nconst controller = new GameController({$id: 'game'})\ncontroller.addAction('save', () => {})\n\nlogger.log('Actions:', controller.listActions())\n\nconst detailed = controller.listActionsWithParams()\nfor (const action of detailed) {\n    const params = action.params.map(p => p.name).join(', ')\n    logger.log(`${action.name}(${params})`)\n}\n\ncontroller.dispose()"
+  },
+  {
+    "type": "code",
+    "title": "Internal methods",
+    "source": "class GameController extends ActionController {\n    // Exposed as actions\n    shoot () {}\n    jump () {}\n\n    // NOT exposed (internal)\n    _privateMethod () {}\n    onStart () {}\n    updateState () {}\n    getPlayer () {}\n    checkCollision () {}\n}\n\nconst controller = new GameController({$id: 'game'})\nconsole.log(controller.listActions()) // ['shoot', 'jump']"
+  },
+  {
+    "type": "action",
+    "title": "Check exposed actions",
+    "source": "class TestController extends ActionController {\n    publicAction () {}\n    anotherAction () {}\n    _internal () {}\n    onInit () {}\n    getState () {}\n}\n\nconst controller = new TestController({$id: 'test'})\nlogger.log('Exposed actions:', controller.listActions())\ncontroller.dispose()"
+  },
+  {
+    "type": "code",
+    "title": "Propagable actions",
+    "source": "class GameController extends ActionController {\n    static propagable = ['move']\n\n    move () {\n        console.log('Game: move')\n    }\n\n    shoot () {\n        console.log('Game: shoot')\n    }\n}\n\n// 'move' will propagate to lower controllers\n// 'shoot' will stop at this controller"
+  }
+]

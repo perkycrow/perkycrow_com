@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkyExplorer - Perky Docs</title>
+    <meta name="description" content="Documentation for PerkyExplorer in the Perky game framework">
+    <meta property="og:title" content="PerkyExplorer - Perky Docs">
+    <meta property="og:description" content="Documentation for PerkyExplorer in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-BJLA8TVm.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>PerkyExplorer</h1>
+            <section class="test-section"><h2>PerkyExplorer</h2>
+            <div class="test-hook">
+                <h4>beforeEach</h4>
+                <pre><code>container = document.createElement('div')
+document.body.appendChild(container)
+
+explorer = document.createElement('perky-explorer')
+container.appendChild(explorer)</code></pre>
+            </div>
+        
+            <div class="test-hook">
+                <h4>afterEach</h4>
+                <pre><code>container.remove()</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>initialization</h3>
+            <div class="test-case">
+                <h4>should be a custom element</h4>
+                <pre><code>expect(explorer).toBeInstanceOf(PerkyExplorer)
+expect(explorer).toBeInstanceOf(HTMLElement)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should have shadow DOM</h4>
+                <pre><code>expect(explorer.shadowRoot).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should show empty state when no module is set</h4>
+                <pre><code>const emptyMessage = explorer.shadowRoot.querySelector('.explorer-empty')
+expect(emptyMessage).not.toBeNull()
+expect(emptyMessage.textContent).toContain('No module attached')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should have a header with title</h4>
+                <pre><code>const title = explorer.shadowRoot.querySelector('.explorer-title')
+expect(title).not.toBeNull()
+expect(title.textContent).toContain('Perky Explorer')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>setModule</h3>
+            <div class="test-case">
+                <h4>should render the module tree</h4>
+                <pre><code>const module = new PerkyModule({$id: 'root', $category: 'app'})
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+expect(rootNode).not.toBeNull()
+
+const id = getNodeId(rootNode)
+expect(id.textContent).toBe('root')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should return the module via getModule</h4>
+                <pre><code>const module = new PerkyModule({$id: 'root'})
+explorer.setModule(module)
+
+expect(explorer.getModule()).toBe(module)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should expand the root node by default</h4>
+                <pre><code>const parent = new PerkyModule({$id: 'parent'})
+parent.create(PerkyModule, {$id: 'child'})
+
+explorer.setModule(parent)
+
+const rootNode = getRootNode(explorer)
+const childrenContainer = getNodeChildren(rootNode)
+expect(childrenContainer.classList.contains('expanded')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should render children in the tree</h4>
+                <pre><code>const parent = new PerkyModule({$id: 'parent'})
+parent.create(PerkyModule, {$id: 'child1', $category: 'test'})
+parent.create(PerkyModule, {$id: 'child2', $category: 'test'})
+
+explorer.setModule(parent)
+
+const rootNode = getRootNode(explorer)
+const nodeIds = collectAllNodeIds(rootNode)
+
+expect(nodeIds).toContain('parent')
+expect(nodeIds).toContain('child1')
+expect(nodeIds).toContain('child2')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>status indicators</h3>
+            <div class="test-case">
+                <h4>should show stopped status when module not started</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+const status = getNodeStatus(rootNode)
+expect(status.classList.contains('stopped')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should show started status when module is running</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+module.start()
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+const status = getNodeStatus(rootNode)
+expect(status.classList.contains('started')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should show disposed status when module is disposed</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+module.dispose()
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+const status = getNodeStatus(rootNode)
+expect(status.classList.contains('disposed')).toBe(true)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>collapse/expand</h3>
+            <div class="test-case">
+                <h4>should toggle tree visibility when clicking header</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+explorer.setModule(module)
+
+const header = explorer.shadowRoot.querySelector('.explorer-header')
+const tree = explorer.shadowRoot.querySelector('.explorer-tree')
+
+expect(tree.classList.contains('hidden')).toBe(false)
+
+header.click()
+
+const treeAfter = explorer.shadowRoot.querySelector('.explorer-tree')
+expect(treeAfter.classList.contains('hidden')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should toggle child nodes when clicking arrow</h4>
+                <pre><code>const parent = new PerkyModule({$id: 'parent'})
+parent.create(PerkyModule, {$id: 'child'})
+explorer.setModule(parent)
+
+const rootNode = getRootNode(explorer)
+
+let childContainer = getNodeChildren(rootNode)
+expect(childContainer.classList.contains('expanded')).toBe(true)
+
+const toggle = getNodeToggle(rootNode)
+toggle.click()
+
+childContainer = getNodeChildren(rootNode)
+expect(childContainer.classList.contains('expanded')).toBe(false)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>selection and details</h3>
+            <div class="test-case">
+                <h4>should show details panel when node is clicked</h4>
+                <pre><code>const module = new PerkyModule({
+    $id: 'test-module',
+    $name: 'TestModule',
+    $category: 'testing',
+    $tags: ['tag1', 'tag2']
+})
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+const nodeContent = getNodeContent(rootNode)
+nodeContent.click()
+
+const details = getDetails(explorer)
+expect(details).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should display module properties in details</h4>
+                <pre><code>const module = new PerkyModule({
+    $id: 'test-module',
+    $name: 'TestName',
+    $category: 'testing'
+})
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+const nodeContent = getNodeContent(rootNode)
+nodeContent.click()
+
+const details = getDetails(explorer)
+const detailsContent = details.shadowRoot.textContent
+expect(detailsContent).toContain('TestName')
+expect(detailsContent).toContain('testing')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should display tags in details</h4>
+                <pre><code>const module = new PerkyModule({
+    $id: 'test',
+    $tags: ['alpha', 'beta']
+})
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+const nodeContent = getNodeContent(rootNode)
+nodeContent.click()
+
+const details = getDetails(explorer)
+const tags = details.shadowRoot.querySelectorAll('.details-tag')
+const tagTexts = [...tags].map(t =&gt; t.textContent)
+
+expect(tagTexts).toContain('alpha')
+expect(tagTexts).toContain('beta')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should mark selected node with selected class</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+const nodeContent = getNodeContent(rootNode)
+nodeContent.click()
+
+const selectedContent = getNodeContent(rootNode)
+expect(selectedContent.classList.contains('selected')).toBe(true)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>minimize</h3>
+            <div class="test-case">
+                <h4>should minimize when clicking minimize button</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+explorer.setModule(module)
+
+const minimizeBtn = explorer.shadowRoot.querySelectorAll('.explorer-btn')[2]
+minimizeBtn.click()
+
+const minimized = explorer.shadowRoot.querySelector('.explorer-minimized')
+expect(minimized.classList.contains('hidden')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should restore when clicking minimized icon</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+explorer.setModule(module)
+
+const minimizeBtn = explorer.shadowRoot.querySelectorAll('.explorer-btn')[2]
+minimizeBtn.click()
+
+const minimized = explorer.shadowRoot.querySelector('.explorer-minimized')
+minimized.click()
+
+const explorerPanel = explorer.shadowRoot.querySelector('.explorer')
+expect(explorerPanel.classList.contains('hidden')).toBe(false)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>live updates</h3>
+            <div class="test-case">
+                <h4>should update when child is added</h4>
+                <pre><code>const parent = new PerkyModule({$id: 'parent'})
+explorer.setModule(parent)
+
+const rootNode = getRootNode(explorer)
+let nodeIds = collectAllNodeIds(rootNode)
+expect(nodeIds).not.toContain('new-child')
+
+parent.create(PerkyModule, {$id: 'new-child', $category: 'perkyModule'})
+
+nodeIds = collectAllNodeIds(rootNode)
+expect(nodeIds).toContain('new-child')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should update when module starts</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+let status = getNodeStatus(rootNode)
+expect(status.classList.contains('stopped')).toBe(true)
+
+module.start()
+
+status = getNodeStatus(rootNode)
+expect(status.classList.contains('started')).toBe(true)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>cleanup</h3>
+            <div class="test-case">
+                <h4>should clean up listeners when disconnected</h4>
+                <pre><code>const module = new PerkyModule({$id: 'test'})
+explorer.setModule(module)
+
+const rootNode = getRootNode(explorer)
+const offSpy = vi.spyOn(module, 'off')
+
+rootNode.remove()
+
+expect(offSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>should clean up listeners when setting new module</h4>
+                <pre><code>const module1 = new PerkyModule({$id: 'first'})
+const module2 = new PerkyModule({$id: 'second'})
+
+explorer.setModule(module1)
+
+const rootNode = getRootNode(explorer)
+const offSpy = vi.spyOn(module1, 'off')
+
+rootNode.setModule(module2)
+
+expect(offSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+            </div>
+            <div class="sidebar-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor">ActionDispatcherInspector</a><a class="nav-item active" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor">Vec2LogRenderer</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-CWGy973H.js"></script>
+</body>
+</html>

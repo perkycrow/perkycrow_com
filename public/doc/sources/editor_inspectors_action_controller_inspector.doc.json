@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Setup",
+    "source": "const inspector = document.createElement('action-controller-inspector')\n\nconst controller = new ActionController({$id: 'main'})\ncontroller.addAction('save', () => console.log('Saving...'))\n\ninspector.setModule(controller)\ndocument.body.appendChild(inspector)"
+  },
+  {
+    "type": "container",
+    "title": "Inspector demo",
+    "source": "class GameController extends ActionController {\n    static propagable = ['move']\n\n    shoot () {\n        logger.log('Shooting!')\n    }\n\n    jump (height = 1) {\n        logger.log(`Jumping ${height} units`)\n    }\n\n    move (x, y) {\n        logger.log(`Moving to ${x}, ${y}`)\n    }\n\n    heal () {\n        logger.log('Healing...')\n    }\n}\n\nconst controller = new GameController({$id: 'game'})\n\nconst inspector = document.createElement('action-controller-inspector')\ninspector.setModule(controller)\nctx.container.appendChild(inspector)"
+  },
+  {
+    "type": "container",
+    "title": "With propagable actions",
+    "source": "class MenuController extends ActionController {\n    static propagable = ['navigate', 'back']\n\n    select () {\n        logger.log('Selected!')\n    }\n\n    navigate () {\n        logger.log('Navigating...')\n    }\n\n    back () {\n        logger.log('Going back...')\n    }\n}\n\nconst controller = new MenuController({$id: 'menu'})\n\nconst inspector = document.createElement('action-controller-inspector')\ninspector.setModule(controller)\nctx.container.appendChild(inspector)"
+  },
+  {
+    "type": "container",
+    "title": "No actions",
+    "source": "const controller = new ActionController({$id: 'empty'})\n\nconst inspector = document.createElement('action-controller-inspector')\ninspector.setModule(controller)\nctx.container.appendChild(inspector)"
+  }
+]

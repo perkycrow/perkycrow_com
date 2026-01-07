@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Setup",
+    "source": "// import './vec2_log_renderer.js'\n\nconst position = new Vec2(10, 20)\nlogger.log('Position:', position)"
+  },
+  {
+    "type": "action",
+    "title": "Log Vec2",
+    "source": "const position = new Vec2(100, 250)\nlogger.log('Position:', position)"
+  },
+  {
+    "type": "action",
+    "title": "Log floats",
+    "source": "const velocity = new Vec2(3.14159, -2.71828)\nlogger.log('Velocity:', velocity)"
+  },
+  {
+    "type": "action",
+    "title": "Log multiple",
+    "source": "const start = new Vec2(0, 0)\nconst end = new Vec2(100, 50)\nlogger.log('From', start, 'to', end)"
+  }
+]

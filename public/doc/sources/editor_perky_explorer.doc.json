@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Standalone",
+    "source": "const explorer = document.createElement('perky-explorer')\ndocument.body.appendChild(explorer)\n\n// const game = new Game()\n// explorer.setModule(game)"
+  },
+  {
+    "type": "container",
+    "title": "Embedded explorer",
+    "source": "const explorer = document.createElement('perky-explorer')\nexplorer.embedded = true\nctx.container.appendChild(explorer)\n\nconst game = new Game({$id: 'myGame'})\nexplorer.setModule(game)\n\nsetTimeout(() => game.start(), 1000)"
+  },
+  {
+    "type": "code",
+    "title": "Enable embedded mode",
+    "source": "const explorer = document.createElement('perky-explorer')\nexplorer.embedded = true\n\n// Or via attribute\n// <perky-explorer embedded></perky-explorer>"
+  },
+  {
+    "type": "code",
+    "title": "Focus on a module",
+    "source": "const explorer = document.createElement('perky-explorer')\n// const app = new Application()\n// explorer.setModule(app)\n\n// Focus on a child module\n// explorer.focusModule(app.inputSystem)"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Setup",
+    "source": "const toggle = document.createElement('toggle-input')\ntoggle.addEventListener('change', (e) => {\n    console.log('Checked:', e.detail.checked)\n})\ndocument.body.appendChild(toggle)"
+  },
+  {
+    "type": "container",
+    "title": "Toggle demo",
+    "source": "const toggle = document.createElement('toggle-input')\ntoggle.addEventListener('change', (e) => {\n    logger.log('Checked:', e.detail.checked)\n})\nctx.container.appendChild(toggle)"
+  },
+  {
+    "type": "container",
+    "title": "Labeled toggle",
+    "source": "const toggle = document.createElement('toggle-input')\ntoggle.setLabel('Enable feature')\ntoggle.addEventListener('change', (e) => {\n    logger.log('Feature enabled:', e.detail.checked)\n})\nctx.container.appendChild(toggle)"
+  },
+  {
+    "type": "container",
+    "title": "Programmatic",
+    "source": "const toggle = document.createElement('toggle-input')\ntoggle.setLabel('Auto-save')\ntoggle.addEventListener('change', (e) => {\n    logger.log('Auto-save:', e.detail.checked)\n})\nctx.container.appendChild(toggle)\n\nctx.action('Toggle', () => {\n    toggle.setChecked(!toggle.checked)\n    logger.log('Set to:', toggle.checked)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Initially checked",
+    "source": "const toggle = document.createElement('toggle-input')\ntoggle.setLabel('Notifications')\ntoggle.setChecked(true)\nctx.container.appendChild(toggle)"
+  }
+]

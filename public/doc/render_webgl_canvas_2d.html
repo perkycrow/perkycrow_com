@@ -7,7 +7,7 @@
     <meta name="description" content="Documentation for WebglCanvas2d in the Perky game framework">
     <meta property="og:title" content="WebglCanvas2d - Perky Docs">
     <meta property="og:description" content="Documentation for WebglCanvas2d in the Perky game framework">
-    <link rel="stylesheet" href="assets/main-wAHr3Suq.css">
+    <link rel="stylesheet" href="assets/main-BJLA8TVm.css">
 </head>
 <body>
     <noscript>
@@ -45,11 +45,7 @@ const rect = new Rectangle({
 })
 
 scene.add(rect)
-renderer.render(scene)
-
-ctx.setApp(renderer)
-
-logger.log('canvas:', renderer.canvas.width, 'x', renderer.canvas.height)</code></pre>
+renderer.render(scene)</code></pre>
             </div>
         
             <div class="doc-block">
@@ -85,8 +81,7 @@ scene.add(new Rectangle({
     y: 0
 }))
 
-renderer.render(scene)
-ctx.setApp(renderer)</code></pre>
+renderer.render(scene)</code></pre>
             </div>
         
             <div class="doc-block">
@@ -104,8 +99,7 @@ const rect1 = new Rectangle({
     height: 1.5,
     color: '#e94560',
     x: -5,
-    y: 0,
-    rotation: Math.PI / 6
+    y: 0
 })
 
 const rect2 = new Rectangle({
@@ -113,8 +107,7 @@ const rect2 = new Rectangle({
     height: 1.5,
     color: '#0f3460',
     x: 0,
-    y: 0,
-    rotation: Math.PI / 4
+    y: 0
 })
 
 const rect3 = new Rectangle({
@@ -122,15 +115,18 @@ const rect3 = new Rectangle({
     height: 1.5,
     color: '#533483',
     x: 5,
-    y: 0,
-    rotation: -Math.PI / 6,
-    scaleX: 1.2,
-    scaleY: 0.8
+    y: 0
 })
 
 scene.add(rect1, rect2, rect3)
-renderer.render(scene)
-ctx.setApp(renderer)</code></pre>
+
+ctx.slider('rotation', {min: -180, max: 180, default: 0}, value =&gt; {
+    const rad = value * Math.PI / 180
+    rect1.rotation = rad
+    rect2.rotation = rad
+    rect3.rotation = rad
+    renderer.render(scene)
+})</code></pre>
             </div>
         
             <div class="doc-block">
@@ -143,7 +139,7 @@ ctx.setApp(renderer)</code></pre>
 
 const scene = new Group2D()
 
-const group = new Group2D({x: 0, y: 0, rotation: Math.PI / 8})
+const group = new Group2D({x: 0, y: 0})
 
 group.add(new Rectangle({
     width: 2.5,
@@ -162,10 +158,17 @@ group.add(new Rectangle({
 }))
 
 scene.add(group)
-renderer.render(scene)
-ctx.setApp(renderer)
 
-logger.log('group rotation:', (group.rotation * 180 / Math.PI).toFixed(0) + '°')</code></pre>
+ctx.slider('rotation', {min: -180, max: 180, default: 0}, value =&gt; {
+    group.rotation = value * Math.PI / 180
+    renderer.render(scene)
+})
+
+ctx.slider('scale', {min: 0.5, max: 2, default: 1}, value =&gt; {
+    group.scaleX = value
+    group.scaleY = value
+    renderer.render(scene)
+})</code></pre>
             </div>
         
             <div class="doc-block">
@@ -187,11 +190,15 @@ for (let i = 0; i &lt; 5; i++) {
     }))
 }
 
-renderer.camera.zoom = 1.5
-renderer.render(scene)
-ctx.setApp(renderer)
+ctx.slider('zoom', {min: 0.5, max: 3, default: 1}, value =&gt; {
+    renderer.camera.zoom = value
+    renderer.render(scene)
+})
 
-logger.log('zoom:', renderer.camera.zoom + 'x')</code></pre>
+ctx.slider('pan X', {min: -10, max: 10, default: 0}, value =&gt; {
+    renderer.camera.x = value
+    renderer.render(scene)
+})</code></pre>
             </div>
         
             <div class="doc-block">
@@ -219,12 +226,17 @@ scene.add(new Circle({
     y: 0
 }))
 
-renderer.camera.x = 3
-renderer.camera.y = 2
-renderer.render(scene)
-ctx.setApp(renderer)
+ctx.action('Center', () =&gt; {
+    renderer.camera.x = 0
+    renderer.camera.y = 0
+    renderer.render(scene)
+})
 
-logger.log('camera pos:', renderer.camera.x, renderer.camera.y)</code></pre>
+ctx.action('Offset (3, 2)', () =&gt; {
+    renderer.camera.x = 3
+    renderer.camera.y = 2
+    renderer.render(scene)
+})</code></pre>
             </div>
         
             <div class="doc-block">
@@ -257,7 +269,7 @@ renderer1.backgroundColor = '#ff0000'</code></pre>
                 </svg>
                 <input type="text" class="search-input" placeholder="Search...">
             </div>
-            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item active" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">editor</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor">ActionDispatcherInspector</a><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor">Vec2LogRenderer</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">input</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item active" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a></nav>
         </aside>
 
         <main class="docs-main">
@@ -268,6 +280,6 @@ renderer1.backgroundColor = '#ff0000'</code></pre>
         </main>
     </div>
 
-    <script type="module" src="assets/main-woiL4Dlz.js"></script>
+    <script type="module" src="assets/main-CWGy973H.js"></script>
 </body>
 </html>

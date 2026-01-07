@@ -594,6 +594,335 @@
       }
     ]
   },
+  "/core/action_controller.doc.js": {
+    "file": "/core/action_controller.test.js",
+    "describes": [
+      {
+        "title": "ActionController",
+        "line": 5,
+        "beforeEach": {
+          "line": 9,
+          "source": "controller = new ActionController()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor",
+            "line": 14,
+            "source": "expect(controller.getAction('any')).toBeUndefined()"
+          },
+          {
+            "title": "addAction and getAction",
+            "line": 19,
+            "source": "const action = vi.fn()\n\ncontroller.addAction('testAction', action)\n\nexpect(controller.getAction('testAction')).toBe(action)"
+          },
+          {
+            "title": "removeAction",
+            "line": 28,
+            "source": "const action = vi.fn()\n\ncontroller.addAction('testAction', action)\ncontroller.removeAction('testAction')\n\nexpect(controller.getAction('testAction')).toBeUndefined()"
+          },
+          {
+            "title": "hasAction - registered action",
+            "line": 38,
+            "source": "const action = vi.fn()\ncontroller.addAction('testAction', action)\n\nexpect(controller.hasAction('testAction')).toBe(true)"
+          },
+          {
+            "title": "hasAction - method action",
+            "line": 46,
+            "source": "class TestController extends ActionController {\n    testMethod () { }\n}\n\nconst testController = new TestController()\nexpect(testController.hasAction('testMethod')).toBe(true)"
+          },
+          {
+            "title": "hasAction - non-existent action",
+            "line": 56,
+            "source": "expect(controller.hasAction('nonExistent')).toBe(false)"
+          },
+          {
+            "title": "shouldPropagate - default (no propagable)",
+            "line": 61,
+            "source": "expect(controller.shouldPropagate('anyAction')).toBe(false)"
+          },
+          {
+            "title": "shouldPropagate - with propagable whitelist",
+            "line": 66,
+            "source": "class TestController extends ActionController {\n    static propagable = ['move', 'look']\n}\n\nconst testController = new TestController()\n\nexpect(testController.shouldPropagate('move')).toBe(true)\nexpect(testController.shouldPropagate('look')).toBe(true)\nexpect(testController.shouldPropagate('shoot')).toBe(false)"
+          },
+          {
+            "title": "listActions - registered actions",
+            "line": 79,
+            "source": "controller.addAction('action1', vi.fn())\ncontroller.addAction('action2', vi.fn())\n\nconst actions = controller.listActions()\n\nexpect(actions).toContain('action1')\nexpect(actions).toContain('action2')"
+          },
+          {
+            "title": "listActions - method actions",
+            "line": 90,
+            "source": "class TestController extends ActionController {\n    jump () { }\n    move () { }\n}\n\nconst testController = new TestController()\nconst actions = testController.listActions()\n\nexpect(actions).toContain('jump')\nexpect(actions).toContain('move')"
+          },
+          {
+            "title": "listActions - excludes internal methods",
+            "line": 104,
+            "source": "const actions = controller.listActions()\n\nexpect(actions).not.toContain('start')\nexpect(actions).not.toContain('stop')\nexpect(actions).not.toContain('addAction')\nexpect(actions).not.toContain('execute')"
+          },
+          {
+            "title": "execute with existing registered action",
+            "line": 114,
+            "source": "const action = vi.fn()\nconst actionListener = vi.fn()\nconst genericListener = vi.fn()\n\ncontroller.addAction('testAction', action)\ncontroller.on('testAction', actionListener)\ncontroller.on('action', genericListener)\n\ncontroller.execute('testAction', 'arg1', 'arg2')\n\nexpect(action).toHaveBeenCalledWith('arg1', 'arg2')\nexpect(actionListener).toHaveBeenCalledWith('arg1', 'arg2')\nexpect(genericListener).toHaveBeenCalledWith('testAction', 'arg1', 'arg2')"
+          },
+          {
+            "title": "execute with method action",
+            "line": 131,
+            "source": "const action = vi.fn()\nconst actionListener = vi.fn()\n\ncontroller.addAction('testMethod', action)\ncontroller.on('testMethod', actionListener)\n\ncontroller.execute('testMethod', 'arg1')\n\nexpect(action).toHaveBeenCalledWith('arg1')\nexpect(actionListener).toHaveBeenCalledWith('arg1')"
+          },
+          {
+            "title": "execute with non-existent action still emits events",
+            "line": 145,
+            "source": "const actionListener = vi.fn()\nconst genericListener = vi.fn()\n\ncontroller.on('nonExistentAction', actionListener)\ncontroller.on('action', genericListener)\n\ncontroller.execute('nonExistentAction', 'arg1', 'arg2')\n\nexpect(actionListener).toHaveBeenCalledWith('arg1', 'arg2')\nexpect(genericListener).toHaveBeenCalledWith('nonExistentAction', 'arg1', 'arg2')"
+          },
+          {
+            "title": "multiple event listeners",
+            "line": 159,
+            "source": "const action = vi.fn()\nconst listener1 = vi.fn()\nconst listener2 = vi.fn()\nconst genericListener = vi.fn()\n\ncontroller.addAction('testAction', action)\ncontroller.on('testAction', listener1)\ncontroller.on('testAction', listener2)\ncontroller.on('action', genericListener)\n\ncontroller.execute('testAction', 'arg')\n\nexpect(action).toHaveBeenCalledWith('arg')\nexpect(listener1).toHaveBeenCalledWith('arg')\nexpect(listener2).toHaveBeenCalledWith('arg')\nexpect(genericListener).toHaveBeenCalledWith('testAction', 'arg')"
+          }
+        ],
+        "describes": [
+          {
+            "title": "normalizeBindings",
+            "line": 179,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "empty bindings",
+                "line": 181,
+                "source": "class TestController extends ActionController {\n    static bindings = {}\n}\n\nconst normalized = TestController.normalizeBindings('test')\nexpect(normalized).toEqual([])"
+              },
+              {
+                "title": "simple string binding",
+                "line": 191,
+                "source": "class TestController extends ActionController {\n    static bindings = {\n        shoot: 'Space'\n    }\n}\n\nconst normalized = TestController.normalizeBindings('test')\nexpect(normalized).toEqual([\n    {\n        action: 'shoot',\n        key: 'Space',\n        scoped: false,\n        eventType: 'pressed',\n        controllerName: null\n    }\n])"
+              },
+              {
+                "title": "array of keys binding",
+                "line": 211,
+                "source": "class TestController extends ActionController {\n    static bindings = {\n        moveUp: ['KeyW', 'ArrowUp']\n    }\n}\n\nconst normalized = TestController.normalizeBindings('test')\nexpect(normalized).toEqual([\n    {\n        action: 'moveUp',\n        key: 'KeyW',\n        scoped: false,\n        eventType: 'pressed',\n        controllerName: null\n    },\n    {\n        action: 'moveUp',\n        key: 'ArrowUp',\n        scoped: false,\n        eventType: 'pressed',\n        controllerName: null\n    }\n])"
+              },
+              {
+                "title": "scoped binding",
+                "line": 238,
+                "source": "class TestController extends ActionController {\n    static bindings = {\n        shoot: {keys: 'Space', scoped: true}\n    }\n}\n\nconst normalized = TestController.normalizeBindings('game')\nexpect(normalized).toEqual([\n    {\n        action: 'shoot',\n        key: 'Space',\n        scoped: true,\n        eventType: 'pressed',\n        controllerName: 'game'\n    }\n])"
+              },
+              {
+                "title": "scoped binding with multiple keys",
+                "line": 258,
+                "source": "class TestController extends ActionController {\n    static bindings = {\n        move: {keys: ['KeyW', 'KeyS'], scoped: true}\n    }\n}\n\nconst normalized = TestController.normalizeBindings('game')\nexpect(normalized).toEqual([\n    {\n        action: 'move',\n        key: 'KeyW',\n        scoped: true,\n        eventType: 'pressed',\n        controllerName: 'game'\n    },\n    {\n        action: 'move',\n        key: 'KeyS',\n        scoped: true,\n        eventType: 'pressed',\n        controllerName: 'game'\n    }\n])"
+              },
+              {
+                "title": "custom eventType",
+                "line": 285,
+                "source": "class TestController extends ActionController {\n    static bindings = {\n        shoot: {keys: 'Space', eventType: 'released'}\n    }\n}\n\nconst normalized = TestController.normalizeBindings('test')\nexpect(normalized).toEqual([\n    {\n        action: 'shoot',\n        key: 'Space',\n        scoped: false,\n        eventType: 'released',\n        controllerName: null\n    }\n])"
+              },
+              {
+                "title": "mixed binding formats",
+                "line": 305,
+                "source": "class TestController extends ActionController {\n    static bindings = {\n        shoot: 'Space',\n        moveUp: ['KeyW', 'ArrowUp'],\n        jump: {keys: 'KeyJ', scoped: true},\n        dash: {keys: ['KeyD', 'ShiftLeft'], scoped: false, eventType: 'released'}\n    }\n}\n\nconst normalized = TestController.normalizeBindings('player')\nexpect(normalized).toHaveLength(6)\n\nexpect(normalized).toContainEqual({\n    action: 'shoot',\n    key: 'Space',\n    scoped: false,\n    eventType: 'pressed',\n    controllerName: null\n})\n\nexpect(normalized).toContainEqual({\n    action: 'jump',\n    key: 'KeyJ',\n    scoped: true,\n    eventType: 'pressed',\n    controllerName: 'player'\n})"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/core/action_dispatcher.doc.js": {
+    "file": "/core/action_dispatcher.test.js",
+    "describes": [
+      {
+        "title": "ActionDispatcher",
+        "line": 7,
+        "beforeEach": {
+          "line": 11,
+          "source": "dispatcher = new ActionDispatcher()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor",
+            "line": 16,
+            "source": "expect(dispatcher.getController('any')).toBeNull()\nexpect(dispatcher.getActive()).toEqual([])"
+          },
+          {
+            "title": "register",
+            "line": 22,
+            "source": "const controller = dispatcher.register('main', ActionController)\n\nexpect(dispatcher.getController('main')).toBe(controller)"
+          },
+          {
+            "title": "register with existing name",
+            "line": 29,
+            "source": "dispatcher.register('main', ActionController)\nconst controller2 = dispatcher.register('main', ActionController)\nexpect(dispatcher.getController('main')).toBe(controller2)"
+          },
+          {
+            "title": "onInstall creates main controller by default",
+            "line": 36,
+            "source": "const host = new PerkyModule()\nconst newDispatcher = new ActionDispatcher()\n\nnewDispatcher.install(host, {main: true})\n\nexpect(newDispatcher.mainControllerName).toBe('main')\nexpect(newDispatcher.getController('main')).toBeInstanceOf(ActionController)\nexpect(newDispatcher.getActive()).toEqual(['main'])\nexpect(newDispatcher.mainController).toBeInstanceOf(ActionController)"
+          },
+          {
+            "title": "onInstall creates main controller with custom name",
+            "line": 49,
+            "source": "const host = new PerkyModule()\nconst newDispatcher = new ActionDispatcher()\n\nnewDispatcher.install(host, {main: 'base'})\n\nexpect(newDispatcher.mainControllerName).toBe('base')\nexpect(newDispatcher.getController('base')).toBeInstanceOf(ActionController)\nexpect(newDispatcher.getActive()).toEqual(['base'])\nexpect(newDispatcher.mainController).toBeInstanceOf(ActionController)"
+          },
+          {
+            "title": "onInstall skips main controller when main is false",
+            "line": 62,
+            "source": "const host = new PerkyModule()\nconst newDispatcher = new ActionDispatcher()\n\nnewDispatcher.install(host, {main: false})\n\nexpect(newDispatcher.mainControllerName).toBeNull()\nexpect(newDispatcher.getActive()).toEqual([])\nexpect(newDispatcher.mainController).toBeNull()"
+          },
+          {
+            "title": "unregister",
+            "line": 74,
+            "source": "dispatcher.register('main', ActionController)\nconst result = dispatcher.unregister('main')\n\nexpect(result).toBe(true)\nexpect(dispatcher.getController('main')).toBeNull()"
+          },
+          {
+            "title": "unregister non-existent controller",
+            "line": 83,
+            "source": "const result = dispatcher.unregister('nonExistent')\n\nexpect(result).toBe(false)"
+          },
+          {
+            "title": "unregister active controller",
+            "line": 90,
+            "source": "dispatcher.register('main', ActionController)\ndispatcher.setActive('main')\ndispatcher.unregister('main')\n\nexpect(dispatcher.getActive()).toEqual([])"
+          },
+          {
+            "title": "unregister controller in stack",
+            "line": 99,
+            "source": "dispatcher.register('main', ActionController)\ndispatcher.pushActive('main')\n\nexpect(dispatcher.getActive()).toContain('main')\n\ndispatcher.unregister('main')\n\nexpect(dispatcher.getActive()).not.toContain('main')"
+          },
+          {
+            "title": "getController",
+            "line": 111,
+            "source": "const controller = dispatcher.register('main', ActionController)\n\nexpect(dispatcher.getController('main')).toBe(controller)"
+          },
+          {
+            "title": "setActive valid controller",
+            "line": 118,
+            "source": "dispatcher.register('main', ActionController)\nconst result = dispatcher.setActive('main')\n\nexpect(result).toBe(true)\nexpect(dispatcher.getActive()).toEqual(['main'])"
+          },
+          {
+            "title": "setActive invalid controller",
+            "line": 127,
+            "source": "const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })\n\nconst result = dispatcher.setActive('nonExistent')\n\nexpect(result).toBe(false)\nexpect(dispatcher.getActive()).toEqual([])\nexpect(consoleSpy).toHaveBeenCalled()\n\nconsoleSpy.mockRestore()"
+          },
+          {
+            "title": "setActive with array",
+            "line": 140,
+            "source": "dispatcher.register('main', ActionController)\ndispatcher.register('pause', ActionController)\n\nconst result = dispatcher.setActive(['main', 'pause'])\n\nexpect(result).toBe(true)\nexpect(dispatcher.getActive()).toEqual(['main', 'pause'])"
+          },
+          {
+            "title": "getActive returns array",
+            "line": 151,
+            "source": "dispatcher.register('main', ActionController)\ndispatcher.setActive('main')\n\nconst active = dispatcher.getActive()\nexpect(active).toEqual(['main'])\nexpect(Array.isArray(active)).toBe(true)"
+          },
+          {
+            "title": "dispatch - single mode (default)",
+            "line": 161,
+            "source": "class TestController extends ActionController {\n    someAction = vi.fn()\n}\nconst controller = dispatcher.register('main', TestController)\ndispatcher.setActive('main')\n\ndispatcher.execute('someAction', 'arg1', 'arg2')\n\nexpect(controller.someAction).toHaveBeenCalledWith('arg1', 'arg2')"
+          },
+          {
+            "title": "dispatch - no active controller",
+            "line": 174,
+            "source": "const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })\n\ndispatcher.execute('someAction')\n\nexpect(consoleSpy).toHaveBeenCalled()\n\nconsoleSpy.mockRestore()"
+          },
+          {
+            "title": "executeTo",
+            "line": 185,
+            "source": "class TestController extends PerkyModule {\n    someAction = vi.fn()\n}\nconst controller = dispatcher.register('main', TestController)\ndispatcher.setActive('main')\n\ndispatcher.executeTo('main', 'someAction', 'arg1', 'arg2')\n\nexpect(controller.someAction).toHaveBeenCalledWith('arg1', 'arg2')"
+          },
+          {
+            "title": "dispatchAction",
+            "line": 198,
+            "source": "class TestController extends PerkyModule {\n    jump = vi.fn()\n}\nconst controller = dispatcher.register('game', TestController)\ndispatcher.setActive('game')\n\nconst binding = {\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump',\n    controllerName: 'game'\n}\n\ndispatcher.dispatchAction(binding, 'event', 'device')\n\nexpect(controller.jump).toHaveBeenCalledWith('event', 'device')"
+          },
+          {
+            "title": "dispatchAction - inactive controller does not call action",
+            "line": 218,
+            "source": "class TestController extends PerkyModule {\n    jump = vi.fn()\n}\n\nconst gameController = dispatcher.register('game', TestController)\ndispatcher.register('other', ActionController)\ndispatcher.register('game', TestController)\ndispatcher.register('other', ActionController)\ndispatcher.setActive('other')\n\nconst binding = {\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump',\n    controllerName: 'game'\n}\n\ndispatcher.dispatchAction(binding, 'event', 'device')\n\nexpect(gameController.jump).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "dispatchAction - controller in stack works",
+            "line": 242,
+            "source": "class TestController extends PerkyModule {\n    jump = vi.fn()\n}\n\nconst gameController = dispatcher.register('game', TestController)\ndispatcher.register('pause', ActionController)\ndispatcher.pushActive('game')\ndispatcher.pushActive('pause')\n\nconst binding = {\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump',\n    controllerName: 'game'\n}\n\ndispatcher.dispatchAction(binding, 'event', 'device')\n\nexpect(gameController.jump).toHaveBeenCalledWith('event', 'device')"
+          },
+          {
+            "title": "dispatchAction - active controller fallback",
+            "line": 265,
+            "source": "class TestController extends ActionController {\n    jump = vi.fn()\n}\n\nconst controller = dispatcher.register('main', TestController)\ndispatcher.setActive('main')\n\nconst binding = {\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump'\n}\n\ndispatcher.dispatchAction(binding, 'event', 'device')\n\nexpect(controller.jump).toHaveBeenCalledWith('event', 'device')"
+          },
+          {
+            "title": "pushActive",
+            "line": 285,
+            "source": "dispatcher.register('main', ActionController)\n\ndispatcher.pushActive('main')\n\nexpect(dispatcher.getActive()).toEqual(['main'])"
+          },
+          {
+            "title": "pushActive - non-existent controller",
+            "line": 294,
+            "source": "const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })\n\nconst result = dispatcher.pushActive('nonExistent')\n\nexpect(result).toBe(false)\nexpect(consoleSpy).toHaveBeenCalled()\n\nconsoleSpy.mockRestore()"
+          },
+          {
+            "title": "pushActive - prevents duplicate controller",
+            "line": 306,
+            "source": "dispatcher.register('main', ActionController)\n\ndispatcher.pushActive('main')\nexpect(dispatcher.getActive()).toEqual(['main'])\n\nconst result = dispatcher.pushActive('main')\n\nexpect(result).toBe(false)\nexpect(dispatcher.getActive()).toEqual(['main'])"
+          },
+          {
+            "title": "pushActive - prevents duplicate even if not on top",
+            "line": 319,
+            "source": "dispatcher.register('main', ActionController)\ndispatcher.register('other', ActionController)\n\ndispatcher.pushActive('main')\ndispatcher.pushActive('other')\nconst result = dispatcher.pushActive('main')\n\nexpect(result).toBe(false)\nexpect(dispatcher.getActive()).toEqual(['main', 'other'])"
+          },
+          {
+            "title": "popActive - returns popped controller",
+            "line": 332,
+            "source": "dispatcher.register('main', ActionController)\n\ndispatcher.pushActive('main')\nconst popped = dispatcher.popActive()\n\nexpect(popped).toBe('main')\nexpect(dispatcher.getActive()).toEqual([])"
+          },
+          {
+            "title": "popActive - empty stack",
+            "line": 343,
+            "source": "const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })\n\nconst result = dispatcher.popActive()\n\nexpect(result).toBeNull()\nexpect(consoleSpy).toHaveBeenCalled()\n\nconsoleSpy.mockRestore()"
+          },
+          {
+            "title": "getActive - returns copy",
+            "line": 355,
+            "source": "dispatcher.register('main', ActionController)\n\ndispatcher.pushActive('main')\nconst stack = dispatcher.getActive()\n\nstack.push('other')\n\nexpect(dispatcher.getActive()).toEqual(['main'])"
+          },
+          {
+            "title": "getActive - returns empty array when no active controllers",
+            "line": 367,
+            "source": "expect(dispatcher.getActive()).toEqual([])"
+          },
+          {
+            "title": "clearActive",
+            "line": 372,
+            "source": "dispatcher.register('main', ActionController)\ndispatcher.register('pause', ActionController)\n\ndispatcher.pushActive('main')\ndispatcher.pushActive('pause')\n\ndispatcher.clearActive()\n\nexpect(dispatcher.getActive()).toEqual([])"
+          },
+          {
+            "title": "dispatch - stack mode with propagation",
+            "line": 385,
+            "source": "class GameController extends ActionController {\n    static propagable = ['move']\n\n    move = vi.fn()\n    shoot = vi.fn()\n}\n\nclass PauseController extends ActionController {\n    resume = vi.fn()\n}\n\nconst gameController = dispatcher.register('game', GameController)\nconst pauseController = dispatcher.register('pause', PauseController)\n\ndispatcher.pushActive('game')\ndispatcher.pushActive('pause')\n\ndispatcher.execute('move')\nexpect(gameController.move).toHaveBeenCalled()\n\ndispatcher.execute('shoot')\nexpect(gameController.shoot).toHaveBeenCalled()\n\ndispatcher.execute('resume')\nexpect(pauseController.resume).toHaveBeenCalled()"
+          },
+          {
+            "title": "dispatch - stack mode propagates to lower controller",
+            "line": 414,
+            "source": "class GameController extends ActionController {\n    static propagable = ['move']\n\n    move = vi.fn()\n}\n\nclass PauseController extends ActionController {\n    resume = vi.fn()\n}\n\nconst gameController = dispatcher.register('game', GameController)\ndispatcher.register('pause', PauseController)\n\ndispatcher.pushActive('game')\ndispatcher.pushActive('pause')\n\ndispatcher.execute('move')\n\nexpect(gameController.move).toHaveBeenCalled()"
+          },
+          {
+            "title": "listControllers",
+            "line": 437,
+            "source": "dispatcher.register('main', ActionController)\ndispatcher.register('pause', ActionController)\n\nconst controllers = dispatcher.listControllers()\n\nexpect(controllers).toContain('main')\nexpect(controllers).toContain('pause')"
+          },
+          {
+            "title": "listAllActions",
+            "line": 448,
+            "source": "class GameController extends ActionController {\n    jump () { }\n    move () { }\n}\n\nconst gameController = dispatcher.register('game', GameController)\ngameController.addAction('shoot', vi.fn())\n\nconst allActions = dispatcher.listAllActions()\nconst actionNames = allActions.get('game').map(a => a.name)\n\nexpect(actionNames).toContain('jump')\nexpect(actionNames).toContain('move')\nexpect(actionNames).toContain('shoot')"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
   "/core/notifier.doc.js": {
     "file": "/core/notifier.test.js",
     "describes": [
@@ -1732,6 +2061,473 @@
       }
     ]
   },
+  "/editor/inspectors/action_controller_inspector.doc.js": {
+    "file": "/editor/inspectors/action_controller_inspector.test.js",
+    "describes": [
+      {
+        "title": "ActionControllerInspector",
+        "line": 34,
+        "beforeEach": {
+          "line": 40,
+          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\ninspector = document.createElement('action-controller-inspector')\ncontainer.appendChild(inspector)"
+        },
+        "afterEach": {
+          "line": 49,
+          "source": "container.remove()"
+        },
+        "tests": [
+          {
+            "title": "matches returns true for ActionController instances",
+            "line": 73,
+            "source": "const mock = new MockActionController()\nObject.setPrototypeOf(mock, {constructor: {name: 'ActionController'}})\n\nconst matches = ActionControllerInspector.matches\nexpect(typeof matches).toBe('function')"
+          },
+          {
+            "title": "execute button calls module.execute when clicked",
+            "line": 157,
+            "source": "const module = new MockActionController(['jump'])\nmodule.execute = vi.fn()\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nbtn.click()\n\nexpect(module.execute).toHaveBeenCalledWith('jump')"
+          }
+        ],
+        "describes": [
+          {
+            "title": "initialization",
+            "line": 54,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "extends HTMLElement",
+                "line": 56,
+                "source": "expect(inspector).toBeInstanceOf(HTMLElement)"
+              },
+              {
+                "title": "has shadow DOM",
+                "line": 61,
+                "source": "expect(inspector.shadowRoot).not.toBeNull()"
+              },
+              {
+                "title": "hides gridEl",
+                "line": 66,
+                "source": "expect(inspector.gridEl.style.display).toBe('none')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setModule",
+            "line": 82,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "stores the module",
+                "line": 84,
+                "source": "const module = new MockActionController(['jump'])\ninspector.setModule(module)\nexpect(inspector.getModule()).toBe(module)"
+              },
+              {
+                "title": "renders actions when module is set",
+                "line": 91,
+                "source": "const module = new MockActionController(['jump', 'run'])\ninspector.setModule(module)\n\nconst actionCards = inspector.shadowRoot.querySelectorAll('.action-card')\nexpect(actionCards.length).toBe(2)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "rendering",
+            "line": 102,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "shows header with action count",
+                "line": 104,
+                "source": "const module = new MockActionController(['a', 'b', 'c'])\ninspector.setModule(module)\n\nconst header = inspector.shadowRoot.querySelector('.actions-header')\nexpect(header).not.toBeNull()\nexpect(header.textContent).toContain('3')"
+              },
+              {
+                "title": "shows empty message when no actions",
+                "line": 114,
+                "source": "const module = new MockActionController([])\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No actions defined')"
+              },
+              {
+                "title": "renders action names",
+                "line": 124,
+                "source": "const module = new MockActionController(['jump', 'attack'])\ninspector.setModule(module)\n\nconst names = inspector.shadowRoot.querySelectorAll('.action-name')\nexpect(names.length).toBe(2)\nexpect(names[0].textContent).toBe('jump')\nexpect(names[1].textContent).toBe('attack')"
+              },
+              {
+                "title": "shows propagable badge for propagable actions",
+                "line": 135,
+                "source": "const module = new MockActionController(['jump', 'attack'], ['jump'])\ninspector.setModule(module)\n\nconst badges = inspector.shadowRoot.querySelectorAll('.action-badge.propagable')\nexpect(badges.length).toBe(1)\nexpect(badges[0].textContent).toBe('propagable')"
+              },
+              {
+                "title": "renders execute button for each action",
+                "line": 145,
+                "source": "const module = new MockActionController(['jump'])\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nexpect(btn).not.toBeNull()\nexpect(btn.textContent).toContain('Run')"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/editor/inspectors/action_dispatcher_inspector.doc.js": {
+    "file": "/editor/inspectors/action_dispatcher_inspector.test.js",
+    "describes": [
+      {
+        "title": "ActionDispatcherInspector",
+        "line": 39,
+        "beforeEach": {
+          "line": 45,
+          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\ninspector = document.createElement('action-dispatcher-inspector')\ncontainer.appendChild(inspector)"
+        },
+        "afterEach": {
+          "line": 54,
+          "source": "container.remove()"
+        },
+        "tests": [
+          {
+            "title": "matches static matches method exists",
+            "line": 78,
+            "source": "expect(typeof ActionDispatcherInspector.matches).toBe('function')"
+          },
+          {
+            "title": "execute button calls module.executeTo when clicked",
+            "line": 176,
+            "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\nmodule.executeTo = vi.fn()\ninspector.setModule(module)\n\nconst btn = inspector.shadowRoot.querySelector('.execute-btn')\nbtn.click()\n\nexpect(module.executeTo).toHaveBeenCalledWith('player', 'jump')"
+          }
+        ],
+        "describes": [
+          {
+            "title": "initialization",
+            "line": 59,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "extends HTMLElement",
+                "line": 61,
+                "source": "expect(inspector).toBeInstanceOf(HTMLElement)"
+              },
+              {
+                "title": "has shadow DOM",
+                "line": 66,
+                "source": "expect(inspector.shadowRoot).not.toBeNull()"
+              },
+              {
+                "title": "hides gridEl",
+                "line": 71,
+                "source": "expect(inspector.gridEl.style.display).toBe('none')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setModule",
+            "line": 83,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "stores the module",
+                "line": 85,
+                "source": "const module = new MockActionDispatcher()\ninspector.setModule(module)\nexpect(inspector.getModule()).toBe(module)"
+              },
+              {
+                "title": "renders controller groups when module is set",
+                "line": 92,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'run'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst groups = inspector.shadowRoot.querySelectorAll('.controller-group')\nexpect(groups.length).toBe(2)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "rendering",
+            "line": 107,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "shows header with total action and controller count",
+                "line": 109,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'run'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst header = inspector.shadowRoot.querySelector('.actions-header')\nexpect(header).not.toBeNull()\nexpect(header.textContent).toContain('3')\nexpect(header.textContent).toContain('2')"
+              },
+              {
+                "title": "shows empty message when no controllers",
+                "line": 124,
+                "source": "const module = new MockActionDispatcher(new Map())\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No controllers registered')"
+              },
+              {
+                "title": "renders controller group headers",
+                "line": 134,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst groupName = inspector.shadowRoot.querySelector('.group-name')\nexpect(groupName).not.toBeNull()\nexpect(groupName.textContent).toBe('player')"
+              },
+              {
+                "title": "renders action cards with names",
+                "line": 147,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}, {name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst names = inspector.shadowRoot.querySelectorAll('.action-name')\nexpect(names.length).toBe(2)\nexpect(names[0].textContent).toBe('jump')\nexpect(names[1].textContent).toBe('attack')"
+              },
+              {
+                "title": "shows empty message in group when controller has no actions",
+                "line": 161,
+                "source": "const actionsMap = new Map([\n    ['player', []]\n])\nconst module = new MockActionDispatcher(actionsMap)\ninspector.setModule(module)\n\nconst empty = inspector.shadowRoot.querySelector('.controller-group .empty-message')\nexpect(empty).not.toBeNull()\nexpect(empty.textContent).toBe('No actions')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "active controller toggle",
+            "line": 191,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "renders toggle for each controller group",
+                "line": 193,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst toggles = inspector.shadowRoot.querySelectorAll('toggle-input')\nexpect(toggles.length).toBe(2)"
+              },
+              {
+                "title": "toggle is checked when controller is active",
+                "line": 206,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\nexpect(toggle.checked).toBe(true)"
+              },
+              {
+                "title": "toggle is unchecked when controller is inactive",
+                "line": 218,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\nexpect(toggle.checked).toBe(false)"
+              },
+              {
+                "title": "inactive controller group has group-inactive class",
+                "line": 230,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\ninspector.setModule(module)\n\nconst group = inspector.shadowRoot.querySelector('.controller-group')\nexpect(group.classList.contains('group-inactive')).toBe(true)"
+              },
+              {
+                "title": "active controller group does not have group-inactive class",
+                "line": 242,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player'])\ninspector.setModule(module)\n\nconst group = inspector.shadowRoot.querySelector('.controller-group')\nexpect(group.classList.contains('group-inactive')).toBe(false)"
+              },
+              {
+                "title": "clicking toggle activates inactive controller",
+                "line": 254,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, [])\nmodule.setActive = vi.fn()\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\ntoggle.dispatchEvent(new CustomEvent('change', {detail: {checked: true}}))\n\nexpect(module.setActive).toHaveBeenCalledWith(['player'])"
+              },
+              {
+                "title": "clicking toggle deactivates active controller",
+                "line": 269,
+                "source": "const actionsMap = new Map([\n    ['player', [{name: 'jump'}]],\n    ['enemy', [{name: 'attack'}]]\n])\nconst module = new MockActionDispatcher(actionsMap, ['player', 'enemy'])\nmodule.setActive = vi.fn()\ninspector.setModule(module)\n\nconst toggle = inspector.shadowRoot.querySelector('toggle-input')\ntoggle.dispatchEvent(new CustomEvent('change', {detail: {checked: false}}))\n\nexpect(module.setActive).toHaveBeenCalledWith(['enemy'])"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/editor/perky_explorer.doc.js": {
+    "file": "/editor/perky_explorer.test.js",
+    "describes": [
+      {
+        "title": "PerkyExplorer",
+        "line": 58,
+        "beforeEach": {
+          "line": 64,
+          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\nexplorer = document.createElement('perky-explorer')\ncontainer.appendChild(explorer)"
+        },
+        "afterEach": {
+          "line": 73,
+          "source": "container.remove()"
+        },
+        "tests": [],
+        "describes": [
+          {
+            "title": "initialization",
+            "line": 78,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should be a custom element",
+                "line": 80,
+                "source": "expect(explorer).toBeInstanceOf(PerkyExplorer)\nexpect(explorer).toBeInstanceOf(HTMLElement)"
+              },
+              {
+                "title": "should have shadow DOM",
+                "line": 86,
+                "source": "expect(explorer.shadowRoot).not.toBeNull()"
+              },
+              {
+                "title": "should show empty state when no module is set",
+                "line": 91,
+                "source": "const emptyMessage = explorer.shadowRoot.querySelector('.explorer-empty')\nexpect(emptyMessage).not.toBeNull()\nexpect(emptyMessage.textContent).toContain('No module attached')"
+              },
+              {
+                "title": "should have a header with title",
+                "line": 98,
+                "source": "const title = explorer.shadowRoot.querySelector('.explorer-title')\nexpect(title).not.toBeNull()\nexpect(title.textContent).toContain('Perky Explorer')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setModule",
+            "line": 107,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should render the module tree",
+                "line": 109,
+                "source": "const module = new PerkyModule({$id: 'root', $category: 'app'})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nexpect(rootNode).not.toBeNull()\n\nconst id = getNodeId(rootNode)\nexpect(id.textContent).toBe('root')"
+              },
+              {
+                "title": "should return the module via getModule",
+                "line": 121,
+                "source": "const module = new PerkyModule({$id: 'root'})\nexplorer.setModule(module)\n\nexpect(explorer.getModule()).toBe(module)"
+              },
+              {
+                "title": "should expand the root node by default",
+                "line": 129,
+                "source": "const parent = new PerkyModule({$id: 'parent'})\nparent.create(PerkyModule, {$id: 'child'})\n\nexplorer.setModule(parent)\n\nconst rootNode = getRootNode(explorer)\nconst childrenContainer = getNodeChildren(rootNode)\nexpect(childrenContainer.classList.contains('expanded')).toBe(true)"
+              },
+              {
+                "title": "should render children in the tree",
+                "line": 141,
+                "source": "const parent = new PerkyModule({$id: 'parent'})\nparent.create(PerkyModule, {$id: 'child1', $category: 'test'})\nparent.create(PerkyModule, {$id: 'child2', $category: 'test'})\n\nexplorer.setModule(parent)\n\nconst rootNode = getRootNode(explorer)\nconst nodeIds = collectAllNodeIds(rootNode)\n\nexpect(nodeIds).toContain('parent')\nexpect(nodeIds).toContain('child1')\nexpect(nodeIds).toContain('child2')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "status indicators",
+            "line": 159,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should show stopped status when module not started",
+                "line": 161,
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst status = getNodeStatus(rootNode)\nexpect(status.classList.contains('stopped')).toBe(true)"
+              },
+              {
+                "title": "should show started status when module is running",
+                "line": 171,
+                "source": "const module = new PerkyModule({$id: 'test'})\nmodule.start()\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst status = getNodeStatus(rootNode)\nexpect(status.classList.contains('started')).toBe(true)"
+              },
+              {
+                "title": "should show disposed status when module is disposed",
+                "line": 182,
+                "source": "const module = new PerkyModule({$id: 'test'})\nmodule.dispose()\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst status = getNodeStatus(rootNode)\nexpect(status.classList.contains('disposed')).toBe(true)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "collapse/expand",
+            "line": 195,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should toggle tree visibility when clicking header",
+                "line": 197,
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst header = explorer.shadowRoot.querySelector('.explorer-header')\nconst tree = explorer.shadowRoot.querySelector('.explorer-tree')\n\nexpect(tree.classList.contains('hidden')).toBe(false)\n\nheader.click()\n\nconst treeAfter = explorer.shadowRoot.querySelector('.explorer-tree')\nexpect(treeAfter.classList.contains('hidden')).toBe(true)"
+              },
+              {
+                "title": "should toggle child nodes when clicking arrow",
+                "line": 213,
+                "source": "const parent = new PerkyModule({$id: 'parent'})\nparent.create(PerkyModule, {$id: 'child'})\nexplorer.setModule(parent)\n\nconst rootNode = getRootNode(explorer)\n\nlet childContainer = getNodeChildren(rootNode)\nexpect(childContainer.classList.contains('expanded')).toBe(true)\n\nconst toggle = getNodeToggle(rootNode)\ntoggle.click()\n\nchildContainer = getNodeChildren(rootNode)\nexpect(childContainer.classList.contains('expanded')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "selection and details",
+            "line": 233,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should show details panel when node is clicked",
+                "line": 235,
+                "source": "const module = new PerkyModule({\n    $id: 'test-module',\n    $name: 'TestModule',\n    $category: 'testing',\n    $tags: ['tag1', 'tag2']\n})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst nodeContent = getNodeContent(rootNode)\nnodeContent.click()\n\nconst details = getDetails(explorer)\nexpect(details).not.toBeNull()"
+              },
+              {
+                "title": "should display module properties in details",
+                "line": 253,
+                "source": "const module = new PerkyModule({\n    $id: 'test-module',\n    $name: 'TestName',\n    $category: 'testing'\n})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst nodeContent = getNodeContent(rootNode)\nnodeContent.click()\n\nconst details = getDetails(explorer)\nconst detailsContent = details.shadowRoot.textContent\nexpect(detailsContent).toContain('TestName')\nexpect(detailsContent).toContain('testing')"
+              },
+              {
+                "title": "should display tags in details",
+                "line": 272,
+                "source": "const module = new PerkyModule({\n    $id: 'test',\n    $tags: ['alpha', 'beta']\n})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst nodeContent = getNodeContent(rootNode)\nnodeContent.click()\n\nconst details = getDetails(explorer)\nconst tags = details.shadowRoot.querySelectorAll('.details-tag')\nconst tagTexts = [...tags].map(t => t.textContent)\n\nexpect(tagTexts).toContain('alpha')\nexpect(tagTexts).toContain('beta')"
+              },
+              {
+                "title": "should mark selected node with selected class",
+                "line": 292,
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst nodeContent = getNodeContent(rootNode)\nnodeContent.click()\n\nconst selectedContent = getNodeContent(rootNode)\nexpect(selectedContent.classList.contains('selected')).toBe(true)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "minimize",
+            "line": 307,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should minimize when clicking minimize button",
+                "line": 309,
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst minimizeBtn = explorer.shadowRoot.querySelectorAll('.explorer-btn')[2]\nminimizeBtn.click()\n\nconst minimized = explorer.shadowRoot.querySelector('.explorer-minimized')\nexpect(minimized.classList.contains('hidden')).toBe(false)"
+              },
+              {
+                "title": "should restore when clicking minimized icon",
+                "line": 321,
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst minimizeBtn = explorer.shadowRoot.querySelectorAll('.explorer-btn')[2]\nminimizeBtn.click()\n\nconst minimized = explorer.shadowRoot.querySelector('.explorer-minimized')\nminimized.click()\n\nconst explorerPanel = explorer.shadowRoot.querySelector('.explorer')\nexpect(explorerPanel.classList.contains('hidden')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "live updates",
+            "line": 338,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should update when child is added",
+                "line": 340,
+                "source": "const parent = new PerkyModule({$id: 'parent'})\nexplorer.setModule(parent)\n\nconst rootNode = getRootNode(explorer)\nlet nodeIds = collectAllNodeIds(rootNode)\nexpect(nodeIds).not.toContain('new-child')\n\nparent.create(PerkyModule, {$id: 'new-child', $category: 'perkyModule'})\n\nnodeIds = collectAllNodeIds(rootNode)\nexpect(nodeIds).toContain('new-child')"
+              },
+              {
+                "title": "should update when module starts",
+                "line": 355,
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nlet status = getNodeStatus(rootNode)\nexpect(status.classList.contains('stopped')).toBe(true)\n\nmodule.start()\n\nstatus = getNodeStatus(rootNode)\nexpect(status.classList.contains('started')).toBe(true)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "cleanup",
+            "line": 372,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should clean up listeners when disconnected",
+                "line": 374,
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst rootNode = getRootNode(explorer)\nconst offSpy = vi.spyOn(module, 'off')\n\nrootNode.remove()\n\nexpect(offSpy).toHaveBeenCalled()"
+              },
+              {
+                "title": "should clean up listeners when setting new module",
+                "line": 387,
+                "source": "const module1 = new PerkyModule({$id: 'first'})\nconst module2 = new PerkyModule({$id: 'second'})\n\nexplorer.setModule(module1)\n\nconst rootNode = getRootNode(explorer)\nconst offSpy = vi.spyOn(module1, 'off')\n\nrootNode.setModule(module2)\n\nexpect(offSpy).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
   "/editor/perky_logger.doc.js": {
     "file": "/editor/perky_logger.test.js",
     "describes": [
@@ -1849,6 +2645,255 @@
           }
         ],
         "describes": []
+      }
+    ]
+  },
+  "/editor/toggle_input.doc.js": {
+    "file": "/editor/toggle_input.test.js",
+    "describes": [
+      {
+        "title": "ToggleInput",
+        "line": 5,
+        "beforeEach": {
+          "line": 11,
+          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\ntoggle = document.createElement('toggle-input')\ncontainer.appendChild(toggle)"
+        },
+        "afterEach": {
+          "line": 20,
+          "source": "container.remove()"
+        },
+        "tests": [
+          {
+            "title": "setChecked should set checked directly",
+            "line": 63,
+            "source": "toggle.setChecked(true)\nexpect(toggle.checked).toBe(true)"
+          },
+          {
+            "title": "setLabel should set label text",
+            "line": 69,
+            "source": "toggle.setLabel('Enabled')\nconst label = toggle.shadowRoot.querySelector('.toggle-input-label')\nexpect(label.textContent).toBe('Enabled')"
+          },
+          {
+            "title": "observedAttributes should include expected attributes",
+            "line": 76,
+            "source": "const observed = toggle.constructor.observedAttributes\nexpect(observed).toContain('checked')\nexpect(observed).toContain('label')"
+          }
+        ],
+        "describes": [
+          {
+            "title": "initialization",
+            "line": 25,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should extend HTMLElement",
+                "line": 27,
+                "source": "expect(toggle).toBeInstanceOf(HTMLElement)"
+              },
+              {
+                "title": "should have shadow DOM",
+                "line": 32,
+                "source": "expect(toggle.shadowRoot).not.toBeNull()"
+              },
+              {
+                "title": "should have default checked of false",
+                "line": 37,
+                "source": "expect(toggle.checked).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "checked property",
+            "line": 44,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should get and set checked",
+                "line": 46,
+                "source": "toggle.checked = true\nexpect(toggle.checked).toBe(true)"
+              },
+              {
+                "title": "should coerce to boolean",
+                "line": 52,
+                "source": "toggle.checked = 1\nexpect(toggle.checked).toBe(true)\n\ntoggle.checked = 0\nexpect(toggle.checked).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "visual state",
+            "line": 83,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should add checked class when checked",
+                "line": 85,
+                "source": "toggle.setChecked(true)\nconst track = toggle.shadowRoot.querySelector('.toggle-input-track')\nexpect(track.classList.contains('checked')).toBe(true)"
+              },
+              {
+                "title": "should remove checked class when unchecked",
+                "line": 92,
+                "source": "toggle.setChecked(true)\ntoggle.setChecked(false)\nconst track = toggle.shadowRoot.querySelector('.toggle-input-track')\nexpect(track.classList.contains('checked')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "click behavior",
+            "line": 102,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should toggle when track clicked",
+                "line": 104,
+                "source": "const track = toggle.shadowRoot.querySelector('.toggle-input-track')\ntrack.click()\nexpect(toggle.checked).toBe(true)\n\ntrack.click()\nexpect(toggle.checked).toBe(false)"
+              },
+              {
+                "title": "should toggle when label clicked",
+                "line": 114,
+                "source": "toggle.setLabel('Test')\nconst label = toggle.shadowRoot.querySelector('.toggle-input-label')\nlabel.click()\nexpect(toggle.checked).toBe(true)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "change event",
+            "line": 124,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should emit change event when toggled",
+                "line": 126,
+                "source": "const handler = vi.fn()\ntoggle.addEventListener('change', handler)\n\nconst track = toggle.shadowRoot.querySelector('.toggle-input-track')\ntrack.click()\n\nexpect(handler).toHaveBeenCalled()\nexpect(handler.mock.calls[0][0].detail.checked).toBe(true)"
+              },
+              {
+                "title": "should emit correct state in change event",
+                "line": 138,
+                "source": "toggle.setChecked(true)\n\nconst handler = vi.fn()\ntoggle.addEventListener('change', handler)\n\nconst track = toggle.shadowRoot.querySelector('.toggle-input-track')\ntrack.click()\n\nexpect(handler.mock.calls[0][0].detail.checked).toBe(false)"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/editor/vec2_input.doc.js": {
+    "file": "/editor/vec2_input.test.js",
+    "describes": [
+      {
+        "title": "Vec2Input",
+        "line": 5,
+        "beforeEach": {
+          "line": 11,
+          "source": "container = document.createElement('div')\ndocument.body.appendChild(container)\n\nvec2Input = document.createElement('vec2-input')\ncontainer.appendChild(vec2Input)"
+        },
+        "afterEach": {
+          "line": 20,
+          "source": "container.remove()"
+        },
+        "tests": [
+          {
+            "title": "value property should get and set value",
+            "line": 44,
+            "source": "const vec = {x: 10, y: 20}\nvec2Input.value = vec\nexpect(vec2Input.value).toBe(vec)"
+          },
+          {
+            "title": "setLabel should set label text",
+            "line": 51,
+            "source": "vec2Input.setLabel('Position')\nconst label = vec2Input.shadowRoot.querySelector('.vec2-input-label')\nexpect(label.textContent).toBe('Position')"
+          },
+          {
+            "title": "observedAttributes should include expected attributes",
+            "line": 58,
+            "source": "const observed = vec2Input.constructor.observedAttributes\nexpect(observed).toContain('label')"
+          }
+        ],
+        "describes": [
+          {
+            "title": "initialization",
+            "line": 25,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should extend HTMLElement",
+                "line": 27,
+                "source": "expect(vec2Input).toBeInstanceOf(HTMLElement)"
+              },
+              {
+                "title": "should have shadow DOM",
+                "line": 32,
+                "source": "expect(vec2Input.shadowRoot).not.toBeNull()"
+              },
+              {
+                "title": "should have null default value",
+                "line": 37,
+                "source": "expect(vec2Input.value).toBeNull()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "sub-inputs",
+            "line": 64,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should have x number input",
+                "line": 66,
+                "source": "const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')\nconst xInput = Array.from(inputs).find(i => i.getAttribute('label') === 'x')\nexpect(xInput).not.toBeNull()"
+              },
+              {
+                "title": "should have y number input",
+                "line": 73,
+                "source": "const inputs = vec2Input.shadowRoot.querySelectorAll('number-input')\nconst yInput = Array.from(inputs).find(i => i.getAttribute('label') === 'y')\nexpect(yInput).not.toBeNull()"
+              },
+              {
+                "title": "should update x input when value set",
+                "line": 80,
+                "source": "vec2Input.value = {x: 100, y: 200}\nconst inputs = vec2Input.shadowRoot.querySelectorAll('number-input')\nconst xInput = Array.from(inputs).find(i => i.getAttribute('label') === 'x')\nexpect(xInput.value).toBe(100)"
+              },
+              {
+                "title": "should update y input when value set",
+                "line": 88,
+                "source": "vec2Input.value = {x: 100, y: 200}\nconst inputs = vec2Input.shadowRoot.querySelectorAll('number-input')\nconst yInput = Array.from(inputs).find(i => i.getAttribute('label') === 'y')\nexpect(yInput.value).toBe(200)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "change event",
+            "line": 98,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "should emit change event when x changes",
+                "line": 100,
+                "source": "const vec = {x: 0, y: 0}\nvec2Input.value = vec\n\nconst handler = vi.fn()\nvec2Input.addEventListener('change', handler)\n\nconst inputs = vec2Input.shadowRoot.querySelectorAll('number-input')\nconst xInput = Array.from(inputs).find(i => i.getAttribute('label') === 'x')\nxInput.dispatchEvent(new CustomEvent('change', {\n    detail: {value: 50}\n}))\n\nexpect(handler).toHaveBeenCalled()\nexpect(handler.mock.calls[0][0].detail.axis).toBe('x')\nexpect(handler.mock.calls[0][0].detail.componentValue).toBe(50)"
+              },
+              {
+                "title": "should emit change event when y changes",
+                "line": 119,
+                "source": "const vec = {x: 0, y: 0}\nvec2Input.value = vec\n\nconst handler = vi.fn()\nvec2Input.addEventListener('change', handler)\n\nconst inputs = vec2Input.shadowRoot.querySelectorAll('number-input')\nconst yInput = Array.from(inputs).find(i => i.getAttribute('label') === 'y')\nyInput.dispatchEvent(new CustomEvent('change', {\n    detail: {value: 75}\n}))\n\nexpect(handler).toHaveBeenCalled()\nexpect(handler.mock.calls[0][0].detail.axis).toBe('y')\nexpect(handler.mock.calls[0][0].detail.componentValue).toBe(75)"
+              },
+              {
+                "title": "should update vec2 object when sub-input changes",
+                "line": 138,
+                "source": "const vec = {x: 0, y: 0}\nvec2Input.value = vec\n\nconst inputs = vec2Input.shadowRoot.querySelectorAll('number-input')\nconst xInput = Array.from(inputs).find(i => i.getAttribute('label') === 'x')\nxInput.dispatchEvent(new CustomEvent('change', {\n    detail: {value: 123}\n}))\n\nexpect(vec.x).toBe(123)"
+              }
+            ],
+            "describes": []
+          }
+        ]
       }
     ]
   },
@@ -2948,6 +3993,118 @@
             "describes": []
           }
         ]
+      }
+    ]
+  },
+  "/render/canvas_2d.doc.js": {
+    "file": "/render/canvas_2d.test.js",
+    "describes": [
+      {
+        "title": "Canvas2D",
+        "line": 27,
+        "beforeEach": {
+          "line": 32,
+          "source": "canvas = document.createElement('canvas')\ncanvas.width = 800\ncanvas.height = 600\nrenderer = new Canvas2D({canvas})"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor with canvas",
+            "line": 40,
+            "source": "expect(renderer.canvas).toBe(canvas)\nexpect(renderer.ctx).toBe(canvas.getContext('2d'))\nexpect(renderer.camera).toBeInstanceOf(Camera2D)\nexpect(renderer.backgroundColor).toBe(null)"
+          },
+          {
+            "title": "constructor with container",
+            "line": 48,
+            "source": "const container = document.createElement('div')\nconst r = new Canvas2D({container, width: 400, height: 300})\n\nexpect(r.canvas).toBeInstanceOf(HTMLCanvasElement)\nexpect(r.container).toBe(container)\nexpect(container.contains(r.canvas)).toBe(true)"
+          },
+          {
+            "title": "constructor with options",
+            "line": 58,
+            "source": "const camera = new Camera2D()\nconst r = new Canvas2D({\n    canvas,\n    camera,\n    backgroundColor: '#ffffff'\n})\n\nexpect(r.camera).toBe(camera)\nexpect(r.backgroundColor).toBe('#ffffff')"
+          },
+          {
+            "title": "autoFit observes container resize",
+            "line": 71,
+            "source": "const container = document.createElement('div')\n\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\nr.dispose()"
+          },
+          {
+            "title": "dispose cleans up autoFit observer",
+            "line": 86,
+            "source": "const container = document.createElement('div')\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.canvas).toBeInstanceOf(HTMLCanvasElement)\nexpect(r.ctx).toBeDefined()\n\nr.dispose()\n\nexpect(r.canvas).toBe(null)\nexpect(r.ctx).toBe(null)"
+          },
+          {
+            "title": "autoFitEnabled can be toggled dynamically",
+            "line": 103,
+            "source": "const container = document.createElement('div')\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.autoFitEnabled).toBe(true)\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\n// Disable autoFit\nr.autoFitEnabled = false\nexpect(r.autoFitEnabled).toBe(false)\n\n// Re-enable autoFit\nr.autoFitEnabled = true\nexpect(r.autoFitEnabled).toBe(true)\n\nr.dispose()"
+          },
+          {
+            "title": "changing container with autoFit updates observer",
+            "line": 126,
+            "source": "const container1 = document.createElement('div')\nconst container2 = document.createElement('div')\n\nObject.defineProperty(container1, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container1, 'clientHeight', {value: 300, writable: true})\nObject.defineProperty(container2, 'clientWidth', {value: 800, writable: true})\nObject.defineProperty(container2, 'clientHeight', {value: 600, writable: true})\n\nconst r = new Canvas2D({container: container1, autoFit: true})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\nexpect(r.container).toBe(container1)\n\n// Change container - should trigger resize\nr.container = container2\n\nexpect(r.container).toBe(container2)\nexpect(r.displayWidth).toBe(800)\nexpect(r.displayHeight).toBe(600)\n\nr.dispose()"
+          },
+          {
+            "title": "changing container without autoFit does not resize",
+            "line": 152,
+            "source": "const container1 = document.createElement('div')\nconst container2 = document.createElement('div')\n\nObject.defineProperty(container1, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container1, 'clientHeight', {value: 300, writable: true})\nObject.defineProperty(container2, 'clientWidth', {value: 800, writable: true})\nObject.defineProperty(container2, 'clientHeight', {value: 600, writable: true})\n\nconst r = new Canvas2D({container: container1, width: 400, height: 300})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\n// Change container - should NOT auto-resize\nr.container = container2\n\nexpect(r.container).toBe(container2)\nexpect(r.displayWidth).toBe(400) // Should remain same\nexpect(r.displayHeight).toBe(300) // Should remain same\n\nr.dispose()"
+          },
+          {
+            "title": "render clears canvas",
+            "line": 177,
+            "source": "const scene = new Group2D()\nconst ctx = canvas.getContext('2d')\n\nvi.spyOn(ctx, 'clearRect')\n\nrenderer.render(scene)\n\nexpect(ctx.clearRect).toHaveBeenCalledWith(0, 0, 800, 600)"
+          },
+          {
+            "title": "render with background color",
+            "line": 189,
+            "source": "const scene = new Group2D()\nconst ctx = canvas.getContext('2d')\n\nrenderer.backgroundColor = '#ff0000'\nvi.spyOn(ctx, 'fillRect')\n\nrenderer.render(scene)\n\nexpect(ctx.fillRect).toHaveBeenCalledWith(0, 0, 800, 600)"
+          },
+          {
+            "title": "render updates world matrix",
+            "line": 202,
+            "source": "const scene = new Group2D()\nvi.spyOn(scene, 'updateWorldMatrix')\n\nrenderer.render(scene)\n\nexpect(scene.updateWorldMatrix).toHaveBeenCalledWith(false)"
+          },
+          {
+            "title": "render with visible object",
+            "line": 212,
+            "source": "const scene = new Group2D()\nconst circle = new Circle({radius: 10, color: '#ff0000'})\nscene.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
+          },
+          {
+            "title": "render with invisible object",
+            "line": 221,
+            "source": "const scene = new Group2D()\nconst circle = new Circle({radius: 10, color: '#ff0000', visible: false})\nscene.addChild(circle)\n\nvi.spyOn(circle, 'render')\n\nrenderer.render(scene)\n\nexpect(circle.render).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "render with nested groups",
+            "line": 234,
+            "source": "const scene = new Group2D()\nconst group1 = new Group2D({x: 10, y: 20})\nconst group2 = new Group2D({x: 5, y: 5})\nconst circle = new Circle({radius: 10, color: '#ff0000'})\n\nscene.addChild(group1)\ngroup1.addChild(group2)\ngroup2.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
+          },
+          {
+            "title": "render with opacity",
+            "line": 248,
+            "source": "const scene = new Group2D()\nconst circle = new Circle({radius: 10, color: '#ff0000', opacity: 0.5})\nscene.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
+          },
+          {
+            "title": "render respects camera transformations",
+            "line": 257,
+            "source": "const scene = new Group2D()\nconst circle = new Circle({x: 0, y: 0, radius: 10, color: '#ff0000'})\nscene.addChild(circle)\n\nrenderer.camera.setPosition(5, 5)\nrenderer.camera.setZoom(2)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
+          },
+          {
+            "title": "render multiple objects",
+            "line": 269,
+            "source": "const scene = new Group2D()\nscene.addChild(\n    new Circle({x: 0, y: 0, radius: 10, color: '#ff0000'}),\n    new Rectangle({x: 50, y: 50, width: 20, height: 20, color: '#00ff00'}),\n    new Circle({x: -50, y: -50, radius: 15, color: '#0000ff'})\n)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
+          },
+          {
+            "title": "render with rotation",
+            "line": 281,
+            "source": "const scene = new Group2D()\nconst rect = new Rectangle({\n    x: 0,\n    y: 0,\n    width: 50,\n    height: 30,\n    rotation: Math.PI / 4,\n    color: '#ff0000'\n})\nscene.addChild(rect)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
+          },
+          {
+            "title": "render with scale",
+            "line": 297,
+            "source": "const scene = new Group2D()\nconst circle = new Circle({\n    x: 0,\n    y: 0,\n    radius: 10,\n    scaleX: 2,\n    scaleY: 3,\n    color: '#ff0000'\n})\nscene.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
+          }
+        ],
+        "describes": []
       }
     ]
   },
