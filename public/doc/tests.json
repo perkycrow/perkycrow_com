@@ -4290,116 +4290,116 @@
     "describes": [
       {
         "title": "Canvas2D",
-        "line": 27,
+        "line": 9,
         "beforeEach": {
-          "line": 32,
+          "line": 14,
           "source": "canvas = document.createElement('canvas')\ncanvas.width = 800\ncanvas.height = 600\nrenderer = new Canvas2D({canvas})"
         },
         "afterEach": null,
         "tests": [
           {
             "title": "constructor with canvas",
-            "line": 40,
+            "line": 22,
             "source": "expect(renderer.canvas).toBe(canvas)\nexpect(renderer.ctx).toBe(canvas.getContext('2d'))\nexpect(renderer.camera).toBeInstanceOf(Camera2D)\nexpect(renderer.backgroundColor).toBe(null)"
           },
           {
             "title": "constructor with container",
-            "line": 48,
+            "line": 30,
             "source": "const container = document.createElement('div')\nconst r = new Canvas2D({container, width: 400, height: 300})\n\nexpect(r.canvas).toBeInstanceOf(HTMLCanvasElement)\nexpect(r.container).toBe(container)\nexpect(container.contains(r.canvas)).toBe(true)"
           },
           {
             "title": "constructor with options",
-            "line": 58,
+            "line": 40,
             "source": "const camera = new Camera2D()\nconst r = new Canvas2D({\n    canvas,\n    camera,\n    backgroundColor: '#ffffff'\n})\n\nexpect(r.camera).toBe(camera)\nexpect(r.backgroundColor).toBe('#ffffff')"
           },
           {
             "title": "autoFit observes container resize",
-            "line": 71,
+            "line": 53,
             "source": "const container = document.createElement('div')\n\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\nr.dispose()"
           },
           {
             "title": "dispose cleans up autoFit observer",
-            "line": 86,
+            "line": 68,
             "source": "const container = document.createElement('div')\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.canvas).toBeInstanceOf(HTMLCanvasElement)\nexpect(r.ctx).toBeDefined()\n\nr.dispose()\n\nexpect(r.canvas).toBe(null)\nexpect(r.ctx).toBe(null)"
           },
           {
             "title": "autoFitEnabled can be toggled dynamically",
-            "line": 103,
+            "line": 85,
             "source": "const container = document.createElement('div')\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.autoFitEnabled).toBe(true)\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\n// Disable autoFit\nr.autoFitEnabled = false\nexpect(r.autoFitEnabled).toBe(false)\n\n// Re-enable autoFit\nr.autoFitEnabled = true\nexpect(r.autoFitEnabled).toBe(true)\n\nr.dispose()"
           },
           {
             "title": "changing container with autoFit updates observer",
-            "line": 126,
+            "line": 108,
             "source": "const container1 = document.createElement('div')\nconst container2 = document.createElement('div')\n\nObject.defineProperty(container1, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container1, 'clientHeight', {value: 300, writable: true})\nObject.defineProperty(container2, 'clientWidth', {value: 800, writable: true})\nObject.defineProperty(container2, 'clientHeight', {value: 600, writable: true})\n\nconst r = new Canvas2D({container: container1, autoFit: true})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\nexpect(r.container).toBe(container1)\n\n// Change container - should trigger resize\nr.container = container2\n\nexpect(r.container).toBe(container2)\nexpect(r.displayWidth).toBe(800)\nexpect(r.displayHeight).toBe(600)\n\nr.dispose()"
           },
           {
             "title": "changing container without autoFit does not resize",
-            "line": 152,
+            "line": 134,
             "source": "const container1 = document.createElement('div')\nconst container2 = document.createElement('div')\n\nObject.defineProperty(container1, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container1, 'clientHeight', {value: 300, writable: true})\nObject.defineProperty(container2, 'clientWidth', {value: 800, writable: true})\nObject.defineProperty(container2, 'clientHeight', {value: 600, writable: true})\n\nconst r = new Canvas2D({container: container1, width: 400, height: 300})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\n// Change container - should NOT auto-resize\nr.container = container2\n\nexpect(r.container).toBe(container2)\nexpect(r.displayWidth).toBe(400) // Should remain same\nexpect(r.displayHeight).toBe(300) // Should remain same\n\nr.dispose()"
           },
           {
             "title": "render clears canvas",
-            "line": 177,
+            "line": 159,
             "source": "const scene = new Group2D()\nconst ctx = canvas.getContext('2d')\n\nvi.spyOn(ctx, 'clearRect')\n\nrenderer.render(scene)\n\nexpect(ctx.clearRect).toHaveBeenCalledWith(0, 0, 800, 600)"
           },
           {
             "title": "render with background color",
-            "line": 189,
+            "line": 171,
             "source": "const scene = new Group2D()\nconst ctx = canvas.getContext('2d')\n\nrenderer.backgroundColor = '#ff0000'\nvi.spyOn(ctx, 'fillRect')\n\nrenderer.render(scene)\n\nexpect(ctx.fillRect).toHaveBeenCalledWith(0, 0, 800, 600)"
           },
           {
             "title": "render updates world matrix",
-            "line": 202,
+            "line": 184,
             "source": "const scene = new Group2D()\nvi.spyOn(scene, 'updateWorldMatrix')\n\nrenderer.render(scene)\n\nexpect(scene.updateWorldMatrix).toHaveBeenCalledWith(false)"
           },
           {
             "title": "render with visible object",
-            "line": 212,
+            "line": 194,
             "source": "const scene = new Group2D()\nconst circle = new Circle({radius: 10, color: '#ff0000'})\nscene.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
           },
           {
             "title": "render with invisible object",
-            "line": 221,
+            "line": 203,
             "source": "const scene = new Group2D()\nconst circle = new Circle({radius: 10, color: '#ff0000', visible: false})\nscene.addChild(circle)\n\nvi.spyOn(circle, 'render')\n\nrenderer.render(scene)\n\nexpect(circle.render).not.toHaveBeenCalled()"
           },
           {
             "title": "render with nested groups",
-            "line": 234,
+            "line": 216,
             "source": "const scene = new Group2D()\nconst group1 = new Group2D({x: 10, y: 20})\nconst group2 = new Group2D({x: 5, y: 5})\nconst circle = new Circle({radius: 10, color: '#ff0000'})\n\nscene.addChild(group1)\ngroup1.addChild(group2)\ngroup2.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
           },
           {
             "title": "render with opacity",
-            "line": 248,
+            "line": 230,
             "source": "const scene = new Group2D()\nconst circle = new Circle({radius: 10, color: '#ff0000', opacity: 0.5})\nscene.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
           },
           {
             "title": "render respects camera transformations",
-            "line": 257,
+            "line": 239,
             "source": "const scene = new Group2D()\nconst circle = new Circle({x: 0, y: 0, radius: 10, color: '#ff0000'})\nscene.addChild(circle)\n\nrenderer.camera.setPosition(5, 5)\nrenderer.camera.setZoom(2)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
           },
           {
             "title": "render multiple objects",
-            "line": 269,
+            "line": 251,
             "source": "const scene = new Group2D()\nscene.addChild(\n    new Circle({x: 0, y: 0, radius: 10, color: '#ff0000'}),\n    new Rectangle({x: 50, y: 50, width: 20, height: 20, color: '#00ff00'}),\n    new Circle({x: -50, y: -50, radius: 15, color: '#0000ff'})\n)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
           },
           {
             "title": "render with rotation",
-            "line": 281,
+            "line": 263,
             "source": "const scene = new Group2D()\nconst rect = new Rectangle({\n    x: 0,\n    y: 0,\n    width: 50,\n    height: 30,\n    rotation: Math.PI / 4,\n    color: '#ff0000'\n})\nscene.addChild(rect)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
           },
           {
             "title": "render with scale",
-            "line": 297,
+            "line": 279,
             "source": "const scene = new Group2D()\nconst circle = new Circle({\n    x: 0,\n    y: 0,\n    radius: 10,\n    scaleX: 2,\n    scaleY: 3,\n    color: '#ff0000'\n})\nscene.addChild(circle)\n\nexpect(() => renderer.render(scene)).not.toThrow()"
           },
           {
             "title": "registerRenderer adds renderer for object types",
-            "line": 313,
+            "line": 295,
             "source": "class CustomObject {}\nconst customRenderer = {\n    constructor: {handles: [CustomObject]},\n    init: vi.fn(),\n    reset: vi.fn(),\n    flush: vi.fn(),\n    dispose: vi.fn()\n}\n\nconst result = renderer.registerRenderer(customRenderer)\n\nexpect(result).toBe(renderer)\nexpect(customRenderer.init).toHaveBeenCalled()"
           },
           {
             "title": "unregisterRenderer removes renderer",
-            "line": 330,
+            "line": 312,
             "source": "class CustomObject {}\nconst customRenderer = {\n    constructor: {handles: [CustomObject]},\n    init: vi.fn(),\n    reset: vi.fn(),\n    flush: vi.fn(),\n    dispose: vi.fn()\n}\n\nrenderer.registerRenderer(customRenderer)\nconst result = renderer.unregisterRenderer(customRenderer)\n\nexpect(result).toBe(renderer)\nexpect(customRenderer.dispose).toHaveBeenCalled()"
           }
         ],
@@ -4679,6 +4679,687 @@
                 "title": "setRenderGroups clears previous groups",
                 "line": 401,
                 "source": "const scene = new Group2D()\n\nrenderer.setRenderGroups([\n    {$id: 'oldGroup', content: scene}\n])\n\nrenderer.setRenderGroups([\n    {$id: 'newGroup', content: scene}\n])\n\nexpect(renderer.renderGroups.length).toBe(1)\nexpect(renderer.renderGroups[0].$id).toBe('newGroup')"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/audio/audio_system.doc.js": {
+    "file": "/audio/audio_system.test.js",
+    "describes": [
+      {
+        "title": "AudioSystem",
+        "line": 13,
+        "beforeEach": {
+          "line": 21,
+          "source": "// Get the mocked onAudioUnlock\nconst audioUnlockModule = await import('./audio_unlock.js')\nmockOnAudioUnlock = audioUnlockModule.onAudioUnlock\nmockOnAudioUnlock.mockClear()\n\nmockContext = createMockAudioContextWithSpies()\ncleanupAudioContext = setupGlobalAudioContext(mockContext)\ncleanupFetch = setupGlobalFetch()\n\nsystem = new AudioSystem()"
+        },
+        "afterEach": {
+          "line": 35,
+          "source": "cleanupAudioContext()\ncleanupFetch()"
+        },
+        "tests": [
+          {
+            "title": "audioContext returns the audio context",
+            "line": 61,
+            "source": "expect(system.audioContext).toBeDefined()"
+          },
+          {
+            "title": "unlocked starts as false",
+            "line": 66,
+            "source": "expect(system.unlocked).toBe(false)"
+          },
+          {
+            "title": "currentTime returns context current time",
+            "line": 71,
+            "source": "expect(system.currentTime).toBe(0)"
+          },
+          {
+            "title": "onStart registers audio unlock callback",
+            "line": 107,
+            "source": "system.onStart()\nexpect(mockOnAudioUnlock).toHaveBeenCalledWith(expect.any(Function))"
+          },
+          {
+            "title": "onStop suspends audio context when unlocked",
+            "line": 113,
+            "source": "// Mark system as unlocked first\nawait system.unlock()\nconst suspendSpy = vi.spyOn(system.audioContext, 'suspend')\nsystem.onStop()\nexpect(suspendSpy).toHaveBeenCalled()"
+          },
+          {
+            "title": "onStop does nothing when not unlocked",
+            "line": 121,
+            "source": "const suspendSpy = vi.spyOn(system.audioContext, 'suspend')\nsystem.onStop()\nexpect(suspendSpy).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "listChannels returns channel names",
+            "line": 213,
+            "source": "const channels = system.listChannels()\nexpect(channels).toContain('music')\nexpect(channels).toContain('sfx')\nexpect(channels).toContain('ambiance')"
+          },
+          {
+            "title": "stopAll stops all channels",
+            "line": 427,
+            "source": "const musicChannel = system.getChannel('music')\nconst sfxChannel = system.getChannel('sfx')\nconst musicSpy = vi.spyOn(musicChannel, 'stopAll')\nconst sfxSpy = vi.spyOn(sfxChannel, 'stopAll')\nsystem.stopAll()\nexpect(musicSpy).toHaveBeenCalled()\nexpect(sfxSpy).toHaveBeenCalled()"
+          },
+          {
+            "title": "getVolume returns master volume from context",
+            "line": 458,
+            "source": "const spy = vi.spyOn(system.audioContext, 'getMasterVolume').mockReturnValue(0.7)\nexpect(system.getVolume()).toBe(0.7)\nexpect(spy).toHaveBeenCalled()"
+          }
+        ],
+        "describes": [
+          {
+            "title": "constructor",
+            "line": 41,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "sets static category",
+                "line": 42,
+                "source": "expect(AudioSystem.$category).toBe('audioSystem')"
+              },
+              {
+                "title": "creates default channels",
+                "line": 46,
+                "source": "expect(system.hasChannel('music')).toBe(true)\nexpect(system.hasChannel('sfx')).toBe(true)\nexpect(system.hasChannel('ambiance')).toBe(true)"
+              },
+              {
+                "title": "accepts custom channels",
+                "line": 52,
+                "source": "const custom = new AudioSystem({channels: ['voice', 'effects']})\nexpect(custom.hasChannel('voice')).toBe(true)\nexpect(custom.hasChannel('effects')).toBe(true)\nexpect(custom.hasChannel('music')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "masterVolume",
+            "line": 76,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "get returns master volume",
+                "line": 77,
+                "source": "expect(system.masterVolume).toBeDefined()"
+              },
+              {
+                "title": "set calls setMasterVolume on context",
+                "line": 81,
+                "source": "const spy = vi.spyOn(system.audioContext, 'setMasterVolume')\nsystem.masterVolume = 0.5\nexpect(spy).toHaveBeenCalledWith(0.5)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "onInstall",
+            "line": 89,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "delegates audio methods to host",
+                "line": 90,
+                "source": "const host = {emit: vi.fn()}\nsystem.onInstall(host)\nexpect(host.play).toBeDefined()\nexpect(host.stop).toBeDefined()\nexpect(host.unlock).toBeDefined()"
+              },
+              {
+                "title": "delegates audio events to host",
+                "line": 98,
+                "source": "const host = {emit: vi.fn(), on: vi.fn()}\nsystem.onInstall(host)\nsystem.emit('audio:play', 'test')\nexpect(host.emit).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "onDispose",
+            "line": 128,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "stops all sounds",
+                "line": 129,
+                "source": "const stopAllSpy = vi.spyOn(system, 'stopAll')\nsystem.onDispose()\nexpect(stopAllSpy).toHaveBeenCalled()"
+              },
+              {
+                "title": "disposes audio context",
+                "line": 135,
+                "source": "const disposeSpy = vi.spyOn(system.audioContext, 'dispose')\nsystem.onDispose()\nexpect(disposeSpy).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "unlock",
+            "line": 143,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "resumes audio context",
+                "line": 144,
+                "source": "await system.unlock()\nexpect(mockContext.resume).toHaveBeenCalled()"
+              },
+              {
+                "title": "sets unlocked to true",
+                "line": 149,
+                "source": "await system.unlock()\nexpect(system.unlocked).toBe(true)"
+              },
+              {
+                "title": "emits audio:unlocked event",
+                "line": 154,
+                "source": "const listener = vi.fn()\nsystem.on('audio:unlocked', listener)\nawait system.unlock()\nexpect(listener).toHaveBeenCalled()"
+              },
+              {
+                "title": "returns true on success",
+                "line": 161,
+                "source": "expect(await system.unlock()).toBe(true)"
+              },
+              {
+                "title": "returns true if already unlocked",
+                "line": 165,
+                "source": "await system.unlock()\nexpect(await system.unlock()).toBe(true)"
+              },
+              {
+                "title": "returns false on error",
+                "line": 170,
+                "source": "mockContext.resume.mockRejectedValue(new Error('failed'))\nexpect(await system.unlock()).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "createChannel",
+            "line": 177,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "creates new channel",
+                "line": 178,
+                "source": "const channel = system.createChannel('custom')\nexpect(channel).toBeInstanceOf(AudioChannel)"
+              },
+              {
+                "title": "registers channel by name",
+                "line": 183,
+                "source": "system.createChannel('custom')\nexpect(system.hasChannel('custom')).toBe(true)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "getChannel",
+            "line": 190,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns existing channel",
+                "line": 191,
+                "source": "const channel = system.getChannel('sfx')\nexpect(channel).toBeInstanceOf(AudioChannel)"
+              },
+              {
+                "title": "returns null for unknown channel",
+                "line": 196,
+                "source": "expect(system.getChannel('unknown')).toBeNull()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "hasChannel",
+            "line": 202,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns true for existing channel",
+                "line": 203,
+                "source": "expect(system.hasChannel('sfx')).toBe(true)"
+              },
+              {
+                "title": "returns false for unknown channel",
+                "line": 207,
+                "source": "expect(system.hasChannel('unknown')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "registerBuffer",
+            "line": 221,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "stores buffer by id",
+                "line": 222,
+                "source": "const buffer = {duration: 10}\nsystem.registerBuffer('test', buffer)\nexpect(system.getBuffer('test')).toBe(buffer)"
+              },
+              {
+                "title": "emits buffer:registered event",
+                "line": 228,
+                "source": "const listener = vi.fn()\nsystem.on('buffer:registered', listener)\nconst buffer = {}\nsystem.registerBuffer('test', buffer)\nexpect(listener).toHaveBeenCalledWith('test', buffer)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "getBuffer",
+            "line": 238,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns registered buffer",
+                "line": 239,
+                "source": "const buffer = {}\nsystem.registerBuffer('test', buffer)\nexpect(system.getBuffer('test')).toBe(buffer)"
+              },
+              {
+                "title": "returns null for unknown buffer",
+                "line": 245,
+                "source": "expect(system.getBuffer('unknown')).toBeNull()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "hasBuffer",
+            "line": 251,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns true for registered buffer",
+                "line": 252,
+                "source": "system.registerBuffer('test', {})\nexpect(system.hasBuffer('test')).toBe(true)"
+              },
+              {
+                "title": "returns false for unknown buffer",
+                "line": 257,
+                "source": "expect(system.hasBuffer('unknown')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "loadBuffer",
+            "line": 263,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "fetches and decodes audio",
+                "line": 264,
+                "source": "// Set context to running so decodeAudioData doesn't queue\nmockContext.state = 'running'\nconst buffer = await system.loadBuffer('test', 'http://example.com/audio.mp3')\nexpect(global.fetch).toHaveBeenCalledWith('http://example.com/audio.mp3')\nexpect(buffer).toBeDefined()"
+              },
+              {
+                "title": "registers loaded buffer",
+                "line": 272,
+                "source": "// Set context to running so decodeAudioData doesn't queue\nmockContext.state = 'running'\nawait system.loadBuffer('test', 'http://example.com/audio.mp3')\nexpect(system.hasBuffer('test')).toBe(true)"
+              },
+              {
+                "title": "returns null on error",
+                "line": 279,
+                "source": "global.fetch.mockRejectedValue(new Error('network error'))\nconst buffer = await system.loadBuffer('test', 'http://example.com/audio.mp3')\nexpect(buffer).toBeNull()"
+              },
+              {
+                "title": "emits buffer:error on failure",
+                "line": 285,
+                "source": "const listener = vi.fn()\nsystem.on('buffer:error', listener)\nglobal.fetch.mockRejectedValue(new Error('network error'))\nawait system.loadBuffer('test', 'http://example.com/audio.mp3')\nexpect(listener).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "play",
+            "line": 295,
+            "beforeEach": {
+              "line": 296,
+              "source": "// Unlock the system so play() works\nawait system.unlock()"
+            },
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns null for unknown buffer",
+                "line": 301,
+                "source": "expect(system.play('unknown')).toBeNull()"
+              },
+              {
+                "title": "creates audio source for registered buffer",
+                "line": 305,
+                "source": "system.registerBuffer('test', {duration: 1})\nconst source = system.play('test')\nexpect(source).not.toBeNull()"
+              },
+              {
+                "title": "uses sfx channel by default",
+                "line": 311,
+                "source": "system.registerBuffer('test', {})\nconst source = system.play('test')\nexpect(source.channel).toBe(system.getChannel('sfx'))"
+              },
+              {
+                "title": "uses specified channel",
+                "line": 317,
+                "source": "system.registerBuffer('test', {})\nconst source = system.play('test', {channel: 'music'})\nexpect(source.channel).toBe(system.getChannel('music'))"
+              },
+              {
+                "title": "emits audio:play event",
+                "line": 323,
+                "source": "const listener = vi.fn()\nsystem.on('audio:play', listener)\nsystem.registerBuffer('test', {})\nsystem.play('test')\nexpect(listener).toHaveBeenCalled()"
+              },
+              {
+                "title": "accepts loop option",
+                "line": 331,
+                "source": "system.registerBuffer('test', {})\nconst source = system.play('test', {loop: true})\nexpect(source.loop).toBe(true)"
+              },
+              {
+                "title": "accepts volume option",
+                "line": 337,
+                "source": "system.registerBuffer('test', {})\nconst source = system.play('test', {volume: 0.5})\nexpect(source.volume).toBe(0.5)"
+              },
+              {
+                "title": "accepts playbackRate option",
+                "line": 343,
+                "source": "system.registerBuffer('test', {})\nconst source = system.play('test', {playbackRate: 2})\nexpect(source.playbackRate).toBe(2)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "playOscillator",
+            "line": 351,
+            "beforeEach": {
+              "line": 352,
+              "source": "// Unlock the system so playOscillator() works\nawait system.unlock()"
+            },
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "creates oscillator source",
+                "line": 357,
+                "source": "const source = system.playOscillator()\nexpect(source).not.toBeNull()"
+              },
+              {
+                "title": "uses sfx channel by default",
+                "line": 362,
+                "source": "const source = system.playOscillator()\nexpect(source.channel).toBe(system.getChannel('sfx'))"
+              },
+              {
+                "title": "accepts type option",
+                "line": 367,
+                "source": "const source = system.playOscillator({type: 'square'})\nexpect(source).not.toBeNull()"
+              },
+              {
+                "title": "emits audio:play event",
+                "line": 372,
+                "source": "const listener = vi.fn()\nsystem.on('audio:play', listener)\nsystem.playOscillator()\nexpect(listener).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "stop",
+            "line": 381,
+            "beforeEach": {
+              "line": 382,
+              "source": "// Unlock the system so play() works\nawait system.unlock()"
+            },
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns false for unknown source",
+                "line": 387,
+                "source": "expect(system.stop('unknown')).toBe(false)"
+              },
+              {
+                "title": "stops playing source",
+                "line": 391,
+                "source": "system.registerBuffer('test', {})\nconst source = system.play('test')\nconst result = system.stop(source.$id)\nexpect(result).toBe(true)"
+              },
+              {
+                "title": "emits audio:stop event",
+                "line": 398,
+                "source": "const listener = vi.fn()\nsystem.on('audio:stop', listener)\nsystem.registerBuffer('test', {})\nconst source = system.play('test')\nsystem.stop(source.$id)\nexpect(listener).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "stopChannel",
+            "line": 409,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns false for unknown channel",
+                "line": 410,
+                "source": "expect(system.stopChannel('unknown')).toBe(false)"
+              },
+              {
+                "title": "stops all sources in channel",
+                "line": 414,
+                "source": "const channel = system.getChannel('sfx')\nconst stopAllSpy = vi.spyOn(channel, 'stopAll')\nsystem.stopChannel('sfx')\nexpect(stopAllSpy).toHaveBeenCalled()"
+              },
+              {
+                "title": "returns true on success",
+                "line": 421,
+                "source": "expect(system.stopChannel('sfx')).toBe(true)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setVolume",
+            "line": 438,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "sets master volume",
+                "line": 439,
+                "source": "const spy = vi.spyOn(system.audioContext, 'setMasterVolume')\nsystem.setVolume(0.5)\nexpect(spy).toHaveBeenCalledWith(0.5)"
+              },
+              {
+                "title": "emits volume:changed event",
+                "line": 445,
+                "source": "const listener = vi.fn()\nsystem.on('volume:changed', listener)\nsystem.setVolume(0.5)\nexpect(listener).toHaveBeenCalledWith(0.5)"
+              },
+              {
+                "title": "returns self for chaining",
+                "line": 452,
+                "source": "expect(system.setVolume(0.5)).toBe(system)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setChannelVolume",
+            "line": 465,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "sets channel volume",
+                "line": 466,
+                "source": "system.setChannelVolume('sfx', 0.5)\nexpect(system.getChannel('sfx').volume).toBe(0.5)"
+              },
+              {
+                "title": "does nothing for unknown channel",
+                "line": 471,
+                "source": "expect(() => system.setChannelVolume('unknown', 0.5)).not.toThrow()"
+              },
+              {
+                "title": "returns self for chaining",
+                "line": 475,
+                "source": "expect(system.setChannelVolume('sfx', 0.5)).toBe(system)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "getChannelVolume",
+            "line": 481,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns channel volume",
+                "line": 482,
+                "source": "system.setChannelVolume('sfx', 0.7)\nexpect(system.getChannelVolume('sfx')).toBe(0.7)"
+              },
+              {
+                "title": "returns 0 for unknown channel",
+                "line": 487,
+                "source": "expect(system.getChannelVolume('unknown')).toBe(0)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "muteChannel",
+            "line": 493,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "mutes channel",
+                "line": 494,
+                "source": "system.muteChannel('sfx')\nexpect(system.getChannel('sfx').muted).toBe(true)"
+              },
+              {
+                "title": "does nothing for unknown channel",
+                "line": 499,
+                "source": "expect(() => system.muteChannel('unknown')).not.toThrow()"
+              },
+              {
+                "title": "returns self for chaining",
+                "line": 503,
+                "source": "expect(system.muteChannel('sfx')).toBe(system)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "unmuteChannel",
+            "line": 509,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "unmutes channel",
+                "line": 510,
+                "source": "system.muteChannel('sfx')\nsystem.unmuteChannel('sfx')\nexpect(system.getChannel('sfx').muted).toBe(false)"
+              },
+              {
+                "title": "does nothing for unknown channel",
+                "line": 516,
+                "source": "expect(() => system.unmuteChannel('unknown')).not.toThrow()"
+              },
+              {
+                "title": "returns self for chaining",
+                "line": 520,
+                "source": "expect(system.unmuteChannel('sfx')).toBe(system)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "playAt",
+            "line": 526,
+            "beforeEach": {
+              "line": 527,
+              "source": "// Unlock the system so playAt() works\nawait system.unlock()"
+            },
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns null for unknown buffer",
+                "line": 532,
+                "source": "expect(system.playAt('unknown', 10, 20)).toBeNull()"
+              },
+              {
+                "title": "creates audio source",
+                "line": 536,
+                "source": "system.registerBuffer('test', {})\nconst source = system.playAt('test', 100, 200)\nexpect(source).not.toBeNull()"
+              },
+              {
+                "title": "calls play with spatial options",
+                "line": 542,
+                "source": "system.registerBuffer('test', {})\nconst playSpy = vi.spyOn(system, 'play')\nsystem.playAt('test', 150, 250, {volume: 0.5})\nexpect(playSpy).toHaveBeenCalledWith('test', expect.objectContaining({\n    spatial: true,\n    x: 150,\n    y: 250,\n    volume: 0.5\n}))"
+              },
+              {
+                "title": "emits audio:play event",
+                "line": 554,
+                "source": "const listener = vi.fn()\nsystem.on('audio:play', listener)\nsystem.registerBuffer('test', {})\nsystem.playAt('test', 10, 20)\nexpect(listener).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "playOscillatorAt",
+            "line": 564,
+            "beforeEach": {
+              "line": 565,
+              "source": "// Unlock the system so playOscillatorAt() works\nawait system.unlock()"
+            },
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "creates oscillator source with spatial audio enabled",
+                "line": 570,
+                "source": "const source = system.playOscillatorAt(100, 200)\nexpect(source).not.toBeNull()\n\n// Verify spatial audio is enabled by checking position properties\nconst pos = source.getPosition()\nexpect(pos.x).toBe(100)\nexpect(pos.y).toBe(200)"
+              },
+              {
+                "title": "sets position coordinates",
+                "line": 580,
+                "source": "const source = system.playOscillatorAt(150, 250)\nconst pos = source.getPosition()\nexpect(pos.x).toBe(150)\nexpect(pos.y).toBe(250)"
+              },
+              {
+                "title": "accepts options",
+                "line": 587,
+                "source": "const source = system.playOscillatorAt(10, 20, {type: 'square', frequency: 880, volume: 0.3})\nexpect(source.volume).toBe(0.3)"
+              },
+              {
+                "title": "emits audio:play event",
+                "line": 592,
+                "source": "const listener = vi.fn()\nsystem.on('audio:play', listener)\nsystem.playOscillatorAt(10, 20)\nexpect(listener).toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "setListenerPosition",
+            "line": 601,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "sets listener position on audio context",
+                "line": 602,
+                "source": "const spy = vi.spyOn(system.audioContext, 'setListenerPosition')\nsystem.setListenerPosition(50, 75)\nexpect(spy).toHaveBeenCalledWith(50, 75, 0)"
+              },
+              {
+                "title": "returns self for chaining",
+                "line": 608,
+                "source": "expect(system.setListenerPosition(10, 20)).toBe(system)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "getListenerPosition",
+            "line": 614,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "calls getListenerPosition on audio context",
+                "line": 615,
+                "source": "const spy = vi.spyOn(system.audioContext, 'getListenerPosition')\nsystem.getListenerPosition()\nexpect(spy).toHaveBeenCalled()"
+              },
+              {
+                "title": "returns object with x and y properties",
+                "line": 621,
+                "source": "const pos = system.getListenerPosition()\nexpect(pos).toHaveProperty('x')\nexpect(pos).toHaveProperty('y')\nexpect(pos.z).toBeUndefined()"
               }
             ],
             "describes": []

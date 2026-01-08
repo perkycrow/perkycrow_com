@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, emit_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _swipeReferenceY, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLCanvas2D_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _world, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _program2, _enabled3, _a, _width2, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _GameRenderer_instances, registerViews_fn, registerShaderEffects_fn, buildScene_fn, setupRenderGroups_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _enabled4, _program3, _uniforms2, _RenderPass_instances, applyUniform_fn, _DefendTheDen_instances, updateShadows_fn, checkWaveClear_fn, startNextWave_fn, _listeners, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _customStyles2, _BaseInspector_instances, getStyles_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn4, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl3, _ToggleInput_instances, buildDOM_fn5, updateDisplay_fn2, handleClick_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl4, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn6, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn2, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _vec2, _xInput, _yInput, _label4, _labelEl5, _Vec2Input_instances, buildDOM_fn7, updateDisplay_fn4, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _ManifestInspector_instances, update_fn6, createSection_fn, createConfigSection_fn, createDataGrid_fn, createAssetsSection_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn8, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn9, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn10, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn11, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn12, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn13, createHeader_fn4, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _controlsEl, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn14, togglePin_fn, updateControlsVisibility_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn15, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn;
+var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _delegations, _eventDelegations, _PerkyModule_instances, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, emit_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _swipeReferenceY, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLCanvas2D_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _world, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _program2, _enabled3, _a, _width2, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _GameRenderer_instances, registerViews_fn, registerShaderEffects_fn, buildScene_fn, setupRenderGroups_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _context3, _masterGain, _suspended, _pendingDecodes, _masterVolume, _AudioContext_instances, processPendingDecodes_fn, _audioContext, _gainNode, _volume, _muted, _sources, _AudioChannel_instances, updateGain_fn, _audioContext2, _channel, _gainNode2, _pannerNode, _sourceNode, _playing, _loop, _volume2, _playbackRate, _startTime, _pauseTime, _x2, _y2, _spatial, _refDistance, _maxDistance, _rolloffFactor, _AudioSource_instances, initSpatialOptions_fn, updatePannerPosition_fn, updateGain_fn2, setupNodes_fn, configurePanner_fn, cleanupSourceNode_fn, _audioContext3, _buffers, _pendingAudio, _unlocked, _AudioSystem_instances, loadPendingAudio_fn, applyConfig_fn, _game, _DenAudioManager_instances, setupGameEvents_fn, setupWorldEvents_fn, playDayAnnounce_fn, _enabled4, _program3, _uniforms2, _RenderPass_instances, applyUniform_fn, _DefendTheDen_instances, updateShadows_fn, checkWaveClear_fn, startNextWave_fn, _listeners, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _customStyles2, _BaseInspector_instances, getStyles_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn4, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl3, _ToggleInput_instances, buildDOM_fn5, updateDisplay_fn2, handleClick_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl4, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn6, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn2, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _vec2, _xInput, _yInput, _label4, _labelEl5, _Vec2Input_instances, buildDOM_fn7, updateDisplay_fn4, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _filterState, _typeGroupsState, _mainContainer, _assetsListContainer, _ManifestInspector_instances, update_fn6, updateAssetsList_fn, applyFilters_fn, createSection_fn, createConfigSection_fn, createDataGrid_fn, createFiltersBar_fn, createAssetsSection_fn, createTypeGroup_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, toggleController_fn, _unlockedValueEl, _channelsValueEl, _volumeInput, _unlockBtn, _AudioSystemInspector_instances, handleVolumeChange_fn, handleUnlock_fn, bindEvents_fn4, updateAll_fn3, updateUnlocked_fn, updateChannels_fn, updateVolume_fn, _mutedValueEl, _sourcesValueEl, _volumeInput2, _muteBtn, _AudioChannelInspector_instances, handleVolumeChange_fn2, handleToggleMute_fn, bindEvents_fn5, updateAll_fn4, updateMuted_fn, updateSources_fn, updateVolume_fn2, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn8, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn9, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn10, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn11, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn12, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn13, createHeader_fn4, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _controlsEl, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn14, togglePin_fn, updateControlsVisibility_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn15, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -595,6 +595,9 @@ class Inflector {
   }
   toKebabCase(string) {
     return string.replace(/[_\s]/g, "-").replace(/([A-Z])([A-Z][a-z])/g, "$1-$2").replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase().replace(/^-/, "");
+  }
+  toHumanCase(string) {
+    return string.replace(/[-_]/g, " ").replace(/([A-Z])([A-Z][a-z])/g, "$1 $2").replace(/([a-z])([A-Z])/g, "$1 $2").replace(/^\s+/, "").replace(/\s+/g, " ");
   }
   addPluralRule(rule, replacement) {
     __privateGet(this, _pluralRules).push([sanitizeRule(rule), replacement]);
@@ -1916,6 +1919,7 @@ __publicField(_ActionController, "actionControllerMethods", _ActionController.pe
   "hasAction",
   "shouldPropagate",
   "listActions",
+  "listActionsWithParams",
   "execute",
   "context"
 ]));
@@ -2681,27 +2685,12 @@ async function loadArrayBuffer(params) {
   checkResponse(response, url);
   return response.arrayBuffer();
 }
-let sharedAudioContext = null;
-function getAudioContext() {
-  if (!sharedAudioContext) {
-    sharedAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  return sharedAudioContext;
-}
 async function loadAudio(params) {
-  const arrayBuffer = await loadArrayBuffer(params);
-  const audioContext = getAudioContext();
-  return new Promise((resolve, reject) => {
-    audioContext.decodeAudioData(
-      arrayBuffer,
-      function(decodedData) {
-        resolve(decodedData);
-      },
-      function(error) {
-        reject(new Error("Failed to decode audio data: " + (error ? error.message : "Unknown error")));
-      }
-    );
-  });
+  const { url } = normalizeParams(params);
+  return {
+    type: "deferred_audio",
+    url
+  };
 }
 function loadFont(params) {
   const { url, config } = normalizeParams(params);
@@ -4877,6 +4866,7 @@ class BaseRenderer extends PerkyModule {
     this.displayWidth = width;
     this.displayHeight = height;
     this.applyPixelRatio();
+    this.emit("resize", width, height);
     return this;
   }
   resizeToContainer() {
@@ -7071,7 +7061,47 @@ function parseColor(colorString) {
     const b = parseInt(hex.substring(4, 6), 16) / 255;
     return { r, g, b, a: 1 };
   }
+  if (colorString.startsWith("hsl")) {
+    const match = colorString.match(/hsl\(\s*(\d+)\s*,\s*(\d+)%?\s*,\s*(\d+)%?\s*\)/);
+    if (match) {
+      const h = parseInt(match[1], 10) / 360;
+      const s = parseInt(match[2], 10) / 100;
+      const l = parseInt(match[3], 10) / 100;
+      const { r, g, b } = hslToRgb(h, s, l);
+      return { r, g, b, a: 1 };
+    }
+  }
   return { r: 0, g: 0, b: 0, a: 1 };
+}
+function hslToRgb(h, s, l) {
+  if (s === 0) {
+    return { r: l, g: l, b: l };
+  }
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  const p = 2 * l - q;
+  return {
+    r: hueToRgb(p, q, h + 1 / 3),
+    g: hueToRgb(p, q, h),
+    b: hueToRgb(p, q, h - 1 / 3)
+  };
+}
+function hueToRgb(p, q, t) {
+  if (t < 0) {
+    t += 1;
+  }
+  if (t > 1) {
+    t -= 1;
+  }
+  if (t < 1 / 6) {
+    return p + (q - p) * 6 * t;
+  }
+  if (t < 1 / 2) {
+    return q;
+  }
+  if (t < 2 / 3) {
+    return p + (q - p) * (2 / 3 - t) * 6;
+  }
+  return p;
 }
 const BLEND_MODES = {
   normal: "normal",
@@ -9915,6 +9945,7 @@ class GameController extends WorldController {
     }
   }
   shoot() {
+    var _a2;
     const player = this.world.player;
     if (!player.canShoot()) {
       return;
@@ -9925,6 +9956,7 @@ class GameController extends WorldController {
       x: player.x + 0.3,
       y: player.y + 0.4
     });
+    (_a2 = this.game.denAudio) == null ? void 0 : _a2.playShoot();
   }
   spawnPlayer(options = {}) {
     return this.world.spawnPlayer(options);
@@ -11232,6 +11264,1009 @@ applyStyles_fn = function() {
 };
 __publicField(_WaveProgressBar, "phaseNames", ["Dawn", "Day", "Dusk", "Night"]);
 let WaveProgressBar = _WaveProgressBar;
+class AudioContext {
+  constructor() {
+    __privateAdd(this, _AudioContext_instances);
+    __privateAdd(this, _context3, null);
+    __privateAdd(this, _masterGain, null);
+    __privateAdd(this, _suspended, true);
+    __privateAdd(this, _pendingDecodes, []);
+    __privateAdd(this, _masterVolume, 1);
+  }
+  get context() {
+    return __privateGet(this, _context3);
+  }
+  get masterGain() {
+    return __privateGet(this, _masterGain);
+  }
+  get currentTime() {
+    var _a2;
+    return ((_a2 = __privateGet(this, _context3)) == null ? void 0 : _a2.currentTime) ?? 0;
+  }
+  get suspended() {
+    return __privateGet(this, _suspended);
+  }
+  get sampleRate() {
+    var _a2;
+    return ((_a2 = __privateGet(this, _context3)) == null ? void 0 : _a2.sampleRate) ?? 44100;
+  }
+  get listener() {
+    var _a2;
+    return ((_a2 = __privateGet(this, _context3)) == null ? void 0 : _a2.listener) ?? null;
+  }
+  init() {
+    if (__privateGet(this, _context3)) {
+      return __privateGet(this, _context3);
+    }
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      throw new Error("Web Audio API is not supported in this browser");
+    }
+    __privateSet(this, _context3, new AudioContextClass());
+    __privateSet(this, _masterGain, __privateGet(this, _context3).createGain());
+    __privateGet(this, _masterGain).gain.setValueAtTime(__privateGet(this, _masterVolume), __privateGet(this, _context3).currentTime);
+    __privateGet(this, _masterGain).connect(__privateGet(this, _context3).destination);
+    __privateSet(this, _suspended, __privateGet(this, _context3).state === "suspended");
+    if (__privateGet(this, _context3).state === "running") {
+      __privateMethod(this, _AudioContext_instances, processPendingDecodes_fn).call(this);
+    }
+    return __privateGet(this, _context3);
+  }
+  async resume() {
+    if (!__privateGet(this, _context3)) {
+      this.init();
+    }
+    if (__privateGet(this, _context3).state === "suspended") {
+      await __privateGet(this, _context3).resume();
+      __privateSet(this, _suspended, false);
+    }
+    return this;
+  }
+  suspend() {
+    if (__privateGet(this, _context3) && __privateGet(this, _context3).state === "running") {
+      __privateGet(this, _context3).suspend();
+      __privateSet(this, _suspended, true);
+    }
+    return this;
+  }
+  setMasterVolume(value) {
+    __privateSet(this, _masterVolume, Math.max(0, Math.min(1, value)));
+    if (__privateGet(this, _masterGain)) {
+      __privateGet(this, _masterGain).gain.setValueAtTime(
+        __privateGet(this, _masterVolume),
+        __privateGet(this, _context3).currentTime
+      );
+    }
+    return this;
+  }
+  getMasterVolume() {
+    return __privateGet(this, _masterVolume);
+  }
+  createGain() {
+    this.init();
+    return __privateGet(this, _context3).createGain();
+  }
+  createOscillator() {
+    this.init();
+    return __privateGet(this, _context3).createOscillator();
+  }
+  createBufferSource() {
+    this.init();
+    return __privateGet(this, _context3).createBufferSource();
+  }
+  createPanner() {
+    this.init();
+    return __privateGet(this, _context3).createPanner();
+  }
+  createStereoPanner() {
+    this.init();
+    return __privateGet(this, _context3).createStereoPanner();
+  }
+  async decodeAudioData(arrayBuffer) {
+    this.init();
+    if (__privateGet(this, _context3).state === "suspended") {
+      return new Promise((resolve, reject) => {
+        __privateGet(this, _pendingDecodes).push({ buffer: arrayBuffer, resolve, reject });
+      });
+    }
+    return __privateGet(this, _context3).decodeAudioData(arrayBuffer);
+  }
+  setListenerPosition(x, y, z = 0) {
+    this.init();
+    const listener = __privateGet(this, _context3).listener;
+    if (listener.positionX) {
+      listener.positionX.setValueAtTime(x, __privateGet(this, _context3).currentTime);
+      listener.positionY.setValueAtTime(y, __privateGet(this, _context3).currentTime);
+      listener.positionZ.setValueAtTime(z, __privateGet(this, _context3).currentTime);
+    } else if (listener.setPosition) {
+      listener.setPosition(x, y, z);
+    }
+    return this;
+  }
+  getListenerPosition() {
+    var _a2;
+    if (!((_a2 = __privateGet(this, _context3)) == null ? void 0 : _a2.listener)) {
+      return { x: 0, y: 0, z: 0 };
+    }
+    const listener = __privateGet(this, _context3).listener;
+    if (listener.positionX) {
+      return {
+        x: listener.positionX.value,
+        y: listener.positionY.value,
+        z: listener.positionZ.value
+      };
+    }
+    return { x: 0, y: 0, z: 0 };
+  }
+  dispose() {
+    if (__privateGet(this, _context3)) {
+      __privateGet(this, _context3).close();
+      __privateSet(this, _context3, null);
+      __privateSet(this, _masterGain, null);
+    }
+  }
+}
+_context3 = new WeakMap();
+_masterGain = new WeakMap();
+_suspended = new WeakMap();
+_pendingDecodes = new WeakMap();
+_masterVolume = new WeakMap();
+_AudioContext_instances = new WeakSet();
+processPendingDecodes_fn = function() {
+  for (const pending of __privateGet(this, _pendingDecodes)) {
+    __privateGet(this, _context3).decodeAudioData(pending.buffer).then(pending.resolve).catch(pending.reject);
+  }
+  __privateSet(this, _pendingDecodes, []);
+};
+class AudioChannel extends PerkyModule {
+  constructor(options = {}) {
+    super(options);
+    __privateAdd(this, _AudioChannel_instances);
+    __privateAdd(this, _audioContext, null);
+    __privateAdd(this, _gainNode, null);
+    __privateAdd(this, _volume, 1);
+    __privateAdd(this, _muted, false);
+    __privateAdd(this, _sources, /* @__PURE__ */ new Map());
+    __privateSet(this, _audioContext, options.audioContext);
+    __privateSet(this, _volume, options.volume ?? 1);
+  }
+  get volume() {
+    return __privateGet(this, _volume);
+  }
+  set volume(value) {
+    __privateSet(this, _volume, Math.max(0, Math.min(1, value)));
+    __privateMethod(this, _AudioChannel_instances, updateGain_fn).call(this);
+  }
+  get muted() {
+    return __privateGet(this, _muted);
+  }
+  set muted(value) {
+    __privateSet(this, _muted, Boolean(value));
+    __privateMethod(this, _AudioChannel_instances, updateGain_fn).call(this);
+  }
+  get gainNode() {
+    if (!__privateGet(this, _gainNode) && __privateGet(this, _audioContext)) {
+      __privateSet(this, _gainNode, __privateGet(this, _audioContext).createGain());
+      __privateGet(this, _gainNode).connect(__privateGet(this, _audioContext).masterGain);
+      __privateMethod(this, _AudioChannel_instances, updateGain_fn).call(this);
+    }
+    return __privateGet(this, _gainNode);
+  }
+  get sources() {
+    return Array.from(__privateGet(this, _sources).values());
+  }
+  get sourceCount() {
+    return __privateGet(this, _sources).size;
+  }
+  onInstall() {
+  }
+  onDispose() {
+    this.stopAll();
+    if (__privateGet(this, _gainNode)) {
+      __privateGet(this, _gainNode).disconnect();
+      __privateSet(this, _gainNode, null);
+    }
+  }
+  registerSource(source) {
+    if (!source || !source.$id) {
+      return false;
+    }
+    __privateGet(this, _sources).set(source.$id, source);
+    this.emit("source:added", source);
+    return true;
+  }
+  unregisterSource(source) {
+    if (!source || !__privateGet(this, _sources).has(source.$id)) {
+      return false;
+    }
+    __privateGet(this, _sources).delete(source.$id);
+    this.emit("source:removed", source);
+    return true;
+  }
+  getSource(id) {
+    return __privateGet(this, _sources).get(id) || null;
+  }
+  hasSource(id) {
+    return __privateGet(this, _sources).has(id);
+  }
+  stopAll() {
+    for (const source of __privateGet(this, _sources).values()) {
+      if (source.stop) {
+        source.stop();
+      }
+    }
+    __privateGet(this, _sources).clear();
+  }
+  setVolume(value) {
+    this.volume = value;
+    this.emit("volume:changed", __privateGet(this, _volume));
+    return this;
+  }
+  getVolume() {
+    return __privateGet(this, _volume);
+  }
+  mute() {
+    this.muted = true;
+    this.emit("muted");
+    return this;
+  }
+  unmute() {
+    this.muted = false;
+    this.emit("unmuted");
+    return this;
+  }
+  toggleMute() {
+    if (__privateGet(this, _muted)) {
+      this.unmute();
+    } else {
+      this.mute();
+    }
+    return this;
+  }
+}
+_audioContext = new WeakMap();
+_gainNode = new WeakMap();
+_volume = new WeakMap();
+_muted = new WeakMap();
+_sources = new WeakMap();
+_AudioChannel_instances = new WeakSet();
+updateGain_fn = function() {
+  var _a2;
+  if (__privateGet(this, _gainNode) && ((_a2 = __privateGet(this, _audioContext)) == null ? void 0 : _a2.context)) {
+    const effectiveVolume = __privateGet(this, _muted) ? 0 : __privateGet(this, _volume);
+    __privateGet(this, _gainNode).gain.setValueAtTime(
+      effectiveVolume,
+      __privateGet(this, _audioContext).context.currentTime
+    );
+  }
+};
+__publicField(AudioChannel, "$category", "audioChannel");
+class AudioSource extends PerkyModule {
+  constructor(options = {}) {
+    super(options);
+    __privateAdd(this, _AudioSource_instances);
+    __privateAdd(this, _audioContext2, null);
+    __privateAdd(this, _channel, null);
+    __privateAdd(this, _gainNode2, null);
+    __privateAdd(this, _pannerNode, null);
+    __privateAdd(this, _sourceNode, null);
+    __privateAdd(this, _playing, false);
+    __privateAdd(this, _loop, false);
+    __privateAdd(this, _volume2, 1);
+    __privateAdd(this, _playbackRate, 1);
+    __privateAdd(this, _startTime, 0);
+    __privateAdd(this, _pauseTime, 0);
+    __privateAdd(this, _x2, 0);
+    __privateAdd(this, _y2, 0);
+    __privateAdd(this, _spatial, false);
+    __privateAdd(this, _refDistance, 1);
+    __privateAdd(this, _maxDistance, 10);
+    __privateAdd(this, _rolloffFactor, 1);
+    __privateSet(this, _audioContext2, options.audioContext);
+    __privateSet(this, _channel, options.channel);
+    __privateSet(this, _loop, options.loop ?? false);
+    __privateSet(this, _volume2, options.volume ?? 1);
+    __privateSet(this, _playbackRate, options.playbackRate ?? 1);
+    __privateSet(this, _spatial, options.spatial ?? false);
+    __privateMethod(this, _AudioSource_instances, initSpatialOptions_fn).call(this, options);
+  }
+  get playing() {
+    return __privateGet(this, _playing);
+  }
+  get loop() {
+    return __privateGet(this, _loop);
+  }
+  set loop(value) {
+    __privateSet(this, _loop, Boolean(value));
+    if (__privateGet(this, _sourceNode) && "loop" in __privateGet(this, _sourceNode)) {
+      __privateGet(this, _sourceNode).loop = __privateGet(this, _loop);
+    }
+  }
+  get volume() {
+    return __privateGet(this, _volume2);
+  }
+  set volume(value) {
+    __privateSet(this, _volume2, Math.max(0, Math.min(1, value)));
+    __privateMethod(this, _AudioSource_instances, updateGain_fn2).call(this);
+  }
+  get playbackRate() {
+    return __privateGet(this, _playbackRate);
+  }
+  set playbackRate(value) {
+    __privateSet(this, _playbackRate, Math.max(0.1, Math.min(10, value)));
+    if (__privateGet(this, _sourceNode) && "playbackRate" in __privateGet(this, _sourceNode)) {
+      __privateGet(this, _sourceNode).playbackRate.setValueAtTime(
+        __privateGet(this, _playbackRate),
+        __privateGet(this, _audioContext2).context.currentTime
+      );
+    }
+  }
+  get channel() {
+    return __privateGet(this, _channel);
+  }
+  get gainNode() {
+    return __privateGet(this, _gainNode2);
+  }
+  get sourceNode() {
+    return __privateGet(this, _sourceNode);
+  }
+  get currentTime() {
+    if (!__privateGet(this, _playing)) {
+      return __privateGet(this, _pauseTime);
+    }
+    return __privateGet(this, _audioContext2).currentTime - __privateGet(this, _startTime);
+  }
+  get x() {
+    return __privateGet(this, _x2);
+  }
+  set x(value) {
+    __privateSet(this, _x2, value);
+    __privateMethod(this, _AudioSource_instances, updatePannerPosition_fn).call(this);
+  }
+  get y() {
+    return __privateGet(this, _y2);
+  }
+  set y(value) {
+    __privateSet(this, _y2, value);
+    __privateMethod(this, _AudioSource_instances, updatePannerPosition_fn).call(this);
+  }
+  get spatial() {
+    return __privateGet(this, _spatial);
+  }
+  get refDistance() {
+    return __privateGet(this, _refDistance);
+  }
+  get maxDistance() {
+    return __privateGet(this, _maxDistance);
+  }
+  get rolloffFactor() {
+    return __privateGet(this, _rolloffFactor);
+  }
+  playBuffer(buffer, offset = 0) {
+    var _a2;
+    if (!__privateGet(this, _audioContext2) || !buffer) {
+      return false;
+    }
+    this.stop();
+    __privateMethod(this, _AudioSource_instances, setupNodes_fn).call(this);
+    __privateSet(this, _sourceNode, __privateGet(this, _audioContext2).createBufferSource());
+    __privateGet(this, _sourceNode).buffer = buffer;
+    __privateGet(this, _sourceNode).loop = __privateGet(this, _loop);
+    __privateGet(this, _sourceNode).playbackRate.setValueAtTime(
+      __privateGet(this, _playbackRate),
+      __privateGet(this, _audioContext2).context.currentTime
+    );
+    __privateGet(this, _sourceNode).connect(__privateGet(this, _gainNode2));
+    __privateGet(this, _sourceNode).onended = () => {
+      var _a3;
+      if (__privateGet(this, _playing) && !__privateGet(this, _loop)) {
+        __privateSet(this, _playing, false);
+        this.emit("ended");
+        (_a3 = __privateGet(this, _channel)) == null ? void 0 : _a3.unregisterSource(this);
+      }
+    };
+    __privateGet(this, _sourceNode).start(0, offset);
+    __privateSet(this, _startTime, __privateGet(this, _audioContext2).currentTime - offset);
+    __privateSet(this, _playing, true);
+    (_a2 = __privateGet(this, _channel)) == null ? void 0 : _a2.registerSource(this);
+    this.emit("play");
+    return true;
+  }
+  playOscillator(type = "sine", frequency = 440, duration = null) {
+    var _a2;
+    if (!__privateGet(this, _audioContext2)) {
+      return false;
+    }
+    this.stop();
+    __privateMethod(this, _AudioSource_instances, setupNodes_fn).call(this);
+    __privateSet(this, _sourceNode, __privateGet(this, _audioContext2).createOscillator());
+    __privateGet(this, _sourceNode).type = type;
+    __privateGet(this, _sourceNode).frequency.setValueAtTime(
+      frequency,
+      __privateGet(this, _audioContext2).context.currentTime
+    );
+    __privateGet(this, _sourceNode).connect(__privateGet(this, _gainNode2));
+    __privateGet(this, _sourceNode).onended = () => {
+      var _a3;
+      if (__privateGet(this, _playing)) {
+        __privateSet(this, _playing, false);
+        this.emit("ended");
+        (_a3 = __privateGet(this, _channel)) == null ? void 0 : _a3.unregisterSource(this);
+      }
+    };
+    __privateGet(this, _sourceNode).start();
+    __privateSet(this, _startTime, __privateGet(this, _audioContext2).currentTime);
+    __privateSet(this, _playing, true);
+    if (duration !== null && duration > 0) {
+      __privateGet(this, _sourceNode).stop(__privateGet(this, _audioContext2).context.currentTime + duration);
+    }
+    (_a2 = __privateGet(this, _channel)) == null ? void 0 : _a2.registerSource(this);
+    this.emit("play");
+    return true;
+  }
+  stop() {
+    var _a2;
+    if (!__privateGet(this, _playing)) {
+      return false;
+    }
+    __privateSet(this, _playing, false);
+    __privateSet(this, _pauseTime, 0);
+    if (__privateGet(this, _sourceNode)) {
+      try {
+        __privateGet(this, _sourceNode).stop();
+      } catch {
+      }
+    }
+    __privateMethod(this, _AudioSource_instances, cleanupSourceNode_fn).call(this);
+    if (__privateGet(this, _pannerNode)) {
+      __privateGet(this, _pannerNode).disconnect();
+      __privateSet(this, _pannerNode, null);
+    }
+    if (__privateGet(this, _gainNode2)) {
+      __privateGet(this, _gainNode2).disconnect();
+      __privateSet(this, _gainNode2, null);
+    }
+    (_a2 = __privateGet(this, _channel)) == null ? void 0 : _a2.unregisterSource(this);
+    this.emit("stop");
+    return true;
+  }
+  setPosition(x, y) {
+    __privateSet(this, _x2, x);
+    __privateSet(this, _y2, y);
+    __privateMethod(this, _AudioSource_instances, updatePannerPosition_fn).call(this);
+    return this;
+  }
+  getPosition() {
+    return { x: __privateGet(this, _x2), y: __privateGet(this, _y2) };
+  }
+  setVolume(value) {
+    this.volume = value;
+    return this;
+  }
+  getVolume() {
+    return __privateGet(this, _volume2);
+  }
+  setLoop(value) {
+    this.loop = value;
+    return this;
+  }
+  setPlaybackRate(value) {
+    this.playbackRate = value;
+    return this;
+  }
+  fadeIn(duration = 1) {
+    var _a2;
+    if (!__privateGet(this, _gainNode2) || !((_a2 = __privateGet(this, _audioContext2)) == null ? void 0 : _a2.context)) {
+      return this;
+    }
+    const ctx = __privateGet(this, _audioContext2).context;
+    __privateGet(this, _gainNode2).gain.setValueAtTime(0, ctx.currentTime);
+    __privateGet(this, _gainNode2).gain.linearRampToValueAtTime(__privateGet(this, _volume2), ctx.currentTime + duration);
+    return this;
+  }
+  fadeOut(duration = 1, stopAfter = true) {
+    var _a2;
+    if (!__privateGet(this, _gainNode2) || !((_a2 = __privateGet(this, _audioContext2)) == null ? void 0 : _a2.context)) {
+      return this;
+    }
+    const ctx = __privateGet(this, _audioContext2).context;
+    __privateGet(this, _gainNode2).gain.setValueAtTime(__privateGet(this, _gainNode2).gain.value, ctx.currentTime);
+    __privateGet(this, _gainNode2).gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+    if (stopAfter) {
+      setTimeout(() => this.stop(), duration * 1e3);
+    }
+    return this;
+  }
+  onDispose() {
+    this.stop();
+  }
+}
+_audioContext2 = new WeakMap();
+_channel = new WeakMap();
+_gainNode2 = new WeakMap();
+_pannerNode = new WeakMap();
+_sourceNode = new WeakMap();
+_playing = new WeakMap();
+_loop = new WeakMap();
+_volume2 = new WeakMap();
+_playbackRate = new WeakMap();
+_startTime = new WeakMap();
+_pauseTime = new WeakMap();
+_x2 = new WeakMap();
+_y2 = new WeakMap();
+_spatial = new WeakMap();
+_refDistance = new WeakMap();
+_maxDistance = new WeakMap();
+_rolloffFactor = new WeakMap();
+_AudioSource_instances = new WeakSet();
+initSpatialOptions_fn = function(options) {
+  __privateSet(this, _x2, options.x ?? 0);
+  __privateSet(this, _y2, options.y ?? 0);
+  __privateSet(this, _refDistance, options.refDistance ?? 1);
+  __privateSet(this, _maxDistance, options.maxDistance ?? 10);
+  __privateSet(this, _rolloffFactor, options.rolloffFactor ?? 1);
+};
+updatePannerPosition_fn = function() {
+  var _a2;
+  if (__privateGet(this, _pannerNode) && ((_a2 = __privateGet(this, _audioContext2)) == null ? void 0 : _a2.context)) {
+    const ctx = __privateGet(this, _audioContext2).context;
+    __privateGet(this, _pannerNode).positionX.setValueAtTime(__privateGet(this, _x2), ctx.currentTime);
+    __privateGet(this, _pannerNode).positionY.setValueAtTime(__privateGet(this, _y2), ctx.currentTime);
+  }
+};
+updateGain_fn2 = function() {
+  var _a2;
+  if (__privateGet(this, _gainNode2) && ((_a2 = __privateGet(this, _audioContext2)) == null ? void 0 : _a2.context)) {
+    __privateGet(this, _gainNode2).gain.setValueAtTime(
+      __privateGet(this, _volume2),
+      __privateGet(this, _audioContext2).context.currentTime
+    );
+  }
+};
+setupNodes_fn = function() {
+  var _a2;
+  if (!__privateGet(this, _audioContext2)) {
+    return false;
+  }
+  __privateSet(this, _gainNode2, __privateGet(this, _audioContext2).createGain());
+  __privateMethod(this, _AudioSource_instances, updateGain_fn2).call(this);
+  let outputNode = __privateGet(this, _gainNode2);
+  if (__privateGet(this, _spatial)) {
+    __privateSet(this, _pannerNode, __privateGet(this, _audioContext2).createPanner());
+    __privateMethod(this, _AudioSource_instances, configurePanner_fn).call(this);
+    __privateGet(this, _gainNode2).connect(__privateGet(this, _pannerNode));
+    outputNode = __privateGet(this, _pannerNode);
+  }
+  if ((_a2 = __privateGet(this, _channel)) == null ? void 0 : _a2.gainNode) {
+    outputNode.connect(__privateGet(this, _channel).gainNode);
+  } else {
+    outputNode.connect(__privateGet(this, _audioContext2).masterGain);
+  }
+  return true;
+};
+configurePanner_fn = function() {
+  if (!__privateGet(this, _pannerNode)) {
+    return;
+  }
+  __privateGet(this, _pannerNode).panningModel = "HRTF";
+  __privateGet(this, _pannerNode).distanceModel = "linear";
+  __privateGet(this, _pannerNode).refDistance = __privateGet(this, _refDistance);
+  __privateGet(this, _pannerNode).maxDistance = __privateGet(this, _maxDistance);
+  __privateGet(this, _pannerNode).rolloffFactor = __privateGet(this, _rolloffFactor);
+  __privateMethod(this, _AudioSource_instances, updatePannerPosition_fn).call(this);
+};
+cleanupSourceNode_fn = function() {
+  if (__privateGet(this, _sourceNode)) {
+    try {
+      __privateGet(this, _sourceNode).disconnect();
+    } catch {
+    }
+    __privateSet(this, _sourceNode, null);
+  }
+};
+__publicField(AudioSource, "$category", "audioSource");
+__publicField(AudioSource, "$lifecycle", false);
+const unlockEvents = ["click", "touchstart", "keydown"];
+let unlocked = false;
+let pendingCallbacks = [];
+function handleUnlock() {
+  if (unlocked) {
+    return;
+  }
+  unlocked = true;
+  for (const callback of pendingCallbacks) {
+    callback();
+  }
+  pendingCallbacks = [];
+  cleanup();
+}
+function cleanup() {
+  for (const event of unlockEvents) {
+    document.removeEventListener(event, handleUnlock, true);
+  }
+  window.removeEventListener("gamepadconnected", handleUnlock);
+}
+for (const event of unlockEvents) {
+  document.addEventListener(event, handleUnlock, true);
+}
+window.addEventListener("gamepadconnected", handleUnlock);
+function onAudioUnlock(callback) {
+  if (unlocked) {
+    callback();
+  } else {
+    pendingCallbacks.push(callback);
+  }
+}
+class AudioSystem extends PerkyModule {
+  constructor(options = {}) {
+    super(options);
+    __privateAdd(this, _AudioSystem_instances);
+    __privateAdd(this, _audioContext3, null);
+    __privateAdd(this, _buffers, /* @__PURE__ */ new Map());
+    __privateAdd(this, _pendingAudio, /* @__PURE__ */ new Map());
+    __privateAdd(this, _unlocked, false);
+    __privateSet(this, _audioContext3, new AudioContext());
+    const defaultChannels = options.channels ?? ["music", "sfx", "ambiance"];
+    for (const channelName of defaultChannels) {
+      this.createChannel(channelName);
+    }
+  }
+  get audioContext() {
+    return __privateGet(this, _audioContext3);
+  }
+  get unlocked() {
+    return __privateGet(this, _unlocked);
+  }
+  get currentTime() {
+    return __privateGet(this, _audioContext3).currentTime;
+  }
+  get masterVolume() {
+    return __privateGet(this, _audioContext3).getMasterVolume();
+  }
+  set masterVolume(value) {
+    __privateGet(this, _audioContext3).setMasterVolume(value);
+  }
+  onInstall(host) {
+    this.delegateTo(host, [
+      "play",
+      "playAt",
+      "playOscillator",
+      "playOscillatorAt",
+      "stop",
+      "stopChannel",
+      "stopAll",
+      "setVolume",
+      "getVolume",
+      "setChannelVolume",
+      "getChannelVolume",
+      "muteChannel",
+      "unmuteChannel",
+      "getChannel",
+      "hasChannel",
+      "unlock",
+      "setListenerPosition",
+      "getListenerPosition"
+    ]);
+    this.delegateEventsTo(host, [
+      "audio:play",
+      "audio:stop",
+      "audio:unlocked"
+    ], "audio");
+    if (host.sourceManager) {
+      this.listenTo(host.sourceManager, "loader:progress", (_progress, { asset, source }) => {
+        if (asset.type === "audio" && (source == null ? void 0 : source.type) === "deferred_audio") {
+          __privateGet(this, _pendingAudio).set(asset.id, source.url);
+        }
+      });
+    }
+    __privateMethod(this, _AudioSystem_instances, applyConfig_fn).call(this);
+  }
+  onStart() {
+    onAudioUnlock(() => this.unlock());
+  }
+  onStop() {
+    if (__privateGet(this, _unlocked)) {
+      __privateGet(this, _audioContext3).suspend();
+    }
+  }
+  onDispose() {
+    this.stopAll();
+    __privateGet(this, _buffers).clear();
+    __privateGet(this, _audioContext3).dispose();
+  }
+  async unlock() {
+    if (__privateGet(this, _unlocked)) {
+      return true;
+    }
+    try {
+      await __privateGet(this, _audioContext3).resume();
+      __privateSet(this, _unlocked, true);
+      await __privateMethod(this, _AudioSystem_instances, loadPendingAudio_fn).call(this);
+      this.emit("audio:unlocked");
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  createChannel(name, options = {}) {
+    return this.create(AudioChannel, {
+      $id: name,
+      $bind: name,
+      audioContext: __privateGet(this, _audioContext3),
+      ...options
+    });
+  }
+  getChannel(name) {
+    return this.getChild(name);
+  }
+  hasChannel(name) {
+    return this.hasChild(name);
+  }
+  listChannels() {
+    return this.listNamesFor("audioChannel");
+  }
+  registerBuffer(id, buffer) {
+    __privateGet(this, _buffers).set(id, buffer);
+    this.emit("buffer:registered", id, buffer);
+  }
+  async registerArrayBuffer(id, arrayBuffer) {
+    try {
+      const audioBuffer = await __privateGet(this, _audioContext3).decodeAudioData(arrayBuffer);
+      this.registerBuffer(id, audioBuffer);
+      return audioBuffer;
+    } catch (e) {
+      this.emit("buffer:error", id, e);
+      return null;
+    }
+  }
+  getBuffer(id) {
+    return __privateGet(this, _buffers).get(id) || null;
+  }
+  hasBuffer(id) {
+    return __privateGet(this, _buffers).has(id);
+  }
+  async loadBuffer(id, url) {
+    try {
+      const response = await fetch(url);
+      const arrayBuffer = await response.arrayBuffer();
+      return this.registerArrayBuffer(id, arrayBuffer);
+    } catch (e) {
+      this.emit("buffer:error", id, e);
+      return null;
+    }
+  }
+  play(bufferId, options = {}) {
+    if (!__privateGet(this, _unlocked)) {
+      return null;
+    }
+    const buffer = __privateGet(this, _buffers).get(bufferId);
+    if (!buffer) {
+      return null;
+    }
+    const channelName = options.channel ?? "sfx";
+    const channel = this.getChannel(channelName);
+    const sourceId = options.$id ?? uniqueId(this.childrenRegistry, bufferId);
+    const source = new AudioSource({
+      $id: sourceId,
+      audioContext: __privateGet(this, _audioContext3),
+      channel,
+      loop: options.loop ?? false,
+      volume: options.volume ?? 1,
+      playbackRate: options.playbackRate ?? 1
+    });
+    source.playBuffer(buffer, options.offset ?? 0);
+    this.emit("audio:play", sourceId, bufferId, options);
+    return source;
+  }
+  playAt(bufferId, x, y, options = {}) {
+    return this.play(bufferId, {
+      ...options,
+      spatial: true,
+      x,
+      y
+    });
+  }
+  playOscillator(options = {}) {
+    if (!__privateGet(this, _unlocked)) {
+      return null;
+    }
+    const channel = this.getChannel(options.channel ?? "sfx");
+    const sourceId = options.$id ?? uniqueId(this.childrenRegistry, "oscillator");
+    const source = new AudioSource({
+      ...options,
+      $id: sourceId,
+      audioContext: __privateGet(this, _audioContext3),
+      channel
+    });
+    source.playOscillator(options.type, options.frequency, options.duration);
+    this.emit("audio:play", sourceId, "oscillator", options);
+    return source;
+  }
+  playOscillatorAt(x, y, options = {}) {
+    return this.playOscillator({
+      ...options,
+      spatial: true,
+      x,
+      y
+    });
+  }
+  stop(sourceId) {
+    for (const channelName of this.listChannels()) {
+      const channel = this.getChannel(channelName);
+      const source = channel == null ? void 0 : channel.getSource(sourceId);
+      if (source) {
+        source.stop();
+        this.emit("audio:stop", sourceId);
+        return true;
+      }
+    }
+    return false;
+  }
+  stopChannel(channelName) {
+    const channel = this.getChannel(channelName);
+    if (channel) {
+      channel.stopAll();
+      return true;
+    }
+    return false;
+  }
+  stopAll() {
+    for (const channelName of this.listChannels()) {
+      this.stopChannel(channelName);
+    }
+  }
+  setVolume(value) {
+    this.masterVolume = value;
+    this.emit("volume:changed", value);
+    return this;
+  }
+  getVolume() {
+    return this.masterVolume;
+  }
+  setChannelVolume(channelName, value) {
+    const channel = this.getChannel(channelName);
+    if (channel) {
+      channel.setVolume(value);
+    }
+    return this;
+  }
+  getChannelVolume(channelName) {
+    const channel = this.getChannel(channelName);
+    return channel ? channel.getVolume() : 0;
+  }
+  muteChannel(channelName) {
+    const channel = this.getChannel(channelName);
+    if (channel) {
+      channel.mute();
+    }
+    return this;
+  }
+  unmuteChannel(channelName) {
+    const channel = this.getChannel(channelName);
+    if (channel) {
+      channel.unmute();
+    }
+    return this;
+  }
+  setListenerPosition(x, y) {
+    __privateGet(this, _audioContext3).setListenerPosition(x, y, 0);
+    return this;
+  }
+  getListenerPosition() {
+    const pos = __privateGet(this, _audioContext3).getListenerPosition();
+    return { x: pos.x, y: pos.y };
+  }
+}
+_audioContext3 = new WeakMap();
+_buffers = new WeakMap();
+_pendingAudio = new WeakMap();
+_unlocked = new WeakMap();
+_AudioSystem_instances = new WeakSet();
+loadPendingAudio_fn = async function() {
+  const promises = [];
+  for (const [id, url] of __privateGet(this, _pendingAudio)) {
+    promises.push(this.loadBuffer(id, url));
+  }
+  __privateGet(this, _pendingAudio).clear();
+  await Promise.all(promises);
+};
+applyConfig_fn = function() {
+  var _a2, _b;
+  const audioConfig = (_b = (_a2 = this.host) == null ? void 0 : _a2.getConfig) == null ? void 0 : _b.call(_a2, "audio");
+  if (!audioConfig) {
+    return;
+  }
+  if (audioConfig.masterVolume !== void 0) {
+    this.setVolume(audioConfig.masterVolume);
+  }
+  if (audioConfig.channels) {
+    Object.entries(audioConfig.channels).forEach(([channelName, channelConfig]) => {
+      if (channelConfig.volume !== void 0) {
+        this.setChannelVolume(channelName, channelConfig.volume);
+      }
+      if (channelConfig.muted) {
+        this.muteChannel(channelName);
+      }
+    });
+  }
+};
+__publicField(AudioSystem, "$category", "audioSystem");
+class DenAudioManager extends PerkyModule {
+  constructor(options = {}) {
+    super(options);
+    __privateAdd(this, _DenAudioManager_instances);
+    __privateAdd(this, _game, null);
+    __privateSet(this, _game, options.game);
+  }
+  onInstall(host) {
+    host.create(AudioSystem, {
+      $bind: "audioSystem"
+    });
+    __privateMethod(this, _DenAudioManager_instances, setupGameEvents_fn).call(this, host);
+  }
+  playShoot() {
+    var _a2;
+    const audioSystem = (_a2 = __privateGet(this, _game)) == null ? void 0 : _a2.audioSystem;
+    if (!(audioSystem == null ? void 0 : audioSystem.hasBuffer("throw"))) {
+      return;
+    }
+    audioSystem.play("throw", { volume: 0.5 });
+  }
+  playHit(x, y) {
+    var _a2;
+    const audioSystem = (_a2 = __privateGet(this, _game)) == null ? void 0 : _a2.audioSystem;
+    if (!(audioSystem == null ? void 0 : audioSystem.hasBuffer("wound"))) {
+      return;
+    }
+    audioSystem.playAt("wound", x, y, { volume: 0.4 });
+  }
+  playEnemyDeath(x, y) {
+    var _a2;
+    const audioSystem = (_a2 = __privateGet(this, _game)) == null ? void 0 : _a2.audioSystem;
+    if (!(audioSystem == null ? void 0 : audioSystem.hasBuffer("wound"))) {
+      return;
+    }
+    audioSystem.playAt("wound", x, y, { volume: 0.3 });
+  }
+  playClick() {
+    var _a2;
+    const audioSystem = (_a2 = __privateGet(this, _game)) == null ? void 0 : _a2.audioSystem;
+    if (!(audioSystem == null ? void 0 : audioSystem.hasBuffer("click"))) {
+      return;
+    }
+    audioSystem.play("click", { volume: 0.4 });
+  }
+}
+_game = new WeakMap();
+_DenAudioManager_instances = new WeakSet();
+setupGameEvents_fn = function(game) {
+  game.on("day:announce", () => {
+    __privateMethod(this, _DenAudioManager_instances, playDayAnnounce_fn).call(this);
+  });
+  if (game.world) {
+    __privateMethod(this, _DenAudioManager_instances, setupWorldEvents_fn).call(this, game.world);
+  }
+};
+setupWorldEvents_fn = function(world) {
+  world.on("enemy:hit", ({ x, y }) => {
+    this.playHit(x, y);
+  });
+  world.on("enemy:destroyed", (enemy) => {
+    this.playEnemyDeath(enemy.x, enemy.y);
+  });
+  world.on("player:hit", ({ x, y }) => {
+    this.playHit(x, y);
+  });
+};
+playDayAnnounce_fn = function() {
+  var _a2;
+  const audioSystem = (_a2 = __privateGet(this, _game)) == null ? void 0 : _a2.audioSystem;
+  if (!(audioSystem == null ? void 0 : audioSystem.hasBuffer("howl"))) {
+    return;
+  }
+  audioSystem.play("howl", { channel: "sfx", volume: 0.6 });
+};
+__publicField(DenAudioManager, "$category", "audioManager");
 class RenderPass {
   constructor() {
     __privateAdd(this, _RenderPass_instances);
@@ -12014,7 +13049,15 @@ __publicField(DayNightPass, "uniformConfig", {
 });
 const manifest = {
   config: {
-    name: "Mistbrewer"
+    name: "Mistbrewer",
+    audio: {
+      masterVolume: 0.5,
+      channels: {
+        sfx: { muted: true, volume: 0.5 },
+        ambiance: { muted: true },
+        music: { muted: false }
+      }
+    }
   },
   assets: {
     background: { type: "image", url: "./assets/images/background.png" },
@@ -12029,7 +13072,12 @@ const manifest = {
     brick: { type: "image", url: "./assets/images/brick.png" },
     pie: { type: "image", url: "./assets/images/pie.png" },
     cake: { type: "image", url: "./assets/images/cake.png" },
-    fireball: { type: "image", url: "./assets/images/fireball.png" }
+    fireball: { type: "image", url: "./assets/images/fireball.png" },
+    click: { type: "audio", url: "./assets/audio/click.ogg", tags: ["sfx"] },
+    howl: { type: "audio", url: "./assets/audio/howl.ogg", tags: ["sfx"] },
+    throw: { type: "audio", url: "./assets/audio/throw.ogg", tags: ["sfx"] },
+    wound: { type: "audio", url: "./assets/audio/wound.ogg", tags: ["sfx"] },
+    music: { type: "audio", url: "./assets/audio/music.ogg", tags: ["music"] }
   }
 };
 const instances = /* @__PURE__ */ new Map();
@@ -12227,6 +13275,10 @@ class DefendTheDen extends Game {
       game: this
     });
     waveProgressBar.mount(uiLayer);
+    this.denAudio = this.create(DenAudioManager, {
+      $id: "denAudio",
+      game: this
+    });
     this.on("render", () => {
       this.renderer.render();
     });
@@ -12377,7 +13429,10 @@ const ICONS = {
         <path d="M 8 9 L 3 11 L 8 13" />
         <path d="M 8 13 C 9 16 11 19 14 21" />
         <path d="M 14 5 C 16 6 17 12 17 20" />
-    </svg>`
+    </svg>`,
+  volume: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>',
+  volumeMuted: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>',
+  audio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>'
 };
 const cssVariables = `
     --bg-primary: #1a1a1e;
@@ -14613,7 +15668,7 @@ update_fn = function() {
 };
 customElements.define("base-renderer-inspector", BaseRendererInspector);
 PerkyExplorerDetails.registerInspector(BaseRendererInspector);
-const customStyles$6 = `
+const customStyles$8 = `
     .fps-controls {
         grid-column: 1 / -1;
         display: flex;
@@ -14671,7 +15726,7 @@ const customStyles$6 = `
 `;
 class GameLoopInspector extends BaseInspector {
   constructor() {
-    super(customStyles$6);
+    super(customStyles$8);
     __privateAdd(this, _GameLoopInspector_instances);
     __privateAdd(this, _fpsValueEl, null);
     __privateAdd(this, _screenFpsValueEl, null);
@@ -14861,7 +15916,7 @@ function createInfoRow(label) {
   row.appendChild(valueEl);
   return row;
 }
-const customStyles$5 = `
+const customStyles$7 = `
     .inspector-stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -14985,7 +16040,7 @@ const customStyles$5 = `
 `;
 class TextureManagerInspector extends BaseInspector {
   constructor() {
-    super(customStyles$5);
+    super(customStyles$7);
     __privateAdd(this, _TextureManagerInspector_instances);
     __privateAdd(this, _activeCountEl, null);
     __privateAdd(this, _activeSizeEl, null);
@@ -15635,7 +16690,7 @@ openSceneTree_fn = function() {
 };
 customElements.define("canvas-layer-inspector", CanvasLayerInspector);
 PerkyExplorerDetails.registerInspector(CanvasLayerInspector);
-const customStyles$4 = `
+const customStyles$6 = `
     .view-list {
         margin-top: 8px;
         padding-top: 8px;
@@ -15665,7 +16720,7 @@ const customStyles$4 = `
 `;
 class WorldViewInspector extends BaseInspector {
   constructor() {
-    super(customStyles$4);
+    super(customStyles$6);
     __privateAdd(this, _WorldViewInspector_instances);
     this.buildDOM();
   }
@@ -15850,7 +16905,116 @@ renderPostPasses_fn = function(group) {
 };
 customElements.define("render-group-inspector", RenderGroupInspector);
 PerkyExplorerDetails.registerInspector(RenderGroupInspector);
-const customStyles$3 = `
+function matchesSearch(asset, query2) {
+  const lowerQuery = query2.toLowerCase();
+  if ((asset.id || "").toLowerCase().includes(lowerQuery)) {
+    return true;
+  }
+  if ((asset.name || "").toLowerCase().includes(lowerQuery)) {
+    return true;
+  }
+  if ((asset.type || "").toLowerCase().includes(lowerQuery)) {
+    return true;
+  }
+  if (asset.tags && asset.tags.some((tag) => tag.toLowerCase().includes(lowerQuery))) {
+    return true;
+  }
+  return false;
+}
+const customStyles$5 = `
+    .filters-container {
+        margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .search-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .search-bar {
+        width: 100%;
+        padding: 6px 28px 6px 8px;
+        background: var(--bg-hover);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--fg-primary);
+        font-size: 11px;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .search-clear {
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 16px;
+        height: 16px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--fg-muted);
+        font-size: 14px;
+        line-height: 1;
+        user-select: none;
+        border-radius: 2px;
+    }
+
+    .search-clear:hover {
+        color: var(--fg-primary);
+        background: var(--bg-primary);
+    }
+
+    .search-container.has-value .search-clear {
+        display: flex;
+    }
+
+    .search-bar:focus {
+        border-color: var(--accent);
+    }
+
+    .search-bar::placeholder {
+        color: var(--fg-muted);
+    }
+
+    .filter-buttons {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+
+    .filter-button {
+        padding: 4px 8px;
+        background: var(--bg-hover);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-size: 10px;
+        color: var(--fg-secondary);
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.2s;
+    }
+
+    .filter-button:hover {
+        background: var(--bg-primary);
+        color: var(--fg-primary);
+    }
+
+    .filter-button.active {
+        background: var(--accent);
+        color: var(--bg-primary);
+        border-color: var(--accent);
+    }
+
+    .filter-button .count {
+        opacity: 0.7;
+        margin-left: 4px;
+    }
+
     .section {
         margin-bottom: 12px;
     }
@@ -15952,15 +17116,46 @@ const customStyles$3 = `
         margin-bottom: 6px;
     }
 
+    .asset-card.collapsed {
+        padding-bottom: 8px;
+    }
+
     .asset-header {
         display: flex;
         align-items: center;
         gap: 8px;
+        position: relative;
+    }
+
+    .asset-header:not(.collapsed) {
         margin-bottom: 6px;
     }
 
+    .asset-header::before {
+        content: '▼';
+        font-size: 8px;
+        color: var(--fg-muted);
+        transition: transform 0.2s;
+        margin-right: 2px;
+    }
+
+    .asset-header.collapsed::before {
+        transform: rotate(-90deg);
+    }
+
     .asset-icon {
-        font-size: 14px;
+        width: 14px;
+        height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .asset-icon svg {
+        width: 100%;
+        height: 100%;
+        color: var(--fg-muted);
     }
 
     .asset-name {
@@ -16033,6 +17228,16 @@ const customStyles$3 = `
         background: var(--bg-primary);
     }
 
+    .asset-preview audio {
+        width: 100%;
+        height: 32px;
+        outline: none;
+    }
+
+    .asset-preview audio::-webkit-media-controls-panel {
+        background-color: var(--bg-primary);
+    }
+
     .asset-config {
         margin-top: 6px;
         padding-top: 6px;
@@ -16048,12 +17253,18 @@ const customStyles$3 = `
 `;
 class ManifestInspector extends BaseInspector {
   constructor() {
-    super(customStyles$3);
+    super(customStyles$5);
     __privateAdd(this, _ManifestInspector_instances);
     __privateAdd(this, _sectionsState, {
       config: true,
       assets: true
     });
+    __privateAdd(this, _filterState, {
+      searchQuery: ""
+    });
+    __privateAdd(this, _typeGroupsState, {});
+    __privateAdd(this, _mainContainer, null);
+    __privateAdd(this, _assetsListContainer, null);
     this.buildDOM();
   }
   static matches(module) {
@@ -16061,22 +17272,58 @@ class ManifestInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this);
+      __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this, false);
     }
   }
 }
 _sectionsState = new WeakMap();
+_filterState = new WeakMap();
+_typeGroupsState = new WeakMap();
+_mainContainer = new WeakMap();
+_assetsListContainer = new WeakMap();
 _ManifestInspector_instances = new WeakSet();
-update_fn6 = function() {
+update_fn6 = function(onlyAssetsList = false) {
   if (!this.module) {
     return;
   }
+  if (onlyAssetsList && __privateGet(this, _assetsListContainer)) {
+    __privateMethod(this, _ManifestInspector_instances, updateAssetsList_fn).call(this);
+    return;
+  }
+  if (__privateGet(this, _mainContainer) && __privateGet(this, _mainContainer).parentNode) {
+    __privateGet(this, _mainContainer).remove();
+  }
   this.clearContent();
   const container = document.createElement("div");
+  __privateSet(this, _mainContainer, container);
   container.appendChild(__privateMethod(this, _ManifestInspector_instances, createConfigSection_fn).call(this));
   container.appendChild(__privateMethod(this, _ManifestInspector_instances, createAssetsSection_fn).call(this));
   this.gridEl.style.display = "none";
   this.shadowRoot.insertBefore(container, this.gridEl);
+};
+updateAssetsList_fn = function() {
+  if (!__privateGet(this, _assetsListContainer)) {
+    return;
+  }
+  __privateGet(this, _assetsListContainer).innerHTML = "";
+  const allAssets = this.module.getAllAssets();
+  const filteredAssets = __privateMethod(this, _ManifestInspector_instances, applyFilters_fn).call(this, allAssets);
+  const hasActiveSearch = __privateGet(this, _filterState).searchQuery.length > 0;
+  if (filteredAssets.length === 0) {
+    __privateGet(this, _assetsListContainer).innerHTML = '<div class="empty-message">No assets match the current filters</div>';
+    return;
+  }
+  const assetsByType = groupAssetsByType(filteredAssets);
+  for (const [type, assets] of Object.entries(assetsByType)) {
+    const group = __privateMethod(this, _ManifestInspector_instances, createTypeGroup_fn).call(this, type, assets, hasActiveSearch);
+    __privateGet(this, _assetsListContainer).appendChild(group);
+  }
+};
+applyFilters_fn = function(assets) {
+  if (!__privateGet(this, _filterState).searchQuery) {
+    return assets;
+  }
+  return assets.filter((asset) => matchesSearch(asset, __privateGet(this, _filterState).searchQuery));
 };
 createSection_fn = function(title, key, count = null) {
   const section = document.createElement("div");
@@ -16144,27 +17391,116 @@ createDataGrid_fn = function(data, depth = 0) {
   }
   return grid;
 };
+createFiltersBar_fn = function(allAssets) {
+  const container = document.createElement("div");
+  container.className = "filters-container";
+  const searchContainer = document.createElement("div");
+  searchContainer.className = "search-container";
+  if (__privateGet(this, _filterState).searchQuery) {
+    searchContainer.classList.add("has-value");
+  }
+  const searchBar = document.createElement("input");
+  searchBar.type = "text";
+  searchBar.className = "search-bar";
+  searchBar.placeholder = "Search by name, id, type or tag...";
+  searchBar.value = __privateGet(this, _filterState).searchQuery;
+  const clearButton = document.createElement("div");
+  clearButton.className = "search-clear";
+  clearButton.textContent = "×";
+  clearButton.title = "Clear search";
+  const updateSearch = (value) => {
+    searchBar.value = value;
+    __privateGet(this, _filterState).searchQuery = value;
+    if (value) {
+      searchContainer.classList.add("has-value");
+    } else {
+      searchContainer.classList.remove("has-value");
+    }
+    __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this);
+  };
+  searchBar.addEventListener("input", (e) => {
+    __privateGet(this, _filterState).searchQuery = e.target.value;
+    if (e.target.value) {
+      searchContainer.classList.add("has-value");
+    } else {
+      searchContainer.classList.remove("has-value");
+    }
+    __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this, true);
+  });
+  clearButton.addEventListener("click", () => {
+    updateSearch("");
+    searchBar.focus();
+  });
+  searchContainer.appendChild(searchBar);
+  searchContainer.appendChild(clearButton);
+  container.appendChild(searchContainer);
+  const quickFilters = document.createElement("div");
+  quickFilters.className = "filter-buttons";
+  const typeStats = getTypeStats(allAssets);
+  for (const [type, count] of Object.entries(typeStats)) {
+    const chip = createFilterChip(type, count, () => {
+      updateSearch(type);
+      searchBar.focus();
+    });
+    quickFilters.appendChild(chip);
+  }
+  const tagStats = getTagStats(allAssets);
+  if (Object.keys(tagStats).length > 0) {
+    for (const [tag, count] of Object.entries(tagStats)) {
+      const chip = createFilterChip(`#${tag}`, count, () => {
+        updateSearch(tag);
+        searchBar.focus();
+      });
+      quickFilters.appendChild(chip);
+    }
+  }
+  container.appendChild(quickFilters);
+  return container;
+};
 createAssetsSection_fn = function() {
   const allAssets = this.module.getAllAssets();
+  const hasActiveSearch = __privateGet(this, _filterState).searchQuery.length > 0;
   const { section, content } = __privateMethod(this, _ManifestInspector_instances, createSection_fn).call(this, "Assets", "assets", allAssets.length);
   if (allAssets.length === 0) {
     content.innerHTML = '<div class="empty-message">No assets defined</div>';
     return section;
   }
-  const assetsByType = groupAssetsByType(allAssets);
+  content.appendChild(__privateMethod(this, _ManifestInspector_instances, createFiltersBar_fn).call(this, allAssets));
+  const assetsListContainer = document.createElement("div");
+  __privateSet(this, _assetsListContainer, assetsListContainer);
+  content.appendChild(assetsListContainer);
+  const filteredAssets = __privateMethod(this, _ManifestInspector_instances, applyFilters_fn).call(this, allAssets);
+  if (filteredAssets.length === 0) {
+    assetsListContainer.innerHTML = '<div class="empty-message">No assets match the current filters</div>';
+    return section;
+  }
+  const assetsByType = groupAssetsByType(filteredAssets);
   for (const [type, assets] of Object.entries(assetsByType)) {
-    const group = document.createElement("div");
-    group.className = "asset-type-group";
-    const typeHeader = document.createElement("div");
-    typeHeader.className = "asset-type-header";
-    typeHeader.textContent = `${type} (${assets.length})`;
-    group.appendChild(typeHeader);
-    for (const asset of assets) {
-      group.appendChild(createAssetCard(asset, (data) => __privateMethod(this, _ManifestInspector_instances, createDataGrid_fn).call(this, data)));
-    }
-    content.appendChild(group);
+    const group = __privateMethod(this, _ManifestInspector_instances, createTypeGroup_fn).call(this, type, assets, hasActiveSearch);
+    assetsListContainer.appendChild(group);
   }
   return section;
+};
+createTypeGroup_fn = function(type, assets, hasActiveSearch) {
+  const group = document.createElement("div");
+  group.className = "asset-type-group";
+  const typeHeader = document.createElement("div");
+  typeHeader.className = "asset-type-header";
+  typeHeader.style.cursor = "pointer";
+  typeHeader.textContent = `${type} (${assets.length})`;
+  const isCollapsed = __privateGet(this, _typeGroupsState)[type] === false;
+  const typeContent = document.createElement("div");
+  typeContent.style.display = isCollapsed ? "none" : "block";
+  typeHeader.addEventListener("click", () => {
+    __privateGet(this, _typeGroupsState)[type] = typeContent.style.display === "none";
+    typeContent.style.display = typeContent.style.display === "none" ? "block" : "none";
+  });
+  for (const asset of assets) {
+    typeContent.appendChild(createAssetCard(asset, (data) => __privateMethod(this, _ManifestInspector_instances, createDataGrid_fn).call(this, data), hasActiveSearch));
+  }
+  group.appendChild(typeHeader);
+  group.appendChild(typeContent);
+  return group;
 };
 function groupAssetsByType(assets) {
   const grouped = {};
@@ -16177,12 +17513,38 @@ function groupAssetsByType(assets) {
   }
   return grouped;
 }
+function getTypeStats(assets) {
+  const stats = {};
+  for (const asset of assets) {
+    const type = asset.type || "unknown";
+    stats[type] = (stats[type] || 0) + 1;
+  }
+  return stats;
+}
+function getTagStats(assets) {
+  const stats = {};
+  for (const asset of assets) {
+    if (asset.tags) {
+      for (const tag of asset.tags) {
+        stats[tag] = (stats[tag] || 0) + 1;
+      }
+    }
+  }
+  return stats;
+}
+function createFilterChip(label, count, onClick) {
+  const chip = document.createElement("div");
+  chip.className = "filter-button";
+  chip.innerHTML = `${label}<span class="count">${count}</span>`;
+  chip.addEventListener("click", onClick);
+  return chip;
+}
 function createAssetHeader(asset) {
   const header = document.createElement("div");
   header.className = "asset-header";
   const icon = document.createElement("span");
   icon.className = "asset-icon";
-  icon.textContent = getAssetIcon(asset);
+  icon.innerHTML = getAssetIcon(asset);
   const name = document.createElement("span");
   name.className = "asset-name";
   name.textContent = asset.name || asset.id;
@@ -16238,23 +17600,39 @@ function createAssetConfig(asset, createDataGrid) {
   configSection.appendChild(createDataGrid(asset.config));
   return configSection;
 }
-function createAssetCard(asset, createDataGrid) {
+function createAssetCard(asset, createDataGrid, hasActiveSearch = false) {
   const card = document.createElement("div");
   card.className = "asset-card";
-  card.appendChild(createAssetHeader(asset));
-  card.appendChild(createAssetDetails(asset));
+  const header = createAssetHeader(asset);
+  card.appendChild(header);
+  const detailsContainer = document.createElement("div");
+  const isCollapsed = !hasActiveSearch;
+  detailsContainer.style.display = hasActiveSearch ? "block" : "none";
+  if (isCollapsed) {
+    header.classList.add("collapsed");
+    card.classList.add("collapsed");
+  }
+  detailsContainer.appendChild(createAssetDetails(asset));
   const tags = createAssetTags(asset);
   if (tags) {
-    card.appendChild(tags);
+    detailsContainer.appendChild(tags);
   }
   const config = createAssetConfig(asset, createDataGrid);
   if (config) {
-    card.appendChild(config);
+    detailsContainer.appendChild(config);
   }
   const preview = createSourcePreview(asset);
   if (preview) {
-    card.appendChild(preview);
+    detailsContainer.appendChild(preview);
   }
+  card.appendChild(detailsContainer);
+  header.style.cursor = "pointer";
+  header.addEventListener("click", () => {
+    const isHidden = detailsContainer.style.display === "none";
+    detailsContainer.style.display = isHidden ? "block" : "none";
+    header.classList.toggle("collapsed");
+    card.classList.toggle("collapsed");
+  });
   return card;
 }
 function addAssetRow(container, label, value) {
@@ -16277,24 +17655,34 @@ function addAssetRowElement(container, label, element) {
   container.appendChild(labelEl);
   container.appendChild(valueEl);
 }
+const ASSET_ICONS = {
+  image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>',
+  audio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>',
+  font: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>',
+  shader: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>',
+  scene: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"></path></svg>',
+  script: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>',
+  data: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>',
+  default: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>'
+};
 const ASSET_ICON_PATTERNS = [
-  { keywords: ["texture", "image", "sprite"], icon: "🖼" },
-  { keywords: ["audio", "sound", "music"], icon: "🔊" },
-  { keywords: ["font"], icon: "🔤" },
-  { keywords: ["shader"], icon: "✨" },
-  { keywords: ["scene"], icon: "🎬" },
-  { keywords: ["script"], icon: "📜" },
-  { keywords: ["data", "json"], icon: "📄" }
+  { keywords: ["texture", "image", "sprite"], key: "image" },
+  { keywords: ["audio", "sound", "music"], key: "audio" },
+  { keywords: ["font"], key: "font" },
+  { keywords: ["shader"], key: "shader" },
+  { keywords: ["scene"], key: "scene" },
+  { keywords: ["script"], key: "script" },
+  { keywords: ["data", "json"], key: "data" }
 ];
 function getAssetIcon(asset) {
   var _a2;
   const type = ((_a2 = asset.type) == null ? void 0 : _a2.toLowerCase()) || "";
-  for (const { keywords, icon } of ASSET_ICON_PATTERNS) {
+  for (const { keywords, key } of ASSET_ICON_PATTERNS) {
     if (keywords.some((keyword) => type.includes(keyword))) {
-      return icon;
+      return ASSET_ICONS[key];
     }
   }
-  return "📦";
+  return ASSET_ICONS.default;
 }
 function getImageSrc(source) {
   if (source instanceof HTMLImageElement) {
@@ -16306,6 +17694,9 @@ function getImageSrc(source) {
   return null;
 }
 function createSourcePreview(asset) {
+  if (asset.type === "audio") {
+    return createAudioPreview(asset);
+  }
   const source = asset.source;
   const src = getImageSrc(source);
   if (!src) {
@@ -16319,9 +17710,30 @@ function createSourcePreview(asset) {
   preview.appendChild(img);
   return preview;
 }
+function createAudioPreview(asset) {
+  const source = asset.source;
+  let audioSrc = null;
+  if (source instanceof HTMLAudioElement) {
+    audioSrc = source.src;
+  } else if (asset.url) {
+    audioSrc = asset.url;
+  }
+  if (!audioSrc) {
+    return null;
+  }
+  const preview = document.createElement("div");
+  preview.className = "asset-preview";
+  const audio = document.createElement("audio");
+  audio.controls = true;
+  audio.preload = "metadata";
+  audio.src = audioSrc;
+  audio.setAttribute("controlsList", "nodownload");
+  preview.appendChild(audio);
+  return preview;
+}
 customElements.define("manifest-inspector", ManifestInspector);
 PerkyExplorerDetails.registerInspector(ManifestInspector);
-const customStyles$2 = `
+const customStyles$4 = `
     .bindings-header {
         display: flex;
         align-items: center;
@@ -16519,7 +17931,7 @@ const customStyles$2 = `
 `;
 class InputBinderInspector extends BaseInspector {
   constructor() {
-    super(customStyles$2);
+    super(customStyles$4);
     __privateAdd(this, _InputBinderInspector_instances);
     __privateAdd(this, _viewMode, "action");
     __privateAdd(this, _containerEl, null);
@@ -16716,7 +18128,7 @@ function createBindingCard(binding) {
 }
 customElements.define("input-binder-inspector", InputBinderInspector);
 PerkyExplorerDetails.registerInspector(InputBinderInspector);
-const customStyles$1 = `
+const customStyles$3 = `
     .actions-header {
         display: flex;
         align-items: center;
@@ -16796,7 +18208,7 @@ const customStyles$1 = `
 `;
 class ActionControllerInspector extends BaseInspector {
   constructor() {
-    super(customStyles$1);
+    super(customStyles$3);
     __privateAdd(this, _ActionControllerInspector_instances);
     __privateAdd(this, _containerEl2, null);
     this.buildDOM();
@@ -16880,7 +18292,7 @@ function createHeader$1(count) {
 }
 customElements.define("action-controller-inspector", ActionControllerInspector);
 PerkyExplorerDetails.registerInspector(ActionControllerInspector);
-const customStyles = `
+const customStyles$2 = `
     .actions-header {
         display: flex;
         align-items: center;
@@ -16918,12 +18330,13 @@ const customStyles = `
         flex: 1;
     }
 
-    .group-count {
-        font-size: 9px;
-        background: var(--bg-hover);
-        padding: 2px 6px;
-        border-radius: 8px;
-        color: var(--fg-secondary);
+    .group-inactive .group-name {
+        opacity: 0.4;
+    }
+
+    .group-inactive .actions-list {
+        opacity: 0.3;
+        pointer-events: none;
     }
 
     .actions-list {
@@ -16976,7 +18389,7 @@ const customStyles = `
 `;
 class ActionDispatcherInspector extends BaseInspector {
   constructor() {
-    super(customStyles);
+    super(customStyles$2);
     __privateAdd(this, _ActionDispatcherInspector_instances);
     __privateAdd(this, _containerEl3, null);
     this.buildDOM();
@@ -17023,18 +18436,21 @@ update_fn9 = function() {
   }
 };
 createControllerGroup_fn = function(controllerName, actions) {
+  const isActive = this.module.getActive().includes(controllerName);
   const group = document.createElement("div");
-  group.className = "controller-group";
+  group.className = isActive ? "controller-group" : "controller-group group-inactive";
   const header = document.createElement("div");
   header.className = "group-header";
   const nameEl = document.createElement("span");
   nameEl.className = "group-name";
   nameEl.textContent = controllerName;
-  const count = document.createElement("span");
-  count.className = "group-count";
-  count.textContent = actions.length;
+  const toggle = document.createElement("toggle-input");
+  toggle.setChecked(isActive);
+  toggle.addEventListener("change", (e) => {
+    __privateMethod(this, _ActionDispatcherInspector_instances, toggleController_fn).call(this, controllerName, e.detail.checked);
+  });
   header.appendChild(nameEl);
-  header.appendChild(count);
+  header.appendChild(toggle);
   group.appendChild(header);
   if (actions.length === 0) {
     const empty = document.createElement("div");
@@ -17044,13 +18460,24 @@ createControllerGroup_fn = function(controllerName, actions) {
   } else {
     const list = document.createElement("div");
     list.className = "actions-list";
-    for (const actionName of actions) {
-      const card = createActionCard(actionName, controllerName, this.module);
+    for (const action of actions) {
+      const card = createActionCard(action.name, controllerName, this.module);
       list.appendChild(card);
     }
     group.appendChild(list);
   }
   return group;
+};
+toggleController_fn = function(controllerName, active) {
+  const currentActive = this.module.getActive();
+  if (active) {
+    if (!currentActive.includes(controllerName)) {
+      this.module.setActive([...currentActive, controllerName]);
+    }
+  } else {
+    this.module.setActive(currentActive.filter((name) => name !== controllerName));
+  }
+  __privateMethod(this, _ActionDispatcherInspector_instances, update_fn9).call(this);
 };
 function createHeader(totalActions, controllerCount) {
   const header = document.createElement("div");
@@ -17079,6 +18506,247 @@ function createActionCard(actionName, controllerName, dispatcher) {
 }
 customElements.define("action-dispatcher-inspector", ActionDispatcherInspector);
 PerkyExplorerDetails.registerInspector(ActionDispatcherInspector);
+const customStyles$1 = `
+    .volume-controls {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+    }
+
+    .volume-icon {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+`;
+class AudioSystemInspector extends BaseInspector {
+  constructor() {
+    super(customStyles$1);
+    __privateAdd(this, _AudioSystemInspector_instances);
+    __privateAdd(this, _unlockedValueEl, null);
+    __privateAdd(this, _channelsValueEl, null);
+    __privateAdd(this, _volumeInput, null);
+    __privateAdd(this, _unlockBtn, null);
+    this.buildDOM();
+  }
+  static matches(module) {
+    return module instanceof AudioSystem;
+  }
+  onModuleSet(module) {
+    if (module) {
+      __privateMethod(this, _AudioSystemInspector_instances, bindEvents_fn4).call(this);
+      __privateMethod(this, _AudioSystemInspector_instances, updateAll_fn3).call(this);
+    }
+  }
+  buildDOM() {
+    super.buildDOM();
+    __privateSet(this, _unlockedValueEl, this.addRow("unlocked", "false"));
+    __privateSet(this, _channelsValueEl, this.addRow("channels", "0"));
+    const controlsEl = document.createElement("div");
+    controlsEl.className = "volume-controls";
+    __privateSet(this, _volumeInput, document.createElement("slider-input"));
+    __privateGet(this, _volumeInput).setAttribute("label", "Master Volume");
+    __privateGet(this, _volumeInput).setAttribute("min", "0");
+    __privateGet(this, _volumeInput).setAttribute("max", "1");
+    __privateGet(this, _volumeInput).setAttribute("step", "0.01");
+    __privateGet(this, _volumeInput).setAttribute("value", "1");
+    __privateGet(this, _volumeInput).addEventListener("change", (e) => __privateMethod(this, _AudioSystemInspector_instances, handleVolumeChange_fn).call(this, e));
+    controlsEl.appendChild(__privateGet(this, _volumeInput));
+    this.gridEl.appendChild(controlsEl);
+    __privateSet(this, _unlockBtn, this.createButton("", "Unlock Audio", () => __privateMethod(this, _AudioSystemInspector_instances, handleUnlock_fn).call(this)));
+    __privateGet(this, _unlockBtn).innerHTML = `<span class="volume-icon">${ICONS.audio}</span> Unlock Audio`;
+    this.actionsEl.appendChild(__privateGet(this, _unlockBtn));
+  }
+}
+_unlockedValueEl = new WeakMap();
+_channelsValueEl = new WeakMap();
+_volumeInput = new WeakMap();
+_unlockBtn = new WeakMap();
+_AudioSystemInspector_instances = new WeakSet();
+handleVolumeChange_fn = function(e) {
+  if (!this.module) {
+    return;
+  }
+  this.module.setVolume(e.detail.value);
+};
+handleUnlock_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  this.module.unlock();
+};
+bindEvents_fn4 = function() {
+  if (!this.module) {
+    return;
+  }
+  this.listenTo(this.module, "audio:unlocked", () => __privateMethod(this, _AudioSystemInspector_instances, updateUnlocked_fn).call(this));
+  this.listenTo(this.module, "volume:changed", (volume) => __privateMethod(this, _AudioSystemInspector_instances, updateVolume_fn).call(this, volume));
+  this.listenTo(this.module, "child:added", () => __privateMethod(this, _AudioSystemInspector_instances, updateChannels_fn).call(this));
+  this.listenTo(this.module, "child:removed", () => __privateMethod(this, _AudioSystemInspector_instances, updateChannels_fn).call(this));
+};
+updateAll_fn3 = function() {
+  var _a2;
+  __privateMethod(this, _AudioSystemInspector_instances, updateUnlocked_fn).call(this);
+  __privateMethod(this, _AudioSystemInspector_instances, updateChannels_fn).call(this);
+  __privateMethod(this, _AudioSystemInspector_instances, updateVolume_fn).call(this, ((_a2 = this.module) == null ? void 0 : _a2.masterVolume) ?? 1);
+};
+updateUnlocked_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const unlocked2 = this.module.unlocked;
+  __privateGet(this, _unlockedValueEl).textContent = unlocked2 ? "true" : "false";
+  __privateGet(this, _unlockedValueEl).className = `inspector-value ${unlocked2 ? "accent" : ""}`;
+  if (__privateGet(this, _unlockBtn)) {
+    if (unlocked2) {
+      __privateGet(this, _unlockBtn).style.display = "none";
+    } else {
+      __privateGet(this, _unlockBtn).style.display = "";
+      __privateGet(this, _unlockBtn).classList.add("primary");
+    }
+  }
+};
+updateChannels_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const channels = this.module.listChannels();
+  __privateGet(this, _channelsValueEl).textContent = `${channels.length} (${channels.join(", ")})`;
+};
+updateVolume_fn = function(volume) {
+  if (__privateGet(this, _volumeInput)) {
+    __privateGet(this, _volumeInput).setValue(volume);
+  }
+};
+customElements.define("audio-system-inspector", AudioSystemInspector);
+PerkyExplorerDetails.registerInspector(AudioSystemInspector);
+const customStyles = `
+    .volume-controls {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+    }
+
+    .volume-icon {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+`;
+class AudioChannelInspector extends BaseInspector {
+  constructor() {
+    super(customStyles);
+    __privateAdd(this, _AudioChannelInspector_instances);
+    __privateAdd(this, _mutedValueEl, null);
+    __privateAdd(this, _sourcesValueEl, null);
+    __privateAdd(this, _volumeInput2, null);
+    __privateAdd(this, _muteBtn, null);
+    this.buildDOM();
+  }
+  static matches(module) {
+    return module instanceof AudioChannel;
+  }
+  onModuleSet(module) {
+    if (module) {
+      __privateMethod(this, _AudioChannelInspector_instances, bindEvents_fn5).call(this);
+      __privateMethod(this, _AudioChannelInspector_instances, updateAll_fn4).call(this);
+    }
+  }
+  buildDOM() {
+    super.buildDOM();
+    __privateSet(this, _mutedValueEl, this.addRow("muted", "false"));
+    __privateSet(this, _sourcesValueEl, this.addRow("sources", "0"));
+    const controlsEl = document.createElement("div");
+    controlsEl.className = "volume-controls";
+    __privateSet(this, _volumeInput2, document.createElement("slider-input"));
+    __privateGet(this, _volumeInput2).setAttribute("label", "Volume");
+    __privateGet(this, _volumeInput2).setAttribute("min", "0");
+    __privateGet(this, _volumeInput2).setAttribute("max", "1");
+    __privateGet(this, _volumeInput2).setAttribute("step", "0.01");
+    __privateGet(this, _volumeInput2).setAttribute("value", "1");
+    __privateGet(this, _volumeInput2).addEventListener("change", (e) => __privateMethod(this, _AudioChannelInspector_instances, handleVolumeChange_fn2).call(this, e));
+    controlsEl.appendChild(__privateGet(this, _volumeInput2));
+    this.gridEl.appendChild(controlsEl);
+    __privateSet(this, _muteBtn, this.createButton("", "Mute", () => __privateMethod(this, _AudioChannelInspector_instances, handleToggleMute_fn).call(this)));
+    __privateGet(this, _muteBtn).innerHTML = `<span class="volume-icon">${ICONS.volumeMuted}</span> Mute`;
+    this.actionsEl.appendChild(__privateGet(this, _muteBtn));
+  }
+}
+_mutedValueEl = new WeakMap();
+_sourcesValueEl = new WeakMap();
+_volumeInput2 = new WeakMap();
+_muteBtn = new WeakMap();
+_AudioChannelInspector_instances = new WeakSet();
+handleVolumeChange_fn2 = function(e) {
+  if (!this.module) {
+    return;
+  }
+  this.module.setVolume(e.detail.value);
+};
+handleToggleMute_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  this.module.toggleMute();
+};
+bindEvents_fn5 = function() {
+  if (!this.module) {
+    return;
+  }
+  this.listenTo(this.module, "volume:changed", (volume) => __privateMethod(this, _AudioChannelInspector_instances, updateVolume_fn2).call(this, volume));
+  this.listenTo(this.module, "muted", () => __privateMethod(this, _AudioChannelInspector_instances, updateMuted_fn).call(this));
+  this.listenTo(this.module, "unmuted", () => __privateMethod(this, _AudioChannelInspector_instances, updateMuted_fn).call(this));
+  this.listenTo(this.module, "source:added", () => __privateMethod(this, _AudioChannelInspector_instances, updateSources_fn).call(this));
+  this.listenTo(this.module, "source:removed", () => __privateMethod(this, _AudioChannelInspector_instances, updateSources_fn).call(this));
+};
+updateAll_fn4 = function() {
+  var _a2;
+  __privateMethod(this, _AudioChannelInspector_instances, updateMuted_fn).call(this);
+  __privateMethod(this, _AudioChannelInspector_instances, updateSources_fn).call(this);
+  __privateMethod(this, _AudioChannelInspector_instances, updateVolume_fn2).call(this, ((_a2 = this.module) == null ? void 0 : _a2.volume) ?? 1);
+};
+updateMuted_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const muted = this.module.muted;
+  __privateGet(this, _mutedValueEl).textContent = muted ? "true" : "false";
+  __privateGet(this, _mutedValueEl).className = `inspector-value ${muted ? "accent" : ""}`;
+  if (muted) {
+    __privateGet(this, _muteBtn).innerHTML = `<span class="volume-icon">${ICONS.volume}</span> Unmute`;
+    __privateGet(this, _muteBtn).classList.add("primary");
+  } else {
+    __privateGet(this, _muteBtn).innerHTML = `<span class="volume-icon">${ICONS.volumeMuted}</span> Mute`;
+    __privateGet(this, _muteBtn).classList.remove("primary");
+  }
+};
+updateSources_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const count = this.module.sourceCount;
+  __privateGet(this, _sourcesValueEl).textContent = count;
+  __privateGet(this, _sourcesValueEl).className = `inspector-value ${count > 0 ? "accent" : ""}`;
+};
+updateVolume_fn2 = function(volume) {
+  if (__privateGet(this, _volumeInput2)) {
+    __privateGet(this, _volumeInput2).setValue(volume);
+  }
+};
+customElements.define("audio-channel-inspector", AudioChannelInspector);
+PerkyExplorerDetails.registerInspector(AudioChannelInspector);
 class ExplorerContextMenu extends BaseEditorComponent {
   constructor() {
     super();
@@ -19966,18 +21634,24 @@ const STYLES$1 = buildEditorStyles(
         display: block;
         font-family: var(--font-mono);
         font-size: 12px;
+        --logger-width: calc(100% - 20px);
+        --logger-margin: 0 10px 10px;
+        --logger-padding: 0;
+        --logger-border: 1px solid var(--border);
+        --logger-border-radius: 6px;
     }
 
     .logger {
-        width: calc(100% - 20px);
-        margin: 0 10px 10px;
-        border-radius: 6px;
+        width: var(--logger-width);
+        margin: var(--logger-margin);
+        padding: var(--logger-padding);
+        border-radius: var(--logger-border-radius);
         overflow: hidden;
         z-index: 100;
         position: relative;
         background: var(--bg-primary);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        border: 1px solid var(--border);
+        border: var(--logger-border);
         color: var(--fg-primary);
         transition: opacity 0.2s ease;
     }
@@ -20381,7 +22055,7 @@ cleanupKeyboard_fn = function() {
 showCommandPalette_fn = async function() {
   if (!__privateGet(this, _commandPaletteEl)) {
     const { default: DevToolsCommandPalette } = await __vitePreload(async () => {
-      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-FVrbP9y8.js");
+      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-BJ9git4R.js");
       return { default: DevToolsCommandPalette2 };
     }, true ? [] : void 0, import.meta.url);
     __privateSet(this, _commandPaletteEl, new DevToolsCommandPalette());
@@ -20421,7 +22095,7 @@ async function init() {
   const appManager = new ApplicationManager();
   appManager.register("defendTheDen", DefendTheDen);
   appManager.start();
-  const container = document.getElementById("defend_the_den");
+  const container = document.getElementById("den");
   const app = await appManager.spawn("defendTheDen", {
     container,
     preload: "all"

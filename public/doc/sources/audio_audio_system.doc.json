@@ -1,0 +1,37 @@
+[
+  {
+    "type": "container",
+    "title": "Simple sound playback",
+    "source": "const audioSystem = new AudioSystem()\naudioSystem.start()\n\nlet ready = false\n\nctx.action('Play Click', async () => {\n    if (!ready) {\n        await audioSystem.unlock()\n        await audioSystem.loadBuffer('click', './assets/audio/click.ogg')\n        ready = true\n    }\n    audioSystem.play('click')\n    logger.log('Playing click sound')\n})"
+  },
+  {
+    "type": "container",
+    "title": "Master volume control",
+    "source": "const audioSystem = new AudioSystem()\naudioSystem.start()\n\nlet ready = false\n\nctx.action('Play Looped', async () => {\n    if (!ready) {\n        await audioSystem.unlock()\n        await audioSystem.loadBuffer('tac', './assets/audio/tac.mp3')\n        ready = true\n    }\n    audioSystem.play('tac', {loop: true})\n    logger.log('Playing looped sound')\n})\n\nctx.slider('Master Volume', {min: 0, max: 1, default: 1, step: 0.1}, value => {\n    audioSystem.setVolume(value)\n})\n\nctx.action('Stop', () => {\n    audioSystem.stopAll()\n})"
+  },
+  {
+    "type": "container",
+    "title": "Sound properties",
+    "source": "const audioSystem = new AudioSystem()\naudioSystem.start()\n\nlet ready = false\nlet currentSource = null\n\nconst ensureReady = async () => {\n    if (!ready) {\n        await audioSystem.unlock()\n        await audioSystem.loadBuffer('click', './assets/audio/click.ogg')\n        ready = true\n    }\n}\n\nctx.action('Play Normal', async () => {\n    await ensureReady()\n    audioSystem.stopAll()\n    currentSource = audioSystem.play('click')\n    logger.log('Playing at normal speed')\n})\n\nctx.action('Play Looped', async () => {\n    await ensureReady()\n    audioSystem.stopAll()\n    currentSource = audioSystem.play('click', {loop: true})\n    logger.log('Playing looped')\n})\n\nctx.slider('Playback Rate', {min: 0.5, max: 2, default: 1, step: 0.1}, value => {\n    if (currentSource) {\n        currentSource.setPlaybackRate(value)\n    }\n})\n\nctx.slider('Volume', {min: 0, max: 1, default: 1, step: 0.1}, value => {\n    if (currentSource) {\n        currentSource.setVolume(value)\n    }\n})\n\nctx.action('Stop', () => {\n    audioSystem.stopAll()\n    currentSource = null\n})"
+  },
+  {
+    "type": "container",
+    "title": "3D sound positioning",
+    "source": "const audioSystem = new AudioSystem()\naudioSystem.start()\n\nlet ready = false\nlet spatialSource = null\n\nctx.action('Play Spatial Sound', async () => {\n    if (!ready) {\n        await audioSystem.unlock()\n        await audioSystem.loadBuffer('pick', './assets/audio/pick.mp3')\n        ready = true\n    }\n    audioSystem.stopAll()\n    spatialSource = audioSystem.playAt('pick', 5, 0, {\n        loop: true,\n        refDistance: 1,\n        maxDistance: 10\n    })\n    logger.log('Playing spatial sound at (5, 0)')\n})\n\nctx.slider('Sound X Position', {min: -10, max: 10, default: 5}, value => {\n    if (spatialSource) {\n        spatialSource.setPosition(value, spatialSource.y)\n    }\n})\n\nctx.slider('Sound Y Position', {min: -10, max: 10, default: 0}, value => {\n    if (spatialSource) {\n        spatialSource.setPosition(spatialSource.x, value)\n    }\n})\n\nctx.slider('Listener X', {min: -10, max: 10, default: 0}, value => {\n    audioSystem.setListenerPosition(value, 0)\n})\n\nctx.action('Stop', () => {\n    audioSystem.stopAll()\n    spatialSource = null\n})"
+  },
+  {
+    "type": "code",
+    "title": "Basic setup and playback",
+    "source": "const audioSystem = new AudioSystem()\naudioSystem.start()\n\n// Load audio files\nawait audioSystem.loadBuffer('jump', './sounds/jump.mp3')\nawait audioSystem.loadBuffer('music', './sounds/bg-music.ogg')\n\n// Unlock on user interaction\nawait audioSystem.unlock()\n\n// Play sounds\naudioSystem.play('jump', {channel: 'sfx'})\naudioSystem.play('music', {channel: 'music', loop: true})"
+  },
+  {
+    "type": "code",
+    "title": "Channel management",
+    "source": "// Create custom channel\naudioSystem.createChannel('voice', {volume: 0.8})\n\n// Control channels\naudioSystem.setChannelVolume('music', 0.5)\naudioSystem.muteChannel('sfx')\naudioSystem.unmuteChannel('sfx')\naudioSystem.stopChannel('music')"
+  },
+  {
+    "type": "code",
+    "title": "Spatial audio",
+    "source": "// Play sound at position\nconst source = audioSystem.playAt('explosion', 10, 5, {\n    refDistance: 2,\n    maxDistance: 20,\n    rolloffFactor: 1\n})\n\n// Update listener position (player position)\naudioSystem.setListenerPosition(playerX, playerY)\n\n// Update sound position\nsource.setPosition(enemyX, enemyY)"
+  }
+]

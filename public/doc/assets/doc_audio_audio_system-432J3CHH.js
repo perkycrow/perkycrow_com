@@ -1,0 +1,212 @@
+import { d as doc, t as text, s as section, f as container, c as code } from "./runtime-CM36Pd9c.js";
+import { A as AudioSystem } from "./audio_system-B0lRqclk.js";
+import { l as logger } from "./logger-DMogC8ed.js";
+import "./perky_module-8S_KnZAY.js";
+import "./utils-BTvKfW7M.js";
+const audio_system_doc = doc("AudioSystem", () => {
+  text(`
+        Manages audio playback with support for multiple channels, spatial audio,
+        and dynamic sound effects. Uses the Web Audio API for high-quality audio rendering.
+    `);
+  section("Basic Setup", () => {
+    text(`
+            Create an audio system with default channels (music, sfx, ambiance).
+            Audio must be unlocked by user interaction before playing.
+        `);
+    container({ title: "Simple sound playback", height: 200 }, (ctx) => {
+      const audioSystem2 = new AudioSystem();
+      audioSystem2.start();
+      let ready = false;
+      ctx.action("Play Click", async () => {
+        if (!ready) {
+          await audioSystem2.unlock();
+          await audioSystem2.loadBuffer("click", "./assets/audio/click.ogg");
+          ready = true;
+        }
+        audioSystem2.play("click");
+        logger.log("Playing click sound");
+      });
+      ctx.setApp(audioSystem2);
+    });
+  });
+  section("Channels", () => {
+    text(`
+            Audio channels allow you to group sounds and control their volume independently.
+            Default channels are: music, sfx, and ambiance.
+        `);
+    container({ height: 200 }, async (ctx) => {
+      const audio = new AudioSystem();
+      audio.start();
+      await audio.unlock();
+      await Promise.all([
+        audio.loadBuffer("click", "./assets/audio/click.ogg"),
+        audio.loadBuffer("pick", "./assets/audio/pick.mp3"),
+        audio.loadBuffer("tac", "./assets/audio/tac.mp3")
+      ]);
+      ctx.action("Play on SFX", () => audio.play("click", { channel: "sfx" }));
+      ctx.action("Play on Music", () => audio.play("pick", { channel: "music", loop: true }));
+      ctx.action("Stop All", () => audio.stopAll());
+      ctx.setApp(audio);
+    });
+  });
+  section("Master Volume", () => {
+    text("Control the overall volume of all audio channels.");
+    container({ title: "Master volume control", height: 200 }, (ctx) => {
+      const audioSystem2 = new AudioSystem();
+      audioSystem2.start();
+      let ready = false;
+      ctx.action("Play Looped", async () => {
+        if (!ready) {
+          await audioSystem2.unlock();
+          await audioSystem2.loadBuffer("tac", "./assets/audio/tac.mp3");
+          ready = true;
+        }
+        audioSystem2.play("tac", { loop: true });
+        logger.log("Playing looped sound");
+      });
+      ctx.slider("Master Volume", { min: 0, max: 1, default: 1, step: 0.1 }, (value) => {
+        audioSystem2.setVolume(value);
+      });
+      ctx.action("Stop", () => {
+        audioSystem2.stopAll();
+      });
+      ctx.setApp(audioSystem2);
+    });
+  });
+  section("Playback Options", () => {
+    text("Control loop, volume, and playback rate for individual sounds.");
+    container({ title: "Sound properties", height: 250 }, (ctx) => {
+      const audioSystem2 = new AudioSystem();
+      audioSystem2.start();
+      let ready = false;
+      let currentSource = null;
+      const ensureReady = async () => {
+        if (!ready) {
+          await audioSystem2.unlock();
+          await audioSystem2.loadBuffer("click", "./assets/audio/click.ogg");
+          ready = true;
+        }
+      };
+      ctx.action("Play Normal", async () => {
+        await ensureReady();
+        audioSystem2.stopAll();
+        currentSource = audioSystem2.play("click");
+        logger.log("Playing at normal speed");
+      });
+      ctx.action("Play Looped", async () => {
+        await ensureReady();
+        audioSystem2.stopAll();
+        currentSource = audioSystem2.play("click", { loop: true });
+        logger.log("Playing looped");
+      });
+      ctx.slider("Playback Rate", { min: 0.5, max: 2, default: 1, step: 0.1 }, (value) => {
+        if (currentSource) {
+          currentSource.setPlaybackRate(value);
+        }
+      });
+      ctx.slider("Volume", { min: 0, max: 1, default: 1, step: 0.1 }, (value) => {
+        if (currentSource) {
+          currentSource.setVolume(value);
+        }
+      });
+      ctx.action("Stop", () => {
+        audioSystem2.stopAll();
+        currentSource = null;
+      });
+      ctx.setApp(audioSystem2);
+    });
+  });
+  section("Spatial Audio", () => {
+    text("Position sounds in 2D space with distance attenuation.");
+    container({ title: "3D sound positioning", height: 250 }, (ctx) => {
+      const audioSystem2 = new AudioSystem();
+      audioSystem2.start();
+      let ready = false;
+      let spatialSource = null;
+      ctx.action("Play Spatial Sound", async () => {
+        if (!ready) {
+          await audioSystem2.unlock();
+          await audioSystem2.loadBuffer("pick", "./assets/audio/pick.mp3");
+          ready = true;
+        }
+        audioSystem2.stopAll();
+        spatialSource = audioSystem2.playAt("pick", 5, 0, {
+          loop: true,
+          refDistance: 1,
+          maxDistance: 10
+        });
+        logger.log("Playing spatial sound at (5, 0)");
+      });
+      ctx.slider("Sound X Position", { min: -10, max: 10, default: 5 }, (value) => {
+        if (spatialSource) {
+          spatialSource.setPosition(value, spatialSource.y);
+        }
+      });
+      ctx.slider("Sound Y Position", { min: -10, max: 10, default: 0 }, (value) => {
+        if (spatialSource) {
+          spatialSource.setPosition(spatialSource.x, value);
+        }
+      });
+      ctx.slider("Listener X", { min: -10, max: 10, default: 0 }, (value) => {
+        audioSystem2.setListenerPosition(value, 0);
+      });
+      ctx.action("Stop", () => {
+        audioSystem2.stopAll();
+        spatialSource = null;
+      });
+      ctx.setApp(audioSystem2);
+    });
+  });
+  section("Oscillators", () => {
+    text("Generate synthesized tones for sound effects.");
+    container({ height: 200 }, async (ctx) => {
+      const audio = new AudioSystem();
+      audio.start();
+      await audio.unlock();
+      ctx.action("Sine (440 Hz)", () => {
+        audio.playOscillator({ type: "sine", frequency: 440, duration: 0.5 });
+      });
+      ctx.action("Square (220 Hz)", () => {
+        audio.playOscillator({ type: "square", frequency: 220, duration: 0.5 });
+      });
+      ctx.action("Sawtooth (330 Hz)", () => {
+        audio.playOscillator({ type: "sawtooth", frequency: 330, duration: 0.5 });
+      });
+      ctx.action("Triangle (550 Hz)", () => {
+        audio.playOscillator({ type: "triangle", frequency: 550, duration: 0.5 });
+      });
+      ctx.setApp(audio);
+    });
+  });
+  section("Code Examples", () => {
+    text("Common patterns for using the audio system.");
+    code("Basic setup and playback", async () => {
+      const audioSystem2 = new AudioSystem();
+      audioSystem2.start();
+      await audioSystem2.loadBuffer("jump", "./sounds/jump.mp3");
+      await audioSystem2.loadBuffer("music", "./sounds/bg-music.ogg");
+      await audioSystem2.unlock();
+      audioSystem2.play("jump", { channel: "sfx" });
+      audioSystem2.play("music", { channel: "music", loop: true });
+    });
+    code("Channel management", () => {
+      audioSystem.createChannel("voice", { volume: 0.8 });
+      audioSystem.setChannelVolume("music", 0.5);
+      audioSystem.muteChannel("sfx");
+      audioSystem.unmuteChannel("sfx");
+      audioSystem.stopChannel("music");
+    });
+    code("Spatial audio", () => {
+      const source = audioSystem.playAt("explosion", 10, 5, {
+        refDistance: 2,
+        maxDistance: 20,
+        rolloffFactor: 1
+      });
+      audioSystem.setListenerPosition(playerX, playerY);
+      source.setPosition(enemyX, enemyY);
+    });
+  });
+});
+export {
+  audio_system_doc as default
+};

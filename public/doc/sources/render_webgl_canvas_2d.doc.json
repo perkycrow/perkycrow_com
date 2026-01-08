@@ -30,6 +30,11 @@
     "source": "const renderer = new WebGLCanvas2D({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\n\nconst scene = new Group2D()\n\nscene.add(new Rectangle({\n    width: 4,\n    height: 4,\n    color: '#e94560',\n    x: 0,\n    y: 0\n}))\n\nscene.add(new Circle({\n    radius: 1.2,\n    color: '#533483',\n    x: 0,\n    y: 0\n}))\n\nctx.action('Center', () => {\n    renderer.camera.x = 0\n    renderer.camera.y = 0\n    renderer.render(scene)\n})\n\nctx.action('Offset (3, 2)', () => {\n    renderer.camera.x = 3\n    renderer.camera.y = 2\n    renderer.render(scene)\n})"
   },
   {
+    "type": "container",
+    "title": "Sprite rendering",
+    "source": "const renderer = new WebGLCanvas2D({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\n\nconst scene = new Group2D()\n\nconst shroomImage = new Image()\nshroomImage.src = './assets/images/shroom.png'\n\nshroomImage.onload = () => {\n    const sprite = new Image2D({\n        x: 0,\n        y: 0,\n        width: 7,\n        height: 7,\n        anchorX: 0.5,\n        anchorY: 0.5,\n        image: shroomImage\n    })\n\n    scene.add(sprite)\n    renderer.render(scene)\n}"
+  },
+  {
     "type": "code",
     "title": "Background options",
     "source": "// Solid color\nconst renderer1 = new WebGLCanvas2D({\n    backgroundColor: '#1a1a2e'\n})\n\n// Transparent (default)\nconst renderer2 = new WebGLCanvas2D({\n    backgroundColor: 'transparent'\n})\n\n// Or set later\nrenderer1.backgroundColor = '#ff0000'"

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioSystem - Perky Docs</title>
+    <meta name="description" content="Documentation for AudioSystem in the Perky game framework">
+    <meta property="og:title" content="AudioSystem - Perky Docs">
+    <meta property="og:description" content="Documentation for AudioSystem in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-BCH7HCcF.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>AudioSystem</h1>
+            <section class="test-section"><h2>AudioSystem</h2>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>// Get the mocked onAudioUnlock
+const audioUnlockModule = await import('./audio_unlock.js')
+mockOnAudioUnlock = audioUnlockModule.onAudioUnlock
+mockOnAudioUnlock.mockClear()
+
+mockContext = createMockAudioContextWithSpies()
+cleanupAudioContext = setupGlobalAudioContext(mockContext)
+cleanupFetch = setupGlobalFetch()
+
+system = new AudioSystem()</code></pre>
+        </div>
+    
+        <div class="test-hook">
+            <h4>afterEach</h4>
+            <pre><code>cleanupAudioContext()
+cleanupFetch()</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>audioContext returns the audio context</h4>
+                <pre><code>expect(system.audioContext).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>unlocked starts as false</h4>
+                <pre><code>expect(system.unlocked).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>currentTime returns context current time</h4>
+                <pre><code>expect(system.currentTime).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>onStart registers audio unlock callback</h4>
+                <pre><code>system.onStart()
+expect(mockOnAudioUnlock).toHaveBeenCalledWith(expect.any(Function))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>onStop suspends audio context when unlocked</h4>
+                <pre><code>// Mark system as unlocked first
+await system.unlock()
+const suspendSpy = vi.spyOn(system.audioContext, 'suspend')
+system.onStop()
+expect(suspendSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>onStop does nothing when not unlocked</h4>
+                <pre><code>const suspendSpy = vi.spyOn(system.audioContext, 'suspend')
+system.onStop()
+expect(suspendSpy).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>listChannels returns channel names</h4>
+                <pre><code>const channels = system.listChannels()
+expect(channels).toContain('music')
+expect(channels).toContain('sfx')
+expect(channels).toContain('ambiance')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>stopAll stops all channels</h4>
+                <pre><code>const musicChannel = system.getChannel('music')
+const sfxChannel = system.getChannel('sfx')
+const musicSpy = vi.spyOn(musicChannel, 'stopAll')
+const sfxSpy = vi.spyOn(sfxChannel, 'stopAll')
+system.stopAll()
+expect(musicSpy).toHaveBeenCalled()
+expect(sfxSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getVolume returns master volume from context</h4>
+                <pre><code>const spy = vi.spyOn(system.audioContext, 'getMasterVolume').mockReturnValue(0.7)
+expect(system.getVolume()).toBe(0.7)
+expect(spy).toHaveBeenCalled()</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>constructor</h3>
+            <div class="test-case">
+                <h4>sets static category</h4>
+                <pre><code>expect(AudioSystem.$category).toBe('audioSystem')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>creates default channels</h4>
+                <pre><code>expect(system.hasChannel('music')).toBe(true)
+expect(system.hasChannel('sfx')).toBe(true)
+expect(system.hasChannel('ambiance')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>accepts custom channels</h4>
+                <pre><code>const custom = new AudioSystem({channels: ['voice', 'effects']})
+expect(custom.hasChannel('voice')).toBe(true)
+expect(custom.hasChannel('effects')).toBe(true)
+expect(custom.hasChannel('music')).toBe(false)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>masterVolume</h3>
+            <div class="test-case">
+                <h4>get returns master volume</h4>
+                <pre><code>expect(system.masterVolume).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>set calls setMasterVolume on context</h4>
+                <pre><code>const spy = vi.spyOn(system.audioContext, 'setMasterVolume')
+system.masterVolume = 0.5
+expect(spy).toHaveBeenCalledWith(0.5)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>onInstall</h3>
+            <div class="test-case">
+                <h4>delegates audio methods to host</h4>
+                <pre><code>const host = {emit: vi.fn()}
+system.onInstall(host)
+expect(host.play).toBeDefined()
+expect(host.stop).toBeDefined()
+expect(host.unlock).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delegates audio events to host</h4>
+                <pre><code>const host = {emit: vi.fn(), on: vi.fn()}
+system.onInstall(host)
+system.emit('audio:play', 'test')
+expect(host.emit).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>onDispose</h3>
+            <div class="test-case">
+                <h4>stops all sounds</h4>
+                <pre><code>const stopAllSpy = vi.spyOn(system, 'stopAll')
+system.onDispose()
+expect(stopAllSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>disposes audio context</h4>
+                <pre><code>const disposeSpy = vi.spyOn(system.audioContext, 'dispose')
+system.onDispose()
+expect(disposeSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>unlock</h3>
+            <div class="test-case">
+                <h4>resumes audio context</h4>
+                <pre><code>await system.unlock()
+expect(mockContext.resume).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>sets unlocked to true</h4>
+                <pre><code>await system.unlock()
+expect(system.unlocked).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits audio:unlocked event</h4>
+                <pre><code>const listener = vi.fn()
+system.on('audio:unlocked', listener)
+await system.unlock()
+expect(listener).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns true on success</h4>
+                <pre><code>expect(await system.unlock()).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns true if already unlocked</h4>
+                <pre><code>await system.unlock()
+expect(await system.unlock()).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns false on error</h4>
+                <pre><code>mockContext.resume.mockRejectedValue(new Error('failed'))
+expect(await system.unlock()).toBe(false)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>createChannel</h3>
+            <div class="test-case">
+                <h4>creates new channel</h4>
+                <pre><code>const channel = system.createChannel('custom')
+expect(channel).toBeInstanceOf(AudioChannel)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>registers channel by name</h4>
+                <pre><code>system.createChannel('custom')
+expect(system.hasChannel('custom')).toBe(true)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>getChannel</h3>
+            <div class="test-case">
+                <h4>returns existing channel</h4>
+                <pre><code>const channel = system.getChannel('sfx')
+expect(channel).toBeInstanceOf(AudioChannel)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns null for unknown channel</h4>
+                <pre><code>expect(system.getChannel('unknown')).toBeNull()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>hasChannel</h3>
+            <div class="test-case">
+                <h4>returns true for existing channel</h4>
+                <pre><code>expect(system.hasChannel('sfx')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns false for unknown channel</h4>
+                <pre><code>expect(system.hasChannel('unknown')).toBe(false)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>registerBuffer</h3>
+            <div class="test-case">
+                <h4>stores buffer by id</h4>
+                <pre><code>const buffer = {duration: 10}
+system.registerBuffer('test', buffer)
+expect(system.getBuffer('test')).toBe(buffer)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits buffer:registered event</h4>
+                <pre><code>const listener = vi.fn()
+system.on('buffer:registered', listener)
+const buffer = {}
+system.registerBuffer('test', buffer)
+expect(listener).toHaveBeenCalledWith('test', buffer)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>getBuffer</h3>
+            <div class="test-case">
+                <h4>returns registered buffer</h4>
+                <pre><code>const buffer = {}
+system.registerBuffer('test', buffer)
+expect(system.getBuffer('test')).toBe(buffer)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns null for unknown buffer</h4>
+                <pre><code>expect(system.getBuffer('unknown')).toBeNull()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>hasBuffer</h3>
+            <div class="test-case">
+                <h4>returns true for registered buffer</h4>
+                <pre><code>system.registerBuffer('test', {})
+expect(system.hasBuffer('test')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns false for unknown buffer</h4>
+                <pre><code>expect(system.hasBuffer('unknown')).toBe(false)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>loadBuffer</h3>
+            <div class="test-case">
+                <h4>fetches and decodes audio</h4>
+                <pre><code>// Set context to running so decodeAudioData doesn't queue
+mockContext.state = 'running'
+const buffer = await system.loadBuffer('test', 'http://example.com/audio.mp3')
+expect(global.fetch).toHaveBeenCalledWith('http://example.com/audio.mp3')
+expect(buffer).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>registers loaded buffer</h4>
+                <pre><code>// Set context to running so decodeAudioData doesn't queue
+mockContext.state = 'running'
+await system.loadBuffer('test', 'http://example.com/audio.mp3')
+expect(system.hasBuffer('test')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns null on error</h4>
+                <pre><code>global.fetch.mockRejectedValue(new Error('network error'))
+const buffer = await system.loadBuffer('test', 'http://example.com/audio.mp3')
+expect(buffer).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits buffer:error on failure</h4>
+                <pre><code>const listener = vi.fn()
+system.on('buffer:error', listener)
+global.fetch.mockRejectedValue(new Error('network error'))
+await system.loadBuffer('test', 'http://example.com/audio.mp3')
+expect(listener).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>play</h3>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>// Unlock the system so play() works
+await system.unlock()</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>returns null for unknown buffer</h4>
+                <pre><code>expect(system.play('unknown')).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>creates audio source for registered buffer</h4>
+                <pre><code>system.registerBuffer('test', {duration: 1})
+const source = system.play('test')
+expect(source).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>uses sfx channel by default</h4>
+                <pre><code>system.registerBuffer('test', {})
+const source = system.play('test')
+expect(source.channel).toBe(system.getChannel('sfx'))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>uses specified channel</h4>
+                <pre><code>system.registerBuffer('test', {})
+const source = system.play('test', {channel: 'music'})
+expect(source.channel).toBe(system.getChannel('music'))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits audio:play event</h4>
+                <pre><code>const listener = vi.fn()
+system.on('audio:play', listener)
+system.registerBuffer('test', {})
+system.play('test')
+expect(listener).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>accepts loop option</h4>
+                <pre><code>system.registerBuffer('test', {})
+const source = system.play('test', {loop: true})
+expect(source.loop).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>accepts volume option</h4>
+                <pre><code>system.registerBuffer('test', {})
+const source = system.play('test', {volume: 0.5})
+expect(source.volume).toBe(0.5)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>accepts playbackRate option</h4>
+                <pre><code>system.registerBuffer('test', {})
+const source = system.play('test', {playbackRate: 2})
+expect(source.playbackRate).toBe(2)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>playOscillator</h3>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>// Unlock the system so playOscillator() works
+await system.unlock()</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>creates oscillator source</h4>
+                <pre><code>const source = system.playOscillator()
+expect(source).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>uses sfx channel by default</h4>
+                <pre><code>const source = system.playOscillator()
+expect(source.channel).toBe(system.getChannel('sfx'))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>accepts type option</h4>
+                <pre><code>const source = system.playOscillator({type: 'square'})
+expect(source).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits audio:play event</h4>
+                <pre><code>const listener = vi.fn()
+system.on('audio:play', listener)
+system.playOscillator()
+expect(listener).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>stop</h3>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>// Unlock the system so play() works
+await system.unlock()</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>returns false for unknown source</h4>
+                <pre><code>expect(system.stop('unknown')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>stops playing source</h4>
+                <pre><code>system.registerBuffer('test', {})
+const source = system.play('test')
+const result = system.stop(source.$id)
+expect(result).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits audio:stop event</h4>
+                <pre><code>const listener = vi.fn()
+system.on('audio:stop', listener)
+system.registerBuffer('test', {})
+const source = system.play('test')
+system.stop(source.$id)
+expect(listener).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>stopChannel</h3>
+            <div class="test-case">
+                <h4>returns false for unknown channel</h4>
+                <pre><code>expect(system.stopChannel('unknown')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>stops all sources in channel</h4>
+                <pre><code>const channel = system.getChannel('sfx')
+const stopAllSpy = vi.spyOn(channel, 'stopAll')
+system.stopChannel('sfx')
+expect(stopAllSpy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns true on success</h4>
+                <pre><code>expect(system.stopChannel('sfx')).toBe(true)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>setVolume</h3>
+            <div class="test-case">
+                <h4>sets master volume</h4>
+                <pre><code>const spy = vi.spyOn(system.audioContext, 'setMasterVolume')
+system.setVolume(0.5)
+expect(spy).toHaveBeenCalledWith(0.5)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits volume:changed event</h4>
+                <pre><code>const listener = vi.fn()
+system.on('volume:changed', listener)
+system.setVolume(0.5)
+expect(listener).toHaveBeenCalledWith(0.5)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns self for chaining</h4>
+                <pre><code>expect(system.setVolume(0.5)).toBe(system)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>setChannelVolume</h3>
+            <div class="test-case">
+                <h4>sets channel volume</h4>
+                <pre><code>system.setChannelVolume('sfx', 0.5)
+expect(system.getChannel('sfx').volume).toBe(0.5)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>does nothing for unknown channel</h4>
+                <pre><code>expect(() =&gt; system.setChannelVolume('unknown', 0.5)).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns self for chaining</h4>
+                <pre><code>expect(system.setChannelVolume('sfx', 0.5)).toBe(system)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>getChannelVolume</h3>
+            <div class="test-case">
+                <h4>returns channel volume</h4>
+                <pre><code>system.setChannelVolume('sfx', 0.7)
+expect(system.getChannelVolume('sfx')).toBe(0.7)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns 0 for unknown channel</h4>
+                <pre><code>expect(system.getChannelVolume('unknown')).toBe(0)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>muteChannel</h3>
+            <div class="test-case">
+                <h4>mutes channel</h4>
+                <pre><code>system.muteChannel('sfx')
+expect(system.getChannel('sfx').muted).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>does nothing for unknown channel</h4>
+                <pre><code>expect(() =&gt; system.muteChannel('unknown')).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns self for chaining</h4>
+                <pre><code>expect(system.muteChannel('sfx')).toBe(system)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>unmuteChannel</h3>
+            <div class="test-case">
+                <h4>unmutes channel</h4>
+                <pre><code>system.muteChannel('sfx')
+system.unmuteChannel('sfx')
+expect(system.getChannel('sfx').muted).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>does nothing for unknown channel</h4>
+                <pre><code>expect(() =&gt; system.unmuteChannel('unknown')).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns self for chaining</h4>
+                <pre><code>expect(system.unmuteChannel('sfx')).toBe(system)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>playAt</h3>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>// Unlock the system so playAt() works
+await system.unlock()</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>returns null for unknown buffer</h4>
+                <pre><code>expect(system.playAt('unknown', 10, 20)).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>creates audio source</h4>
+                <pre><code>system.registerBuffer('test', {})
+const source = system.playAt('test', 100, 200)
+expect(source).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>calls play with spatial options</h4>
+                <pre><code>system.registerBuffer('test', {})
+const playSpy = vi.spyOn(system, 'play')
+system.playAt('test', 150, 250, {volume: 0.5})
+expect(playSpy).toHaveBeenCalledWith('test', expect.objectContaining({
+    spatial: true,
+    x: 150,
+    y: 250,
+    volume: 0.5
+}))</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits audio:play event</h4>
+                <pre><code>const listener = vi.fn()
+system.on('audio:play', listener)
+system.registerBuffer('test', {})
+system.playAt('test', 10, 20)
+expect(listener).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>playOscillatorAt</h3>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>// Unlock the system so playOscillatorAt() works
+await system.unlock()</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>creates oscillator source with spatial audio enabled</h4>
+                <pre><code>const source = system.playOscillatorAt(100, 200)
+expect(source).not.toBeNull()
+
+// Verify spatial audio is enabled by checking position properties
+const pos = source.getPosition()
+expect(pos.x).toBe(100)
+expect(pos.y).toBe(200)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>sets position coordinates</h4>
+                <pre><code>const source = system.playOscillatorAt(150, 250)
+const pos = source.getPosition()
+expect(pos.x).toBe(150)
+expect(pos.y).toBe(250)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>accepts options</h4>
+                <pre><code>const source = system.playOscillatorAt(10, 20, {type: 'square', frequency: 880, volume: 0.3})
+expect(source.volume).toBe(0.3)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>emits audio:play event</h4>
+                <pre><code>const listener = vi.fn()
+system.on('audio:play', listener)
+system.playOscillatorAt(10, 20)
+expect(listener).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>setListenerPosition</h3>
+            <div class="test-case">
+                <h4>sets listener position on audio context</h4>
+                <pre><code>const spy = vi.spyOn(system.audioContext, 'setListenerPosition')
+system.setListenerPosition(50, 75)
+expect(spy).toHaveBeenCalledWith(50, 75, 0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns self for chaining</h4>
+                <pre><code>expect(system.setListenerPosition(10, 20)).toBe(system)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>getListenerPosition</h3>
+            <div class="test-case">
+                <h4>calls getListenerPosition on audio context</h4>
+                <pre><code>const spy = vi.spyOn(system.audioContext, 'getListenerPosition')
+system.getListenerPosition()
+expect(spy).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns object with x and y properties</h4>
+                <pre><code>const pos = system.getListenerPosition()
+expect(pos).toHaveProperty('x')
+expect(pos).toHaveProperty('y')
+expect(pos.z).toBeUndefined()</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2d</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebglCanvas2d</a><div class="nav-category">audio</div><a class="nav-item active" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">general</div><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/philosophy.guide.js" data-title="philosophy" data-category="general">Philosophy</a><a class="nav-item" href="guide_getting_started.html" data-file="/doc/guides/getting_started.guide.js" data-title="gettingstarted" data-category="general">Getting Started</a><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-C78eJMBq.js"></script>
+</body>
+</html>

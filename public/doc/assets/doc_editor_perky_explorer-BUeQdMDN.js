@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _swipeReferenceY, _TouchDevice_instances, createControls_fn, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn3, updateDisplay_fn, handleInput_fn, clamp_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _ManifestInspector_instances, update_fn6, createSection_fn, createConfigSection_fn, createDataGrid_fn, createAssetsSection_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _menuEl, _actions, _module2, _ExplorerContextMenu_instances, buildDOM_fn4, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module3, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl2, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn5, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn;
+var _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentY, _touchStartTime, _swipeReferenceY, _TouchDevice_instances, createControls_fn, handleTouchstart_fn, handleTouchmove_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _Game_instances, updateActiveControllers_fn, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _customStyles, _BaseTreeNode_instances, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _PerkyExplorerNode_instances, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _value, _min, _max, _step, _label, _slider, _labelEl2, _valueEl, _SliderInput_instances, buildDOM_fn3, updateDisplay_fn, handleInput_fn, clamp_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _filterState, _typeGroupsState, _mainContainer, _assetsListContainer, _ManifestInspector_instances, update_fn6, updateAssetsList_fn, applyFilters_fn, createSection_fn, createConfigSection_fn, createDataGrid_fn, createFiltersBar_fn, createAssetsSection_fn, createTypeGroup_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _unlockedValueEl, _channelsValueEl, _volumeInput, _unlockBtn, _AudioSystemInspector_instances, handleVolumeChange_fn, handleUnlock_fn, bindEvents_fn4, updateAll_fn3, updateUnlocked_fn, updateChannels_fn, updateVolume_fn, _mutedValueEl, _sourcesValueEl, _volumeInput2, _muteBtn, _AudioChannelInspector_instances, handleVolumeChange_fn2, handleToggleMute_fn, bindEvents_fn5, updateAll_fn4, updateMuted_fn, updateSources_fn, updateVolume_fn2, _menuEl, _actions, _module2, _ExplorerContextMenu_instances, buildDOM_fn4, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module3, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _containerEl2, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn5, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn;
 import { d as doc, t as text, s as section, c as code, f as container } from "./runtime-CM36Pd9c.js";
 import { P as PerkyModule, R as Registry } from "./perky_module-8S_KnZAY.js";
 import { u as uniqueId, b as toSnakeCase, s as setDefaults, d as deepMerge, g as getNestedValue, c as setNestedValue, f as formatNumber, e as formatBytes } from "./utils-BTvKfW7M.js";
@@ -31,6 +31,7 @@ import { E as Entity } from "./entity-CKloPz57.js";
 import "./vec2_input-BFMiN3vt.js";
 import "./action_controller_inspector-9VUh3OSo.js";
 import "./action_dispatcher_inspector-CXLcEDVW.js";
+import { A as AudioSystem, a as AudioChannel } from "./audio_system-B0lRqclk.js";
 import "./action_controller-BKl2uYjt.js";
 class Asset {
   constructor(params = {}) {
@@ -642,27 +643,12 @@ async function loadArrayBuffer(params) {
   checkResponse(response, url);
   return response.arrayBuffer();
 }
-let sharedAudioContext = null;
-function getAudioContext() {
-  if (!sharedAudioContext) {
-    sharedAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  return sharedAudioContext;
-}
 async function loadAudio(params) {
-  const arrayBuffer = await loadArrayBuffer(params);
-  const audioContext = getAudioContext();
-  return new Promise((resolve, reject) => {
-    audioContext.decodeAudioData(
-      arrayBuffer,
-      function(decodedData) {
-        resolve(decodedData);
-      },
-      function(error) {
-        reject(new Error("Failed to decode audio data: " + (error ? error.message : "Unknown error")));
-      }
-    );
-  });
+  const { url } = normalizeParams(params);
+  return {
+    type: "deferred_audio",
+    url
+  };
 }
 function loadFont(params) {
   const { url, config } = normalizeParams(params);
@@ -3407,7 +3393,7 @@ update_fn = function() {
 };
 customElements.define("base-renderer-inspector", BaseRendererInspector);
 PerkyExplorerDetails.registerInspector(BaseRendererInspector);
-const customStyles$4 = `
+const customStyles$6 = `
     .fps-controls {
         grid-column: 1 / -1;
         display: flex;
@@ -3465,7 +3451,7 @@ const customStyles$4 = `
 `;
 class GameLoopInspector extends BaseInspector {
   constructor() {
-    super(customStyles$4);
+    super(customStyles$6);
     __privateAdd(this, _GameLoopInspector_instances);
     __privateAdd(this, _fpsValueEl, null);
     __privateAdd(this, _screenFpsValueEl, null);
@@ -3655,7 +3641,7 @@ function createInfoRow(label) {
   row.appendChild(valueEl);
   return row;
 }
-const customStyles$3 = `
+const customStyles$5 = `
     .inspector-stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -3779,7 +3765,7 @@ const customStyles$3 = `
 `;
 class TextureManagerInspector extends BaseInspector {
   constructor() {
-    super(customStyles$3);
+    super(customStyles$5);
     __privateAdd(this, _TextureManagerInspector_instances);
     __privateAdd(this, _activeCountEl, null);
     __privateAdd(this, _activeSizeEl, null);
@@ -4124,7 +4110,7 @@ resolveViews_fn = function(entity) {
   return results;
 };
 __publicField(WorldView, "$category", "worldView");
-const customStyles$2 = `
+const customStyles$4 = `
     .view-list {
         margin-top: 8px;
         padding-top: 8px;
@@ -4154,7 +4140,7 @@ const customStyles$2 = `
 `;
 class WorldViewInspector extends BaseInspector {
   constructor() {
-    super(customStyles$2);
+    super(customStyles$4);
     __privateAdd(this, _WorldViewInspector_instances);
     this.buildDOM();
   }
@@ -4339,7 +4325,116 @@ renderPostPasses_fn = function(group) {
 };
 customElements.define("render-group-inspector", RenderGroupInspector);
 PerkyExplorerDetails.registerInspector(RenderGroupInspector);
-const customStyles$1 = `
+function matchesSearch(asset, query) {
+  const lowerQuery = query.toLowerCase();
+  if ((asset.id || "").toLowerCase().includes(lowerQuery)) {
+    return true;
+  }
+  if ((asset.name || "").toLowerCase().includes(lowerQuery)) {
+    return true;
+  }
+  if ((asset.type || "").toLowerCase().includes(lowerQuery)) {
+    return true;
+  }
+  if (asset.tags && asset.tags.some((tag) => tag.toLowerCase().includes(lowerQuery))) {
+    return true;
+  }
+  return false;
+}
+const customStyles$3 = `
+    .filters-container {
+        margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .search-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .search-bar {
+        width: 100%;
+        padding: 6px 28px 6px 8px;
+        background: var(--bg-hover);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--fg-primary);
+        font-size: 11px;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .search-clear {
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 16px;
+        height: 16px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--fg-muted);
+        font-size: 14px;
+        line-height: 1;
+        user-select: none;
+        border-radius: 2px;
+    }
+
+    .search-clear:hover {
+        color: var(--fg-primary);
+        background: var(--bg-primary);
+    }
+
+    .search-container.has-value .search-clear {
+        display: flex;
+    }
+
+    .search-bar:focus {
+        border-color: var(--accent);
+    }
+
+    .search-bar::placeholder {
+        color: var(--fg-muted);
+    }
+
+    .filter-buttons {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+
+    .filter-button {
+        padding: 4px 8px;
+        background: var(--bg-hover);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-size: 10px;
+        color: var(--fg-secondary);
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.2s;
+    }
+
+    .filter-button:hover {
+        background: var(--bg-primary);
+        color: var(--fg-primary);
+    }
+
+    .filter-button.active {
+        background: var(--accent);
+        color: var(--bg-primary);
+        border-color: var(--accent);
+    }
+
+    .filter-button .count {
+        opacity: 0.7;
+        margin-left: 4px;
+    }
+
     .section {
         margin-bottom: 12px;
     }
@@ -4441,15 +4536,46 @@ const customStyles$1 = `
         margin-bottom: 6px;
     }
 
+    .asset-card.collapsed {
+        padding-bottom: 8px;
+    }
+
     .asset-header {
         display: flex;
         align-items: center;
         gap: 8px;
+        position: relative;
+    }
+
+    .asset-header:not(.collapsed) {
         margin-bottom: 6px;
     }
 
+    .asset-header::before {
+        content: '▼';
+        font-size: 8px;
+        color: var(--fg-muted);
+        transition: transform 0.2s;
+        margin-right: 2px;
+    }
+
+    .asset-header.collapsed::before {
+        transform: rotate(-90deg);
+    }
+
     .asset-icon {
-        font-size: 14px;
+        width: 14px;
+        height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .asset-icon svg {
+        width: 100%;
+        height: 100%;
+        color: var(--fg-muted);
     }
 
     .asset-name {
@@ -4522,6 +4648,16 @@ const customStyles$1 = `
         background: var(--bg-primary);
     }
 
+    .asset-preview audio {
+        width: 100%;
+        height: 32px;
+        outline: none;
+    }
+
+    .asset-preview audio::-webkit-media-controls-panel {
+        background-color: var(--bg-primary);
+    }
+
     .asset-config {
         margin-top: 6px;
         padding-top: 6px;
@@ -4537,12 +4673,18 @@ const customStyles$1 = `
 `;
 class ManifestInspector extends BaseInspector {
   constructor() {
-    super(customStyles$1);
+    super(customStyles$3);
     __privateAdd(this, _ManifestInspector_instances);
     __privateAdd(this, _sectionsState, {
       config: true,
       assets: true
     });
+    __privateAdd(this, _filterState, {
+      searchQuery: ""
+    });
+    __privateAdd(this, _typeGroupsState, {});
+    __privateAdd(this, _mainContainer, null);
+    __privateAdd(this, _assetsListContainer, null);
     this.buildDOM();
   }
   static matches(module) {
@@ -4550,22 +4692,58 @@ class ManifestInspector extends BaseInspector {
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this);
+      __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this, false);
     }
   }
 }
 _sectionsState = new WeakMap();
+_filterState = new WeakMap();
+_typeGroupsState = new WeakMap();
+_mainContainer = new WeakMap();
+_assetsListContainer = new WeakMap();
 _ManifestInspector_instances = new WeakSet();
-update_fn6 = function() {
+update_fn6 = function(onlyAssetsList = false) {
   if (!this.module) {
     return;
   }
+  if (onlyAssetsList && __privateGet(this, _assetsListContainer)) {
+    __privateMethod(this, _ManifestInspector_instances, updateAssetsList_fn).call(this);
+    return;
+  }
+  if (__privateGet(this, _mainContainer) && __privateGet(this, _mainContainer).parentNode) {
+    __privateGet(this, _mainContainer).remove();
+  }
   this.clearContent();
   const container2 = document.createElement("div");
+  __privateSet(this, _mainContainer, container2);
   container2.appendChild(__privateMethod(this, _ManifestInspector_instances, createConfigSection_fn).call(this));
   container2.appendChild(__privateMethod(this, _ManifestInspector_instances, createAssetsSection_fn).call(this));
   this.gridEl.style.display = "none";
   this.shadowRoot.insertBefore(container2, this.gridEl);
+};
+updateAssetsList_fn = function() {
+  if (!__privateGet(this, _assetsListContainer)) {
+    return;
+  }
+  __privateGet(this, _assetsListContainer).innerHTML = "";
+  const allAssets = this.module.getAllAssets();
+  const filteredAssets = __privateMethod(this, _ManifestInspector_instances, applyFilters_fn).call(this, allAssets);
+  const hasActiveSearch = __privateGet(this, _filterState).searchQuery.length > 0;
+  if (filteredAssets.length === 0) {
+    __privateGet(this, _assetsListContainer).innerHTML = '<div class="empty-message">No assets match the current filters</div>';
+    return;
+  }
+  const assetsByType = groupAssetsByType(filteredAssets);
+  for (const [type, assets] of Object.entries(assetsByType)) {
+    const group = __privateMethod(this, _ManifestInspector_instances, createTypeGroup_fn).call(this, type, assets, hasActiveSearch);
+    __privateGet(this, _assetsListContainer).appendChild(group);
+  }
+};
+applyFilters_fn = function(assets) {
+  if (!__privateGet(this, _filterState).searchQuery) {
+    return assets;
+  }
+  return assets.filter((asset) => matchesSearch(asset, __privateGet(this, _filterState).searchQuery));
 };
 createSection_fn = function(title, key, count = null) {
   const section2 = document.createElement("div");
@@ -4633,27 +4811,116 @@ createDataGrid_fn = function(data, depth = 0) {
   }
   return grid;
 };
+createFiltersBar_fn = function(allAssets) {
+  const container2 = document.createElement("div");
+  container2.className = "filters-container";
+  const searchContainer = document.createElement("div");
+  searchContainer.className = "search-container";
+  if (__privateGet(this, _filterState).searchQuery) {
+    searchContainer.classList.add("has-value");
+  }
+  const searchBar = document.createElement("input");
+  searchBar.type = "text";
+  searchBar.className = "search-bar";
+  searchBar.placeholder = "Search by name, id, type or tag...";
+  searchBar.value = __privateGet(this, _filterState).searchQuery;
+  const clearButton = document.createElement("div");
+  clearButton.className = "search-clear";
+  clearButton.textContent = "×";
+  clearButton.title = "Clear search";
+  const updateSearch = (value) => {
+    searchBar.value = value;
+    __privateGet(this, _filterState).searchQuery = value;
+    if (value) {
+      searchContainer.classList.add("has-value");
+    } else {
+      searchContainer.classList.remove("has-value");
+    }
+    __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this);
+  };
+  searchBar.addEventListener("input", (e) => {
+    __privateGet(this, _filterState).searchQuery = e.target.value;
+    if (e.target.value) {
+      searchContainer.classList.add("has-value");
+    } else {
+      searchContainer.classList.remove("has-value");
+    }
+    __privateMethod(this, _ManifestInspector_instances, update_fn6).call(this, true);
+  });
+  clearButton.addEventListener("click", () => {
+    updateSearch("");
+    searchBar.focus();
+  });
+  searchContainer.appendChild(searchBar);
+  searchContainer.appendChild(clearButton);
+  container2.appendChild(searchContainer);
+  const quickFilters = document.createElement("div");
+  quickFilters.className = "filter-buttons";
+  const typeStats = getTypeStats(allAssets);
+  for (const [type, count] of Object.entries(typeStats)) {
+    const chip = createFilterChip(type, count, () => {
+      updateSearch(type);
+      searchBar.focus();
+    });
+    quickFilters.appendChild(chip);
+  }
+  const tagStats = getTagStats(allAssets);
+  if (Object.keys(tagStats).length > 0) {
+    for (const [tag, count] of Object.entries(tagStats)) {
+      const chip = createFilterChip(`#${tag}`, count, () => {
+        updateSearch(tag);
+        searchBar.focus();
+      });
+      quickFilters.appendChild(chip);
+    }
+  }
+  container2.appendChild(quickFilters);
+  return container2;
+};
 createAssetsSection_fn = function() {
   const allAssets = this.module.getAllAssets();
+  const hasActiveSearch = __privateGet(this, _filterState).searchQuery.length > 0;
   const { section: section2, content } = __privateMethod(this, _ManifestInspector_instances, createSection_fn).call(this, "Assets", "assets", allAssets.length);
   if (allAssets.length === 0) {
     content.innerHTML = '<div class="empty-message">No assets defined</div>';
     return section2;
   }
-  const assetsByType = groupAssetsByType(allAssets);
+  content.appendChild(__privateMethod(this, _ManifestInspector_instances, createFiltersBar_fn).call(this, allAssets));
+  const assetsListContainer = document.createElement("div");
+  __privateSet(this, _assetsListContainer, assetsListContainer);
+  content.appendChild(assetsListContainer);
+  const filteredAssets = __privateMethod(this, _ManifestInspector_instances, applyFilters_fn).call(this, allAssets);
+  if (filteredAssets.length === 0) {
+    assetsListContainer.innerHTML = '<div class="empty-message">No assets match the current filters</div>';
+    return section2;
+  }
+  const assetsByType = groupAssetsByType(filteredAssets);
   for (const [type, assets] of Object.entries(assetsByType)) {
-    const group = document.createElement("div");
-    group.className = "asset-type-group";
-    const typeHeader = document.createElement("div");
-    typeHeader.className = "asset-type-header";
-    typeHeader.textContent = `${type} (${assets.length})`;
-    group.appendChild(typeHeader);
-    for (const asset of assets) {
-      group.appendChild(createAssetCard(asset, (data) => __privateMethod(this, _ManifestInspector_instances, createDataGrid_fn).call(this, data)));
-    }
-    content.appendChild(group);
+    const group = __privateMethod(this, _ManifestInspector_instances, createTypeGroup_fn).call(this, type, assets, hasActiveSearch);
+    assetsListContainer.appendChild(group);
   }
   return section2;
+};
+createTypeGroup_fn = function(type, assets, hasActiveSearch) {
+  const group = document.createElement("div");
+  group.className = "asset-type-group";
+  const typeHeader = document.createElement("div");
+  typeHeader.className = "asset-type-header";
+  typeHeader.style.cursor = "pointer";
+  typeHeader.textContent = `${type} (${assets.length})`;
+  const isCollapsed = __privateGet(this, _typeGroupsState)[type] === false;
+  const typeContent = document.createElement("div");
+  typeContent.style.display = isCollapsed ? "none" : "block";
+  typeHeader.addEventListener("click", () => {
+    __privateGet(this, _typeGroupsState)[type] = typeContent.style.display === "none";
+    typeContent.style.display = typeContent.style.display === "none" ? "block" : "none";
+  });
+  for (const asset of assets) {
+    typeContent.appendChild(createAssetCard(asset, (data) => __privateMethod(this, _ManifestInspector_instances, createDataGrid_fn).call(this, data), hasActiveSearch));
+  }
+  group.appendChild(typeHeader);
+  group.appendChild(typeContent);
+  return group;
 };
 function groupAssetsByType(assets) {
   const grouped = {};
@@ -4666,12 +4933,38 @@ function groupAssetsByType(assets) {
   }
   return grouped;
 }
+function getTypeStats(assets) {
+  const stats = {};
+  for (const asset of assets) {
+    const type = asset.type || "unknown";
+    stats[type] = (stats[type] || 0) + 1;
+  }
+  return stats;
+}
+function getTagStats(assets) {
+  const stats = {};
+  for (const asset of assets) {
+    if (asset.tags) {
+      for (const tag of asset.tags) {
+        stats[tag] = (stats[tag] || 0) + 1;
+      }
+    }
+  }
+  return stats;
+}
+function createFilterChip(label, count, onClick) {
+  const chip = document.createElement("div");
+  chip.className = "filter-button";
+  chip.innerHTML = `${label}<span class="count">${count}</span>`;
+  chip.addEventListener("click", onClick);
+  return chip;
+}
 function createAssetHeader(asset) {
   const header = document.createElement("div");
   header.className = "asset-header";
   const icon = document.createElement("span");
   icon.className = "asset-icon";
-  icon.textContent = getAssetIcon(asset);
+  icon.innerHTML = getAssetIcon(asset);
   const name = document.createElement("span");
   name.className = "asset-name";
   name.textContent = asset.name || asset.id;
@@ -4727,23 +5020,39 @@ function createAssetConfig(asset, createDataGrid) {
   configSection.appendChild(createDataGrid(asset.config));
   return configSection;
 }
-function createAssetCard(asset, createDataGrid) {
+function createAssetCard(asset, createDataGrid, hasActiveSearch = false) {
   const card = document.createElement("div");
   card.className = "asset-card";
-  card.appendChild(createAssetHeader(asset));
-  card.appendChild(createAssetDetails(asset));
+  const header = createAssetHeader(asset);
+  card.appendChild(header);
+  const detailsContainer = document.createElement("div");
+  const isCollapsed = !hasActiveSearch;
+  detailsContainer.style.display = hasActiveSearch ? "block" : "none";
+  if (isCollapsed) {
+    header.classList.add("collapsed");
+    card.classList.add("collapsed");
+  }
+  detailsContainer.appendChild(createAssetDetails(asset));
   const tags = createAssetTags(asset);
   if (tags) {
-    card.appendChild(tags);
+    detailsContainer.appendChild(tags);
   }
   const config = createAssetConfig(asset, createDataGrid);
   if (config) {
-    card.appendChild(config);
+    detailsContainer.appendChild(config);
   }
   const preview = createSourcePreview(asset);
   if (preview) {
-    card.appendChild(preview);
+    detailsContainer.appendChild(preview);
   }
+  card.appendChild(detailsContainer);
+  header.style.cursor = "pointer";
+  header.addEventListener("click", () => {
+    const isHidden = detailsContainer.style.display === "none";
+    detailsContainer.style.display = isHidden ? "block" : "none";
+    header.classList.toggle("collapsed");
+    card.classList.toggle("collapsed");
+  });
   return card;
 }
 function addAssetRow(container2, label, value) {
@@ -4766,24 +5075,34 @@ function addAssetRowElement(container2, label, element) {
   container2.appendChild(labelEl);
   container2.appendChild(valueEl);
 }
+const ASSET_ICONS = {
+  image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>',
+  audio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>',
+  font: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>',
+  shader: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>',
+  scene: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"></path></svg>',
+  script: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>',
+  data: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>',
+  default: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>'
+};
 const ASSET_ICON_PATTERNS = [
-  { keywords: ["texture", "image", "sprite"], icon: "🖼" },
-  { keywords: ["audio", "sound", "music"], icon: "🔊" },
-  { keywords: ["font"], icon: "🔤" },
-  { keywords: ["shader"], icon: "✨" },
-  { keywords: ["scene"], icon: "🎬" },
-  { keywords: ["script"], icon: "📜" },
-  { keywords: ["data", "json"], icon: "📄" }
+  { keywords: ["texture", "image", "sprite"], key: "image" },
+  { keywords: ["audio", "sound", "music"], key: "audio" },
+  { keywords: ["font"], key: "font" },
+  { keywords: ["shader"], key: "shader" },
+  { keywords: ["scene"], key: "scene" },
+  { keywords: ["script"], key: "script" },
+  { keywords: ["data", "json"], key: "data" }
 ];
 function getAssetIcon(asset) {
   var _a;
   const type = ((_a = asset.type) == null ? void 0 : _a.toLowerCase()) || "";
-  for (const { keywords, icon } of ASSET_ICON_PATTERNS) {
+  for (const { keywords, key } of ASSET_ICON_PATTERNS) {
     if (keywords.some((keyword) => type.includes(keyword))) {
-      return icon;
+      return ASSET_ICONS[key];
     }
   }
-  return "📦";
+  return ASSET_ICONS.default;
 }
 function getImageSrc(source) {
   if (source instanceof HTMLImageElement) {
@@ -4795,6 +5114,9 @@ function getImageSrc(source) {
   return null;
 }
 function createSourcePreview(asset) {
+  if (asset.type === "audio") {
+    return createAudioPreview(asset);
+  }
   const source = asset.source;
   const src = getImageSrc(source);
   if (!src) {
@@ -4808,9 +5130,30 @@ function createSourcePreview(asset) {
   preview.appendChild(img);
   return preview;
 }
+function createAudioPreview(asset) {
+  const source = asset.source;
+  let audioSrc = null;
+  if (source instanceof HTMLAudioElement) {
+    audioSrc = source.src;
+  } else if (asset.url) {
+    audioSrc = asset.url;
+  }
+  if (!audioSrc) {
+    return null;
+  }
+  const preview = document.createElement("div");
+  preview.className = "asset-preview";
+  const audio = document.createElement("audio");
+  audio.controls = true;
+  audio.preload = "metadata";
+  audio.src = audioSrc;
+  audio.setAttribute("controlsList", "nodownload");
+  preview.appendChild(audio);
+  return preview;
+}
 customElements.define("manifest-inspector", ManifestInspector);
 PerkyExplorerDetails.registerInspector(ManifestInspector);
-const customStyles = `
+const customStyles$2 = `
     .bindings-header {
         display: flex;
         align-items: center;
@@ -5008,7 +5351,7 @@ const customStyles = `
 `;
 class InputBinderInspector extends BaseInspector {
   constructor() {
-    super(customStyles);
+    super(customStyles$2);
     __privateAdd(this, _InputBinderInspector_instances);
     __privateAdd(this, _viewMode, "action");
     __privateAdd(this, _containerEl, null);
@@ -5205,6 +5548,254 @@ function createBindingCard(binding) {
 }
 customElements.define("input-binder-inspector", InputBinderInspector);
 PerkyExplorerDetails.registerInspector(InputBinderInspector);
+const ICONS = {
+  inspect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+  clipboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>',
+  volume: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>',
+  volumeMuted: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>',
+  audio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>'
+};
+const customStyles$1 = `
+    .volume-controls {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+    }
+
+    .volume-icon {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+`;
+class AudioSystemInspector extends BaseInspector {
+  constructor() {
+    super(customStyles$1);
+    __privateAdd(this, _AudioSystemInspector_instances);
+    __privateAdd(this, _unlockedValueEl, null);
+    __privateAdd(this, _channelsValueEl, null);
+    __privateAdd(this, _volumeInput, null);
+    __privateAdd(this, _unlockBtn, null);
+    this.buildDOM();
+  }
+  static matches(module) {
+    return module instanceof AudioSystem;
+  }
+  onModuleSet(module) {
+    if (module) {
+      __privateMethod(this, _AudioSystemInspector_instances, bindEvents_fn4).call(this);
+      __privateMethod(this, _AudioSystemInspector_instances, updateAll_fn3).call(this);
+    }
+  }
+  buildDOM() {
+    super.buildDOM();
+    __privateSet(this, _unlockedValueEl, this.addRow("unlocked", "false"));
+    __privateSet(this, _channelsValueEl, this.addRow("channels", "0"));
+    const controlsEl = document.createElement("div");
+    controlsEl.className = "volume-controls";
+    __privateSet(this, _volumeInput, document.createElement("slider-input"));
+    __privateGet(this, _volumeInput).setAttribute("label", "Master Volume");
+    __privateGet(this, _volumeInput).setAttribute("min", "0");
+    __privateGet(this, _volumeInput).setAttribute("max", "1");
+    __privateGet(this, _volumeInput).setAttribute("step", "0.01");
+    __privateGet(this, _volumeInput).setAttribute("value", "1");
+    __privateGet(this, _volumeInput).addEventListener("change", (e) => __privateMethod(this, _AudioSystemInspector_instances, handleVolumeChange_fn).call(this, e));
+    controlsEl.appendChild(__privateGet(this, _volumeInput));
+    this.gridEl.appendChild(controlsEl);
+    __privateSet(this, _unlockBtn, this.createButton("", "Unlock Audio", () => __privateMethod(this, _AudioSystemInspector_instances, handleUnlock_fn).call(this)));
+    __privateGet(this, _unlockBtn).innerHTML = `<span class="volume-icon">${ICONS.audio}</span> Unlock Audio`;
+    this.actionsEl.appendChild(__privateGet(this, _unlockBtn));
+  }
+}
+_unlockedValueEl = new WeakMap();
+_channelsValueEl = new WeakMap();
+_volumeInput = new WeakMap();
+_unlockBtn = new WeakMap();
+_AudioSystemInspector_instances = new WeakSet();
+handleVolumeChange_fn = function(e) {
+  if (!this.module) {
+    return;
+  }
+  this.module.setVolume(e.detail.value);
+};
+handleUnlock_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  this.module.unlock();
+};
+bindEvents_fn4 = function() {
+  if (!this.module) {
+    return;
+  }
+  this.listenTo(this.module, "audio:unlocked", () => __privateMethod(this, _AudioSystemInspector_instances, updateUnlocked_fn).call(this));
+  this.listenTo(this.module, "volume:changed", (volume) => __privateMethod(this, _AudioSystemInspector_instances, updateVolume_fn).call(this, volume));
+  this.listenTo(this.module, "child:added", () => __privateMethod(this, _AudioSystemInspector_instances, updateChannels_fn).call(this));
+  this.listenTo(this.module, "child:removed", () => __privateMethod(this, _AudioSystemInspector_instances, updateChannels_fn).call(this));
+};
+updateAll_fn3 = function() {
+  var _a;
+  __privateMethod(this, _AudioSystemInspector_instances, updateUnlocked_fn).call(this);
+  __privateMethod(this, _AudioSystemInspector_instances, updateChannels_fn).call(this);
+  __privateMethod(this, _AudioSystemInspector_instances, updateVolume_fn).call(this, ((_a = this.module) == null ? void 0 : _a.masterVolume) ?? 1);
+};
+updateUnlocked_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const unlocked = this.module.unlocked;
+  __privateGet(this, _unlockedValueEl).textContent = unlocked ? "true" : "false";
+  __privateGet(this, _unlockedValueEl).className = `inspector-value ${unlocked ? "accent" : ""}`;
+  if (__privateGet(this, _unlockBtn)) {
+    if (unlocked) {
+      __privateGet(this, _unlockBtn).style.display = "none";
+    } else {
+      __privateGet(this, _unlockBtn).style.display = "";
+      __privateGet(this, _unlockBtn).classList.add("primary");
+    }
+  }
+};
+updateChannels_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const channels = this.module.listChannels();
+  __privateGet(this, _channelsValueEl).textContent = `${channels.length} (${channels.join(", ")})`;
+};
+updateVolume_fn = function(volume) {
+  if (__privateGet(this, _volumeInput)) {
+    __privateGet(this, _volumeInput).setValue(volume);
+  }
+};
+customElements.define("audio-system-inspector", AudioSystemInspector);
+PerkyExplorerDetails.registerInspector(AudioSystemInspector);
+const customStyles = `
+    .volume-controls {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+    }
+
+    .volume-icon {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+`;
+class AudioChannelInspector extends BaseInspector {
+  constructor() {
+    super(customStyles);
+    __privateAdd(this, _AudioChannelInspector_instances);
+    __privateAdd(this, _mutedValueEl, null);
+    __privateAdd(this, _sourcesValueEl, null);
+    __privateAdd(this, _volumeInput2, null);
+    __privateAdd(this, _muteBtn, null);
+    this.buildDOM();
+  }
+  static matches(module) {
+    return module instanceof AudioChannel;
+  }
+  onModuleSet(module) {
+    if (module) {
+      __privateMethod(this, _AudioChannelInspector_instances, bindEvents_fn5).call(this);
+      __privateMethod(this, _AudioChannelInspector_instances, updateAll_fn4).call(this);
+    }
+  }
+  buildDOM() {
+    super.buildDOM();
+    __privateSet(this, _mutedValueEl, this.addRow("muted", "false"));
+    __privateSet(this, _sourcesValueEl, this.addRow("sources", "0"));
+    const controlsEl = document.createElement("div");
+    controlsEl.className = "volume-controls";
+    __privateSet(this, _volumeInput2, document.createElement("slider-input"));
+    __privateGet(this, _volumeInput2).setAttribute("label", "Volume");
+    __privateGet(this, _volumeInput2).setAttribute("min", "0");
+    __privateGet(this, _volumeInput2).setAttribute("max", "1");
+    __privateGet(this, _volumeInput2).setAttribute("step", "0.01");
+    __privateGet(this, _volumeInput2).setAttribute("value", "1");
+    __privateGet(this, _volumeInput2).addEventListener("change", (e) => __privateMethod(this, _AudioChannelInspector_instances, handleVolumeChange_fn2).call(this, e));
+    controlsEl.appendChild(__privateGet(this, _volumeInput2));
+    this.gridEl.appendChild(controlsEl);
+    __privateSet(this, _muteBtn, this.createButton("", "Mute", () => __privateMethod(this, _AudioChannelInspector_instances, handleToggleMute_fn).call(this)));
+    __privateGet(this, _muteBtn).innerHTML = `<span class="volume-icon">${ICONS.volumeMuted}</span> Mute`;
+    this.actionsEl.appendChild(__privateGet(this, _muteBtn));
+  }
+}
+_mutedValueEl = new WeakMap();
+_sourcesValueEl = new WeakMap();
+_volumeInput2 = new WeakMap();
+_muteBtn = new WeakMap();
+_AudioChannelInspector_instances = new WeakSet();
+handleVolumeChange_fn2 = function(e) {
+  if (!this.module) {
+    return;
+  }
+  this.module.setVolume(e.detail.value);
+};
+handleToggleMute_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  this.module.toggleMute();
+};
+bindEvents_fn5 = function() {
+  if (!this.module) {
+    return;
+  }
+  this.listenTo(this.module, "volume:changed", (volume) => __privateMethod(this, _AudioChannelInspector_instances, updateVolume_fn2).call(this, volume));
+  this.listenTo(this.module, "muted", () => __privateMethod(this, _AudioChannelInspector_instances, updateMuted_fn).call(this));
+  this.listenTo(this.module, "unmuted", () => __privateMethod(this, _AudioChannelInspector_instances, updateMuted_fn).call(this));
+  this.listenTo(this.module, "source:added", () => __privateMethod(this, _AudioChannelInspector_instances, updateSources_fn).call(this));
+  this.listenTo(this.module, "source:removed", () => __privateMethod(this, _AudioChannelInspector_instances, updateSources_fn).call(this));
+};
+updateAll_fn4 = function() {
+  var _a;
+  __privateMethod(this, _AudioChannelInspector_instances, updateMuted_fn).call(this);
+  __privateMethod(this, _AudioChannelInspector_instances, updateSources_fn).call(this);
+  __privateMethod(this, _AudioChannelInspector_instances, updateVolume_fn2).call(this, ((_a = this.module) == null ? void 0 : _a.volume) ?? 1);
+};
+updateMuted_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const muted = this.module.muted;
+  __privateGet(this, _mutedValueEl).textContent = muted ? "true" : "false";
+  __privateGet(this, _mutedValueEl).className = `inspector-value ${muted ? "accent" : ""}`;
+  if (muted) {
+    __privateGet(this, _muteBtn).innerHTML = `<span class="volume-icon">${ICONS.volume}</span> Unmute`;
+    __privateGet(this, _muteBtn).classList.add("primary");
+  } else {
+    __privateGet(this, _muteBtn).innerHTML = `<span class="volume-icon">${ICONS.volumeMuted}</span> Mute`;
+    __privateGet(this, _muteBtn).classList.remove("primary");
+  }
+};
+updateSources_fn = function() {
+  if (!this.module) {
+    return;
+  }
+  const count = this.module.sourceCount;
+  __privateGet(this, _sourcesValueEl).textContent = count;
+  __privateGet(this, _sourcesValueEl).className = `inspector-value ${count > 0 ? "accent" : ""}`;
+};
+updateVolume_fn2 = function(volume) {
+  if (__privateGet(this, _volumeInput2)) {
+    __privateGet(this, _volumeInput2).setValue(volume);
+  }
+};
+customElements.define("audio-channel-inspector", AudioChannelInspector);
+PerkyExplorerDetails.registerInspector(AudioChannelInspector);
 class ExplorerContextMenu extends BaseEditorComponent {
   constructor() {
     super();
@@ -5385,10 +5976,6 @@ const menuStyles = `
     }
 `;
 customElements.define("explorer-context-menu", ExplorerContextMenu);
-const ICONS = {
-  inspect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-  clipboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>'
-};
 const actionProviders = [];
 function registerActionProvider(provider) {
   actionProviders.push(provider);

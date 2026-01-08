@@ -1,6 +1,6 @@
 import { d as doc, t as text, s as section, f as container, c as code } from "./runtime-CM36Pd9c.js";
 import { W as WebGLCanvas2D } from "./webgl_canvas_2d-zqI8K6VW.js";
-import { G as Group2D, R as Rectangle, C as Circle } from "./group_2d-CoEJFKmm.js";
+import { G as Group2D, R as Rectangle, C as Circle, I as Image2D } from "./group_2d-CoEJFKmm.js";
 import "./logger-DMogC8ed.js";
 import "./perky_module-8S_KnZAY.js";
 import "./utils-BTvKfW7M.js";
@@ -201,6 +201,33 @@ const webgl_canvas_2d_doc = doc("WebGLCanvas2D", () => {
         renderer.camera.y = 2;
         renderer.render(scene);
       });
+      ctx.setApp(renderer, scene);
+    });
+  });
+  section("Images", () => {
+    text("Render images and sprites using Image2D objects.");
+    container({ title: "Sprite rendering", height: 200 }, (ctx) => {
+      const renderer = new WebGLCanvas2D({
+        container: ctx.container,
+        autoFit: true,
+        backgroundColor: "#1a1a2e"
+      });
+      const scene = new Group2D();
+      const shroomImage = new Image();
+      shroomImage.src = "./assets/images/shroom.png";
+      shroomImage.onload = () => {
+        const sprite = new Image2D({
+          x: 0,
+          y: 0,
+          width: 7,
+          height: 7,
+          anchorX: 0.5,
+          anchorY: 0.5,
+          image: shroomImage
+        });
+        scene.add(sprite);
+        renderer.render(scene);
+      };
       ctx.setApp(renderer, scene);
     });
   });
