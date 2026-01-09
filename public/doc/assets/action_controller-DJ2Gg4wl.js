@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var _actions, _actionList;
-import { P as PerkyModule } from "./perky_module-BD8xZ4RH.js";
+import { P as PerkyModule } from "./perky_module-CcyM7f0C.js";
 import { R as Registry } from "./registry-DkFDcuAy.js";
 const _ActionController = class _ActionController extends PerkyModule {
   constructor(options = {}) {

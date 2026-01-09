@@ -10,7 +10,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _context, _collected, _rendererRegistry, _renderers, _debugGizmoRenderer, _Canvas2D_instances, setupDefaultRenderers_fn;
-import { C as Circle, R as Rectangle, I as Image2D, S as Sprite2D, B as BaseRenderer, t as traverseAndCollect } from "./group_2d-Cw-ZHZml.js";
+import { C as Circle, R as Rectangle, I as Image2D, S as Sprite2D, B as BaseRenderer, t as traverseAndCollect } from "./group_2d-88Xttwgn.js";
 class CanvasObjectRenderer {
   constructor() {
     __privateAdd(this, _context, null);

@@ -1,11 +1,11 @@
 import { d as doc, t as text, s as section, c as code, e as action } from "./runtime-xB3_cpHX.js";
-import { P as PerkyModule } from "./perky_module-BD8xZ4RH.js";
+import { P as PerkyModule } from "./perky_module-CcyM7f0C.js";
 import { l as logger } from "./logger-Wk9ggM8V.js";
 import "./notifier-BaRt7qG0.js";
 import "./registry-DkFDcuAy.js";
 import "./observable_map-DbdPsVuP.js";
 import "./observable_set-CjEWA0bY.js";
-import "./utils-1YvUtnPG.js";
+import "./utils-D9Z65BTh.js";
 import "./inflector--UCXb4XA.js";
 const perky_module_doc = doc("PerkyModule", { context: "simple" }, () => {
   text(`

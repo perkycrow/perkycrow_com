@@ -10,7 +10,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn;
-import { I as InputDevice, B as ButtonControl } from "./button_control-4gs7TZGw.js";
+import { I as InputDevice, B as ButtonControl } from "./button_control-CUm1sIyt.js";
 import { V as Vec2Control } from "./vec2_control-89KZna8m.js";
 import { I as InputControl } from "./input_control-Bm8lg0DB.js";
 const { VALUE, OLD_VALUE } = InputControl;

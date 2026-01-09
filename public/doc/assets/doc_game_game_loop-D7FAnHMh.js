@@ -1,12 +1,12 @@
 import { d as doc, t as text, s as section, c as code, e as action } from "./runtime-xB3_cpHX.js";
-import { G as GameLoop } from "./game_loop-DovgaDSG.js";
+import { G as GameLoop } from "./game_loop-Bd0m7LbG.js";
 import { l as logger } from "./logger-Wk9ggM8V.js";
-import "./perky_module-BD8xZ4RH.js";
+import "./perky_module-CcyM7f0C.js";
 import "./notifier-BaRt7qG0.js";
 import "./registry-DkFDcuAy.js";
 import "./observable_map-DbdPsVuP.js";
 import "./observable_set-CjEWA0bY.js";
-import "./utils-1YvUtnPG.js";
+import "./utils-D9Z65BTh.js";
 import "./inflector--UCXb4XA.js";
 const game_loop_doc = doc("GameLoop", { context: "game" }, () => {
   text(`

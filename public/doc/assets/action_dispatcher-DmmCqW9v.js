@@ -10,8 +10,8 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn;
-import { P as PerkyModule } from "./perky_module-BD8xZ4RH.js";
-import { A as ActionController } from "./action_controller-D-4twAJQ.js";
+import { P as PerkyModule } from "./perky_module-CcyM7f0C.js";
+import { A as ActionController } from "./action_controller-DJ2Gg4wl.js";
 import { l as logger } from "./logger-Wk9ggM8V.js";
 class ActionDispatcher extends PerkyModule {
   constructor() {

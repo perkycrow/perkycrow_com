@@ -13,7 +13,7 @@ var _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eager
 import { N as Notifier } from "./notifier-BaRt7qG0.js";
 import { R as Registry } from "./registry-DkFDcuAy.js";
 import { O as ObservableSet } from "./observable_set-CjEWA0bY.js";
-import { u as uniqueId, o as delegateProperties } from "./utils-1YvUtnPG.js";
+import { u as uniqueId, o as delegateProperties } from "./utils-D9Z65BTh.js";
 const SELECTOR_REGEX = /([#.$@])([a-zA-Z0-9_-]+)/g;
 const PREFIX_TO_TYPE = {
   "#": "id",

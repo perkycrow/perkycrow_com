@@ -8,8 +8,8 @@ var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _containerEl, _ActionControllerInspector_instances, update_fn, createActionCard_fn;
 import { P as PerkyExplorerDetails, a as BaseInspector } from "./perky_explorer_details-blS-_Re2.js";
-import { A as ActionController } from "./action_controller-D-4twAJQ.js";
-import { e as pluralize } from "./utils-1YvUtnPG.js";
+import { A as ActionController } from "./action_controller-DJ2Gg4wl.js";
+import { k as pluralize } from "./utils-D9Z65BTh.js";
 const customStyles = `
     .actions-header {
         display: flex;

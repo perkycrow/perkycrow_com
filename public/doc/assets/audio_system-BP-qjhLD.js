@@ -10,8 +10,8 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _context, _masterGain, _suspended, _pendingDecodes, _masterVolume, _AudioContext_instances, processPendingDecodes_fn, _audioContext, _gainNode, _volume, _muted, _sources, _AudioChannel_instances, updateGain_fn, _audioContext2, _channel, _gainNode2, _pannerNode, _sourceNode, _playing, _loop, _volume2, _playbackRate, _startTime, _pauseTime, _x, _y, _spatial, _refDistance, _maxDistance, _rolloffFactor, _AudioSource_instances, initSpatialOptions_fn, updatePannerPosition_fn, updateGain_fn2, setupNodes_fn, configurePanner_fn, cleanupSourceNode_fn, _audioContext3, _buffers, _pendingAudio, _unlocked, _AudioSystem_instances, loadPendingAudio_fn, applyConfig_fn;
-import { P as PerkyModule } from "./perky_module-BD8xZ4RH.js";
-import { u as uniqueId } from "./utils-1YvUtnPG.js";
+import { P as PerkyModule } from "./perky_module-CcyM7f0C.js";
+import { u as uniqueId } from "./utils-D9Z65BTh.js";
 class AudioContext {
   constructor() {
     __privateAdd(this, _AudioContext_instances);

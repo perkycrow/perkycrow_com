@@ -8,7 +8,7 @@ var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _InputDevice_instances, initEvents_fn;
-import { P as PerkyModule } from "./perky_module-BD8xZ4RH.js";
+import { P as PerkyModule } from "./perky_module-CcyM7f0C.js";
 import { R as Registry } from "./registry-DkFDcuAy.js";
 import { I as InputControl } from "./input_control-Bm8lg0DB.js";
 class InputDevice extends PerkyModule {
