@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registry - Perky Docs</title>
+    <meta name="description" content="Documentation for Registry in the Perky game framework">
+    <meta property="og:title" content="Registry - Perky Docs">
+    <meta property="og:description" content="Documentation for Registry in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-BbQlfHkH.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Registry</h1>
+            <section class="test-section"><h2>Registry</h2>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>registry = new Registry()</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>set</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+
+registry.set('key', 'value')
+
+expect(registry.get('key')).toBe('value')
+expect(spy).toHaveBeenCalledWith('set', 'key', 'value', undefined)
+
+spy.mockClear()
+registry.set('key', 'newValue')
+
+expect(registry.get('key')).toBe('newValue')
+
+expect(spy).toHaveBeenCalledTimes(2)
+expect(spy).toHaveBeenNthCalledWith(1, 'delete', 'key', 'value')
+expect(spy).toHaveBeenNthCalledWith(2, 'set', 'key', 'newValue', 'value')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>set with same value does not emit delete</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+
+registry.set('key', 'value')
+spy.mockClear()
+
+registry.set('key', 'value')
+
+expect(spy).toHaveBeenCalledTimes(1)
+expect(spy).toHaveBeenCalledWith('set', 'key', 'value', 'value')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delete</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+
+registry.set('key', 'value')
+spy.mockClear()
+
+const result = registry.delete('key')
+
+expect(result).toBe(true)
+expect(registry.has('key')).toBe(false)
+expect(spy).toHaveBeenCalledWith('delete', 'key', 'value')
+expect(spy).toHaveBeenCalledTimes(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>delete non-existent</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+const result = registry.delete('nonexistent')
+expect(result).toBe(false)
+expect(spy).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updateKey</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+
+registry.set('oldKey', 'value')
+spy.mockClear()
+
+const result = registry.updateKey('oldKey', 'newKey')
+
+expect(result).toBe(true)
+expect(registry.has('oldKey')).toBe(false)
+expect(registry.has('newKey')).toBe(true)
+expect(registry.get('newKey')).toBe('value')
+expect(spy).toHaveBeenCalledWith('key:updated', 'oldKey', 'newKey', 'value')
+expect(spy).toHaveBeenCalledTimes(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updateKey with same key does nothing</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+
+registry.set('key', 'value')
+spy.mockClear()
+
+const result = registry.updateKey('key', 'key')
+
+expect(result).toBe(false)
+expect(registry.has('key')).toBe(true)
+expect(registry.get('key')).toBe('value')
+expect(spy).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updateKey with item verification</h4>
+                <pre><code>const value1 = 'value1'
+const value2 = 'value2'
+
+registry.set('key1', value1)
+registry.set('key2', value2)
+
+expect(registry.updateKey('key1', 'newKey1', value1)).toBe(true)
+expect(registry.has('key1')).toBe(false)
+expect(registry.get('newKey1')).toBe(value1)
+
+expect(registry.updateKey('key2', 'newKey2', value1)).toBe(false)
+expect(registry.has('key2')).toBe(true)
+expect(registry.get('key2')).toBe(value2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updateKey with non-existent key returns false</h4>
+                <pre><code>const result = registry.updateKey('nonexistent', 'newKey')
+expect(result).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clear</h4>
+                <pre><code>registry.set('key1', 'value1')
+registry.set('key2', 'value2')
+registry.clear()
+
+expect(registry.size).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clear empty</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+registry.clear()
+expect(registry.size).toBe(0)
+expect(spy).not.toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addCollection object</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+const collection = {
+    foo: 'bar',
+    baz: 'qux'
+}
+
+registry.addCollection(collection)
+expect(registry.get('foo')).toBe('bar')
+expect(registry.get('baz')).toBe('qux')
+expect(registry.size).toBe(2)
+expect(spy).toHaveBeenCalledTimes(2)
+expect(spy).toHaveBeenCalledWith('set', 'foo', 'bar', undefined)
+expect(spy).toHaveBeenCalledWith('set', 'baz', 'qux', undefined)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addCollection map</h4>
+                <pre><code>const spy = vi.spyOn(registry, 'emit')
+const map = new Map([
+    ['one', 1],
+    ['two', 2]
+])
+
+registry.addCollection(map)
+expect(registry.get('one')).toBe(1)
+expect(registry.get('two')).toBe(2)
+expect(registry.size).toBe(2)
+expect(spy).toHaveBeenCalledTimes(2)
+expect(spy).toHaveBeenCalledWith('set', 'one', 1, undefined)
+expect(spy).toHaveBeenCalledWith('set', 'two', 2, undefined)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addCollection invalid</h4>
+                <pre><code>expect(registry.addCollection(null)).toBe(false)
+expect(registry.addCollection(123)).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>toObject</h4>
+                <pre><code>const foo = {name: 'foo'}
+const bar = {name: 'bar'}
+
+registry.set('foo', foo)
+registry.set('bar', bar)
+
+const object = registry.toObject()
+
+expect(object).toEqual({
+    foo,
+    bar
+})
+expect(registry.toObject()).not.toBe(registry.map)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keys</h4>
+                <pre><code>registry.set('a', 1)
+registry.set('b', 2)
+
+expect(Array.from(registry.keys)).toEqual(['a', 'b'])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>values</h4>
+                <pre><code>registry.set('a', 1)
+registry.set('b', 2)
+
+expect(Array.from(registry.values)).toEqual([1, 2])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>entries</h4>
+                <pre><code>registry.set('a', 1)
+registry.set('b', 2)
+
+expect(Array.from(registry.entries)).toEqual([['a', 1], ['b', 2]])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasValue</h4>
+                <pre><code>registry.set('a', 1)
+registry.set('b', 2)
+
+expect(registry.hasValue(1)).toBe(true)
+expect(registry.hasValue(3)).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keyFor</h4>
+                <pre><code>registry.set('a', 1)
+registry.set('b', 2)
+
+expect(registry.keyFor(1)).toBe('a')
+expect(registry.keyFor(3)).toBe(undefined)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>Map methods</h4>
+                <pre><code>registry.set('a', 1)
+registry.set('b', 2)
+
+expect(registry.size).toBe(2)
+expect(registry.has('a')).toBe(true)
+expect(registry.has('c')).toBe(false)
+
+const results = []
+registry.forEach((value, key) =&gt; {
+    results.push({key, value})
+})
+expect(results).toEqual([{key: 'a', value: 1}, {key: 'b', value: 2}])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with default collection</h4>
+                <pre><code>const collection = {
+    key1: 'value1',
+    key2: 'value2'
+}
+
+const registryWithCollection = new Registry(collection)
+
+expect(registryWithCollection.size).toBe(2)
+expect(registryWithCollection.get('key1')).toBe('value1')
+expect(registryWithCollection.get('key2')).toBe('value2')</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>Indexing</h3>
+            <div class="test-case">
+                <h4>addIndex creates a new index</h4>
+                <pre><code>registry.addIndex('byName', (item) =&gt; item.name)
+expect(registry.hasIndex('byName')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addIndex with property name string</h4>
+                <pre><code>registry.addIndex('byName', 'name')
+
+registry.set('1', {name: 'Alice', age: 30})
+registry.set('2', {name: 'Bob', age: 25})
+
+expect(registry.lookup('byName', 'Alice')).toEqual([{name: 'Alice', age: 30}])
+expect(registry.lookup('byName', 'Bob')).toEqual([{name: 'Bob', age: 25}])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addIndex with single argument (property name)</h4>
+                <pre><code>registry.addIndex('name')
+
+registry.set('1', {name: 'Alice', age: 30})
+registry.set('2', {name: 'Bob', age: 25})
+
+expect(registry.lookup('name', 'Alice')).toEqual([{name: 'Alice', age: 30}])
+expect(registry.lookup('name', 'Bob')).toEqual([{name: 'Bob', age: 25}])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addIndex returns false if keyFunction is invalid type</h4>
+                <pre><code>expect(registry.addIndex('test', 123)).toBe(false)
+expect(registry.addIndex('test', null)).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>lookup returns empty array for non-existent key</h4>
+                <pre><code>registry.addIndex('byName', (item) =&gt; item.name)
+expect(registry.lookup('byName', 'John')).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>lookup throws if index does not exist</h4>
+                <pre><code>expect(() =&gt; registry.lookup('nonExistent', 'key')).toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>items are automatically added to index on set</h4>
+                <pre><code>registry.addIndex('byName', (item) =&gt; item.name)
+
+registry.set('1', {name: 'Alice', age: 30})
+registry.set('2', {name: 'Bob', age: 25})
+
+expect(registry.lookup('byName', 'Alice')).toEqual([{name: 'Alice', age: 30}])
+expect(registry.lookup('byName', 'Bob')).toEqual([{name: 'Bob', age: 25}])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>multiple items with same key are stored in index</h4>
+                <pre><code>registry.addIndex('byAge', (item) =&gt; item.age)
+
+registry.set('1', {name: 'Alice', age: 30})
+registry.set('2', {name: 'Bob', age: 30})
+registry.set('3', {name: 'Charlie', age: 25})
+
+const age30 = registry.lookup('byAge', 30)
+expect(age30).toHaveLength(2)
+expect(age30).toContainEqual({name: 'Alice', age: 30})
+expect(age30).toContainEqual({name: 'Bob', age: 30})</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>items are removed from index on delete</h4>
+                <pre><code>registry.addIndex('byName', (item) =&gt; item.name)
+
+registry.set('1', {name: 'Alice', age: 30})
+expect(registry.lookup('byName', 'Alice')).toHaveLength(1)
+
+registry.delete('1')
+expect(registry.lookup('byName', 'Alice')).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>items are updated in index when replaced</h4>
+                <pre><code>registry.addIndex('byName', (item) =&gt; item.name)
+
+registry.set('1', {name: 'Alice', age: 30})
+expect(registry.lookup('byName', 'Alice')).toHaveLength(1)
+
+registry.set('1', {name: 'Bob', age: 30})
+expect(registry.lookup('byName', 'Alice')).toEqual([])
+expect(registry.lookup('byName', 'Bob')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>index can be added after items are inserted</h4>
+                <pre><code>registry.set('1', {name: 'Alice', age: 30})
+registry.set('2', {name: 'Bob', age: 25})
+
+registry.addIndex('byName', (item) =&gt; item.name)
+
+expect(registry.lookup('byName', 'Alice')).toHaveLength(1)
+expect(registry.lookup('byName', 'Bob')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>multiple indexes can coexist</h4>
+                <pre><code>registry.addIndex('byName', (item) =&gt; item.name)
+registry.addIndex('byAge', (item) =&gt; item.age)
+
+registry.set('1', {name: 'Alice', age: 30})
+registry.set('2', {name: 'Bob', age: 30})
+
+expect(registry.lookup('byName', 'Alice')).toHaveLength(1)
+expect(registry.lookup('byAge', 30)).toHaveLength(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keyFunction can return array of keys</h4>
+                <pre><code>registry.addIndex('byTags', (item) =&gt; item.tags)
+
+registry.set('1', {name: 'Post1', tags: ['javascript', 'testing']})
+registry.set('2', {name: 'Post2', tags: ['javascript', 'nodejs']})
+
+const jsPosts = registry.lookup('byTags', 'javascript')
+expect(jsPosts).toHaveLength(2)
+
+const testingPosts = registry.lookup('byTags', 'testing')
+expect(testingPosts).toHaveLength(1)
+expect(testingPosts[0].name).toBe('Post1')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keyFunction returning null/undefined is ignored</h4>
+                <pre><code>registry.addIndex('byOptional', (item) =&gt; item.optional)
+
+registry.set('1', {name: 'Item1', optional: null})
+registry.set('2', {name: 'Item2', optional: undefined})
+registry.set('3', {name: 'Item3', optional: 'value'})
+
+expect(registry.lookup('byOptional', null)).toEqual([])
+expect(registry.lookup('byOptional', undefined)).toEqual([])
+expect(registry.lookup('byOptional', 'value')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeIndex removes an index</h4>
+                <pre><code>registry.addIndex('byName', (item) =&gt; item.name)
+expect(registry.hasIndex('byName')).toBe(true)
+
+registry.removeIndex('byName')
+expect(registry.hasIndex('byName')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>complex index key function</h4>
+                <pre><code>registry.addIndex('byActionEvent', (item) =&gt;
+    `${item.action}:${item.event}`)
+
+registry.set('1', {action: 'jump', event: 'pressed'})
+registry.set('2', {action: 'jump', event: 'released'})
+registry.set('3', {action: 'run', event: 'pressed'})
+
+const jumpPressed = registry.lookup('byActionEvent', 'jump:pressed')
+expect(jumpPressed).toHaveLength(1)
+expect(jumpPressed[0].action).toBe('jump')
+expect(jumpPressed[0].event).toBe('pressed')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>index updated on clear</h4>
+                <pre><code>registry.addIndex('byName', (item) =&gt; item.name)
+
+registry.set('1', {name: 'Alice', age: 30})
+registry.set('2', {name: 'Bob', age: 25})
+
+expect(registry.lookup('byName', 'Alice')).toHaveLength(1)
+
+registry.clear()
+
+expect(registry.lookup('byName', 'Alice')).toEqual([])
+expect(registry.lookup('byName', 'Bob')).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updateIndexFor moves item from old key to new key</h4>
+                <pre><code>registry.addIndex('byCategory', (item) =&gt; item.$category)
+
+const item = {name: 'Item', $category: 'foo'}
+registry.set('1', item)
+
+expect(registry.lookup('byCategory', 'foo')).toHaveLength(1)
+expect(registry.lookup('byCategory', 'bar')).toHaveLength(0)
+
+item.$category = 'bar'
+registry.updateIndexFor(item, 'byCategory', 'foo', 'bar')
+
+expect(registry.lookup('byCategory', 'foo')).toHaveLength(0)
+expect(registry.lookup('byCategory', 'bar')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updateIndexFor handles array keys</h4>
+                <pre><code>registry.addIndex('byTags', (item) =&gt; item.tags)
+
+const item = {name: 'Post', tags: ['javascript', 'testing']}
+registry.set('1', item)
+
+expect(registry.lookup('byTags', 'javascript')).toHaveLength(1)
+expect(registry.lookup('byTags', 'testing')).toHaveLength(1)
+
+item.tags = ['react', 'hooks']
+registry.updateIndexFor(item, 'byTags', ['javascript', 'testing'], ['react', 'hooks'])
+
+expect(registry.lookup('byTags', 'javascript')).toHaveLength(0)
+expect(registry.lookup('byTags', 'testing')).toHaveLength(0)
+expect(registry.lookup('byTags', 'react')).toHaveLength(1)
+expect(registry.lookup('byTags', 'hooks')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updateIndexFor returns false if value not in registry</h4>
+                <pre><code>registry.addIndex('byCategory', (item) =&gt; item.$category)
+const item = {name: 'Item', category: 'foo'}
+
+expect(registry.updateIndexFor(item, 'byCategory', 'foo', 'bar')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updateIndexFor returns false if index does not exist</h4>
+                <pre><code>const item = {name: 'Item', category: 'foo'}
+registry.set('1', item)
+
+expect(registry.updateIndexFor(item, 'nonExistent', 'foo', 'bar')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>refreshIndexFor recalculates index automatically</h4>
+                <pre><code>registry.addIndex('byCategory', (item) =&gt; item.$category)
+
+const item = {name: 'Item', $category: 'foo'}
+registry.set('1', item)
+
+expect(registry.lookup('byCategory', 'foo')).toHaveLength(1)
+expect(registry.lookup('byCategory', 'bar')).toHaveLength(0)
+
+item.$category = 'bar'
+registry.refreshIndexFor(item, 'byCategory')
+
+expect(registry.lookup('byCategory', 'foo')).toHaveLength(0)
+expect(registry.lookup('byCategory', 'bar')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>refreshIndexFor handles array values</h4>
+                <pre><code>registry.addIndex('byTags', (item) =&gt; item.tags)
+
+const item = {name: 'Post', tags: ['javascript', 'testing']}
+registry.set('1', item)
+
+expect(registry.lookup('byTags', 'javascript')).toHaveLength(1)
+
+item.tags = ['react', 'hooks']
+registry.refreshIndexFor(item, 'byTags')
+
+expect(registry.lookup('byTags', 'javascript')).toHaveLength(0)
+expect(registry.lookup('byTags', 'react')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>refreshIndexFor returns false if value not in registry</h4>
+                <pre><code>registry.addIndex('byCategory', (item) =&gt; item.$category)
+const item = {name: 'Item', category: 'foo'}
+
+expect(registry.refreshIndexFor(item, 'byCategory')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>refreshIndexFor returns false if index does not exist</h4>
+                <pre><code>const item = {name: 'Item', category: 'foo'}
+registry.set('1', item)
+
+expect(registry.refreshIndexFor(item, 'nonExistent')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>lookupKeys returns keys for indexed value</h4>
+                <pre><code>registry.addIndex('byCategory', (item) =&gt; item.category)
+
+registry.set('item1', {name: 'Item1', category: 'electronics'})
+registry.set('item2', {name: 'Item2', category: 'electronics'})
+registry.set('item3', {name: 'Item3', category: 'clothing'})
+
+const electronicKeys = registry.lookupKeys('byCategory', 'electronics')
+
+expect(electronicKeys).toHaveLength(2)
+expect(electronicKeys).toContain('item1')
+expect(electronicKeys).toContain('item2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>lookupKeys returns empty array for non-existent value</h4>
+                <pre><code>registry.addIndex('byCategory', (item) =&gt; item.category)
+
+registry.set('item1', {name: 'Item1', category: 'electronics'})
+
+const result = registry.lookupKeys('byCategory', 'nonexistent')
+
+expect(result).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>lookupKeys throws for non-existent index</h4>
+                <pre><code>expect(() =&gt; registry.lookupKeys('nonExistent', 'value')).toThrow()</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item active" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2D</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebGLCanvas2D</a><div class="nav-category">input</div><a class="nav-item" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category">input/input_controls</div><a class="nav-item" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">audio</div><a class="nav-item" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-BccKM_Kk.js"></script>
+</body>
+</html>

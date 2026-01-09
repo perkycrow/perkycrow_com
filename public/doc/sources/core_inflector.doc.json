@@ -1,0 +1,217 @@
+[
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.inflector = new Inflector()"
+  },
+  {
+    "type": "action",
+    "title": "Regular plurals",
+    "source": "logger.log('cat:', ctx.inflector.plural('cat'))\nlogger.log('dog:', ctx.inflector.plural('dog'))\nlogger.log('house:', ctx.inflector.plural('house'))\nlogger.log('box:', ctx.inflector.plural('box'))\nlogger.log('bus:', ctx.inflector.plural('bus'))"
+  },
+  {
+    "type": "action",
+    "title": "Irregular plurals",
+    "source": "logger.log('child:', ctx.inflector.plural('child'))\nlogger.log('person:', ctx.inflector.plural('person'))\nlogger.log('goose:', ctx.inflector.plural('goose'))\nlogger.log('tooth:', ctx.inflector.plural('tooth'))\nlogger.log('ox:', ctx.inflector.plural('ox'))"
+  },
+  {
+    "type": "action",
+    "title": "Words ending in y",
+    "source": "logger.log('city:', ctx.inflector.plural('city'))\nlogger.log('party:', ctx.inflector.plural('party'))\nlogger.log('baby:', ctx.inflector.plural('baby'))\nlogger.log('key:', ctx.inflector.plural('key'))"
+  },
+  {
+    "type": "action",
+    "title": "Uncountable words",
+    "source": "logger.log('sheep:', ctx.inflector.plural('sheep'))\nlogger.log('fish:', ctx.inflector.plural('fish'))\nlogger.log('moose:', ctx.inflector.plural('moose'))\nlogger.log('information:', ctx.inflector.plural('information'))"
+  },
+  {
+    "type": "setup",
+    "index": 1,
+    "source": "ctx.inflector = new Inflector()"
+  },
+  {
+    "type": "action",
+    "title": "Regular singulars",
+    "source": "logger.log('cats:', ctx.inflector.singular('cats'))\nlogger.log('dogs:', ctx.inflector.singular('dogs'))\nlogger.log('houses:', ctx.inflector.singular('houses'))\nlogger.log('boxes:', ctx.inflector.singular('boxes'))"
+  },
+  {
+    "type": "action",
+    "title": "Irregular singulars",
+    "source": "logger.log('children:', ctx.inflector.singular('children'))\nlogger.log('people:', ctx.inflector.singular('people'))\nlogger.log('geese:', ctx.inflector.singular('geese'))\nlogger.log('teeth:', ctx.inflector.singular('teeth'))"
+  },
+  {
+    "type": "action",
+    "title": "Words ending in ies",
+    "source": "logger.log('cities:', ctx.inflector.singular('cities'))\nlogger.log('parties:', ctx.inflector.singular('parties'))\nlogger.log('babies:', ctx.inflector.singular('babies'))"
+  },
+  {
+    "type": "action",
+    "title": "Uncountable words",
+    "source": "logger.log('sheep:', ctx.inflector.singular('sheep'))\nlogger.log('fish:', ctx.inflector.singular('fish'))\nlogger.log('deer:', ctx.inflector.singular('deer'))"
+  },
+  {
+    "type": "setup",
+    "index": 2,
+    "source": "ctx.inflector = new Inflector()"
+  },
+  {
+    "type": "action",
+    "title": "Without count prefix",
+    "source": "logger.log('0 items:', ctx.inflector.pluralize('item', 0))\nlogger.log('1 item:', ctx.inflector.pluralize('item', 1))\nlogger.log('5 items:', ctx.inflector.pluralize('item', 5))"
+  },
+  {
+    "type": "action",
+    "title": "With count prefix",
+    "source": "logger.log('0:', ctx.inflector.pluralize('item', 0, true))\nlogger.log('1:', ctx.inflector.pluralize('item', 1, true))\nlogger.log('5:', ctx.inflector.pluralize('item', 5, true))"
+  },
+  {
+    "type": "action",
+    "title": "Irregular words",
+    "source": "logger.log('1 child:', ctx.inflector.pluralize('child', 1, true))\nlogger.log('3 children:', ctx.inflector.pluralize('child', 3, true))\nlogger.log('1 person:', ctx.inflector.pluralize('person', 1, true))\nlogger.log('10 people:', ctx.inflector.pluralize('person', 10, true))"
+  },
+  {
+    "type": "setup",
+    "index": 3,
+    "source": "ctx.inflector = new Inflector()"
+  },
+  {
+    "type": "action",
+    "title": "isPlural",
+    "source": "logger.log('cats is plural:', ctx.inflector.isPlural('cats'))\nlogger.log('cat is plural:', ctx.inflector.isPlural('cat'))\nlogger.log('children is plural:', ctx.inflector.isPlural('children'))\nlogger.log('sheep is plural:', ctx.inflector.isPlural('sheep'))"
+  },
+  {
+    "type": "action",
+    "title": "isSingular",
+    "source": "logger.log('cat is singular:', ctx.inflector.isSingular('cat'))\nlogger.log('cats is singular:', ctx.inflector.isSingular('cats'))\nlogger.log('child is singular:', ctx.inflector.isSingular('child'))\nlogger.log('fish is singular:', ctx.inflector.isSingular('fish'))"
+  },
+  {
+    "type": "setup",
+    "index": 4,
+    "source": "ctx.inflector = new Inflector()"
+  },
+  {
+    "type": "action",
+    "title": "toCamelCase",
+    "source": "logger.log('snake_case:', ctx.inflector.toCamelCase('snake_case'))\nlogger.log('kebab-case:', ctx.inflector.toCamelCase('kebab-case'))\nlogger.log('PascalCase:', ctx.inflector.toCamelCase('PascalCase'))\nlogger.log('with spaces:', ctx.inflector.toCamelCase('hello world'))"
+  },
+  {
+    "type": "action",
+    "title": "toPascalCase",
+    "source": "logger.log('camelCase:', ctx.inflector.toPascalCase('camelCase'))\nlogger.log('snake_case:', ctx.inflector.toPascalCase('snake_case'))\nlogger.log('kebab-case:', ctx.inflector.toPascalCase('kebab-case'))"
+  },
+  {
+    "type": "action",
+    "title": "toSnakeCase",
+    "source": "logger.log('camelCase:', ctx.inflector.toSnakeCase('camelCase'))\nlogger.log('PascalCase:', ctx.inflector.toSnakeCase('PascalCase'))\nlogger.log('kebab-case:', ctx.inflector.toSnakeCase('kebab-case'))\nlogger.log('with spaces:', ctx.inflector.toSnakeCase('hello world'))"
+  },
+  {
+    "type": "action",
+    "title": "toKebabCase",
+    "source": "logger.log('camelCase:', ctx.inflector.toKebabCase('camelCase'))\nlogger.log('PascalCase:', ctx.inflector.toKebabCase('PascalCase'))\nlogger.log('snake_case:', ctx.inflector.toKebabCase('snake_case'))"
+  },
+  {
+    "type": "action",
+    "title": "toHumanCase",
+    "source": "logger.log('camelCase:', ctx.inflector.toHumanCase('camelCase'))\nlogger.log('PascalCase:', ctx.inflector.toHumanCase('PascalCase'))\nlogger.log('snake_case:', ctx.inflector.toHumanCase('snake_case'))\nlogger.log('kebab-case:', ctx.inflector.toHumanCase('kebab-case'))"
+  },
+  {
+    "type": "setup",
+    "index": 5,
+    "source": "ctx.inflector = new Inflector()"
+  },
+  {
+    "type": "action",
+    "title": "Uppercase",
+    "source": "logger.log('CAT:', ctx.inflector.plural('CAT'))\nlogger.log('DOG:', ctx.inflector.plural('DOG'))\nlogger.log('CHILD:', ctx.inflector.plural('CHILD'))"
+  },
+  {
+    "type": "action",
+    "title": "Title case",
+    "source": "logger.log('Cat:', ctx.inflector.plural('Cat'))\nlogger.log('Person:', ctx.inflector.plural('Person'))\nlogger.log('Children:', ctx.inflector.singular('Children'))"
+  },
+  {
+    "type": "action",
+    "title": "Mixed case",
+    "source": "logger.log('CaT:', ctx.inflector.plural('CaT'))\nlogger.log('DoG:', ctx.inflector.plural('DoG'))"
+  },
+  {
+    "type": "action",
+    "title": "addPluralRule",
+    "source": "const inflector = new Inflector()\n\ninflector.addPluralRule(/ninja$/i, 'ninjas')\nlogger.log('ninja:', inflector.plural('ninja'))\n\ninflector.addPluralRule(/pokemon$/i, 'pokemon')\nlogger.log('pokemon:', inflector.plural('pokemon'))"
+  },
+  {
+    "type": "action",
+    "title": "addSingularRule",
+    "source": "const inflector = new Inflector()\n\ninflector.addSingularRule(/ninjas$/i, 'ninja')\nlogger.log('ninjas:', inflector.singular('ninjas'))"
+  },
+  {
+    "type": "action",
+    "title": "addUncountableRule",
+    "source": "const inflector = new Inflector()\n\ninflector.addUncountableRule('mana')\nlogger.log('singular:', inflector.singular('mana'))\nlogger.log('plural:', inflector.plural('mana'))\nlogger.log('is plural:', inflector.isPlural('mana'))\nlogger.log('is singular:', inflector.isSingular('mana'))"
+  },
+  {
+    "type": "action",
+    "title": "addIrregularRule",
+    "source": "const inflector = new Inflector()\n\ninflector.addIrregularRule('cactus', 'cacti')\nlogger.log('cactus:', inflector.plural('cactus'))\nlogger.log('cacti:', inflector.singular('cacti'))\nlogger.log('is plural cacti:', inflector.isPlural('cacti'))"
+  },
+  {
+    "type": "setup",
+    "index": 6,
+    "source": "ctx.inflector = new Inflector()"
+  },
+  {
+    "type": "action",
+    "title": "Dynamic labels",
+    "source": "const counts = [0, 1, 5]\ncounts.forEach(count => {\n    const label = ctx.inflector.pluralize('enemy', count, true)\n    logger.log(label)\n})"
+  },
+  {
+    "type": "action",
+    "title": "API endpoints",
+    "source": "const singular = 'player'\nconst endpoint = ctx.inflector.plural(singular)\nlogger.log(`GET /api/${endpoint}`)\nlogger.log(`POST /api/${endpoint}/:id`)"
+  },
+  {
+    "type": "action",
+    "title": "Variable naming",
+    "source": "const model = 'UserProfile'\nconst snake = ctx.inflector.toSnakeCase(model)\nconst camel = ctx.inflector.toCamelCase(snake)\nconst plural = ctx.inflector.plural(camel)\n\nlogger.log('Model:', model)\nlogger.log('Table:', snake)\nlogger.log('Variable:', camel)\nlogger.log('Collection:', plural)"
+  },
+  {
+    "type": "action",
+    "title": "Database conventions",
+    "source": "const className = 'GameSession'\nconst tableName = ctx.inflector.plural(\n    ctx.inflector.toSnakeCase(className)\n)\n\nlogger.log('Class:', className)\nlogger.log('Table:', tableName)"
+  },
+  {
+    "type": "action",
+    "title": "Compound words",
+    "source": "const inflector = new Inflector()\n\nlogger.log('passerby:', inflector.plural('passerby'))\nlogger.log('mother-in-law:', inflector.plural('mother-in-law'))"
+  },
+  {
+    "type": "action",
+    "title": "Latin/Greek origins",
+    "source": "const inflector = new Inflector()\n\nlogger.log('cactus:', inflector.plural('cactus'))\nlogger.log('fungus:', inflector.plural('fungus'))\nlogger.log('radius:', inflector.plural('radius'))\nlogger.log('alumnus:', inflector.plural('alumnus'))\nlogger.log('stimulus:', inflector.plural('stimulus'))"
+  },
+  {
+    "type": "action",
+    "title": "Words ending in f/fe",
+    "source": "const inflector = new Inflector()\n\nlogger.log('knife:', inflector.plural('knife'))\nlogger.log('life:', inflector.plural('life'))\nlogger.log('wolf:', inflector.plural('wolf'))\nlogger.log('shelf:', inflector.plural('shelf'))"
+  },
+  {
+    "type": "code",
+    "title": "Batch processing",
+    "source": "const inflector = new Inflector()\n\nconst words = ['player', 'enemy', 'item', 'quest']\nconst plurals = words.map(w => inflector.plural(w))\nconst snakePlurals = plurals.map(w => inflector.toSnakeCase(w))\n\n// ['players', 'enemies', 'items', 'quests']\n// ['players', 'enemies', 'items', 'quests']"
+  },
+  {
+    "type": "code",
+    "title": "Irregular plurals",
+    "source": "// Common irregulars built-in:\n// child → children\n// person → people\n// man → men\n// woman → women\n// tooth → teeth\n// foot → feet\n// goose → geese\n// mouse → mice\n// ox → oxen\n// And many more..."
+  },
+  {
+    "type": "code",
+    "title": "Uncountable words",
+    "source": "// Words that are the same in both forms:\n// sheep, fish, deer, moose\n// information, equipment, furniture\n// rice, money, music, audio\n// And many more..."
+  },
+  {
+    "type": "code",
+    "title": "Pattern rules",
+    "source": "// Automatic rules for common patterns:\n// -s, -es, -ies endings\n// -f/-fe → -ves\n// -us → -i (Latin)\n// -is → -es (Greek)\n// -on → -a (Greek)\n// And many more..."
+  }
+]

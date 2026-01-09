@@ -1,0 +1,42 @@
+[
+  {
+    "type": "action",
+    "title": "Creation",
+    "source": "const empty = new ObservableMap()\nlogger.log('empty size:', empty.size)\n\nconst withData = new ObservableMap({a: 1, b: 2, c: 3})\nlogger.log('with data:', withData.size)\nlogger.log('entries:', withData.entries)"
+  },
+  {
+    "type": "action",
+    "title": "set / get / has / delete",
+    "source": "const map = new ObservableMap()\n\nmap.set('x', 10)\nmap.set('y', 20)\n\nlogger.log('get x:', map.get('x'))\nlogger.log('has x:', map.has('x'))\nlogger.log('has z:', map.has('z'))\n\nmap.delete('x')\nlogger.log('after delete, has x:', map.has('x'))"
+  },
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.map = new ObservableMap()\nctx.alice = {name: 'Alice'}\nctx.bob = {name: 'Bob'}\nctx.map.set('player1', ctx.alice)\nctx.map.set('player2', ctx.bob)"
+  },
+  {
+    "type": "action",
+    "title": "keyFor / hasValue",
+    "source": "logger.log('key for Alice:', ctx.map.keyFor(ctx.alice))\nlogger.log('has Alice object:', ctx.map.hasValue(ctx.alice))\nlogger.log('has different object:', ctx.map.hasValue({name: 'Alice'}))"
+  },
+  {
+    "type": "action",
+    "title": "entries / keys / values",
+    "source": "const map = new ObservableMap({red: '#ff0000', green: '#00ff00'})\n\nlogger.log('entries:', map.entries)\nlogger.log('keys:', Array.from(map.keys))\nlogger.log('values:', map.all)"
+  },
+  {
+    "type": "action",
+    "title": "set / delete / clear",
+    "source": "const map = new ObservableMap()\n\nmap.on('set', (key) => logger.log(`set: ${key}`))\nmap.on('delete', (key) => logger.log(`delete: ${key}`))\nmap.on('clear', () => logger.log('cleared'))\n\nmap.set('a', 1)\nmap.set('b', 2)\nmap.delete('a')\nmap.clear()"
+  },
+  {
+    "type": "action",
+    "title": "updateKey",
+    "source": "const map = new ObservableMap()\nmap.set('temp_id', {name: 'Alice'})\n\nmap.on('key:updated', (oldKey, newKey) => {\n    logger.log(`key updated: ${oldKey} → ${newKey}`)\n})\n\nmap.updateKey('temp_id', 'player1')\nlogger.log('keys:', Array.from(map.keys))"
+  },
+  {
+    "type": "action",
+    "title": "addCollection / toObject",
+    "source": "const map = new ObservableMap()\n\nmap.addCollection({name: 'Game', version: '1.0'})\nlogger.log('entries:', map.entries)\n\nconst obj = map.toObject()\nlogger.log('as object:', obj)"
+  }
+]

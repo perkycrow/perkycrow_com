@@ -1,52 +1,32 @@
 [
   {
-    "type": "code",
-    "title": "Creating a controller",
-    "source": "class PlayerController extends ActionController {\n    jump () {\n        logger.log('Player jumps!')\n    }\n\n    shoot () {\n        logger.log('Player shoots!')\n    }\n}\n\nconst controller = new PlayerController({$id: 'player'})\ncontroller.execute('jump')\ncontroller.execute('shoot')"
-  },
-  {
     "type": "action",
     "title": "Execute actions",
-    "source": "class GameController extends ActionController {\n    start () {\n        logger.log('Game started')\n    }\n\n    pause () {\n        logger.log('Game paused')\n    }\n}\n\nconst controller = new GameController({$id: 'game'})\ncontroller.execute('start')\ncontroller.execute('pause')\ncontroller.dispose()"
-  },
-  {
-    "type": "code",
-    "title": "Adding actions",
-    "source": "const controller = new ActionController({$id: 'main'})\n\ncontroller.addAction('save', () => {\n    logger.log('Saving...')\n})\n\ncontroller.addAction('load', () => {\n    logger.log('Loading...')\n})\n\ncontroller.execute('save')"
+    "source": "class GameController extends ActionController {\n    start () {\n        logger.log('Game started')\n    }\n\n    pause () {\n        logger.log('Game paused')\n    }\n}\n\nconst controller = new GameController({$id: 'game'})\ncontroller.execute('start')\ncontroller.execute('pause')"
   },
   {
     "type": "action",
     "title": "Dynamic actions",
-    "source": "const controller = new ActionController({$id: 'main'})\n\ncontroller.addAction('greet', (name) => {\n    logger.log('Hello,', name)\n})\n\ncontroller.execute('greet', 'World')\ncontroller.dispose()"
-  },
-  {
-    "type": "code",
-    "title": "With parameters",
-    "source": "class PlayerController extends ActionController {\n    move (x, y) {\n        logger.log(`Moving to ${x}, ${y}`)\n    }\n\n    heal (amount = 10) {\n        logger.log(`Healing ${amount} HP`)\n    }\n}\n\nconst controller = new PlayerController({$id: 'player'})\ncontroller.execute('move', 5, 10)\ncontroller.execute('heal', 25)\ncontroller.execute('heal') // Uses default value"
+    "source": "const controller = new ActionController({$id: 'main'})\n\ncontroller.addAction('greet', (name) => {\n    logger.log('Hello,', name)\n})\n\ncontroller.execute('greet', 'World')"
   },
   {
     "type": "action",
     "title": "Parameters demo",
-    "source": "class MathController extends ActionController {\n    add (a, b) {\n        logger.log(`${a} + ${b} =`, a + b)\n    }\n\n    multiply (a, b = 2) {\n        logger.log(`${a} × ${b} =`, a * b)\n    }\n}\n\nconst controller = new MathController({$id: 'math'})\ncontroller.execute('add', 3, 4)\ncontroller.execute('multiply', 5, 3)\ncontroller.execute('multiply', 10)\ncontroller.dispose()"
+    "source": "class MathController extends ActionController {\n    add (a, b) {\n        logger.log(`${a} + ${b} =`, a + b)\n    }\n\n    multiply (a, b = 2) {\n        logger.log(`${a} × ${b} =`, a * b)\n    }\n}\n\nconst controller = new MathController({$id: 'math'})\ncontroller.execute('add', 3, 4)\ncontroller.execute('multiply', 5, 3)\ncontroller.execute('multiply', 10)"
   },
   {
     "type": "action",
     "title": "List actions",
-    "source": "class GameController extends ActionController {\n    shoot () {}\n    jump (height = 1) {}\n    move (x, y) {}\n}\n\nconst controller = new GameController({$id: 'game'})\ncontroller.addAction('save', () => {})\n\nlogger.log('Actions:', controller.listActions())\n\nconst detailed = controller.listActionsWithParams()\nfor (const actionInfo of detailed) {\n    const params = actionInfo.params.map(p => p.name).join(', ')\n    logger.log(`${actionInfo.name}(${params})`)\n}\n\ncontroller.dispose()"
-  },
-  {
-    "type": "code",
-    "title": "Internal methods",
-    "source": "class GameController extends ActionController {\n    // Exposed as actions\n    shoot () {}\n    jump () {}\n\n    // NOT exposed (internal)\n    onStart () {}\n    updateState () {}\n    getPlayer () {}\n    checkCollision () {}\n}\n\nconst controller = new GameController({$id: 'game'})\nlogger.log(controller.listActions()) // ['shoot', 'jump']"
+    "source": "class GameController extends ActionController {\n    shoot () {}\n    jump (height = 1) {}\n    move (x, y) {}\n}\n\nconst controller = new GameController({$id: 'game'})\ncontroller.addAction('save', () => {})\n\nlogger.log('Actions:', controller.listActions())\n\nconst detailed = controller.listActionsWithParams()\nfor (const actionInfo of detailed) {\n    const params = actionInfo.params.map(p => p.name).join(', ')\n    logger.log(`${actionInfo.name}(${params})`)\n}"
   },
   {
     "type": "action",
     "title": "Check exposed actions",
-    "source": "class TestController extends ActionController {\n    publicAction () {}\n    anotherAction () {}\n    onInit () {}\n    getState () {}\n}\n\nconst controller = new TestController({$id: 'test'})\nlogger.log('Exposed actions:', controller.listActions())\ncontroller.dispose()"
+    "source": "class TestController extends ActionController {\n    publicAction () {}\n    anotherAction () {}\n    onInit () {}\n    getState () {}\n}\n\nconst controller = new TestController({$id: 'test'})\nlogger.log('Exposed actions:', controller.listActions())"
   },
   {
     "type": "code",
     "title": "Propagable actions",
-    "source": "class GameController extends ActionController {\n    static propagable = ['move']\n\n    move () {\n        logger.log('Game: move')\n    }\n\n    shoot () {\n        logger.log('Game: shoot')\n    }\n}\n\n// 'move' will propagate to lower controllers\n// 'shoot' will stop at this controller"
+    "source": "class MenuController extends ActionController {\n    static propagable = ['move']\n\n    move () {\n        logger.log('Menu: navigate')\n    }\n\n    confirm () {\n        logger.log('Menu: confirm')\n    }\n\n    cancel () {\n        logger.log('Menu: cancel')\n    }\n}\n\n// 'move' propagates to GameController below\n// 'confirm' and 'cancel' stop here"
   }
 ]

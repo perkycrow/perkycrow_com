@@ -53,10 +53,5 @@
     "type": "action",
     "title": "delegateEvents",
     "source": "const input = new Notifier()\nconst game = new Notifier()\n\ngame.delegateEvents(input, ['press', 'release'], 'input')\n\ngame.on('input:press', key => logger.log('press:', key))\ngame.on('input:release', key => logger.log('release:', key))\n\ninput.emit('press', 'space')\ninput.emit('release', 'space')"
-  },
-  {
-    "type": "action",
-    "title": "getListenersFor",
-    "source": "const notifier = new Notifier()\n\nnotifier.on('event', () => {})\nnotifier.on('event', () => {})\nnotifier.on('other', () => {})\n\nconst listeners = notifier.getListenersFor('event')\nlogger.log('event listeners:', listeners.length)\nlogger.log('other listeners:', notifier.getListenersFor('other').length)\nlogger.log('none listeners:', notifier.getListenersFor('none'))"
   }
 ]

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registry - Perky Docs</title>
+    <meta name="description" content="Documentation for Registry in the Perky game framework">
+    <meta property="og:title" content="Registry - Perky Docs">
+    <meta property="og:description" content="Documentation for Registry in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-BbQlfHkH.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Registry</h1>
+            
+            <div class="doc-block">
+                <h3>set / get</h3>
+                <pre><code>const registry = new Registry()
+
+registry.set('player1', {name: 'Alice', level: 10})
+registry.set('player2', {name: 'Bob', level: 15})
+
+logger.log('player1:', registry.get('player1'))
+logger.log('size:', registry.size)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>delete / clear</h3>
+                <pre><code>const registry = new Registry([
+    ['a', {value: 1}],
+    ['b', {value: 2}],
+    ['c', {value: 3}]
+])
+
+logger.log('initial size:', registry.size)
+registry.delete('a')
+logger.log('after delete:', registry.size)
+registry.clear()
+logger.log('after clear:', registry.size)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>addIndex (property name)</h3>
+                <pre><code>const registry = new Registry()
+
+registry.set('player1', {name: 'Alice', level: 10})
+registry.set('player2', {name: 'Bob', level: 15})
+registry.set('player3', {name: 'Charlie', level: 10})
+
+registry.addIndex('level')
+
+logger.log('level 10:', registry.lookup('level', 10))
+logger.log('level 15:', registry.lookup('level', 15))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>addIndex (function)</h3>
+                <pre><code>const registry = new Registry()
+
+registry.set('item1', {name: 'Sword', category: 'weapon'})
+registry.set('item2', {name: 'Shield', category: 'armor'})
+registry.set('item3', {name: 'Axe', category: 'weapon'})
+
+registry.addIndex('category', item =&gt; item.category)
+
+logger.log('weapons:', registry.lookup('category', 'weapon'))
+logger.log('armor:', registry.lookup('category', 'armor'))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Multi-value indexes</h3>
+                <pre><code>const registry = new Registry()
+
+registry.set('player1', {
+    name: 'Alice',
+    tags: ['warrior', 'leader']
+})
+registry.set('player2', {
+    name: 'Bob',
+    tags: ['mage', 'leader']
+})
+
+// Return array for multi-value index
+registry.addIndex('tags', item =&gt; item.tags)
+
+// Now can lookup by any tag
+const leaders = registry.lookup('tags', 'leader')
+const warriors = registry.lookup('tags', 'warrior')</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>lookup</h3>
+                <pre><code>logger.log('red team:', ctx.registry.lookup('team', 'red'))
+logger.log('blue team:', ctx.registry.lookup('team', 'blue'))
+logger.log('no match:', ctx.registry.lookup('team', 'green'))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>lookupKeys</h3>
+                <pre><code>logger.log('red team keys:', ctx.registry.lookupKeys('team', 'red'))
+logger.log('blue team keys:', ctx.registry.lookupKeys('team', 'blue'))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>hasIndex / removeIndex</h3>
+                <pre><code>const registry = new Registry()
+registry.addIndex('category')
+
+logger.log('has category:', registry.hasIndex('category'))
+logger.log('has level:', registry.hasIndex('level'))
+
+registry.removeIndex('category')
+logger.log('after remove:', registry.hasIndex('category'))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>updateIndexFor</h3>
+                <pre><code>const registry = new Registry()
+const player = {name: 'Alice', team: 'red'}
+
+registry.set('p1', player)
+registry.addIndex('team')
+
+logger.log('before update:', registry.lookup('team', 'red'))
+
+// Manually update index when property changes
+player.team = 'blue'
+registry.updateIndexFor(player, 'team', 'red', 'blue')
+
+logger.log('red team:', registry.lookup('team', 'red'))
+logger.log('blue team:', registry.lookup('team', 'blue'))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>refreshIndexFor</h3>
+                <pre><code>const registry = new Registry()
+const player = {name: 'Alice', level: 10}
+
+registry.set('p1', player)
+registry.addIndex('level')
+
+logger.log('before:', registry.lookup('level', 10))
+
+// Change property and refresh index
+player.level = 15
+registry.refreshIndexFor(player, 'level')
+
+logger.log('level 10:', registry.lookup('level', 10))
+logger.log('level 15:', registry.lookup('level', 15))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Auto-update on set</h3>
+                <pre><code>const registry = new Registry()
+registry.addIndex('type')
+
+registry.set('enemy1', {type: 'goblin'})
+logger.log('goblins:', registry.lookup('type', 'goblin').length)
+
+registry.set('enemy2', {type: 'goblin'})
+logger.log('after adding:', registry.lookup('type', 'goblin').length)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Auto-update on delete</h3>
+                <pre><code>const registry = new Registry()
+registry.addIndex('type')
+
+registry.set('e1', {type: 'orc'})
+registry.set('e2', {type: 'orc'})
+
+logger.log('before delete:', registry.lookup('type', 'orc').length)
+registry.delete('e1')
+logger.log('after delete:', registry.lookup('type', 'orc').length)</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Multiple indexes</h3>
+                <pre><code>const registry = new Registry()
+
+registry.set('i1', {name: 'Sword', rarity: 'common', type: 'weapon'})
+registry.set('i2', {name: 'Shield', rarity: 'rare', type: 'armor'})
+registry.set('i3', {name: 'Axe', rarity: 'common', type: 'weapon'})
+registry.set('i4', {name: 'Helmet', rarity: 'rare', type: 'armor'})
+
+registry.addIndex('rarity')
+registry.addIndex('type')
+
+logger.log('common items:', registry.lookup('rarity', 'common'))
+logger.log('weapons:', registry.lookup('type', 'weapon'))
+logger.log('rare armor:',
+    registry.lookup('rarity', 'rare')
+        .filter(item =&gt; item.type === 'armor'))</code></pre>
+            </div>
+        
+            <div class="doc-block">
+                <h3>Observable integration</h3>
+                <pre><code>const registry = new Registry()
+
+// Registry extends ObservableMap
+registry.on('set', (key, value) =&gt; {
+    logger.log('added:', key, value)
+})
+
+registry.on('delete', (key, value) =&gt; {
+    logger.log('removed:', key, value)
+})
+
+registry.set('item', {data: 'test'})</code></pre>
+            </div>
+        
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item active" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2D</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebGLCanvas2D</a><div class="nav-category">input</div><a class="nav-item" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category">input/input_controls</div><a class="nav-item" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">audio</div><a class="nav-item" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-BccKM_Kk.js"></script>
+</body>
+</html>

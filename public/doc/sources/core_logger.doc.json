@@ -1,0 +1,97 @@
+[
+  {
+    "type": "action",
+    "title": "log / notice",
+    "source": "logger.log('This is a notice')\nlogger.notice('Same as log()')"
+  },
+  {
+    "type": "action",
+    "title": "info",
+    "source": "logger.info('Informational message')\nlogger.info('Multiple', 'arguments', 'supported')"
+  },
+  {
+    "type": "action",
+    "title": "warn",
+    "source": "logger.warn('Warning message')\nlogger.warn('Something might be wrong')"
+  },
+  {
+    "type": "action",
+    "title": "error",
+    "source": "logger.error('Error occurred')\nlogger.error('Critical issue:', new Error('test'))"
+  },
+  {
+    "type": "action",
+    "title": "success",
+    "source": "logger.success('Operation completed')\nlogger.success('All tests passed')"
+  },
+  {
+    "type": "action",
+    "title": "title",
+    "source": "logger.title('Section Header')\nlogger.log('Content below the title')"
+  },
+  {
+    "type": "action",
+    "title": "spacer",
+    "source": "logger.log('First group')\nlogger.spacer()\nlogger.log('Second group')"
+  },
+  {
+    "type": "action",
+    "title": "clear",
+    "source": "logger.log('This will be cleared')\nlogger.clear()\nlogger.log('Fresh start')"
+  },
+  {
+    "type": "action",
+    "title": "Accessing history",
+    "source": "logger.log('First entry')\nlogger.warn('Second entry')\nlogger.error('Third entry')\n\nlogger.log('History length:', logger.history.length)\nlogger.log('Last entry:', logger.history[logger.history.length - 1])"
+  },
+  {
+    "type": "action",
+    "title": "clearHistory",
+    "source": "logger.log('Entry 1')\nlogger.log('Entry 2')\nlogger.log('Before clear:', logger.history.length)\n\nlogger.clearHistory()\nlogger.log('After clear:', logger.history.length)"
+  },
+  {
+    "type": "action",
+    "title": "log event",
+    "source": "const handler = entry => {\n    logger.log('Log event:', entry.type, '-', entry.items)\n}\n\nlogger.on('log', handler)\nlogger.info('Info message')\nlogger.warn('Warning message')\nlogger.off('log', handler)"
+  },
+  {
+    "type": "action",
+    "title": "clear event",
+    "source": "const handler = entry => {\n    logger.log('Clear event at:', new Date(entry.timestamp))\n}\n\nlogger.on('clear', handler)\nlogger.clear()\nlogger.off('clear', handler)"
+  },
+  {
+    "type": "action",
+    "title": "title event",
+    "source": "const handler = entry => {\n    logger.log('Title event:', entry.title)\n}\n\nlogger.on('title', handler)\nlogger.title('Section 1')\nlogger.off('title', handler)"
+  },
+  {
+    "type": "action",
+    "title": "spacer event",
+    "source": "const handler = entry => {\n    logger.log('Spacer event at:', entry.timestamp)\n}\n\nlogger.on('spacer', handler)\nlogger.spacer()\nlogger.off('spacer', handler)"
+  },
+  {
+    "type": "action",
+    "title": "Log entry format",
+    "source": "logger.info('Test message', {data: 'value'})\n\nconst entry = logger.history[logger.history.length - 1]\nlogger.log('event:', entry.event)\nlogger.log('type:', entry.type)\nlogger.log('items:', entry.items)\nlogger.log('timestamp:', new Date(entry.timestamp))"
+  },
+  {
+    "type": "action",
+    "title": "Different event types",
+    "source": "logger.clearHistory()\n\nlogger.log('Log')\nlogger.clear()\nlogger.title('Title')\nlogger.spacer()\n\nlogger.history.forEach((entry, i) => {\n    logger.log(`Entry ${i}:`, entry.event)\n})"
+  },
+  {
+    "type": "code",
+    "title": "maxHistory",
+    "source": "// Limit history size (default: 100)\nlogger.maxHistory = 50\n\n// History automatically trims when limit is reached"
+  },
+  {
+    "type": "code",
+    "title": "loggerOutput",
+    "source": "// Disable logger output (logs still recorded in history)\nlogger.loggerOutput = false\n\nlogger.log('This is silent but recorded')\n\n// Re-enable\nlogger.loggerOutput = true"
+  },
+  {
+    "type": "code",
+    "title": "Logger method mapping",
+    "source": "logger.info('Uses logger.info')\nlogger.warn('Uses logger.warn')\nlogger.error('Uses logger.error')\nlogger.notice('Uses logger.log')\nlogger.success('Uses logger.log')"
+  }
+]

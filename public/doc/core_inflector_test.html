@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflector - Perky Docs</title>
+    <meta name="description" content="Documentation for Inflector in the Perky game framework">
+    <meta property="og:title" content="Inflector - Perky Docs">
+    <meta property="og:description" content="Documentation for Inflector in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-BbQlfHkH.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Inflector</h1>
+            <section class="test-section"><h2>Inflector</h2>
+            <div class="test-case">
+                <h4>addPluralRule adds a custom plural rule</h4>
+                <pre><code>const customInflector = new Inflector()
+customInflector.addPluralRule(/zyx$/i, 'zyxes')
+
+expect(customInflector.plural('zyx')).toBe('zyxes')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addSingularRule adds a custom singular rule</h4>
+                <pre><code>const customInflector = new Inflector()
+customInflector.addSingularRule(/zyxes$/i, 'zyx')
+
+expect(customInflector.singular('zyxes')).toBe('zyx')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addUncountableRule adds an uncountable word</h4>
+                <pre><code>const customInflector = new Inflector()
+customInflector.addUncountableRule('customword')
+
+expect(customInflector.plural('customword')).toBe('customword')
+expect(customInflector.singular('customword')).toBe('customword')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addIrregularRule adds an irregular plural/singular pair</h4>
+                <pre><code>const customInflector = new Inflector()
+customInflector.addIrregularRule('customsingle', 'customplural')
+
+expect(customInflector.plural('customsingle')).toBe('customplural')
+expect(customInflector.singular('customplural')).toBe('customsingle')</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>plural</h3>
+            <div class="test-case">
+                <h4>regular plurals</h4>
+                <pre><code>expect(inflector.plural('cat')).toBe('cats')
+expect(inflector.plural('dog')).toBe('dogs')
+expect(inflector.plural('book')).toBe('books')
+expect(inflector.plural('car')).toBe('cars')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in s, x, z, ch, sh</h4>
+                <pre><code>expect(inflector.plural('bus')).toBe('buses')
+expect(inflector.plural('box')).toBe('boxes')
+expect(inflector.plural('quiz')).toBe('quizzes')
+expect(inflector.plural('church')).toBe('churches')
+expect(inflector.plural('dish')).toBe('dishes')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in consonant + y</h4>
+                <pre><code>expect(inflector.plural('city')).toBe('cities')
+expect(inflector.plural('fly')).toBe('flies')
+expect(inflector.plural('story')).toBe('stories')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>irregular plurals</h4>
+                <pre><code>expect(inflector.plural('child')).toBe('children')
+expect(inflector.plural('person')).toBe('people')
+expect(inflector.plural('man')).toBe('men')
+expect(inflector.plural('woman')).toBe('women')
+expect(inflector.plural('foot')).toBe('feet')
+expect(inflector.plural('tooth')).toBe('teeth')
+expect(inflector.plural('goose')).toBe('geese')
+expect(inflector.plural('mouse')).toBe('mice')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in f/fe become ves</h4>
+                <pre><code>expect(inflector.plural('knife')).toBe('knives')
+expect(inflector.plural('wife')).toBe('wives')
+expect(inflector.plural('life')).toBe('lives')
+expect(inflector.plural('leaf')).toBe('leaves')
+expect(inflector.plural('half')).toBe('halves')
+expect(inflector.plural('wolf')).toBe('wolves')
+expect(inflector.plural('thief')).toBe('thieves')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in o</h4>
+                <pre><code>expect(inflector.plural('hero')).toBe('heroes')
+expect(inflector.plural('potato')).toBe('potatoes')
+expect(inflector.plural('tomato')).toBe('tomatoes')
+expect(inflector.plural('echo')).toBe('echoes')
+expect(inflector.plural('volcano')).toBe('volcanoes')
+expect(inflector.plural('tornado')).toBe('tornadoes')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>Latin/Greek endings</h4>
+                <pre><code>expect(inflector.plural('focus')).toBe('foci')
+expect(inflector.plural('cactus')).toBe('cacti')
+expect(inflector.plural('fungus')).toBe('fungi')
+expect(inflector.plural('nucleus')).toBe('nuclei')
+expect(inflector.plural('radius')).toBe('radii')
+expect(inflector.plural('stimulus')).toBe('stimuli')
+expect(inflector.plural('syllabus')).toBe('syllabi')
+expect(inflector.plural('alumnus')).toBe('alumni')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in -is become -es</h4>
+                <pre><code>expect(inflector.plural('analysis')).toBe('analyses')
+expect(inflector.plural('basis')).toBe('bases')
+expect(inflector.plural('crisis')).toBe('crises')
+expect(inflector.plural('diagnosis')).toBe('diagnoses')
+expect(inflector.plural('hypothesis')).toBe('hypotheses')
+expect(inflector.plural('thesis')).toBe('theses')
+expect(inflector.plural('axis')).toBe('axes')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in -um become -a</h4>
+                <pre><code>expect(inflector.plural('datum')).toBe('data')
+expect(inflector.plural('curriculum')).toBe('curricula')
+expect(inflector.plural('symposium')).toBe('symposia')
+expect(inflector.plural('bacterium')).toBe('bacteria')
+expect(inflector.plural('millennium')).toBe('millennia')
+expect(inflector.plural('addendum')).toBe('addenda')
+expect(inflector.plural('erratum')).toBe('errata')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in -on become -a</h4>
+                <pre><code>expect(inflector.plural('criterion')).toBe('criteria')
+expect(inflector.plural('phenomenon')).toBe('phenomena')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in -a become -ae</h4>
+                <pre><code>expect(inflector.plural('alumna')).toBe('alumnae')
+expect(inflector.plural('vertebra')).toBe('vertebrae')
+expect(inflector.plural('alga')).toBe('algae')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in -ex/-ix become -ices</h4>
+                <pre><code>expect(inflector.plural('index')).toBe('indices')
+expect(inflector.plural('appendix')).toBe('appendices')
+expect(inflector.plural('matrix')).toBe('matrices')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>pronouns and special irregulars</h4>
+                <pre><code>expect(inflector.plural('I')).toBe('WE')
+expect(inflector.plural('me')).toBe('us')
+expect(inflector.plural('he')).toBe('they')
+expect(inflector.plural('she')).toBe('they')
+expect(inflector.plural('this')).toBe('these')
+expect(inflector.plural('that')).toBe('those')
+expect(inflector.plural('is')).toBe('are')
+expect(inflector.plural('was')).toBe('were')
+expect(inflector.plural('has')).toBe('have')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>singular</h3>
+            <div class="test-case">
+                <h4>regular singulars</h4>
+                <pre><code>expect(inflector.singular('cats')).toBe('cat')
+expect(inflector.singular('dogs')).toBe('dog')
+expect(inflector.singular('books')).toBe('book')
+expect(inflector.singular('cars')).toBe('car')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in es</h4>
+                <pre><code>expect(inflector.singular('buses')).toBe('bus')
+expect(inflector.singular('boxes')).toBe('box')
+expect(inflector.singular('churches')).toBe('church')
+expect(inflector.singular('dishes')).toBe('dish')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>words ending in ies</h4>
+                <pre><code>expect(inflector.singular('cities')).toBe('city')
+expect(inflector.singular('flies')).toBe('fly')
+expect(inflector.singular('stories')).toBe('story')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>irregular singulars</h4>
+                <pre><code>expect(inflector.singular('children')).toBe('child')
+expect(inflector.singular('people')).toBe('person')
+expect(inflector.singular('men')).toBe('man')
+expect(inflector.singular('women')).toBe('woman')
+expect(inflector.singular('feet')).toBe('foot')
+expect(inflector.singular('teeth')).toBe('tooth')
+expect(inflector.singular('geese')).toBe('goose')
+expect(inflector.singular('mice')).toBe('mouse')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>isPlural / isSingular</h3>
+            <div class="test-case">
+                <h4>isPlural returns true for plural words</h4>
+                <pre><code>expect(inflector.isPlural('cats')).toBe(true)
+expect(inflector.isPlural('children')).toBe(true)
+expect(inflector.isPlural('people')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>isSingular returns true for singular words</h4>
+                <pre><code>expect(inflector.isSingular('cat')).toBe(true)
+expect(inflector.isSingular('child')).toBe(true)
+expect(inflector.isSingular('person')).toBe(true)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>uncountables</h3>
+            <div class="test-case">
+                <h4>uncountable words stay the same in plural</h4>
+                <pre><code>expect(inflector.plural('fish')).toBe('fish')
+expect(inflector.plural('sheep')).toBe('sheep')
+expect(inflector.plural('deer')).toBe('deer')
+expect(inflector.plural('moose')).toBe('moose')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>uncountable words stay the same in singular</h4>
+                <pre><code>expect(inflector.singular('fish')).toBe('fish')
+expect(inflector.singular('sheep')).toBe('sheep')
+expect(inflector.singular('deer')).toBe('deer')
+expect(inflector.singular('moose')).toBe('moose')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>pluralize with count</h3>
+            <div class="test-case">
+                <h4>returns singular for count 1</h4>
+                <pre><code>expect(inflector.pluralize('cat', 1)).toBe('cat')
+expect(inflector.pluralize('child', 1)).toBe('child')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns plural for count != 1</h4>
+                <pre><code>expect(inflector.pluralize('cat', 0)).toBe('cats')
+expect(inflector.pluralize('cat', 2)).toBe('cats')
+expect(inflector.pluralize('child', 5)).toBe('children')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>includes count when inclusive is true</h4>
+                <pre><code>expect(inflector.pluralize('cat', 1, true)).toBe('1 cat')
+expect(inflector.pluralize('cat', 3, true)).toBe('3 cats')
+expect(inflector.pluralize('child', 1, true)).toBe('1 child')
+expect(inflector.pluralize('child', 5, true)).toBe('5 children')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>case preservation</h3>
+            <div class="test-case">
+                <h4>preserves lowercase</h4>
+                <pre><code>expect(inflector.plural('cat')).toBe('cats')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>preserves uppercase</h4>
+                <pre><code>expect(inflector.plural('CAT')).toBe('CATS')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>preserves title case</h4>
+                <pre><code>expect(inflector.plural('Cat')).toBe('Cats')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>toCamelCase</h3>
+            <div class="test-case">
+                <h4>converts snake_case</h4>
+                <pre><code>expect(inflector.toCamelCase('hello_world')).toBe('helloWorld')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts kebab-case</h4>
+                <pre><code>expect(inflector.toCamelCase('hello-world')).toBe('helloWorld')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts space separated</h4>
+                <pre><code>expect(inflector.toCamelCase('hello world')).toBe('helloWorld')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts PascalCase</h4>
+                <pre><code>expect(inflector.toCamelCase('HelloWorld')).toBe('helloWorld')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>handles single word</h4>
+                <pre><code>expect(inflector.toCamelCase('Hello')).toBe('hello')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>toPascalCase</h3>
+            <div class="test-case">
+                <h4>converts snake_case</h4>
+                <pre><code>expect(inflector.toPascalCase('hello_world')).toBe('HelloWorld')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts kebab-case</h4>
+                <pre><code>expect(inflector.toPascalCase('hello-world')).toBe('HelloWorld')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts space separated</h4>
+                <pre><code>expect(inflector.toPascalCase('hello world')).toBe('HelloWorld')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>keeps PascalCase</h4>
+                <pre><code>expect(inflector.toPascalCase('HelloWorld')).toBe('HelloWorld')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>handles single word</h4>
+                <pre><code>expect(inflector.toPascalCase('Hello')).toBe('Hello')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>toSnakeCase</h3>
+            <div class="test-case">
+                <h4>converts camelCase</h4>
+                <pre><code>expect(inflector.toSnakeCase('helloWorld')).toBe('hello_world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts PascalCase</h4>
+                <pre><code>expect(inflector.toSnakeCase('HelloWorld')).toBe('hello_world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts kebab-case</h4>
+                <pre><code>expect(inflector.toSnakeCase('hello-world')).toBe('hello_world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts space separated</h4>
+                <pre><code>expect(inflector.toSnakeCase('hello world')).toBe('hello_world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>handles single word</h4>
+                <pre><code>expect(inflector.toSnakeCase('Hello')).toBe('hello')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>toKebabCase</h3>
+            <div class="test-case">
+                <h4>converts camelCase</h4>
+                <pre><code>expect(inflector.toKebabCase('helloWorld')).toBe('hello-world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts PascalCase</h4>
+                <pre><code>expect(inflector.toKebabCase('HelloWorld')).toBe('hello-world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts snake_case</h4>
+                <pre><code>expect(inflector.toKebabCase('hello_world')).toBe('hello-world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts space separated</h4>
+                <pre><code>expect(inflector.toKebabCase('hello world')).toBe('hello-world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>handles single word</h4>
+                <pre><code>expect(inflector.toKebabCase('Hello')).toBe('hello')</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>toHumanCase</h3>
+            <div class="test-case">
+                <h4>converts PascalCase</h4>
+                <pre><code>expect(inflector.toHumanCase('GettingStarted')).toBe('Getting Started')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts camelCase</h4>
+                <pre><code>expect(inflector.toHumanCase('helloWorld')).toBe('hello World')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts snake_case</h4>
+                <pre><code>expect(inflector.toHumanCase('hello_world')).toBe('hello world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>converts kebab-case</h4>
+                <pre><code>expect(inflector.toHumanCase('hello-world')).toBe('hello world')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>handles consecutive uppercase</h4>
+                <pre><code>expect(inflector.toHumanCase('HTMLParser')).toBe('HTML Parser')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>handles single word</h4>
+                <pre><code>expect(inflector.toHumanCase('Hello')).toBe('Hello')</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item active" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2D</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebGLCanvas2D</a><div class="nav-category">input</div><a class="nav-item" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category">input/input_controls</div><a class="nav-item" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">audio</div><a class="nav-item" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-BccKM_Kk.js"></script>
+</body>
+</html>

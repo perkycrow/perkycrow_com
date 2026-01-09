@@ -1,6 +1,11 @@
 [
   {
     "type": "code",
+    "title": "Reserved $ properties",
+    "source": "const module = new PerkyModule({\n    $id: 'player',\n    $name: 'Player',\n    $category: 'entity',\n    $tags: ['controllable'],\n    $bind: 'player',\n    $lifecycle: true,\n    $eagerStart: true\n})\n\n// Your own properties are safe\nmodule.health = 100\nmodule.name = 'Hero'  // No conflict with $name\nmodule.id = 'custom'  // No conflict with $id"
+  },
+  {
+    "type": "code",
     "title": "Direct instantiation",
     "source": "const module = new PerkyModule({\n    $id: 'myModule',\n    $category: 'custom',\n    $tags: ['active', 'visible']\n})"
   },
@@ -32,17 +37,17 @@
   {
     "type": "action",
     "title": "create",
-    "source": "const parent = new PerkyModule({$id: 'parent'})\n\nconst child = parent.create(PerkyModule, {\n    $id: 'child',\n    $category: 'component'\n})\n\nlogger.log('children count:', parent.children.length)\nlogger.log('child.$id:', child.$id)\nlogger.log('child.host:', child.host.$id)"
-  },
-  {
-    "type": "action",
-    "title": "getChild / hasChild",
-    "source": "const parent = new PerkyModule({$id: 'parent'})\nparent.create(PerkyModule, {$id: 'player'})\nparent.create(PerkyModule, {$id: 'enemy'})\n\nlogger.log('hasChild player:', parent.hasChild('player'))\nlogger.log('hasChild boss:', parent.hasChild('boss'))\nlogger.log('getChild:', parent.getChild('player').$id)"
+    "source": "const parent = new PerkyModule({$id: 'parent'})\n\nconst child = parent.create(PerkyModule, {\n    $id: 'child',\n    $category: 'component'\n})\n\nlogger.log('child.host:', child.host.$id)\nlogger.log('child.installed:', child.installed)\nlogger.log('hasChild:', parent.hasChild('child'))\nlogger.log('getChild:', parent.getChild('child').$id)"
   },
   {
     "type": "action",
     "title": "Lifecycle propagation",
     "source": "const parent = new PerkyModule({$id: 'parent'})\nconst child = parent.create(PerkyModule, {$id: 'child'})\n\nchild.on('start', () => logger.log('child started'))\nchild.on('stop', () => logger.log('child stopped'))\n\nlogger.log('Starting parent...')\nparent.start()\n\nlogger.log('Stopping parent...')\nparent.stop()"
+  },
+  {
+    "type": "action",
+    "title": "$eagerStart (default: true)",
+    "source": "const parent = new PerkyModule({$id: 'parent'})\nparent.start()\nlogger.log('parent started:', parent.started)\n\n// Child auto-starts because $eagerStart is true by default\nconst eager = parent.create(PerkyModule, {$id: 'eager'})\nlogger.log('eager.started:', eager.started)\n\n// Disable auto-start with $eagerStart: false\nconst lazy = parent.create(PerkyModule, {\n    $id: 'lazy',\n    $eagerStart: false\n})\nlogger.log('lazy.started:', lazy.started)\n\n// Lazy child can be started manually\nlazy.start()\nlogger.log('lazy after manual start:', lazy.started)"
   },
   {
     "type": "action",
@@ -67,7 +72,7 @@
   {
     "type": "action",
     "title": "query / queryAll",
-    "source": "const app = new PerkyModule({$id: 'app'})\nconst game = app.create(PerkyModule, {$id: 'game', $category: 'scene'})\ngame.create(PerkyModule, {$id: 'player', $category: 'entity', $tags: ['controllable']})\ngame.create(PerkyModule, {$id: 'enemy', $category: 'entity', $tags: ['hostile']})\n\nlogger.log('query #player:', app.query('#player')?.$id)\nlogger.log('queryAll entity:', app.queryAll('entity').map(e => e.$id))\nlogger.log('queryAll .hostile:', app.queryAll('.hostile').map(e => e.$id))"
+    "source": "const app = new PerkyModule({$id: 'app'})\nconst game = app.create(PerkyModule, {$id: 'game', $category: 'scene'})\ngame.create(PerkyModule, {$id: 'player', $category: 'entity', $tags: ['controllable']})\ngame.create(PerkyModule, {$id: 'enemy', $category: 'entity', $tags: ['hostile']})\n\n// Direct child queries\nlogger.log('#game:', app.query('#game')?.$id)\nlogger.log('#game @entity:', app.queryAll('#game @entity').map(e => e.$id))\nlogger.log('#game .hostile:', app.query('#game .hostile')?.$id)"
   },
   {
     "type": "action",

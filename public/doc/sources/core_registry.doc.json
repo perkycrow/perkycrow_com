@@ -1,0 +1,77 @@
+[
+  {
+    "type": "action",
+    "title": "set / get",
+    "source": "const registry = new Registry()\n\nregistry.set('player1', {name: 'Alice', level: 10})\nregistry.set('player2', {name: 'Bob', level: 15})\n\nlogger.log('player1:', registry.get('player1'))\nlogger.log('size:', registry.size)"
+  },
+  {
+    "type": "action",
+    "title": "delete / clear",
+    "source": "const registry = new Registry([\n    ['a', {value: 1}],\n    ['b', {value: 2}],\n    ['c', {value: 3}]\n])\n\nlogger.log('initial size:', registry.size)\nregistry.delete('a')\nlogger.log('after delete:', registry.size)\nregistry.clear()\nlogger.log('after clear:', registry.size)"
+  },
+  {
+    "type": "action",
+    "title": "addIndex (property name)",
+    "source": "const registry = new Registry()\n\nregistry.set('player1', {name: 'Alice', level: 10})\nregistry.set('player2', {name: 'Bob', level: 15})\nregistry.set('player3', {name: 'Charlie', level: 10})\n\nregistry.addIndex('level')\n\nlogger.log('level 10:', registry.lookup('level', 10))\nlogger.log('level 15:', registry.lookup('level', 15))"
+  },
+  {
+    "type": "action",
+    "title": "addIndex (function)",
+    "source": "const registry = new Registry()\n\nregistry.set('item1', {name: 'Sword', category: 'weapon'})\nregistry.set('item2', {name: 'Shield', category: 'armor'})\nregistry.set('item3', {name: 'Axe', category: 'weapon'})\n\nregistry.addIndex('category', item => item.category)\n\nlogger.log('weapons:', registry.lookup('category', 'weapon'))\nlogger.log('armor:', registry.lookup('category', 'armor'))"
+  },
+  {
+    "type": "code",
+    "title": "Multi-value indexes",
+    "source": "const registry = new Registry()\n\nregistry.set('player1', {\n    name: 'Alice',\n    tags: ['warrior', 'leader']\n})\nregistry.set('player2', {\n    name: 'Bob',\n    tags: ['mage', 'leader']\n})\n\n// Return array for multi-value index\nregistry.addIndex('tags', item => item.tags)\n\n// Now can lookup by any tag\nconst leaders = registry.lookup('tags', 'leader')\nconst warriors = registry.lookup('tags', 'warrior')"
+  },
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.registry = new Registry()\nctx.registry.set('p1', {name: 'Alice', team: 'red'})\nctx.registry.set('p2', {name: 'Bob', team: 'blue'})\nctx.registry.set('p3', {name: 'Charlie', team: 'red'})\nctx.registry.addIndex('team')"
+  },
+  {
+    "type": "action",
+    "title": "lookup",
+    "source": "logger.log('red team:', ctx.registry.lookup('team', 'red'))\nlogger.log('blue team:', ctx.registry.lookup('team', 'blue'))\nlogger.log('no match:', ctx.registry.lookup('team', 'green'))"
+  },
+  {
+    "type": "action",
+    "title": "lookupKeys",
+    "source": "logger.log('red team keys:', ctx.registry.lookupKeys('team', 'red'))\nlogger.log('blue team keys:', ctx.registry.lookupKeys('team', 'blue'))"
+  },
+  {
+    "type": "action",
+    "title": "hasIndex / removeIndex",
+    "source": "const registry = new Registry()\nregistry.addIndex('category')\n\nlogger.log('has category:', registry.hasIndex('category'))\nlogger.log('has level:', registry.hasIndex('level'))\n\nregistry.removeIndex('category')\nlogger.log('after remove:', registry.hasIndex('category'))"
+  },
+  {
+    "type": "action",
+    "title": "updateIndexFor",
+    "source": "const registry = new Registry()\nconst player = {name: 'Alice', team: 'red'}\n\nregistry.set('p1', player)\nregistry.addIndex('team')\n\nlogger.log('before update:', registry.lookup('team', 'red'))\n\n// Manually update index when property changes\nplayer.team = 'blue'\nregistry.updateIndexFor(player, 'team', 'red', 'blue')\n\nlogger.log('red team:', registry.lookup('team', 'red'))\nlogger.log('blue team:', registry.lookup('team', 'blue'))"
+  },
+  {
+    "type": "action",
+    "title": "refreshIndexFor",
+    "source": "const registry = new Registry()\nconst player = {name: 'Alice', level: 10}\n\nregistry.set('p1', player)\nregistry.addIndex('level')\n\nlogger.log('before:', registry.lookup('level', 10))\n\n// Change property and refresh index\nplayer.level = 15\nregistry.refreshIndexFor(player, 'level')\n\nlogger.log('level 10:', registry.lookup('level', 10))\nlogger.log('level 15:', registry.lookup('level', 15))"
+  },
+  {
+    "type": "action",
+    "title": "Auto-update on set",
+    "source": "const registry = new Registry()\nregistry.addIndex('type')\n\nregistry.set('enemy1', {type: 'goblin'})\nlogger.log('goblins:', registry.lookup('type', 'goblin').length)\n\nregistry.set('enemy2', {type: 'goblin'})\nlogger.log('after adding:', registry.lookup('type', 'goblin').length)"
+  },
+  {
+    "type": "action",
+    "title": "Auto-update on delete",
+    "source": "const registry = new Registry()\nregistry.addIndex('type')\n\nregistry.set('e1', {type: 'orc'})\nregistry.set('e2', {type: 'orc'})\n\nlogger.log('before delete:', registry.lookup('type', 'orc').length)\nregistry.delete('e1')\nlogger.log('after delete:', registry.lookup('type', 'orc').length)"
+  },
+  {
+    "type": "action",
+    "title": "Multiple indexes",
+    "source": "const registry = new Registry()\n\nregistry.set('i1', {name: 'Sword', rarity: 'common', type: 'weapon'})\nregistry.set('i2', {name: 'Shield', rarity: 'rare', type: 'armor'})\nregistry.set('i3', {name: 'Axe', rarity: 'common', type: 'weapon'})\nregistry.set('i4', {name: 'Helmet', rarity: 'rare', type: 'armor'})\n\nregistry.addIndex('rarity')\nregistry.addIndex('type')\n\nlogger.log('common items:', registry.lookup('rarity', 'common'))\nlogger.log('weapons:', registry.lookup('type', 'weapon'))\nlogger.log('rare armor:',\n    registry.lookup('rarity', 'rare')\n        .filter(item => item.type === 'armor'))"
+  },
+  {
+    "type": "code",
+    "title": "Observable integration",
+    "source": "const registry = new Registry()\n\n// Registry extends ObservableMap\nregistry.on('set', (key, value) => {\n    logger.log('added:', key, value)\n})\n\nregistry.on('delete', (key, value) => {\n    logger.log('removed:', key, value)\n})\n\nregistry.set('item', {data: 'test'})"
+  }
+]

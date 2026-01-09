@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflector - Perky Docs</title>
+    <meta name="description" content="Documentation for Inflector in the Perky game framework">
+    <meta property="og:title" content="Inflector - Perky Docs">
+    <meta property="og:description" content="Documentation for Inflector in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-BbQlfHkH.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Inflector</h1>
+            <section class="api-section"><h2>Constructor</h2>
+        <div class="api-member">
+            <h3><code>constructor()</code></h3>
+            <pre><code>constructor () {
+    this.#loadIrregulars()
+    this.#loadPlurals()
+    this.#loadSingulars()
+    this.#loadUncountables()
+}</code></pre>
+        </div>
+    </section><section class="api-section"><h2>Methods</h2>
+        <div class="api-member">
+            <h3><code>plural(word)</code></h3>
+            <pre><code>plural (word) {
+    return this.#replaceWord(
+        this.#irregularSingles,
+        this.#irregularPlurals,
+        this.#pluralRules
+    )(word)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>singular(word)</code></h3>
+            <pre><code>singular (word) {
+    return this.#replaceWord(
+        this.#irregularPlurals,
+        this.#irregularSingles,
+        this.#singularRules
+    )(word)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>isPlural(word)</code></h3>
+            <pre><code>isPlural (word) {
+    return this.#checkWord(
+        this.#irregularSingles,
+        this.#irregularPlurals,
+        this.#pluralRules
+    )(word)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>isSingular(word)</code></h3>
+            <pre><code>isSingular (word) {
+    return this.#checkWord(
+        this.#irregularPlurals,
+        this.#irregularSingles,
+        this.#singularRules
+    )(word)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>pluralize(word, count, inclusive)</code></h3>
+            <pre><code>pluralize (word, count, inclusive) {
+    const pluralized = count === 1 ? this.singular(word) : this.plural(word)
+    return (inclusive ? count + ' ' : '') + pluralized
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>toCamelCase(string)</code></h3>
+            <pre><code>toCamelCase (string) { // eslint-disable-line local/class-methods-use-this -- clean
+    return string
+        .replace(/[-_\s]([a-z])/g, (match, letter) =&gt; letter.toUpperCase())
+        .replace(/^[A-Z]/, letter =&gt; letter.toLowerCase())
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>toPascalCase(string)</code></h3>
+            <pre><code>toPascalCase (string) {
+    return this.toCamelCase(string).replace(/^[a-z]/, letter =&gt; letter.toUpperCase())
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>toSnakeCase(string)</code></h3>
+            <pre><code>toSnakeCase (string) { // eslint-disable-line local/class-methods-use-this -- clean
+    return string
+        .replace(/[-\s]/g, '_')
+        .replace(/([A-Z])([A-Z][a-z])/g, '$1_$2')
+        .replace(/([a-z])([A-Z])/g, '$1_$2')
+        .toLowerCase()
+        .replace(/^_/, '')
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>toKebabCase(string)</code></h3>
+            <pre><code>toKebabCase (string) { // eslint-disable-line local/class-methods-use-this -- clean
+    return string
+        .replace(/[_\s]/g, '-')
+        .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .toLowerCase()
+        .replace(/^-/, '')
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>toHumanCase(string)</code></h3>
+            <pre><code>toHumanCase (string) { // eslint-disable-line local/class-methods-use-this -- clean
+    return string
+        .replace(/[-_]/g, ' ')
+        .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/^\s+/, '')
+        .replace(/\s+/g, ' ')
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addPluralRule(rule, replacement)</code></h3>
+            <pre><code>addPluralRule (rule, replacement) {
+    this.#pluralRules.push([sanitizeRule(rule), replacement])
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addSingularRule(rule, replacement)</code></h3>
+            <pre><code>addSingularRule (rule, replacement) {
+    this.#singularRules.push([sanitizeRule(rule), replacement])
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addUncountableRule(word)</code></h3>
+            <pre><code>addUncountableRule (word) {
+    if (typeof word === 'string') {
+        this.#uncountables[word.toLowerCase()] = true
+        return
+    }
+
+    this.addPluralRule(word, '$0')
+    this.addSingularRule(word, '$0')
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addIrregularRule(single, pluralForm)</code></h3>
+            <pre><code>addIrregularRule (single, pluralForm) {
+    const s = single.toLowerCase()
+    const p = pluralForm.toLowerCase()
+
+    this.#irregularSingles[s] = p
+    this.#irregularPlurals[p] = s
+}</code></pre>
+        </div>
+    </section>
+        </div>
+    </noscript>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item active" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2D</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebGLCanvas2D</a><div class="nav-category">input</div><a class="nav-item" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category">input/input_controls</div><a class="nav-item" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">audio</div><a class="nav-item" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-BccKM_Kk.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Simple Vec2 control",
+    "source": "const control = new Vec2Control({\n    device: null,\n    name: 'joystick',\n    value: new Vec2(0, 0)\n})\n\ncontrol.on('updated', (newValue, oldValue) => {\n    logger.log(`Joystick moved: (${newValue.x}, ${newValue.y})`)\n})\n\ncontrol.setValue(new Vec2(0.5, -0.3))"
+  },
+  {
+    "type": "code",
+    "title": "Object to Vec2",
+    "source": "const control = new Vec2Control({\n    device: null,\n    name: 'mouse',\n    value: new Vec2()\n})\n\n// Accepts plain objects\ncontrol.setValue({x: 100, y: 200})\n\n// Always returns Vec2 instance\nlogger.log(control.value instanceof Vec2)  // true\nlogger.log(control.value.x, control.value.y)  // 100, 200"
+  },
+  {
+    "type": "code",
+    "title": "Change detection",
+    "source": "const control = new Vec2Control({\n    device: null,\n    name: 'stick',\n    value: new Vec2(0, 0)\n})\n\nlet updateCount = 0\ncontrol.on('updated', () => {\n    updateCount++\n})\n\ncontrol.setValue(new Vec2(1, 1))  // Updates (count: 1)\ncontrol.setValue(new Vec2(1, 1))  // No update (same value)\ncontrol.setValue(new Vec2(2, 2))  // Updates (count: 2)\n\nlogger.log(updateCount)  // 2"
+  }
+]

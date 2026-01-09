@@ -1,0 +1,62 @@
+[
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.app = new PerkyModule({$id: 'app'})\nconst game = ctx.app.create(PerkyModule, {\n    $id: 'game',\n    $category: 'scene'\n})\ngame.create(PerkyModule, {\n    $id: 'player',\n    $category: 'entity',\n    $tags: ['controllable']\n})\ngame.create(PerkyModule, {\n    $id: 'enemy1',\n    $category: 'entity',\n    $tags: ['hostile']\n})\ngame.create(PerkyModule, {\n    $id: 'enemy2',\n    $category: 'entity',\n    $tags: ['hostile']\n})"
+  },
+  {
+    "type": "action",
+    "title": "query (first match)",
+    "source": "const game = query(ctx.app, '#game')\nlogger.log('#game:', game?.$id)\n\nconst hostile = query(ctx.app, '#game .hostile')\nlogger.log('#game .hostile:', hostile?.$id)"
+  },
+  {
+    "type": "action",
+    "title": "queryAll (all matches)",
+    "source": "const entities = queryAll(ctx.app, '#game @entity')\nlogger.log('#game @entity:', entities.map(e => e.$id))\n\nconst hostile = queryAll(ctx.app, '#game .hostile')\nlogger.log('#game .hostile:', hostile.map(e => e.$id))"
+  },
+  {
+    "type": "action",
+    "title": "No match returns null / []",
+    "source": "// Won't find player - it's not a direct child of app\nlogger.log('#player (skip game):', query(ctx.app, '#player'))\nlogger.log('.hostile (skip game):', queryAll(ctx.app, '.hostile'))"
+  },
+  {
+    "type": "setup",
+    "index": 1,
+    "source": "ctx.app = new PerkyModule({$id: 'app'})\n\nconst game = ctx.app.create(PerkyModule, {\n    $id: 'game',\n    $category: 'scene'\n})\nconst level = game.create(PerkyModule, {\n    $id: 'level1',\n    $category: 'level'\n})\nlevel.create(PerkyModule, {\n    $id: 'player',\n    $category: 'entity',\n    $tags: ['controllable']\n})\nlevel.create(PerkyModule, {\n    $id: 'enemy',\n    $category: 'entity',\n    $tags: ['hostile']\n})"
+  },
+  {
+    "type": "action",
+    "title": "Two-level path",
+    "source": "const level = query(ctx.app, '#game #level1')\nlogger.log('#game #level1:', level?.$id)\n\nconst entities = queryAll(ctx.app, '#game @level')\nlogger.log('#game @level:', entities.map(e => e.$id))"
+  },
+  {
+    "type": "action",
+    "title": "Three-level path",
+    "source": "const player = query(ctx.app, '#game #level1 .controllable')\nlogger.log('#game #level1 .controllable:', player?.$id)\n\nconst all = queryAll(ctx.app, '#game #level1 @entity')\nlogger.log('#game #level1 @entity:', all.map(e => e.$id))"
+  },
+  {
+    "type": "action",
+    "title": "Single selectors",
+    "source": "logger.log('#player:', parseSelector('#player'))\nlogger.log('.hostile:', parseSelector('.hostile'))\nlogger.log('$Alice:', parseSelector('$Alice'))\nlogger.log('@entity:', parseSelector('@entity'))"
+  },
+  {
+    "type": "action",
+    "title": "Combined selectors",
+    "source": "logger.log('@entity.hostile:', parseSelector('@entity.hostile'))\nlogger.log('#player.alive:', parseSelector('#player.alive'))"
+  },
+  {
+    "type": "setup",
+    "index": 2,
+    "source": "ctx.player = new PerkyModule({\n    $id: 'player1',\n    $name: 'Alice',\n    $category: 'entity',\n    $tags: ['controllable', 'visible']\n})"
+  },
+  {
+    "type": "action",
+    "title": "Single condition",
+    "source": "const conditions = parseSelector('#player1')[0]\nlogger.log('matches #player1:', matchesConditions(ctx.player, conditions))\n\nconst wrongId = parseSelector('#enemy')[0]\nlogger.log('matches #enemy:', matchesConditions(ctx.player, wrongId))"
+  },
+  {
+    "type": "action",
+    "title": "Multiple conditions",
+    "source": "const conditions = parseSelector('@entity.controllable')[0]\nlogger.log('matches @entity.controllable:',\n    matchesConditions(ctx.player, conditions))\n\nconst wrongConditions = parseSelector('@ui.controllable')[0]\nlogger.log('matches @ui.controllable:',\n    matchesConditions(ctx.player, wrongConditions))"
+  }
+]

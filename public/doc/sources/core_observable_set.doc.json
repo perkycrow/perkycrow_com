@@ -1,0 +1,27 @@
+[
+  {
+    "type": "action",
+    "title": "Creation",
+    "source": "const empty = new ObservableSet()\nlogger.log('empty size:', empty.size)\n\nconst withValues = new ObservableSet([1, 2, 3, 2])\nlogger.log('with values:', withValues.size)\nlogger.log('values:', withValues.toArray())"
+  },
+  {
+    "type": "action",
+    "title": "add / has / delete",
+    "source": "const set = new ObservableSet()\n\nset.add('apple')\nset.add('banana')\nset.add('apple')  // Duplicate - ignored\n\nlogger.log('has apple:', set.has('apple'))\nlogger.log('has grape:', set.has('grape'))\nlogger.log('size:', set.size)\n\nset.delete('apple')\nlogger.log('after delete:', set.toArray())"
+  },
+  {
+    "type": "action",
+    "title": "add / delete / clear",
+    "source": "const set = new ObservableSet()\n\nset.on('add', (value) => logger.log(`add: ${value}`))\nset.on('delete', (value) => logger.log(`delete: ${value}`))\nset.on('clear', (values) => logger.log('cleared:', values))\n\nset.add('a')\nset.add('b')\nset.delete('a')\nset.clear()"
+  },
+  {
+    "type": "action",
+    "title": "toArray / for...of",
+    "source": "const set = new ObservableSet(['red', 'green', 'blue'])\n\nlogger.log('toArray:', set.toArray())\n\nfor (const value of set) {\n    logger.log('value:', value)\n}"
+  },
+  {
+    "type": "action",
+    "title": "Chain adds",
+    "source": "const set = new ObservableSet()\n\nset.add('a').add('b').add('c')\n\nlogger.log('size:', set.size)"
+  }
+]

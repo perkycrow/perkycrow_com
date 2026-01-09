@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Simple control",
+    "source": "const control = new InputControl({\n    device: null,\n    name: 'jump',\n    value: 0\n})\n\ncontrol.on('updated', (newValue, oldValue) => {\n    logger.log(`Value changed: ${oldValue} -> ${newValue}`)\n})\n\ncontrol.setValue(1) // Triggers 'updated' event"
+  },
+  {
+    "type": "code",
+    "title": "Value tracking",
+    "source": "const control = new InputControl({\n    device: null,\n    name: 'axis',\n    value: 0\n})\n\ncontrol.setValue(0.5)\ncontrol.setValue(0.8)\n\nlogger.log(control.value)     // 0.8\nlogger.log(control.oldValue)  // 0.5\n\ncontrol.reset()\nlogger.log(control.value)     // 0 (default value)"
+  }
+]

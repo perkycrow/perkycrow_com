@@ -1,0 +1,234 @@
+let currentBlocks = null;
+let currentSetup = null;
+function doc(title, options, fn) {
+  const opts = typeof options === "function" ? {} : options;
+  const callback = typeof options === "function" ? options : fn;
+  const docData = {
+    title,
+    options: opts,
+    blocks: []
+  };
+  currentBlocks = docData.blocks;
+  currentSetup = null;
+  callback();
+  currentBlocks = null;
+  currentSetup = null;
+  return docData;
+}
+function section(title, fn) {
+  if (!currentBlocks) {
+    throw new Error("section() must be called inside doc()");
+  }
+  const sectionData = {
+    type: "section",
+    title,
+    blocks: [],
+    setup: null
+  };
+  const parentBlocks = currentBlocks;
+  const parentSetup = currentSetup;
+  currentBlocks = sectionData.blocks;
+  currentSetup = null;
+  fn();
+  sectionData.setup = currentSetup;
+  currentBlocks = parentBlocks;
+  currentSetup = parentSetup;
+  currentBlocks.push(sectionData);
+}
+function setup(fn) {
+  if (!currentBlocks) {
+    throw new Error("setup() must be called inside doc() or section()");
+  }
+  currentSetup = {
+    source: extractFunctionBody(fn),
+    fn
+  };
+}
+function text(content) {
+  if (!currentBlocks) {
+    throw new Error("text() must be called inside doc()");
+  }
+  currentBlocks.push({
+    type: "text",
+    content: dedent(content)
+  });
+}
+function code(title, fn) {
+  if (!currentBlocks) {
+    throw new Error("code() must be called inside doc()");
+  }
+  currentBlocks.push({
+    type: "code",
+    title,
+    source: extractFunctionBody(fn)
+  });
+}
+function action(title, fn) {
+  if (!currentBlocks) {
+    throw new Error("action() must be called inside doc()");
+  }
+  currentBlocks.push({
+    type: "action",
+    title,
+    source: extractFunctionBody(fn),
+    fn
+  });
+}
+function see(name, options = {}) {
+  if (!currentBlocks) {
+    throw new Error("see() must be called inside doc()");
+  }
+  currentBlocks.push({
+    type: "see",
+    name,
+    pageType: options.type || "doc",
+    section: options.section || null,
+    category: options.category || null
+  });
+}
+function disclaimer(content) {
+  if (!currentBlocks) {
+    throw new Error("disclaimer() must be called inside doc()");
+  }
+  currentBlocks.push({
+    type: "disclaimer",
+    content: dedent(content)
+  });
+}
+const CONTAINER_PRESETS = {
+  interactive: {
+    tabIndex: 0,
+    style: {
+      outline: "none",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#1a1a2e",
+      color: "#fff",
+      fontFamily: "monospace",
+      userSelect: "none"
+    }
+  },
+  "interactive-alt": {
+    tabIndex: 0,
+    style: {
+      outline: "none",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#16213e",
+      color: "#fff",
+      fontFamily: "monospace",
+      userSelect: "none"
+    }
+  },
+  inspector: {
+    style: {
+      padding: "12px",
+      background: "#1a1a1e",
+      overflow: "auto"
+    }
+  },
+  centered: {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#1a1a1e"
+    }
+  }
+};
+function container(options, fn) {
+  if (!currentBlocks) {
+    throw new Error("container() must be called inside doc()");
+  }
+  const opts = typeof options === "function" ? {} : options;
+  const callback = typeof options === "function" ? options : fn;
+  currentBlocks.push({
+    type: "container",
+    width: opts.width || null,
+    height: opts.height || 300,
+    title: opts.title || null,
+    preset: opts.preset || null,
+    scrollable: opts.scrollable || false,
+    source: extractFunctionBody(callback),
+    fn: callback
+  });
+}
+function applyContainerPreset(element, presetName) {
+  const preset = CONTAINER_PRESETS[presetName];
+  if (!preset) {
+    return;
+  }
+  if (preset.tabIndex !== void 0) {
+    element.tabIndex = preset.tabIndex;
+  }
+  if (preset.style) {
+    Object.assign(element.style, preset.style);
+  }
+}
+function extractFunctionBody(fn) {
+  const source = fn.toString();
+  let body = null;
+  const arrowMatch = source.match(/^\s*\(?[^)]*\)?\s*=>\s*\{([\s\S]*)\}\s*$/);
+  if (arrowMatch) {
+    body = arrowMatch[1];
+  }
+  if (!body) {
+    const functionMatch = source.match(/^function\s*\w*\s*\([^)]*\)\s*\{([\s\S]*)\}\s*$/);
+    if (functionMatch) {
+      body = functionMatch[1];
+    }
+  }
+  if (!body) {
+    const arrowExpressionMatch = source.match(/^\s*\(?[^)]*\)?\s*=>\s*(.+)$/);
+    if (arrowExpressionMatch) {
+      return arrowExpressionMatch[1].trim();
+    }
+  }
+  if (!body) {
+    return source;
+  }
+  body = body.split("\n").filter((line) => !line.trim().startsWith("ctx.setApp(")).join("\n");
+  return dedent(body);
+}
+function dedent(str) {
+  let lines = str.split("\n");
+  while (lines.length > 0 && lines[0].trim() === "") {
+    lines.shift();
+  }
+  while (lines.length > 0 && lines[lines.length - 1].trim() === "") {
+    lines.pop();
+  }
+  if (lines.length === 0) {
+    return "";
+  }
+  const nonEmptyLines = lines.filter((line) => line.trim());
+  if (nonEmptyLines.length === 0) {
+    return lines.join("\n");
+  }
+  const minIndent = Math.min(
+    ...nonEmptyLines.map((line) => {
+      const match = line.match(/^(\s*)/);
+      return match ? match[1].length : 0;
+    })
+  );
+  if (minIndent === 0) {
+    return lines.join("\n");
+  }
+  return lines.map((line) => line.slice(minIndent)).join("\n");
+}
+export {
+  applyContainerPreset as a,
+  setup as b,
+  code as c,
+  doc as d,
+  action as e,
+  container as f,
+  see as g,
+  disclaimer as h,
+  section as s,
+  text as t
+};

@@ -1,0 +1,57 @@
+[
+  {
+    "type": "action",
+    "title": "Parent and children",
+    "source": "const game = new PerkyModule({$id: 'game'})\n\nconst player = game.create(PerkyModule, {$id: 'player'})\nconst enemy = game.create(PerkyModule, {$id: 'enemy'})\n\nlogger.log('game has', game.children.length, 'children')\nlogger.log('player host:', player.host.$id)\nlogger.log('enemy host:', enemy.host.$id)"
+  },
+  {
+    "type": "action",
+    "title": "Your properties are safe",
+    "source": "const player = new PerkyModule({\n    $id: 'player',\n    $name: 'Hero',\n    $category: 'entity'\n})\n\nplayer.name = 'Alice'\nplayer.health = 100\nplayer.id = 'custom-id'\n\nlogger.log('$name (config):', player.$name)\nlogger.log('name (yours):', player.name)\nlogger.log('$id (config):', player.$id)\nlogger.log('id (yours):', player.id)"
+  },
+  {
+    "type": "action",
+    "title": "Auto-generated IDs",
+    "source": "const game = new PerkyModule({$id: 'game'})\n\nconst m1 = game.create(PerkyModule)\nconst m2 = game.create(PerkyModule)\nconst e1 = game.create(PerkyModule, {$name: 'enemy'})\nconst e2 = game.create(PerkyModule, {$name: 'enemy'})\n\nlogger.log('m1.$id:', m1.$id)\nlogger.log('m2.$id:', m2.$id)\nlogger.log('e1.$id:', e1.$id)\nlogger.log('e2.$id:', e2.$id)"
+  },
+  {
+    "type": "action",
+    "title": "Lifecycle flows down",
+    "source": "const game = new PerkyModule({$id: 'game'})\nconst player = game.create(PerkyModule, {$id: 'player'})\n\nplayer.on('start', () => logger.log('player: started'))\nplayer.on('stop', () => logger.log('player: stopped'))\n\nlogger.log('Starting game...')\ngame.start()\n\nlogger.log('Stopping game...')\ngame.stop()"
+  },
+  {
+    "type": "action",
+    "title": "Eager vs lazy",
+    "source": "const game = new PerkyModule({$id: 'game'})\ngame.start()\nlogger.log('game started:', game.started)\n\nconst eager = game.create(PerkyModule, {$id: 'eager'})\nlogger.log('eager.started:', eager.started)\n\nconst lazy = game.create(PerkyModule, {\n    $id: 'lazy',\n    $eagerStart: false\n})\nlogger.log('lazy.started:', lazy.started)\n\nlazy.start()\nlogger.log('lazy after manual start:', lazy.started)"
+  },
+  {
+    "type": "action",
+    "title": "Query examples",
+    "source": "const game = new PerkyModule({$id: 'game'})\ngame.create(PerkyModule, {$id: 'player', $category: 'entity', $tags: ['controllable']})\ngame.create(PerkyModule, {$id: 'enemy1', $category: 'entity', $tags: ['hostile']})\ngame.create(PerkyModule, {$id: 'enemy2', $category: 'entity', $tags: ['hostile']})\n\nlogger.log('#player:', game.query('#player')?.$id)\nlogger.log('@entity:', game.queryAll('@entity').map(e => e.$id))\nlogger.log('.hostile:', game.queryAll('.hostile').map(e => e.$id))\nlogger.log('@entity.hostile:', game.queryAll('@entity.hostile').map(e => e.$id))"
+  },
+  {
+    "type": "action",
+    "title": "Multi-level paths",
+    "source": "const app = new PerkyModule({$id: 'app'})\nconst game = app.create(PerkyModule, {$id: 'game'})\nconst level = game.create(PerkyModule, {$id: 'level'})\nlevel.create(PerkyModule, {$id: 'player', $tags: ['hero']})\n\nlogger.log('Wrong (skips levels):', app.query('#player'))\nlogger.log('Right (full path):', app.query('#game #level #player')?.$id)"
+  },
+  {
+    "type": "action",
+    "title": "Emit and listen",
+    "source": "const player = new PerkyModule({$id: 'player'})\n\nplayer.on('damage', (amount) => {\n    logger.log('took', amount, 'damage')\n})\n\nplayer.emit('damage', 25)\nplayer.emit('damage', 50)"
+  },
+  {
+    "type": "action",
+    "title": "Listen to others",
+    "source": "const player = new PerkyModule({$id: 'player'})\nconst enemy = new PerkyModule({$id: 'enemy'})\n\nenemy.listenTo(player, 'move', (x, y) => {\n    logger.log('enemy follows player to', x, y)\n})\n\nplayer.emit('move', 100, 50)"
+  },
+  {
+    "type": "code",
+    "title": "Custom module class",
+    "source": "class Player extends PerkyModule {\n    static $category = 'entity'\n    static $tags = ['controllable']\n\n    health = 100\n\n    onStart () {\n        this.health = 100\n    }\n\n    takeDamage (amount) {\n        this.health -= amount\n        this.emit('damage', amount)\n\n        if (this.health <= 0) {\n            this.emit('death')\n        }\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "$bind in action",
+    "source": "const game = new PerkyModule({$id: 'game'})\n\ngame.create(PerkyModule, {\n    $id: 'playerModule',\n    $bind: 'player'\n})\n\nlogger.log('game.player:', game.player.$id)"
+  }
+]
