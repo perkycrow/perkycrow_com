@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manifest - Perky Docs</title>
+    <meta name="description" content="Documentation for Manifest in the Perky game framework">
+    <meta property="og:title" content="Manifest - Perky Docs">
+    <meta property="og:description" content="Documentation for Manifest in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-KtVTL3IB.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>Manifest</h1>
+            <section class="test-section"><h2>Manifest</h2>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>manifest = new Manifest()</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>constructor</h4>
+                <pre><code>expect(manifest.getConfig()).toEqual({})
+expect(manifest.getAllAssets()).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>constructor with data</h4>
+                <pre><code>const customManifest = new Manifest({
+    data: {
+        config: {name: 'Test Manifest'}
+    }
+})
+
+expect(customManifest.getConfig('name')).toBe('Test Manifest')
+expect(customManifest.getAllAssets()).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>import with JSON string</h4>
+                <pre><code>const jsonData = JSON.stringify({
+    config: {debug: true},
+    assets: {
+        logo: {type: 'image', url: '/assets/logo.png', tags: ['preload']}
+    }
+})
+
+manifest.import(jsonData)
+
+expect(manifest.getConfig('debug')).toBe(true)
+expect(manifest.getAsset('logo').id).toBe('logo')
+expect(manifest.getAsset('logo').type).toBe('image')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>import with object</h4>
+                <pre><code>const data = {
+    config: {version: '1.0.0'}
+}
+
+manifest.import(data)
+
+expect(manifest.getConfig('version')).toBe('1.0.0')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>import clears existing assets</h4>
+                <pre><code>manifest.addAsset({id: 'old', type: 'image', url: '/old.png'})
+
+manifest.import({
+    config: {},
+    assets: {
+        new: {type: 'image', url: '/new.png'}
+    }
+})
+
+expect(manifest.getAsset('old')).toBeNull()
+expect(manifest.getAsset('new')).not.toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>export</h4>
+                <pre><code>manifest.setConfig('version', '1.0.0')
+manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})
+
+const exported = manifest.export()
+
+expect(exported.config.version).toBe('1.0.0')
+expect(exported.assets.logo.id).toBe('logo')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getConfig</h4>
+                <pre><code>manifest.setConfig('debug', true)
+manifest.setConfig('logging.level', 'info')
+
+expect(manifest.getConfig()).toEqual({debug: true, logging: {level: 'info'}})</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getConfig with path</h4>
+                <pre><code>manifest.setConfig('debug', true)
+manifest.setConfig('logging.level', 'info')
+
+expect(manifest.getConfig('logging.level')).toBe('info')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setConfig</h4>
+                <pre><code>const result = manifest.setConfig('logging.level', 'debug')
+
+expect(manifest.getConfig('logging.level')).toBe('debug')
+expect(result).toBe(manifest)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addAsset</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/assets/logo.png'})
+
+expect(manifest.getAllAssets()).toHaveLength(1)
+expect(manifest.getAsset('logo').id).toBe('logo')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addAsset updates existing</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/assets/logo.png'})
+manifest.addAsset({id: 'logo', type: 'image', url: '/assets/new-logo.png'})
+
+expect(manifest.getAllAssets()).toHaveLength(1)
+expect(manifest.getAsset('logo').url).toBe('/assets/new-logo.png')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>addAsset with Asset instance</h4>
+                <pre><code>const asset = new Asset({id: 'logo', type: 'image', url: '/logo.png'})
+manifest.addAsset(asset)
+
+expect(manifest.getAsset('logo')).toBe(asset)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAsset returns null for missing</h4>
+                <pre><code>expect(manifest.getAsset('nonexistent')).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAsset</h4>
+                <pre><code>const assetData = {id: 'logo', type: 'image', url: '/assets/logo.png'}
+manifest.addAsset(assetData)
+
+const asset = manifest.getAsset('logo')
+expect(asset).toBeInstanceOf(Asset)
+expect(asset.id).toBe(assetData.id)
+expect(asset.url).toBe(assetData.url)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getSource</h4>
+                <pre><code>const assetData = {id: 'logo', type: 'image', url: '/assets/logo.png', source: 'fakeImage'}
+manifest.addAsset(assetData)
+
+const source = manifest.getSource('logo')
+expect(source).toBe('fakeImage')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getSource returns null for missing</h4>
+                <pre><code>expect(manifest.getSource('nonexistent')).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAssetsByType</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})
+manifest.addAsset({id: 'icon', type: 'image', url: '/icon.png'})
+manifest.addAsset({id: 'music', type: 'audio', url: '/music.mp3'})
+
+const images = manifest.getAssetsByType('image')
+expect(images).toHaveLength(2)
+expect(images.map(a =&gt; a.id)).toContain('logo')
+expect(images.map(a =&gt; a.id)).toContain('icon')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAssetsByTag</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png', tags: ['titleScreen']})
+manifest.addAsset({id: 'icon', type: 'image', url: '/icon.png', tags: ['mainScene']})
+
+const titleScreenAssets = manifest.getAssetsByTag('titleScreen')
+expect(titleScreenAssets).toHaveLength(1)
+expect(titleScreenAssets[0].id).toBe('logo')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAssetsByTag multiple types</h4>
+                <pre><code>manifest.addAsset({id: 'icon', type: 'image', url: '/icon.png', tags: ['titleScreen']})
+manifest.addAsset({id: 'music', type: 'audio', url: '/music.mp3', tags: ['titleScreen']})
+
+const titleScreenAssets = manifest.getAssetsByTag('titleScreen')
+expect(titleScreenAssets).toHaveLength(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAssetsByTag multiple tags</h4>
+                <pre><code>manifest.addAsset({id: 'icon', type: 'image', url: '/icon.png', tags: ['titleScreen', 'mainScene', 'endingScene']})
+manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png', tags: ['endingScene']})
+
+const titleScreenAssets = manifest.getAssetsByTag('titleScreen')
+expect(titleScreenAssets).toHaveLength(1)
+expect(titleScreenAssets[0].id).toBe('icon')
+
+const endingSceneAssets = manifest.getAssetsByTag('endingScene')
+expect(endingSceneAssets).toHaveLength(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAssetsByTag no assets</h4>
+                <pre><code>const tagAssets = manifest.getAssetsByTag('titleScreen')
+expect(tagAssets).toHaveLength(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAssetsByTag invalid tag</h4>
+                <pre><code>expect(manifest.getAssetsByTag(null)).toEqual([])
+expect(manifest.getAssetsByTag('')).toEqual([])
+expect(manifest.getAssetsByTag(123)).toEqual([])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAllAssets</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})
+manifest.addAsset({id: 'music', type: 'audio', url: '/music.mp3'})
+
+const allAssets = manifest.getAllAssets()
+expect(allAssets).toHaveLength(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getAssets is alias for getAllAssets</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})
+
+expect(manifest.getAssets()).toEqual(manifest.getAllAssets())</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>hasAsset</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})
+
+expect(manifest.hasAsset('logo')).toBe(true)
+expect(manifest.hasAsset('nonexistent')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeAsset</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})
+
+expect(manifest.removeAsset('logo')).toBe(true)
+expect(manifest.getAsset('logo')).toBeNull()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removeAsset nonexistent</h4>
+                <pre><code>expect(manifest.removeAsset('nonexistent')).toBe(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>assets registry has type index</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})
+
+expect(manifest.assets.hasIndex('type')).toBe(true)
+expect(manifest.assets.lookup('type', 'image')).toHaveLength(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>assets registry has tags index</h4>
+                <pre><code>manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png', tags: ['preload']})
+
+expect(manifest.assets.hasIndex('tags')).toBe(true)
+expect(manifest.assets.lookup('tags', 'preload')).toHaveLength(1)</code></pre>
+            </div>
+        </section>
+        </div>
+    </noscript>
+    <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"></path>
+        </svg>
+    </button>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="docs-layout">
+        <aside class="docs-sidebar" id="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item active" href="application_manifest.html" data-file="/application/manifest.doc.js" data-title="manifest" data-category="application">Manifest</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2D</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebGLCanvas2D</a><div class="nav-category">input</div><a class="nav-item" href="input_input_system.html" data-file="/input/input_system.doc.js" data-title="inputsystem" data-category="input">InputSystem</a><a class="nav-item" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category">input/input_controls</div><a class="nav-item" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">audio</div><a class="nav-item" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">doc</div><a class="nav-item" href="doc_runtime.html" data-file="/doc/runtime.doc.js" data-title="doc runtime" data-category="doc">Doc Runtime</a><a class="nav-item" href="doc_doc_page.html" data-file="/doc/doc_page.doc.js" data-title="doc page" data-category="doc">Doc Page</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-Bd4T5Vv_.js"></script>
+</body>
+</html>

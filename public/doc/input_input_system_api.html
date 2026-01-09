@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InputSystem - Perky Docs</title>
+    <meta name="description" content="Documentation for InputSystem in the Perky game framework">
+    <meta property="og:title" content="InputSystem - Perky Docs">
+    <meta property="og:description" content="Documentation for InputSystem in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-KtVTL3IB.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>InputSystem</h1>
+            <p class="api-extends">extends <code>PerkyModule</code></p><section class="api-section"><h2>Static</h2>
+        <div class="api-member">
+            <h3><code>$category</code></h3>
+            <pre><code>static $category = 'inputSystem'</code></pre>
+        </div>
+    </section><section class="api-section"><h2>Constructor</h2>
+        <div class="api-member">
+            <h3><code>constructor(options = ...)</code></h3>
+            <pre><code>constructor (options = {}) {
+    const {bindings = []} = options
+    super(options)
+
+    this.create(InputBinder, {
+        $bind: 'inputBinder',
+        bindings
+    })
+
+    this.#initEvents()
+}</code></pre>
+        </div>
+    </section><section class="api-section"><h2>Methods</h2>
+        <div class="api-member">
+            <h3><code>onInstall(host)</code></h3>
+            <pre><code>onInstall (host) {
+    this.registerDevice(KeyboardDevice, {
+        $id: 'keyboard',
+        $bind: 'keyboard'
+    })
+
+    this.registerDevice(MouseDevice, {
+        $id: 'mouse',
+        $bind: 'mouse',
+        container: host.element
+    })
+
+    this.registerDevice(TouchDevice, {
+        $id: 'touch',
+        $bind: 'touch',
+        container: host.element
+    })
+
+    this.delegateTo(host, [
+        'registerDevice',
+        'unregisterDevice',
+        'getDevice',
+        'isPressed',
+        'isPressedAny',
+        'getAllPressed',
+        'getValueFor',
+        'getValueAny',
+        'addControl',
+        'getControl',
+        'getControlAny',
+        'getPressedControls'
+    ])
+
+    this.delegateTo(host, [
+        'inputBinder',
+        'bindInput',
+        'unbind',
+        'getBinding',
+        'hasBinding',
+        'getBindingsForInput',
+        'getBindingsForAction',
+        'getAllBindings',
+        'clearBindings',
+        'bindCombo'
+    ])
+
+    this.delegateTo(host, [
+        'isKeyPressed',
+        'isMousePressed',
+        'isTouchPressed',
+        'getKeyValue',
+        'getMouseValue',
+        'getTouchValue',
+        'isActionPressed',
+        'getActionControls',
+        'getInputValue',
+        'getInputValueAny',
+        'getDirection'
+    ])
+
+    this.delegateEventsTo(host, ['input:triggered'])
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>registerDevice(DeviceClass, options = ...)</code></h3>
+            <pre><code>registerDevice (DeviceClass, options = {}) {
+    return this.create(DeviceClass, options)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getDevice(name)</code></h3>
+            <pre><code>getDevice (name) {
+    return this.getChild(name)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>isPressed(deviceName, controlName)</code></h3>
+            <pre><code>isPressed (deviceName, controlName) {
+    const device = this.getDevice(deviceName)
+    return device ? device.isPressed(controlName) : false
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getValueFor(deviceName, controlName)</code></h3>
+            <pre><code>getValueFor (deviceName, controlName) {
+    const device = this.getDevice(deviceName)
+    return device ? device.getValueFor(controlName) : undefined
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getControl(deviceName, controlName)</code></h3>
+            <pre><code>getControl (deviceName, controlName) {
+    const device = this.getDevice(deviceName)
+    return device ? (device.getControl(controlName) ?? null) : null
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>listDeviceNames()</code></h3>
+            <pre><code>listDeviceNames () {
+    return this.listNamesFor('inputDevice')
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>isPressedAny(controlName)</code></h3>
+            <pre><code>isPressedAny (controlName) {
+    const deviceNames = this.listDeviceNames()
+    for (const name of deviceNames) {
+        const device = this.getChild(name)
+        if (device &amp;&amp; device.isPressed(controlName)) {
+            return true
+        }
+    }
+    return false
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getValueAny(controlName)</code></h3>
+            <pre><code>getValueAny (controlName) {
+    const deviceNames = this.listDeviceNames()
+    for (const name of deviceNames) {
+        const device = this.getChild(name)
+        if (device) {
+            const value = device.getValueFor(controlName)
+            if (value !== undefined) {
+                return value
+            }
+        }
+    }
+    return undefined
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getControlAny(controlName)</code></h3>
+            <pre><code>getControlAny (controlName) {
+    const deviceNames = this.listDeviceNames()
+    for (const name of deviceNames) {
+        const device = this.getChild(name)
+        if (device) {
+            const control = device.getControl(controlName)
+            if (control) {
+                return control
+            }
+        }
+    }
+    return null
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getAllPressed(controlName)</code></h3>
+            <pre><code>getAllPressed (controlName) {
+    const results = []
+    const deviceNames = this.listDeviceNames()
+    for (const name of deviceNames) {
+        const device = this.getChild(name)
+        if (device &amp;&amp; device.isPressed(controlName)) {
+            results.push(device)
+        }
+    }
+    return results
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getPressedControls(deviceName)</code></h3>
+            <pre><code>getPressedControls (deviceName) {
+    const device = this.getDevice(deviceName)
+    return device ? device.getPressedControls() : []
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getAllValues(controlName)</code></h3>
+            <pre><code>getAllValues (controlName) {
+    const results = []
+    const deviceNames = this.listDeviceNames()
+    for (const name of deviceNames) {
+        const device = this.getChild(name)
+        if (device) {
+            const value = device.getValueFor(controlName)
+            if (value !== undefined) {
+                results.push({device, value})
+            }
+        }
+    }
+    return results
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addControl(deviceNameOrControl, ControlOrParams = ..., params = ...)</code></h3>
+            <pre><code>addControl (deviceNameOrControl, ControlOrParams = {}, params = {}) {
+
+    if (typeof deviceNameOrControl === 'string') {
+        const device = this.getDevice(deviceNameOrControl)
+
+        if (!device) {
+            throw new Error(`Device '${deviceNameOrControl}' not found`)
+        }
+
+        return device.findOrCreateControl(ControlOrParams, params)
+
+    } else if (typeof deviceNameOrControl === 'function') {
+
+        return this.addControlToFirst(deviceNameOrControl, ControlOrParams)
+    }
+
+    return null
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addControlToFirst(Control, params = ...)</code></h3>
+            <pre><code>addControlToFirst (Control, params = {}) {
+    const deviceNames = this.listDeviceNames()
+    const firstDevice = deviceNames.length &gt; 0 ? this.getChild(deviceNames[0]) : null
+    if (!firstDevice) {
+        throw new Error('No devices available')
+    }
+    return firstDevice.findOrCreateControl(Control, params)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>addControlToAll(Control, params = ...)</code></h3>
+            <pre><code>addControlToAll (Control, params = {}) {
+    const results = []
+    const deviceNames = this.listDeviceNames()
+    for (const name of deviceNames) {
+        const device = this.getChild(name)
+        if (device) {
+            const control = device.findOrCreateControl(Control, params)
+            results.push({device, control})
+        }
+    }
+    return results
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>deviceKeyFor(device)</code></h3>
+            <pre><code>deviceKeyFor (device) {
+    return this.childrenRegistry.keyFor(device)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getInputValue(deviceName, controlName)</code></h3>
+            <pre><code>getInputValue (deviceName, controlName) {
+    return this.getValueFor(deviceName, controlName)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getInputValueAny(controlName)</code></h3>
+            <pre><code>getInputValueAny (controlName) {
+    return this.getValueAny(controlName)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>isKeyPressed(keyName)</code></h3>
+            <pre><code>isKeyPressed (keyName) {
+    return this.isPressed('keyboard', keyName)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>isMousePressed(buttonName)</code></h3>
+            <pre><code>isMousePressed (buttonName) {
+    return this.isPressed('mouse', buttonName)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getKeyValue(keyName)</code></h3>
+            <pre><code>getKeyValue (keyName) {
+    return this.getInputValue('keyboard', keyName)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getMouseValue(buttonName)</code></h3>
+            <pre><code>getMouseValue (buttonName) {
+    return this.getInputValue('mouse', buttonName)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>isTouchPressed(controlName)</code></h3>
+            <pre><code>isTouchPressed (controlName) {
+    return this.isPressed('touch', controlName)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getTouchValue(controlName)</code></h3>
+            <pre><code>getTouchValue (controlName) {
+    return this.getInputValue('touch', controlName)
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>isActionPressed(actionName, controllerName = ...)</code></h3>
+            <pre><code>isActionPressed (actionName, controllerName = null) {
+    const bindings = this.inputBinder.getBindingsForAction(actionName, controllerName, 'pressed')
+
+    for (const binding of bindings) {
+        if (typeof binding.shouldTrigger === 'function') {
+            if (binding.shouldTrigger(this)) {
+                return true
+            }
+        } else if (this.isPressed(binding.deviceName, binding.controlName)) {
+            return true
+        }
+    }
+
+    return false
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getActionControls(actionName, controllerName = ...)</code></h3>
+            <pre><code>getActionControls (actionName, controllerName = null) {
+    const bindings = this.inputBinder.getBindingsForAction(actionName, controllerName, 'pressed')
+    const controls = []
+
+    for (const binding of bindings) {
+        controls.push(...this.#getControlsFromBinding(binding))
+    }
+
+    return controls
+}</code></pre>
+        </div>
+    
+        <div class="api-member">
+            <h3><code>getDirection(name = ...)</code></h3>
+            <pre><code>getDirection (name = 'move') {
+    const up = name + 'Up'
+    const down = name + 'Down'
+    const left = name + 'Left'
+    const right = name + 'Right'
+
+    const x = (this.isActionPressed(right) ? 1 : 0)
+        - (this.isActionPressed(left) ? 1 : 0)
+    const y = (this.isActionPressed(up) ? 1 : 0)
+        - (this.isActionPressed(down) ? 1 : 0)
+
+    const vec = new Vec2(x, y)
+
+    return vec.length() &gt; 0 ? vec.clone().normalize() : vec
+}</code></pre>
+        </div>
+    </section>
+        </div>
+    </noscript>
+    <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"></path>
+        </svg>
+    </button>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="docs-layout">
+        <aside class="docs-sidebar" id="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_manifest.html" data-file="/application/manifest.doc.js" data-title="manifest" data-category="application">Manifest</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><div class="nav-category">game</div><a class="nav-item" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_2d.html" data-file="/render/canvas_2d.doc.js" data-title="canvas2d" data-category="render">Canvas2D</a><a class="nav-item" href="render_webgl_canvas_2d.html" data-file="/render/webgl_canvas_2d.doc.js" data-title="webglcanvas2d" data-category="render">WebGLCanvas2D</a><div class="nav-category">input</div><a class="nav-item active" href="input_input_system.html" data-file="/input/input_system.doc.js" data-title="inputsystem" data-category="input">InputSystem</a><a class="nav-item" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category">input/input_controls</div><a class="nav-item" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><div class="nav-category">audio</div><a class="nav-item" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">doc</div><a class="nav-item" href="doc_runtime.html" data-file="/doc/runtime.doc.js" data-title="doc runtime" data-category="doc">Doc Runtime</a><a class="nav-item" href="doc_doc_page.html" data-file="/doc/doc_page.doc.js" data-title="doc page" data-category="doc">Doc Page</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-Bd4T5Vv_.js"></script>
+</body>
+</html>

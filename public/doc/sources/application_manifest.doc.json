@@ -1,0 +1,77 @@
+[
+  {
+    "type": "action",
+    "title": "Create empty manifest",
+    "source": "const manifest = new Manifest()\n\nlogger.log('config:', manifest.getConfig())\nlogger.log('assets:', manifest.getAllAssets())"
+  },
+  {
+    "type": "action",
+    "title": "Create with data",
+    "source": "const manifest = new Manifest({\n    data: {\n        config: {\n            title: 'My Game',\n            version: '1.0.0'\n        },\n        assets: {\n            hero: {type: 'sprite', url: '/sprites/hero.png'},\n            music: {type: 'audio', url: '/audio/theme.mp3'}\n        }\n    }\n})\n\nlogger.log('title:', manifest.getConfig('title'))\nlogger.log('assets count:', manifest.getAllAssets().length)"
+  },
+  {
+    "type": "action",
+    "title": "getConfig / setConfig",
+    "source": "const manifest = new Manifest()\n\nmanifest.setConfig('game.title', 'My Game')\nmanifest.setConfig('game.settings.difficulty', 'hard')\n\nlogger.log('title:', manifest.getConfig('game.title'))\nlogger.log('difficulty:', manifest.getConfig('game.settings.difficulty'))\nlogger.log('all config:', manifest.getConfig())"
+  },
+  {
+    "type": "action",
+    "title": "Nested paths",
+    "source": "const manifest = new Manifest({\n    data: {\n        config: {\n            display: {\n                width: 800,\n                height: 600,\n                fullscreen: false\n            }\n        }\n    }\n})\n\nlogger.log('width:', manifest.getConfig('display.width'))\nlogger.log('display:', manifest.getConfig('display'))"
+  },
+  {
+    "type": "action",
+    "title": "addAsset",
+    "source": "const manifest = new Manifest()\n\nconst sprite = manifest.addAsset({\n    id: 'player',\n    type: 'sprite',\n    url: '/sprites/player.png',\n    tags: ['character', 'controllable']\n})\n\nlogger.log('added:', sprite.id, sprite.type)\nlogger.log('tags:', sprite.tags)"
+  },
+  {
+    "type": "action",
+    "title": "getAsset / getSource",
+    "source": "const manifest = new Manifest({\n    data: {\n        assets: {\n            config: {\n                type: 'json',\n                source: {debug: true, level: 5}\n            }\n        }\n    }\n})\n\nconst asset = manifest.getAsset('config')\nlogger.log('asset:', asset.id, asset.type)\nlogger.log('source:', manifest.getSource('config'))\nlogger.log('missing:', manifest.getAsset('unknown'))"
+  },
+  {
+    "type": "action",
+    "title": "hasAsset / removeAsset",
+    "source": "const manifest = new Manifest()\nmanifest.addAsset({id: 'temp', type: 'data'})\n\nlogger.log('has temp:', manifest.hasAsset('temp'))\nmanifest.removeAsset('temp')\nlogger.log('after remove:', manifest.hasAsset('temp'))"
+  },
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.manifest = new Manifest()\nctx.manifest.addAsset({id: 'hero', type: 'sprite', tags: ['character']})\nctx.manifest.addAsset({id: 'enemy', type: 'sprite', tags: ['character', 'hostile']})\nctx.manifest.addAsset({id: 'theme', type: 'audio', tags: ['music']})\nctx.manifest.addAsset({id: 'coin', type: 'audio', tags: ['sfx']})"
+  },
+  {
+    "type": "action",
+    "title": "getAssetsByType",
+    "source": "const sprites = ctx.manifest.getAssetsByType('sprite')\nconst audio = ctx.manifest.getAssetsByType('audio')\n\nlogger.log('sprites:', sprites.map(a => a.id))\nlogger.log('audio:', audio.map(a => a.id))"
+  },
+  {
+    "type": "action",
+    "title": "getAssetsByTag",
+    "source": "const characters = ctx.manifest.getAssetsByTag('character')\nconst hostile = ctx.manifest.getAssetsByTag('hostile')\n\nlogger.log('characters:', characters.map(a => a.id))\nlogger.log('hostile:', hostile.map(a => a.id))"
+  },
+  {
+    "type": "action",
+    "title": "getAllAssets / getAssets",
+    "source": "const all = ctx.manifest.getAllAssets()\nlogger.log('all assets:', all.map(a => a.id))"
+  },
+  {
+    "type": "action",
+    "title": "export",
+    "source": "const manifest = new Manifest()\nmanifest.setConfig('title', 'My Game')\nmanifest.addAsset({id: 'hero', type: 'sprite', url: '/hero.png'})\n\nconst exported = manifest.export()\nlogger.log('exported:', JSON.stringify(exported, null, 2))"
+  },
+  {
+    "type": "action",
+    "title": "import (object)",
+    "source": "const manifest = new Manifest()\n\nmanifest.import({\n    config: {title: 'Imported Game'},\n    assets: {\n        player: {type: 'sprite', url: '/player.png'}\n    }\n})\n\nlogger.log('title:', manifest.getConfig('title'))\nlogger.log('player:', manifest.getAsset('player').url)"
+  },
+  {
+    "type": "action",
+    "title": "import (JSON string)",
+    "source": "const manifest = new Manifest()\nconst json = '{\"config\":{\"version\":\"2.0\"},\"assets\":{}}'\n\nmanifest.import(json)\nlogger.log('version:', manifest.getConfig('version'))"
+  },
+  {
+    "type": "code",
+    "title": "Delegated methods",
+    "source": "// When manifest.onInstall(host) is called:\n// - host.getConfig()     -> manifest.getConfig()\n// - host.setConfig()     -> manifest.setConfig()\n// - host.addAsset()      -> manifest.addAsset()\n// - host.getAsset()      -> manifest.getAsset()\n// - host.getAssets()     -> manifest.getAssets()\n// - host.getAssetsByType() -> manifest.getAssetsByType()\n// - host.getAssetsByTag()  -> manifest.getAssetsByTag()\n// - host.getSource()     -> manifest.getSource()\n// - host.getAllAssets()  -> manifest.getAllAssets()\n// - host.exportManifest() -> manifest.export()\n// - host.importManifest() -> manifest.import()"
+  }
+]

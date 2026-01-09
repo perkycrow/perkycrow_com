@@ -3989,6 +3989,168 @@
       }
     ]
   },
+  "/application/manifest.doc.js": {
+    "file": "/application/manifest.test.js",
+    "describes": [
+      {
+        "title": "Manifest",
+        "line": 5,
+        "beforeEach": {
+          "line": 8,
+          "source": "manifest = new Manifest()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor",
+            "line": 13,
+            "source": "expect(manifest.getConfig()).toEqual({})\nexpect(manifest.getAllAssets()).toEqual([])"
+          },
+          {
+            "title": "constructor with data",
+            "line": 19,
+            "source": "const customManifest = new Manifest({\n    data: {\n        config: {name: 'Test Manifest'}\n    }\n})\n\nexpect(customManifest.getConfig('name')).toBe('Test Manifest')\nexpect(customManifest.getAllAssets()).toEqual([])"
+          },
+          {
+            "title": "import with JSON string",
+            "line": 31,
+            "source": "const jsonData = JSON.stringify({\n    config: {debug: true},\n    assets: {\n        logo: {type: 'image', url: '/assets/logo.png', tags: ['preload']}\n    }\n})\n\nmanifest.import(jsonData)\n\nexpect(manifest.getConfig('debug')).toBe(true)\nexpect(manifest.getAsset('logo').id).toBe('logo')\nexpect(manifest.getAsset('logo').type).toBe('image')"
+          },
+          {
+            "title": "import with object",
+            "line": 47,
+            "source": "const data = {\n    config: {version: '1.0.0'}\n}\n\nmanifest.import(data)\n\nexpect(manifest.getConfig('version')).toBe('1.0.0')"
+          },
+          {
+            "title": "import clears existing assets",
+            "line": 58,
+            "source": "manifest.addAsset({id: 'old', type: 'image', url: '/old.png'})\n\nmanifest.import({\n    config: {},\n    assets: {\n        new: {type: 'image', url: '/new.png'}\n    }\n})\n\nexpect(manifest.getAsset('old')).toBeNull()\nexpect(manifest.getAsset('new')).not.toBeNull()"
+          },
+          {
+            "title": "export",
+            "line": 73,
+            "source": "manifest.setConfig('version', '1.0.0')\nmanifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})\n\nconst exported = manifest.export()\n\nexpect(exported.config.version).toBe('1.0.0')\nexpect(exported.assets.logo.id).toBe('logo')"
+          },
+          {
+            "title": "getConfig",
+            "line": 84,
+            "source": "manifest.setConfig('debug', true)\nmanifest.setConfig('logging.level', 'info')\n\nexpect(manifest.getConfig()).toEqual({debug: true, logging: {level: 'info'}})"
+          },
+          {
+            "title": "getConfig with path",
+            "line": 92,
+            "source": "manifest.setConfig('debug', true)\nmanifest.setConfig('logging.level', 'info')\n\nexpect(manifest.getConfig('logging.level')).toBe('info')"
+          },
+          {
+            "title": "setConfig",
+            "line": 100,
+            "source": "const result = manifest.setConfig('logging.level', 'debug')\n\nexpect(manifest.getConfig('logging.level')).toBe('debug')\nexpect(result).toBe(manifest)"
+          },
+          {
+            "title": "addAsset",
+            "line": 108,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/assets/logo.png'})\n\nexpect(manifest.getAllAssets()).toHaveLength(1)\nexpect(manifest.getAsset('logo').id).toBe('logo')"
+          },
+          {
+            "title": "addAsset updates existing",
+            "line": 116,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/assets/logo.png'})\nmanifest.addAsset({id: 'logo', type: 'image', url: '/assets/new-logo.png'})\n\nexpect(manifest.getAllAssets()).toHaveLength(1)\nexpect(manifest.getAsset('logo').url).toBe('/assets/new-logo.png')"
+          },
+          {
+            "title": "addAsset with Asset instance",
+            "line": 125,
+            "source": "const asset = new Asset({id: 'logo', type: 'image', url: '/logo.png'})\nmanifest.addAsset(asset)\n\nexpect(manifest.getAsset('logo')).toBe(asset)"
+          },
+          {
+            "title": "getAsset returns null for missing",
+            "line": 133,
+            "source": "expect(manifest.getAsset('nonexistent')).toBeNull()"
+          },
+          {
+            "title": "getAsset",
+            "line": 138,
+            "source": "const assetData = {id: 'logo', type: 'image', url: '/assets/logo.png'}\nmanifest.addAsset(assetData)\n\nconst asset = manifest.getAsset('logo')\nexpect(asset).toBeInstanceOf(Asset)\nexpect(asset.id).toBe(assetData.id)\nexpect(asset.url).toBe(assetData.url)"
+          },
+          {
+            "title": "getSource",
+            "line": 149,
+            "source": "const assetData = {id: 'logo', type: 'image', url: '/assets/logo.png', source: 'fakeImage'}\nmanifest.addAsset(assetData)\n\nconst source = manifest.getSource('logo')\nexpect(source).toBe('fakeImage')"
+          },
+          {
+            "title": "getSource returns null for missing",
+            "line": 158,
+            "source": "expect(manifest.getSource('nonexistent')).toBeNull()"
+          },
+          {
+            "title": "getAssetsByType",
+            "line": 163,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})\nmanifest.addAsset({id: 'icon', type: 'image', url: '/icon.png'})\nmanifest.addAsset({id: 'music', type: 'audio', url: '/music.mp3'})\n\nconst images = manifest.getAssetsByType('image')\nexpect(images).toHaveLength(2)\nexpect(images.map(a => a.id)).toContain('logo')\nexpect(images.map(a => a.id)).toContain('icon')"
+          },
+          {
+            "title": "getAssetsByTag",
+            "line": 175,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png', tags: ['titleScreen']})\nmanifest.addAsset({id: 'icon', type: 'image', url: '/icon.png', tags: ['mainScene']})\n\nconst titleScreenAssets = manifest.getAssetsByTag('titleScreen')\nexpect(titleScreenAssets).toHaveLength(1)\nexpect(titleScreenAssets[0].id).toBe('logo')"
+          },
+          {
+            "title": "getAssetsByTag multiple types",
+            "line": 185,
+            "source": "manifest.addAsset({id: 'icon', type: 'image', url: '/icon.png', tags: ['titleScreen']})\nmanifest.addAsset({id: 'music', type: 'audio', url: '/music.mp3', tags: ['titleScreen']})\n\nconst titleScreenAssets = manifest.getAssetsByTag('titleScreen')\nexpect(titleScreenAssets).toHaveLength(2)"
+          },
+          {
+            "title": "getAssetsByTag multiple tags",
+            "line": 194,
+            "source": "manifest.addAsset({id: 'icon', type: 'image', url: '/icon.png', tags: ['titleScreen', 'mainScene', 'endingScene']})\nmanifest.addAsset({id: 'logo', type: 'image', url: '/logo.png', tags: ['endingScene']})\n\nconst titleScreenAssets = manifest.getAssetsByTag('titleScreen')\nexpect(titleScreenAssets).toHaveLength(1)\nexpect(titleScreenAssets[0].id).toBe('icon')\n\nconst endingSceneAssets = manifest.getAssetsByTag('endingScene')\nexpect(endingSceneAssets).toHaveLength(2)"
+          },
+          {
+            "title": "getAssetsByTag no assets",
+            "line": 207,
+            "source": "const tagAssets = manifest.getAssetsByTag('titleScreen')\nexpect(tagAssets).toHaveLength(0)"
+          },
+          {
+            "title": "getAssetsByTag invalid tag",
+            "line": 213,
+            "source": "expect(manifest.getAssetsByTag(null)).toEqual([])\nexpect(manifest.getAssetsByTag('')).toEqual([])\nexpect(manifest.getAssetsByTag(123)).toEqual([])"
+          },
+          {
+            "title": "getAllAssets",
+            "line": 220,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})\nmanifest.addAsset({id: 'music', type: 'audio', url: '/music.mp3'})\n\nconst allAssets = manifest.getAllAssets()\nexpect(allAssets).toHaveLength(2)"
+          },
+          {
+            "title": "getAssets is alias for getAllAssets",
+            "line": 229,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})\n\nexpect(manifest.getAssets()).toEqual(manifest.getAllAssets())"
+          },
+          {
+            "title": "hasAsset",
+            "line": 236,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})\n\nexpect(manifest.hasAsset('logo')).toBe(true)\nexpect(manifest.hasAsset('nonexistent')).toBe(false)"
+          },
+          {
+            "title": "removeAsset",
+            "line": 244,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})\n\nexpect(manifest.removeAsset('logo')).toBe(true)\nexpect(manifest.getAsset('logo')).toBeNull()"
+          },
+          {
+            "title": "removeAsset nonexistent",
+            "line": 252,
+            "source": "expect(manifest.removeAsset('nonexistent')).toBe(false)"
+          },
+          {
+            "title": "assets registry has type index",
+            "line": 257,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png'})\n\nexpect(manifest.assets.hasIndex('type')).toBe(true)\nexpect(manifest.assets.lookup('type', 'image')).toHaveLength(1)"
+          },
+          {
+            "title": "assets registry has tags index",
+            "line": 265,
+            "source": "manifest.addAsset({id: 'logo', type: 'image', url: '/logo.png', tags: ['preload']})\n\nexpect(manifest.assets.hasIndex('tags')).toBe(true)\nexpect(manifest.assets.lookup('tags', 'preload')).toHaveLength(1)"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
   "/application/perky_view.doc.js": {
     "file": "/application/perky_view.test.js",
     "describes": [
@@ -5608,6 +5770,296 @@
                 "title": "setRenderGroups clears previous groups",
                 "line": 401,
                 "source": "const scene = new Group2D()\n\nrenderer.setRenderGroups([\n    {$id: 'oldGroup', content: scene}\n])\n\nrenderer.setRenderGroups([\n    {$id: 'newGroup', content: scene}\n])\n\nexpect(renderer.renderGroups.length).toBe(1)\nexpect(renderer.renderGroups[0].$id).toBe('newGroup')"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/input/input_system.doc.js": {
+    "file": "/input/input_system.test.js",
+    "describes": [
+      {
+        "title": "InputSystem",
+        "line": 11,
+        "beforeEach": {
+          "line": 16,
+          "source": "mockHost = new PerkyModule({name: 'mockHost'})\nmockHost.actionDispatcher = {\n    dispatchAction: vi.fn()\n}\n\ninputSystem = new InputSystem()\ninputSystem.install(mockHost)"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor creates InputBinder",
+            "line": 27,
+            "source": "expect(inputSystem.inputBinder).toBeInstanceOf(InputBinder)"
+          },
+          {
+            "title": "onInstall creates keyboard and mouse devices",
+            "line": 32,
+            "source": "expect(inputSystem.getDevice('keyboard')).toBeInstanceOf(KeyboardDevice)\nexpect(inputSystem.getDevice('mouse')).toBeInstanceOf(MouseDevice)"
+          },
+          {
+            "title": "onInstall registers devices with $bind",
+            "line": 38,
+            "source": "expect(inputSystem.getDevice('keyboard')).toBe(inputSystem.keyboard)\nexpect(inputSystem.getDevice('mouse')).toBe(inputSystem.mouse)"
+          },
+          {
+            "title": "onInstall delegates device management methods to host",
+            "line": 44,
+            "source": "expect(typeof mockHost.registerDevice).toBe('function')\nexpect(typeof mockHost.getDevice).toBe('function')\nexpect(typeof mockHost.isPressed).toBe('function')\nexpect(typeof mockHost.getControl).toBe('function')"
+          },
+          {
+            "title": "onInstall delegates InputBinder methods to host",
+            "line": 52,
+            "source": "expect(typeof mockHost.bindInput).toBe('function')\nexpect(typeof mockHost.unbind).toBe('function')\nexpect(typeof mockHost.getBinding).toBe('function')\nexpect(typeof mockHost.hasBinding).toBe('function')"
+          },
+          {
+            "title": "onInstall adds convenience methods to host",
+            "line": 60,
+            "source": "expect(typeof mockHost.isKeyPressed).toBe('function')\nexpect(typeof mockHost.isMousePressed).toBe('function')\nexpect(typeof mockHost.isActionPressed).toBe('function')\nexpect(typeof mockHost.getActionControls).toBe('function')"
+          },
+          {
+            "title": "registerDevice",
+            "line": 70,
+            "source": "const device = inputSystem.registerDevice(InputDevice, {$id: 'gamepad', $bind: 'gamepad'})\n\nexpect(inputSystem.getDevice('gamepad')).toBe(device)\nexpect(device.host).toBe(inputSystem)\nexpect(inputSystem.gamepad).toBe(device)"
+          },
+          {
+            "title": "registerDevice with duplicate name replaces device",
+            "line": 79,
+            "source": "inputSystem.registerDevice(InputDevice, {$id: 'test', $bind: 'test'})\nconst device2 = inputSystem.registerDevice(InputDevice, {$id: 'test', $bind: 'test'})\n\nexpect(inputSystem.getDevice('test')).toBe(device2)\nexpect(inputSystem.test).toBe(device2)"
+          },
+          {
+            "title": "isPressed",
+            "line": 88,
+            "source": "const button = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'TestButton'})\n\nexpect(inputSystem.isPressed('keyboard', 'TestButton')).toBe(false)\nexpect(inputSystem.isPressed('nonExistent', 'TestButton')).toBe(false)\nexpect(inputSystem.isPressed('keyboard', 'nonExistent')).toBe(false)\n\nbutton.press()\nexpect(inputSystem.isPressed('keyboard', 'TestButton')).toBe(true)\n\nbutton.release()\nexpect(inputSystem.isPressed('keyboard', 'TestButton')).toBe(false)"
+          },
+          {
+            "title": "getValueFor",
+            "line": 103,
+            "source": "const button = inputSystem.mouse.findOrCreateControl(ButtonControl, {name: 'TestButton'})\nbutton.value = 0.5\n\nexpect(inputSystem.getValueFor('mouse', 'TestButton')).toBe(0.5)\nexpect(inputSystem.getValueFor('nonExistent', 'TestButton')).toBeUndefined()\nexpect(inputSystem.getValueFor('mouse', 'nonExistent')).toBeUndefined()"
+          },
+          {
+            "title": "getControl",
+            "line": 113,
+            "source": "const device = inputSystem.registerDevice(InputDevice, {$id: 'gamepad', $bind: 'gamepad'})\nconst button = device.findOrCreateControl(ButtonControl, {name: 'TestButton'})\n\nexpect(inputSystem.getControl('gamepad', 'TestButton')).toBe(button)\nexpect(inputSystem.getControl('nonExistent', 'TestButton')).toBeNull()\nexpect(inputSystem.getControl('gamepad', 'nonExistent')).toBeNull()"
+          },
+          {
+            "title": "automatic lifecycle management",
+            "line": 123,
+            "source": "inputSystem.start()\nconst device = inputSystem.registerDevice(InputDevice, {$id: 'auto', $bind: 'auto'})\n\nexpect(device.started).toBe(true)"
+          },
+          {
+            "title": "event forwarding",
+            "line": 131,
+            "source": "const device = inputSystem.registerDevice(InputDevice, {$id: 'test', $bind: 'test'})\n\nconst pressedListener = vi.fn()\nconst releasedListener = vi.fn()\nconst updatedListener = vi.fn()\n\ninputSystem.on('control:pressed', pressedListener)\ninputSystem.on('control:released', releasedListener)\ninputSystem.on('control:updated', updatedListener)\n\nconst button = device.findOrCreateControl(ButtonControl, {name: 'TestButton'})\n\nbutton.press()\nexpect(pressedListener).toHaveBeenCalledWith(button, null, device)\n\nbutton.release()\nexpect(releasedListener).toHaveBeenCalledWith(button, null, device)\n\nbutton.setValue(0.5)\nexpect(updatedListener).toHaveBeenCalled()"
+          },
+          {
+            "title": "isPressedAny",
+            "line": 155,
+            "source": "const gamepad = inputSystem.registerDevice(InputDevice, {$id: 'gamepad', $bind: 'gamepad'})\n\nconst keyW = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nconst buttonA = gamepad.findOrCreateControl(ButtonControl, {name: 'ButtonA'})\n\nexpect(inputSystem.isPressedAny('KeyW')).toBe(false)\nexpect(inputSystem.isPressedAny('ButtonA')).toBe(false)\nexpect(inputSystem.isPressedAny('NonExistent')).toBe(false)\n\nkeyW.press()\nexpect(inputSystem.isPressedAny('KeyW')).toBe(true)\nexpect(inputSystem.isPressedAny('ButtonA')).toBe(false)\n\nbuttonA.press()\nexpect(inputSystem.isPressedAny('ButtonA')).toBe(true)"
+          },
+          {
+            "title": "getValueAny",
+            "line": 174,
+            "source": "const keyW = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nconst leftButton = inputSystem.mouse.findOrCreateControl(ButtonControl, {name: 'leftButton'})\n\nkeyW.setValue(0.8)\nleftButton.setValue(0.5)\n\nexpect(inputSystem.getValueAny('KeyW')).toBe(0.8)\nexpect(inputSystem.getValueAny('leftButton')).toBe(0.5)\nexpect(inputSystem.getValueAny('NonExistent')).toBeUndefined()"
+          },
+          {
+            "title": "getControlAny",
+            "line": 187,
+            "source": "const keyW = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nconst leftButton = inputSystem.mouse.findOrCreateControl(ButtonControl, {name: 'leftButton'})\n\nexpect(inputSystem.getControlAny('KeyW')).toBe(keyW)\nexpect(inputSystem.getControlAny('leftButton')).toBe(leftButton)\nexpect(inputSystem.getControlAny('NonExistent')).toBeNull()"
+          },
+          {
+            "title": "getAllPressed",
+            "line": 197,
+            "source": "const gamepad = inputSystem.registerDevice(InputDevice, {$id: 'gamepad', $bind: 'gamepad'})\n\nconst keyEnter = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'Enter'})\nconst gamepadEnter = gamepad.findOrCreateControl(ButtonControl, {name: 'Enter'})\n\nexpect(inputSystem.getAllPressed('Enter')).toEqual([])\n\nkeyEnter.press()\nexpect(inputSystem.getAllPressed('Enter')).toEqual([inputSystem.keyboard])\n\ngamepadEnter.press()\nexpect(inputSystem.getAllPressed('Enter')).toEqual([inputSystem.keyboard, gamepad])\n\nkeyEnter.release()\nexpect(inputSystem.getAllPressed('Enter')).toEqual([gamepad])"
+          },
+          {
+            "title": "getAllValues",
+            "line": 216,
+            "source": "const device1 = inputSystem.registerDevice(InputDevice, {$id: 'device1', $bind: 'device1'})\nconst device2 = inputSystem.registerDevice(InputDevice, {$id: 'device2', $bind: 'device2'})\n\nconst control1 = device1.findOrCreateControl(ButtonControl, {name: 'SharedControl'})\nconst control2 = device2.findOrCreateControl(ButtonControl, {name: 'SharedControl'})\n\ncontrol1.setValue(0.3)\ncontrol2.setValue(0.7)\n\nconst values = inputSystem.getAllValues('SharedControl')\nexpect(values).toHaveLength(2)\nexpect(values[0]).toEqual({device: device1, value: 0.3})\nexpect(values[1]).toEqual({device: device2, value: 0.7})"
+          },
+          {
+            "title": "addControl - explicit form",
+            "line": 233,
+            "source": "const control = inputSystem.addControl('keyboard', ButtonControl, {\n    name: 'TestKey',\n    pressThreshold: 0.8\n})\n\nexpect(control).toBeInstanceOf(ButtonControl)\nexpect(control.name).toBe('TestKey')\nexpect(control.pressThreshold).toBe(0.8)\nexpect(inputSystem.keyboard.getControl('TestKey')).toBe(control)"
+          },
+          {
+            "title": "addControl - shortcut form",
+            "line": 246,
+            "source": "const control = inputSystem.addControl(ButtonControl, {\n    name: 'ShortcutKey',\n    pressThreshold: 0.6\n})\n\nexpect(control).toBeInstanceOf(ButtonControl)\nexpect(control.name).toBe('ShortcutKey')\nexpect(control.pressThreshold).toBe(0.6)\n\nexpect(inputSystem.keyboard.getControl('ShortcutKey')).toBe(control)\nexpect(inputSystem.mouse.getControl('ShortcutKey')).toBeUndefined()"
+          },
+          {
+            "title": "addControl with nonexistent device",
+            "line": 261,
+            "source": "expect(() => {\n    inputSystem.addControl('nonexistent', ButtonControl, {name: 'test'})\n}).toThrow(\"Device 'nonexistent' not found\")"
+          },
+          {
+            "title": "addControlToFirst",
+            "line": 268,
+            "source": "const control = inputSystem.addControlToFirst(ButtonControl, {\n    name: 'FirstDeviceControl'\n})\n\nexpect(control).toBeInstanceOf(ButtonControl)\nexpect(control.name).toBe('FirstDeviceControl')\n\nexpect(inputSystem.keyboard.getControl('FirstDeviceControl')).toBe(control)\nexpect(inputSystem.mouse.getControl('FirstDeviceControl')).toBeUndefined()"
+          },
+          {
+            "title": "addControlToAll",
+            "line": 281,
+            "source": "const results = inputSystem.addControlToAll(ButtonControl, {\n    name: 'SharedControl'\n})\n\nexpect(results).toHaveLength(3)\nexpect(results[0].device).toBe(inputSystem.keyboard)\nexpect(results[0].control).toBeInstanceOf(ButtonControl)\nexpect(results[0].control.name).toBe('SharedControl')\nexpect(results[1].device).toBe(inputSystem.mouse)\nexpect(results[1].control).toBeInstanceOf(ButtonControl)\nexpect(results[1].control.name).toBe('SharedControl')\nexpect(results[2].device).toBe(inputSystem.touch)\nexpect(results[2].control).toBeInstanceOf(ButtonControl)\nexpect(results[2].control.name).toBe('SharedControl')\n\nexpect(inputSystem.keyboard.getControl('SharedControl')).toBe(results[0].control)\nexpect(inputSystem.mouse.getControl('SharedControl')).toBe(results[1].control)\nexpect(inputSystem.touch.getControl('SharedControl')).toBe(results[2].control)"
+          },
+          {
+            "title": "deviceKeyFor",
+            "line": 303,
+            "source": "expect(inputSystem.deviceKeyFor(inputSystem.keyboard)).toBe('keyboard')\nexpect(inputSystem.deviceKeyFor(inputSystem.mouse)).toBe('mouse')\n\nconst unknownDevice = new InputDevice({name: 'Unknown'})\nexpect(inputSystem.deviceKeyFor(unknownDevice)).toBeUndefined()"
+          },
+          {
+            "title": "bindInput creates keyboard binding (auto-detected)",
+            "line": 314,
+            "source": "const binding = inputSystem.bindInput({controlName: 'Space', actionName: 'jump'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('keyboard')\nexpect(binding.controlName).toBe('Space')\nexpect(binding.actionName).toBe('jump')"
+          },
+          {
+            "title": "bindInput creates mouse binding (auto-detected)",
+            "line": 324,
+            "source": "const binding = inputSystem.bindInput({controlName: 'leftButton', actionName: 'fire'})\n\nexpect(binding).toBeDefined()\nexpect(binding.deviceName).toBe('mouse')\nexpect(binding.controlName).toBe('leftButton')\nexpect(binding.actionName).toBe('fire')"
+          },
+          {
+            "title": "isKeyPressed returns correct state",
+            "line": 334,
+            "source": "const spaceControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'Space'})\n\nexpect(inputSystem.isKeyPressed('Space')).toBe(false)\n\nspaceControl.press()\nexpect(inputSystem.isKeyPressed('Space')).toBe(true)\n\nspaceControl.release()\nexpect(inputSystem.isKeyPressed('Space')).toBe(false)"
+          },
+          {
+            "title": "isMousePressed returns correct state",
+            "line": 347,
+            "source": "const leftButtonControl = inputSystem.mouse.findOrCreateControl(ButtonControl, {name: 'leftButton'})\n\nexpect(inputSystem.isMousePressed('leftButton')).toBe(false)\n\nleftButtonControl.press()\nexpect(inputSystem.isMousePressed('leftButton')).toBe(true)\n\nleftButtonControl.release()\nexpect(inputSystem.isMousePressed('leftButton')).toBe(false)"
+          },
+          {
+            "title": "isTouchPressed returns correct state",
+            "line": 360,
+            "source": "const swipeUpControl = inputSystem.touch.getControl('swipeUp')\n\nexpect(inputSystem.isTouchPressed('swipeUp')).toBe(false)\n\nswipeUpControl.press()\nexpect(inputSystem.isTouchPressed('swipeUp')).toBe(true)\n\nswipeUpControl.release()\nexpect(inputSystem.isTouchPressed('swipeUp')).toBe(false)"
+          },
+          {
+            "title": "getTouchValue returns touch control value",
+            "line": 373,
+            "source": "const positionControl = inputSystem.touch.getControl('position')\n\npositionControl.setValue({x: 150, y: 250})\nconst value = inputSystem.getTouchValue('position')\nexpect(value.x).toBe(150)\nexpect(value.y).toBe(250)"
+          },
+          {
+            "title": "isActionPressed returns false when action not bound",
+            "line": 383,
+            "source": "expect(inputSystem.isActionPressed('jump')).toBe(false)"
+          },
+          {
+            "title": "isActionPressed returns true when action is pressed",
+            "line": 388,
+            "source": "inputSystem.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst spaceControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(inputSystem.isActionPressed('jump')).toBe(true)"
+          },
+          {
+            "title": "isActionPressed works with multiple bindings",
+            "line": 398,
+            "source": "inputSystem.bindInput({controlName: 'Space', actionName: 'jump', controllerName: 'player1'})\ninputSystem.bindInput({controlName: 'KeyW', actionName: 'jump', controllerName: 'player2'})\n\nconst wControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nwControl.press()\n\nexpect(inputSystem.isActionPressed('jump')).toBe(true)\nexpect(inputSystem.isActionPressed('jump', 'player2')).toBe(true)\nexpect(inputSystem.isActionPressed('jump', 'player1')).toBe(false)"
+          },
+          {
+            "title": "getActionControls returns empty array when action not bound",
+            "line": 411,
+            "source": "const controls = inputSystem.getActionControls('jump')\nexpect(controls).toEqual([])"
+          },
+          {
+            "title": "getActionControls returns controls for action",
+            "line": 417,
+            "source": "inputSystem.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst spaceControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'Space'})\n\nconst controls = inputSystem.getActionControls('jump')\nexpect(controls).toHaveLength(1)\nexpect(controls[0]).toBe(spaceControl)"
+          },
+          {
+            "title": "emits input:triggered event when control is pressed",
+            "line": 428,
+            "source": "inputSystem.bindInput({controlName: 'Space', actionName: 'jump'})\n\nconst triggeredListener = vi.fn()\nmockHost.on('input:triggered', triggeredListener)\n\nconst spaceControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'Space'})\n\nspaceControl.press({code: 'Space'})\n\nawait new Promise(resolve => setTimeout(resolve, 0))\n\nexpect(triggeredListener).toHaveBeenCalled()\nexpect(triggeredListener).toHaveBeenCalledWith(\n    expect.objectContaining({actionName: 'jump'}),\n    expect.anything(),\n    expect.anything()\n)"
+          },
+          {
+            "title": "emits control events",
+            "line": 449,
+            "source": "const pressedListener = vi.fn()\nconst releasedListener = vi.fn()\n\ninputSystem.on('control:pressed', pressedListener)\ninputSystem.on('control:released', releasedListener)\n\nconst spaceControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'Space'})\n\nspaceControl.press({code: 'Space'})\nawait new Promise(resolve => setTimeout(resolve, 0))\nexpect(pressedListener).toHaveBeenCalled()\n\nspaceControl.release({code: 'Space'})\nawait new Promise(resolve => setTimeout(resolve, 0))\nexpect(releasedListener).toHaveBeenCalled()"
+          },
+          {
+            "title": "getInputValue returns control value",
+            "line": 468,
+            "source": "const spaceControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(inputSystem.getInputValue('keyboard', 'Space')).toBe(1)"
+          },
+          {
+            "title": "getKeyValue returns keyboard control value",
+            "line": 476,
+            "source": "const spaceControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'Space'})\nspaceControl.press()\n\nexpect(inputSystem.getKeyValue('Space')).toBe(1)"
+          },
+          {
+            "title": "getMouseValue returns mouse control value",
+            "line": 484,
+            "source": "const leftButtonControl = inputSystem.mouse.findOrCreateControl(ButtonControl, {name: 'leftButton'})\nleftButtonControl.press()\n\nexpect(inputSystem.getMouseValue('leftButton')).toBe(1)"
+          },
+          {
+            "title": "constructor accepts inputBinder data",
+            "line": 495,
+            "source": "const bindings = [\n    {\n        deviceName: 'keyboard',\n        controlName: 'Space',\n        actionName: 'jump'\n    }\n]\n\nconst customInputSystem = new InputSystem({\n    bindings\n})\n\nexpect(customInputSystem.inputBinder.hasBinding({actionName: 'jump'})).toBe(true)"
+          },
+          {
+            "title": "listDeviceNames returns array of device names",
+            "line": 631,
+            "source": "const names = inputSystem.listDeviceNames()\n\nexpect(names).toContain('keyboard')\nexpect(names).toContain('mouse')\nexpect(names).toContain('touch')"
+          },
+          {
+            "title": "getPressedControls returns pressed controls for device",
+            "line": 640,
+            "source": "const button1 = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyA'})\nconst button2 = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyB'})\n\nexpect(inputSystem.getPressedControls('keyboard')).toEqual([])\n\nbutton1.press()\nexpect(inputSystem.getPressedControls('keyboard')).toEqual([button1])\n\nbutton2.press()\nconst pressed = inputSystem.getPressedControls('keyboard')\nexpect(pressed).toHaveLength(2)\nexpect(pressed).toContain(button1)\nexpect(pressed).toContain(button2)"
+          },
+          {
+            "title": "getPressedControls returns empty array for nonexistent device",
+            "line": 657,
+            "source": "expect(inputSystem.getPressedControls('nonexistent')).toEqual([])"
+          },
+          {
+            "title": "getInputValueAny returns value from any device",
+            "line": 662,
+            "source": "const keyControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'TestKey'})\nkeyControl.setValue(0.75)\n\nexpect(inputSystem.getInputValueAny('TestKey')).toBe(0.75)\nexpect(inputSystem.getInputValueAny('NonExistent')).toBeUndefined()"
+          }
+        ],
+        "describes": [
+          {
+            "title": "getDirection",
+            "line": 512,
+            "beforeEach": {
+              "line": 514,
+              "source": "// Setup WASD bindings\ninputSystem.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\ninputSystem.bindInput({controlName: 'KeyA', actionName: 'moveLeft'})\ninputSystem.bindInput({controlName: 'KeyS', actionName: 'moveDown'})\ninputSystem.bindInput({controlName: 'KeyD', actionName: 'moveRight'})"
+            },
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns zero vector when no keys pressed",
+                "line": 523,
+                "source": "const dir = inputSystem.getDirection()\n\nexpect(dir.x).toBe(0)\nexpect(dir.y).toBe(0)"
+              },
+              {
+                "title": "returns up vector when W pressed",
+                "line": 531,
+                "source": "const wControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nwControl.press()\n\nconst dir = inputSystem.getDirection()\n\nexpect(dir.x).toBe(0)\nexpect(dir.y).toBe(1)"
+              },
+              {
+                "title": "returns normalized diagonal when W+D pressed",
+                "line": 542,
+                "source": "const wControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nconst dControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyD'})\nwControl.press()\ndControl.press()\n\nconst dir = inputSystem.getDirection()\n\n// Diagonal should be normalized (≈0.707, 0.707)\nexpect(dir.x).toBeCloseTo(Math.SQRT1_2, 5)\nexpect(dir.y).toBeCloseTo(Math.SQRT1_2, 5)\nexpect(dir.length()).toBeCloseTo(1, 5)"
+              },
+              {
+                "title": "returns left vector when A pressed",
+                "line": 557,
+                "source": "const aControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyA'})\naControl.press()\n\nconst dir = inputSystem.getDirection()\n\nexpect(dir.x).toBe(-1)\nexpect(dir.y).toBe(0)"
+              },
+              {
+                "title": "cancels opposite directions",
+                "line": 568,
+                "source": "const wControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyW'})\nconst sControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'KeyS'})\nwControl.press()\nsControl.press()\n\nconst dir = inputSystem.getDirection()\n\nexpect(dir.x).toBe(0)\nexpect(dir.y).toBe(0)"
+              },
+              {
+                "title": "works with custom direction name",
+                "line": 581,
+                "source": "inputSystem.bindInput({controlName: 'ArrowUp', actionName: 'aimUp'})\ninputSystem.bindInput({controlName: 'ArrowDown', actionName: 'aimDown'})\ninputSystem.bindInput({controlName: 'ArrowLeft', actionName: 'aimLeft'})\ninputSystem.bindInput({controlName: 'ArrowRight', actionName: 'aimRight'})\n\nconst upControl = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: 'ArrowUp'})\nupControl.press()\n\nconst dir = inputSystem.getDirection('aim')\n\nexpect(dir.x).toBe(0)\nexpect(dir.y).toBe(1)"
+              },
+              {
+                "title": "returns correct vector for all 8 directions",
+                "line": 597,
+                "source": "const testDirections = [\n    {keys: ['KeyW'], expected: {x: 0, y: 1}},\n    {keys: ['KeyD'], expected: {x: 1, y: 0}},\n    {keys: ['KeyS'], expected: {x: 0, y: -1}},\n    {keys: ['KeyA'], expected: {x: -1, y: 0}},\n    {keys: ['KeyW', 'KeyD'], expected: {x: Math.SQRT1_2, y: Math.SQRT1_2}},\n    {keys: ['KeyS', 'KeyD'], expected: {x: Math.SQRT1_2, y: -Math.SQRT1_2}},\n    {keys: ['KeyS', 'KeyA'], expected: {x: -Math.SQRT1_2, y: -Math.SQRT1_2}},\n    {keys: ['KeyW', 'KeyA'], expected: {x: -Math.SQRT1_2, y: Math.SQRT1_2}}\n]\n\ntestDirections.forEach(({keys, expected}) => {\n    ['KeyW', 'KeyA', 'KeyS', 'KeyD'].forEach(key => {\n        const control = inputSystem.keyboard.getControl(key)\n        if (control) {\n            control.release()\n        }\n    })\n\n    keys.forEach(key => {\n        const control = inputSystem.keyboard.findOrCreateControl(ButtonControl, {name: key})\n        control.press()\n    })\n\n    const dir = inputSystem.getDirection()\n    expect(dir.x).toBeCloseTo(expected.x, 5)\n    expect(dir.y).toBeCloseTo(expected.y, 5)\n})"
               }
             ],
             "describes": []

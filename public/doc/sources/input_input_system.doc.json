@@ -1,0 +1,82 @@
+[
+  {
+    "type": "code",
+    "title": "With Application",
+    "source": "// InputSystem is automatically created\nconst app = new Application({$id: 'game'})\n\n// Access via the bound property\napp.inputSystem\n\n// Or access devices directly (also bound)\napp.keyboard\napp.mouse\napp.touch"
+  },
+  {
+    "type": "code",
+    "title": "Standalone",
+    "source": "// Create a host with an element\nconst host = new PerkyModule({$id: 'host'})\nhost.create(PerkyView, {$bind: 'perkyView'})\n\n// Create and install InputSystem\nconst inputSystem = host.create(InputSystem, {\n    $bind: 'inputSystem'\n})\n\nhost.start()"
+  },
+  {
+    "type": "container",
+    "title": "Keyboard state",
+    "source": "ctx.hint('Click here, then press keys')\nconst updateDisplay = ctx.display(keys => (keys?.length ? keys : 'No keys pressed'))\n\nconst host = new PerkyModule({$id: 'host'})\nconst view = host.create(PerkyView, {\n    $bind: 'perkyView',\n    container: ctx.container\n})\n\nconst inputSystem = host.create(InputSystem, {$bind: 'inputSystem'})\nhost.start()\n\nconst update = () => {\n    const pressed = inputSystem.keyboard.getPressedControls()\n    updateDisplay(pressed.map(c => c.name))\n}\n\ninputSystem.on('control:pressed', update)\ninputSystem.on('control:released', update)"
+  },
+  {
+    "type": "code",
+    "title": "Query methods",
+    "source": "// Check specific key/button\napp.isKeyPressed('Space')\napp.isMousePressed('left')\napp.isTouchPressed('touch0')\n\n// Check across all devices\napp.isPressedAny('Space')\n\n// Get control value (0 or 1 for buttons)\napp.getKeyValue('KeyW')\napp.getMouseValue('left')"
+  },
+  {
+    "type": "code",
+    "title": "Device methods",
+    "source": "// Check specific device\ninputSystem.isPressed('keyboard', 'Space')\ninputSystem.isPressed('mouse', 'left')\ninputSystem.isPressed('touch', 'touch0')\n\n// Get control value (0 or 1 for buttons)\ninputSystem.getValueFor('keyboard', 'KeyW')\n\n// Get all pressed controls from a device\ninputSystem.getPressedControls('keyboard')"
+  },
+  {
+    "type": "container",
+    "title": "Action bindings",
+    "source": "ctx.hint('Press J to jump, K to kick')\nconst updateDisplay = ctx.display(msg => msg || 'Waiting...')\n\nconst host = new PerkyModule({$id: 'host'})\nhost.create(PerkyView, {\n    $bind: 'perkyView',\n    container: ctx.container\n})\n\nconst inputSystem = host.create(InputSystem, {$bind: 'inputSystem'})\nhost.start()\n\n// Bind keys to actions\nhost.bindInput({controlName: 'KeyJ', actionName: 'jump', eventType: 'pressed'})\nhost.bindInput({controlName: 'KeyK', actionName: 'kick', eventType: 'pressed'})\n\nhost.on('input:triggered', (binding) => {\n    updateDisplay(`Action: ${binding.actionName}`)\n    setTimeout(() => updateDisplay('Waiting...'), 500)\n})"
+  },
+  {
+    "type": "code",
+    "title": "bindInput / isActionPressed",
+    "source": "app.bindInput({\n    controlName: 'Space',\n    actionName: 'jump',\n    eventType: 'pressed'\n})\n\n// Check if action is currently triggered\nif (app.isActionPressed('jump')) {\n    player.jump()\n}\n\n// Check if binding exists\napp.hasBinding('jump') // true"
+  },
+  {
+    "type": "code",
+    "title": "Binding options",
+    "source": "// Basic binding\ninputSystem.bindInput({\n    controlName: 'Space',\n    actionName: 'jump',\n    eventType: 'pressed' // or 'released'\n})\n\n// With device name (defaults to 'keyboard')\ninputSystem.bindInput({\n    deviceName: 'mouse',\n    controlName: 'left',\n    actionName: 'shoot',\n    eventType: 'pressed'\n})\n\n// With controller name (for multiplayer)\ninputSystem.bindInput({\n    controlName: 'KeyW',\n    actionName: 'moveUp',\n    controllerName: 'player1'\n})"
+  },
+  {
+    "type": "container",
+    "title": "WASD direction",
+    "source": "ctx.hint('Use WASD or arrow keys')\nconst updateDisplay = ctx.display(dir => dir || 'Direction: (0, 0)')\n\nconst host = new PerkyModule({$id: 'host'})\nhost.create(PerkyView, {\n    $bind: 'perkyView',\n    container: ctx.container\n})\n\nconst inputSystem = host.create(InputSystem, {$bind: 'inputSystem'})\nhost.start()\n\n// Bind WASD\nhost.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\nhost.bindInput({controlName: 'KeyS', actionName: 'moveDown'})\nhost.bindInput({controlName: 'KeyA', actionName: 'moveLeft'})\nhost.bindInput({controlName: 'KeyD', actionName: 'moveRight'})\n\n// Bind arrows too\nhost.bindInput({controlName: 'ArrowUp', actionName: 'moveUp'})\nhost.bindInput({controlName: 'ArrowDown', actionName: 'moveDown'})\nhost.bindInput({controlName: 'ArrowLeft', actionName: 'moveLeft'})\nhost.bindInput({controlName: 'ArrowRight', actionName: 'moveRight'})\n\nconst update = () => {\n    const dir = host.getDirection('move')\n    updateDisplay(`Direction: (${dir.x.toFixed(1)}, ${dir.y.toFixed(1)})`)\n}\n\ninputSystem.on('control:pressed', update)\ninputSystem.on('control:released', update)"
+  },
+  {
+    "type": "code",
+    "title": "Usage in game loop",
+    "source": "// In your game loop\nconst dir = app.getDirection('move')\n\nplayer.x += dir.x * speed * deltaTime\nplayer.y += dir.y * speed * deltaTime"
+  },
+  {
+    "type": "code",
+    "title": "Device events",
+    "source": "// Low-level: any control pressed/released\ninputSystem.on('control:pressed', (control, event, device) => {\n    logger.log(`${control.name} pressed on ${device.$id}`)\n})\n\ninputSystem.on('control:released', (control, event, device) => {\n    logger.log(`${control.name} released`)\n})"
+  },
+  {
+    "type": "code",
+    "title": "Action events",
+    "source": "// High-level: bound action triggered\napp.on('input:triggered', (binding, event, device) => {\n    logger.log(`Action: ${binding.actionName}`)\n\n    if (binding.actionName === 'jump') {\n        player.jump()\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Binding queries",
+    "source": "app.bindInput({controlName: 'Space', actionName: 'jump'})\napp.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\n\napp.hasBinding('jump')           // true\napp.getAllBindings()             // [binding1, binding2]\napp.getBindingsForAction('jump') // [binding1]\napp.getBindingsForInput({deviceName: 'keyboard', controlName: 'Space'})"
+  },
+  {
+    "type": "code",
+    "title": "Unbind / clear",
+    "source": "// Remove specific binding\ninputSystem.unbind('jump')\n\n// Clear all bindings\ninputSystem.clearBindings()"
+  },
+  {
+    "type": "code",
+    "title": "Register device",
+    "source": "// import GamepadDevice from './input_devices/gamepad_device.js'\n\ninputSystem.registerDevice(GamepadDevice, {\n    $id: 'gamepad',\n    $bind: 'gamepad'\n})\n\n// Now available\ninputSystem.isPressed('gamepad', 'button0')"
+  },
+  {
+    "type": "code",
+    "title": "Unregister device",
+    "source": "inputSystem.unregisterDevice('gamepad')"
+  }
+]

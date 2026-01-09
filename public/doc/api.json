@@ -1917,6 +1917,164 @@
     },
     "isDefault": true
   },
+  "/application/manifest.doc.js": {
+    "type": "class",
+    "file": "/application/manifest.js",
+    "name": "Manifest",
+    "line": 7,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "$category",
+        "line": 9,
+        "source": "static $category = 'manifest'",
+        "kind": "property",
+        "value": "'manifest'"
+      },
+      {
+        "name": "$lifecycle",
+        "line": 10,
+        "source": "static $lifecycle = false",
+        "kind": "property",
+        "value": "false"
+      }
+    ],
+    "methods": [
+      {
+        "name": "onInstall",
+        "line": 32,
+        "source": "onInstall (host) {\n    this.delegateTo(host, [\n        'getConfig',\n        'setConfig',\n        'addAsset',\n        'getAsset',\n        'getAssets',\n        'getAssetsByType',\n        'getAssetsByTag',\n        'getSource',\n        'getAllAssets'\n    ])\n\n    this.delegateTo(host, {\n        export: 'exportManifest',\n        import: 'importManifest'\n    })\n}",
+        "kind": "method",
+        "params": [
+          "host"
+        ]
+      },
+      {
+        "name": "import",
+        "line": 52,
+        "source": "import (jsonData) {\n    if (typeof jsonData === 'string') {\n        try {\n            this.#data = JSON.parse(jsonData)\n        } catch (error) {\n            throw new Error(`Failed to parse manifest JSON: ${error.message}`)\n        }\n    } else if (jsonData && typeof jsonData === 'object') {\n        this.#data = jsonData\n    } else {\n        throw new Error('Invalid manifest data: must be a JSON string or object')\n    }\n\n    this.assets.clear()\n    this.#initAssets()\n\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "jsonData"
+        ]
+      },
+      {
+        "name": "export",
+        "line": 72,
+        "source": "export () {\n    return deepMerge({}, {\n        config: this.#data.config,\n        assets: this.#exportAssets()\n    })\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "getConfig",
+        "line": 80,
+        "source": "getConfig (path) {\n    if (path === undefined) {\n        return this.#data.config\n    }\n\n    return getNestedValue(this.#data.config, path)\n}",
+        "kind": "method",
+        "params": [
+          "path"
+        ]
+      },
+      {
+        "name": "setConfig",
+        "line": 89,
+        "source": "setConfig (path, value) {\n    setNestedValue(this.#data.config, path, value)\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "path",
+          "value"
+        ]
+      },
+      {
+        "name": "addAsset",
+        "line": 95,
+        "source": "addAsset (assetData) {\n    validateAssetInput(assetData)\n\n    const asset = prepareAsset(assetData)\n\n    this.assets.set(asset.id, asset)\n\n    return asset\n}",
+        "kind": "method",
+        "params": [
+          "assetData"
+        ]
+      },
+      {
+        "name": "getAsset",
+        "line": 106,
+        "source": "getAsset (id) {\n    return this.assets.get(id) || null\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "name": "getSource",
+        "line": 111,
+        "source": "getSource (id) {\n    const asset = this.getAsset(id)\n\n    if (!asset) {\n        return null\n    }\n\n    return asset.source\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "name": "getAssetsByType",
+        "line": 122,
+        "source": "getAssetsByType (type) {\n    return this.assets.lookup('type', type)\n}",
+        "kind": "method",
+        "params": [
+          "type"
+        ]
+      },
+      {
+        "name": "getAssetsByTag",
+        "line": 127,
+        "source": "getAssetsByTag (tag) {\n    if (!tag || typeof tag !== 'string') {\n        return []\n    }\n\n    return this.assets.lookup('tags', tag)\n}",
+        "kind": "method",
+        "params": [
+          "tag"
+        ]
+      },
+      {
+        "name": "getAssets",
+        "line": 136,
+        "source": "getAssets () {\n    return this.assets.all\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "getAllAssets",
+        "line": 141,
+        "source": "getAllAssets () {\n    return this.assets.all\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "hasAsset",
+        "line": 146,
+        "source": "hasAsset (id) {\n    return this.assets.has(id)\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "name": "removeAsset",
+        "line": 151,
+        "source": "removeAsset (id) {\n    return this.assets.delete(id)\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 14,
+      "source": "constructor (params = {}) {\n    const {data = {}, ...moduleParams} = params\n\n    super(moduleParams)\n\n    this.#data = setDefaults(data, {\n        config: {},\n        assets: {}\n    })\n\n    this.assets = new Registry()\n    this.assets.addIndex('type', asset => asset.type)\n    this.assets.addIndex('tags', asset => asset.tags)\n\n    this.#initAssets()\n}",
+      "kind": "constructor",
+      "params": [
+        "params = ..."
+      ]
+    },
+    "isDefault": true
+  },
   "/application/perky_view.doc.js": {
     "type": "class",
     "file": "/application/perky_view.js",
@@ -3171,6 +3329,297 @@
     },
     "isDefault": true
   },
+  "/input/input_system.doc.js": {
+    "type": "class",
+    "file": "/input/input_system.js",
+    "name": "InputSystem",
+    "line": 9,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "$category",
+        "line": 11,
+        "source": "static $category = 'inputSystem'",
+        "kind": "property",
+        "value": "'inputSystem'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "onInstall",
+        "line": 26,
+        "source": "onInstall (host) {\n    this.registerDevice(KeyboardDevice, {\n        $id: 'keyboard',\n        $bind: 'keyboard'\n    })\n\n    this.registerDevice(MouseDevice, {\n        $id: 'mouse',\n        $bind: 'mouse',\n        container: host.element\n    })\n\n    this.registerDevice(TouchDevice, {\n        $id: 'touch',\n        $bind: 'touch',\n        container: host.element\n    })\n\n    this.delegateTo(host, [\n        'registerDevice',\n        'unregisterDevice',\n        'getDevice',\n        'isPressed',\n        'isPressedAny',\n        'getAllPressed',\n        'getValueFor',\n        'getValueAny',\n        'addControl',\n        'getControl',\n        'getControlAny',\n        'getPressedControls'\n    ])\n\n    this.delegateTo(host, [\n        'inputBinder',\n        'bindInput',\n        'unbind',\n        'getBinding',\n        'hasBinding',\n        'getBindingsForInput',\n        'getBindingsForAction',\n        'getAllBindings',\n        'clearBindings',\n        'bindCombo'\n    ])\n\n    this.delegateTo(host, [\n        'isKeyPressed',\n        'isMousePressed',\n        'isTouchPressed',\n        'getKeyValue',\n        'getMouseValue',\n        'getTouchValue',\n        'isActionPressed',\n        'getActionControls',\n        'getInputValue',\n        'getInputValueAny',\n        'getDirection'\n    ])\n\n    this.delegateEventsTo(host, ['input:triggered'])\n}",
+        "kind": "method",
+        "params": [
+          "host"
+        ]
+      },
+      {
+        "name": "registerDevice",
+        "line": 90,
+        "source": "registerDevice (DeviceClass, options = {}) {\n    return this.create(DeviceClass, options)\n}",
+        "kind": "method",
+        "params": [
+          "DeviceClass",
+          "options = ..."
+        ]
+      },
+      {
+        "name": "getDevice",
+        "line": 95,
+        "source": "getDevice (name) {\n    return this.getChild(name)\n}",
+        "kind": "method",
+        "params": [
+          "name"
+        ]
+      },
+      {
+        "name": "isPressed",
+        "line": 100,
+        "source": "isPressed (deviceName, controlName) {\n    const device = this.getDevice(deviceName)\n    return device ? device.isPressed(controlName) : false\n}",
+        "kind": "method",
+        "params": [
+          "deviceName",
+          "controlName"
+        ]
+      },
+      {
+        "name": "getValueFor",
+        "line": 106,
+        "source": "getValueFor (deviceName, controlName) {\n    const device = this.getDevice(deviceName)\n    return device ? device.getValueFor(controlName) : undefined\n}",
+        "kind": "method",
+        "params": [
+          "deviceName",
+          "controlName"
+        ]
+      },
+      {
+        "name": "getControl",
+        "line": 112,
+        "source": "getControl (deviceName, controlName) {\n    const device = this.getDevice(deviceName)\n    return device ? (device.getControl(controlName) ?? null) : null\n}",
+        "kind": "method",
+        "params": [
+          "deviceName",
+          "controlName"
+        ]
+      },
+      {
+        "name": "listDeviceNames",
+        "line": 118,
+        "source": "listDeviceNames () {\n    return this.listNamesFor('inputDevice')\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "isPressedAny",
+        "line": 123,
+        "source": "isPressedAny (controlName) {\n    const deviceNames = this.listDeviceNames()\n    for (const name of deviceNames) {\n        const device = this.getChild(name)\n        if (device && device.isPressed(controlName)) {\n            return true\n        }\n    }\n    return false\n}",
+        "kind": "method",
+        "params": [
+          "controlName"
+        ]
+      },
+      {
+        "name": "getValueAny",
+        "line": 135,
+        "source": "getValueAny (controlName) {\n    const deviceNames = this.listDeviceNames()\n    for (const name of deviceNames) {\n        const device = this.getChild(name)\n        if (device) {\n            const value = device.getValueFor(controlName)\n            if (value !== undefined) {\n                return value\n            }\n        }\n    }\n    return undefined\n}",
+        "kind": "method",
+        "params": [
+          "controlName"
+        ]
+      },
+      {
+        "name": "getControlAny",
+        "line": 150,
+        "source": "getControlAny (controlName) {\n    const deviceNames = this.listDeviceNames()\n    for (const name of deviceNames) {\n        const device = this.getChild(name)\n        if (device) {\n            const control = device.getControl(controlName)\n            if (control) {\n                return control\n            }\n        }\n    }\n    return null\n}",
+        "kind": "method",
+        "params": [
+          "controlName"
+        ]
+      },
+      {
+        "name": "getAllPressed",
+        "line": 165,
+        "source": "getAllPressed (controlName) {\n    const results = []\n    const deviceNames = this.listDeviceNames()\n    for (const name of deviceNames) {\n        const device = this.getChild(name)\n        if (device && device.isPressed(controlName)) {\n            results.push(device)\n        }\n    }\n    return results\n}",
+        "kind": "method",
+        "params": [
+          "controlName"
+        ]
+      },
+      {
+        "name": "getPressedControls",
+        "line": 178,
+        "source": "getPressedControls (deviceName) {\n    const device = this.getDevice(deviceName)\n    return device ? device.getPressedControls() : []\n}",
+        "kind": "method",
+        "params": [
+          "deviceName"
+        ]
+      },
+      {
+        "name": "getAllValues",
+        "line": 184,
+        "source": "getAllValues (controlName) {\n    const results = []\n    const deviceNames = this.listDeviceNames()\n    for (const name of deviceNames) {\n        const device = this.getChild(name)\n        if (device) {\n            const value = device.getValueFor(controlName)\n            if (value !== undefined) {\n                results.push({device, value})\n            }\n        }\n    }\n    return results\n}",
+        "kind": "method",
+        "params": [
+          "controlName"
+        ]
+      },
+      {
+        "name": "addControl",
+        "line": 200,
+        "source": "addControl (deviceNameOrControl, ControlOrParams = {}, params = {}) {\n\n    if (typeof deviceNameOrControl === 'string') {\n        const device = this.getDevice(deviceNameOrControl)\n\n        if (!device) {\n            throw new Error(`Device '${deviceNameOrControl}' not found`)\n        }\n\n        return device.findOrCreateControl(ControlOrParams, params)\n\n    } else if (typeof deviceNameOrControl === 'function') {\n\n        return this.addControlToFirst(deviceNameOrControl, ControlOrParams)\n    }\n\n    return null\n}",
+        "kind": "method",
+        "params": [
+          "deviceNameOrControl",
+          "ControlOrParams = ...",
+          "params = ..."
+        ]
+      },
+      {
+        "name": "addControlToFirst",
+        "line": 220,
+        "source": "addControlToFirst (Control, params = {}) {\n    const deviceNames = this.listDeviceNames()\n    const firstDevice = deviceNames.length > 0 ? this.getChild(deviceNames[0]) : null\n    if (!firstDevice) {\n        throw new Error('No devices available')\n    }\n    return firstDevice.findOrCreateControl(Control, params)\n}",
+        "kind": "method",
+        "params": [
+          "Control",
+          "params = ..."
+        ]
+      },
+      {
+        "name": "addControlToAll",
+        "line": 230,
+        "source": "addControlToAll (Control, params = {}) {\n    const results = []\n    const deviceNames = this.listDeviceNames()\n    for (const name of deviceNames) {\n        const device = this.getChild(name)\n        if (device) {\n            const control = device.findOrCreateControl(Control, params)\n            results.push({device, control})\n        }\n    }\n    return results\n}",
+        "kind": "method",
+        "params": [
+          "Control",
+          "params = ..."
+        ]
+      },
+      {
+        "name": "deviceKeyFor",
+        "line": 244,
+        "source": "deviceKeyFor (device) {\n    return this.childrenRegistry.keyFor(device)\n}",
+        "kind": "method",
+        "params": [
+          "device"
+        ]
+      },
+      {
+        "name": "getInputValue",
+        "line": 249,
+        "source": "getInputValue (deviceName, controlName) {\n    return this.getValueFor(deviceName, controlName)\n}",
+        "kind": "method",
+        "params": [
+          "deviceName",
+          "controlName"
+        ]
+      },
+      {
+        "name": "getInputValueAny",
+        "line": 254,
+        "source": "getInputValueAny (controlName) {\n    return this.getValueAny(controlName)\n}",
+        "kind": "method",
+        "params": [
+          "controlName"
+        ]
+      },
+      {
+        "name": "isKeyPressed",
+        "line": 259,
+        "source": "isKeyPressed (keyName) {\n    return this.isPressed('keyboard', keyName)\n}",
+        "kind": "method",
+        "params": [
+          "keyName"
+        ]
+      },
+      {
+        "name": "isMousePressed",
+        "line": 264,
+        "source": "isMousePressed (buttonName) {\n    return this.isPressed('mouse', buttonName)\n}",
+        "kind": "method",
+        "params": [
+          "buttonName"
+        ]
+      },
+      {
+        "name": "getKeyValue",
+        "line": 269,
+        "source": "getKeyValue (keyName) {\n    return this.getInputValue('keyboard', keyName)\n}",
+        "kind": "method",
+        "params": [
+          "keyName"
+        ]
+      },
+      {
+        "name": "getMouseValue",
+        "line": 274,
+        "source": "getMouseValue (buttonName) {\n    return this.getInputValue('mouse', buttonName)\n}",
+        "kind": "method",
+        "params": [
+          "buttonName"
+        ]
+      },
+      {
+        "name": "isTouchPressed",
+        "line": 279,
+        "source": "isTouchPressed (controlName) {\n    return this.isPressed('touch', controlName)\n}",
+        "kind": "method",
+        "params": [
+          "controlName"
+        ]
+      },
+      {
+        "name": "getTouchValue",
+        "line": 284,
+        "source": "getTouchValue (controlName) {\n    return this.getInputValue('touch', controlName)\n}",
+        "kind": "method",
+        "params": [
+          "controlName"
+        ]
+      },
+      {
+        "name": "isActionPressed",
+        "line": 289,
+        "source": "isActionPressed (actionName, controllerName = null) {\n    const bindings = this.inputBinder.getBindingsForAction(actionName, controllerName, 'pressed')\n\n    for (const binding of bindings) {\n        if (typeof binding.shouldTrigger === 'function') {\n            if (binding.shouldTrigger(this)) {\n                return true\n            }\n        } else if (this.isPressed(binding.deviceName, binding.controlName)) {\n            return true\n        }\n    }\n\n    return false\n}",
+        "kind": "method",
+        "params": [
+          "actionName",
+          "controllerName = ..."
+        ]
+      },
+      {
+        "name": "getActionControls",
+        "line": 306,
+        "source": "getActionControls (actionName, controllerName = null) {\n    const bindings = this.inputBinder.getBindingsForAction(actionName, controllerName, 'pressed')\n    const controls = []\n\n    for (const binding of bindings) {\n        controls.push(...this.#getControlsFromBinding(binding))\n    }\n\n    return controls\n}",
+        "kind": "method",
+        "params": [
+          "actionName",
+          "controllerName = ..."
+        ]
+      },
+      {
+        "name": "getDirection",
+        "line": 318,
+        "source": "getDirection (name = 'move') {\n    const up = name + 'Up'\n    const down = name + 'Down'\n    const left = name + 'Left'\n    const right = name + 'Right'\n\n    const x = (this.isActionPressed(right) ? 1 : 0)\n        - (this.isActionPressed(left) ? 1 : 0)\n    const y = (this.isActionPressed(up) ? 1 : 0)\n        - (this.isActionPressed(down) ? 1 : 0)\n\n    const vec = new Vec2(x, y)\n\n    return vec.length() > 0 ? vec.clone().normalize() : vec\n}",
+        "kind": "method",
+        "params": [
+          "name = ..."
+        ]
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 13,
+      "source": "constructor (options = {}) {\n    const {bindings = []} = options\n    super(options)\n\n    this.create(InputBinder, {\n        $bind: 'inputBinder',\n        bindings\n    })\n\n    this.#initEvents()\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
   "/input/input_control.doc.js": {
     "type": "class",
     "file": "/input/input_control.js",
@@ -4383,11 +4832,11 @@
           "containerEl",
           "sectionSetup = ..."
         ],
-        "source": "async function executeContainer (block, containerEl, sectionSetup = null) {\n    addSpacerIfNeeded()\n\n    const prevApp = containerEl._currentApp\n    if (prevApp?.dispose) {\n        prevApp.dispose()\n    }\n    containerEl.innerHTML = ''\n\n    if (block.preset) {\n        applyContainerPreset(containerEl, block.preset)\n    }\n\n    if (block.scrollable) {\n        containerEl.style.overflow = 'auto'\n    }\n\n    try {\n        let actionsBar = null\n        let slidersBar = null\n        let infoBar = null\n\n        const ctx = {\n            container: containerEl,\n            setApp: (app, ...args) => {\n                containerEl._currentApp = app\n                const [scene] = args\n                if (scene && app.autoFitEnabled && app.render) {\n                    app.on('resize', () => app.render(scene))\n                }\n            },\n            action: (label, callback) => {\n                if (!actionsBar) {\n                    actionsBar = document.createElement('div')\n                    actionsBar.className = 'doc-actions-bar'\n                    containerEl.appendChild(actionsBar)\n                }\n\n                const isFirst = actionsBar.children.length === 0\n                const btn = document.createElement('button')\n                btn.className = 'doc-actions-btn'\n                if (isFirst) {\n                    btn.classList.add('doc-actions-btn--active')\n                }\n                btn.textContent = label\n                btn.addEventListener('click', () => {\n                    actionsBar.querySelectorAll('.doc-actions-btn').forEach(b => b.classList.remove('doc-actions-btn--active'))\n                    btn.classList.add('doc-actions-btn--active')\n                    callback()\n                })\n                actionsBar.appendChild(btn)\n\n                if (isFirst) {\n                    callback()\n                }\n            },\n            slider: (label, opts, onChange) => {\n                if (!slidersBar) {\n                    slidersBar = document.createElement('div')\n                    slidersBar.className = 'doc-sliders-bar'\n                    containerEl.appendChild(slidersBar)\n                }\n\n                const wrapper = document.createElement('div')\n                wrapper.className = 'doc-slider-wrapper'\n\n                const labelEl = document.createElement('span')\n                labelEl.className = 'doc-slider-label'\n                labelEl.textContent = label\n\n                const valueEl = document.createElement('span')\n                valueEl.className = 'doc-slider-value'\n                valueEl.textContent = opts.default ?? opts.min\n\n                const input = document.createElement('input')\n                input.type = 'range'\n                input.className = 'doc-slider'\n                input.min = opts.min\n                input.max = opts.max\n                input.step = opts.step ?? (opts.max - opts.min) / 100\n                input.value = opts.default ?? opts.min\n\n                input.addEventListener('input', () => {\n                    const value = parseFloat(input.value)\n                    valueEl.textContent = Number.isInteger(value) ? value : value.toFixed(2)\n                    onChange(value)\n                })\n\n                wrapper.appendChild(labelEl)\n                wrapper.appendChild(input)\n                wrapper.appendChild(valueEl)\n                slidersBar.appendChild(wrapper)\n\n                onChange(parseFloat(input.value))\n            },\n            info: (formatter) => {\n                if (!infoBar) {\n                    infoBar = document.createElement('div')\n                    infoBar.className = 'doc-info-bar'\n                    containerEl.appendChild(infoBar)\n                }\n\n                const el = document.createElement('div')\n                el.className = 'doc-info'\n                infoBar.appendChild(el)\n                const update = (...args) => {\n                    el.textContent = formatter(...args)\n                }\n                update()\n                return update\n            },\n            hint: (message) => {\n                const el = document.createElement('div')\n                el.className = 'doc-hint'\n                el.textContent = message\n                containerEl.appendChild(el)\n            },\n            display: (formatter) => {\n                const el = document.createElement('div')\n                el.className = 'doc-display'\n                containerEl.appendChild(el)\n                const update = (...args) => {\n                    const result = formatter(...args)\n                    if (Array.isArray(result)) {\n                        el.innerHTML = result.map(item => `<span class=\"doc-display-tag\">${item}</span>`).join('')\n                    } else {\n                        el.innerHTML = result\n                    }\n                }\n                update()\n                return update\n            }\n        }\n\n        if (sectionSetup?.fn) {\n            await sectionSetup.fn(ctx)\n        }\n        await block.fn(ctx)\n\n        if (containerEl.tabIndex >= 0) {\n            containerEl.focus()\n        }\n    } catch (error) {\n        logger.error('Container error:', error.message)\n    }\n}"
+        "source": "async function executeContainer (block, containerEl, sectionSetup = null) {\n    addSpacerIfNeeded()\n\n    const prevApp = containerEl._currentApp\n    if (prevApp?.dispose) {\n        prevApp.dispose()\n    }\n    containerEl.innerHTML = ''\n\n    if (block.preset) {\n        applyContainerPreset(containerEl, block.preset)\n    }\n\n    if (block.scrollable) {\n        containerEl.style.overflow = 'auto'\n    }\n\n    try {\n        let actionsBar = null\n        let slidersBar = null\n        let infoBar = null\n\n        const ctx = {\n            container: containerEl,\n            setApp: (app, ...args) => {\n                containerEl._currentApp = app\n                const [scene] = args\n                if (scene && app.autoFitEnabled && app.render) {\n                    app.on('resize', () => app.render(scene))\n                }\n            },\n            action: (label, callback) => {\n                if (!actionsBar) {\n                    actionsBar = document.createElement('div')\n                    actionsBar.className = 'doc-actions-bar'\n                    containerEl.appendChild(actionsBar)\n                }\n\n                const isFirst = actionsBar.children.length === 0\n                const btn = document.createElement('button')\n                btn.className = 'doc-actions-btn'\n                if (isFirst) {\n                    btn.classList.add('doc-actions-btn--active')\n                }\n                btn.textContent = label\n                btn.addEventListener('click', () => {\n                    actionsBar.querySelectorAll('.doc-actions-btn').forEach(b => b.classList.remove('doc-actions-btn--active'))\n                    btn.classList.add('doc-actions-btn--active')\n                    callback()\n                })\n                actionsBar.appendChild(btn)\n\n                if (isFirst) {\n                    callback()\n                }\n            },\n            slider: (label, opts, onChange) => {\n                if (!slidersBar) {\n                    slidersBar = document.createElement('div')\n                    slidersBar.className = 'doc-sliders-bar'\n                    containerEl.appendChild(slidersBar)\n                }\n\n                const wrapper = document.createElement('div')\n                wrapper.className = 'doc-slider-wrapper'\n\n                const labelEl = document.createElement('span')\n                labelEl.className = 'doc-slider-label'\n                labelEl.textContent = label\n\n                const valueEl = document.createElement('span')\n                valueEl.className = 'doc-slider-value'\n                valueEl.textContent = opts.default ?? opts.min\n\n                const input = document.createElement('input')\n                input.type = 'range'\n                input.className = 'doc-slider'\n                input.min = opts.min\n                input.max = opts.max\n                input.step = opts.step ?? (opts.max - opts.min) / 100\n                input.value = opts.default ?? opts.min\n\n                input.addEventListener('input', () => {\n                    const value = parseFloat(input.value)\n                    valueEl.textContent = Number.isInteger(value) ? value : value.toFixed(2)\n                    onChange(value)\n                })\n\n                wrapper.appendChild(labelEl)\n                wrapper.appendChild(input)\n                wrapper.appendChild(valueEl)\n                slidersBar.appendChild(wrapper)\n\n                onChange(parseFloat(input.value))\n            },\n            info: (formatter) => {\n                if (!infoBar) {\n                    infoBar = document.createElement('div')\n                    infoBar.className = 'doc-info-bar'\n                    containerEl.appendChild(infoBar)\n                }\n\n                const el = document.createElement('div')\n                el.className = 'doc-info'\n                infoBar.appendChild(el)\n                const update = (...args) => {\n                    el.textContent = formatter(...args)\n                }\n                update()\n                return update\n            },\n            hint: (message) => {\n                const el = document.createElement('div')\n                el.className = 'doc-hint'\n                el.textContent = message\n                containerEl.appendChild(el)\n            },\n            display: (formatter) => {\n                const el = document.createElement('div')\n                el.className = 'doc-display'\n                containerEl.appendChild(el)\n                const update = (...args) => {\n                    const result = formatter(...args)\n                    if (result instanceof HTMLElement) {\n                        el.innerHTML = ''\n                        el.appendChild(result)\n                    } else if (Array.isArray(result)) {\n                        el.innerHTML = result.map(item => `<span class=\"doc-display-tag\">${item}</span>`).join('')\n                    } else {\n                        el.innerHTML = result\n                    }\n                }\n                update()\n                return update\n            },\n            box: (opts = {}) => {\n                const size = opts.size || 40\n                const color = opts.color || '#4a9eff'\n                const el = document.createElement('div')\n                el.style.cssText = `width:${size}px;height:${size}px;background:${color};position:absolute;border-radius:4px;left:50%;top:50%;transform:translate(-50%,-50%)`\n                containerEl.appendChild(el)\n                return el\n            }\n        }\n\n        if (sectionSetup?.fn) {\n            await sectionSetup.fn(ctx)\n        }\n        await block.fn(ctx)\n\n        if (containerEl.tabIndex >= 0) {\n            containerEl.focus()\n        }\n    } catch (error) {\n        logger.error('Container error:', error.message)\n    }\n}"
       },
       {
         "name": "renderAction",
-        "line": 428,
+        "line": 439,
         "params": [
           "block",
           "sectionSetup = ...",

@@ -1,37 +1,62 @@
 [
   {
     "type": "code",
-    "title": "Basic setup",
-    "source": "class MyGame extends Application {\n    static $category = 'game'\n\n    configureApplication () {\n        // Called after all systems are created\n    }\n}"
+    "title": "Subclass with manifest",
+    "source": "class MyGame extends Application {\n    static manifest = {\n        config: {title: 'My Game'},\n        assets: {\n            hero: {type: 'sprite', url: '/hero.png', tags: ['preload']}\n        }\n    }\n\n    configureApplication () {\n        this.setConfig('debug', true)\n    }\n}\n\nconst game = new MyGame({$id: 'game'})\ngame.mount(document.getElementById('app'))\ngame.start()"
+  },
+  {
+    "type": "action",
+    "title": "setConfig / getConfig",
+    "source": "const app = new Application({$id: 'demo'})\n\n// Nested path\napp.setConfig('game.title', 'My Game')\nlogger.log('title:', app.getConfig('game.title'))\n\n// Direct key\napp.setConfig('debug', true)\nlogger.log('debug:', app.getConfig('debug'))"
+  },
+  {
+    "type": "container",
+    "title": "Load and display assets",
+    "source": "const updateDisplay = ctx.display(content => content || 'Loading...')\n\nconst app = new Application({\n    $id: 'demo',\n    manifest: {\n        assets: {\n            shroom: {type: 'image', url: './assets/images/shroom.png', tags: ['preload']}\n        }\n    }\n})\n\n// Add asset dynamically\napp.addAsset({id: 'spore', type: 'image', url: './assets/images/spore.png', tags: ['preload']})\n\napp.start()\n\napp.on('loader:complete', () => {\n    const wrapper = document.createElement('div')\n    wrapper.style.cssText = 'display:flex;gap:20px;align-items:center'\n\n    const img1 = app.getSource('shroom')\n    const img2 = app.getSource('spore')\n    img1.style.width = '80px'\n    img2.style.width = '80px'\n\n    wrapper.appendChild(img1)\n    wrapper.appendChild(img2)\n    updateDisplay(wrapper)\n})\n\napp.preload()"
   },
   {
     "type": "code",
-    "title": "Create and mount",
-    "source": "const app = new Application({$id: 'demo'})\nconst container = document.getElementById('app')\n\napp.mount(container)\napp.start()\n\nlogger.log(app.mounted) // true\nlogger.log(app.element.tagName) // 'DIV'\nlogger.log(app.perkyView.width, app.perkyView.height)"
+    "title": "Loading events",
+    "source": "const app = new Application({$id: 'demo'})\n\napp.on('loader:progress', ({loaded, total}) => {\n    logger.log(`Loading: ${loaded}/${total}`)\n})\n\napp.on('loader:complete', () => {\n    logger.log('All assets loaded')\n})\n\napp.on('loader:error', ({asset, error}) => {\n    logger.error(`Failed to load ${asset.id}:`, error)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Resize events",
+    "source": "const app = new Application({$id: 'demo'})\napp.mount(ctx.container)\napp.start()\n\napp.on('resize', ({width, height}) => {\n    logger.log('resize:', width, '×', height)\n})\n\nctx.slider('Height', {min: 100, max: 400, default: 200, step: 10}, h => {\n    ctx.container.style.height = h + 'px'\n})"
   },
   {
     "type": "code",
-    "title": "List children",
-    "source": "const app = new Application({$id: 'demo'})\n\nfor (const child of app.children) {\n    logger.log(`${child.$id} (${child.$category})`)\n}\n\napp.dispose()"
+    "title": "mount / dismount",
+    "source": "const app = new Application({$id: 'demo'})\nconst el = document.getElementById('app')\n\napp.mount(el)\nlogger.log(app.mounted) // true\nlogger.log(app.element) // DOM element\n\napp.dismount()"
+  },
+  {
+    "type": "container",
+    "title": "Move the box",
+    "source": "ctx.hint('Use WASD or arrow keys')\n\nconst app = new Application({$id: 'demo'})\napp.mount(ctx.container)\napp.start()\n\nconst box = ctx.box({size: 40})\nconst w = ctx.container.offsetWidth\nconst h = ctx.container.offsetHeight\nlet x = w / 2\nlet y = h / 2\n\n// Bind movement keys\napp.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\napp.bindInput({controlName: 'KeyS', actionName: 'moveDown'})\napp.bindInput({controlName: 'KeyA', actionName: 'moveLeft'})\napp.bindInput({controlName: 'KeyD', actionName: 'moveRight'})\napp.bindInput({controlName: 'ArrowUp', actionName: 'moveUp'})\napp.bindInput({controlName: 'ArrowDown', actionName: 'moveDown'})\napp.bindInput({controlName: 'ArrowLeft', actionName: 'moveLeft'})\napp.bindInput({controlName: 'ArrowRight', actionName: 'moveRight'})\n\n// Game loop\nconst speed = 3\nconst loop = () => {\n    const dir = app.getDirection('move')\n    x = Math.max(20, Math.min(w - 20, x + dir.x * speed))\n    y = Math.max(20, Math.min(h - 20, y - dir.y * speed))\n    box.style.left = x + 'px'\n    box.style.top = y + 'px'\n    requestAnimationFrame(loop)\n}\nloop()"
+  },
+  {
+    "type": "container",
+    "title": "Action events",
+    "source": "ctx.hint('Press C to change color')\n\nconst app = new Application({$id: 'demo'})\napp.mount(ctx.container)\napp.start()\n\nconst box = ctx.box({size: 60})\nconst colors = ['#4a9eff', '#ff4a4a', '#4aff4a', '#ffff4a', '#ff4aff']\nlet colorIndex = 0\n\n// Bind action key\napp.bindInput({controlName: 'KeyC', actionName: 'color', eventType: 'pressed'})\n\n// React to action\napp.on('input:triggered', () => {\n    colorIndex = (colorIndex + 1) % colors.length\n    box.style.background = colors[colorIndex]\n})"
   },
   {
     "type": "code",
-    "title": "Access systems",
-    "source": "const app = new Application({$id: 'demo'})\n\nlogger.log(app.manifest.$id)\nlogger.log(app.perkyView.$id)\nlogger.log(app.inputSystem.$id)\n\napp.dispose()"
+    "title": "Input bindings",
+    "source": "const app = new Application({$id: 'demo'})\n\n// Bind keyboard to action\napp.bindInput({\n    controlName: 'KeyJ',\n    actionName: 'jump',\n    eventType: 'pressed'\n})\n\n// Check if action is triggered\nif (app.isActionPressed('jump')) {\n    // player jumps\n}\n\n// Listen for action triggers\napp.on('input:triggered', (binding) => {\n    logger.log('Action triggered:', binding.actionName)\n})"
+  },
+  {
+    "type": "action",
+    "title": "addAction / execute",
+    "source": "const app = new Application({$id: 'demo'})\n\n// Add action to main controller\napp.addAction('greet', () => {\n    logger.log('Hello!')\n})\n\n// Execute action\napp.execute('greet')"
+  },
+  {
+    "type": "container",
+    "title": "Custom controller",
+    "source": "ctx.hint('Press G to greet, F to farewell')\n\nconst app = new Application({$id: 'demo'})\napp.mount(ctx.container)\napp.start()\n\n// Custom controller with methods as actions\nclass GreetController extends ActionController {\n    greet () {\n        logger.log('Hello!')\n    }\n\n    farewell () {\n        logger.log('Goodbye!')\n    }\n}\n\napp.registerController('greeter', GreetController)\napp.pushActiveController('greeter')\n\n// Bind keys to controller actions\napp.bindInput({controlName: 'KeyG', actionName: 'greet'})\napp.bindInput({controlName: 'KeyF', actionName: 'farewell'})"
   },
   {
     "type": "code",
-    "title": "start / stop",
-    "source": "const app = new Application({$id: 'demo'})\n\napp.on('start', () => logger.log('app started'))\napp.on('stop', () => logger.log('app stopped'))\n\napp.start()\nlogger.log(app.running) // true\n\napp.stop()\nlogger.log(app.running) // false\n\napp.dispose()"
-  },
-  {
-    "type": "code",
-    "title": "View properties",
-    "source": "const app = new Application({$id: 'demo'})\n\nlogger.log(app.perkyView.width)\nlogger.log(app.perkyView.height)\nlogger.log(app.perkyView.aspectRatio)"
-  },
-  {
-    "type": "code",
-    "title": "Resize event",
-    "source": "const app = new Application({$id: 'demo'})\n\napp.on('resize', ({width, height}) => {\n    logger.log('resized to:', width, height)\n})\n\napp.perkyView.setSize({width: 800, height: 600})"
+    "title": "Controller with bindings",
+    "source": "class GameController extends ActionController {\n    static bindings = {\n        moveUp: ['KeyW', 'ArrowUp'],\n        moveDown: ['KeyS', 'ArrowDown'],\n        shoot: 'Space'\n    }\n\n    moveUp () {\n        logger.log('up')\n    }\n\n    moveDown () {\n        logger.log('down')\n    }\n\n    shoot () {\n        logger.log('shoot')\n    }\n}\n\n// Bindings are auto-registered when controller is added\napp.registerController('game', GameController)"
   }
 ]
