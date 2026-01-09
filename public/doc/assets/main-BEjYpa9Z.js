@@ -835,6 +835,22 @@ class DocPage extends HTMLElement {
       __privateSet(this, _activeTab, value);
     }
   }
+  get activeTab() {
+    return __privateGet(this, _activeTab);
+  }
+  get availableTabs() {
+    const tabs = ["doc"];
+    if (__privateGet(this, _api)) {
+      tabs.push("api");
+    }
+    if (__privateGet(this, _tests)) {
+      tabs.push("test");
+    }
+    return tabs;
+  }
+  switchTab(tab) {
+    __privateMethod(this, _DocPage_instances, switchTab_fn).call(this, tab);
+  }
 }
 _doc = new WeakMap();
 _api = new WeakMap();
@@ -2276,33 +2292,22 @@ const STYLES$1 = buildEditorStyles(
         }
 
         .doc-header {
-            flex-direction: column;
-            align-items: flex-start;
-            padding-top: 0;
-            border-bottom: none;
+            padding: 0.5rem 0;
             margin-bottom: 1rem;
+            border-bottom: none;
         }
 
         .doc-header h1 {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
         }
 
         .doc-tabs {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1000;
-            border: 1px solid var(--border);
-            height: 44px;
-            padding: 0.25rem;
-            box-sizing: border-box;
+            display: none;
         }
 
         .doc-tab {
-            padding: 0 0.6rem;
-            height: 100%;
-            display: flex;
-            align-items: center;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.7rem;
         }
     }
 `
@@ -3483,6 +3488,7 @@ const STYLES = buildEditorStyles(
 customElements.define("perky-logger", PerkyLogger);
 const docModules = /* @__PURE__ */ Object.assign({ "../application/application.doc.js": () => __vitePreload(() => import("./doc_application_application-BDuVJ8UP.js"), true ? __vite__mapDeps([0,1,2,3]) : void 0, import.meta.url), "../application/perky_view.doc.js": () => __vitePreload(() => import("./doc_application_perky_view-WQ4oC7W2.js"), true ? __vite__mapDeps([4,1,2,3]) : void 0, import.meta.url), "../audio/audio_system.doc.js": () => __vitePreload(() => import("./doc_audio_audio_system-xTVYszmJ.js"), true ? __vite__mapDeps([5,1,6,7,3,8,9,10,11,12,2]) : void 0, import.meta.url), "../core/action_controller.doc.js": () => __vitePreload(() => import("./doc_core_action_controller-BOa4pPOS.js"), true ? __vite__mapDeps([13,1,14,7,3,8,9,10,11,12,2]) : void 0, import.meta.url), "../core/action_dispatcher.doc.js": () => __vitePreload(() => import("./doc_core_action_dispatcher-X0Tm71Z9.js"), true ? __vite__mapDeps([15,1,16,7,3,8,9,10,11,12,14,2]) : void 0, import.meta.url), "../core/inflector.doc.js": () => __vitePreload(() => import("./doc_core_inflector-BhQ5hXSK.js"), true ? __vite__mapDeps([17,1,12,2,3]) : void 0, import.meta.url), "../core/logger.doc.js": () => __vitePreload(() => import("./doc_core_logger-Ccf9ubjC.js"), true ? __vite__mapDeps([18,1,2,3]) : void 0, import.meta.url), "../core/notifier.doc.js": () => __vitePreload(() => import("./doc_core_notifier-CIbKJZ2e.js"), true ? __vite__mapDeps([19,1,3,2]) : void 0, import.meta.url), "../core/observable_map.doc.js": () => __vitePreload(() => import("./doc_core_observable_map-_kWOdv5v.js"), true ? __vite__mapDeps([20,1,9,3,2]) : void 0, import.meta.url), "../core/observable_set.doc.js": () => __vitePreload(() => import("./doc_core_observable_set-DRkrptWJ.js"), true ? __vite__mapDeps([21,1,10,3,2]) : void 0, import.meta.url), "../core/perky_module.doc.js": () => __vitePreload(() => import("./doc_core_perky_module-DV2RSptE.js"), true ? __vite__mapDeps([22,1,7,3,8,9,10,11,12,2]) : void 0, import.meta.url), "../core/perky_query.doc.js": () => __vitePreload(() => import("./doc_core_perky_query-Djsy5rA6.js"), true ? __vite__mapDeps([23,1,7,3,8,9,10,11,12,2]) : void 0, import.meta.url), "../core/registry.doc.js": () => __vitePreload(() => import("./doc_core_registry-BHfRu3rP.js"), true ? __vite__mapDeps([24,1,8,9,3,2]) : void 0, import.meta.url), "../core/utils.doc.js": () => __vitePreload(() => import("./doc_core_utils-B8jWKd6w.js"), true ? __vite__mapDeps([25,1,11,12,2,3]) : void 0, import.meta.url), "../editor/inspectors/action_controller_inspector.doc.js": () => __vitePreload(() => import("./doc_editor_inspectors_action_controller_inspector-B5bO1AD2.js"), true ? __vite__mapDeps([26,1,14,7,3,8,9,10,11,12,27,28,29,2]) : void 0, import.meta.url), "../editor/inspectors/action_dispatcher_inspector.doc.js": () => __vitePreload(() => import("./doc_editor_inspectors_action_dispatcher_inspector-hZCR0blK.js"), true ? __vite__mapDeps([30,1,16,7,3,8,9,10,11,12,14,2,31,28,29,32,33]) : void 0, import.meta.url), "../editor/log_renderers/vec2_log_renderer.doc.js": () => __vitePreload(() => import("./doc_editor_log_renderers_vec2_log_renderer-DTC_6qJu.js"), true ? __vite__mapDeps([34,1,35,36,2,3]) : void 0, import.meta.url), "../editor/perky_explorer.doc.js": () => __vitePreload(() => import("./doc_editor_perky_explorer-Cov03DgR.js"), true ? __vite__mapDeps([37,1,7,3,8,9,10,11,12,16,14,2,38,39,40,41,42,35,43,44,45,46,28,29,33,32,47,27,31,6]) : void 0, import.meta.url), "../editor/perky_logger.doc.js": () => __vitePreload(() => import("./doc_editor_perky_logger-Cw4GdhTF.js"), true ? __vite__mapDeps([48,1,35,2,3]) : void 0, import.meta.url), "../editor/toggle_input.doc.js": () => __vitePreload(() => import("./doc_editor_toggle_input-XeOnmYLO.js"), true ? __vite__mapDeps([49,1,32,33,29,2,3]) : void 0, import.meta.url), "../editor/vec2_input.doc.js": () => __vitePreload(() => import("./doc_editor_vec2_input-FaJpPSLh.js"), true ? __vite__mapDeps([50,1,35,47,33,29,2,3]) : void 0, import.meta.url), "../game/game.doc.js": () => __vitePreload(() => import("./doc_game_game-DHG5e4qr.js"), true ? __vite__mapDeps([51,1]) : void 0, import.meta.url), "../game/game_loop.doc.js": () => __vitePreload(() => import("./doc_game_game_loop-D7FAnHMh.js"), true ? __vite__mapDeps([52,1,43,7,3,8,9,10,11,12,2]) : void 0, import.meta.url), "../input/input_control.doc.js": () => __vitePreload(() => import("./doc_input_input_control-t2ssK_ay.js"), true ? __vite__mapDeps([53,1,40,3,2]) : void 0, import.meta.url), "../input/input_controls/vec2_control.doc.js": () => __vitePreload(() => import("./doc_input_input_controls_vec2_control-DSx6-rXj.js"), true ? __vite__mapDeps([54,1,42,40,3,35,2]) : void 0, import.meta.url), "../input/input_devices/keyboard_device.doc.js": () => __vitePreload(() => import("./doc_input_input_devices_keyboard_device-DHJI37T6.js"), true ? __vite__mapDeps([55,1,38,39,7,3,8,9,10,11,12,40]) : void 0, import.meta.url), "../input/input_devices/mouse_device.doc.js": () => __vitePreload(() => import("./doc_input_input_devices_mouse_device-RQylMr3h.js"), true ? __vite__mapDeps([56,1,41,39,7,3,8,9,10,11,12,40,42,35]) : void 0, import.meta.url), "../math/random.doc.js": () => __vitePreload(() => import("./doc_math_random-g0gJo4gn.js"), true ? __vite__mapDeps([57,1,2,3]) : void 0, import.meta.url), "../math/vec2.doc.js": () => __vitePreload(() => import("./doc_math_vec2-CifAhRWd.js"), true ? __vite__mapDeps([58,1,35,2,3]) : void 0, import.meta.url), "../render/canvas_2d.doc.js": () => __vitePreload(() => import("./doc_render_canvas_2d-sPYLqd_9.js"), true ? __vite__mapDeps([59,1,44,45,7,3,8,9,10,11,12,2]) : void 0, import.meta.url), "../render/webgl_canvas_2d.doc.js": () => __vitePreload(() => import("./doc_render_webgl_canvas_2d-Daw6ugO4.js"), true ? __vite__mapDeps([60,1,46,45,7,3,8,9,10,11,12,2]) : void 0, import.meta.url) });
 const guideModules = /* @__PURE__ */ Object.assign({ "./guides/conventions.guide.js": () => __vitePreload(() => import("./conventions.guide-nXQ1XJTJ.js"), true ? __vite__mapDeps([61,1]) : void 0, import.meta.url), "./guides/perky_module.guide.js": () => __vitePreload(() => import("./perky_module.guide-BZjyfkVA.js"), true ? __vite__mapDeps([62,1,7,3,8,9,10,11,12,2]) : void 0, import.meta.url), "./guides/prologue/foreword.guide.js": () => __vitePreload(() => import("./foreword.guide-DLfyd409.js"), true ? __vite__mapDeps([63,1]) : void 0, import.meta.url), "./guides/prologue/philosophy.guide.js": () => __vitePreload(() => import("./philosophy.guide-0HEdzMHo.js"), true ? __vite__mapDeps([64,1]) : void 0, import.meta.url) });
+const HAMBURGER_ICON = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>';
 class DocViewer {
   constructor() {
     __privateAdd(this, _DocViewer_instances);
@@ -3699,6 +3705,9 @@ class DocViewer {
       }
       this.container.appendChild(docPage);
       this.currentDoc = docPath;
+      requestAnimationFrame(() => {
+        updateMobileTabs(docPage);
+      });
     } catch (error) {
       logger.error("Failed to load doc:", error);
       this.container.innerHTML = `
@@ -3707,6 +3716,7 @@ class DocViewer {
                     <p>${error.message}</p>
                 </div>
             `;
+      hideMobileTabs();
     }
   }
   async showGuide(guidePath) {
@@ -3732,6 +3742,7 @@ class DocViewer {
       }
       this.container.appendChild(docPage);
       this.currentDoc = guidePath;
+      hideMobileTabs();
     } catch (error) {
       logger.error("Failed to load guide:", error);
       this.container.innerHTML = `
@@ -3740,6 +3751,7 @@ class DocViewer {
                     <p>${error.message}</p>
                 </div>
             `;
+      hideMobileTabs();
     }
   }
 }
@@ -3844,11 +3856,26 @@ function categoryHasVisibleItems(category) {
   return false;
 }
 function setupMobileMenu() {
-  const toggle = document.getElementById("mobile-toggle");
-  const sidebar = document.getElementById("docs-sidebar");
-  const overlay = document.getElementById("mobile-overlay");
-  if (!toggle || !sidebar || !overlay) {
+  let toggle = document.getElementById("mobile-toggle");
+  let overlay = document.getElementById("mobile-overlay");
+  const sidebar = document.querySelector(".docs-sidebar");
+  if (!sidebar) {
     return;
+  }
+  sidebar.id = "docs-sidebar";
+  if (!toggle) {
+    toggle = document.createElement("button");
+    toggle.id = "mobile-toggle";
+    toggle.className = "mobile-toggle";
+    toggle.setAttribute("aria-label", "Toggle menu");
+    toggle.innerHTML = HAMBURGER_ICON;
+    document.body.insertBefore(toggle, document.body.firstChild);
+  }
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "mobile-overlay";
+    overlay.className = "mobile-overlay";
+    document.body.insertBefore(overlay, document.body.firstChild);
   }
   const openMenu = () => {
     sidebar.classList.add("open");
@@ -3873,6 +3900,42 @@ function setupMobileMenu() {
       closeMenu();
     }
   });
+}
+function getMobileTabsContainer() {
+  let container = document.getElementById("mobile-tabs");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "mobile-tabs";
+    container.className = "mobile-tabs";
+    document.body.appendChild(container);
+  }
+  return container;
+}
+function updateMobileTabs(docPage) {
+  const container = getMobileTabsContainer();
+  const tabs = docPage.availableTabs;
+  if (tabs.length <= 1) {
+    container.style.display = "none";
+    return;
+  }
+  container.innerHTML = "";
+  container.style.display = "";
+  for (const tab of tabs) {
+    const button = document.createElement("button");
+    button.textContent = tab.charAt(0).toUpperCase() + tab.slice(1);
+    button.className = docPage.activeTab === tab ? "active" : "";
+    button.addEventListener("click", () => {
+      docPage.switchTab(tab);
+      updateMobileTabs(docPage);
+    });
+    container.appendChild(button);
+  }
+}
+function hideMobileTabs() {
+  const container = document.getElementById("mobile-tabs");
+  if (container) {
+    container.style.display = "none";
+  }
 }
 document.addEventListener("DOMContentLoaded", () => {
   const viewer = new DocViewer();
