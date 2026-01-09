@@ -1,0 +1,72 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "const docPage = document.createElement('doc-page')\ndocPage.doc = {\n    title: 'My Module',\n    blocks: [\n        {type: 'text', content: 'Introduction text.'}\n    ]\n}\ndocument.body.appendChild(docPage)"
+  },
+  {
+    "type": "code",
+    "title": "doc",
+    "source": "// Main documentation data\ndocPage.doc = {\n    title: 'Module Name',\n    options: {context: 'Core'},\n    blocks: []\n}"
+  },
+  {
+    "type": "code",
+    "title": "api",
+    "source": "// API reference data (classes, methods, properties)\ndocPage.api = {\n    classes: [{name: 'MyClass', methods: []}],\n    functions: [],\n    constants: []\n}"
+  },
+  {
+    "type": "code",
+    "title": "tests",
+    "source": "// Test suite data for the tests tab\ndocPage.tests = {\n    describes: [{\n        title: 'MyClass',\n        tests: [{title: 'does something'}]\n    }]\n}"
+  },
+  {
+    "type": "code",
+    "title": "sources",
+    "source": "// Extracted source code for actions/containers\ndocPage.sources = {\n    'action-0': 'logger.log(\"hello\")',\n    'container-1': 'ctx.hint(\"demo\")'\n}"
+  },
+  {
+    "type": "code",
+    "title": "initialTab",
+    "source": "// Set which tab to show first\ndocPage.initialTab = 'api' // 'doc', 'api', or 'test'"
+  },
+  {
+    "type": "code",
+    "title": "Available tabs",
+    "source": "// availableTabs returns array of visible tabs\nconst tabs = docPage.availableTabs\n\n// ['doc', 'api', 'test'] if all data present\n\n// activeTab returns current tab\nconst current = docPage.activeTab"
+  },
+  {
+    "type": "code",
+    "title": "text block",
+    "source": "const block = {type: 'text', content: 'Hello **world**'}"
+  },
+  {
+    "type": "code",
+    "title": "code block",
+    "source": "const block = {type: 'code', title: 'Example', source: 'const x = 1'}"
+  },
+  {
+    "type": "code",
+    "title": "action block",
+    "source": "const block = {type: 'action', title: 'Demo', source: '...', fn: () => {}}"
+  },
+  {
+    "type": "code",
+    "title": "container block",
+    "source": "const block = {\n    type: 'container',\n    height: 300,\n    preset: 'interactive',\n    fn: (ctx) => {}\n}"
+  },
+  {
+    "type": "code",
+    "title": "section block",
+    "source": "const block = {\n    type: 'section',\n    title: 'Overview',\n    blocks: [],\n    setup: null\n}"
+  },
+  {
+    "type": "code",
+    "title": "see block",
+    "source": "const block = {type: 'see', name: 'Logger', pageType: 'doc', section: null}"
+  },
+  {
+    "type": "code",
+    "title": "disclaimer block",
+    "source": "const block = {type: 'disclaimer', content: 'Experimental feature'}"
+  }
+]

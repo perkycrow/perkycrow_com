@@ -6,6 +6,36 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://perkycrow.com/doc/core_perky_module.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/core_perky_module_api.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/core_perky_module_test.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/core_utils.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/core_utils_api.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/core_utils_test.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://perkycrow.com/doc/core_action_controller.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.8</priority>
@@ -111,21 +141,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://perkycrow.com/doc/core_perky_module.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://perkycrow.com/doc/core_perky_module_api.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://perkycrow.com/doc/core_perky_module_test.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://perkycrow.com/doc/core_perky_query.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.8</priority>
@@ -152,21 +167,6 @@
   </url>
   <url>
     <loc>https://perkycrow.com/doc/core_registry_test.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://perkycrow.com/doc/core_utils.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://perkycrow.com/doc/core_utils_api.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://perkycrow.com/doc/core_utils_test.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.5</priority>
   </url>
@@ -227,6 +227,36 @@
   </url>
   <url>
     <loc>https://perkycrow.com/doc/game_game_loop_test.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/math_random.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/math_random_api.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/math_random_test.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/math_vec2.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/math_vec2_api.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/math_vec2_test.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.5</priority>
   </url>
@@ -321,32 +351,17 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://perkycrow.com/doc/math_random.html</loc>
+    <loc>https://perkycrow.com/doc/audio_audio_system.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://perkycrow.com/doc/math_random_api.html</loc>
+    <loc>https://perkycrow.com/doc/audio_audio_system_api.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://perkycrow.com/doc/math_random_test.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://perkycrow.com/doc/math_vec2.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://perkycrow.com/doc/math_vec2_api.html</loc>
-    <lastmod>2026-01-09</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://perkycrow.com/doc/math_vec2_test.html</loc>
+    <loc>https://perkycrow.com/doc/audio_audio_system_test.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.5</priority>
   </url>
@@ -451,17 +466,32 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://perkycrow.com/doc/audio_audio_system.html</loc>
+    <loc>https://perkycrow.com/doc/doc_runtime.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://perkycrow.com/doc/audio_audio_system_api.html</loc>
+    <loc>https://perkycrow.com/doc/doc_runtime_api.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://perkycrow.com/doc/audio_audio_system_test.html</loc>
+    <loc>https://perkycrow.com/doc/doc_runtime_test.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/doc_doc_page.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/doc_doc_page_api.html</loc>
+    <lastmod>2026-01-09</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://perkycrow.com/doc/doc_doc_page_test.html</loc>
     <lastmod>2026-01-09</lastmod>
     <priority>0.5</priority>
   </url>
