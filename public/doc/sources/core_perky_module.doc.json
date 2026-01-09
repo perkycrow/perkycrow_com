@@ -37,7 +37,7 @@
   {
     "type": "action",
     "title": "create",
-    "source": "const parent = new PerkyModule({$id: 'parent'})\n\nconst child = parent.create(PerkyModule, {\n    $id: 'child',\n    $category: 'component'\n})\n\nlogger.log('child.host:', child.host.$id)\nlogger.log('child.installed:', child.installed)\nlogger.log('hasChild:', parent.hasChild('child'))\nlogger.log('getChild:', parent.getChild('child').$id)"
+    "source": "const parent = new PerkyModule({$id: 'parent'})\n\nparent.create(PerkyModule, {$id: 'child1', $category: 'component'})\nparent.create(PerkyModule, {$id: 'child2', $category: 'component'})\n\nlogger.log('children:', parent.children.map(c => c.$id))\nlogger.log('hasChild:', parent.hasChild('child1'))\nlogger.log('getChild:', parent.getChild('child1').$id)"
   },
   {
     "type": "action",
@@ -53,6 +53,11 @@
     "type": "action",
     "title": "childrenByCategory",
     "source": "const game = new PerkyModule({$id: 'game'})\ngame.create(PerkyModule, {$id: 'player', $category: 'entity'})\ngame.create(PerkyModule, {$id: 'enemy1', $category: 'entity'})\ngame.create(PerkyModule, {$id: 'score', $category: 'ui'})\n\nconst entities = game.childrenByCategory('entity')\nlogger.log('entities:', entities.map(e => e.$id))"
+  },
+  {
+    "type": "action",
+    "title": "removeChild",
+    "source": "const game = new PerkyModule({$id: 'game'})\nconst enemy = game.create(PerkyModule, {$id: 'enemy'})\n\nlogger.log('before:', game.hasChild('enemy'))\n\ngame.removeChild('enemy')\nlogger.log('after:', game.hasChild('enemy'))\nlogger.log('enemy disposed:', enemy.disposed)"
   },
   {
     "type": "action",
@@ -83,5 +88,15 @@
     "type": "action",
     "title": "listenTo",
     "source": "const player = new PerkyModule({$id: 'player'})\nconst enemy = new PerkyModule({$id: 'enemy'})\n\nplayer.listenTo(enemy, 'attack', damage => {\n    logger.log('player received attack:', damage)\n})\n\nenemy.emit('attack', 30)"
+  },
+  {
+    "type": "action",
+    "title": "delegateTo",
+    "source": "class AudioSystem extends PerkyModule {\n    play (sound) {\n        logger.log('playing:', sound)\n    }\n\n    stop () {\n        logger.log('stopping audio')\n    }\n\n    onInstall (host) {\n        this.delegateTo(host, ['play', 'stop'])\n    }\n}\n\nconst game = new PerkyModule({$id: 'game'})\ngame.create(AudioSystem, {$id: 'audio'})\n\ngame.play('explosion.mp3')\ngame.stop()"
+  },
+  {
+    "type": "action",
+    "title": "delegateEventsTo",
+    "source": "const game = new PerkyModule({$id: 'game'})\nconst player = game.create(PerkyModule, {$id: 'player'})\n\nplayer.delegateEventsTo(game, ['damage', 'death'], 'player')\n\ngame.on('player:damage', amount => logger.log('game heard player damage:', amount))\ngame.on('player:death', () => logger.log('game heard player death'))\n\nplayer.emit('damage', 50)\nplayer.emit('death')"
   }
 ]

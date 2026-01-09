@@ -3989,6 +3989,65 @@
       }
     ]
   },
+  "/application/asset.doc.js": {
+    "file": "/application/asset.test.js",
+    "describes": [
+      {
+        "title": "Asset",
+        "line": 5,
+        "beforeEach": null,
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor with parameters",
+            "line": 7,
+            "source": "const params = {\n    type: 'image',\n    name: 'example',\n    id: 'test_id',\n    url: '/path/to/file.jpg',\n    source: {key: 'value'},\n    tags: ['titleScreen', 'mainScene'],\n    config: {width: 100, height: 100}\n}\n\nconst asset = new Asset(params)\n\nexpect(asset.type).toBe('image')\nexpect(asset.name).toBe('example')\nexpect(asset.id).toBe('test_id')\nexpect(asset.url).toBe('/path/to/file.jpg')\nexpect(asset.source).toEqual({key: 'value'})\nexpect(asset.tags).toEqual(['titleScreen', 'mainScene'])\nexpect(asset.config).toEqual({width: 100, height: 100})"
+          },
+          {
+            "title": "constructor name defaults to id",
+            "line": 30,
+            "source": "const asset = new Asset({\n    type: 'video',\n    id: 'custom_id'\n})\n\nexpect(asset.id).toBe('custom_id')\nexpect(asset.name).toBe('custom_id')"
+          },
+          {
+            "title": "loaded returns true when source exists",
+            "line": 41,
+            "source": "const asset = new Asset({\n    type: 'json',\n    id: 'test_id',\n    source: {content: 'source'}\n})\n\nexpect(asset.loaded).toBe(true)"
+          },
+          {
+            "title": "loaded returns false when source is missing",
+            "line": 52,
+            "source": "const asset = new Asset({\n    type: 'text',\n    id: 'test_id',\n    url: '/path/to/text.txt'\n})\n\nexpect(asset.loaded).toBe(false)"
+          },
+          {
+            "title": "hasTag returns true for existing tags",
+            "line": 63,
+            "source": "const asset = new Asset({\n    type: 'image',\n    id: 'test_id',\n    tags: ['titleScreen', 'mainScene']\n})\n\nexpect(asset.hasTag('titleScreen')).toBe(true)\nexpect(asset.hasTag('mainScene')).toBe(true)\nexpect(asset.hasTag('endingScene')).toBe(false)"
+          },
+          {
+            "title": "hasTag returns false when tags are empty",
+            "line": 76,
+            "source": "const asset = new Asset({\n    type: 'image',\n    id: 'test_id'\n})\n\nexpect(asset.hasTag('titleScreen')).toBe(false)"
+          },
+          {
+            "title": "export with url",
+            "line": 86,
+            "source": "const asset = new Asset({\n    type: 'image',\n    name: 'example',\n    id: 'test_id',\n    url: '/path/to/file.jpg',\n    tags: ['titleScreen'],\n    config: {width: 100}\n})\n\nconst exported = asset.export()\n\nexpect(exported).toEqual({\n    type: 'image',\n    id: 'test_id',\n    name: 'example',\n    url: '/path/to/file.jpg',\n    tags: ['titleScreen'],\n    config: {width: 100}\n})\nexpect(exported.source).toBeUndefined()"
+          },
+          {
+            "title": "export with source",
+            "line": 110,
+            "source": "const asset = new Asset({\n    type: 'json',\n    name: 'config',\n    id: 'config_id',\n    source: {settings: true},\n    tags: ['config', 'settings'],\n    config: {parse: true}\n})\n\nconst exported = asset.export()\n\nexpect(exported).toEqual({\n    type: 'json',\n    id: 'config_id',\n    name: 'config',\n    source: {settings: true},\n    tags: ['config', 'settings'],\n    config: {parse: true}\n})\nexpect(exported.path).toBeUndefined()"
+          },
+          {
+            "title": "default tags and config",
+            "line": 134,
+            "source": "const asset = new Asset({\n    type: 'audio',\n    id: 'audio_id'\n})\n\nexpect(asset.tags).toEqual([])\nexpect(asset.config).toEqual({})"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
   "/application/manifest.doc.js": {
     "file": "/application/manifest.test.js",
     "describes": [
@@ -4326,6 +4385,58 @@
       }
     ]
   },
+  "/application/source_manager.doc.js": {
+    "file": "/application/source_manager.test.js",
+    "describes": [
+      {
+        "title": "SourceManager",
+        "line": 7,
+        "beforeEach": {
+          "line": 12,
+          "source": "loaders = {\n    image: vi.fn().mockResolvedValue('loaded image'),\n    audio: vi.fn().mockResolvedValue('loaded audio')\n}\n\nmanifest = {\n    getAsset: vi.fn(),\n    getAssetsByTag: vi.fn(),\n    getAllAssets: vi.fn()\n}\n\nmanager = new SourceManager({loaders, manifest})"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor",
+            "line": 28,
+            "source": "expect(manager).toBeInstanceOf(PerkyModule)\nexpect(manager.manifest).toBe(manifest)"
+          },
+          {
+            "title": "loadAsset success",
+            "line": 34,
+            "source": "const asset = {type: 'image', id: 'logo', url: '/assets/logo.png'}\nmanifest.getAsset.mockReturnValueOnce(asset)\n\nconst result = await manager.loadAsset('logo')\n\nexpect(manifest.getAsset).toHaveBeenCalledWith('logo')\nexpect(result).toBeInstanceOf(SourceLoader)\nexpect(result.assets).toEqual([asset])"
+          },
+          {
+            "title": "loadAsset not found",
+            "line": 46,
+            "source": "manifest.getAsset.mockReturnValueOnce(null)\n\nawait expect(manager.loadAsset('nonexistent')).rejects.toThrow('Asset not found: nonexistent')\nexpect(manifest.getAsset).toHaveBeenCalledWith('nonexistent')"
+          },
+          {
+            "title": "loadTag success",
+            "line": 54,
+            "source": "const assets = [\n    {type: 'image', id: 'logo', url: '/assets/logo.png', tags: ['ui']},\n    {type: 'image', id: 'background', url: '/assets/bg.png', tags: ['ui']}\n]\nmanifest.getAssetsByTag.mockReturnValueOnce(assets)\n\nconst result = await manager.loadTag('ui')\n\nexpect(manifest.getAssetsByTag).toHaveBeenCalledWith('ui')\nexpect(result).toBeInstanceOf(SourceLoader)\nexpect(result.assets).toBe(assets)"
+          },
+          {
+            "title": "loadTag empty result",
+            "line": 69,
+            "source": "manifest.getAssetsByTag.mockReturnValueOnce([])\n\nconst result = await manager.loadTag('nonexistent')\n\nexpect(manifest.getAssetsByTag).toHaveBeenCalledWith('nonexistent')\nexpect(result).toBeInstanceOf(SourceLoader)\nexpect(result.assets).toEqual([])"
+          },
+          {
+            "title": "loadAll success",
+            "line": 80,
+            "source": "const assets = [\n    {type: 'image', id: 'logo', url: '/assets/logo.png'},\n    {type: 'audio', id: 'music', url: '/assets/music.mp3'}\n]\nmanifest.getAllAssets.mockReturnValueOnce(assets)\n\nconst result = await manager.loadAll()\n\nexpect(manifest.getAllAssets).toHaveBeenCalled()\nexpect(result).toBeInstanceOf(SourceLoader)\nexpect(result.assets).toBe(assets)"
+          },
+          {
+            "title": "loadAll empty result",
+            "line": 95,
+            "source": "manifest.getAllAssets.mockReturnValueOnce([])\n\nconst result = await manager.loadAll()\n\nexpect(manifest.getAllAssets).toHaveBeenCalled()\nexpect(result).toBeInstanceOf(SourceLoader)\nexpect(result.assets).toEqual([])"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
   "/game/game.doc.js": {
     "file": "/game/game.test.js",
     "describes": [
@@ -4513,6 +4624,256 @@
           }
         ],
         "describes": []
+      }
+    ]
+  },
+  "/game/world_view.doc.js": {
+    "file": "/game/world_view.test.js",
+    "describes": [
+      {
+        "title": "WorldView",
+        "line": 73,
+        "beforeEach": {
+          "line": 79,
+          "source": "mockWorld = new MockWorld()\nmockGame = {getSource: vi.fn()}\n\nworldView = new WorldView({\n    world: mockWorld,\n    game: mockGame\n})"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "clearRegistry clears all registrations",
+            "line": 183,
+            "source": "worldView.register(MockEntity, MockEntityView)\nworldView.register(AnotherMockEntity, MockEntityView)\n\nconst result = worldView.clearRegistry()\n\nexpect(result).toBe(worldView)"
+          },
+          {
+            "title": "onStop disposes all views",
+            "line": 240,
+            "source": "worldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'stop-test'})\nmockWorld.addEntity(entity)\n\nconst views = worldView.getViews('stop-test')\nexpect(views.length).toBe(1)\n\nworldView.onStop()\n\n// After stop, views should be cleared\nexpect(worldView.getViews('stop-test').length).toBe(0)"
+          },
+          {
+            "title": "sync calls sync on all views",
+            "line": 257,
+            "source": "worldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity1 = new MockEntity({$id: 'sync-1'})\nconst entity2 = new MockEntity({$id: 'sync-2'})\nmockWorld.addEntity(entity1)\nmockWorld.addEntity(entity2)\n\nworldView.sync()\n\nconst views1 = worldView.getViews('sync-1')\nconst views2 = worldView.getViews('sync-2')\n\nexpect(views1[0].syncCalled).toBe(true)\nexpect(views2[0].syncCalled).toBe(true)"
+          }
+        ],
+        "describes": [
+          {
+            "title": "constructor",
+            "line": 90,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "initializes with world and game references",
+                "line": 92,
+                "source": "expect(worldView.world).toBe(mockWorld)\nexpect(worldView.game).toBe(mockGame)"
+              },
+              {
+                "title": "creates a rootGroup",
+                "line": 98,
+                "source": "expect(worldView.rootGroup).toBeInstanceOf(Group2D)"
+              },
+              {
+                "title": "has correct $category",
+                "line": 103,
+                "source": "expect(WorldView.$category).toBe('worldView')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "register",
+            "line": 110,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "registers a view by class",
+                "line": 112,
+                "source": "worldView.register(MockEntity, MockEntityView)\n\nconst entity = new MockEntity({$id: 'test-1'})\nmockWorld.addEntity(entity)\nworldView.onStart()\n\nexpect(worldView.getViews('test-1').length).toBe(1)"
+              },
+              {
+                "title": "registers a view by matcher function",
+                "line": 123,
+                "source": "const matcher = (entity) => entity.hasTag('enemy')\nworldView.register(matcher, MockEntityView)\n\nconst entity = new MockEntity({$id: 'test-2', entityTags: ['enemy']})\nmockWorld.addEntity(entity)\nworldView.onStart()\n\nexpect(worldView.getViews('test-2').length).toBe(1)"
+              },
+              {
+                "title": "registers with config",
+                "line": 135,
+                "source": "const config = {color: 'red', size: 10}\nworldView.register(MockEntity, MockEntityView, config)\n\nconst entity = new MockEntity({$id: 'test-3'})\nmockWorld.addEntity(entity)\nworldView.onStart()\n\nconst views = worldView.getViews('test-3')\nexpect(views[0].context.config).toEqual(config)"
+              },
+              {
+                "title": "returns this for chaining",
+                "line": 148,
+                "source": "const result = worldView.register(MockEntity, MockEntityView)\nexpect(result).toBe(worldView)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "unregister",
+            "line": 156,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "unregisters a class registration",
+                "line": 158,
+                "source": "worldView.register(MockEntity, MockEntityView)\nconst result = worldView.unregister(MockEntity)\n\nexpect(result).toBe(true)"
+              },
+              {
+                "title": "unregisters a matcher registration",
+                "line": 166,
+                "source": "const matcher = (entity) => entity.hasTag('test')\nworldView.register(matcher, MockEntityView)\nconst result = worldView.unregister(matcher)\n\nexpect(result).toBe(true)"
+              },
+              {
+                "title": "returns false for non-existent registration",
+                "line": 175,
+                "source": "const result = worldView.unregister(MockEntity)\nexpect(result).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "onStart",
+            "line": 193,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "listens to world entity:set events",
+                "line": 195,
+                "source": "worldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'dynamic-1'})\nmockWorld.addEntity(entity)\n\nexpect(worldView.getViews('dynamic-1').length).toBe(1)"
+              },
+              {
+                "title": "listens to world entity:delete events",
+                "line": 206,
+                "source": "worldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'to-delete'})\nmockWorld.addEntity(entity)\n\nexpect(worldView.getViews('to-delete').length).toBe(1)\n\nmockWorld.removeEntity('to-delete')\n\nexpect(worldView.getViews('to-delete').length).toBe(0)"
+              },
+              {
+                "title": "processes existing entities on start",
+                "line": 221,
+                "source": "const entity = new MockEntity({$id: 'existing-1'})\nmockWorld.addEntity(entity)\n\nworldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nexpect(worldView.getViews('existing-1').length).toBe(1)"
+              },
+              {
+                "title": "does nothing if no world",
+                "line": 232,
+                "source": "const noWorldView = new WorldView({game: mockGame})\nexpect(() => noWorldView.onStart()).not.toThrow()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "getViews",
+            "line": 276,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns empty array for unknown entity",
+                "line": 278,
+                "source": "expect(worldView.getViews('unknown')).toEqual([])"
+              },
+              {
+                "title": "returns views for known entity",
+                "line": 283,
+                "source": "worldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'get-test'})\nmockWorld.addEntity(entity)\n\nconst views = worldView.getViews('get-test')\nexpect(views.length).toBe(1)\nexpect(views[0]).toBeInstanceOf(MockEntityView)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "events",
+            "line": 298,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "emits view:added when entity is added",
+                "line": 300,
+                "source": "const addedHandler = vi.fn()\nworldView.on('view:added', addedHandler)\n\nworldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'event-add'})\nmockWorld.addEntity(entity)\n\nexpect(addedHandler).toHaveBeenCalledWith('event-add', expect.any(Array))"
+              },
+              {
+                "title": "emits view:removed when entity is deleted",
+                "line": 314,
+                "source": "const removedHandler = vi.fn()\nworldView.on('view:removed', removedHandler)\n\nworldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'event-remove'})\nmockWorld.addEntity(entity)\nmockWorld.removeEntity('event-remove')\n\nexpect(removedHandler).toHaveBeenCalledWith('event-remove', expect.any(Array))"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "view root integration",
+            "line": 331,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "adds view root to rootGroup",
+                "line": 333,
+                "source": "worldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'root-test'})\nmockWorld.addEntity(entity)\n\nexpect(worldView.rootGroup.children.length).toBe(1)"
+              },
+              {
+                "title": "sets $entity on view root",
+                "line": 344,
+                "source": "worldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'meta-test'})\nmockWorld.addEntity(entity)\n\nconst child = worldView.rootGroup.children[0]\nexpect(child.$entity).toBe(entity)"
+              },
+              {
+                "title": "sets $view and $viewName on view root",
+                "line": 356,
+                "source": "worldView.register(MockEntity, MockEntityView)\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'view-meta'})\nmockWorld.addEntity(entity)\n\nconst child = worldView.rootGroup.children[0]\nexpect(child.$view).toBeInstanceOf(MockEntityView)\nexpect(child.$viewName).toBe('MockEntityView')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "AutoView (Object2D registration)",
+            "line": 371,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "registers an Object2D class directly",
+                "line": 373,
+                "source": "worldView.register(MockEntity, Circle, {radius: 0.5, color: '#ff0000'})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'circle-1', x: 10, y: 20})\nmockWorld.addEntity(entity)\n\nconst views = worldView.getViews('circle-1')\nexpect(views.length).toBe(1)\nexpect(views[0].root).toBeInstanceOf(Circle)\nexpect(views[0].root.radius).toBe(0.5)\nexpect(views[0].root.color).toBe('#ff0000')"
+              },
+              {
+                "title": "auto-syncs x and y from entity",
+                "line": 388,
+                "source": "worldView.register(MockEntity, Circle, {radius: 0.5})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'sync-xy', x: 5, y: 10})\nmockWorld.addEntity(entity)\n\nconst view = worldView.getViews('sync-xy')[0]\nexpect(view.root.x).toBe(5)\nexpect(view.root.y).toBe(10)\n\nentity.x = 15\nentity.y = 25\nworldView.sync()\n\nexpect(view.root.x).toBe(15)\nexpect(view.root.y).toBe(25)"
+              },
+              {
+                "title": "supports custom sync bindings with string property name",
+                "line": 408,
+                "source": "worldView.register(MockEntity, Circle, {\n    radius: 0.5,\n    sync: {\n        opacity: 'health'\n    }\n})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'sync-string', x: 0, y: 0})\nentity.health = 0.75\nmockWorld.addEntity(entity)\n\nworldView.sync()\n\nconst view = worldView.getViews('sync-string')[0]\nexpect(view.root.opacity).toBe(0.75)"
+              },
+              {
+                "title": "supports custom sync bindings with function",
+                "line": 428,
+                "source": "worldView.register(MockEntity, Circle, {\n    radius: 0.5,\n    sync: {\n        scaleX: (entity) => entity.health / 100\n    }\n})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'sync-fn', x: 0, y: 0})\nentity.health = 50\nmockWorld.addEntity(entity)\n\nworldView.sync()\n\nconst view = worldView.getViews('sync-fn')[0]\nexpect(view.root.scaleX).toBe(0.5)"
+              },
+              {
+                "title": "passes deltaTime to sync function",
+                "line": 448,
+                "source": "const syncFn = vi.fn((entity, dt) => dt * 2)\nworldView.register(MockEntity, Circle, {\n    radius: 0.5,\n    sync: {\n        opacity: syncFn\n    }\n})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'sync-dt', x: 0, y: 0})\nmockWorld.addEntity(entity)\n\nworldView.sync(0.016)\n\nexpect(syncFn).toHaveBeenCalledWith(entity, 0.016)"
+              },
+              {
+                "title": "sets $viewName to Object2D class name",
+                "line": 467,
+                "source": "worldView.register(MockEntity, Circle, {radius: 0.5})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'viewname-test'})\nmockWorld.addEntity(entity)\n\nconst child = worldView.rootGroup.children[0]\nexpect(child.$viewName).toBe('Circle')"
+              },
+              {
+                "title": "works with Image2D",
+                "line": 479,
+                "source": "const mockImage = {width: 100, height: 100}\nworldView.register(MockEntity, Image2D, {image: mockImage, width: 1, height: 1})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'image-test', x: 0, y: 0})\nmockWorld.addEntity(entity)\n\nconst view = worldView.getViews('image-test')[0]\nexpect(view.root).toBeInstanceOf(Image2D)\nexpect(view.root.image).toBe(mockImage)"
+              },
+              {
+                "title": "disposes correctly",
+                "line": 493,
+                "source": "worldView.register(MockEntity, Circle, {radius: 0.5})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'dispose-test'})\nmockWorld.addEntity(entity)\n\nexpect(worldView.rootGroup.children.length).toBe(1)\n\nmockWorld.removeEntity('dispose-test')\n\nexpect(worldView.getViews('dispose-test').length).toBe(0)"
+              }
+            ],
+            "describes": []
+          }
+        ]
       }
     ]
   },
@@ -5376,57 +5737,57 @@
       }
     ]
   },
-  "/render/canvas_2d.doc.js": {
-    "file": "/render/canvas_2d.test.js",
+  "/render/canvas_renderer.doc.js": {
+    "file": "/render/canvas_renderer.test.js",
     "describes": [
       {
-        "title": "Canvas2D",
+        "title": "CanvasRenderer",
         "line": 9,
         "beforeEach": {
           "line": 14,
-          "source": "canvas = document.createElement('canvas')\ncanvas.width = 800\ncanvas.height = 600\nrenderer = new Canvas2D({canvas})"
+          "source": "canvas = document.createElement('canvas')\ncanvas.width = 800\ncanvas.height = 600\nrenderer = new CanvasRenderer({canvas})"
         },
         "afterEach": null,
         "tests": [
           {
             "title": "constructor with canvas",
             "line": 22,
-            "source": "expect(renderer.canvas).toBe(canvas)\nexpect(renderer.ctx).toBe(canvas.getContext('2d'))\nexpect(renderer.camera).toBeInstanceOf(Camera2D)\nexpect(renderer.backgroundColor).toBe(null)"
+            "source": "expect(renderer.canvas).toBe(canvas)\nexpect(renderer.ctx).toBe(canvas.getContext('2d'))\nexpect(renderer.camera).toBeInstanceOf(Camera)\nexpect(renderer.backgroundColor).toBe(null)"
           },
           {
             "title": "constructor with container",
             "line": 30,
-            "source": "const container = document.createElement('div')\nconst r = new Canvas2D({container, width: 400, height: 300})\n\nexpect(r.canvas).toBeInstanceOf(HTMLCanvasElement)\nexpect(r.container).toBe(container)\nexpect(container.contains(r.canvas)).toBe(true)"
+            "source": "const container = document.createElement('div')\nconst r = new CanvasRenderer({container, width: 400, height: 300})\n\nexpect(r.canvas).toBeInstanceOf(HTMLCanvasElement)\nexpect(r.container).toBe(container)\nexpect(container.contains(r.canvas)).toBe(true)"
           },
           {
             "title": "constructor with options",
             "line": 40,
-            "source": "const camera = new Camera2D()\nconst r = new Canvas2D({\n    canvas,\n    camera,\n    backgroundColor: '#ffffff'\n})\n\nexpect(r.camera).toBe(camera)\nexpect(r.backgroundColor).toBe('#ffffff')"
+            "source": "const camera = new Camera()\nconst r = new CanvasRenderer({\n    canvas,\n    camera,\n    backgroundColor: '#ffffff'\n})\n\nexpect(r.camera).toBe(camera)\nexpect(r.backgroundColor).toBe('#ffffff')"
           },
           {
             "title": "autoFit observes container resize",
             "line": 53,
-            "source": "const container = document.createElement('div')\n\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\nr.dispose()"
+            "source": "const container = document.createElement('div')\n\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new CanvasRenderer({container, autoFit: true})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\nr.dispose()"
           },
           {
             "title": "dispose cleans up autoFit observer",
             "line": 68,
-            "source": "const container = document.createElement('div')\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.canvas).toBeInstanceOf(HTMLCanvasElement)\nexpect(r.ctx).toBeDefined()\n\nr.dispose()\n\nexpect(r.canvas).toBe(null)\nexpect(r.ctx).toBe(null)"
+            "source": "const container = document.createElement('div')\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new CanvasRenderer({container, autoFit: true})\n\nexpect(r.canvas).toBeInstanceOf(HTMLCanvasElement)\nexpect(r.ctx).toBeDefined()\n\nr.dispose()\n\nexpect(r.canvas).toBe(null)\nexpect(r.ctx).toBe(null)"
           },
           {
             "title": "autoFitEnabled can be toggled dynamically",
             "line": 85,
-            "source": "const container = document.createElement('div')\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new Canvas2D({container, autoFit: true})\n\nexpect(r.autoFitEnabled).toBe(true)\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\n// Disable autoFit\nr.autoFitEnabled = false\nexpect(r.autoFitEnabled).toBe(false)\n\n// Re-enable autoFit\nr.autoFitEnabled = true\nexpect(r.autoFitEnabled).toBe(true)\n\nr.dispose()"
+            "source": "const container = document.createElement('div')\nObject.defineProperty(container, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container, 'clientHeight', {value: 300, writable: true})\n\nconst r = new CanvasRenderer({container, autoFit: true})\n\nexpect(r.autoFitEnabled).toBe(true)\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\n// Disable autoFit\nr.autoFitEnabled = false\nexpect(r.autoFitEnabled).toBe(false)\n\n// Re-enable autoFit\nr.autoFitEnabled = true\nexpect(r.autoFitEnabled).toBe(true)\n\nr.dispose()"
           },
           {
             "title": "changing container with autoFit updates observer",
             "line": 108,
-            "source": "const container1 = document.createElement('div')\nconst container2 = document.createElement('div')\n\nObject.defineProperty(container1, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container1, 'clientHeight', {value: 300, writable: true})\nObject.defineProperty(container2, 'clientWidth', {value: 800, writable: true})\nObject.defineProperty(container2, 'clientHeight', {value: 600, writable: true})\n\nconst r = new Canvas2D({container: container1, autoFit: true})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\nexpect(r.container).toBe(container1)\n\n// Change container - should trigger resize\nr.container = container2\n\nexpect(r.container).toBe(container2)\nexpect(r.displayWidth).toBe(800)\nexpect(r.displayHeight).toBe(600)\n\nr.dispose()"
+            "source": "const container1 = document.createElement('div')\nconst container2 = document.createElement('div')\n\nObject.defineProperty(container1, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container1, 'clientHeight', {value: 300, writable: true})\nObject.defineProperty(container2, 'clientWidth', {value: 800, writable: true})\nObject.defineProperty(container2, 'clientHeight', {value: 600, writable: true})\n\nconst r = new CanvasRenderer({container: container1, autoFit: true})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\nexpect(r.container).toBe(container1)\n\n// Change container - should trigger resize\nr.container = container2\n\nexpect(r.container).toBe(container2)\nexpect(r.displayWidth).toBe(800)\nexpect(r.displayHeight).toBe(600)\n\nr.dispose()"
           },
           {
             "title": "changing container without autoFit does not resize",
             "line": 134,
-            "source": "const container1 = document.createElement('div')\nconst container2 = document.createElement('div')\n\nObject.defineProperty(container1, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container1, 'clientHeight', {value: 300, writable: true})\nObject.defineProperty(container2, 'clientWidth', {value: 800, writable: true})\nObject.defineProperty(container2, 'clientHeight', {value: 600, writable: true})\n\nconst r = new Canvas2D({container: container1, width: 400, height: 300})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\n// Change container - should NOT auto-resize\nr.container = container2\n\nexpect(r.container).toBe(container2)\nexpect(r.displayWidth).toBe(400) // Should remain same\nexpect(r.displayHeight).toBe(300) // Should remain same\n\nr.dispose()"
+            "source": "const container1 = document.createElement('div')\nconst container2 = document.createElement('div')\n\nObject.defineProperty(container1, 'clientWidth', {value: 400, writable: true})\nObject.defineProperty(container1, 'clientHeight', {value: 300, writable: true})\nObject.defineProperty(container2, 'clientWidth', {value: 800, writable: true})\nObject.defineProperty(container2, 'clientHeight', {value: 600, writable: true})\n\nconst r = new CanvasRenderer({container: container1, width: 400, height: 300})\n\nexpect(r.displayWidth).toBe(400)\nexpect(r.displayHeight).toBe(300)\n\n// Change container - should NOT auto-resize\nr.container = container2\n\nexpect(r.container).toBe(container2)\nexpect(r.displayWidth).toBe(400) // Should remain same\nexpect(r.displayHeight).toBe(300) // Should remain same\n\nr.dispose()"
           },
           {
             "title": "render clears canvas",
@@ -5498,15 +5859,15 @@
       }
     ]
   },
-  "/render/webgl_canvas_2d.doc.js": {
-    "file": "/render/webgl_canvas_2d.test.js",
+  "/render/webgl_renderer.doc.js": {
+    "file": "/render/webgl_renderer.test.js",
     "describes": [
       {
-        "title": "WebGLCanvas2D",
+        "title": "WebGLRenderer",
         "line": 12,
         "beforeEach": {
           "line": 17,
-          "source": "canvas = document.createElement('canvas')\ncanvas.width = 800\ncanvas.height = 600\nrenderer = new WebGLCanvas2D({canvas})"
+          "source": "canvas = document.createElement('canvas')\ncanvas.width = 800\ncanvas.height = 600\nrenderer = new WebGLRenderer({canvas})"
         },
         "afterEach": null,
         "tests": [
@@ -5541,27 +5902,27 @@
               {
                 "title": "initializes camera",
                 "line": 37,
-                "source": "expect(renderer.camera).toBeInstanceOf(Camera2D)"
+                "source": "expect(renderer.camera).toBeInstanceOf(Camera)"
               },
               {
                 "title": "has static $name",
                 "line": 42,
-                "source": "expect(WebGLCanvas2D.$name).toBe('webGLCanvas2D')"
+                "source": "expect(WebGLRenderer.$name).toBe('webGLRenderer')"
               },
               {
                 "title": "with provided camera",
                 "line": 47,
-                "source": "const camera = new Camera2D({x: 10, y: 20})\nconst r = new WebGLCanvas2D({canvas, camera})\nexpect(r.camera).toBe(camera)"
+                "source": "const camera = new Camera({x: 10, y: 20})\nconst r = new WebGLRenderer({canvas, camera})\nexpect(r.camera).toBe(camera)"
               },
               {
                 "title": "with backgroundColor",
                 "line": 54,
-                "source": "const r = new WebGLCanvas2D({canvas, backgroundColor: '#FF0000'})\nexpect(r.backgroundColor).toBe('#FF0000')"
+                "source": "const r = new WebGLRenderer({canvas, backgroundColor: '#FF0000'})\nexpect(r.backgroundColor).toBe('#FF0000')"
               },
               {
                 "title": "with enableCulling",
                 "line": 60,
-                "source": "const r = new WebGLCanvas2D({canvas, enableCulling: true})\nexpect(r.enableCulling).toBe(true)"
+                "source": "const r = new WebGLRenderer({canvas, enableCulling: true})\nexpect(r.enableCulling).toBe(true)"
               },
               {
                 "title": "initializes stats",
@@ -5775,6 +6136,598 @@
             "describes": []
           }
         ]
+      }
+    ]
+  },
+  "/render/circle.doc.js": {
+    "file": "/render/circle.test.js",
+    "describes": [
+      {
+        "title": "Circle",
+        "line": 6,
+        "beforeEach": {
+          "line": 10,
+          "source": "circle = new Circle()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor defaults",
+            "line": 15,
+            "source": "expect(circle.radius).toBe(10)\nexpect(circle.color).toBe('#000000')\nexpect(circle.strokeColor).toBe('#000000')\nexpect(circle.strokeWidth).toBe(0)"
+          },
+          {
+            "title": "constructor with options",
+            "line": 23,
+            "source": "const c = new Circle({\n    x: 10,\n    y: 20,\n    radius: 50,\n    color: '#ff0000',\n    strokeColor: '#00ff00',\n    strokeWidth: 2,\n    opacity: 0.5\n})\n\nexpect(c.x).toBe(10)\nexpect(c.y).toBe(20)\nexpect(c.radius).toBe(50)\nexpect(c.color).toBe('#ff0000')\nexpect(c.strokeColor).toBe('#00ff00')\nexpect(c.strokeWidth).toBe(2)\nexpect(c.opacity).toBe(0.5)"
+          },
+          {
+            "title": "setRadius",
+            "line": 44,
+            "source": "const result = circle.setRadius(25)\n\nexpect(circle.radius).toBe(25)\nexpect(result).toBe(circle)"
+          },
+          {
+            "title": "getBounds",
+            "line": 52,
+            "source": "circle.radius = 20\ncircle.anchorX = 0.5\ncircle.anchorY = 0.5\n\nconst bounds = circle.getBounds()\n\nexpect(bounds.minX).toBeCloseTo(-20)\nexpect(bounds.minY).toBeCloseTo(-20)\nexpect(bounds.maxX).toBeCloseTo(20)\nexpect(bounds.maxY).toBeCloseTo(20)\nexpect(bounds.width).toBe(40)\nexpect(bounds.height).toBe(40)"
+          },
+          {
+            "title": "getBounds with custom anchor",
+            "line": 68,
+            "source": "circle.radius = 10\ncircle.anchorX = 0\ncircle.anchorY = 0\n\nconst bounds = circle.getBounds()\n\nexpect(bounds.minX).toBeCloseTo(0)\nexpect(bounds.minY).toBeCloseTo(0)\nexpect(bounds.maxX).toBeCloseTo(20)\nexpect(bounds.maxY).toBeCloseTo(20)\nexpect(bounds.width).toBe(20)\nexpect(bounds.height).toBe(20)"
+          }
+        ],
+        "describes": []
+      },
+      {
+        "title": "CanvasCircleRenderer",
+        "line": 86,
+        "beforeEach": {
+          "line": 91,
+          "source": "renderer = new CanvasCircleRenderer()\nctx = {\n    beginPath: vi.fn(),\n    arc: vi.fn(),\n    fill: vi.fn(),\n    stroke: vi.fn()\n}"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "handles Circle class",
+            "line": 102,
+            "source": "expect(CanvasCircleRenderer.handles).toContain(Circle)"
+          },
+          {
+            "title": "render without stroke",
+            "line": 107,
+            "source": "const circle = new Circle({\n    radius: 20,\n    color: '#ff0000',\n    anchorX: 0.5,\n    anchorY: 0.5,\n    strokeWidth: 0\n})\n\nrenderer.render(circle, ctx)\n\nexpect(ctx.beginPath).toHaveBeenCalled()\nexpect(ctx.arc).toHaveBeenCalledWith(0, 0, 20, 0, Math.PI * 2)\nexpect(ctx.fill).toHaveBeenCalled()\nexpect(ctx.stroke).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "render with stroke",
+            "line": 125,
+            "source": "const circle = new Circle({\n    radius: 20,\n    color: '#ff0000',\n    strokeColor: '#0000ff',\n    strokeWidth: 2,\n    anchorX: 0.5,\n    anchorY: 0.5\n})\n\nrenderer.render(circle, ctx)\n\nexpect(ctx.beginPath).toHaveBeenCalled()\nexpect(ctx.arc).toHaveBeenCalledWith(0, 0, 20, 0, Math.PI * 2)\nexpect(ctx.fill).toHaveBeenCalled()\nexpect(ctx.stroke).toHaveBeenCalled()"
+          },
+          {
+            "title": "render with custom anchor",
+            "line": 144,
+            "source": "const circle = new Circle({\n    radius: 20,\n    anchorX: 0,\n    anchorY: 0\n})\n\nrenderer.render(circle, ctx)\n\nexpect(ctx.arc).toHaveBeenCalledWith(20, 20, 20, 0, Math.PI * 2)"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
+  "/render/group_2d.doc.js": {
+    "file": "/render/group_2d.test.js",
+    "describes": [
+      {
+        "title": "Group2D",
+        "line": 6,
+        "beforeEach": {
+          "line": 10,
+          "source": "group = new Group2D()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor",
+            "line": 15,
+            "source": "expect(group).toBeInstanceOf(Object2D)\nexpect(group.children).toEqual([])"
+          },
+          {
+            "title": "constructor with options",
+            "line": 21,
+            "source": "const g = new Group2D({\n    x: 10,\n    y: 20,\n    rotation: Math.PI,\n    scaleX: 2,\n    scaleY: 3,\n    opacity: 0.5,\n    visible: false\n})\n\nexpect(g.x).toBe(10)\nexpect(g.y).toBe(20)\nexpect(g.rotation).toBe(Math.PI)\nexpect(g.scaleX).toBe(2)\nexpect(g.scaleY).toBe(3)\nexpect(g.opacity).toBe(0.5)\nexpect(g.visible).toBe(false)"
+          },
+          {
+            "title": "addChild",
+            "line": 42,
+            "source": "const child1 = new Object2D()\nconst child2 = new Object2D()\n\nconst result = group.addChild(child1, child2)\n\nexpect(group.children).toEqual([child1, child2])\nexpect(child1.parent).toBe(group)\nexpect(child2.parent).toBe(group)\nexpect(result).toBe(group)"
+          },
+          {
+            "title": "addChild with single child",
+            "line": 55,
+            "source": "const child = new Object2D()\n\ngroup.addChild(child)\n\nexpect(group.children).toEqual([child])\nexpect(child.parent).toBe(group)"
+          },
+          {
+            "title": "addChild is fluent",
+            "line": 65,
+            "source": "const child = new Object2D()\n\nconst result = group.addChild(child).setPosition(10, 20)\n\nexpect(result).toBe(group)\nexpect(group.x).toBe(10)\nexpect(group.y).toBe(20)"
+          },
+          {
+            "title": "nested groups",
+            "line": 76,
+            "source": "const parent = new Group2D()\nconst child = new Group2D()\nconst grandchild = new Object2D()\n\nparent.addChild(child)\nchild.addChild(grandchild)\n\nexpect(parent.children).toEqual([child])\nexpect(child.children).toEqual([grandchild])\nexpect(child.parent).toBe(parent)\nexpect(grandchild.parent).toBe(child)"
+          },
+          {
+            "title": "world matrix propagation",
+            "line": 91,
+            "source": "const parent = new Group2D()\nparent.x = 10\nparent.y = 20\n\nconst child = new Group2D()\nchild.x = 5\nchild.y = 5\n\nparent.addChild(child)\nparent.updateWorldMatrix()\n\nconst m = child.worldMatrix\nexpect(m[4]).toBeCloseTo(15)\nexpect(m[5]).toBeCloseTo(25)"
+          },
+          {
+            "title": "getBounds returns zero bounds for empty group",
+            "line": 109,
+            "source": "const bounds = group.getBounds()\n\nexpect(bounds).toEqual({\n    minX: 0,\n    minY: 0,\n    maxX: 0,\n    maxY: 0,\n    width: 0,\n    height: 0\n})"
+          },
+          {
+            "title": "getBounds calculates bounds from children",
+            "line": 123,
+            "source": "const child1 = new Object2D({x: 0, y: 0})\nchild1.getBounds = () => ({minX: -5, minY: -5, maxX: 5, maxY: 5, width: 10, height: 10})\n\nconst child2 = new Object2D({x: 10, y: 10})\nchild2.getBounds = () => ({minX: -2, minY: -2, maxX: 2, maxY: 2, width: 4, height: 4})\n\ngroup.addChild(child1, child2)\ngroup.updateWorldMatrix()\n\nconst bounds = group.getBounds()\n\nexpect(bounds.minX).toBe(-5)\nexpect(bounds.minY).toBe(-5)\nexpect(bounds.maxX).toBe(12)\nexpect(bounds.maxY).toBe(12)\nexpect(bounds.width).toBe(17)\nexpect(bounds.height).toBe(17)"
+          },
+          {
+            "title": "getBounds ignores zero-size children",
+            "line": 144,
+            "source": "const child1 = new Object2D({x: 5, y: 5})\nchild1.getBounds = () => ({minX: -2, minY: -2, maxX: 2, maxY: 2, width: 4, height: 4})\n\nconst emptyChild = new Object2D({x: 100, y: 100})\nemptyChild.getBounds = () => ({minX: 0, minY: 0, maxX: 0, maxY: 0, width: 0, height: 0})\n\ngroup.addChild(child1, emptyChild)\ngroup.updateWorldMatrix()\n\nconst bounds = group.getBounds()\n\nexpect(bounds.minX).toBe(3)\nexpect(bounds.minY).toBe(3)\nexpect(bounds.maxX).toBe(7)\nexpect(bounds.maxY).toBe(7)"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
+  "/render/image_2d.doc.js": {
+    "file": "/render/image_2d.test.js",
+    "describes": [
+      {
+        "title": "Image2D",
+        "line": 6,
+        "beforeEach": {
+          "line": 10,
+          "source": "image2d = new Image2D()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor defaults",
+            "line": 15,
+            "source": "expect(image2d.image).toBe(null)\nexpect(image2d.width).toBe(10)\nexpect(image2d.height).toBe(10)"
+          },
+          {
+            "title": "constructor with options",
+            "line": 22,
+            "source": "const img = {complete: true}\nconst i = new Image2D({\n    x: 10,\n    y: 20,\n    image: img,\n    width: 100,\n    height: 50,\n    opacity: 0.5,\n    rotation: Math.PI / 4\n})\n\nexpect(i.x).toBe(10)\nexpect(i.y).toBe(20)\nexpect(i.image).toBe(img)\nexpect(i.width).toBe(100)\nexpect(i.height).toBe(50)\nexpect(i.opacity).toBe(0.5)\nexpect(i.rotation).toBeCloseTo(Math.PI / 4)"
+          },
+          {
+            "title": "getBounds",
+            "line": 44,
+            "source": "image2d.width = 100\nimage2d.height = 50\nimage2d.anchorX = 0.5\nimage2d.anchorY = 0.5\n\nconst bounds = image2d.getBounds()\n\nexpect(bounds.minX).toBe(-50)\nexpect(bounds.minY).toBe(-25)\nexpect(bounds.maxX).toBe(50)\nexpect(bounds.maxY).toBe(25)\nexpect(bounds.width).toBe(100)\nexpect(bounds.height).toBe(50)"
+          }
+        ],
+        "describes": []
+      },
+      {
+        "title": "CanvasImageRenderer",
+        "line": 63,
+        "beforeEach": {
+          "line": 68,
+          "source": "renderer = new CanvasImageRenderer()\nctx = {\n    save: vi.fn(),\n    scale: vi.fn(),\n    drawImage: vi.fn(),\n    restore: vi.fn()\n}"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "handles Image2D class",
+            "line": 79,
+            "source": "expect(CanvasImageRenderer.handles).toContain(Image2D)"
+          },
+          {
+            "title": "render does nothing when image is null",
+            "line": 84,
+            "source": "const image2d = new Image2D({image: null})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.drawImage).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "render does nothing when image is not complete",
+            "line": 93,
+            "source": "const image2d = new Image2D({image: {complete: false}})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.drawImage).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "render draws image when complete",
+            "line": 102,
+            "source": "const img = {complete: true}\nconst image2d = new Image2D({\n    image: img,\n    width: 100,\n    height: 50,\n    anchorX: 0.5,\n    anchorY: 0.5\n})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.save).toHaveBeenCalled()\nexpect(ctx.scale).toHaveBeenCalledWith(1, -1)\nexpect(ctx.drawImage).toHaveBeenCalledWith(img, -50, -25, 100, 50)\nexpect(ctx.restore).toHaveBeenCalled()"
+          },
+          {
+            "title": "render with custom anchor",
+            "line": 121,
+            "source": "const img = {complete: true}\nconst image2d = new Image2D({\n    image: img,\n    width: 100,\n    height: 50,\n    anchorX: 0,\n    anchorY: 0\n})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.save).toHaveBeenCalled()\nexpect(ctx.scale).toHaveBeenCalledWith(1, -1)\nexpect(ctx.drawImage).toHaveBeenCalledWith(img, -0, -50, 100, 50)\nexpect(ctx.restore).toHaveBeenCalled()"
+          },
+          {
+            "title": "render with bottom-right anchor",
+            "line": 140,
+            "source": "const img = {complete: true}\nconst image2d = new Image2D({\n    image: img,\n    width: 100,\n    height: 50,\n    anchorX: 1,\n    anchorY: 1\n})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.save).toHaveBeenCalled()\nexpect(ctx.scale).toHaveBeenCalledWith(1, -1)\nexpect(ctx.drawImage).toHaveBeenCalledWith(img, -100, 0, 100, 50)\nexpect(ctx.restore).toHaveBeenCalled()"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
+  "/render/object_2d.doc.js": {
+    "file": "/render/object_2d.test.js",
+    "describes": [
+      {
+        "title": "Object2D",
+        "line": 5,
+        "beforeEach": {
+          "line": 9,
+          "source": "object = new Object2D()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor defaults",
+            "line": 14,
+            "source": "expect(object.visible).toBe(true)\nexpect(object.opacity).toBe(1)\nexpect(object.depth).toBe(0)\nexpect(object.anchorX).toBe(0.5)\nexpect(object.anchorY).toBe(0.5)\nexpect(object.x).toBe(0)\nexpect(object.y).toBe(0)\nexpect(object.rotation).toBe(0)\nexpect(object.scaleX).toBe(1)\nexpect(object.scaleY).toBe(1)"
+          },
+          {
+            "title": "constructor with options",
+            "line": 28,
+            "source": "const obj = new Object2D({\n    x: 10,\n    y: 20,\n    rotation: Math.PI,\n    scaleX: 2,\n    scaleY: 3,\n    opacity: 0.5,\n    depth: 5,\n    visible: false,\n    anchorX: 0.25,\n    anchorY: 0.75,\n    pivotX: 5,\n    pivotY: 10\n})\n\nexpect(obj.x).toBe(10)\nexpect(obj.y).toBe(20)\nexpect(obj.rotation).toBe(Math.PI)\nexpect(obj.scaleX).toBe(2)\nexpect(obj.scaleY).toBe(3)\nexpect(obj.opacity).toBe(0.5)\nexpect(obj.depth).toBe(5)\nexpect(obj.visible).toBe(false)\nexpect(obj.anchorX).toBe(0.25)\nexpect(obj.anchorY).toBe(0.75)\nexpect(obj.pivotX).toBe(5)\nexpect(obj.pivotY).toBe(10)"
+          },
+          {
+            "title": "setPosition",
+            "line": 59,
+            "source": "const result = object.setPosition(10, 20)\n\nexpect(object.x).toBe(10)\nexpect(object.y).toBe(20)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setRotation",
+            "line": 68,
+            "source": "const result = object.setRotation(Math.PI / 2)\n\nexpect(object.rotation).toBeCloseTo(Math.PI / 2)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setScale with two values",
+            "line": 76,
+            "source": "const result = object.setScale(2, 3)\n\nexpect(object.scaleX).toBe(2)\nexpect(object.scaleY).toBe(3)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setScale with one value",
+            "line": 85,
+            "source": "const result = object.setScale(2)\n\nexpect(object.scaleX).toBe(2)\nexpect(object.scaleY).toBe(2)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setOpacity",
+            "line": 94,
+            "source": "const result = object.setOpacity(0.5)\n\nexpect(object.opacity).toBe(0.5)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setDepth",
+            "line": 102,
+            "source": "const result = object.setDepth(10)\n\nexpect(object.depth).toBe(10)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setAnchor with two values",
+            "line": 110,
+            "source": "const result = object.setAnchor(0.25, 0.75)\n\nexpect(object.anchorX).toBe(0.25)\nexpect(object.anchorY).toBe(0.75)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setAnchor with one value",
+            "line": 119,
+            "source": "const result = object.setAnchor(0.25)\n\nexpect(object.anchorX).toBe(0.25)\nexpect(object.anchorY).toBe(0.25)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setPivot",
+            "line": 128,
+            "source": "const result = object.setPivot(5, 10)\n\nexpect(object.pivotX).toBe(5)\nexpect(object.pivotY).toBe(10)\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "render does nothing by default",
+            "line": 137,
+            "source": "expect(() => object.render({})).not.toThrow()"
+          },
+          {
+            "title": "fluent interface",
+            "line": 142,
+            "source": "const result = object\n    .setPosition(10, 20)\n    .setRotation(Math.PI)\n    .setScale(2, 3)\n    .setOpacity(0.5)\n    .setDepth(7)\n    .setAnchor(0.25, 0.75)\n    .setPivot(5, 10)\n\nexpect(result).toBe(object)\nexpect(object.x).toBe(10)\nexpect(object.y).toBe(20)\nexpect(object.rotation).toBeCloseTo(Math.PI)\nexpect(object.scaleX).toBe(2)\nexpect(object.scaleY).toBe(3)\nexpect(object.opacity).toBe(0.5)\nexpect(object.depth).toBe(7)\nexpect(object.anchorX).toBe(0.25)\nexpect(object.anchorY).toBe(0.75)\nexpect(object.pivotX).toBe(5)\nexpect(object.pivotY).toBe(10)"
+          },
+          {
+            "title": "getBounds default",
+            "line": 167,
+            "source": "const bounds = object.getBounds()\n\nexpect(bounds.minX).toBe(0)\nexpect(bounds.minY).toBe(0)\nexpect(bounds.maxX).toBe(0)\nexpect(bounds.maxY).toBe(0)\nexpect(bounds.width).toBe(0)\nexpect(bounds.height).toBe(0)"
+          },
+          {
+            "title": "getWorldBounds with translation",
+            "line": 179,
+            "source": "object.x = 10\nobject.y = 20\nobject.getBounds = () => ({minX: 0, minY: 0, maxX: 10, maxY: 10, width: 10, height: 10})\nobject.updateWorldMatrix()\n\nconst bounds = object.getWorldBounds()\n\nexpect(bounds.minX).toBeCloseTo(10)\nexpect(bounds.minY).toBeCloseTo(20)\nexpect(bounds.maxX).toBeCloseTo(20)\nexpect(bounds.maxY).toBeCloseTo(30)"
+          },
+          {
+            "title": "getWorldBounds with scale",
+            "line": 194,
+            "source": "object.scaleX = 2\nobject.scaleY = 2\nobject.getBounds = () => ({minX: 0, minY: 0, maxX: 10, maxY: 10, width: 10, height: 10})\nobject.updateWorldMatrix()\n\nconst bounds = object.getWorldBounds()\n\nexpect(bounds.width).toBeCloseTo(20)\nexpect(bounds.height).toBeCloseTo(20)"
+          },
+          {
+            "title": "showDebugGizmos enables debug gizmos with defaults",
+            "line": 207,
+            "source": "const result = object.showDebugGizmos()\n\nexpect(object.debugGizmos).toEqual({\n    bounds: true,\n    anchor: true,\n    pivot: true,\n    origin: true\n})\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "showDebugGizmos with custom options",
+            "line": 220,
+            "source": "object.showDebugGizmos({\n    bounds: true,\n    anchor: false,\n    pivot: false,\n    origin: true\n})\n\nexpect(object.debugGizmos).toEqual({\n    bounds: true,\n    anchor: false,\n    pivot: false,\n    origin: true\n})"
+          },
+          {
+            "title": "hideDebugGizmos disables debug gizmos",
+            "line": 237,
+            "source": "object.showDebugGizmos()\n\nexpect(object.debugGizmos).not.toBeNull()\n\nconst result = object.hideDebugGizmos()\n\nexpect(object.debugGizmos).toBeNull()\nexpect(result).toBe(object)"
+          },
+          {
+            "title": "setVisible changes visible property",
+            "line": 249,
+            "source": "expect(object.visible).toBe(true)\n\nconst result = object.setVisible(false)\n\nexpect(object.visible).toBe(false)\nexpect(result).toBe(object)\n\nobject.setVisible(true)\n\nexpect(object.visible).toBe(true)"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
+  "/render/rectangle.doc.js": {
+    "file": "/render/rectangle.test.js",
+    "describes": [
+      {
+        "title": "Rectangle",
+        "line": 6,
+        "beforeEach": {
+          "line": 10,
+          "source": "rectangle = new Rectangle()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor defaults",
+            "line": 15,
+            "source": "expect(rectangle.width).toBe(10)\nexpect(rectangle.height).toBe(10)\nexpect(rectangle.color).toBe('#000000')\nexpect(rectangle.strokeColor).toBe('#000000')\nexpect(rectangle.strokeWidth).toBe(0)"
+          },
+          {
+            "title": "constructor with options",
+            "line": 24,
+            "source": "const r = new Rectangle({\n    x: 10,\n    y: 20,\n    width: 100,\n    height: 50,\n    color: '#ff0000',\n    strokeColor: '#00ff00',\n    strokeWidth: 2,\n    opacity: 0.5,\n    rotation: Math.PI / 4\n})\n\nexpect(r.x).toBe(10)\nexpect(r.y).toBe(20)\nexpect(r.width).toBe(100)\nexpect(r.height).toBe(50)\nexpect(r.color).toBe('#ff0000')\nexpect(r.strokeColor).toBe('#00ff00')\nexpect(r.strokeWidth).toBe(2)\nexpect(r.opacity).toBe(0.5)\nexpect(r.rotation).toBeCloseTo(Math.PI / 4)"
+          },
+          {
+            "title": "getBounds",
+            "line": 49,
+            "source": "rectangle.width = 100\nrectangle.height = 50\nrectangle.anchorX = 0.5\nrectangle.anchorY = 0.5\n\nconst bounds = rectangle.getBounds()\n\nexpect(bounds.minX).toBe(-50)\nexpect(bounds.minY).toBe(-25)\nexpect(bounds.maxX).toBe(50)\nexpect(bounds.maxY).toBe(25)\nexpect(bounds.width).toBe(100)\nexpect(bounds.height).toBe(50)"
+          }
+        ],
+        "describes": []
+      },
+      {
+        "title": "CanvasRectangleRenderer",
+        "line": 68,
+        "beforeEach": {
+          "line": 73,
+          "source": "renderer = new CanvasRectangleRenderer()\nctx = {\n    fillRect: vi.fn(),\n    strokeRect: vi.fn()\n}"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "handles Rectangle class",
+            "line": 82,
+            "source": "expect(CanvasRectangleRenderer.handles).toContain(Rectangle)"
+          },
+          {
+            "title": "render without stroke",
+            "line": 87,
+            "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    color: '#ff0000',\n    anchorX: 0.5,\n    anchorY: 0.5,\n    strokeWidth: 0\n})\n\nrenderer.render(rect, ctx)\n\nexpect(ctx.fillRect).toHaveBeenCalledWith(-50, -25, 100, 50)\nexpect(ctx.strokeRect).not.toHaveBeenCalled()"
+          },
+          {
+            "title": "render with stroke",
+            "line": 104,
+            "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    color: '#ff0000',\n    strokeColor: '#0000ff',\n    strokeWidth: 2,\n    anchorX: 0.5,\n    anchorY: 0.5\n})\n\nrenderer.render(rect, ctx)\n\nexpect(ctx.fillRect).toHaveBeenCalledWith(-50, -25, 100, 50)\nexpect(ctx.strokeRect).toHaveBeenCalledWith(-50, -25, 100, 50)"
+          },
+          {
+            "title": "render with custom anchor",
+            "line": 122,
+            "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    anchorX: 0,\n    anchorY: 0\n})\n\nrenderer.render(rect, ctx)\n\nexpect(ctx.fillRect).toHaveBeenCalledWith(-0, -0, 100, 50)"
+          },
+          {
+            "title": "render with top-left anchor",
+            "line": 136,
+            "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    anchorX: 1,\n    anchorY: 1\n})\n\nrenderer.render(rect, ctx)\n\nexpect(ctx.fillRect).toHaveBeenCalledWith(-100, -50, 100, 50)"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
+  "/render/sprite.doc.js": {
+    "file": "/render/sprite.test.js",
+    "describes": [
+      {
+        "title": "Sprite",
+        "line": 6,
+        "beforeEach": {
+          "line": 11,
+          "source": "mockImage = {\n    width: 100,\n    height: 100,\n    naturalWidth: 100,\n    naturalHeight: 100,\n    complete: true\n}\nmockFrame = {\n    filename: 'frame1',\n    frame: {x: 0, y: 0, w: 10, h: 10},\n    image: mockImage\n}\nsprite = new Sprite({\n    frame: mockFrame,\n    width: 5\n})"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "initializes with frame and options",
+            "line": 30,
+            "source": "expect(sprite.currentFrame).toBe(mockFrame)\nexpect(sprite.width).toBe(5)\nexpect(sprite.height).toBeNull()"
+          },
+          {
+            "title": "getBounds calculates bounds from frame and width",
+            "line": 36,
+            "source": "const bounds = sprite.getBounds()\n\nexpect(bounds.width).toBe(5)\nexpect(bounds.height).toBe(5)"
+          },
+          {
+            "title": "getBounds calculates bounds from frame and height",
+            "line": 43,
+            "source": "sprite = new Sprite({\n    frame: mockFrame,\n    height: 10\n})\nconst bounds = sprite.getBounds()\n\nexpect(bounds.width).toBe(10)\nexpect(bounds.height).toBe(10)"
+          },
+          {
+            "title": "addAnimation stores animation",
+            "line": 54,
+            "source": "const mockAnim = {\n    play: vi.fn(),\n    stop: vi.fn()\n}\n\nsprite.addAnimation('walk', mockAnim)\nexpect(sprite.animations.get('walk')).toBe(mockAnim)"
+          },
+          {
+            "title": "play starts animation",
+            "line": 64,
+            "source": "const mockAnim = {\n    play: vi.fn(),\n    stop: vi.fn()\n}\n\nsprite.addAnimation('walk', mockAnim)\nsprite.play('walk')\n\nexpect(sprite.currentAnimation).toBe(mockAnim)\nexpect(mockAnim.play).toHaveBeenCalled()"
+          },
+          {
+            "title": "stop stops current animation",
+            "line": 77,
+            "source": "const mockAnim = {\n    play: vi.fn(),\n    stop: vi.fn()\n}\n\nsprite.addAnimation('walk', mockAnim)\nsprite.play('walk')\nsprite.stop()\n\nexpect(sprite.currentAnimation).toBeNull()\nexpect(mockAnim.stop).toHaveBeenCalled()"
+          },
+          {
+            "title": "setFrame updates currentFrame",
+            "line": 92,
+            "source": "const newFrame = {\n    filename: 'frame2',\n    frame: {x: 10, y: 0, w: 20, h: 20},\n    image: mockImage\n}\n\nsprite.setFrame(newFrame)\n\nexpect(sprite.currentFrame).toBe(newFrame)"
+          }
+        ],
+        "describes": []
+      },
+      {
+        "title": "CanvasSpriteRenderer",
+        "line": 106,
+        "beforeEach": {
+          "line": 112,
+          "source": "renderer = new CanvasSpriteRenderer()\nctx = {\n    save: vi.fn(),\n    restore: vi.fn(),\n    scale: vi.fn(),\n    drawImage: vi.fn(),\n    translate: vi.fn(),\n    rotate: vi.fn()\n}\nmockImage = {\n    width: 100,\n    height: 100,\n    naturalWidth: 100,\n    naturalHeight: 100,\n    complete: true\n}\nmockFrame = {\n    filename: 'frame1',\n    frame: {x: 0, y: 0, w: 10, h: 10},\n    image: mockImage\n}"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "handles Sprite class",
+            "line": 137,
+            "source": "expect(CanvasSpriteRenderer.handles).toContain(Sprite)"
+          },
+          {
+            "title": "render draws frame using image from frame data",
+            "line": 142,
+            "source": "const sprite = new Sprite({\n    frame: mockFrame,\n    width: 5\n})\n\nrenderer.render(sprite, ctx)\n\nexpect(ctx.drawImage).toHaveBeenCalledWith(\n    mockImage,\n    0, 0, 10, 10,\n    expect.any(Number), expect.any(Number),\n    5, 5\n)"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
+  "/render/transform.doc.js": {
+    "file": "/render/transform.test.js",
+    "describes": [
+      {
+        "title": "Transform",
+        "line": 5,
+        "beforeEach": {
+          "line": 9,
+          "source": "transform = new Transform()"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor",
+            "line": 14,
+            "source": "expect(transform.x).toBe(0)\nexpect(transform.y).toBe(0)\nexpect(transform.rotation).toBe(0)\nexpect(transform.scaleX).toBe(1)\nexpect(transform.scaleY).toBe(1)\nexpect(transform.pivotX).toBe(0)\nexpect(transform.pivotY).toBe(0)\nexpect(transform.parent).toBe(null)\nexpect(transform.children).toEqual([])"
+          },
+          {
+            "title": "add child",
+            "line": 27,
+            "source": "const child1 = new Transform()\nconst child2 = new Transform()\n\ntransform.add(child1, child2)\n\nexpect(transform.children).toEqual([child1, child2])\nexpect(child1.parent).toBe(transform)\nexpect(child2.parent).toBe(transform)"
+          },
+          {
+            "title": "add child removes from previous parent",
+            "line": 39,
+            "source": "const parent1 = new Transform()\nconst parent2 = new Transform()\nconst child = new Transform()\n\nparent1.add(child)\nexpect(parent1.children).toEqual([child])\nexpect(child.parent).toBe(parent1)\n\nparent2.add(child)\nexpect(parent1.children).toEqual([])\nexpect(parent2.children).toEqual([child])\nexpect(child.parent).toBe(parent2)"
+          },
+          {
+            "title": "remove child",
+            "line": 55,
+            "source": "const child = new Transform()\n\ntransform.add(child)\nexpect(transform.children).toEqual([child])\n\ntransform.remove(child)\nexpect(transform.children).toEqual([])\nexpect(child.parent).toBe(null)"
+          },
+          {
+            "title": "updateLocalMatrix identity",
+            "line": 67,
+            "source": "transform.updateLocalMatrix()\nconst m = transform.worldMatrix\n\nexpect(m[0]).toBeCloseTo(1)\nexpect(m[1]).toBeCloseTo(0)\nexpect(m[2]).toBeCloseTo(0)\nexpect(m[3]).toBeCloseTo(1)\nexpect(m[4]).toBeCloseTo(0)\nexpect(m[5]).toBeCloseTo(0)"
+          },
+          {
+            "title": "updateLocalMatrix with translation",
+            "line": 80,
+            "source": "transform.x = 10\ntransform.y = 20\ntransform.updateWorldMatrix()\nconst m = transform.worldMatrix\n\nexpect(m[0]).toBeCloseTo(1)\nexpect(m[1]).toBeCloseTo(0)\nexpect(m[2]).toBeCloseTo(0)\nexpect(m[3]).toBeCloseTo(1)\nexpect(m[4]).toBeCloseTo(10)\nexpect(m[5]).toBeCloseTo(20)"
+          },
+          {
+            "title": "updateLocalMatrix with rotation",
+            "line": 95,
+            "source": "transform.rotation = Math.PI / 2\ntransform.updateWorldMatrix()\nconst m = transform.worldMatrix\n\nexpect(m[0]).toBeCloseTo(0)\nexpect(m[1]).toBeCloseTo(1)\nexpect(m[2]).toBeCloseTo(-1)\nexpect(m[3]).toBeCloseTo(0)\nexpect(m[4]).toBeCloseTo(0)\nexpect(m[5]).toBeCloseTo(0)"
+          },
+          {
+            "title": "updateLocalMatrix with scale",
+            "line": 109,
+            "source": "transform.scaleX = 2\ntransform.scaleY = 3\ntransform.updateWorldMatrix()\nconst m = transform.worldMatrix\n\nexpect(m[0]).toBeCloseTo(2)\nexpect(m[1]).toBeCloseTo(0)\nexpect(m[2]).toBeCloseTo(0)\nexpect(m[3]).toBeCloseTo(3)\nexpect(m[4]).toBeCloseTo(0)\nexpect(m[5]).toBeCloseTo(0)"
+          },
+          {
+            "title": "updateWorldMatrix without parent",
+            "line": 124,
+            "source": "transform.x = 5\ntransform.y = 10\ntransform.updateWorldMatrix()\nconst m = transform.worldMatrix\n\nexpect(m[4]).toBeCloseTo(5)\nexpect(m[5]).toBeCloseTo(10)"
+          },
+          {
+            "title": "updateWorldMatrix with parent",
+            "line": 135,
+            "source": "const parent = new Transform()\nparent.x = 10\nparent.y = 20\n\nconst child = new Transform()\nchild.x = 5\nchild.y = 5\n\nparent.add(child)\nparent.updateWorldMatrix()\n\nconst m = child.worldMatrix\nexpect(m[4]).toBeCloseTo(15)\nexpect(m[5]).toBeCloseTo(25)"
+          },
+          {
+            "title": "markDirty propagates to children",
+            "line": 153,
+            "source": "const child1 = new Transform()\nconst child2 = new Transform()\n\ntransform.add(child1)\nchild1.add(child2)\n\ntransform.updateWorldMatrix()\nchild1.updateWorldMatrix()\nchild2.updateWorldMatrix()\n\ntransform.markDirty()\n\ntransform.x = 100\ntransform.updateWorldMatrix()\n\nconst m = child2.worldMatrix\nexpect(m[4]).toBeCloseTo(100)"
+          },
+          {
+            "title": "getSortedChildren returns children sorted by depth",
+            "line": 174,
+            "source": "const child1 = new Transform()\nchild1.depth = 2\nconst child2 = new Transform()\nchild2.depth = 0\nconst child3 = new Transform()\nchild3.depth = 1\n\ntransform.add(child1, child2, child3)\n\nconst sorted = transform.getSortedChildren()\n\nexpect(sorted[0]).toBe(child2)\nexpect(sorted[1]).toBe(child3)\nexpect(sorted[2]).toBe(child1)"
+          },
+          {
+            "title": "getSortedChildren caches result",
+            "line": 192,
+            "source": "const child1 = new Transform()\nchild1.depth = 1\nconst child2 = new Transform()\nchild2.depth = 0\n\ntransform.add(child1, child2)\n\nconst sorted1 = transform.getSortedChildren()\nconst sorted2 = transform.getSortedChildren()\n\nexpect(sorted1).toBe(sorted2)"
+          },
+          {
+            "title": "markChildrenNeedSort invalidates cache",
+            "line": 207,
+            "source": "const child1 = new Transform()\nchild1.depth = 1\nconst child2 = new Transform()\nchild2.depth = 0\n\ntransform.add(child1, child2)\n\nconst sorted1 = transform.getSortedChildren()\ntransform.markChildrenNeedSort()\nconst sorted2 = transform.getSortedChildren()\n\nexpect(sorted1).not.toBe(sorted2)"
+          },
+          {
+            "title": "add triggers re-sort on next getSortedChildren call",
+            "line": 223,
+            "source": "const child1 = new Transform()\nchild1.depth = 1\n\ntransform.add(child1)\ntransform.getSortedChildren()\n\nconst child2 = new Transform()\nchild2.depth = 0\ntransform.add(child2)\n\nconst sorted2 = transform.getSortedChildren()\nexpect(sorted2[0]).toBe(child2)\nexpect(sorted2[1]).toBe(child1)"
+          },
+          {
+            "title": "remove triggers re-sort on next getSortedChildren call",
+            "line": 240,
+            "source": "const child1 = new Transform()\nchild1.depth = 0\nconst child2 = new Transform()\nchild2.depth = 1\n\ntransform.add(child1, child2)\nconst sorted1 = transform.getSortedChildren()\nexpect(sorted1.length).toBe(2)\n\ntransform.remove(child1)\nconst sorted2 = transform.getSortedChildren()\nexpect(sorted2.length).toBe(1)\nexpect(sorted2[0]).toBe(child2)"
+          },
+          {
+            "title": "transformPoint with identity matrix",
+            "line": 257,
+            "source": "transform.updateWorldMatrix()\n\nconst result = transform.transformPoint({x: 10, y: 20})\n\nexpect(result.x).toBeCloseTo(10)\nexpect(result.y).toBeCloseTo(20)"
+          },
+          {
+            "title": "transformPoint with translation",
+            "line": 267,
+            "source": "transform.x = 5\ntransform.y = 10\ntransform.updateWorldMatrix()\n\nconst result = transform.transformPoint({x: 10, y: 20})\n\nexpect(result.x).toBeCloseTo(15)\nexpect(result.y).toBeCloseTo(30)"
+          },
+          {
+            "title": "transformPoint with scale",
+            "line": 279,
+            "source": "transform.scaleX = 2\ntransform.scaleY = 3\ntransform.updateWorldMatrix()\n\nconst result = transform.transformPoint({x: 10, y: 20})\n\nexpect(result.x).toBeCloseTo(20)\nexpect(result.y).toBeCloseTo(60)"
+          },
+          {
+            "title": "transformPoint with rotation",
+            "line": 291,
+            "source": "transform.rotation = Math.PI / 2\ntransform.updateWorldMatrix()\n\nconst result = transform.transformPoint({x: 10, y: 0})\n\nexpect(result.x).toBeCloseTo(0)\nexpect(result.y).toBeCloseTo(10)"
+          }
+        ],
+        "describes": []
       }
     ]
   },
@@ -6150,6 +7103,108 @@
       }
     ]
   },
+  "/input/input_controls/button_control.doc.js": {
+    "file": "/input/input_controls/button_control.test.js",
+    "describes": [
+      {
+        "title": "ButtonControl",
+        "line": 6,
+        "beforeEach": {
+          "line": 10,
+          "source": "control = new ButtonControl({\n    device: null,\n    name: 'testButton'\n})"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "static defaultPressThreshold",
+            "line": 18,
+            "source": "expect(ButtonControl.defaultPressThreshold).toBe(0.1)"
+          },
+          {
+            "title": "constructor",
+            "line": 23,
+            "source": "expect(control).toBeInstanceOf(InputControl)\nexpect(control.name).toBe('testButton')\nexpect(control.value).toBe(0)\nexpect(control.pressThreshold).toBe(0.1)"
+          },
+          {
+            "title": "constructor with custom pressThreshold",
+            "line": 31,
+            "source": "const customControl = new ButtonControl({\n    device: null,\n    name: 'custom',\n    pressThreshold: 0.2\n})\n\nexpect(customControl.pressThreshold).toBe(0.2)"
+          },
+          {
+            "title": "isPressed getter",
+            "line": 42,
+            "source": "expect(control.isPressed).toBe(false)\n\ncontrol.value = 0.05\nexpect(control.isPressed).toBe(false)\n\ncontrol.value = 0.1\nexpect(control.isPressed).toBe(true)\n\ncontrol.value = 0.8\nexpect(control.isPressed).toBe(true)"
+          },
+          {
+            "title": "wasPressed getter",
+            "line": 56,
+            "source": "expect(control.wasPressed).toBe(false)\n\ncontrol.value = 0.15\nexpect(control.wasPressed).toBe(false)\n\ncontrol.value = 0.05\nexpect(control.wasPressed).toBe(true)"
+          },
+          {
+            "title": "pressed event emission",
+            "line": 67,
+            "source": "const pressedListener = vi.fn()\ncontrol.on('pressed', pressedListener)\n\ncontrol.value = 0.15\nexpect(pressedListener).toHaveBeenCalledTimes(1)\nexpect(pressedListener).toHaveBeenCalledWith(null)\n\ncontrol.value = 0.5\nexpect(pressedListener).toHaveBeenCalledTimes(1)"
+          },
+          {
+            "title": "released event emission",
+            "line": 80,
+            "source": "const releasedListener = vi.fn()\ncontrol.on('released', releasedListener)\n\ncontrol.value = 0.15\ncontrol.value = 0.05\nexpect(releasedListener).toHaveBeenCalledTimes(1)\n\ncontrol.value = 0.02\nexpect(releasedListener).toHaveBeenCalledTimes(1)"
+          },
+          {
+            "title": "press and release cycle",
+            "line": 93,
+            "source": "const pressedListener = vi.fn()\nconst releasedListener = vi.fn()\n\ncontrol.on('pressed', pressedListener)\ncontrol.on('released', releasedListener)\n\ncontrol.value = 0.2\nexpect(pressedListener).toHaveBeenCalledTimes(1)\nexpect(releasedListener).toHaveBeenCalledTimes(0)\n\ncontrol.value = 0.05\nexpect(pressedListener).toHaveBeenCalledTimes(1)\nexpect(releasedListener).toHaveBeenCalledTimes(1)"
+          },
+          {
+            "title": "setValue return value",
+            "line": 110,
+            "source": "expect(control.setValue(0.5)).toBe(true)\nexpect(control.setValue(0.5)).toBe(false)\nexpect(control.setValue(0.3)).toBe(true)"
+          },
+          {
+            "title": "no events when value unchanged",
+            "line": 117,
+            "source": "const pressedListener = vi.fn()\nconst releasedListener = vi.fn()\n\ncontrol.on('pressed', pressedListener)\ncontrol.on('released', releasedListener)\n\ncontrol.value = 0.5\ncontrol.value = 0.5\n\nexpect(pressedListener).toHaveBeenCalledTimes(1)\nexpect(releasedListener).toHaveBeenCalledTimes(0)"
+          },
+          {
+            "title": "custom threshold behavior",
+            "line": 132,
+            "source": "const customControl = new ButtonControl({\n    device: null,\n    name: 'custom',\n    pressThreshold: 0.1\n})\n\nexpect(customControl.isPressed).toBe(false)\n\ncustomControl.value = 0.05\nexpect(customControl.isPressed).toBe(false)\n\ncustomControl.value = 0.15\nexpect(customControl.isPressed).toBe(true)"
+          },
+          {
+            "title": "press method",
+            "line": 149,
+            "source": "const pressedListener = vi.fn()\ncontrol.on('pressed', pressedListener)\n\ncontrol.press()\nexpect(control.value).toBe(1)\nexpect(control.isPressed).toBe(true)\nexpect(pressedListener).toHaveBeenCalledTimes(1)\nexpect(pressedListener).toHaveBeenCalledWith(null)"
+          },
+          {
+            "title": "press method with event",
+            "line": 160,
+            "source": "const pressedListener = vi.fn()\ncontrol.on('pressed', pressedListener)\n\nconst mockEvent = {preventDefault: vi.fn()}\ncontrol.press(mockEvent)\n\nexpect(pressedListener).toHaveBeenCalledWith(mockEvent)"
+          },
+          {
+            "title": "setValue with event",
+            "line": 171,
+            "source": "const pressedListener = vi.fn()\ncontrol.on('pressed', pressedListener)\n\nconst mockEvent = {preventDefault: vi.fn()}\ncontrol.setValue(1, mockEvent)\n\nexpect(pressedListener).toHaveBeenCalledWith(mockEvent)"
+          },
+          {
+            "title": "updated includes event when provided",
+            "line": 181,
+            "source": "const updatedListener = vi.fn()\ncontrol.on('updated', updatedListener)\n\nconst mockEvent = {type: 'mock'}\ncontrol.setValue(0.2, mockEvent)\n\nexpect(updatedListener).toHaveBeenCalledWith(0.2, 0, mockEvent)"
+          },
+          {
+            "title": "release method",
+            "line": 192,
+            "source": "const releasedListener = vi.fn()\ncontrol.on('released', releasedListener)\n\ncontrol.value = 0.8\nexpect(control.isPressed).toBe(true)\n\ncontrol.release()\nexpect(control.value).toBe(0)\nexpect(control.isPressed).toBe(false)\nexpect(releasedListener).toHaveBeenCalledTimes(1)"
+          },
+          {
+            "title": "press and release methods cycle",
+            "line": 206,
+            "source": "const pressedListener = vi.fn()\nconst releasedListener = vi.fn()\n\ncontrol.on('pressed', pressedListener)\ncontrol.on('released', releasedListener)\n\ncontrol.press()\nexpect(pressedListener).toHaveBeenCalledTimes(1)\nexpect(releasedListener).toHaveBeenCalledTimes(0)\n\ncontrol.release()\nexpect(pressedListener).toHaveBeenCalledTimes(1)\nexpect(releasedListener).toHaveBeenCalledTimes(1)"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
   "/input/input_controls/vec2_control.doc.js": {
     "file": "/input/input_controls/vec2_control.test.js",
     "describes": [
@@ -6385,6 +7440,113 @@
             "title": "integration test - full mouse interaction",
             "line": 188,
             "source": "const controlPressedListener = vi.fn()\nconst controlReleasedListener = vi.fn()\nconst controlUpdatedListener = vi.fn()\n\ndevice.on('control:pressed', controlPressedListener)\ndevice.on('control:released', controlReleasedListener)\ndevice.on('control:updated', controlUpdatedListener)\n\ndevice.start()\n\nconst mousedownListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'mousedown')[1]\nconst mouseupListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'mouseup')[1]\nconst mousemoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'mousemove')[1]\n\nmousemoveListener(createMockEvent({clientX: 50, clientY: 75}))\nexpect(controlUpdatedListener).toHaveBeenCalledTimes(1)\n\nmousedownListener(createMockEvent({button: 0}))\nexpect(controlPressedListener).toHaveBeenCalledTimes(1)\nexpect(device.isPressed('leftButton')).toBe(true)\n\nmouseupListener(createMockEvent({button: 0}))\nexpect(controlReleasedListener).toHaveBeenCalledTimes(1)\nexpect(device.isPressed('leftButton')).toBe(false)"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
+  "/input/input_devices/touch_device.doc.js": {
+    "file": "/input/input_devices/touch_device.test.js",
+    "describes": [
+      {
+        "title": "TouchDevice",
+        "line": 27,
+        "beforeEach": {
+          "line": 32,
+          "source": "mockContainer = {\n    addEventListener: vi.fn(),\n    removeEventListener: vi.fn()\n}\n\ndevice = new TouchDevice({\n    container: mockContainer,\n    $id: 'testTouch',\n    swipeThreshold: 30\n})"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor",
+            "line": 46,
+            "source": "expect(device).toBeInstanceOf(InputDevice)\nexpect(device.$id).toBe('testTouch')\nexpect(device.container).toBe(mockContainer)\nexpect(device.swipeThreshold).toBe(30)"
+          },
+          {
+            "title": "constructor with default params",
+            "line": 54,
+            "source": "const defaultDevice = new TouchDevice()\nexpect(defaultDevice.$id).toBe('touch')\nexpect(defaultDevice.container).toBe(window)\nexpect(defaultDevice.swipeThreshold).toBe(30)"
+          },
+          {
+            "title": "creates controls on construction",
+            "line": 62,
+            "source": "expect(device.getControl('swipeUp')).toBeInstanceOf(ButtonControl)\nexpect(device.getControl('swipeDown')).toBeInstanceOf(ButtonControl)\nexpect(device.getControl('position')).toBeInstanceOf(Vec2Control)\nexpect(device.getControl('delta')).toBeInstanceOf(Vec2Control)\nexpect(device.getControl('tap')).toBeInstanceOf(ButtonControl)"
+          },
+          {
+            "title": "start attaches event listeners",
+            "line": 71,
+            "source": "device.start()\n\nexpect(mockContainer.addEventListener).toHaveBeenCalledWith('touchstart', expect.any(Function), {passive: false})\nexpect(mockContainer.addEventListener).toHaveBeenCalledWith('touchmove', expect.any(Function), {passive: false})\nexpect(mockContainer.addEventListener).toHaveBeenCalledWith('touchend', expect.any(Function))\nexpect(mockContainer.addEventListener).toHaveBeenCalledWith('touchcancel', expect.any(Function))\nexpect(mockContainer.addEventListener).toHaveBeenCalledTimes(4)"
+          },
+          {
+            "title": "stop removes event listeners",
+            "line": 82,
+            "source": "device.start()\ndevice.stop()\n\nexpect(mockContainer.removeEventListener).toHaveBeenCalledWith('touchstart', expect.any(Function))\nexpect(mockContainer.removeEventListener).toHaveBeenCalledWith('touchmove', expect.any(Function))\nexpect(mockContainer.removeEventListener).toHaveBeenCalledWith('touchend', expect.any(Function))\nexpect(mockContainer.removeEventListener).toHaveBeenCalledWith('touchcancel', expect.any(Function))\nexpect(mockContainer.removeEventListener).toHaveBeenCalledTimes(4)"
+          },
+          {
+            "title": "touchstart updates position",
+            "line": 94,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\n\nconst event = createTouchEvent('touchstart', [{clientX: 100, clientY: 200}])\ntouchstartListener(event)\n\nconst position = device.getControl('position')\nexpect(position.value.x).toBe(100)\nexpect(position.value.y).toBe(200)"
+          },
+          {
+            "title": "touchmove triggers swipeUp when moving up past threshold",
+            "line": 109,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchmoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchmove')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{clientY: 200}]))\ntouchmoveListener(createTouchEvent('touchmove', [{clientY: 150}]))\n\nexpect(device.isPressed('swipeUp')).toBe(true)\nexpect(device.isPressed('swipeDown')).toBe(false)"
+          },
+          {
+            "title": "touchmove triggers swipeDown when moving down past threshold",
+            "line": 125,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchmoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchmove')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{clientY: 200}]))\ntouchmoveListener(createTouchEvent('touchmove', [{clientY: 250}]))\n\nexpect(device.isPressed('swipeDown')).toBe(true)\nexpect(device.isPressed('swipeUp')).toBe(false)"
+          },
+          {
+            "title": "touchmove does not trigger swipe when below threshold",
+            "line": 141,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchmoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchmove')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{clientY: 200}]))\ntouchmoveListener(createTouchEvent('touchmove', [{clientY: 210}]))\n\nexpect(device.isPressed('swipeUp')).toBe(false)\nexpect(device.isPressed('swipeDown')).toBe(false)"
+          },
+          {
+            "title": "touchend releases all swipes",
+            "line": 157,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchmoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchmove')[1]\nconst touchendListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchend')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{identifier: 0, clientY: 200}]))\ntouchmoveListener(createTouchEvent('touchmove', [{identifier: 0, clientY: 150}]))\nexpect(device.isPressed('swipeUp')).toBe(true)\n\ntouchendListener(createTouchEvent('touchend', [], [{identifier: 0, clientY: 150}]))\nexpect(device.isPressed('swipeUp')).toBe(false)"
+          },
+          {
+            "title": "touchcancel releases all swipes",
+            "line": 176,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchmoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchmove')[1]\nconst touchcancelListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchcancel')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{identifier: 0, clientY: 200}]))\ntouchmoveListener(createTouchEvent('touchmove', [{identifier: 0, clientY: 150}]))\nexpect(device.isPressed('swipeUp')).toBe(true)\n\ntouchcancelListener(createTouchEvent('touchcancel', [], [{identifier: 0}]))\nexpect(device.isPressed('swipeUp')).toBe(false)"
+          },
+          {
+            "title": "ignores second touch when first is active",
+            "line": 195,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{identifier: 0, clientX: 100, clientY: 200}]))\n\nconst position = device.getControl('position')\nexpect(position.value.x).toBe(100)\n\ntouchstartListener(createTouchEvent('touchstart', [\n    {identifier: 0, clientX: 100, clientY: 200},\n    {identifier: 1, clientX: 300, clientY: 400}\n]))\n\nexpect(position.value.x).toBe(100)"
+          },
+          {
+            "title": "updates delta on touchmove",
+            "line": 215,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchmoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchmove')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{clientY: 200}]))\ntouchmoveListener(createTouchEvent('touchmove', [{clientY: 180}]))\n\nconst delta = device.getControl('delta')\nexpect(delta.value.y).toBe(-20)"
+          },
+          {
+            "title": "switching from swipeUp to swipeDown releases swipeUp",
+            "line": 231,
+            "source": "device.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchmoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchmove')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{clientY: 200}]))\ntouchmoveListener(createTouchEvent('touchmove', [{clientY: 150}]))\nexpect(device.isPressed('swipeUp')).toBe(true)\n\ntouchmoveListener(createTouchEvent('touchmove', [{clientY: 250}]))\nexpect(device.isPressed('swipeUp')).toBe(false)\nexpect(device.isPressed('swipeDown')).toBe(true)"
+          },
+          {
+            "title": "integration test - full swipe cycle with events",
+            "line": 249,
+            "source": "const controlPressedListener = vi.fn()\nconst controlReleasedListener = vi.fn()\n\ndevice.on('control:pressed', controlPressedListener)\ndevice.on('control:released', controlReleasedListener)\n\ndevice.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchmoveListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchmove')[1]\nconst touchendListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchend')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{identifier: 0, clientY: 200}]))\ntouchmoveListener(createTouchEvent('touchmove', [{identifier: 0, clientY: 150}]))\n\nexpect(controlPressedListener).toHaveBeenCalledTimes(1)\nexpect(controlPressedListener).toHaveBeenCalledWith(\n    expect.objectContaining({name: 'swipeUp'}),\n    expect.anything(),\n    device\n)\n\ntouchendListener(createTouchEvent('touchend', [], [{identifier: 0}]))\n\nexpect(controlReleasedListener).toHaveBeenCalledWith(\n    expect.objectContaining({name: 'swipeUp'}),\n    expect.anything(),\n    device\n)"
+          },
+          {
+            "title": "tap triggers on quick touch without movement",
+            "line": 285,
+            "source": "const controlPressedListener = vi.fn()\nconst controlReleasedListener = vi.fn()\n\ndevice.on('control:pressed', controlPressedListener)\ndevice.on('control:released', controlReleasedListener)\n\ndevice.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchendListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchend')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{identifier: 0, clientX: 100, clientY: 200}]))\ntouchendListener(createTouchEvent('touchend', [], [{identifier: 0, clientX: 100, clientY: 200}]))\n\nexpect(controlPressedListener).toHaveBeenCalledWith(\n    expect.objectContaining({name: 'tap'}),\n    expect.anything(),\n    device\n)\nexpect(controlReleasedListener).toHaveBeenCalledWith(\n    expect.objectContaining({name: 'tap'}),\n    expect.anything(),\n    device\n)"
+          },
+          {
+            "title": "tap does not trigger when movement exceeds threshold",
+            "line": 315,
+            "source": "const controlPressedListener = vi.fn()\n\ndevice.on('control:pressed', controlPressedListener)\n\ndevice.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchendListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchend')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{identifier: 0, clientX: 100, clientY: 200}]))\ntouchendListener(createTouchEvent('touchend', [], [{identifier: 0, clientX: 100, clientY: 250}]))\n\nconst tapCalls = controlPressedListener.mock.calls.filter(\n    call => call[0].name === 'tap'\n)\nexpect(tapCalls).toHaveLength(0)"
+          },
+          {
+            "title": "tap does not trigger on touchcancel",
+            "line": 337,
+            "source": "const controlPressedListener = vi.fn()\n\ndevice.on('control:pressed', controlPressedListener)\n\ndevice.start()\n\nconst touchstartListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchstart')[1]\nconst touchcancelListener = mockContainer.addEventListener.mock.calls\n    .find(call => call[0] === 'touchcancel')[1]\n\ntouchstartListener(createTouchEvent('touchstart', [{identifier: 0, clientX: 100, clientY: 200}]))\ntouchcancelListener(createTouchEvent('touchcancel', [], [{identifier: 0}]))\n\nconst tapCalls = controlPressedListener.mock.calls.filter(\n    call => call[0].name === 'tap'\n)\nexpect(tapCalls).toHaveLength(0)"
           }
         ],
         "describes": []
@@ -7949,7 +9111,7 @@
           {
             "title": "accepts options object",
             "line": 32,
-            "source": "const result = doc('My Doc', {context: 'Core'}, () => {\n    text('Hello')\n})\n\nexpect(result.title).toBe('My Doc')\nexpect(result.options.context).toBe('Core')"
+            "source": "const result = doc('My Doc', {foo: 'bar'}, () => {\n    text('Hello')\n})\n\nexpect(result.title).toBe('My Doc')\nexpect(result.options.foo).toBe('bar')"
           },
           {
             "title": "options defaults to empty object when callback is second arg",

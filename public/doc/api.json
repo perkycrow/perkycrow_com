@@ -1917,6 +1917,52 @@
     },
     "isDefault": true
   },
+  "/application/asset.doc.js": {
+    "type": "class",
+    "file": "/application/asset.js",
+    "name": "Asset",
+    "line": 4,
+    "extends": null,
+    "statics": [],
+    "methods": [
+      {
+        "name": "hasTag",
+        "line": 24,
+        "source": "hasTag (tag) {\n    return Array.isArray(this.tags) && this.tags.includes(tag)\n}",
+        "kind": "method",
+        "params": [
+          "tag"
+        ]
+      },
+      {
+        "name": "export",
+        "line": 29,
+        "source": "export () {\n    const exported = {\n        type: this.type,\n        id: this.id,\n        name: this.name,\n        tags: this.tags,\n        config: this.config\n    }\n\n    if (this.url) {\n        exported.url = this.url\n    } else if (this.source) {\n        exported.source = this.source\n    }\n\n    return exported\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [
+      {
+        "name": "loaded",
+        "line": 19,
+        "source": "get loaded () {\n    return Boolean(this.source)\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 6,
+      "source": "constructor (params = {}) {\n    this.type    = params.type\n    this.name    = params.name\n    this.id      = params.id || guessId(params)\n    this.name ??= this.id\n\n    this.url     = params.url || params.path\n    this.source  = params.source\n    this.tags    = params.tags  || []\n    this.config  = params.config || {}\n}",
+      "kind": "constructor",
+      "params": [
+        "params = ..."
+      ]
+    },
+    "isDefault": true
+  },
   "/application/manifest.doc.js": {
     "type": "class",
     "file": "/application/manifest.js",
@@ -2316,6 +2362,70 @@
     },
     "isDefault": true
   },
+  "/application/source_manager.doc.js": {
+    "type": "class",
+    "file": "/application/source_manager.js",
+    "name": "SourceManager",
+    "line": 5,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "$category",
+        "line": 7,
+        "source": "static $category = 'sourceManager'",
+        "kind": "property",
+        "value": "'sourceManager'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "onInstall",
+        "line": 17,
+        "source": "onInstall (host) {\n    this.delegateTo(host, ['loadAsset', 'loadTag', 'loadAll', 'loaders'])\n\n    this.delegateEventsTo(host, [\n        'loader:progress',\n        'loader:complete',\n        'loader:error'\n    ])\n}",
+        "kind": "method",
+        "params": [
+          "host"
+        ]
+      },
+      {
+        "name": "loadAsset",
+        "line": 28,
+        "source": "async loadAsset (id) {\n    const asset = this.manifest.getAsset(id)\n\n    if (!asset) {\n        throw new Error(`Asset not found: ${id}`)\n    }\n\n    const sourceLoader = new SourceLoader([asset], this.loaders)\n    this.#setupLoaderEvents(sourceLoader)\n\n    await sourceLoader.load()\n\n    return sourceLoader\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "name": "loadTag",
+        "line": 44,
+        "source": "async loadTag (tag) {\n    const assets = this.manifest.getAssetsByTag(tag)\n\n    const sourceLoader = new SourceLoader(assets, this.loaders)\n    this.#setupLoaderEvents(sourceLoader)\n\n    await sourceLoader.load()\n\n    return sourceLoader\n}",
+        "kind": "method",
+        "params": [
+          "tag"
+        ]
+      },
+      {
+        "name": "loadAll",
+        "line": 56,
+        "source": "async loadAll () {\n    const assets = this.manifest.getAllAssets()\n\n    const sourceLoader = new SourceLoader(assets, this.loaders)\n    this.#setupLoaderEvents(sourceLoader)\n\n    await sourceLoader.load()\n\n    return sourceLoader\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 9,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    this.loaders = options.loaders\n    this.manifest = options.manifest\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
   "/game/game.doc.js": {
     "type": "class",
     "file": "/game/game.js",
@@ -2468,6 +2578,95 @@
       "kind": "constructor",
       "params": [
         "params = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/game/world_view.doc.js": {
+    "type": "class",
+    "file": "/game/world_view.js",
+    "name": "WorldView",
+    "line": 23,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "$category",
+        "line": 25,
+        "source": "static $category = 'worldView'",
+        "kind": "property",
+        "value": "'worldView'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "register",
+        "line": 40,
+        "source": "register (classOrMatcher, View, config = null) {\n    const isObject2D = isObject2DClass(View)\n    const registration = isObject2D\n        ? {View: AutoView, config, ObjectClass: View}\n        : {View, config}\n\n    if (typeof classOrMatcher === 'function' && classOrMatcher.prototype) {\n        const isClass = classOrMatcher.toString().startsWith('class ') ||\n            Object.getOwnPropertyNames(classOrMatcher.prototype).length > 1\n\n        if (isClass) {\n            this.#classRegistry.set(classOrMatcher, registration)\n            return this\n        }\n    }\n\n    this.#matcherRegistry.push({matcher: classOrMatcher, ...registration})\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "classOrMatcher",
+          "View",
+          "config = ..."
+        ]
+      },
+      {
+        "name": "unregister",
+        "line": 61,
+        "source": "unregister (classOrMatcher) {\n    if (this.#classRegistry.has(classOrMatcher)) {\n        this.#classRegistry.delete(classOrMatcher)\n        return true\n    }\n\n    const index = this.#matcherRegistry.findIndex(entry => entry.matcher === classOrMatcher)\n    if (index !== -1) {\n        this.#matcherRegistry.splice(index, 1)\n        return true\n    }\n\n    return false\n}",
+        "kind": "method",
+        "params": [
+          "classOrMatcher"
+        ]
+      },
+      {
+        "name": "clearRegistry",
+        "line": 77,
+        "source": "clearRegistry () {\n    this.#classRegistry.clear()\n    this.#matcherRegistry.length = 0\n    return this\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "onStart",
+        "line": 84,
+        "source": "onStart () {\n    if (!this.world) {\n        return\n    }\n\n    this.listenTo(this.world, 'entity:set', (id, entity) => this.#handleEntitySet(entity))\n    this.listenTo(this.world, 'entity:delete', (id) => this.#handleEntityDelete(id))\n\n    for (const entity of this.world.entities) {\n        this.#handleEntitySet(entity)\n    }\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "onStop",
+        "line": 98,
+        "source": "onStop () {\n    this.#disposeAllViews()\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "sync",
+        "line": 103,
+        "source": "sync (deltaTime = 0) {\n    for (const views of this.#views.values()) {\n        for (const view of views) {\n            view.sync(deltaTime)\n        }\n    }\n}",
+        "kind": "method",
+        "params": [
+          "deltaTime = ..."
+        ]
+      },
+      {
+        "name": "getViews",
+        "line": 112,
+        "source": "getViews (entityId) {\n    return this.#views.get(entityId) || []\n}",
+        "kind": "method",
+        "params": [
+          "entityId"
+        ]
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 31,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    this.world = options.world\n    this.game = options.game\n    this.rootGroup = new Group2D({name: 'world'})\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
       ]
     },
     "isDefault": true
@@ -3083,19 +3282,19 @@
     },
     "isDefault": true
   },
-  "/render/canvas_2d.doc.js": {
+  "/render/canvas_renderer.doc.js": {
     "type": "class",
-    "file": "/render/canvas_2d.js",
-    "name": "Canvas2D",
+    "file": "/render/canvas_renderer.js",
+    "name": "CanvasRenderer",
     "line": 11,
     "extends": "BaseRenderer",
     "statics": [
       {
         "name": "$name",
         "line": 13,
-        "source": "static $name = 'canvas2D'",
+        "source": "static $name = 'canvasRenderer'",
         "kind": "property",
-        "value": "'canvas2D'"
+        "value": "'canvasRenderer'"
       }
     ],
     "methods": [
@@ -3147,19 +3346,19 @@
     },
     "isDefault": true
   },
-  "/render/webgl_canvas_2d.doc.js": {
+  "/render/webgl_renderer.doc.js": {
     "type": "class",
-    "file": "/render/webgl_canvas_2d.js",
-    "name": "WebGLCanvas2D",
+    "file": "/render/webgl_renderer.js",
+    "name": "WebGLRenderer",
     "line": 19,
     "extends": "BaseRenderer",
     "statics": [
       {
         "name": "$name",
         "line": 21,
-        "source": "static $name = 'webGLCanvas2D'",
+        "source": "static $name = 'webGLRenderer'",
         "kind": "property",
-        "value": "'webGLCanvas2D'"
+        "value": "'webGLRenderer'"
       }
     ],
     "methods": [
@@ -3326,6 +3525,593 @@
       "params": [
         "options = ..."
       ]
+    },
+    "isDefault": true
+  },
+  "/render/circle.doc.js": {
+    "type": "class",
+    "file": "/render/circle.js",
+    "name": "Circle",
+    "line": 4,
+    "extends": "Object2D",
+    "statics": [],
+    "methods": [
+      {
+        "name": "setRadius",
+        "line": 16,
+        "source": "setRadius (radius) {\n    this.radius = radius\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "radius"
+        ]
+      },
+      {
+        "name": "getBounds",
+        "line": 22,
+        "source": "getBounds () {\n    const size = this.radius * 2\n    const offsetX = -size * this.anchorX\n    const offsetY = -size * this.anchorY\n\n    return {\n        minX: offsetX,\n        minY: offsetY,\n        maxX: offsetX + size,\n        maxY: offsetY + size,\n        width: size,\n        height: size\n    }\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 6,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    this.radius = options.radius ?? 10\n    this.color = options.color ?? '#000000'\n    this.strokeColor = options.strokeColor ?? '#000000'\n    this.strokeWidth = options.strokeWidth ?? 0\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/group_2d.doc.js": {
+    "type": "class",
+    "file": "/render/group_2d.js",
+    "name": "Group2D",
+    "line": 4,
+    "extends": "Object2D",
+    "statics": [],
+    "methods": [
+      {
+        "name": "addChild",
+        "line": 11,
+        "source": "addChild (...objects) {\n    return this.add(...objects)\n}",
+        "kind": "method",
+        "params": [
+          "...objects"
+        ]
+      },
+      {
+        "name": "getBounds",
+        "line": 16,
+        "source": "getBounds () {\n    if (this.children.length === 0) {\n        return {\n            minX: 0,\n            minY: 0,\n            maxX: 0,\n            maxY: 0,\n            width: 0,\n            height: 0\n        }\n    }\n\n    let minX = Infinity\n    let minY = Infinity\n    let maxX = -Infinity\n    let maxY = -Infinity\n\n    this.children.forEach(child => {\n        const bounds = child.getBounds()\n\n        if (bounds.width === 0 && bounds.height === 0) {\n            return\n        }\n\n        const m = child.worldMatrix\n        const corners = [\n            {x: bounds.minX, y: bounds.minY},\n            {x: bounds.maxX, y: bounds.minY},\n            {x: bounds.minX, y: bounds.maxY},\n            {x: bounds.maxX, y: bounds.maxY}\n        ]\n\n        corners.forEach(corner => {\n            const x = m[0] * corner.x + m[2] * corner.y + m[4]\n            const y = m[1] * corner.x + m[3] * corner.y + m[5]\n\n            minX = Math.min(minX, x)\n            minY = Math.min(minY, y)\n            maxX = Math.max(maxX, x)\n            maxY = Math.max(maxY, y)\n        })\n    })\n\n    if (minX === Infinity) {\n        return {\n            minX: 0,\n            minY: 0,\n            maxX: 0,\n            maxY: 0,\n            width: 0,\n            height: 0\n        }\n    }\n\n    return {\n        minX,\n        minY,\n        maxX,\n        maxY,\n        width: maxX - minX,\n        height: maxY - minY\n    }\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 6,
+      "source": "constructor (options = {}) {\n    super(options)\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/image_2d.doc.js": {
+    "type": "class",
+    "file": "/render/image_2d.js",
+    "name": "Image2D",
+    "line": 4,
+    "extends": "Object2D",
+    "statics": [],
+    "methods": [
+      {
+        "name": "getBounds",
+        "line": 15,
+        "source": "getBounds () {\n    const offsetX = -this.width * this.anchorX\n    const offsetY = -this.height * this.anchorY\n\n    return {\n        minX: offsetX,\n        minY: offsetY,\n        maxX: offsetX + this.width,\n        maxY: offsetY + this.height,\n        width: this.width,\n        height: this.height\n    }\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 6,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    this.image = options.image ?? null\n    this.width = options.width ?? 10\n    this.height = options.height ?? 10\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/object_2d.doc.js": {
+    "type": "class",
+    "file": "/render/object_2d.js",
+    "name": "Object2D",
+    "line": 5,
+    "extends": "Transform",
+    "statics": [],
+    "methods": [
+      {
+        "name": "showDebugGizmos",
+        "line": 80,
+        "source": "showDebugGizmos (options = {}) {\n    this.#debugGizmos = {\n        bounds: options.bounds ?? true,\n        anchor: options.anchor ?? true,\n        pivot: options.pivot ?? true,\n        origin: options.origin ?? true\n    }\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "options = ..."
+        ]
+      },
+      {
+        "name": "hideDebugGizmos",
+        "line": 91,
+        "source": "hideDebugGizmos () {\n    this.#debugGizmos = null\n    return this\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "setPosition",
+        "line": 97,
+        "source": "setPosition (x, y) {\n    this.x = x\n    this.y = y\n    this.markDirty()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "x",
+          "y"
+        ]
+      },
+      {
+        "name": "setRotation",
+        "line": 105,
+        "source": "setRotation (rotation) {\n    this.rotation = rotation\n    this.markDirty()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "rotation"
+        ]
+      },
+      {
+        "name": "setScale",
+        "line": 112,
+        "source": "setScale (scaleX, scaleY = scaleX) {\n    this.scaleX = scaleX\n    this.scaleY = scaleY\n    this.markDirty()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "scaleX",
+          "scaleY = ..."
+        ]
+      },
+      {
+        "name": "setOpacity",
+        "line": 120,
+        "source": "setOpacity (opacity) {\n    this.opacity = opacity\n    this.markDirty()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "opacity"
+        ]
+      },
+      {
+        "name": "setVisible",
+        "line": 127,
+        "source": "setVisible (visible) {\n    this.visible = visible\n    this.markDirty()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "visible"
+        ]
+      },
+      {
+        "name": "setDepth",
+        "line": 134,
+        "source": "setDepth (depth) {\n    if (this.depth !== depth) {\n        this.depth = depth\n        if (this.parent) {\n            this.parent.markChildrenNeedSort()\n        }\n        this.markDirty()\n    }\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "depth"
+        ]
+      },
+      {
+        "name": "setAnchor",
+        "line": 146,
+        "source": "setAnchor (x, y = x) {\n    this.anchorX = x\n    this.anchorY = y\n    this.markDirty()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "x",
+          "y = ..."
+        ]
+      },
+      {
+        "name": "setPivot",
+        "line": 154,
+        "source": "setPivot (x, y) {\n    this.pivotX = x\n    this.pivotY = y\n    this.markDirty()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "x",
+          "y"
+        ]
+      },
+      {
+        "name": "getBounds",
+        "line": 162,
+        "source": "getBounds () { // eslint-disable-line local/class-methods-use-this -- clean\n    return {\n        minX: 0,\n        minY: 0,\n        maxX: 0,\n        maxY: 0,\n        width: 0,\n        height: 0\n    }\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "getWorldBounds",
+        "line": 174,
+        "source": "getWorldBounds () {\n    const localBounds = this.getBounds()\n\n    if (localBounds.width === 0 && localBounds.height === 0) {\n        return localBounds\n    }\n\n    const corners = [\n        {x: localBounds.minX, y: localBounds.minY},\n        {x: localBounds.maxX, y: localBounds.minY},\n        {x: localBounds.minX, y: localBounds.maxY},\n        {x: localBounds.maxX, y: localBounds.maxY}\n    ]\n\n    const transformedCorners = corners.map(corner => this.transformPoint(corner))\n\n    const xs = transformedCorners.map(c => c.x)\n    const ys = transformedCorners.map(c => c.y)\n\n    const minX = Math.min(...xs)\n    const minY = Math.min(...ys)\n    const maxX = Math.max(...xs)\n    const maxY = Math.max(...ys)\n\n    return {\n        minX,\n        minY,\n        maxX,\n        maxY,\n        width: maxX - minX,\n        height: maxY - minY\n    }\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "render",
+        "line": 240,
+        "source": "render () {\n\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [
+      {
+        "name": "tint",
+        "line": 52,
+        "source": "get tint () {\n    return this.#tint\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "effects",
+        "line": 62,
+        "source": "get effects () {\n    if (!this.#effects) {\n        this.#effects = new SpriteEffectStack()\n    }\n    return this.#effects\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "debugGizmos",
+        "line": 70,
+        "source": "get debugGizmos () {\n    return this.#debugGizmos\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "renderHints",
+        "line": 209,
+        "source": "get renderHints () {\n    const hasTint = this.#tint !== null\n    const hasEffects = this.#effects !== null && this.#effects.count > 0\n\n    if (!hasTint && !hasEffects) {\n        return null\n    }\n\n    const hints = {}\n\n    if (hasTint) {\n        hints.tint = this.#tint\n    }\n\n    if (hasEffects) {\n        const effectHints = this.#effects.getHints()\n        if (effectHints) {\n            hints.effects = effectHints\n        }\n\n        const shaderEffectTypes = this.#effects.getShaderEffectTypes()\n        if (shaderEffectTypes.length > 0) {\n            hints.shaderEffectTypes = shaderEffectTypes\n            hints.effectParams = this.#effects.getShaderEffectParams()\n        }\n    }\n\n    return hints\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [
+      {
+        "name": "tint",
+        "line": 57,
+        "source": "set tint (value) {\n    this.#tint = value\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "debugGizmos",
+        "line": 75,
+        "source": "set debugGizmos (value) {\n    this.#debugGizmos = value\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      }
+    ],
+    "constructor": {
+      "name": "constructor",
+      "line": 11,
+      "source": "constructor (options = {}) { // eslint-disable-line complexity -- clean\n    super()\n\n    this.visible = options.visible ?? true\n    this.opacity = options.opacity ?? 1\n    this.depth = options.depth ?? 0\n    this.anchorX = options.anchorX ?? 0.5\n    this.anchorY = options.anchorY ?? 0.5\n\n    if (options.debugGizmos !== undefined) {\n        this.#debugGizmos = options.debugGizmos\n    }\n\n    if (options.tint !== undefined) {\n        this.#tint = options.tint\n    }\n\n    if (options.x !== undefined) {\n        this.x = options.x\n    }\n    if (options.y !== undefined) {\n        this.y = options.y\n    }\n    if (options.rotation !== undefined) {\n        this.rotation = options.rotation\n    }\n    if (options.scaleX !== undefined) {\n        this.scaleX = options.scaleX\n    }\n    if (options.scaleY !== undefined) {\n        this.scaleY = options.scaleY\n    }\n    if (options.pivotX !== undefined) {\n        this.pivotX = options.pivotX\n    }\n    if (options.pivotY !== undefined) {\n        this.pivotY = options.pivotY\n    }\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/rectangle.doc.js": {
+    "type": "class",
+    "file": "/render/rectangle.js",
+    "name": "Rectangle",
+    "line": 4,
+    "extends": "Object2D",
+    "statics": [],
+    "methods": [
+      {
+        "name": "getBounds",
+        "line": 17,
+        "source": "getBounds () {\n    const offsetX = -this.width * this.anchorX\n    const offsetY = -this.height * this.anchorY\n\n    return {\n        minX: offsetX,\n        minY: offsetY,\n        maxX: offsetX + this.width,\n        maxY: offsetY + this.height,\n        width: this.width,\n        height: this.height\n    }\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 6,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    this.width = options.width ?? 10\n    this.height = options.height ?? 10\n    this.color = options.color ?? '#000000'\n    this.strokeColor = options.strokeColor ?? '#000000'\n    this.strokeWidth = options.strokeWidth ?? 0\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/sprite.doc.js": {
+    "type": "class",
+    "file": "/render/sprite.js",
+    "name": "Sprite",
+    "line": 4,
+    "extends": "Object2D",
+    "statics": [],
+    "methods": [
+      {
+        "name": "setFrame",
+        "line": 19,
+        "source": "setFrame (frame) {\n    this.currentFrame = frame\n}",
+        "kind": "method",
+        "params": [
+          "frame"
+        ]
+      },
+      {
+        "name": "addAnimation",
+        "line": 24,
+        "source": "addAnimation (name, animation) {\n    this.animations.set(name, animation)\n}",
+        "kind": "method",
+        "params": [
+          "name",
+          "animation"
+        ]
+      },
+      {
+        "name": "play",
+        "line": 29,
+        "source": "play (name) {\n    const animation = this.animations.get(name)\n    if (animation) {\n        if (this.currentAnimation && this.currentAnimation !== animation) {\n            this.currentAnimation.stop()\n        }\n        this.currentAnimation = animation\n        this.currentAnimation.play()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "name"
+        ]
+      },
+      {
+        "name": "stop",
+        "line": 41,
+        "source": "stop () {\n    if (this.currentAnimation) {\n        this.currentAnimation.stop()\n        this.currentAnimation = null\n    }\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "getBounds",
+        "line": 49,
+        "source": "getBounds () {\n    if (!this.currentFrame) {\n        return super.getBounds()\n    }\n\n    const {w, h} = this.currentFrame.frame\n\n    let renderW = w\n    let renderH = h\n\n    if (this.width !== null) {\n        renderW = this.width\n        renderH = (h / w) * renderW\n    } else if (this.height !== null) {\n        renderH = this.height\n        renderW = (w / h) * renderH\n    }\n\n    const offsetX = -renderW * this.anchorX\n    const offsetY = -renderH * this.anchorY\n\n    return {\n        minX: offsetX,\n        minY: offsetY,\n        maxX: offsetX + renderW,\n        maxY: offsetY + renderH,\n        width: renderW,\n        height: renderH\n    }\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 6,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    this.image = options.image || null\n    this.currentFrame = options.frame || null\n    this.width = options.width ?? null\n    this.height = options.height ?? null\n\n    this.animations = new Map()\n    this.currentAnimation = null\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/transform.doc.js": {
+    "type": "class",
+    "file": "/render/transform.js",
+    "name": "Transform",
+    "line": 1,
+    "extends": null,
+    "statics": [],
+    "methods": [
+      {
+        "name": "add",
+        "line": 124,
+        "source": "add (...children) {\n    children.forEach(child => {\n        if (child.parent) {\n            child.parent.remove(child)\n        }\n        this.children.push(child)\n        child.parent = this\n        child.markDirty()\n    })\n    this.markChildrenNeedSort()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "...children"
+        ]
+      },
+      {
+        "name": "remove",
+        "line": 138,
+        "source": "remove (child) {\n    const index = this.children.indexOf(child)\n    if (index !== -1) {\n        this.children.splice(index, 1)\n        child.parent = null\n        child.markDirty()\n    }\n    this.markChildrenNeedSort()\n    return this\n}",
+        "kind": "method",
+        "params": [
+          "child"
+        ]
+      },
+      {
+        "name": "markChildrenNeedSort",
+        "line": 150,
+        "source": "markChildrenNeedSort () {\n    this.#childrenNeedSort = true\n    this.#sortedChildren = null\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "getSortedChildren",
+        "line": 156,
+        "source": "getSortedChildren () {\n    if (this.#childrenNeedSort || !this.#sortedChildren) {\n        this.#sortedChildren = this.children.slice().sort((a, b) => (a.depth ?? 0) - (b.depth ?? 0))\n        this.#childrenNeedSort = false\n    }\n    return this.#sortedChildren\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "markDirty",
+        "line": 165,
+        "source": "markDirty () {\n    this.#dirty = true\n    this.children.forEach(child => child.markDirty())\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "updateLocalMatrix",
+        "line": 171,
+        "source": "updateLocalMatrix () {\n    const cos = Math.cos(this.rotation)\n    const sin = Math.sin(this.rotation)\n\n    const px = -this.pivotX\n    const py = -this.pivotY\n\n    const a = cos * this.scaleX\n    const b = sin * this.scaleX\n    const c = -sin * this.scaleY\n    const d = cos * this.scaleY\n\n    this.#localMatrix[0] = a\n    this.#localMatrix[1] = b\n    this.#localMatrix[2] = c\n    this.#localMatrix[3] = d\n    this.#localMatrix[4] = this.x + (px * a + py * c)\n    this.#localMatrix[5] = this.y + (px * b + py * d)\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "updateWorldMatrix",
+        "line": 192,
+        "source": "updateWorldMatrix (force = false) {\n    if (this.#dirty || force) {\n        this.updateLocalMatrix()\n\n        if (this.parent) {\n            multiplyMatrices(this.parent.#worldMatrix, this.#localMatrix, this.#worldMatrix)\n        } else {\n            this.#worldMatrix = [...this.#localMatrix]\n        }\n\n        this.#dirty = false\n    }\n\n    this.children.forEach(child => child.updateWorldMatrix(force))\n}",
+        "kind": "method",
+        "params": [
+          "force = ..."
+        ]
+      },
+      {
+        "name": "transformPoint",
+        "line": 209,
+        "source": "transformPoint (point, matrix = this.#worldMatrix) {\n    return {\n        x: matrix[0] * point.x + matrix[2] * point.y + matrix[4],\n        y: matrix[1] * point.x + matrix[3] * point.y + matrix[5]\n    }\n}",
+        "kind": "method",
+        "params": [
+          "point",
+          "matrix = ..."
+        ]
+      }
+    ],
+    "getters": [
+      {
+        "name": "x",
+        "line": 28,
+        "source": "get x () {\n    return this.#x\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "y",
+        "line": 41,
+        "source": "get y () {\n    return this.#y\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "rotation",
+        "line": 54,
+        "source": "get rotation () {\n    return this.#rotation\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "scaleX",
+        "line": 67,
+        "source": "get scaleX () {\n    return this.#scaleX\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "scaleY",
+        "line": 80,
+        "source": "get scaleY () {\n    return this.#scaleY\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "pivotX",
+        "line": 93,
+        "source": "get pivotX () {\n    return this.#pivotX\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "pivotY",
+        "line": 106,
+        "source": "get pivotY () {\n    return this.#pivotY\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "worldMatrix",
+        "line": 119,
+        "source": "get worldMatrix () {\n    return this.#worldMatrix\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [
+      {
+        "name": "x",
+        "line": 33,
+        "source": "set x (value) {\n    if (this.#x !== value) {\n        this.#x = value\n        this.markDirty()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "y",
+        "line": 46,
+        "source": "set y (value) {\n    if (this.#y !== value) {\n        this.#y = value\n        this.markDirty()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "rotation",
+        "line": 59,
+        "source": "set rotation (value) {\n    if (this.#rotation !== value) {\n        this.#rotation = value\n        this.markDirty()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "scaleX",
+        "line": 72,
+        "source": "set scaleX (value) {\n    if (this.#scaleX !== value) {\n        this.#scaleX = value\n        this.markDirty()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "scaleY",
+        "line": 85,
+        "source": "set scaleY (value) {\n    if (this.#scaleY !== value) {\n        this.#scaleY = value\n        this.markDirty()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "pivotX",
+        "line": 98,
+        "source": "set pivotX (value) {\n    if (this.#pivotX !== value) {\n        this.#pivotX = value\n        this.markDirty()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "pivotY",
+        "line": 111,
+        "source": "set pivotY (value) {\n    if (this.#pivotY !== value) {\n        this.#pivotY = value\n        this.markDirty()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      }
+    ],
+    "constructor": {
+      "name": "constructor",
+      "line": 16,
+      "source": "constructor () {\n    this.parent = null\n    this.children = []\n    this.#sortedChildren = null\n    this.#childrenNeedSort = false\n\n    this.#localMatrix = [1, 0, 0, 1, 0, 0]\n    this.#worldMatrix = [1, 0, 0, 1, 0, 0]\n    this.#dirty = true\n}",
+      "kind": "constructor",
+      "params": []
     },
     "isDefault": true
   },
@@ -3706,6 +4492,79 @@
     },
     "isDefault": true
   },
+  "/input/input_controls/button_control.doc.js": {
+    "type": "class",
+    "file": "/input/input_controls/button_control.js",
+    "name": "ButtonControl",
+    "line": 4,
+    "extends": "InputControl",
+    "statics": [
+      {
+        "name": "defaultPressThreshold",
+        "line": 6,
+        "source": "static defaultPressThreshold = 0.1",
+        "kind": "property",
+        "value": "0.1"
+      }
+    ],
+    "methods": [
+      {
+        "name": "setValue",
+        "line": 15,
+        "source": "setValue (value, event = null) {\n    this.lastEvent = event\n\n    if (super.setValue(value, event)) {\n\n        if (this.isPressed && !this.wasPressed) {\n            this.emit('pressed', this.lastEvent)\n        }\n\n        if (!this.isPressed && this.wasPressed) {\n            this.emit('released', this.lastEvent)\n        }\n\n        return true\n    }\n\n    return false\n}",
+        "kind": "method",
+        "params": [
+          "value",
+          "event = ..."
+        ]
+      },
+      {
+        "name": "press",
+        "line": 45,
+        "source": "press (event = null) {\n    this.setValue(1, event)\n}",
+        "kind": "method",
+        "params": [
+          "event = ..."
+        ]
+      },
+      {
+        "name": "release",
+        "line": 50,
+        "source": "release (event = null) {\n    this.setValue(0, event)\n}",
+        "kind": "method",
+        "params": [
+          "event = ..."
+        ]
+      }
+    ],
+    "getters": [
+      {
+        "name": "isPressed",
+        "line": 35,
+        "source": "get isPressed () {\n    return this.value >= this.pressThreshold\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "wasPressed",
+        "line": 40,
+        "source": "get wasPressed () {\n    return this.oldValue >= this.pressThreshold\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 8,
+      "source": "constructor (params = {}) {\n    super(params)\n\n    this.pressThreshold = params.pressThreshold ?? this.constructor.defaultPressThreshold\n}",
+      "kind": "constructor",
+      "params": [
+        "params = ..."
+      ]
+    },
+    "isDefault": true
+  },
   "/input/input_controls/vec2_control.doc.js": {
     "type": "class",
     "file": "/input/input_controls/vec2_control.js",
@@ -3818,6 +4677,50 @@
       "name": "constructor",
       "line": 17,
       "source": "constructor (params = {}) {\n    super(params)\n\n    this.shouldPreventDefault = params.shouldPreventDefault\n\n    this.#createControls()\n\n    this.#mousedownListener = this.#handleMousedown.bind(this)\n    this.#mouseupListener = this.#handleMouseup.bind(this)\n    this.#mousemoveListener = this.#handleMousemove.bind(this)\n    this.#contextmenuListener = this.#handleContextmenu.bind(this)\n    this.#wheelListener = this.#handleWheel.bind(this)\n}",
+      "kind": "constructor",
+      "params": [
+        "params = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/input/input_devices/touch_device.doc.js": {
+    "type": "class",
+    "file": "/input/input_devices/touch_device.js",
+    "name": "TouchDevice",
+    "line": 6,
+    "extends": "InputDevice",
+    "statics": [
+      {
+        "name": "$name",
+        "line": 8,
+        "source": "static $name = 'touch'",
+        "kind": "property",
+        "value": "'touch'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "onStart",
+        "line": 39,
+        "source": "onStart () {\n    this.container.addEventListener('touchstart', this.#touchstartListener, {passive: false})\n    this.container.addEventListener('touchmove', this.#touchmoveListener, {passive: false})\n    this.container.addEventListener('touchend', this.#touchendListener)\n    this.container.addEventListener('touchcancel', this.#touchcancelListener)\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "onStop",
+        "line": 47,
+        "source": "onStop () {\n    this.container.removeEventListener('touchstart', this.#touchstartListener)\n    this.container.removeEventListener('touchmove', this.#touchmoveListener)\n    this.container.removeEventListener('touchend', this.#touchendListener)\n    this.container.removeEventListener('touchcancel', this.#touchcancelListener)\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 22,
+      "source": "constructor (params = {}) {\n    super(params)\n\n    this.swipeThreshold = params.swipeThreshold ?? 30\n    this.tapThreshold = params.tapThreshold ?? 20\n    this.tapMaxDuration = params.tapMaxDuration ?? 300\n    this.shouldPreventDefault = params.shouldPreventDefault\n\n    this.#createControls()\n\n    this.#touchstartListener = this.#handleTouchstart.bind(this)\n    this.#touchmoveListener = this.#handleTouchmove.bind(this)\n    this.#touchendListener = this.#handleTouchend.bind(this)\n    this.#touchcancelListener = this.#handleTouchcancel.bind(this)\n}",
       "kind": "constructor",
       "params": [
         "params = ..."
@@ -4284,7 +5187,7 @@
       },
       {
         "name": "log",
-        "line": 318,
+        "line": 322,
         "source": "log (message, type = 'info', format = 'text', timestamp = null) {\n    const entry = document.createElement('div')\n    entry.className = `logger-entry log-${type}`\n\n    const indicator = document.createElement('span')\n    indicator.className = 'logger-indicator'\n    entry.appendChild(indicator)\n\n    const messageElement = document.createElement('span')\n    messageElement.className = 'logger-message'\n\n    processMessage(messageElement, message, format)\n\n    entry.appendChild(messageElement)\n\n    const time = timestamp ? new Date(timestamp) : new Date()\n    const timestampEl = document.createElement('span')\n    timestampEl.className = 'logger-timestamp'\n    timestampEl.textContent = time.toLocaleTimeString()\n    entry.appendChild(timestampEl)\n\n    const copyBtn = document.createElement('button')\n    copyBtn.className = 'logger-copy-btn'\n    copyBtn.innerHTML = COPY_ICON\n    copyBtn.title = 'Copy log entry'\n    copyBtn.addEventListener('click', (e) => {\n        e.stopPropagation()\n        const text = extractFormattedText(messageElement)\n        copyToClipboard(`[${timestampEl.textContent}] ${text}`)\n    })\n    entry.appendChild(copyBtn)\n\n    this.#entries.push(entry)\n\n    while (this.#entries.length > this.#maxEntries) {\n        const removed = this.#entries.shift()\n        if (removed.parentNode) {\n            removed.parentNode.removeChild(removed)\n        }\n    }\n\n    if (this.#contentEl) {\n        this.#contentEl.appendChild(entry)\n        this.#contentEl.scrollTop = this.#contentEl.scrollHeight\n    }\n\n    this.#updateControlsVisibility()\n\n    return entry\n}",
         "kind": "method",
         "params": [
@@ -4296,7 +5199,7 @@
       },
       {
         "name": "info",
-        "line": 370,
+        "line": 374,
         "source": "info (...messages) {\n    return this.log(formatMessage(...messages), 'info')\n}",
         "kind": "method",
         "params": [
@@ -4305,7 +5208,7 @@
       },
       {
         "name": "notice",
-        "line": 375,
+        "line": 379,
         "source": "notice (...messages) {\n    return this.log(formatMessage(...messages), 'notice')\n}",
         "kind": "method",
         "params": [
@@ -4314,7 +5217,7 @@
       },
       {
         "name": "warn",
-        "line": 380,
+        "line": 384,
         "source": "warn (...messages) {\n    return this.log(formatMessage(...messages), 'warn')\n}",
         "kind": "method",
         "params": [
@@ -4323,7 +5226,7 @@
       },
       {
         "name": "error",
-        "line": 385,
+        "line": 389,
         "source": "error (...messages) {\n    return this.log(formatMessage(...messages), 'error')\n}",
         "kind": "method",
         "params": [
@@ -4332,7 +5235,7 @@
       },
       {
         "name": "success",
-        "line": 390,
+        "line": 394,
         "source": "success (...messages) {\n    return this.log(formatMessage(...messages), 'success')\n}",
         "kind": "method",
         "params": [
@@ -4341,14 +5244,14 @@
       },
       {
         "name": "spacer",
-        "line": 395,
+        "line": 399,
         "source": "spacer () {\n    const entry = document.createElement('div')\n    entry.className = 'logger-entry logger-spacer'\n    this.#entries.push(entry)\n\n    if (this.#contentEl) {\n        this.#contentEl.appendChild(entry)\n    }\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "title",
-        "line": 406,
+        "line": 410,
         "source": "title (title) {\n    const entry = document.createElement('div')\n    entry.className = 'logger-entry logger-title-entry'\n    entry.textContent = title\n    this.#entries.push(entry)\n\n    if (this.#contentEl) {\n        this.#contentEl.appendChild(entry)\n    }\n}",
         "kind": "method",
         "params": [
@@ -4357,7 +5260,7 @@
       },
       {
         "name": "clear",
-        "line": 418,
+        "line": 422,
         "source": "clear () {\n    this.#entries = []\n    if (this.#contentEl) {\n        this.#contentEl.innerHTML = ''\n    }\n    this.#updateControlsVisibility()\n}",
         "kind": "method",
         "params": []
@@ -4832,11 +5735,11 @@
           "containerEl",
           "sectionSetup = ..."
         ],
-        "source": "async function executeContainer (block, containerEl, sectionSetup = null) {\n    addSpacerIfNeeded()\n\n    const prevApp = containerEl._currentApp\n    if (prevApp?.dispose) {\n        prevApp.dispose()\n    }\n    containerEl.innerHTML = ''\n\n    if (block.preset) {\n        applyContainerPreset(containerEl, block.preset)\n    }\n\n    if (block.scrollable) {\n        containerEl.style.overflow = 'auto'\n    }\n\n    try {\n        let actionsBar = null\n        let slidersBar = null\n        let infoBar = null\n\n        const ctx = {\n            container: containerEl,\n            setApp: (app, ...args) => {\n                containerEl._currentApp = app\n                const [scene] = args\n                if (scene && app.autoFitEnabled && app.render) {\n                    app.on('resize', () => app.render(scene))\n                }\n            },\n            action: (label, callback) => {\n                if (!actionsBar) {\n                    actionsBar = document.createElement('div')\n                    actionsBar.className = 'doc-actions-bar'\n                    containerEl.appendChild(actionsBar)\n                }\n\n                const isFirst = actionsBar.children.length === 0\n                const btn = document.createElement('button')\n                btn.className = 'doc-actions-btn'\n                if (isFirst) {\n                    btn.classList.add('doc-actions-btn--active')\n                }\n                btn.textContent = label\n                btn.addEventListener('click', () => {\n                    actionsBar.querySelectorAll('.doc-actions-btn').forEach(b => b.classList.remove('doc-actions-btn--active'))\n                    btn.classList.add('doc-actions-btn--active')\n                    callback()\n                })\n                actionsBar.appendChild(btn)\n\n                if (isFirst) {\n                    callback()\n                }\n            },\n            slider: (label, opts, onChange) => {\n                if (!slidersBar) {\n                    slidersBar = document.createElement('div')\n                    slidersBar.className = 'doc-sliders-bar'\n                    containerEl.appendChild(slidersBar)\n                }\n\n                const wrapper = document.createElement('div')\n                wrapper.className = 'doc-slider-wrapper'\n\n                const labelEl = document.createElement('span')\n                labelEl.className = 'doc-slider-label'\n                labelEl.textContent = label\n\n                const valueEl = document.createElement('span')\n                valueEl.className = 'doc-slider-value'\n                valueEl.textContent = opts.default ?? opts.min\n\n                const input = document.createElement('input')\n                input.type = 'range'\n                input.className = 'doc-slider'\n                input.min = opts.min\n                input.max = opts.max\n                input.step = opts.step ?? (opts.max - opts.min) / 100\n                input.value = opts.default ?? opts.min\n\n                input.addEventListener('input', () => {\n                    const value = parseFloat(input.value)\n                    valueEl.textContent = Number.isInteger(value) ? value : value.toFixed(2)\n                    onChange(value)\n                })\n\n                wrapper.appendChild(labelEl)\n                wrapper.appendChild(input)\n                wrapper.appendChild(valueEl)\n                slidersBar.appendChild(wrapper)\n\n                onChange(parseFloat(input.value))\n            },\n            info: (formatter) => {\n                if (!infoBar) {\n                    infoBar = document.createElement('div')\n                    infoBar.className = 'doc-info-bar'\n                    containerEl.appendChild(infoBar)\n                }\n\n                const el = document.createElement('div')\n                el.className = 'doc-info'\n                infoBar.appendChild(el)\n                const update = (...args) => {\n                    el.textContent = formatter(...args)\n                }\n                update()\n                return update\n            },\n            hint: (message) => {\n                const el = document.createElement('div')\n                el.className = 'doc-hint'\n                el.textContent = message\n                containerEl.appendChild(el)\n            },\n            display: (formatter) => {\n                const el = document.createElement('div')\n                el.className = 'doc-display'\n                containerEl.appendChild(el)\n                const update = (...args) => {\n                    const result = formatter(...args)\n                    if (result instanceof HTMLElement) {\n                        el.innerHTML = ''\n                        el.appendChild(result)\n                    } else if (Array.isArray(result)) {\n                        el.innerHTML = result.map(item => `<span class=\"doc-display-tag\">${item}</span>`).join('')\n                    } else {\n                        el.innerHTML = result\n                    }\n                }\n                update()\n                return update\n            },\n            box: (opts = {}) => {\n                const size = opts.size || 40\n                const color = opts.color || '#4a9eff'\n                const el = document.createElement('div')\n                el.style.cssText = `width:${size}px;height:${size}px;background:${color};position:absolute;border-radius:4px;left:50%;top:50%;transform:translate(-50%,-50%)`\n                containerEl.appendChild(el)\n                return el\n            }\n        }\n\n        if (sectionSetup?.fn) {\n            await sectionSetup.fn(ctx)\n        }\n        await block.fn(ctx)\n\n        if (containerEl.tabIndex >= 0) {\n            containerEl.focus()\n        }\n    } catch (error) {\n        logger.error('Container error:', error.message)\n    }\n}"
+        "source": "async function executeContainer (block, containerEl, sectionSetup = null) {\n    addSpacerIfNeeded()\n\n    const prevApp = containerEl._currentApp\n    if (prevApp?.dispose) {\n        prevApp.dispose()\n    }\n    containerEl.innerHTML = ''\n\n    if (block.preset) {\n        applyContainerPreset(containerEl, block.preset)\n    }\n\n    if (block.scrollable) {\n        containerEl.style.overflow = 'auto'\n    }\n\n    try {\n        let actionsBar = null\n        let slidersBar = null\n        let infoBar = null\n\n        const ctx = {\n            container: containerEl,\n            setApp: (app, ...args) => {\n                containerEl._currentApp = app\n                const [scene] = args\n                if (scene && app.autoFitEnabled && app.render) {\n                    app.on('resize', () => app.render(scene))\n                }\n            },\n            action: (label, callback) => {\n                if (!actionsBar) {\n                    actionsBar = document.createElement('div')\n                    actionsBar.className = 'doc-actions-bar'\n                    containerEl.appendChild(actionsBar)\n                }\n\n                const isFirst = actionsBar.children.length === 0\n                const btn = document.createElement('button')\n                btn.className = 'doc-actions-btn'\n                if (isFirst) {\n                    btn.classList.add('doc-actions-btn--active')\n                }\n                btn.textContent = label\n                btn.addEventListener('click', () => {\n                    actionsBar.querySelectorAll('.doc-actions-btn').forEach(b => b.classList.remove('doc-actions-btn--active'))\n                    btn.classList.add('doc-actions-btn--active')\n                    callback()\n                })\n                actionsBar.appendChild(btn)\n\n                if (isFirst) {\n                    callback()\n                }\n            },\n            slider: (label, opts, onChange) => {\n                if (!slidersBar) {\n                    slidersBar = document.createElement('div')\n                    slidersBar.className = 'doc-sliders-bar'\n                    containerEl.appendChild(slidersBar)\n                }\n\n                const wrapper = document.createElement('div')\n                wrapper.className = 'doc-slider-wrapper'\n\n                const labelEl = document.createElement('span')\n                labelEl.className = 'doc-slider-label'\n                labelEl.textContent = label\n\n                const valueEl = document.createElement('span')\n                valueEl.className = 'doc-slider-value'\n                valueEl.textContent = opts.default ?? opts.min\n\n                const input = document.createElement('input')\n                input.type = 'range'\n                input.className = 'doc-slider'\n                input.min = opts.min\n                input.max = opts.max\n                input.step = opts.step ?? (opts.max - opts.min) / 100\n                input.value = opts.default ?? opts.min\n\n                input.addEventListener('input', () => {\n                    const value = parseFloat(input.value)\n                    valueEl.textContent = Number.isInteger(value) ? value : value.toFixed(2)\n                    onChange(value)\n                })\n\n                wrapper.appendChild(labelEl)\n                wrapper.appendChild(input)\n                wrapper.appendChild(valueEl)\n                slidersBar.appendChild(wrapper)\n\n                onChange(parseFloat(input.value))\n            },\n            info: (formatter) => {\n                if (!infoBar) {\n                    infoBar = document.createElement('div')\n                    infoBar.className = 'doc-info-bar'\n                    containerEl.appendChild(infoBar)\n                }\n\n                const el = document.createElement('div')\n                el.className = 'doc-info'\n                infoBar.appendChild(el)\n                const update = (...args) => {\n                    el.textContent = formatter(...args)\n                }\n                update()\n                return update\n            },\n            hint: (message) => {\n                const el = document.createElement('div')\n                el.className = 'doc-hint'\n                el.textContent = message\n                containerEl.appendChild(el)\n            },\n            display: (formatter) => {\n                const el = document.createElement('div')\n                el.className = 'doc-display'\n                containerEl.appendChild(el)\n                const update = (...args) => {\n                    const result = formatter(...args)\n                    if (result instanceof HTMLElement) {\n                        el.innerHTML = ''\n                        el.appendChild(result)\n                    } else if (Array.isArray(result)) {\n                        el.innerHTML = result.map(item => `<span class=\"doc-display-tag\">${item}</span>`).join('')\n                    } else {\n                        el.innerHTML = result\n                    }\n                }\n                update()\n                return update\n            },\n            box: (opts = {}) => {\n                const size = opts.size || 40\n                const color = opts.color || '#4a9eff'\n                const el = document.createElement('div')\n                el.style.cssText = `width:${size}px;height:${size}px;background:${color};position:absolute;border-radius:4px;left:50%;top:50%;transform:translate(-50%,-50%)`\n                containerEl.appendChild(el)\n                return el\n            },\n            marker: (x = 0, y = 0, opts = {}) => {\n                const size = opts.size || 20\n                const color = opts.color || '#4a9eff'\n                const el = document.createElement('div')\n                el.style.cssText = `width:${size}px;height:${size}px;background:${color};position:absolute;border-radius:50%;transform:translate(-50%,-50%);left:${x}px;top:${y}px`\n                containerEl.appendChild(el)\n                return el\n            }\n        }\n\n        if (sectionSetup?.fn) {\n            await sectionSetup.fn(ctx)\n        }\n        await block.fn(ctx)\n\n        if (containerEl.tabIndex >= 0) {\n            containerEl.focus()\n        }\n    } catch (error) {\n        logger.error('Container error:', error.message)\n    }\n}"
       },
       {
         "name": "renderAction",
-        "line": 439,
+        "line": 447,
         "params": [
           "block",
           "sectionSetup = ...",

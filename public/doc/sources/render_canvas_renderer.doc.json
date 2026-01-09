@@ -1,0 +1,52 @@
+[
+  {
+    "type": "container",
+    "title": "Simple rectangle",
+    "source": "const renderer = new CanvasRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\n\nconst scene = new Group2D()\n\nconst rect = new Rectangle({\n    width: 4,\n    height: 2,\n    color: '#e94560',\n    x: 0,\n    y: 0\n})\n\nscene.add(rect)\nrenderer.render(scene)"
+  },
+  {
+    "type": "container",
+    "title": "Circles and rectangles",
+    "source": "const renderer = new CanvasRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\n\nconst scene = new Group2D()\n\nscene.add(new Rectangle({\n    width: 3,\n    height: 3,\n    color: '#e94560',\n    x: -5,\n    y: 0\n}))\n\nscene.add(new Circle({\n    radius: 1.5,\n    color: '#0f3460',\n    x: 0,\n    y: 0\n}))\n\nscene.add(new Rectangle({\n    width: 2,\n    height: 4,\n    color: '#533483',\n    x: 5,\n    y: 0\n}))\n\nrenderer.render(scene)"
+  },
+  {
+    "type": "container",
+    "title": "Rotated shapes",
+    "source": "const renderer = new CanvasRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\n\nconst scene = new Group2D()\n\nconst rect1 = new Rectangle({\n    width: 3,\n    height: 1.5,\n    color: '#e94560',\n    x: -5,\n    y: 0\n})\n\nconst rect2 = new Rectangle({\n    width: 3,\n    height: 1.5,\n    color: '#0f3460',\n    x: 0,\n    y: 0\n})\n\nconst rect3 = new Rectangle({\n    width: 3,\n    height: 1.5,\n    color: '#533483',\n    x: 5,\n    y: 0\n})\n\nscene.add(rect1, rect2, rect3)\n\nctx.slider('rotation', {min: -180, max: 180, default: 0}, value => {\n    const rad = value * Math.PI / 180\n    rect1.rotation = rad\n    rect2.rotation = rad\n    rect3.rotation = rad\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Nested groups",
+    "source": "const renderer = new CanvasRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\n\nconst scene = new Group2D()\n\nconst group = new Group2D({x: 0, y: 0})\n\ngroup.add(new Rectangle({\n    width: 2.5,\n    height: 2.5,\n    color: '#e94560',\n    x: -3,\n    y: 0\n}))\n\ngroup.add(new Rectangle({\n    width: 2.5,\n    height: 2.5,\n    color: '#0f3460',\n    x: 3,\n    y: 0\n}))\n\nscene.add(group)\n\nctx.slider('rotation', {min: -180, max: 180, default: 0}, value => {\n    group.rotation = value * Math.PI / 180\n    renderer.render(scene)\n})\n\nctx.slider('scale', {min: 0.5, max: 2, default: 1}, value => {\n    group.scaleX = value\n    group.scaleY = value\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Camera zoom",
+    "source": "const renderer = new CanvasRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\n\nconst scene = new Group2D()\n\nfor (let i = 0; i < 5; i++) {\n    scene.add(new Circle({\n        radius: 1,\n        color: `hsl(${i * 60}, 70%, 50%)`,\n        x: (i - 2) * 3,\n        y: 0\n    }))\n}\n\nctx.slider('zoom', {min: 0.5, max: 3, default: 1}, value => {\n    renderer.camera.zoom = value\n    renderer.render(scene)\n})\n\nctx.slider('pan X', {min: -10, max: 10, default: 0}, value => {\n    renderer.camera.x = value\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Camera pan",
+    "source": "const renderer = new CanvasRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\n\nconst scene = new Group2D()\n\nscene.add(new Rectangle({\n    width: 4,\n    height: 4,\n    color: '#e94560',\n    x: 0,\n    y: 0\n}))\n\nscene.add(new Circle({\n    radius: 1.2,\n    color: '#533483',\n    x: 0,\n    y: 0\n}))\n\nctx.action('Center', () => {\n    renderer.camera.x = 0\n    renderer.camera.y = 0\n    renderer.render(scene)\n})\n\nctx.action('Offset (3, 2)', () => {\n    renderer.camera.x = 3\n    renderer.camera.y = 2\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Debug visualization",
+    "source": "const renderer = new CanvasRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e',\n    enableDebugGizmos: true\n})\n\nconst scene = new Group2D()\n\nconst rect = new Rectangle({\n    width: 4,\n    height: 2,\n    color: '#e94560',\n    x: -3,\n    y: 0,\n    debugGizmo: true\n})\n\nconst circle = new Circle({\n    radius: 1.5,\n    color: '#0f3460',\n    x: 3,\n    y: 0,\n    debugGizmo: true\n})\n\nscene.add(rect, circle)\nrenderer.render(scene)\n\nctx.action('Gizmos On', () => {\n    rect.debugGizmo = true\n    circle.debugGizmo = true\n    renderer.render(scene)\n})\n\nctx.action('Gizmos Off', () => {\n    rect.debugGizmo = false\n    circle.debugGizmo = false\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Culling stats",
+    "source": "const renderer = new CanvasRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e',\n    enableCulling: true\n})\n\nconst scene = new Group2D()\n\nfor (let i = 0; i < 20; i++) {\n    scene.add(new Circle({\n        radius: 0.8,\n        color: `hsl(${i * 18}, 70%, 50%)`,\n        x: (i - 10) * 2.5,\n        y: 0\n    }))\n}\n\nconst updateInfo = ctx.info(() => {\n    renderer.render(scene)\n    return `rendered: ${renderer.stats.renderedObjects} / ${renderer.stats.totalObjects}`\n})\n\nctx.slider('pan X', {min: -15, max: 15, default: 0}, value => {\n    renderer.camera.x = value\n    updateInfo()\n})"
+  },
+  {
+    "type": "code",
+    "title": "Culling options",
+    "source": "const renderer = new CanvasRenderer({\n    enableCulling: true\n})\n\n// After render, check stats\nrenderer.render(scene)\nlogger.log(renderer.stats.totalObjects)\nlogger.log(renderer.stats.renderedObjects)\nlogger.log(renderer.stats.culledObjects)"
+  },
+  {
+    "type": "code",
+    "title": "Background options",
+    "source": "// Solid color\nconst renderer1 = new CanvasRenderer({\n    backgroundColor: '#1a1a2e'\n})\n\n// Transparent (default)\nconst renderer2 = new CanvasRenderer({\n    backgroundColor: null\n})\n\n// Or set later\nrenderer1.backgroundColor = '#ff0000'"
+  }
+]

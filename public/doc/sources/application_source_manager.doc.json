@@ -1,0 +1,47 @@
+[
+  {
+    "type": "code",
+    "title": "Setup with Application",
+    "source": "// Application creates SourceManager internally:\n// app.sourceManager handles all asset loading\n// app.loadAsset(), app.loadTag(), app.loadAll() are delegated\n\nclass MyGame extends Application {\n    static manifest = {\n        assets: {\n            hero: {type: 'image', url: '/hero.png', tags: ['preload']}\n        }\n    }\n}\n\nconst game = new MyGame({$id: 'game'})\ngame.preload() // Loads all 'preload' tagged assets"
+  },
+  {
+    "type": "code",
+    "title": "loadAsset",
+    "source": "// Load a single asset by id\napp.loadAsset('hero').then(() => {\n    const sprite = app.getSource('hero')\n})"
+  },
+  {
+    "type": "code",
+    "title": "loadTag",
+    "source": "// Load all assets with a specific tag\napp.loadTag('preload').then(() => {\n    // All 'preload' tagged assets are now loaded\n})"
+  },
+  {
+    "type": "code",
+    "title": "loadAll",
+    "source": "// Load every asset in the manifest\napp.loadAll().then(() => {\n    // All assets are now loaded\n})"
+  },
+  {
+    "type": "code",
+    "title": "Event handling",
+    "source": "app.on('loader:progress', ({loaded, total, asset}) => {\n    const percent = Math.round((loaded / total) * 100)\n    logger.log(`Loading: ${percent}% - ${asset.id}`)\n})\n\napp.on('loader:complete', (assets) => {\n    logger.log(`Loaded ${assets.length} assets`)\n})\n\napp.on('loader:error', ({asset, error}) => {\n    logger.error(`Failed to load ${asset.id}:`, error)\n})"
+  },
+  {
+    "type": "code",
+    "title": "Loader function signature",
+    "source": "// Loader receives: {url, config} for URL-based assets\n// or the full asset object for inline sources\n\nconst imageLoader = async ({url}) => {\n    return new Promise((resolve, reject) => {\n        const img = new Image()\n        img.onload = () => resolve(img)\n        img.onerror = reject\n        img.src = url\n    })\n}\n\nconst jsonLoader = async ({url}) => {\n    const response = await fetch(url)\n    return response.json()\n}\n\nconst loaders = new Registry({\n    image: imageLoader,\n    json: jsonLoader\n})"
+  },
+  {
+    "type": "code",
+    "title": "Using custom loaders",
+    "source": "const manifest = new Manifest({\n    data: {\n        assets: {\n            data: {type: 'json', url: '/data.json'}\n        }\n    }\n})\n\nconst sourceManager = new SourceManager({\n    manifest,\n    loaders: {\n        json: async ({url}) => {\n            const res = await fetch(url)\n            return res.json()\n        }\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Delegated methods",
+    "source": "// When sourceManager.onInstall(host) is called:\n// - host.loadAsset()  -> sourceManager.loadAsset()\n// - host.loadTag()    -> sourceManager.loadTag()\n// - host.loadAll()    -> sourceManager.loadAll()\n// - host.loaders      -> sourceManager.loaders"
+  },
+  {
+    "type": "code",
+    "title": "Delegated events",
+    "source": "// Events are prefixed with 'loader:':\n// - loader:progress  -> progress during loading\n// - loader:complete  -> all requested assets loaded\n// - loader:error     -> asset failed to load"
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "type": "code",
+    "title": "Basic sprite",
+    "source": "const sprite = new Sprite({\n    image: myImage,\n    x: 100,\n    y: 100\n})"
+  },
+  {
+    "type": "code",
+    "title": "With frame",
+    "source": "// Frame from a spritesheet (e.g., from TexturePacker JSON)\nconst frame = {\n    frame: {x: 0, y: 0, w: 32, h: 32}\n}\n\nconst sprite = new Sprite({\n    image: spritesheet,\n    frame: frame,\n    x: 100,\n    y: 100\n})"
+  },
+  {
+    "type": "code",
+    "title": "With custom size",
+    "source": "const sprite = new Sprite({\n    image: myImage,\n    width: 64,   // Scales width, height auto-calculated\n    x: 100,\n    y: 100\n})"
+  },
+  {
+    "type": "action",
+    "title": "setFrame",
+    "source": "const sprite = new Sprite({image: null})\n\nconst frame1 = {frame: {x: 0, y: 0, w: 32, h: 32}}\nconst frame2 = {frame: {x: 32, y: 0, w: 32, h: 32}}\n\nsprite.setFrame(frame1)\nlogger.log('currentFrame:', sprite.currentFrame ? 'set' : 'null')\n\nsprite.setFrame(frame2)\nlogger.log('after setFrame:', sprite.currentFrame ? 'set' : 'null')"
+  },
+  {
+    "type": "code",
+    "title": "Frame structure",
+    "source": "// Typical frame object from spritesheet JSON\nconst frame = {\n    frame: {x: 64, y: 0, w: 32, h: 48},\n    sourceSize: {w: 32, h: 48},\n    spriteSourceSize: {x: 0, y: 0, w: 32, h: 48}\n}"
+  },
+  {
+    "type": "action",
+    "title": "addAnimation / play / stop",
+    "source": "const sprite = new Sprite({image: null})\n\n// Mock animation object\nconst walkAnim = {\n    play: () => logger.log('walk animation started'),\n    stop: () => logger.log('walk animation stopped')\n}\n\nconst idleAnim = {\n    play: () => logger.log('idle animation started'),\n    stop: () => logger.log('idle animation stopped')\n}\n\nsprite.addAnimation('walk', walkAnim)\nsprite.addAnimation('idle', idleAnim)\nlogger.log('animations added:', sprite.animations.size)\n\nsprite.play('walk')\nsprite.play('idle')\nsprite.stop()"
+  },
+  {
+    "type": "code",
+    "title": "Animation setup",
+    "source": "const sprite = new Sprite({image: spritesheet})\n\n// Add animations (typically SpriteAnimation instances)\nsprite.addAnimation('idle', idleAnimation)\nsprite.addAnimation('walk', walkAnimation)\nsprite.addAnimation('jump', jumpAnimation)\n\n// Play an animation by name\nsprite.play('walk')\n\n// Stop current animation\nsprite.stop()"
+  },
+  {
+    "type": "code",
+    "title": "Explicit sizing",
+    "source": "// Set width, height auto-calculated from aspect ratio\nconst sprite1 = new Sprite({\n    image: myImage,\n    width: 64\n})\n\n// Set height, width auto-calculated from aspect ratio\nconst sprite2 = new Sprite({\n    image: myImage,\n    height: 48\n})\n\n// Both null = use frame dimensions\nconst sprite3 = new Sprite({\n    image: myImage,\n    frame: frame\n})"
+  },
+  {
+    "type": "action",
+    "title": "With frame",
+    "source": "const frame = {frame: {x: 0, y: 0, w: 64, h: 48}}\nconst sprite = new Sprite({\n    image: null,\n    frame: frame\n})\nconst bounds = sprite.getBounds()\nlogger.log('width:', bounds.width)\nlogger.log('height:', bounds.height)"
+  },
+  {
+    "type": "action",
+    "title": "With explicit width",
+    "source": "const frame = {frame: {x: 0, y: 0, w: 64, h: 48}}\nconst sprite = new Sprite({\n    image: null,\n    frame: frame,\n    width: 128\n})\nconst bounds = sprite.getBounds()\nlogger.log('width:', bounds.width)\nlogger.log('height:', bounds.height, '(scaled proportionally)')"
+  },
+  {
+    "type": "code",
+    "title": "Transform example",
+    "source": "const sprite = new Sprite({\n    image: myImage,\n    x: 200,\n    y: 150,\n    rotation: Math.PI / 6,\n    scaleX: 2,\n    scaleY: 2,\n    anchorX: 0.5,\n    anchorY: 1\n})"
+  }
+]

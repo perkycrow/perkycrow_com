@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGLRenderer - Perky Docs</title>
+    <meta name="description" content="Documentation for WebGLRenderer in the Perky game framework">
+    <meta property="og:title" content="WebGLRenderer - Perky Docs">
+    <meta property="og:description" content="Documentation for WebGLRenderer in the Perky game framework">
+    <link rel="stylesheet" href="assets/main-DKVNPEnN.css">
+</head>
+<body>
+    <noscript>
+        <style>
+            .seo-content { max-width: 800px; padding: 2rem; margin: 0 auto; }
+            .seo-content h1 { margin-bottom: 1rem; }
+            .seo-content h2 { margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+            .seo-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .seo-content pre { background: #1a1a2e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+            .seo-content code { font-family: monospace; }
+            .seo-content .doc-text { margin-bottom: 1rem; line-height: 1.6; }
+            .seo-content .doc-block { margin-bottom: 1.5rem; }
+            .seo-content .api-extends { margin-bottom: 1rem; }
+            .seo-content .api-member { margin-bottom: 1rem; }
+        </style>
+        <div class="seo-content">
+            <h1>WebGLRenderer</h1>
+            <section class="test-section"><h2>WebGLRenderer</h2>
+        <div class="test-hook">
+            <h4>beforeEach</h4>
+            <pre><code>canvas = document.createElement('canvas')
+canvas.width = 800
+canvas.height = 600
+renderer = new WebGLRenderer({canvas})</code></pre>
+        </div>
+    
+            <div class="test-case">
+                <h4>setPixelRatio updates viewport on pixel ratio change</h4>
+                <pre><code>expect(() =&gt; renderer.setPixelRatio(2)).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>dispose cleans up resources</h4>
+                <pre><code>renderer.dispose()
+
+expect(renderer.gl).toBe(null)
+expect(renderer.canvas).toBe(null)</code></pre>
+            </div>
+        <section class="test-section-nested"><h3>constructor</h3>
+            <div class="test-case">
+                <h4>uses provided canvas</h4>
+                <pre><code>expect(renderer.canvas).toBe(canvas)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>gets WebGL context</h4>
+                <pre><code>expect(renderer.gl).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>initializes camera</h4>
+                <pre><code>expect(renderer.camera).toBeInstanceOf(Camera)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>has static $name</h4>
+                <pre><code>expect(WebGLRenderer.$name).toBe('webGLRenderer')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>with provided camera</h4>
+                <pre><code>const camera = new Camera({x: 10, y: 20})
+const r = new WebGLRenderer({canvas, camera})
+expect(r.camera).toBe(camera)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>with backgroundColor</h4>
+                <pre><code>const r = new WebGLRenderer({canvas, backgroundColor: '#FF0000'})
+expect(r.backgroundColor).toBe('#FF0000')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>with enableCulling</h4>
+                <pre><code>const r = new WebGLRenderer({canvas, enableCulling: true})
+expect(r.enableCulling).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>initializes stats</h4>
+                <pre><code>expect(renderer.stats).toBeDefined()
+expect(renderer.stats.totalObjects).toBe(0)
+expect(renderer.stats.renderedObjects).toBe(0)
+expect(renderer.stats.culledObjects).toBe(0)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>shaderRegistry</h3>
+            <div class="test-case">
+                <h4>has shaderRegistry accessor</h4>
+                <pre><code>expect(renderer.shaderRegistry).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can register custom shaders</h4>
+                <pre><code>const definition = {
+    vertex: 'void main() {}',
+    fragment: 'void main() {}',
+    uniforms: [],
+    attributes: []
+}
+
+const program = renderer.registerShader('custom', definition)
+expect(program).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can get registered shader</h4>
+                <pre><code>const definition = {
+    vertex: 'void main() {}',
+    fragment: 'void main() {}',
+    uniforms: [],
+    attributes: []
+}
+
+renderer.registerShader('test', definition)
+const shader = renderer.getShader('test')
+expect(shader).toBeDefined()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>shaderEffectRegistry</h3>
+            <div class="test-case">
+                <h4>has shaderEffectRegistry accessor</h4>
+                <pre><code>expect(renderer.shaderEffectRegistry).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>registerShaderEffect registers an effect class</h4>
+                <pre><code>class TestEffect {
+    static shader = {
+        params: [],
+        uniforms: [],
+        fragment: ''
+    }
+}
+
+expect(() =&gt; renderer.registerShaderEffect(TestEffect)).not.toThrow()
+expect(renderer.shaderEffectRegistry.has('TestEffect')).toBe(true)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setUniform stores uniform value</h4>
+                <pre><code>renderer.setUniform('uTime', 1.5)
+expect(renderer.getUniform('uTime')).toBe(1.5)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setUniform with type stores uniform value and type</h4>
+                <pre><code>renderer.setUniform('uResolution', [800, 600], 'vec2')
+expect(renderer.getUniform('uResolution')).toEqual([800, 600])</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setUniform returns this for chaining</h4>
+                <pre><code>const result = renderer.setUniform('uTime', 1.0)
+expect(result).toBe(renderer)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>getUniform returns undefined for unknown uniform</h4>
+                <pre><code>expect(renderer.getUniform('uUnknown')).toBeUndefined()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>postProcessor</h3>
+            <div class="test-case">
+                <h4>has postProcessor accessor</h4>
+                <pre><code>expect(renderer.postProcessor).toBeDefined()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can add post pass</h4>
+                <pre><code>const mockPass = {
+    init: vi.fn(),
+    getShaderDefinition: () =&gt; ({
+        vertex: 'void main() {}',
+        fragment: 'void main() {}',
+        uniforms: [],
+        attributes: []
+    }),
+    enabled: true,
+    render: vi.fn(),
+    dispose: vi.fn()
+}
+
+renderer.addPostPass(mockPass)
+expect(renderer.postProcessor.passes.length).toBe(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can remove post pass</h4>
+                <pre><code>const mockPass = {
+    init: vi.fn(),
+    getShaderDefinition: () =&gt; ({
+        vertex: 'void main() {}',
+        fragment: 'void main() {}',
+        uniforms: [],
+        attributes: []
+    }),
+    enabled: true,
+    render: vi.fn(),
+    dispose: vi.fn()
+}
+
+renderer.addPostPass(mockPass)
+renderer.removePostPass(mockPass)
+expect(renderer.postProcessor.passes.length).toBe(0)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>render</h3>
+            <div class="test-case">
+                <h4>renders empty scene without error</h4>
+                <pre><code>const scene = new Group2D()
+expect(() =&gt; renderer.render(scene)).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clears the canvas</h4>
+                <pre><code>const scene = new Group2D()
+expect(() =&gt; renderer.render(scene)).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>updates world matrix</h4>
+                <pre><code>const scene = new Group2D()
+vi.spyOn(scene, 'updateWorldMatrix')
+
+renderer.render(scene)
+
+expect(scene.updateWorldMatrix).toHaveBeenCalledWith(false)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>renders circle</h4>
+                <pre><code>const scene = new Group2D()
+const circle = new Circle({radius: 1, color: '#FF0000'})
+scene.addChild(circle)
+
+expect(() =&gt; renderer.render(scene)).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>renders rectangle</h4>
+                <pre><code>const scene = new Group2D()
+const rect = new Rectangle({width: 2, height: 1, color: '#00FF00'})
+scene.addChild(rect)
+
+expect(() =&gt; renderer.render(scene)).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>skips invisible objects</h4>
+                <pre><code>const scene = new Group2D()
+const circle = new Circle({radius: 1, color: '#FF0000', visible: false})
+scene.addChild(circle)
+
+renderer.render(scene)
+expect(renderer.stats.totalObjects).toBe(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>applies opacity inheritance</h4>
+                <pre><code>const scene = new Group2D({opacity: 0.5})
+const circle = new Circle({radius: 1, color: '#FF0000', opacity: 0.5})
+scene.addChild(circle)
+
+expect(() =&gt; renderer.render(scene)).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>renders with background color</h4>
+                <pre><code>renderer.backgroundColor = '#0000FF'
+const scene = new Group2D()
+expect(() =&gt; renderer.render(scene)).not.toThrow()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>registerRenderer and unregisterRenderer</h3>
+            <div class="test-case">
+                <h4>registerRenderer adds custom renderer</h4>
+                <pre><code>class CustomObject {}
+class CustomRenderer {
+    static get handles () {
+        return [CustomObject]
+    }
+
+    init = vi.fn()
+    reset = vi.fn()
+    flush = vi.fn()
+    dispose = vi.fn()
+}
+
+const customRenderer = new CustomRenderer()
+const result = renderer.registerRenderer(customRenderer)
+
+expect(result).toBe(renderer)
+expect(customRenderer.init).toHaveBeenCalled()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>unregisterRenderer removes renderer</h4>
+                <pre><code>class CustomObject {}
+class CustomRenderer {
+    static get handles () {
+        return [CustomObject]
+    }
+
+    init = vi.fn()
+    reset = vi.fn()
+    flush = vi.fn()
+    dispose = vi.fn()
+}
+
+const customRenderer = new CustomRenderer()
+renderer.registerRenderer(customRenderer)
+
+const result = renderer.unregisterRenderer(customRenderer)
+
+expect(result).toBe(renderer)
+expect(customRenderer.dispose).toHaveBeenCalled()</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>applyPixelRatio</h3>
+            <div class="test-case">
+                <h4>applyPixelRatio updates viewport</h4>
+                <pre><code>renderer.pixelRatio = 2
+expect(() =&gt; renderer.applyPixelRatio()).not.toThrow()</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>applyPixelRatio resizes post processor</h4>
+                <pre><code>const originalWidth = canvas.width
+const originalHeight = canvas.height
+
+renderer.applyPixelRatio()
+
+expect(renderer.gl).toBeDefined()
+expect(canvas.width).toBe(originalWidth)
+expect(canvas.height).toBe(originalHeight)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>setRenderGroups and clearRenderGroups</h3>
+            <div class="test-case">
+                <h4>setRenderGroups creates render groups</h4>
+                <pre><code>const scene = new Group2D()
+
+renderer.setRenderGroups([
+    {$id: 'background', content: scene},
+    {$id: 'foreground', content: scene}
+])
+
+expect(renderer.renderGroups.length).toBe(2)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setRenderGroups returns this for chaining</h4>
+                <pre><code>const scene = new Group2D()
+
+const result = renderer.setRenderGroups([
+    {$id: 'test', content: scene}
+])
+
+expect(result).toBe(renderer)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>clearRenderGroups removes all render groups</h4>
+                <pre><code>const scene = new Group2D()
+
+renderer.setRenderGroups([
+    {$id: 'group1', content: scene},
+    {$id: 'group2', content: scene}
+])
+
+expect(renderer.renderGroups.length).toBe(2)
+
+const result = renderer.clearRenderGroups()
+
+expect(result).toBe(renderer)
+expect(renderer.renderGroups.length).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>setRenderGroups clears previous groups</h4>
+                <pre><code>const scene = new Group2D()
+
+renderer.setRenderGroups([
+    {$id: 'oldGroup', content: scene}
+])
+
+renderer.setRenderGroups([
+    {$id: 'newGroup', content: scene}
+])
+
+expect(renderer.renderGroups.length).toBe(1)
+expect(renderer.renderGroups[0].$id).toBe('newGroup')</code></pre>
+            </div>
+        </section></section>
+        </div>
+    </noscript>
+    <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"></path>
+        </svg>
+    </button>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="docs-layout">
+        <aside class="docs-sidebar" id="docs-sidebar">
+            <div class="sidebar-header">
+                <h1>perky docs</h1>
+                <div class="sidebar-search">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="nav-switcher" id="nav-switcher"><button class="nav-switch active" data-section="docs">Docs</button><button class="nav-switch" data-section="guides">Guides</button></div>
+            </div>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><div class="nav-category">application</div><a class="nav-item" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item" href="application_asset.html" data-file="/application/asset.doc.js" data-title="asset" data-category="application">Asset</a><a class="nav-item" href="application_manifest.html" data-file="/application/manifest.doc.js" data-title="manifest" data-category="application">Manifest</a><a class="nav-item" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><a class="nav-item" href="application_source_manager.html" data-file="/application/source_manager.doc.js" data-title="sourcemanager" data-category="application">SourceManager</a><div class="nav-category">game</div><a class="nav-item" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><a class="nav-item" href="game_world_view.html" data-file="/game/world_view.doc.js" data-title="worldview" data-category="game">WorldView</a><div class="nav-category">math</div><a class="nav-item" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item" href="render_canvas_renderer.html" data-file="/render/canvas_renderer.doc.js" data-title="canvasrenderer" data-category="render">CanvasRenderer</a><a class="nav-item active" href="render_webgl_renderer.html" data-file="/render/webgl_renderer.doc.js" data-title="webglrenderer" data-category="render">WebGLRenderer</a><a class="nav-item" href="render_circle.html" data-file="/render/circle.doc.js" data-title="circle" data-category="render">Circle</a><a class="nav-item" href="render_group_2d.html" data-file="/render/group_2d.doc.js" data-title="group2d" data-category="render">Group2D</a><a class="nav-item" href="render_image_2d.html" data-file="/render/image_2d.doc.js" data-title="image2d" data-category="render">Image2D</a><a class="nav-item" href="render_object_2d.html" data-file="/render/object_2d.doc.js" data-title="object2d" data-category="render">Object2D</a><a class="nav-item" href="render_rectangle.html" data-file="/render/rectangle.doc.js" data-title="rectangle" data-category="render">Rectangle</a><a class="nav-item" href="render_sprite.html" data-file="/render/sprite.doc.js" data-title="sprite" data-category="render">Sprite</a><a class="nav-item" href="render_transform.html" data-file="/render/transform.doc.js" data-title="transform" data-category="render">Transform</a><div class="nav-category">input</div><a class="nav-item" href="input_input_system.html" data-file="/input/input_system.doc.js" data-title="inputsystem" data-category="input">InputSystem</a><a class="nav-item" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category">input/input_controls</div><a class="nav-item" href="input_input_controls_button_control.html" data-file="/input/input_controls/button_control.doc.js" data-title="buttoncontrol" data-category="input/input_controls">ButtonControl</a><a class="nav-item" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category">input/input_devices</div><a class="nav-item" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><a class="nav-item" href="input_input_devices_touch_device.html" data-file="/input/input_devices/touch_device.doc.js" data-title="touchdevice" data-category="input/input_devices">TouchDevice</a><div class="nav-category">audio</div><a class="nav-item" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a><div class="nav-category">editor</div><a class="nav-item" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category">editor/inspectors</div><a class="nav-item" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category">editor/log_renderers</div><a class="nav-item" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category">doc</div><a class="nav-item" href="doc_runtime.html" data-file="/doc/runtime.doc.js" data-title="doc runtime" data-category="doc">Doc Runtime</a><a class="nav-item" href="doc_doc_page.html" data-file="/doc/doc_page.doc.js" data-title="doc page" data-category="doc">Doc Page</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <div class="docs-content" id="doc-container"></div>
+            <div class="docs-logger">
+                <perky-logger id="main-logger" max-entries="30"></perky-logger>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="assets/main-CWnUgyy4.js"></script>
+</body>
+</html>

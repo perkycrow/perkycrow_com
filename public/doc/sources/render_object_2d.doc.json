@@ -1,0 +1,117 @@
+[
+  {
+    "type": "code",
+    "title": "Basic options",
+    "source": "const obj = new Object2D({\n    x: 100,\n    y: 100,\n    rotation: Math.PI / 4,\n    scaleX: 2,\n    scaleY: 2\n})"
+  },
+  {
+    "type": "code",
+    "title": "Full options",
+    "source": "const obj = new Object2D({\n    x: 100,\n    y: 100,\n    rotation: 0,\n    scaleX: 1,\n    scaleY: 1,\n    pivotX: 0,\n    pivotY: 0,\n    anchorX: 0.5,\n    anchorY: 0.5,\n    visible: true,\n    opacity: 1,\n    depth: 0,\n    tint: '#ff0000'\n})"
+  },
+  {
+    "type": "action",
+    "title": "visible",
+    "source": "const obj = new Object2D()\nlogger.log('default visible:', obj.visible)\n\nobj.visible = false\nlogger.log('after hide:', obj.visible)\n\nobj.setVisible(true)\nlogger.log('after setVisible:', obj.visible)"
+  },
+  {
+    "type": "action",
+    "title": "opacity",
+    "source": "const obj = new Object2D()\nlogger.log('default opacity:', obj.opacity)\n\nobj.opacity = 0.5\nlogger.log('after change:', obj.opacity)\n\nobj.setOpacity(0.8)\nlogger.log('after setOpacity:', obj.opacity)"
+  },
+  {
+    "type": "action",
+    "title": "depth",
+    "source": "const obj = new Object2D()\nlogger.log('default depth:', obj.depth)\n\nobj.depth = 10\nlogger.log('after change:', obj.depth)\n\nobj.setDepth(5)\nlogger.log('after setDepth:', obj.depth)"
+  },
+  {
+    "type": "code",
+    "title": "Depth example",
+    "source": "// Background layer\nconst bg = new Object2D({depth: 0})\n\n// Game objects\nconst player = new Object2D({depth: 10})\nconst enemy = new Object2D({depth: 10})\n\n// UI layer (always on top)\nconst ui = new Object2D({depth: 100})"
+  },
+  {
+    "type": "action",
+    "title": "anchorX / anchorY",
+    "source": "const obj = new Object2D()\nlogger.log('default anchor:', obj.anchorX, obj.anchorY)\n\nobj.anchorX = 0\nobj.anchorY = 0\nlogger.log('top-left:', obj.anchorX, obj.anchorY)\n\nobj.setAnchor(1, 1)\nlogger.log('bottom-right:', obj.anchorX, obj.anchorY)\n\nobj.setAnchor(0.5)\nlogger.log('center (single value):', obj.anchorX, obj.anchorY)"
+  },
+  {
+    "type": "code",
+    "title": "Common anchors",
+    "source": "// Center (default)\nconst centered = new Object2D({anchorX: 0.5, anchorY: 0.5})\n\n// Top-left (traditional)\nconst topLeft = new Object2D({anchorX: 0, anchorY: 0})\n\n// Bottom-center (for characters)\nconst character = new Object2D({anchorX: 0.5, anchorY: 1})"
+  },
+  {
+    "type": "action",
+    "title": "pivotX / pivotY",
+    "source": "const obj = new Object2D()\nlogger.log('default pivot:', obj.pivotX, obj.pivotY)\n\nobj.pivotX = 50\nobj.pivotY = 50\nlogger.log('after change:', obj.pivotX, obj.pivotY)\n\nobj.setPivot(25, 25)\nlogger.log('after setPivot:', obj.pivotX, obj.pivotY)"
+  },
+  {
+    "type": "action",
+    "title": "Position",
+    "source": "const obj = new Object2D({x: 100, y: 50})\nlogger.log('initial:', obj.x, obj.y)\n\nobj.setPosition(200, 150)\nlogger.log('after setPosition:', obj.x, obj.y)"
+  },
+  {
+    "type": "action",
+    "title": "Rotation",
+    "source": "const obj = new Object2D()\nlogger.log('default rotation:', obj.rotation)\n\nobj.setRotation(Math.PI / 2)\nlogger.log('after setRotation:', obj.rotation, 'radians')"
+  },
+  {
+    "type": "action",
+    "title": "Scale",
+    "source": "const obj = new Object2D()\nlogger.log('default scale:', obj.scaleX, obj.scaleY)\n\nobj.setScale(2)\nlogger.log('uniform scale:', obj.scaleX, obj.scaleY)\n\nobj.setScale(1.5, 2)\nlogger.log('non-uniform:', obj.scaleX, obj.scaleY)"
+  },
+  {
+    "type": "action",
+    "title": "tint",
+    "source": "const obj = new Object2D()\nlogger.log('default tint:', obj.tint)\n\nobj.tint = '#ff0000'\nlogger.log('after set:', obj.tint)\n\nobj.tint = null\nlogger.log('after clear:', obj.tint)"
+  },
+  {
+    "type": "code",
+    "title": "Tint at creation",
+    "source": "const obj = new Object2D({\n    tint: '#ff6b6b'\n})"
+  },
+  {
+    "type": "action",
+    "title": "effects",
+    "source": "const obj = new Object2D()\n\n// Accessing effects creates the stack lazily\nconst stack = obj.effects\nlogger.log('effects stack:', stack.constructor.name)"
+  },
+  {
+    "type": "code",
+    "title": "Adding effects",
+    "source": "const obj = new Object2D()\n\n// Effects are added to the stack\nobj.effects.add(myEffect)"
+  },
+  {
+    "type": "action",
+    "title": "showDebugGizmos / hideDebugGizmos",
+    "source": "const obj = new Object2D()\nlogger.log('default gizmos:', obj.debugGizmos)\n\nobj.showDebugGizmos()\nlogger.log('after show:', obj.debugGizmos)\n\nobj.hideDebugGizmos()\nlogger.log('after hide:', obj.debugGizmos)"
+  },
+  {
+    "type": "action",
+    "title": "Selective gizmos",
+    "source": "const obj = new Object2D()\n\nobj.showDebugGizmos({\n    bounds: true,\n    anchor: true,\n    pivot: false,\n    origin: false\n})\nlogger.log('selective:', obj.debugGizmos)"
+  },
+  {
+    "type": "code",
+    "title": "At creation",
+    "source": "const obj = new Object2D({\n    debugGizmos: {\n        bounds: true,\n        anchor: true,\n        pivot: true,\n        origin: true\n    }\n})"
+  },
+  {
+    "type": "action",
+    "title": "getBounds",
+    "source": "const obj = new Object2D()\nconst bounds = obj.getBounds()\nlogger.log('local bounds:', bounds)"
+  },
+  {
+    "type": "action",
+    "title": "getWorldBounds",
+    "source": "const obj = new Object2D({\n    x: 100,\n    y: 100,\n    scaleX: 2,\n    scaleY: 2\n})\nobj.updateWorldMatrix()\n\nconst worldBounds = obj.getWorldBounds()\nlogger.log('world bounds:', worldBounds)"
+  },
+  {
+    "type": "code",
+    "title": "Bounds structure",
+    "source": "// Bounds object format\nconst bounds = {\n    minX: -50,\n    minY: -25,\n    maxX: 50,\n    maxY: 25,\n    width: 100,\n    height: 50\n}"
+  },
+  {
+    "type": "action",
+    "title": "Chained calls",
+    "source": "const obj = new Object2D()\n\nobj.setPosition(100, 100)\n    .setRotation(Math.PI / 4)\n    .setScale(2)\n    .setOpacity(0.8)\n    .setDepth(10)\n    .setAnchor(0.5)\n    .showDebugGizmos()\n\nlogger.log('position:', obj.x, obj.y)\nlogger.log('rotation:', obj.rotation)\nlogger.log('scale:', obj.scaleX)\nlogger.log('opacity:', obj.opacity)\nlogger.log('depth:', obj.depth)"
+  }
+]

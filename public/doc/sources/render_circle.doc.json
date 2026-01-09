@@ -1,0 +1,52 @@
+[
+  {
+    "type": "code",
+    "title": "Basic circle",
+    "source": "const circle = new Circle({\n    radius: 25,\n    color: '#e94560'\n})"
+  },
+  {
+    "type": "code",
+    "title": "With stroke",
+    "source": "const circle = new Circle({\n    radius: 25,\n    color: '#e94560',\n    strokeColor: '#ffffff',\n    strokeWidth: 2\n})"
+  },
+  {
+    "type": "code",
+    "title": "Positioned circle",
+    "source": "const circle = new Circle({\n    x: 100,\n    y: 100,\n    radius: 30,\n    color: '#0f3460'\n})"
+  },
+  {
+    "type": "action",
+    "title": "Radius",
+    "source": "const circle = new Circle({\n    radius: 25,\n    color: '#e94560'\n})\nlogger.log('radius:', circle.radius)\n\ncircle.radius = 50\nlogger.log('after resize:', circle.radius)"
+  },
+  {
+    "type": "action",
+    "title": "setRadius",
+    "source": "const circle = new Circle({radius: 10, color: '#e94560'})\ncircle.setRadius(30)\nlogger.log('radius:', circle.radius)"
+  },
+  {
+    "type": "action",
+    "title": "Colors",
+    "source": "const circle = new Circle({\n    radius: 25,\n    color: '#e94560',\n    strokeColor: '#ffffff',\n    strokeWidth: 3\n})\nlogger.log('color:', circle.color)\nlogger.log('strokeColor:', circle.strokeColor)\nlogger.log('strokeWidth:', circle.strokeWidth)"
+  },
+  {
+    "type": "action",
+    "title": "Default anchor (0.5, 0.5)",
+    "source": "const circle = new Circle({radius: 25})\nconst bounds = circle.getBounds()\nlogger.log('minX:', bounds.minX)\nlogger.log('minY:', bounds.minY)\nlogger.log('maxX:', bounds.maxX)\nlogger.log('maxY:', bounds.maxY)\nlogger.log('size:', bounds.width, 'x', bounds.height)"
+  },
+  {
+    "type": "action",
+    "title": "Top-left anchor (0, 0)",
+    "source": "const circle = new Circle({\n    radius: 25,\n    anchorX: 0,\n    anchorY: 0\n})\nconst bounds = circle.getBounds()\nlogger.log('minX:', bounds.minX)\nlogger.log('minY:', bounds.minY)\nlogger.log('maxX:', bounds.maxX)\nlogger.log('maxY:', bounds.maxY)"
+  },
+  {
+    "type": "code",
+    "title": "Transform example",
+    "source": "const circle = new Circle({\n    x: 100,\n    y: 100,\n    radius: 30,\n    color: '#533483',\n    scaleX: 2,\n    scaleY: 1,\n    opacity: 0.8\n})"
+  },
+  {
+    "type": "action",
+    "title": "Method chaining",
+    "source": "const circle = new Circle({radius: 20, color: '#e94560'})\ncircle.setPosition(50, 50)\n    .setRadius(30)\n    .setScale(1.5)\n    .setOpacity(0.9)\nlogger.log('position:', circle.x, circle.y)\nlogger.log('radius:', circle.radius)\nlogger.log('scale:', circle.scaleX, circle.scaleY)\nlogger.log('opacity:', circle.opacity)"
+  }
+]

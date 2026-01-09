@@ -1,0 +1,77 @@
+[
+  {
+    "type": "code",
+    "title": "Basic group",
+    "source": "const group = new Group2D()\n\ngroup.add(new Rectangle({\n    x: -50,\n    y: 0,\n    width: 40,\n    height: 40,\n    color: '#e94560'\n}))\n\ngroup.add(new Rectangle({\n    x: 50,\n    y: 0,\n    width: 40,\n    height: 40,\n    color: '#0f3460'\n}))"
+  },
+  {
+    "type": "code",
+    "title": "Positioned group",
+    "source": "const group = new Group2D({\n    x: 100,\n    y: 100,\n    rotation: Math.PI / 4\n})"
+  },
+  {
+    "type": "action",
+    "title": "add / addChild",
+    "source": "const group = new Group2D()\n\nconst rect = new Rectangle({width: 50, height: 50, color: '#e94560'})\nconst circle = new Circle({radius: 25, color: '#0f3460'})\n\ngroup.add(rect, circle)\nlogger.log('children count:', group.children.length)\n\n// addChild is an alias for add\ngroup.addChild(new Rectangle({width: 30, height: 30, color: '#533483'}))\nlogger.log('after addChild:', group.children.length)"
+  },
+  {
+    "type": "action",
+    "title": "remove",
+    "source": "const group = new Group2D()\nconst rect = new Rectangle({width: 50, height: 50, color: '#e94560'})\n\ngroup.add(rect)\nlogger.log('before remove:', group.children.length)\n\ngroup.remove(rect)\nlogger.log('after remove:', group.children.length)\nlogger.log('child parent:', rect.parent)"
+  },
+  {
+    "type": "action",
+    "title": "Parent reference",
+    "source": "const group = new Group2D()\nconst rect = new Rectangle({width: 50, height: 50, color: '#e94560'})\n\ngroup.add(rect)\nlogger.log('rect.parent:', rect.parent === group)\n\ngroup.remove(rect)\nlogger.log('after remove:', rect.parent)"
+  },
+  {
+    "type": "code",
+    "title": "Group rotation",
+    "source": "const group = new Group2D({x: 200, y: 200})\n\ngroup.add(new Rectangle({x: -50, y: 0, width: 30, height: 30, color: '#e94560'}))\ngroup.add(new Rectangle({x: 50, y: 0, width: 30, height: 30, color: '#0f3460'}))\n\n// Rotating the group rotates both rectangles around (200, 200)\ngroup.rotation = Math.PI / 4"
+  },
+  {
+    "type": "code",
+    "title": "Group scale",
+    "source": "const group = new Group2D({x: 100, y: 100})\n\ngroup.add(new Circle({x: 0, y: 0, radius: 20, color: '#e94560'}))\n\n// Scaling the group scales the child\ngroup.scaleX = 2\ngroup.scaleY = 2"
+  },
+  {
+    "type": "action",
+    "title": "Nested groups",
+    "source": "const outer = new Group2D({x: 100, y: 100})\nconst inner = new Group2D({x: 50, y: 0})\n\ninner.add(new Rectangle({width: 20, height: 20, color: '#e94560'}))\nouter.add(inner)\n\nlogger.log('outer children:', outer.children.length)\nlogger.log('inner children:', inner.children.length)"
+  },
+  {
+    "type": "action",
+    "title": "getSortedChildren",
+    "source": "const group = new Group2D()\n\ngroup.add(new Rectangle({width: 30, height: 30, color: '#e94560', depth: 2}))\ngroup.add(new Rectangle({width: 30, height: 30, color: '#0f3460', depth: 0}))\ngroup.add(new Rectangle({width: 30, height: 30, color: '#533483', depth: 1}))\n\nconst sorted = group.getSortedChildren()\nlogger.log('depths:', sorted.map(c => c.depth))"
+  },
+  {
+    "type": "code",
+    "title": "Depth example",
+    "source": "const group = new Group2D()\n\n// Background (rendered first)\ngroup.add(new Rectangle({\n    width: 100,\n    height: 100,\n    color: '#1a1a2e',\n    depth: 0\n}))\n\n// Foreground (rendered last, on top)\ngroup.add(new Circle({\n    radius: 30,\n    color: '#e94560',\n    depth: 10\n}))"
+  },
+  {
+    "type": "action",
+    "title": "Empty group",
+    "source": "const group = new Group2D()\nconst bounds = group.getBounds()\nlogger.log('empty bounds:', bounds.width, 'x', bounds.height)"
+  },
+  {
+    "type": "action",
+    "title": "With children",
+    "source": "const group = new Group2D()\n\ngroup.add(new Rectangle({x: -50, y: 0, width: 40, height: 40, color: '#e94560'}))\ngroup.add(new Rectangle({x: 50, y: 0, width: 40, height: 40, color: '#0f3460'}))\n\n// Force matrix update\ngroup.updateWorldMatrix()\n\nconst bounds = group.getBounds()\nlogger.log('minX:', bounds.minX)\nlogger.log('maxX:', bounds.maxX)\nlogger.log('width:', bounds.width)"
+  },
+  {
+    "type": "action",
+    "title": "Transformed group",
+    "source": "const group = new Group2D({scaleX: 2, scaleY: 2})\n\ngroup.add(new Rectangle({width: 50, height: 50, color: '#e94560'}))\n\ngroup.updateWorldMatrix()\n\nconst bounds = group.getBounds()\nlogger.log('width:', bounds.width, '(scaled 2x)')\nlogger.log('height:', bounds.height, '(scaled 2x)')"
+  },
+  {
+    "type": "action",
+    "title": "updateWorldMatrix",
+    "source": "const group = new Group2D({x: 100, y: 100})\nconst child = new Rectangle({x: 50, y: 0, width: 30, height: 30, color: '#e94560'})\ngroup.add(child)\n\ngroup.updateWorldMatrix()\n\nconst worldPos = child.transformPoint({x: 0, y: 0})\nlogger.log('child world position:', worldPos.x, worldPos.y)"
+  },
+  {
+    "type": "code",
+    "title": "Matrix propagation",
+    "source": "const root = new Group2D({x: 100, y: 100})\nconst child = new Group2D({x: 50, y: 50})\nconst grandchild = new Rectangle({width: 20, height: 20, color: '#e94560'})\n\nchild.add(grandchild)\nroot.add(child)\n\n// Updates all matrices in hierarchy\nroot.updateWorldMatrix()\n\n// grandchild is now at world position (150, 150)"
+  }
+]

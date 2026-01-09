@@ -7,7 +7,7 @@
   {
     "type": "code",
     "title": "doc",
-    "source": "// Main documentation data\ndocPage.doc = {\n    title: 'Module Name',\n    options: {context: 'Core'},\n    blocks: []\n}"
+    "source": "// Main documentation data\ndocPage.doc = {\n    title: 'Module Name',\n    blocks: []\n}"
   },
   {
     "type": "code",

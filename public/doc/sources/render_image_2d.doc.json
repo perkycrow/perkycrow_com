@@ -1,0 +1,57 @@
+[
+  {
+    "type": "code",
+    "title": "Basic image",
+    "source": "const img = new Image2D({\n    image: myImage,\n    width: 100,\n    height: 100\n})"
+  },
+  {
+    "type": "code",
+    "title": "Positioned image",
+    "source": "const img = new Image2D({\n    image: myImage,\n    x: 50,\n    y: 50,\n    width: 200,\n    height: 150\n})"
+  },
+  {
+    "type": "code",
+    "title": "With anchor",
+    "source": "const img = new Image2D({\n    image: myImage,\n    x: 100,\n    y: 100,\n    width: 64,\n    height: 64,\n    anchorX: 0.5,\n    anchorY: 0.5\n})"
+  },
+  {
+    "type": "action",
+    "title": "Dimensions",
+    "source": "const img = new Image2D({\n    image: null,\n    width: 100,\n    height: 50\n})\nlogger.log('width:', img.width)\nlogger.log('height:', img.height)\n\nimg.width = 200\nimg.height = 100\nlogger.log('after resize:', img.width, 'x', img.height)"
+  },
+  {
+    "type": "action",
+    "title": "Image reference",
+    "source": "const img = new Image2D({\n    image: null,\n    width: 100,\n    height: 100\n})\nlogger.log('image:', img.image)\n\n// Set image later (e.g., after loading)\nimg.image = new Image()\nlogger.log('after set:', img.image ? 'set' : 'null')"
+  },
+  {
+    "type": "code",
+    "title": "Load then create",
+    "source": "const htmlImage = new Image()\nhtmlImage.src = './assets/background.png'\n\nhtmlImage.onload = () => {\n    const img = new Image2D({\n        image: htmlImage,\n        width: htmlImage.width,\n        height: htmlImage.height\n    })\n    scene.add(img)\n}"
+  },
+  {
+    "type": "code",
+    "title": "With asset loader",
+    "source": "// Using Perky's asset system\nconst assets = perky.query('#assets')\n\nassets.load('background', './assets/background.png')\nassets.on('load:background', image => {\n    const img = new Image2D({\n        image: image,\n        width: 800,\n        height: 600\n    })\n})"
+  },
+  {
+    "type": "action",
+    "title": "Default anchor (0.5, 0.5)",
+    "source": "const img = new Image2D({\n    image: null,\n    width: 100,\n    height: 50\n})\nconst bounds = img.getBounds()\nlogger.log('minX:', bounds.minX)\nlogger.log('minY:', bounds.minY)\nlogger.log('maxX:', bounds.maxX)\nlogger.log('maxY:', bounds.maxY)"
+  },
+  {
+    "type": "action",
+    "title": "Top-left anchor (0, 0)",
+    "source": "const img = new Image2D({\n    image: null,\n    width: 100,\n    height: 50,\n    anchorX: 0,\n    anchorY: 0\n})\nconst bounds = img.getBounds()\nlogger.log('minX:', bounds.minX)\nlogger.log('minY:', bounds.minY)\nlogger.log('maxX:', bounds.maxX)\nlogger.log('maxY:', bounds.maxY)"
+  },
+  {
+    "type": "code",
+    "title": "Transform example",
+    "source": "const img = new Image2D({\n    image: myImage,\n    x: 200,\n    y: 150,\n    width: 128,\n    height: 128,\n    rotation: Math.PI / 4,\n    scaleX: 0.5,\n    scaleY: 0.5,\n    opacity: 0.9\n})"
+  },
+  {
+    "type": "action",
+    "title": "Method chaining",
+    "source": "const img = new Image2D({\n    image: null,\n    width: 64,\n    height: 64\n})\nimg.setPosition(100, 100)\n    .setRotation(0.5)\n    .setScale(2)\n    .setOpacity(0.8)\nlogger.log('position:', img.x, img.y)\nlogger.log('rotation:', img.rotation)\nlogger.log('scale:', img.scaleX, img.scaleY)"
+  }
+]

@@ -133,6 +133,17 @@
       "featured": true
     },
     {
+      "id": "asset",
+      "file": "/application/asset.doc.js",
+      "category": "application",
+      "title": "Asset",
+      "tags": [
+        "application",
+        "asset"
+      ],
+      "featured": false
+    },
+    {
       "id": "manifest",
       "file": "/application/manifest.doc.js",
       "category": "application",
@@ -151,6 +162,17 @@
       "tags": [
         "application",
         "perky_view"
+      ],
+      "featured": false
+    },
+    {
+      "id": "source_manager",
+      "file": "/application/source_manager.doc.js",
+      "category": "application",
+      "title": "SourceManager",
+      "tags": [
+        "application",
+        "source_manager"
       ],
       "featured": false
     },
@@ -177,6 +199,17 @@
       "featured": false
     },
     {
+      "id": "world_view",
+      "file": "/game/world_view.doc.js",
+      "category": "game",
+      "title": "WorldView",
+      "tags": [
+        "game",
+        "world_view"
+      ],
+      "featured": false
+    },
+    {
       "id": "random",
       "file": "/math/random.doc.js",
       "category": "math",
@@ -199,24 +232,101 @@
       "featured": false
     },
     {
-      "id": "canvas_2d",
-      "file": "/render/canvas_2d.doc.js",
+      "id": "canvas_renderer",
+      "file": "/render/canvas_renderer.doc.js",
       "category": "render",
-      "title": "Canvas2D",
+      "title": "CanvasRenderer",
       "tags": [
         "render",
-        "canvas_2d"
+        "canvas_renderer"
+      ],
+      "featured": true
+    },
+    {
+      "id": "webgl_renderer",
+      "file": "/render/webgl_renderer.doc.js",
+      "category": "render",
+      "title": "WebGLRenderer",
+      "tags": [
+        "render",
+        "webgl_renderer"
+      ],
+      "featured": true
+    },
+    {
+      "id": "circle",
+      "file": "/render/circle.doc.js",
+      "category": "render",
+      "title": "Circle",
+      "tags": [
+        "render",
+        "circle"
       ],
       "featured": false
     },
     {
-      "id": "webgl_canvas_2d",
-      "file": "/render/webgl_canvas_2d.doc.js",
+      "id": "group_2d",
+      "file": "/render/group_2d.doc.js",
       "category": "render",
-      "title": "WebGLCanvas2D",
+      "title": "Group2D",
       "tags": [
         "render",
-        "webgl_canvas_2d"
+        "group_2d"
+      ],
+      "featured": false
+    },
+    {
+      "id": "image_2d",
+      "file": "/render/image_2d.doc.js",
+      "category": "render",
+      "title": "Image2D",
+      "tags": [
+        "render",
+        "image_2d"
+      ],
+      "featured": false
+    },
+    {
+      "id": "object_2d",
+      "file": "/render/object_2d.doc.js",
+      "category": "render",
+      "title": "Object2D",
+      "tags": [
+        "render",
+        "object_2d"
+      ],
+      "featured": false
+    },
+    {
+      "id": "rectangle",
+      "file": "/render/rectangle.doc.js",
+      "category": "render",
+      "title": "Rectangle",
+      "tags": [
+        "render",
+        "rectangle"
+      ],
+      "featured": false
+    },
+    {
+      "id": "sprite",
+      "file": "/render/sprite.doc.js",
+      "category": "render",
+      "title": "Sprite",
+      "tags": [
+        "render",
+        "sprite"
+      ],
+      "featured": false
+    },
+    {
+      "id": "transform",
+      "file": "/render/transform.doc.js",
+      "category": "render",
+      "title": "Transform",
+      "tags": [
+        "render",
+        "transform"
       ],
       "featured": false
     },
@@ -239,6 +349,17 @@
       "tags": [
         "input",
         "input_control"
+      ],
+      "featured": false
+    },
+    {
+      "id": "button_control",
+      "file": "/input/input_controls/button_control.doc.js",
+      "category": "input/input_controls",
+      "title": "ButtonControl",
+      "tags": [
+        "input/input_controls",
+        "button_control"
       ],
       "featured": false
     },
@@ -272,6 +393,17 @@
       "tags": [
         "input/input_devices",
         "mouse_device"
+      ],
+      "featured": false
+    },
+    {
+      "id": "touch_device",
+      "file": "/input/input_devices/touch_device.doc.js",
+      "category": "input/input_devices",
+      "title": "TouchDevice",
+      "tags": [
+        "input/input_devices",
+        "touch_device"
       ],
       "featured": false
     },

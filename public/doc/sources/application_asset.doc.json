@@ -1,0 +1,42 @@
+[
+  {
+    "type": "action",
+    "title": "From URL",
+    "source": "const asset = new Asset({\n    id: 'hero',\n    type: 'sprite',\n    url: '/sprites/hero.png',\n    tags: ['character', 'preload']\n})\n\nlogger.log('id:', asset.id)\nlogger.log('type:', asset.type)\nlogger.log('url:', asset.url)\nlogger.log('tags:', asset.tags)\nlogger.log('loaded:', asset.loaded)"
+  },
+  {
+    "type": "action",
+    "title": "With inline source",
+    "source": "const asset = new Asset({\n    id: 'config',\n    type: 'json',\n    source: {debug: true, volume: 0.8}\n})\n\nlogger.log('id:', asset.id)\nlogger.log('source:', asset.source)\nlogger.log('loaded:', asset.loaded)"
+  },
+  {
+    "type": "action",
+    "title": "Auto-generated id",
+    "source": "const asset1 = new Asset({name: 'Player Sprite', type: 'sprite'})\nconst asset2 = new Asset({type: 'audio'})\n\nlogger.log('from name:', asset1.id)\nlogger.log('from type:', asset2.id)"
+  },
+  {
+    "type": "code",
+    "title": "Available properties",
+    "source": "const asset = new Asset({\n    id: 'hero',\n    name: 'Hero Sprite',\n    type: 'sprite',\n    url: '/sprites/hero.png',\n    tags: ['character', 'preload'],\n    config: {frameWidth: 32, frameHeight: 32}\n})\n\nasset.id       // Unique identifier\nasset.name     // Display name (defaults to id)\nasset.type     // Asset type (sprite, audio, json, etc.)\nasset.url      // URL to load from\nasset.source   // Loaded data (null until loaded)\nasset.tags     // Array of tags for querying\nasset.config   // Extra configuration data\nasset.loaded   // Boolean: true if source is set"
+  },
+  {
+    "type": "action",
+    "title": "hasTag",
+    "source": "const asset = new Asset({\n    id: 'music',\n    type: 'audio',\n    tags: ['music', 'preload']\n})\n\nlogger.log('has preload:', asset.hasTag('preload'))\nlogger.log('has sfx:', asset.hasTag('sfx'))"
+  },
+  {
+    "type": "action",
+    "title": "Check loaded state",
+    "source": "const unloaded = new Asset({\n    id: 'sprite',\n    type: 'image',\n    url: '/sprite.png'\n})\n\nlogger.log('before load:', unloaded.loaded)\n\n// Simulate loading\nunloaded.source = new Image()\nlogger.log('after load:', unloaded.loaded)"
+  },
+  {
+    "type": "action",
+    "title": "export",
+    "source": "const asset = new Asset({\n    id: 'hero',\n    type: 'sprite',\n    name: 'Hero',\n    url: '/sprites/hero.png',\n    tags: ['character'],\n    config: {animated: true}\n})\n\nconst exported = asset.export()\nlogger.log('exported:', JSON.stringify(exported, null, 2))"
+  },
+  {
+    "type": "action",
+    "title": "Export with source",
+    "source": "const asset = new Asset({\n    id: 'settings',\n    type: 'json',\n    source: {volume: 0.5}\n})\n\nconst exported = asset.export()\nlogger.log('exported:', JSON.stringify(exported, null, 2))"
+  }
+]

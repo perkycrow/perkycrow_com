@@ -1,0 +1,32 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const button = new ButtonControl({\n    device: null,\n    name: 'jump'\n})\n\nbutton.on('pressed', () => {\n    logger.log('Button pressed!')\n})\n\nbutton.on('released', () => {\n    logger.log('Button released!')\n})"
+  },
+  {
+    "type": "action",
+    "title": "Press and release",
+    "source": "const button = new ButtonControl({\n    device: null,\n    name: 'action'\n})\n\nbutton.on('pressed', () => logger.log('pressed'))\nbutton.on('released', () => logger.log('released'))\n\nlogger.log('Pressing...')\nbutton.press()\nlogger.log('isPressed:', button.isPressed)\n\nlogger.log('Releasing...')\nbutton.release()\nlogger.log('isPressed:', button.isPressed)"
+  },
+  {
+    "type": "action",
+    "title": "Value changes",
+    "source": "const button = new ButtonControl({\n    device: null,\n    name: 'trigger'\n})\n\nbutton.on('updated', (newValue, oldValue) => {\n    logger.log(`Value: ${oldValue} -> ${newValue}`)\n})\n\nbutton.setValue(0.5)\nlogger.log('isPressed at 0.5:', button.isPressed)\n\nbutton.setValue(1)\nlogger.log('isPressed at 1:', button.isPressed)\n\nbutton.setValue(0)\nlogger.log('isPressed at 0:', button.isPressed)"
+  },
+  {
+    "type": "action",
+    "title": "wasPressed tracking",
+    "source": "const button = new ButtonControl({\n    device: null,\n    name: 'test'\n})\n\nbutton.setValue(1)\nlogger.log('After press - isPressed:', button.isPressed, 'wasPressed:', button.wasPressed)\n\nbutton.setValue(0)\nlogger.log('After release - isPressed:', button.isPressed, 'wasPressed:', button.wasPressed)"
+  },
+  {
+    "type": "action",
+    "title": "Custom threshold",
+    "source": "const button = new ButtonControl({\n    device: null,\n    name: 'analog',\n    pressThreshold: 0.5\n})\n\nbutton.setValue(0.3)\nlogger.log('Value 0.3, threshold 0.5:', button.isPressed)\n\nbutton.setValue(0.6)\nlogger.log('Value 0.6, threshold 0.5:', button.isPressed)"
+  },
+  {
+    "type": "code",
+    "title": "Static default",
+    "source": "// Change default for all new buttons\nButtonControl.defaultPressThreshold = 0.2\n\nconst button = new ButtonControl({\n    device: null,\n    name: 'test'\n})\n\n// button.pressThreshold is now 0.2"
+  }
+]

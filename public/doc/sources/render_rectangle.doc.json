@@ -1,0 +1,47 @@
+[
+  {
+    "type": "code",
+    "title": "Basic rectangle",
+    "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    color: '#e94560'\n})"
+  },
+  {
+    "type": "code",
+    "title": "With stroke",
+    "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    color: '#e94560',\n    strokeColor: '#ffffff',\n    strokeWidth: 2\n})"
+  },
+  {
+    "type": "code",
+    "title": "Positioned rectangle",
+    "source": "const rect = new Rectangle({\n    x: 50,\n    y: 30,\n    width: 100,\n    height: 50,\n    color: '#0f3460'\n})"
+  },
+  {
+    "type": "action",
+    "title": "Dimensions",
+    "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    color: '#e94560'\n})\nlogger.log('width:', rect.width)\nlogger.log('height:', rect.height)\n\nrect.width = 200\nrect.height = 100\nlogger.log('after resize:', rect.width, 'x', rect.height)"
+  },
+  {
+    "type": "action",
+    "title": "Colors",
+    "source": "const rect = new Rectangle({\n    color: '#e94560',\n    strokeColor: '#ffffff',\n    strokeWidth: 2\n})\nlogger.log('color:', rect.color)\nlogger.log('strokeColor:', rect.strokeColor)\nlogger.log('strokeWidth:', rect.strokeWidth)"
+  },
+  {
+    "type": "action",
+    "title": "Default anchor (0.5, 0.5)",
+    "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50\n})\nconst bounds = rect.getBounds()\nlogger.log('minX:', bounds.minX)\nlogger.log('minY:', bounds.minY)\nlogger.log('maxX:', bounds.maxX)\nlogger.log('maxY:', bounds.maxY)"
+  },
+  {
+    "type": "action",
+    "title": "Top-left anchor (0, 0)",
+    "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    anchorX: 0,\n    anchorY: 0\n})\nconst bounds = rect.getBounds()\nlogger.log('minX:', bounds.minX)\nlogger.log('minY:', bounds.minY)\nlogger.log('maxX:', bounds.maxX)\nlogger.log('maxY:', bounds.maxY)"
+  },
+  {
+    "type": "code",
+    "title": "Transform example",
+    "source": "const rect = new Rectangle({\n    x: 100,\n    y: 100,\n    width: 50,\n    height: 50,\n    color: '#533483',\n    rotation: Math.PI / 4,\n    scaleX: 2,\n    scaleY: 1.5,\n    anchorX: 0.5,\n    anchorY: 0.5\n})"
+  },
+  {
+    "type": "action",
+    "title": "Method chaining",
+    "source": "const rect = new Rectangle({width: 50, height: 50, color: '#e94560'})\nrect.setPosition(100, 100)\n    .setRotation(Math.PI / 4)\n    .setScale(2)\n    .setOpacity(0.8)\nlogger.log('x:', rect.x, 'y:', rect.y)\nlogger.log('rotation:', rect.rotation)\nlogger.log('scale:', rect.scaleX, rect.scaleY)\nlogger.log('opacity:', rect.opacity)"
+  }
+]

@@ -11,18 +11,13 @@
   },
   {
     "type": "action",
-    "title": "Auto-generated IDs",
-    "source": "const game = new PerkyModule({$id: 'game'})\n\nconst m1 = game.create(PerkyModule)\nconst m2 = game.create(PerkyModule)\nconst e1 = game.create(PerkyModule, {$name: 'enemy'})\nconst e2 = game.create(PerkyModule, {$name: 'enemy'})\n\nlogger.log('m1.$id:', m1.$id)\nlogger.log('m2.$id:', m2.$id)\nlogger.log('e1.$id:', e1.$id)\nlogger.log('e2.$id:', e2.$id)"
+    "title": "$bind in action",
+    "source": "const game = new PerkyModule({$id: 'game'})\n\ngame.create(PerkyModule, {\n    $id: 'playerModule',\n    $bind: 'player'\n})\n\nlogger.log('game.player:', game.player.$id)"
   },
   {
     "type": "action",
     "title": "Lifecycle flows down",
     "source": "const game = new PerkyModule({$id: 'game'})\nconst player = game.create(PerkyModule, {$id: 'player'})\n\nplayer.on('start', () => logger.log('player: started'))\nplayer.on('stop', () => logger.log('player: stopped'))\n\nlogger.log('Starting game...')\ngame.start()\n\nlogger.log('Stopping game...')\ngame.stop()"
-  },
-  {
-    "type": "action",
-    "title": "Eager vs lazy",
-    "source": "const game = new PerkyModule({$id: 'game'})\ngame.start()\nlogger.log('game started:', game.started)\n\nconst eager = game.create(PerkyModule, {$id: 'eager'})\nlogger.log('eager.started:', eager.started)\n\nconst lazy = game.create(PerkyModule, {\n    $id: 'lazy',\n    $eagerStart: false\n})\nlogger.log('lazy.started:', lazy.started)\n\nlazy.start()\nlogger.log('lazy after manual start:', lazy.started)"
   },
   {
     "type": "action",
@@ -48,10 +43,5 @@
     "type": "code",
     "title": "Custom module class",
     "source": "class Player extends PerkyModule {\n    static $category = 'entity'\n    static $tags = ['controllable']\n\n    health = 100\n\n    onStart () {\n        this.health = 100\n    }\n\n    takeDamage (amount) {\n        this.health -= amount\n        this.emit('damage', amount)\n\n        if (this.health <= 0) {\n            this.emit('death')\n        }\n    }\n}"
-  },
-  {
-    "type": "action",
-    "title": "$bind in action",
-    "source": "const game = new PerkyModule({$id: 'game'})\n\ngame.create(PerkyModule, {\n    $id: 'playerModule',\n    $bind: 'player'\n})\n\nlogger.log('game.player:', game.player.$id)"
   }
 ]

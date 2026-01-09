@@ -1,0 +1,47 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const touch = new TouchDevice({\n    container: document.body\n})\n\ntouch.start()"
+  },
+  {
+    "type": "container",
+    "title": "Interactive touch area",
+    "source": "ctx.hint('Touch and drag')\n\nconst touch = new TouchDevice({\n    container: ctx.container\n})\n\nconst marker = ctx.marker(0, 0)\nmarker.style.opacity = '0'\nmarker.style.transition = 'opacity 0.2s'\n\ntouch.on('control:updated', (control) => {\n    if (control.name === 'position') {\n        const rect = ctx.container.getBoundingClientRect()\n        marker.style.left = (control.value.x - rect.left) + 'px'\n        marker.style.top = (control.value.y - rect.top) + 'px'\n        marker.style.opacity = '1'\n    }\n})\n\ntouch.getControl('swipeUp').on('pressed', () => {\n    marker.style.background = '#4aff4a'\n})\n\ntouch.getControl('swipeDown').on('pressed', () => {\n    marker.style.background = '#ff4a4a'\n})\n\ntouch.getControl('swipeUp').on('released', () => {\n    marker.style.background = '#4a9eff'\n})\n\ntouch.getControl('swipeDown').on('released', () => {\n    marker.style.background = '#4a9eff'\n})\n\ntouch.start()"
+  },
+  {
+    "type": "container",
+    "title": "Swipe detection",
+    "source": "ctx.hint('Swipe up or down')\nconst updateDisplay = ctx.display(t => t || 'Waiting...')\n\nconst touch = new TouchDevice({\n    container: ctx.container\n})\n\ntouch.getControl('swipeUp').on('pressed', () => {\n    updateDisplay('Swipe UP')\n})\n\ntouch.getControl('swipeDown').on('pressed', () => {\n    updateDisplay('Swipe DOWN')\n})\n\ntouch.start()"
+  },
+  {
+    "type": "container",
+    "title": "Tap detection",
+    "source": "ctx.hint('Tap quickly')\nlet count = 0\nconst updateDisplay = ctx.display(() => `Taps: ${count}`)\n\nconst touch = new TouchDevice({\n    container: ctx.container\n})\n\ntouch.getControl('tap').on('pressed', () => {\n    count++\n    updateDisplay()\n})\n\ntouch.start()"
+  },
+  {
+    "type": "code",
+    "title": "Thresholds",
+    "source": "const touch = new TouchDevice({\n    container: document.body,\n    swipeThreshold: 30,   // Pixels to trigger swipe (default: 30)\n    tapThreshold: 20,     // Max movement for tap (default: 20)\n    tapMaxDuration: 300   // Max tap duration in ms (default: 300)\n})"
+  },
+  {
+    "type": "code",
+    "title": "Prevent default",
+    "source": "// Prevent all touch defaults (scrolling, etc.)\nconst touch = new TouchDevice({\n    container: document.body,\n    shouldPreventDefault: true\n})"
+  },
+  {
+    "type": "code",
+    "title": "Selective prevention",
+    "source": "const touch = new TouchDevice({\n    container: document.body,\n    shouldPreventDefault: (event, control) => {\n        // Only prevent default for position tracking\n        return control.name === 'position'\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Position tracking",
+    "source": "const touch = new TouchDevice({\n    container: document.body\n})\n\nconst position = touch.getControl('position')\n\nposition.on('updated', () => {\n    logger.log('Touch at:', position.value.x, position.value.y)\n})\n\ntouch.start()"
+  },
+  {
+    "type": "code",
+    "title": "Gesture events",
+    "source": "const touch = new TouchDevice({\n    container: document.body\n})\n\ntouch.on('control:pressed', (control) => {\n    if (control.name === 'swipeUp') {\n        logger.log('Swiped up!')\n    }\n    if (control.name === 'tap') {\n        logger.log('Tapped!')\n    }\n})\n\ntouch.start()"
+  }
+]

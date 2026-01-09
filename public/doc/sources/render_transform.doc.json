@@ -1,0 +1,82 @@
+[
+  {
+    "type": "action",
+    "title": "Position",
+    "source": "const t = new Transform()\nlogger.log('default x:', t.x)\nlogger.log('default y:', t.y)\n\nt.x = 100\nt.y = 50\nlogger.log('after set:', t.x, t.y)"
+  },
+  {
+    "type": "action",
+    "title": "Rotation",
+    "source": "const t = new Transform()\nlogger.log('default rotation:', t.rotation)\n\nt.rotation = Math.PI / 4\nlogger.log('45 degrees:', t.rotation, 'radians')\n\nt.rotation = Math.PI\nlogger.log('180 degrees:', t.rotation, 'radians')"
+  },
+  {
+    "type": "action",
+    "title": "Scale",
+    "source": "const t = new Transform()\nlogger.log('default scale:', t.scaleX, t.scaleY)\n\nt.scaleX = 2\nt.scaleY = 0.5\nlogger.log('after set:', t.scaleX, t.scaleY)"
+  },
+  {
+    "type": "action",
+    "title": "Pivot",
+    "source": "const t = new Transform()\nlogger.log('default pivot:', t.pivotX, t.pivotY)\n\nt.pivotX = 50\nt.pivotY = 25\nlogger.log('after set:', t.pivotX, t.pivotY)"
+  },
+  {
+    "type": "action",
+    "title": "add / remove",
+    "source": "const parent = new Transform()\nconst child1 = new Transform()\nconst child2 = new Transform()\n\nparent.add(child1, child2)\nlogger.log('children count:', parent.children.length)\nlogger.log('child1 parent:', child1.parent === parent)\n\nparent.remove(child1)\nlogger.log('after remove:', parent.children.length)\nlogger.log('child1 parent:', child1.parent)"
+  },
+  {
+    "type": "action",
+    "title": "Reparenting",
+    "source": "const parent1 = new Transform()\nconst parent2 = new Transform()\nconst child = new Transform()\n\nparent1.add(child)\nlogger.log('initial parent:', child.parent === parent1)\n\nparent2.add(child)\nlogger.log('new parent:', child.parent === parent2)\nlogger.log('parent1 children:', parent1.children.length)"
+  },
+  {
+    "type": "action",
+    "title": "getSortedChildren",
+    "source": "const parent = new Transform()\n\nconst a = new Transform()\nconst b = new Transform()\nconst c = new Transform()\n\na.depth = 10\nb.depth = 0\nc.depth = 5\n\nparent.add(a, b, c)\n\nconst sorted = parent.getSortedChildren()\nlogger.log('sorted depths:', sorted.map(child => child.depth))"
+  },
+  {
+    "type": "action",
+    "title": "worldMatrix",
+    "source": "const t = new Transform()\nt.x = 100\nt.y = 50\nt.updateWorldMatrix()\n\nlogger.log('worldMatrix:', t.worldMatrix)"
+  },
+  {
+    "type": "action",
+    "title": "updateWorldMatrix",
+    "source": "const parent = new Transform()\nparent.x = 100\nparent.y = 100\n\nconst child = new Transform()\nchild.x = 50\nchild.y = 0\n\nparent.add(child)\nparent.updateWorldMatrix()\n\nlogger.log('parent matrix:', parent.worldMatrix)\nlogger.log('child matrix:', child.worldMatrix)"
+  },
+  {
+    "type": "code",
+    "title": "Matrix propagation",
+    "source": "const root = new Transform()\nroot.x = 100\n\nconst child = new Transform()\nchild.x = 50\n\nroot.add(child)\n\n// Updates all matrices in hierarchy\nroot.updateWorldMatrix()\n\n// child.worldMatrix now includes parent's translation\n// child is at world position (150, 0)"
+  },
+  {
+    "type": "action",
+    "title": "markDirty",
+    "source": "const parent = new Transform()\nconst child = new Transform()\nparent.add(child)\n\nparent.updateWorldMatrix()\nlogger.log('matrices updated')\n\n// Changing a property marks dirty\nparent.x = 200\nlogger.log('parent.x changed, hierarchy marked dirty')\n\n// Next updateWorldMatrix will recalculate\nparent.updateWorldMatrix()\nlogger.log('matrices recalculated')"
+  },
+  {
+    "type": "code",
+    "title": "Dirty propagation",
+    "source": "const parent = new Transform()\nconst child = new Transform()\nconst grandchild = new Transform()\n\nchild.add(grandchild)\nparent.add(child)\n\n// Changing parent marks all descendants dirty\nparent.rotation = Math.PI / 2\n\n// updateWorldMatrix recalculates the entire hierarchy\nparent.updateWorldMatrix()"
+  },
+  {
+    "type": "action",
+    "title": "transformPoint",
+    "source": "const t = new Transform()\nt.x = 100\nt.y = 50\nt.rotation = Math.PI / 2\nt.updateWorldMatrix()\n\nconst local = {x: 10, y: 0}\nconst world = t.transformPoint(local)\n\nlogger.log('local point:', local.x, local.y)\nlogger.log('world point:', world.x.toFixed(2), world.y.toFixed(2))"
+  },
+  {
+    "type": "action",
+    "title": "With custom matrix",
+    "source": "const t = new Transform()\n\n// Identity matrix with translation\nconst customMatrix = [1, 0, 0, 1, 200, 100]\n\nconst local = {x: 0, y: 0}\nconst transformed = t.transformPoint(local, customMatrix)\n\nlogger.log('transformed:', transformed.x, transformed.y)"
+  },
+  {
+    "type": "action",
+    "title": "Rotation with pivot",
+    "source": "const t = new Transform()\nt.pivotX = 50\nt.pivotY = 0\nt.rotation = Math.PI / 2\nt.updateWorldMatrix()\n\nconst origin = {x: 0, y: 0}\nconst pivotPoint = {x: 50, y: 0}\n\nlogger.log('origin in world:', t.transformPoint(origin))\nlogger.log('pivot in world:', t.transformPoint(pivotPoint))"
+  },
+  {
+    "type": "action",
+    "title": "Combined transforms",
+    "source": "const t = new Transform()\nt.x = 100\nt.y = 100\nt.rotation = Math.PI / 4\nt.scaleX = 2\nt.scaleY = 2\nt.updateWorldMatrix()\n\nconst point = {x: 10, y: 0}\nconst result = t.transformPoint(point)\n\nlogger.log('local:', point.x, point.y)\nlogger.log('world:', result.x.toFixed(2), result.y.toFixed(2))"
+  }
+]

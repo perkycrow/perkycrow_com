@@ -2,7 +2,7 @@
   {
     "type": "code",
     "title": "Basic document",
-    "source": "// doc(title, callback)\n// doc(title, options, callback)\n\ndoc('My Module', () => {\n    text('Introduction to the module.')\n})\n\ndoc('My Module', {context: 'Core'}, () => {\n    text('With context option.')\n})"
+    "source": "// doc(title, callback)\n// doc(title, options, callback)\n\ndoc('My Module', () => {\n    text('Introduction to the module.')\n})\n\ndoc('My Module', () => {\n    text('Another example.')\n})"
   },
   {
     "type": "code",
