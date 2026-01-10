@@ -9,7 +9,8 @@
         "core",
         "perky_module"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "utils",
@@ -20,7 +21,8 @@
         "core",
         "utils"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "action_controller",
@@ -31,7 +33,8 @@
         "core",
         "action_controller"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "action_dispatcher",
@@ -42,7 +45,8 @@
         "core",
         "action_dispatcher"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "inflector",
@@ -53,7 +57,8 @@
         "core",
         "inflector"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "logger",
@@ -64,7 +69,8 @@
         "core",
         "logger"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "notifier",
@@ -75,7 +81,8 @@
         "core",
         "notifier"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "observable_map",
@@ -86,7 +93,8 @@
         "core",
         "observable_map"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "observable_set",
@@ -97,7 +105,8 @@
         "core",
         "observable_set"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "perky_query",
@@ -108,7 +117,8 @@
         "core",
         "perky_query"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "registry",
@@ -119,7 +129,8 @@
         "core",
         "registry"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "application",
@@ -130,7 +141,8 @@
         "application",
         "application"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "asset",
@@ -141,7 +153,8 @@
         "application",
         "asset"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "manifest",
@@ -152,7 +165,8 @@
         "application",
         "manifest"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "perky_view",
@@ -163,7 +177,8 @@
         "application",
         "perky_view"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "source_manager",
@@ -174,7 +189,8 @@
         "application",
         "source_manager"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "game",
@@ -185,7 +201,8 @@
         "game",
         "game"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "game_loop",
@@ -196,7 +213,8 @@
         "game",
         "game_loop"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "world_view",
@@ -207,7 +225,8 @@
         "game",
         "world_view"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "random",
@@ -218,7 +237,8 @@
         "math",
         "random"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "vec2",
@@ -229,7 +249,8 @@
         "math",
         "vec2"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "canvas_renderer",
@@ -240,7 +261,8 @@
         "render",
         "canvas_renderer"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "webgl_renderer",
@@ -251,7 +273,8 @@
         "render",
         "webgl_renderer"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "circle",
@@ -262,7 +285,8 @@
         "render",
         "circle"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "group_2d",
@@ -273,7 +297,8 @@
         "render",
         "group_2d"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "image_2d",
@@ -284,7 +309,8 @@
         "render",
         "image_2d"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "object_2d",
@@ -295,7 +321,8 @@
         "render",
         "object_2d"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "rectangle",
@@ -306,7 +333,8 @@
         "render",
         "rectangle"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "sprite",
@@ -317,7 +345,8 @@
         "render",
         "sprite"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "transform",
@@ -328,7 +357,8 @@
         "render",
         "transform"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "input_system",
@@ -339,7 +369,8 @@
         "input",
         "input_system"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "input_control",
@@ -350,7 +381,8 @@
         "input",
         "input_control"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "button_control",
@@ -361,7 +393,8 @@
         "input/input_controls",
         "button_control"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "vec2_control",
@@ -372,7 +405,8 @@
         "input/input_controls",
         "vec2_control"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "keyboard_device",
@@ -383,7 +417,8 @@
         "input/input_devices",
         "keyboard_device"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "mouse_device",
@@ -394,7 +429,8 @@
         "input/input_devices",
         "mouse_device"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "touch_device",
@@ -405,7 +441,8 @@
         "input/input_devices",
         "touch_device"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "audio_system",
@@ -416,7 +453,8 @@
         "audio",
         "audio_system"
       ],
-      "featured": true
+      "featured": true,
+      "advanced": false
     },
     {
       "id": "perky_explorer",
@@ -427,7 +465,8 @@
         "editor",
         "perky_explorer"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "perky_logger",
@@ -438,7 +477,8 @@
         "editor",
         "perky_logger"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "toggle_input",
@@ -449,7 +489,8 @@
         "editor",
         "toggle_input"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "vec2_input",
@@ -460,7 +501,8 @@
         "editor",
         "vec2_input"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "action_controller_inspector",
@@ -471,7 +513,8 @@
         "editor/inspectors",
         "action_controller_inspector"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "action_dispatcher_inspector",
@@ -482,7 +525,8 @@
         "editor/inspectors",
         "action_dispatcher_inspector"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "vec2_log_renderer",
@@ -493,18 +537,8 @@
         "editor/log_renderers",
         "vec2_log_renderer"
       ],
-      "featured": false
-    },
-    {
-      "id": "runtime",
-      "file": "/doc/runtime.doc.js",
-      "category": "doc",
-      "title": "Doc Runtime",
-      "tags": [
-        "doc",
-        "runtime"
-      ],
-      "featured": true
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "doc_page",
@@ -515,7 +549,20 @@
         "doc",
         "doc_page"
       ],
-      "featured": false
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "runtime",
+      "file": "/doc/runtime.doc.js",
+      "category": "doc",
+      "title": "Doc Runtime",
+      "tags": [
+        "doc",
+        "runtime"
+      ],
+      "featured": false,
+      "advanced": true
     }
   ],
   "guides": [

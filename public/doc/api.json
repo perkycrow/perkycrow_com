@@ -5612,6 +5612,129 @@
     ],
     "exports": []
   },
+  "/doc/doc_page.doc.js": {
+    "type": "class",
+    "file": "/doc/doc_page.js",
+    "name": "DocPage",
+    "line": 11,
+    "extends": "HTMLElement",
+    "statics": [],
+    "methods": [
+      {
+        "name": "connectedCallback",
+        "line": 31,
+        "source": "connectedCallback () {\n    this.#buildDOM()\n    this.#setupAnchorNavigation()\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "disconnectedCallback",
+        "line": 56,
+        "source": "disconnectedCallback () {\n    this.#disposeAll()\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [
+      {
+        "name": "doc",
+        "line": 80,
+        "source": "get doc () {\n    return this.#doc\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "api",
+        "line": 93,
+        "source": "get api () {\n    return this.#api\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "sources",
+        "line": 103,
+        "source": "get sources () {\n    return this.#sources\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "tests",
+        "line": 113,
+        "source": "get tests () {\n    return this.#tests\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "activeTab",
+        "line": 125,
+        "source": "get activeTab () {\n    return this.#activeTab\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "availableTabs",
+        "line": 130,
+        "source": "get availableTabs () {\n    const tabs = ['doc']\n    if (this.#api) {\n        tabs.push('api')\n    }\n    if (this.#tests) {\n        tabs.push('test')\n    }\n    return tabs\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [
+      {
+        "name": "doc",
+        "line": 72,
+        "source": "set doc (value) {\n    this.#doc = value\n    if (this.isConnected) {\n        this.#render()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "api",
+        "line": 85,
+        "source": "set api (value) {\n    this.#api = value\n    if (this.isConnected) {\n        this.#render()\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "sources",
+        "line": 98,
+        "source": "set sources (value) {\n    this.#sources = value\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "tests",
+        "line": 108,
+        "source": "set tests (value) {\n    this.#tests = value\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "initialTab",
+        "line": 118,
+        "source": "set initialTab (value) {\n    if (value === 'api' || value === 'doc' || value === 'test') {\n        this.#activeTab = value\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      }
+    ],
+    "constructor": {
+      "name": "constructor",
+      "line": 25,
+      "source": "constructor () {\n    super()\n    this.attachShadow({mode: 'open'})\n}",
+      "kind": "constructor",
+      "params": []
+    },
+    "isDefault": true
+  },
   "/doc/runtime.doc.js": {
     "type": "module",
     "file": "/doc/runtime.js",
@@ -5749,128 +5872,5 @@
       }
     ],
     "exports": []
-  },
-  "/doc/doc_page.doc.js": {
-    "type": "class",
-    "file": "/doc/doc_page.js",
-    "name": "DocPage",
-    "line": 11,
-    "extends": "HTMLElement",
-    "statics": [],
-    "methods": [
-      {
-        "name": "connectedCallback",
-        "line": 31,
-        "source": "connectedCallback () {\n    this.#buildDOM()\n    this.#setupAnchorNavigation()\n}",
-        "kind": "method",
-        "params": []
-      },
-      {
-        "name": "disconnectedCallback",
-        "line": 56,
-        "source": "disconnectedCallback () {\n    this.#disposeAll()\n}",
-        "kind": "method",
-        "params": []
-      }
-    ],
-    "getters": [
-      {
-        "name": "doc",
-        "line": 80,
-        "source": "get doc () {\n    return this.#doc\n}",
-        "kind": "method",
-        "params": []
-      },
-      {
-        "name": "api",
-        "line": 93,
-        "source": "get api () {\n    return this.#api\n}",
-        "kind": "method",
-        "params": []
-      },
-      {
-        "name": "sources",
-        "line": 103,
-        "source": "get sources () {\n    return this.#sources\n}",
-        "kind": "method",
-        "params": []
-      },
-      {
-        "name": "tests",
-        "line": 113,
-        "source": "get tests () {\n    return this.#tests\n}",
-        "kind": "method",
-        "params": []
-      },
-      {
-        "name": "activeTab",
-        "line": 125,
-        "source": "get activeTab () {\n    return this.#activeTab\n}",
-        "kind": "method",
-        "params": []
-      },
-      {
-        "name": "availableTabs",
-        "line": 130,
-        "source": "get availableTabs () {\n    const tabs = ['doc']\n    if (this.#api) {\n        tabs.push('api')\n    }\n    if (this.#tests) {\n        tabs.push('test')\n    }\n    return tabs\n}",
-        "kind": "method",
-        "params": []
-      }
-    ],
-    "setters": [
-      {
-        "name": "doc",
-        "line": 72,
-        "source": "set doc (value) {\n    this.#doc = value\n    if (this.isConnected) {\n        this.#render()\n    }\n}",
-        "kind": "method",
-        "params": [
-          "value"
-        ]
-      },
-      {
-        "name": "api",
-        "line": 85,
-        "source": "set api (value) {\n    this.#api = value\n    if (this.isConnected) {\n        this.#render()\n    }\n}",
-        "kind": "method",
-        "params": [
-          "value"
-        ]
-      },
-      {
-        "name": "sources",
-        "line": 98,
-        "source": "set sources (value) {\n    this.#sources = value\n}",
-        "kind": "method",
-        "params": [
-          "value"
-        ]
-      },
-      {
-        "name": "tests",
-        "line": 108,
-        "source": "set tests (value) {\n    this.#tests = value\n}",
-        "kind": "method",
-        "params": [
-          "value"
-        ]
-      },
-      {
-        "name": "initialTab",
-        "line": 118,
-        "source": "set initialTab (value) {\n    if (value === 'api' || value === 'doc' || value === 'test') {\n        this.#activeTab = value\n    }\n}",
-        "kind": "method",
-        "params": [
-          "value"
-        ]
-      }
-    ],
-    "constructor": {
-      "name": "constructor",
-      "line": 25,
-      "source": "constructor () {\n    super()\n    this.attachShadow({mode: 'open'})\n}",
-      "kind": "constructor",
-      "params": []
-    },
-    "isDefault": true
   }
 }

@@ -9094,6 +9094,112 @@
       }
     ]
   },
+  "/doc/doc_page.doc.js": {
+    "file": "/doc/doc_page.test.js",
+    "describes": [
+      {
+        "title": "doc_page",
+        "line": 30,
+        "beforeEach": {
+          "line": 34,
+          "source": "if (!globalThis.customElements) {\n    globalThis.customElements = {\n        define: vi.fn(),\n        get: vi.fn()\n    }\n}\n\nif (!globalThis.HTMLElement) {\n    globalThis.HTMLElement = class {\n        attachShadow () {\n            return {\n                appendChild: vi.fn(),\n                querySelector: vi.fn(() => ({innerHTML: '', appendChild: vi.fn()})),\n                querySelectorAll: vi.fn(() => []),\n                getElementById: vi.fn(),\n                addEventListener: vi.fn()\n            }\n        }\n    }\n}\n\nconst module = await import('./doc_page.js')\nDocPage = module.default"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "exports DocPage class",
+            "line": 61,
+            "source": "expect(DocPage).toBeDefined()\nexpect(typeof DocPage).toBe('function')"
+          },
+          {
+            "title": "DocPage extends HTMLElement",
+            "line": 67,
+            "source": "expect(DocPage.prototype).toBeInstanceOf(HTMLElement)"
+          },
+          {
+            "title": "renderBlock handles see block type",
+            "line": 123,
+            "source": "const page = new DocPage()\nconst seeBlock = {\n    type: 'see',\n    name: 'ActionController',\n    pageType: 'doc',\n    section: null\n}\n\npage.doc = {\n    title: 'Test',\n    blocks: [seeBlock]\n}"
+          }
+        ],
+        "describes": [
+          {
+            "title": "properties",
+            "line": 72,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "doc getter and setter",
+                "line": 74,
+                "source": "const page = new DocPage()\nexpect(page.doc).toBeNull()\n\nconst docData = {title: 'Test', blocks: []}\npage.doc = docData\nexpect(page.doc).toBe(docData)"
+              },
+              {
+                "title": "api getter and setter",
+                "line": 84,
+                "source": "const page = new DocPage()\nexpect(page.api).toBeNull()\n\nconst apiData = {type: 'class', name: 'Test'}\npage.api = apiData\nexpect(page.api).toBe(apiData)"
+              },
+              {
+                "title": "sources getter and setter",
+                "line": 94,
+                "source": "const page = new DocPage()\nexpect(page.sources).toBeNull()\n\nconst sources = [{type: 'code', title: 'Example', source: 'code'}]\npage.sources = sources\nexpect(page.sources).toBe(sources)"
+              },
+              {
+                "title": "tests getter and setter",
+                "line": 104,
+                "source": "const page = new DocPage()\nexpect(page.tests).toBeNull()\n\nconst tests = {describes: []}\npage.tests = tests\nexpect(page.tests).toBe(tests)"
+              },
+              {
+                "title": "initialTab setter validates values",
+                "line": 114,
+                "source": "const page = new DocPage()\npage.initialTab = 'api'\npage.initialTab = 'invalid'"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "inline see links in text",
+            "line": 139,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "parses [[Name]] as doc link",
+                "line": 141,
+                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'See [[ActionController]] for more.'\n    }]\n}"
+              },
+              {
+                "title": "parses [[Name#Section]] as doc link with section",
+                "line": 153,
+                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'See [[ActionController#Propagation]] for details.'\n    }]\n}"
+              },
+              {
+                "title": "parses [[Name:api]] as API link",
+                "line": 165,
+                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'Check [[ActionController:api]] for methods.'\n    }]\n}"
+              },
+              {
+                "title": "parses [[Name:api#Section]] as API link with section",
+                "line": 177,
+                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'See [[ActionController:api#methods]] for the full list.'\n    }]\n}"
+              },
+              {
+                "title": "parses [[Name:guide]] as guide link",
+                "line": 189,
+                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'Read [[philosophy:guide]] for the overview.'\n    }]\n}"
+              },
+              {
+                "title": "parses multiple inline links in same text",
+                "line": 201,
+                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'See [[ActionController]] and [[ActionDispatcher#Stack]].'\n    }]\n}"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
   "/doc/runtime.doc.js": {
     "file": "/doc/runtime.test.js",
     "describes": [
@@ -9467,112 +9573,6 @@
           }
         ],
         "describes": []
-      }
-    ]
-  },
-  "/doc/doc_page.doc.js": {
-    "file": "/doc/doc_page.test.js",
-    "describes": [
-      {
-        "title": "doc_page",
-        "line": 30,
-        "beforeEach": {
-          "line": 34,
-          "source": "if (!globalThis.customElements) {\n    globalThis.customElements = {\n        define: vi.fn(),\n        get: vi.fn()\n    }\n}\n\nif (!globalThis.HTMLElement) {\n    globalThis.HTMLElement = class {\n        attachShadow () {\n            return {\n                appendChild: vi.fn(),\n                querySelector: vi.fn(() => ({innerHTML: '', appendChild: vi.fn()})),\n                querySelectorAll: vi.fn(() => []),\n                getElementById: vi.fn(),\n                addEventListener: vi.fn()\n            }\n        }\n    }\n}\n\nconst module = await import('./doc_page.js')\nDocPage = module.default"
-        },
-        "afterEach": null,
-        "tests": [
-          {
-            "title": "exports DocPage class",
-            "line": 61,
-            "source": "expect(DocPage).toBeDefined()\nexpect(typeof DocPage).toBe('function')"
-          },
-          {
-            "title": "DocPage extends HTMLElement",
-            "line": 67,
-            "source": "expect(DocPage.prototype).toBeInstanceOf(HTMLElement)"
-          },
-          {
-            "title": "renderBlock handles see block type",
-            "line": 123,
-            "source": "const page = new DocPage()\nconst seeBlock = {\n    type: 'see',\n    name: 'ActionController',\n    pageType: 'doc',\n    section: null\n}\n\npage.doc = {\n    title: 'Test',\n    blocks: [seeBlock]\n}"
-          }
-        ],
-        "describes": [
-          {
-            "title": "properties",
-            "line": 72,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "doc getter and setter",
-                "line": 74,
-                "source": "const page = new DocPage()\nexpect(page.doc).toBeNull()\n\nconst docData = {title: 'Test', blocks: []}\npage.doc = docData\nexpect(page.doc).toBe(docData)"
-              },
-              {
-                "title": "api getter and setter",
-                "line": 84,
-                "source": "const page = new DocPage()\nexpect(page.api).toBeNull()\n\nconst apiData = {type: 'class', name: 'Test'}\npage.api = apiData\nexpect(page.api).toBe(apiData)"
-              },
-              {
-                "title": "sources getter and setter",
-                "line": 94,
-                "source": "const page = new DocPage()\nexpect(page.sources).toBeNull()\n\nconst sources = [{type: 'code', title: 'Example', source: 'code'}]\npage.sources = sources\nexpect(page.sources).toBe(sources)"
-              },
-              {
-                "title": "tests getter and setter",
-                "line": 104,
-                "source": "const page = new DocPage()\nexpect(page.tests).toBeNull()\n\nconst tests = {describes: []}\npage.tests = tests\nexpect(page.tests).toBe(tests)"
-              },
-              {
-                "title": "initialTab setter validates values",
-                "line": 114,
-                "source": "const page = new DocPage()\npage.initialTab = 'api'\npage.initialTab = 'invalid'"
-              }
-            ],
-            "describes": []
-          },
-          {
-            "title": "inline see links in text",
-            "line": 139,
-            "beforeEach": null,
-            "afterEach": null,
-            "tests": [
-              {
-                "title": "parses [[Name]] as doc link",
-                "line": 141,
-                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'See [[ActionController]] for more.'\n    }]\n}"
-              },
-              {
-                "title": "parses [[Name#Section]] as doc link with section",
-                "line": 153,
-                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'See [[ActionController#Propagation]] for details.'\n    }]\n}"
-              },
-              {
-                "title": "parses [[Name:api]] as API link",
-                "line": 165,
-                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'Check [[ActionController:api]] for methods.'\n    }]\n}"
-              },
-              {
-                "title": "parses [[Name:api#Section]] as API link with section",
-                "line": 177,
-                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'See [[ActionController:api#methods]] for the full list.'\n    }]\n}"
-              },
-              {
-                "title": "parses [[Name:guide]] as guide link",
-                "line": 189,
-                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'Read [[philosophy:guide]] for the overview.'\n    }]\n}"
-              },
-              {
-                "title": "parses multiple inline links in same text",
-                "line": 201,
-                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'See [[ActionController]] and [[ActionDispatcher#Stack]].'\n    }]\n}"
-              }
-            ],
-            "describes": []
-          }
-        ]
       }
     ]
   }
