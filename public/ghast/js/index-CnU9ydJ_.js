@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _idCounters, _delegations, _eventDelegations, _PerkyModule_instances, findUniqueId_fn, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, emit_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentX, _currentY, _touchStartTime, _swipeReferenceX, _swipeReferenceY, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, updateVerticalSwipes_fn, updateHorizontalSwipes_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _region, _rendererRegistry, _renderers, _debugGizmoRenderer, _CanvasRenderer_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLRenderer_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _canvas, _ctx, _packer, _regions, _dirty2, _atlases, _regionIndex, _atlasSize, _TextureAtlasManager_instances, addToAtlas_fn, addOversizedImage_fn, _atlasManager, _manualRegions, _Game_instances, updateActiveControllers_fn, _world, _functionBindings, _stringBindings, _AutoView_instances, compileBindings_fn, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _GameRenderer_instances, registerViews_fn, setupRenderGroups_fn, _enabled3, _program2, _uniforms2, _RenderPass_instances, applyUniform_fn, _Ghast_instances, updateCamera_fn, updateGroundPass_fn, buildTextureAtlases_fn;
+var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _idCounters, _delegations, _eventDelegations, _PerkyModule_instances, findUniqueId_fn, addChild_fn, setupTagIndexListeners_fn, _ApplicationManager_instances, findApp_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _actions, _actionList, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, emit_fn, _activeControllers, _ActionDispatcher_instances, setupMainController_fn, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentX, _currentY, _touchStartTime, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, updateVerticalSwipes_fn, updateHorizontalSwipes_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, autoRegisterBindings_fn, _paused, _fpsLimited, _resizeObserver2, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _context, _collected, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _enabled, _effects, _tint, _effects2, _debugGizmos, _region, _rendererRegistry, _renderers, _debugGizmoRenderer, _CanvasRenderer_instances, setupDefaultRenderers_fn, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context2, _collected2, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry2, _renderers2, _shaderRegistry3, _shaderEffectRegistry2, _postProcessor, _debugGizmoRenderer2, _compositeQuad, _compositeProgram, _WebGLRenderer_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn2, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _canvas, _ctx, _packer, _regions, _dirty2, _atlases, _regionIndex, _atlasSize, _TextureAtlasManager_instances, addToAtlas_fn, addOversizedImage_fn, _atlasManager, _manualRegions, _Game_instances, updateActiveControllers_fn, _world, _functionBindings, _stringBindings, _AutoView_instances, compileBindings_fn, _classRegistry, _matcherRegistry, _views, _WorldView_instances, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _GameRenderer_instances, registerViews_fn, setupRenderGroups_fn, _enabled3, _program2, _uniforms2, _RenderPass_instances, applyUniform_fn, _Ghast_instances, updateCamera_fn, updateGroundPass_fn, buildTextureAtlases_fn;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -3731,8 +3731,6 @@ class TouchDevice extends InputDevice {
     __privateAdd(this, _currentX, 0);
     __privateAdd(this, _currentY, 0);
     __privateAdd(this, _touchStartTime, 0);
-    __privateAdd(this, _swipeReferenceX, 0);
-    __privateAdd(this, _swipeReferenceY, 0);
     this.swipeThreshold = params.swipeThreshold ?? 30;
     this.tapThreshold = params.tapThreshold ?? 20;
     this.tapMaxDuration = params.tapMaxDuration ?? 300;
@@ -3766,8 +3764,6 @@ _startY = new WeakMap();
 _currentX = new WeakMap();
 _currentY = new WeakMap();
 _touchStartTime = new WeakMap();
-_swipeReferenceX = new WeakMap();
-_swipeReferenceY = new WeakMap();
 _TouchDevice_instances = new WeakSet();
 createControls_fn2 = function() {
   this.registerControl(new ButtonControl({
@@ -3809,8 +3805,6 @@ handleTouchstart_fn = function(event) {
   __privateSet(this, _startY, touch.clientY);
   __privateSet(this, _currentX, touch.clientX);
   __privateSet(this, _currentY, touch.clientY);
-  __privateSet(this, _swipeReferenceX, touch.clientX);
-  __privateSet(this, _swipeReferenceY, touch.clientY);
   __privateSet(this, _touchStartTime, Date.now());
   const positionControl = this.getControl("position");
   positionControl.setValue({
@@ -3843,46 +3837,48 @@ handleTouchmove_fn = function(event) {
   this.preventDefault(event, positionControl);
 };
 updateVerticalSwipes_fn = function(event) {
-  const deltaY = __privateGet(this, _swipeReferenceY) - __privateGet(this, _currentY);
+  const deltaY = __privateGet(this, _startY) - __privateGet(this, _currentY);
   const swipeUpControl = this.getControl("swipeUp");
   const swipeDownControl = this.getControl("swipeDown");
   if (deltaY > this.swipeThreshold) {
     if (!swipeUpControl.isPressed) {
       swipeUpControl.press(event);
     }
-    if (swipeDownControl.isPressed) {
-      swipeDownControl.release(event);
-      __privateSet(this, _swipeReferenceY, __privateGet(this, _currentY));
+  } else {
+    if (swipeUpControl.isPressed) {
+      swipeUpControl.release(event);
     }
-  } else if (deltaY < -this.swipeThreshold) {
+  }
+  if (deltaY < -this.swipeThreshold) {
     if (!swipeDownControl.isPressed) {
       swipeDownControl.press(event);
     }
-    if (swipeUpControl.isPressed) {
-      swipeUpControl.release(event);
-      __privateSet(this, _swipeReferenceY, __privateGet(this, _currentY));
+  } else {
+    if (swipeDownControl.isPressed) {
+      swipeDownControl.release(event);
     }
   }
 };
 updateHorizontalSwipes_fn = function(event) {
-  const deltaX = __privateGet(this, _swipeReferenceX) - __privateGet(this, _currentX);
+  const deltaX = __privateGet(this, _startX) - __privateGet(this, _currentX);
   const swipeLeftControl = this.getControl("swipeLeft");
   const swipeRightControl = this.getControl("swipeRight");
   if (deltaX > this.swipeThreshold) {
     if (!swipeLeftControl.isPressed) {
       swipeLeftControl.press(event);
     }
-    if (swipeRightControl.isPressed) {
-      swipeRightControl.release(event);
-      __privateSet(this, _swipeReferenceX, __privateGet(this, _currentX));
+  } else {
+    if (swipeLeftControl.isPressed) {
+      swipeLeftControl.release(event);
     }
-  } else if (deltaX < -this.swipeThreshold) {
+  }
+  if (deltaX < -this.swipeThreshold) {
     if (!swipeRightControl.isPressed) {
       swipeRightControl.press(event);
     }
-    if (swipeLeftControl.isPressed) {
-      swipeLeftControl.release(event);
-      __privateSet(this, _swipeReferenceX, __privateGet(this, _currentX));
+  } else {
+    if (swipeRightControl.isPressed) {
+      swipeRightControl.release(event);
     }
   }
 };
@@ -3982,7 +3978,8 @@ class InputSystem extends PerkyModule {
     this.registerDevice(TouchDevice, {
       $id: "touch",
       $bind: "touch",
-      container: host.element
+      container: host.element,
+      shouldPreventDefault: true
     });
     this.delegateTo(host, [
       "registerDevice",
