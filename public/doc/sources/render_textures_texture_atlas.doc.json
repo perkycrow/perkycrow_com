@@ -1,0 +1,22 @@
+[
+  {
+    "type": "container",
+    "title": "Generated atlases",
+    "source": "const manager = new TextureAtlasManager({atlasSize: 512})\n\nconst images = [\n    {name: 'logo', src: './assets/images/logo.png', scale: 0.5},\n    {name: 'shroom', src: './assets/images/shroom.png', scale: 0.5},\n    {name: 'spore', src: './assets/images/spore.png', scale: 1},\n    {name: 'next', src: './assets/images/next.png', scale: 0.5},\n    {name: 'restart', src: './assets/images/restart.png', scale: 0.5}\n]\n\nlet loaded = 0\nconst loadedImages = []\n\nconst wrapper = ctx.column({gap: 8})\nconst infoLabel = ctx.label('Loading images...', {parent: wrapper})\nconst atlasesRow = ctx.row({gap: 12, parent: wrapper})\n\nfunction scaleImage (img, scale) {\n    const w = Math.floor(img.width * scale)\n    const h = Math.floor(img.height * scale)\n    const canvas = document.createElement('canvas')\n    canvas.width = w\n    canvas.height = h\n    canvas.getContext('2d').drawImage(img, 0, 0, w, h)\n    return canvas\n}\n\nfunction buildAtlases () {\n    const scaled = loadedImages.map(({name, img, scale}) => ({\n        name,\n        canvas: scaleImage(img, scale)\n    }))\n\n    scaled.sort((a, b) => b.canvas.height - a.canvas.height)\n\n    for (const {name, canvas} of scaled) {\n        manager.add(name, canvas)\n    }\n\n    manager.atlases.forEach((atlas, i) => {\n        const col = ctx.column({parent: atlasesRow})\n        ctx.label(`Atlas ${i + 1} (${pluralize('region', atlas.regionCount, true)}${atlas.full ? ', full' : ''})`, {parent: col})\n        ctx.canvas(atlas.canvas, {maxWidth: 300, parent: col})\n    })\n\n    infoLabel.textContent = `Total: ${pluralize('atlas', manager.atlasCount, true)} | ${pluralize('region', manager.regionCount, true)}`\n}\n\nimages.forEach(({name, src, scale}) => {\n    const img = new Image()\n    img.src = src\n    img.onload = () => {\n        loadedImages.push({name, img, scale})\n        loaded++\n        infoLabel.textContent = `Loading ${loaded}/${images.length}...`\n\n        if (loaded === images.length) {\n            buildAtlases()\n        }\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Creating and using an atlas",
+    "source": "const atlas = new TextureAtlas({\n    width: 1024,\n    height: 1024,\n    padding: 1\n})\n\n// Add an image (returns a TextureRegion)\nconst region = atlas.add('sprite-id', imageElement)\n\n// Check if image was added\nif (region) {\n    // Use region.u0, region.v0, region.u1, region.v1 for UV coordinates\n}\n\n// Retrieve a region later\nconst cached = atlas.get('sprite-id')\n\n// Check if atlas can fit another image\nif (atlas.canFit(128, 128)) {\n    // There's room for a 128x128 image\n}"
+  },
+  {
+    "type": "code",
+    "title": "Checking atlas state",
+    "source": "const atlas = new TextureAtlas({width: 512, height: 512})\n\natlas.add('image1', img1)\natlas.add('image2', img2)\n\nlogger.log(atlas.regionCount) // 2\nlogger.log(atlas.full)        // false (probably)\nlogger.log(atlas.dirty)       // true\n\natlas.markClean()\nlogger.log(atlas.dirty)       // false"
+  },
+  {
+    "type": "code",
+    "title": "Clear vs dispose",
+    "source": "const atlas = new TextureAtlas()\n\n// Clear removes all images but keeps the atlas usable\natlas.clear()\n\n// Dispose releases all resources\natlas.dispose()"
+  }
+]

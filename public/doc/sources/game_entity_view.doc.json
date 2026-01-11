@@ -1,0 +1,42 @@
+[
+  {
+    "type": "code",
+    "title": "Minimal view",
+    "source": "class BallView extends EntityView {\n    constructor (entity, context) {\n        super(entity, context)\n        this.root = new Circle({\n            radius: 1,\n            color: '#e94560'\n        })\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "Complex view",
+    "source": "class PlayerView extends EntityView {\n    constructor (entity, context) {\n        super(entity, context)\n\n        this.root = new Group2D()\n\n        this.body = new Rectangle({\n            width: 1,\n            height: 2,\n            color: '#533483'\n        })\n\n        this.head = new Circle({\n            radius: 0.4,\n            color: '#e94560',\n            y: 1.5\n        })\n\n        this.root.add(this.body, this.head)\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "Default sync",
+    "source": "const entity = new Entity({x: 5, y: 3})\nconst view = new EntityView(entity, {})\nview.root = new Circle({radius: 1})\n\nlogger.log('before sync:')\nlogger.log('  root.x:', view.root.x)\nlogger.log('  root.y:', view.root.y)\n\nview.sync()\n\nlogger.log('after sync:')\nlogger.log('  root.x:', view.root.x)\nlogger.log('  root.y:', view.root.y)"
+  },
+  {
+    "type": "code",
+    "title": "Custom sync",
+    "source": "class SpinnerView extends EntityView {\n    constructor (entity, context) {\n        super(entity, context)\n        this.root = new Rectangle({\n            width: 2,\n            height: 0.5,\n            color: '#4a9eff'\n        })\n    }\n\n    sync () {\n        super.sync()\n        this.root.rotation = this.entity.angle\n        this.root.opacity = this.entity.health\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "Dispose behavior",
+    "source": "const entity = new Entity({x: 0, y: 0})\nconst group = new Group2D()\nconst view = new EntityView(entity, {group})\nview.root = new Circle({radius: 1})\ngroup.add(view.root)\n\nlogger.log('before dispose:')\nlogger.log('  group children:', group.children.length)\nlogger.log('  view.root:', view.root !== null)\n\nview.dispose()\n\nlogger.log('after dispose:')\nlogger.log('  group children:', group.children.length)\nlogger.log('  view.root:', view.root)"
+  },
+  {
+    "type": "code",
+    "title": "Constructor",
+    "source": "// entity: The Entity instance to visualize\n// context: Object containing { group, worldView }\nconst view = new EntityView(entity, context)\n\n// Set this.root to your render object\nview.root = new Circle({radius: 1})"
+  },
+  {
+    "type": "code",
+    "title": "Properties",
+    "source": "// view.entity - The linked Entity\n// view.context - Context object from WorldView\n// view.root - The root Object2D node (you must set this)"
+  },
+  {
+    "type": "code",
+    "title": "Methods",
+    "source": "// sync() - Update render object from entity state\n// dispose() - Clean up when entity is removed"
+  }
+]

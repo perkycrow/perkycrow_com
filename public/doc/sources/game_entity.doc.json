@@ -1,0 +1,47 @@
+[
+  {
+    "type": "action",
+    "title": "Create entity",
+    "source": "const entity = new Entity({x: 5, y: 3})\n\nlogger.log('x:', entity.x)\nlogger.log('y:', entity.y)\nlogger.log('position:', entity.position.x, entity.position.y)"
+  },
+  {
+    "type": "action",
+    "title": "In a World",
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\n\nconst entity = world.create(Entity, {x: 10, y: 20})\n\nlogger.log('x:', entity.x)\nlogger.log('y:', entity.y)"
+  },
+  {
+    "type": "action",
+    "title": "Position access",
+    "source": "const entity = new Entity({x: 0, y: 0})\n\nentity.x = 5\nentity.y = 3\n\nlogger.log('via x/y:', entity.x, entity.y)\nlogger.log('via position:', entity.position.x, entity.position.y)\n\nentity.position.set(10, 20)\nlogger.log('after set:', entity.x, entity.y)"
+  },
+  {
+    "type": "action",
+    "title": "Velocity",
+    "source": "const entity = new Entity()\n\nentity.velocity.set(2, -1)\n\nlogger.log('velocity:', entity.velocity.x, entity.velocity.y)"
+  },
+  {
+    "type": "code",
+    "title": "Custom entity",
+    "source": "class Bullet extends Entity {\n    constructor (options = {}) {\n        super(options)\n        this.damage = options.damage ?? 10\n        this.alive = true\n    }\n\n    update (deltaTime) {\n        this.x += this.velocity.x * deltaTime\n        this.y += this.velocity.y * deltaTime\n\n        if (this.x > 100) {\n            this.alive = false\n        }\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "With physics",
+    "source": "class FallingObject extends Entity {\n    constructor (options = {}) {\n        super(options)\n        this.gravity = options.gravity ?? -9.8\n    }\n\n    update (deltaTime) {\n        this.velocity.y += this.gravity * deltaTime\n        this.x += this.velocity.x * deltaTime\n        this.y += this.velocity.y * deltaTime\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "Constructor",
+    "source": "const entity = new Entity({\n    x: 0,      // Initial x position (default: 0)\n    y: 0       // Initial y position (default: 0)\n})"
+  },
+  {
+    "type": "code",
+    "title": "Properties",
+    "source": "// entity.x - X position (shorthand for position.x)\n// entity.y - Y position (shorthand for position.y)\n// entity.position - Vec2 position vector\n// entity.velocity - Vec2 velocity vector"
+  },
+  {
+    "type": "code",
+    "title": "Methods",
+    "source": "// update(deltaTime) - Called each frame by World"
+  }
+]

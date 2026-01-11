@@ -1,0 +1,52 @@
+[
+  {
+    "type": "code",
+    "title": "Creating entities",
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\n\nclass Player extends Entity {}\nclass Enemy extends Entity {}\n\nconst player = world.create(Player, {x: 0, y: 0})\nconst enemy = world.create(Enemy, {x: 5, y: 0})"
+  },
+  {
+    "type": "action",
+    "title": "Entities list",
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\n\nclass Ball extends Entity {}\n\nworld.create(Ball, {x: 0, y: 0})\nworld.create(Ball, {x: 1, y: 0})\nworld.create(Ball, {x: 2, y: 0})\n\nlogger.log('entity count:', world.entities.length)\n\nfor (const entity of world.entities) {\n    logger.log('  entity at:', entity.x, entity.y)\n}"
+  },
+  {
+    "type": "code",
+    "title": "Update cycle",
+    "source": "class GameWorld extends World {\n    preUpdate (deltaTime, context) {\n        // Called before entities update\n        // Handle input, spawn logic, etc.\n    }\n\n    postUpdate (deltaTime, context) {\n        // Called after entities update\n        // Handle collisions, cleanup, etc.\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "Entity updates",
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\n\nclass MovingEntity extends Entity {\n    update (deltaTime) {\n        this.x += this.velocity.x * deltaTime\n        this.y += this.velocity.y * deltaTime\n    }\n}\n\nconst entity = world.create(MovingEntity, {x: 0, y: 0})\nentity.velocity.x = 10\n\napp.start()\n\nlogger.log('before:', entity.x)\nworld.update(0.1, {})\nlogger.log('after:', entity.x)"
+  },
+  {
+    "type": "action",
+    "title": "Remove entities",
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\n\nclass Ball extends Entity {}\n\nconst ball1 = world.create(Ball, {$id: 'ball1'})\nconst ball2 = world.create(Ball, {$id: 'ball2'})\n\nlogger.log('before:', world.entities.length)\n\nworld.removeChild('ball1')\n\nlogger.log('after:', world.entities.length)"
+  },
+  {
+    "type": "action",
+    "title": "Query by tags",
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\n\nworld.create(Entity, {$tags: ['enemy', 'flying']})\nworld.create(Entity, {$tags: ['enemy', 'ground']})\nworld.create(Entity, {$tags: ['friendly']})\n\nconst enemies = world.childrenByTags('enemy')\nlogger.log('enemies:', enemies.length)\n\nconst flying = world.childrenByTags('flying')\nlogger.log('flying:', flying.length)"
+  },
+  {
+    "type": "code",
+    "title": "Game world example",
+    "source": "class BattleWorld extends World {\n    spawnPlayer (options = {}) {\n        return this.create(Player, {\n            $id: 'player',\n            $bind: 'player',\n            x: options.x || 0,\n            y: options.y || 0\n        })\n    }\n\n    postUpdate () {\n        this.checkCollisions()\n        this.cleanupDead()\n    }\n\n    checkCollisions () {\n        // Game-specific collision logic\n    }\n\n    cleanupDead () {\n        for (const entity of this.entities) {\n            if (entity.alive === false) {\n                this.removeChild(entity.$id)\n            }\n        }\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "Properties",
+    "source": "// world.entities - Array of all Entity children"
+  },
+  {
+    "type": "code",
+    "title": "Methods",
+    "source": "// update(deltaTime, context) - Update all entities\n// preUpdate(deltaTime, context) - Hook before entity updates\n// postUpdate(deltaTime, context) - Hook after entity updates"
+  },
+  {
+    "type": "code",
+    "title": "Inherited from PerkyModule",
+    "source": "// create(Class, options) - Create and add an entity\n// removeChild(id) - Remove an entity by id\n// childrenByCategory(category) - Get children by category\n// childrenByTags(tag) - Get children by tag"
+  }
+]

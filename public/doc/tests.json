@@ -61,210 +61,274 @@
           },
           {
             "title": "listNamesFor - single category",
-            "line": 151,
+            "line": 293,
             "source": "class TestChild1 extends PerkyModule { }\nclass TestChild2 extends PerkyModule { }\n\nchild.create(TestChild1, {\n    $id: 'ext1',\n    $category: 'module'\n})\n\nchild.create(TestChild2, {\n    $id: 'ext2',\n    $category: 'module'\n})\n\nconst modules = child.listNamesFor('module')\n\nexpect(modules).toHaveLength(2)\nexpect(modules).toContain('ext1')\nexpect(modules).toContain('ext2')"
           },
           {
             "title": "listNamesFor - mixed categories",
-            "line": 173,
+            "line": 315,
             "source": "class TestChild1 extends PerkyModule { }\nclass TestChild2 extends PerkyModule { }\nclass TestChild3 extends PerkyModule { }\n\nchild.create(TestChild1, {\n    $id: 'ext1',\n    $category: 'module'\n})\n\nchild.create(TestChild2, {\n    $id: 'ext2',\n    $category: 'service'\n})\n\nchild.create(TestChild3, {\n    $id: 'ext3',\n    $category: 'module'\n})\n\nconst modules = child.listNamesFor('module')\nconst services = child.listNamesFor('service')\n\nexpect(modules).toHaveLength(2)\nexpect(modules).toContain('ext1')\nexpect(modules).toContain('ext3')\n\nexpect(services).toHaveLength(1)\nexpect(services).toContain('ext2')"
           },
           {
             "title": "listNamesFor - empty category",
-            "line": 205,
+            "line": 347,
             "source": "const parent = new PerkyModule()\n\nparent.create(PerkyModule, {$category: 'module'})\nparent.create(PerkyModule, {$category: 'module'})\n\nconst services = parent.listNamesFor('service')\nexpect(services).toEqual([])"
           },
           {
             "title": "listNamesFor - dynamic category update",
-            "line": 216,
+            "line": 358,
             "source": "const parent = new PerkyModule()\n\nconst childA = parent.create(PerkyModule, {$id: 'childA', $category: 'module'})\nparent.create(PerkyModule, {$id: 'childB', $category: 'service'})\n\nexpect(parent.listNamesFor('module')).toEqual(['childA'])\nexpect(parent.listNamesFor('service')).toEqual(['childB'])\n\nchildA.$category = 'service'\n\nexpect(parent.listNamesFor('module')).toEqual([])\nconst serviceChildren = parent.listNamesFor('service')\nexpect(serviceChildren).toHaveLength(2)\nexpect(serviceChildren).toContain('childA')\nexpect(serviceChildren).toContain('childB')"
           },
           {
             "title": "category index is automatically created",
-            "line": 235,
+            "line": 377,
             "source": "const registry = child.childrenRegistry\n\nexpect(registry.hasIndex('$category')).toBe(true)"
           },
           {
             "title": "category index is updated when children are added",
-            "line": 242,
+            "line": 384,
             "source": "class TestChild extends PerkyModule { }\nconst registry = child.childrenRegistry\n\nchild.create(TestChild, {\n    $id: 'ext1',\n    $category: 'module'\n})\n\nchild.create(TestChild, {\n    $id: 'ext2',\n    $category: 'service'\n})\n\nconst moduleChildren = registry.lookup('$category', 'module')\nconst serviceChildren = registry.lookup('$category', 'service')\n\nexpect(moduleChildren).toHaveLength(1)\nexpect(serviceChildren).toHaveLength(1)\nexpect(moduleChildren[0]).toBe(child.getChild('ext1'))\nexpect(serviceChildren[0]).toBe(child.getChild('ext2'))"
           },
           {
             "title": "category index is updated when children are removed",
-            "line": 266,
+            "line": 408,
             "source": "class TestChild extends PerkyModule { }\nconst registry = child.childrenRegistry\n\nchild.create(TestChild, {\n    $id: 'ext1',\n    $category: 'module'\n})\n\nchild.create(TestChild, {\n    $id: 'ext2',\n    $category: 'module'\n})\n\nlet moduleChildren = registry.lookup('$category', 'module')\nexpect(moduleChildren).toHaveLength(2)\n\nchild.removeChild('ext1')\n\nmoduleChildren = registry.lookup('$category', 'module')\nexpect(moduleChildren).toHaveLength(1)\nexpect(moduleChildren[0]).toBe(child.getChild('ext2'))"
           },
           {
             "title": "registry key is updated when child name changes",
-            "line": 291,
+            "line": 433,
             "source": "const parent = new PerkyModule()\n\nconst childModule = parent.create(PerkyModule, {\n    $id: 'oldName',\n    $category: 'module'\n})\n\nexpect(parent.hasChild('oldName')).toBe(true)\nexpect(parent.getChild('oldName')).toBe(childModule)\n\nchildModule.$id = 'newName'\n\nexpect(parent.hasChild('oldName')).toBe(false)\nexpect(parent.hasChild('newName')).toBe(true)\nexpect(parent.getChild('newName')).toBe(childModule)"
           },
           {
             "title": "use with binding",
-            "line": 310,
+            "line": 452,
             "source": "class TestChild extends PerkyModule { }\n\nchild.create(TestChild, {\n    $id: 'test',\n    $bind: 'testProperty'\n})\n\nexpect(child.testProperty).toBeInstanceOf(TestChild)"
           },
           {
             "title": "binding updates automatically when $bind changes",
-            "line": 322,
+            "line": 464,
             "source": "class TestChild extends PerkyModule { }\n\nconst testChild = child.create(TestChild, {\n    $id: 'test',\n    $bind: 'oldProperty'\n})\n\nexpect(child.oldProperty).toBe(testChild)\nexpect(child.newProperty).toBeUndefined()\n\ntestChild.$bind = 'newProperty'\n\nexpect(child.oldProperty).toBeUndefined()\nexpect(child.newProperty).toBe(testChild)"
           },
           {
             "title": "use with lifecycle disabled",
-            "line": 340,
+            "line": 482,
             "source": "class TestChild extends PerkyModule { }\nconst startSpy = vi.spyOn(TestChild.prototype, 'start')\n\nchild.create(TestChild, {\n    $id: 'test',\n    $lifecycle: false\n})\n\nchild.start()\n\nexpect(startSpy).not.toHaveBeenCalled()"
           },
           {
             "title": "use emits registration events",
-            "line": 355,
+            "line": 497,
             "source": "class TestChild extends PerkyModule { }\nconst emitSpy = vi.spyOn(child, 'emit')\n\nconst granchild = child.create(TestChild, {\n    $id: 'test',\n    $category: 'testCategory'\n})\n\nexpect(emitSpy).toHaveBeenCalledWith('testCategory:set', 'test', granchild)"
           },
           {
             "title": "removeChild",
-            "line": 368,
+            "line": 510,
             "source": "class TestChild extends PerkyModule { }\n\nconst instance = child.create(TestChild, {\n    $id: 'test',\n    $category: 'test'\n})\n\nconst uninstallSpy = vi.spyOn(instance, 'uninstall')\nconst disposeSpy = vi.spyOn(instance, 'dispose')\n\n\nconst result = child.removeChild('test')\n\nexpect(result).toBe(true)\nexpect(uninstallSpy).toHaveBeenCalled()\nexpect(disposeSpy).toHaveBeenCalled()"
           },
           {
             "title": "removeChild non-existent",
-            "line": 388,
+            "line": 530,
             "source": "const result = child.removeChild('nonexistent')\nexpect(result).toBe(false)"
           },
           {
             "title": "lifecycle cascade",
-            "line": 394,
+            "line": 536,
             "source": "class ChildChild extends PerkyModule { }\nnew ChildChild()\n\nconst childChild = child.create(ChildChild, {\n    $id: 'default',\n    $lifecycle: true\n})\n\nconst childStartSpy = vi.spyOn(childChild, 'start')\nconst childStopSpy = vi.spyOn(childChild, 'stop')\n\nchild.start()\nexpect(childStartSpy).toHaveBeenCalled()\n\nchild.stop()\nexpect(childStopSpy).toHaveBeenCalled()"
           },
           {
             "title": "delegateTo with methods",
-            "line": 414,
+            "line": 556,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = new PerkyModule({$id: 'child'})\n\nchildModule.method1 = vi.fn()\nchildModule.method2 = vi.fn()\n\nchildModule.delegateTo(hostModule, ['method1', 'method2'])\n\nexpect(hostModule.method1).toBeDefined()\nexpect(hostModule.method2).toBeDefined()\nexpect(typeof hostModule.method1).toBe('function')\nexpect(typeof hostModule.method2).toBe('function')"
           },
           {
             "title": "delegateTo with properties",
-            "line": 430,
+            "line": 572,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = new PerkyModule({$id: 'child'})\n\nchildModule.prop1 = 'value1'\nchildModule.prop2 = 'value2'\n\nchildModule.delegateTo(hostModule, ['prop1', 'prop2'])\n\nexpect(hostModule.prop1).toBe('value1')\nexpect(hostModule.prop2).toBe('value2')\n\nhostModule.prop1 = 'newValue'\nexpect(childModule.prop1).toBe('newValue')"
           },
           {
             "title": "delegateTo with mixed methods and properties",
-            "line": 447,
+            "line": 589,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = new PerkyModule({$id: 'child'})\n\nchildModule.count = 0\nchildModule.increment = function () {\n    this.count++\n}\nchildModule.decrement = function () {\n    this.count--\n}\n\nchildModule.delegateTo(hostModule, ['count', 'increment', 'decrement'])\n\nexpect(hostModule.count).toBe(0)\nexpect(typeof hostModule.increment).toBe('function')\nexpect(typeof hostModule.decrement).toBe('function')\n\nhostModule.increment()\nexpect(childModule.count).toBe(1)\nexpect(hostModule.count).toBe(1)\n\nhostModule.decrement()\nexpect(childModule.count).toBe(0)\nexpect(hostModule.count).toBe(0)"
           },
           {
             "title": "delegateTo with getters and setters",
-            "line": 475,
+            "line": 617,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = new PerkyModule({$id: 'child'})\n\nchildModule.internalValue = 10\nObject.defineProperty(childModule, 'value', {\n    get () {\n        return this.internalValue\n    },\n    set (newValue) {\n        this.internalValue = newValue\n    },\n    enumerable: true,\n    configurable: true\n})\n\nchildModule.delegateTo(hostModule, ['value'])\n\nexpect(hostModule.value).toBe(10)\n\nhostModule.value = 20\nexpect(childModule.value).toBe(20)\nexpect(hostModule.value).toBe(20)"
           },
           {
             "title": "delegateTo with object-based aliasing",
-            "line": 501,
+            "line": 643,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = new PerkyModule({$id: 'child'})\n\nchildModule.originalMethod = vi.fn(() => 'result')\nchildModule.originalProp = 'value'\n\nchildModule.delegateTo(hostModule, {\n    originalMethod: 'aliasedMethod',\n    originalProp: 'aliasedProp'\n})\n\nexpect(hostModule.aliasedMethod).toBeDefined()\nexpect(typeof hostModule.aliasedMethod).toBe('function')\nexpect(hostModule.aliasedMethod()).toBe('result')\nexpect(childModule.originalMethod).toHaveBeenCalled()\n\nexpect(hostModule.aliasedProp).toBe('value')\n\nhostModule.aliasedProp = 'new value'\nexpect(childModule.originalProp).toBe('new value')"
           },
           {
             "title": "delegateTo cleans up delegations on uninstall",
-            "line": 525,
+            "line": 667,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nchildModule.getValue = vi.fn(() => 42)\nchildModule.someData = 'test'\n\nchildModule.delegateTo(hostModule, ['getValue', 'someData'])\n\nexpect(hostModule.getValue).toBeDefined()\nexpect(hostModule.getValue()).toBe(42)\nexpect(hostModule.someData).toBe('test')\n\nchildModule.uninstall()\n\nexpect(hostModule.getValue).toBeUndefined()\nexpect(hostModule.someData).toBeUndefined()"
           },
           {
             "title": "delegateTo cleans up delegations on dispose",
-            "line": 545,
+            "line": 687,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nchildModule.doSomething = vi.fn()\n\nchildModule.delegateTo(hostModule, ['doSomething'])\n\nexpect(hostModule.doSomething).toBeDefined()\n\nchildModule.dispose()\n\nexpect(hostModule.doSomething).toBeUndefined()"
           },
           {
             "title": "delegateTo with object-based aliasing cleans up on uninstall",
-            "line": 561,
+            "line": 703,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nchildModule.originalMethod = vi.fn(() => 'result')\n\nchildModule.delegateTo(hostModule, {originalMethod: 'aliasedMethod'})\n\nexpect(hostModule.aliasedMethod).toBeDefined()\nexpect(hostModule.aliasedMethod()).toBe('result')\n\nchildModule.uninstall()\n\nexpect(hostModule.aliasedMethod).toBeUndefined()"
           },
           {
             "title": "cleanDelegations removes all delegated properties",
-            "line": 578,
+            "line": 720,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = new PerkyModule({$id: 'child'})\n\nchildModule.method1 = vi.fn()\nchildModule.method2 = vi.fn()\nchildModule.prop1 = 'value1'\n\nchildModule.delegateTo(hostModule, ['method1', 'prop1'])\nchildModule.delegateTo(hostModule, ['method2'])\n\nexpect(hostModule.method1).toBeDefined()\nexpect(hostModule.method2).toBeDefined()\nexpect(hostModule.prop1).toBe('value1')\n\nchildModule.cleanDelegations()\n\nexpect(hostModule.method1).toBeUndefined()\nexpect(hostModule.method2).toBeUndefined()\nexpect(hostModule.prop1).toBeUndefined()"
           },
           {
             "title": "delegateEventsTo forwards events to host",
-            "line": 601,
+            "line": 743,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nconst updateSpy = vi.fn()\nconst renderSpy = vi.fn()\n\nhostModule.on('update', updateSpy)\nhostModule.on('render', renderSpy)\n\nchildModule.delegateEventsTo(hostModule, ['update', 'render'])\n\nchildModule.emit('update', 0.16)\nchildModule.emit('render', 1.0)\n\nexpect(updateSpy).toHaveBeenCalledWith(0.16)\nexpect(renderSpy).toHaveBeenCalledWith(1.0)"
           },
           {
             "title": "delegateEventsTo with namespace prefixes events",
-            "line": 621,
+            "line": 763,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nconst spy = vi.fn()\nhostModule.on('child:update', spy)\n\nchildModule.delegateEventsTo(hostModule, ['update'], 'child')\n\nchildModule.emit('update', 0.16)\n\nexpect(spy).toHaveBeenCalledWith(0.16)"
           },
           {
             "title": "delegateEventsTo cleans up on uninstall",
-            "line": 636,
+            "line": 778,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nconst spy = vi.fn()\nhostModule.on('update', spy)\n\nchildModule.delegateEventsTo(hostModule, ['update'])\n\nchildModule.emit('update', 0.16)\nexpect(spy).toHaveBeenCalledTimes(1)\n\nchildModule.uninstall()\n\nchildModule.emit('update', 0.16)\nexpect(spy).toHaveBeenCalledTimes(1)"
           },
           {
             "title": "delegateEventsTo cleans up on dispose",
-            "line": 655,
+            "line": 797,
             "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nconst spy = vi.fn()\nhostModule.on('update', spy)\n\nchildModule.delegateEventsTo(hostModule, ['update'])\n\nchildModule.emit('update', 0.16)\nexpect(spy).toHaveBeenCalledTimes(1)\n\nchildModule.dispose()\n\nchildModule.emit('update', 0.16)\nexpect(spy).toHaveBeenCalledTimes(1)"
           },
           {
             "title": "dispose calls dispose on all children in cascade",
-            "line": 674,
+            "line": 816,
             "source": "class ChildChild1 extends PerkyModule { }\nclass ChildChild2 extends PerkyModule { }\n\nconst child1 = child.create(ChildChild1, {\n    $id: 'child1'\n})\n\nconst child2 = child.create(ChildChild2, {\n    $id: 'child2'\n})\n\nconst child1DisposeSpy = vi.spyOn(child1, 'dispose')\nconst child2DisposeSpy = vi.spyOn(child2, 'dispose')\n\nchild.dispose()\n\nexpect(child1DisposeSpy).toHaveBeenCalled()\nexpect(child2DisposeSpy).toHaveBeenCalled()\nexpect(child1.disposed).toBe(true)\nexpect(child2.disposed).toBe(true)\nexpect(child.disposed).toBe(true)"
           },
           {
             "title": "dispose with multiple nested children",
-            "line": 699,
+            "line": 841,
             "source": "class Level1Child extends PerkyModule { }\nclass Level2Child extends PerkyModule { }\n\nconst level1 = child.create(Level1Child, {\n    $id: 'level1'\n})\n\nconst level2 = child.create(Level2Child, {\n    $id: 'level2'\n})\n\nconst level1DisposeSpy = vi.spyOn(level1, 'dispose')\nconst level2DisposeSpy = vi.spyOn(level2, 'dispose')\n\nchild.dispose()\n\nexpect(level1DisposeSpy).toHaveBeenCalled()\nexpect(level2DisposeSpy).toHaveBeenCalled()\nexpect(level2.disposed).toBe(true)\nexpect(level1.disposed).toBe(true)\nexpect(child.disposed).toBe(true)"
           },
           {
             "title": "dispose skips already disposed children",
-            "line": 724,
+            "line": 866,
             "source": "class ChildChild extends PerkyModule { }\n\nconst childChild = new ChildChild()\nconst childDisposeSpy = vi.spyOn(child, 'dispose')\n\nchild.create(ChildChild, {\n    instance: childChild,\n    $id: 'default'\n})\n\nchild.dispose()\nexpect(childDisposeSpy).toHaveBeenCalledTimes(1)\nexpect(child.disposed).toBe(true)\n\nchildDisposeSpy.mockClear()\n\nchildChild.dispose()\n\nexpect(childDisposeSpy).not.toHaveBeenCalled()\nexpect(childChild.disposed).toBe(true)"
           },
           {
             "title": "dispose clears children registry after disposing all children",
-            "line": 748,
+            "line": 890,
             "source": "class ChildChild extends PerkyModule { }\n\nconst childChild = new ChildChild()\n\nchild.create(ChildChild, {\n    instance: childChild,\n    $id: 'default'\n})\n\nexpect(child.hasChild('default')).toBe(true)\n\nchild.dispose()\n\nexpect(child.hasChild('default')).toBe(false)\nexpect(child.childrenRegistry.size).toBe(0)"
           }
         ],
         "describes": [
           {
+            "title": "addChild",
+            "line": 151,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "adds a pre-created module",
+                "line": 153,
+                "source": "const module = new PerkyModule({$id: 'player', $category: 'entity'})\n\nconst result = child.addChild(module)\n\nexpect(result).toBe(module)\nexpect(child.hasChild('player')).toBe(true)\nexpect(child.getChild('player')).toBe(module)\nexpect(module.host).toBe(child)\nexpect(module.installed).toBe(true)"
+              },
+              {
+                "title": "auto-generates unique ID on collision",
+                "line": 166,
+                "source": "child.create(PerkyModule, {$id: 'enemy'})\n\nconst module = new PerkyModule({$id: 'enemy', $name: 'enemy'})\nchild.addChild(module)\n\nexpect(module.$id).toBe('enemy_1')\nexpect(child.hasChild('enemy')).toBe(true)\nexpect(child.hasChild('enemy_1')).toBe(true)"
+              },
+              {
+                "title": "auto-generates sequential IDs on multiple collisions",
+                "line": 178,
+                "source": "const m1 = new PerkyModule({$id: 'enemy', $name: 'enemy'})\nconst m2 = new PerkyModule({$id: 'enemy', $name: 'enemy'})\nconst m3 = new PerkyModule({$id: 'enemy', $name: 'enemy'})\n\nchild.addChild(m1)\nchild.addChild(m2)\nchild.addChild(m3)\n\nexpect(m1.$id).toBe('enemy')\nexpect(m2.$id).toBe('enemy_1')\nexpect(m3.$id).toBe('enemy_2')"
+              },
+              {
+                "title": "throws if module is already installed",
+                "line": 193,
+                "source": "const parent1 = new PerkyModule({$id: 'parent1'})\nconst parent2 = new PerkyModule({$id: 'parent2'})\nconst module = new PerkyModule({$id: 'child'})\n\nparent1.addChild(module)\n\nexpect(() => parent2.addChild(module)).toThrow('Module is already installed in another parent')"
+              },
+              {
+                "title": "throws if not a PerkyModule instance",
+                "line": 204,
+                "source": "expect(() => child.addChild({})).toThrow('addChild expects a PerkyModule instance')\nexpect(() => child.addChild(null)).toThrow('addChild expects a PerkyModule instance')\nexpect(() => child.addChild('test')).toThrow('addChild expects a PerkyModule instance')\nexpect(() => child.addChild(42)).toThrow('addChild expects a PerkyModule instance')"
+              },
+              {
+                "title": "calls onInstall hook",
+                "line": 212,
+                "source": "const onInstallSpy = vi.fn()\n\nclass TestModule extends PerkyModule {\n    onInstall (installedHost) {\n        onInstallSpy(installedHost)\n    }\n}\n\nconst module = new TestModule({$id: 'test'})\nchild.addChild(module)\n\nexpect(onInstallSpy).toHaveBeenCalledWith(child)"
+              },
+              {
+                "title": "sets up lifecycle binding",
+                "line": 228,
+                "source": "const module = new PerkyModule({$id: 'test'})\nchild.addChild(module)\n\nconst startSpy = vi.spyOn(module, 'start')\nconst stopSpy = vi.spyOn(module, 'stop')\n\nchild.start()\nexpect(startSpy).toHaveBeenCalled()\n\nchild.stop()\nexpect(stopSpy).toHaveBeenCalled()"
+              },
+              {
+                "title": "respects $eagerStart when parent is already started",
+                "line": 243,
+                "source": "child.start()\n\nconst eager = new PerkyModule({$id: 'eager', $eagerStart: true})\nconst lazy = new PerkyModule({$id: 'lazy', $eagerStart: false})\n\nchild.addChild(eager)\nchild.addChild(lazy)\n\nexpect(eager.started).toBe(true)\nexpect(lazy.started).toBe(false)"
+              },
+              {
+                "title": "emits registration events",
+                "line": 257,
+                "source": "const emitSpy = vi.spyOn(child, 'emit')\nconst module = new PerkyModule({$id: 'test', $category: 'entity'})\n\nchild.addChild(module)\n\nexpect(emitSpy).toHaveBeenCalledWith('entity:set', 'test', module)"
+              },
+              {
+                "title": "works with $bind option",
+                "line": 267,
+                "source": "const module = new PerkyModule({$id: 'audio', $bind: 'audioSystem'})\n\nchild.addChild(module)\n\nexpect(child.audioSystem).toBe(module)"
+              },
+              {
+                "title": "respects $lifecycle: false",
+                "line": 276,
+                "source": "const module = new PerkyModule({$id: 'static', $lifecycle: false})\nchild.addChild(module)\n\nconst startSpy = vi.spyOn(module, 'start')\nconst stopSpy = vi.spyOn(module, 'stop')\n\nchild.start()\nexpect(startSpy).not.toHaveBeenCalled()\n\nchild.stop()\nexpect(stopSpy).not.toHaveBeenCalled()"
+              }
+            ],
+            "describes": []
+          },
+          {
             "title": "static $category",
-            "line": 767,
+            "line": 909,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "uses PerkyModule default category \"perkyModule\" when not specified",
-                "line": 768,
+                "line": 910,
                 "source": "const module = child.create(PerkyModule, {$id: 'test'})\nexpect(module.$category).toBe('perkyModule')"
               },
               {
                 "title": "uses static $category from subclass",
-                "line": 774,
+                "line": 916,
                 "source": "class GameController extends PerkyModule {\n    static $category = 'controller'\n}\n\nconst controller = child.create(GameController, {$id: 'game'})\nexpect(controller.$category).toBe('controller')"
               },
               {
                 "title": "explicit $category overrides static $category",
-                "line": 784,
+                "line": 926,
                 "source": "class GameController extends PerkyModule {\n    static $category = 'controller'\n}\n\nconst controller = child.create(GameController, {\n    $id: 'game',\n    $category: 'custom'\n})\n\nexpect(controller.$category).toBe('custom')"
               },
               {
                 "title": "works with multiple levels of inheritance",
-                "line": 798,
+                "line": 940,
                 "source": "class BaseController extends PerkyModule {\n    static $category = 'controller'\n}\n\nclass GameController extends BaseController {\n    static $category = 'gameController'\n}\n\nconst controller = child.create(GameController, {$id: 'game'})\nexpect(controller.$category).toBe('gameController')"
               },
               {
                 "title": "subclass without static $category falls back to parent",
-                "line": 812,
+                "line": 954,
                 "source": "class BaseController extends PerkyModule {\n    static $category = 'controller'\n}\n\nclass GameController extends BaseController {\n    // No static $category override\n}\n\nconst controller = child.create(GameController, {$id: 'game'})\nexpect(controller.$category).toBe('controller')"
               },
               {
                 "title": "auto-generates unique IDs using static $category",
-                "line": 826,
+                "line": 968,
                 "source": "class Monster extends PerkyModule {\n    static $category = 'monster'\n}\n\n// Use a fresh parent to ensure predictable ID generation\nconst parent = new PerkyModule()\nconst monster1 = parent.create(Monster)\nconst monster2 = parent.create(Monster)\nconst monster3 = parent.create(Monster)\n\nexpect(monster1.$category).toBe('monster')\nexpect(monster2.$category).toBe('monster')\nexpect(monster3.$category).toBe('monster')\n\nexpect(monster1.$id).toBe('monster')\nexpect(monster2.$id).toBe('monster_1')\nexpect(monster3.$id).toBe('monster_2')"
               },
               {
                 "title": "emits correct event based on static $category",
-                "line": 847,
+                "line": 989,
                 "source": "class GameController extends PerkyModule {\n    static $category = 'controller'\n}\n\nconst emitSpy = vi.spyOn(child, 'emit')\nconst controller = child.create(GameController, {$id: 'game'})\n\nexpect(emitSpy).toHaveBeenCalledWith('controller:set', 'game', controller)"
               },
               {
                 "title": "listNamesFor works with static $category",
-                "line": 859,
+                "line": 1001,
                 "source": "class GameController extends PerkyModule {\n    static $category = 'controller'\n}\n\nclass InputController extends PerkyModule {\n    static $category = 'controller'\n}\n\nchild.create(GameController, {$id: 'game'})\nchild.create(InputController, {$id: 'input'})\n\nconst controllers = child.listNamesFor('controller')\nexpect(controllers).toHaveLength(2)\nexpect(controllers).toContain('game')\nexpect(controllers).toContain('input')"
               }
             ],
@@ -272,68 +336,68 @@
           },
           {
             "title": "$eagerStart",
-            "line": 879,
+            "line": 1021,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "default $eagerStart is true for PerkyModule",
-                "line": 880,
+                "line": 1022,
                 "source": "const module = child.create(PerkyModule, {$id: 'test'})\nexpect(module.$eagerStart).toBe(true)"
               },
               {
                 "title": "child starts eagerly when parent is already started",
-                "line": 886,
+                "line": 1028,
                 "source": "child.start()\n\nconst module = child.create(PerkyModule, {$id: 'test'})\n\nexpect(module.started).toBe(true)"
               },
               {
                 "title": "child does not start when parent is not started",
-                "line": 895,
+                "line": 1037,
                 "source": "const module = child.create(PerkyModule, {$id: 'test'})\n\nexpect(module.started).toBe(false)"
               },
               {
                 "title": "$eagerStart: false prevents automatic start",
-                "line": 902,
+                "line": 1044,
                 "source": "child.start()\n\nconst module = child.create(PerkyModule, {\n    $id: 'test',\n    $eagerStart: false\n})\n\nexpect(module.started).toBe(false)"
               },
               {
                 "title": "$eagerStart: true forces eager start",
-                "line": 914,
+                "line": 1056,
                 "source": "child.start()\n\nconst module = child.create(PerkyModule, {\n    $id: 'test',\n    $eagerStart: true\n})\n\nexpect(module.started).toBe(true)"
               },
               {
                 "title": "static $eagerStart is inherited from class",
-                "line": 926,
+                "line": 1068,
                 "source": "class LazyModule extends PerkyModule {\n    static $eagerStart = false\n}\n\nchild.start()\n\nconst module = child.create(LazyModule, {$id: 'test'})\n\nexpect(module.$eagerStart).toBe(false)\nexpect(module.started).toBe(false)"
               },
               {
                 "title": "explicit $eagerStart overrides static $eagerStart",
-                "line": 940,
+                "line": 1082,
                 "source": "class LazyModule extends PerkyModule {\n    static $eagerStart = false\n}\n\nchild.start()\n\nconst module = child.create(LazyModule, {\n    $id: 'test',\n    $eagerStart: true\n})\n\nexpect(module.$eagerStart).toBe(true)\nexpect(module.started).toBe(true)"
               },
               {
                 "title": "$eagerStart cascading: option > static > default",
-                "line": 957,
+                "line": 1099,
                 "source": "class CustomModule extends PerkyModule {\n    static $eagerStart = false\n}\n\nconst module1 = child.create(CustomModule, {$id: 'test1'})\nexpect(module1.$eagerStart).toBe(false)\n\nconst module2 = child.create(CustomModule, {\n    $id: 'test2',\n    $eagerStart: true\n})\nexpect(module2.$eagerStart).toBe(true)\n\nconst module3 = child.create(PerkyModule, {$id: 'test3'})\nexpect(module3.$eagerStart).toBe(true)"
               },
               {
                 "title": "$eagerStart works with $lifecycle: false",
-                "line": 976,
+                "line": 1118,
                 "source": "child.start()\n\nconst module = child.create(PerkyModule, {\n    $id: 'test',\n    $eagerStart: true,\n    $lifecycle: false\n})\n\nexpect(module.started).toBe(false)"
               },
               {
                 "title": "lazy module can be started manually later",
-                "line": 989,
+                "line": 1131,
                 "source": "child.start()\n\nconst module = child.create(PerkyModule, {\n    $id: 'test',\n    $eagerStart: false\n})\n\nexpect(module.started).toBe(false)\n\nmodule.start()\n\nexpect(module.started).toBe(true)"
               },
               {
                 "title": "multiple children with mixed $eagerStart",
-                "line": 1005,
+                "line": 1147,
                 "source": "child.start()\n\nconst eager1 = child.create(PerkyModule, {\n    $id: 'eager1',\n    $eagerStart: true\n})\n\nconst lazy1 = child.create(PerkyModule, {\n    $id: 'lazy1',\n    $eagerStart: false\n})\n\nconst eager2 = child.create(PerkyModule, {\n    $id: 'eager2'\n})\n\nexpect(eager1.started).toBe(true)\nexpect(lazy1.started).toBe(false)\nexpect(eager2.started).toBe(true)"
               },
               {
                 "title": "eagerStart getter returns correct value",
-                "line": 1028,
+                "line": 1170,
                 "source": "const eager = child.create(PerkyModule, {\n    $id: 'eager',\n    $eagerStart: true\n})\n\nconst lazy = child.create(PerkyModule, {\n    $id: 'lazy',\n    $eagerStart: false\n})\nexpect(eager.$eagerStart).toBe(true)\nexpect(lazy.$eagerStart).toBe(false)"
               }
             ],
@@ -341,23 +405,23 @@
           },
           {
             "title": "$lifecycle",
-            "line": 1044,
+            "line": 1186,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "$lifecycle is true by default",
-                "line": 1046,
+                "line": 1188,
                 "source": "const module = new PerkyModule()\nexpect(module.$lifecycle).toBe(true)"
               },
               {
                 "title": "$lifecycle can be set to false via options",
-                "line": 1052,
+                "line": 1194,
                 "source": "const module = new PerkyModule({$lifecycle: false})\nexpect(module.$lifecycle).toBe(false)"
               },
               {
                 "title": "$lifecycle is true when option is explicitly true",
-                "line": 1058,
+                "line": 1200,
                 "source": "const module = new PerkyModule({$lifecycle: true})\nexpect(module.$lifecycle).toBe(true)"
               }
             ],
@@ -365,43 +429,43 @@
           },
           {
             "title": "$status",
-            "line": 1066,
+            "line": 1208,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "returns \"stopped\" for new module",
-                "line": 1068,
+                "line": 1210,
                 "source": "const module = new PerkyModule()\nexpect(module.$status).toBe('stopped')"
               },
               {
                 "title": "returns \"started\" when module is running",
-                "line": 1074,
+                "line": 1216,
                 "source": "const module = new PerkyModule()\nmodule.start()\nexpect(module.$status).toBe('started')"
               },
               {
                 "title": "returns \"stopped\" after stopping a started module",
-                "line": 1081,
+                "line": 1223,
                 "source": "const module = new PerkyModule()\nmodule.start()\nmodule.stop()\nexpect(module.$status).toBe('stopped')"
               },
               {
                 "title": "returns \"disposed\" when module is disposed",
-                "line": 1089,
+                "line": 1231,
                 "source": "const module = new PerkyModule()\nmodule.dispose()\nexpect(module.$status).toBe('disposed')"
               },
               {
                 "title": "returns \"static\" when $lifecycle is false",
-                "line": 1096,
+                "line": 1238,
                 "source": "const module = new PerkyModule({$lifecycle: false})\nexpect(module.$status).toBe('static')"
               },
               {
                 "title": "returns \"static\" even if started when $lifecycle is false",
-                "line": 1102,
+                "line": 1244,
                 "source": "const module = new PerkyModule({$lifecycle: false})\nmodule.start()\nexpect(module.$status).toBe('static')"
               },
               {
                 "title": "disposed takes precedence over started",
-                "line": 1109,
+                "line": 1251,
                 "source": "const module = new PerkyModule()\nmodule.start()\nmodule.dispose()\nexpect(module.$status).toBe('disposed')"
               }
             ],
@@ -409,163 +473,163 @@
           },
           {
             "title": "$tags",
-            "line": 1119,
+            "line": 1261,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "initializes with empty tags by default",
-                "line": 1121,
+                "line": 1263,
                 "source": "const module = new PerkyModule()\nexpect(module.$tags).toEqual([])"
               },
               {
                 "title": "initializes with tags from options",
-                "line": 1127,
+                "line": 1269,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable']})\nexpect(module.$tags).toEqual(['enemy', 'collidable'])"
               },
               {
                 "title": "$tags returns array copy",
-                "line": 1133,
+                "line": 1275,
                 "source": "const module = new PerkyModule({$tags: ['test']})\nconst tags1 = module.$tags\nconst tags2 = module.$tags\nexpect(tags1).not.toBe(tags2)\nexpect(tags1).toEqual(tags2)"
               },
               {
                 "title": "tags property returns ObservableSet",
-                "line": 1142,
+                "line": 1284,
                 "source": "const module = new PerkyModule()\nexpect(module.tags).toBeDefined()\nexpect(module.tags.size).toBe(0)"
               },
               {
                 "title": "can add tags via tags.add()",
-                "line": 1149,
+                "line": 1291,
                 "source": "const module = new PerkyModule()\nmodule.tags.add('enemy')\nmodule.tags.add('collidable')\n\nexpect(module.$tags).toEqual(['enemy', 'collidable'])\nexpect(module.tags.size).toBe(2)"
               },
               {
                 "title": "can delete tags via tags.delete()",
-                "line": 1159,
+                "line": 1301,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable', 'flying']})\n\nmodule.tags.delete('flying')\n\nexpect(module.$tags).toEqual(['enemy', 'collidable'])\nexpect(module.tags.size).toBe(2)"
               },
               {
                 "title": "can clear tags via tags.clear()",
-                "line": 1169,
+                "line": 1311,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable']})\n\nmodule.tags.clear()\n\nexpect(module.$tags).toEqual([])\nexpect(module.tags.size).toBe(0)"
               },
               {
                 "title": "tags.add() emits add event",
-                "line": 1179,
+                "line": 1321,
                 "source": "const module = new PerkyModule()\nlet addedTag\n\nmodule.tags.on('add', (tag) => {\n    addedTag = tag\n})\n\nmodule.tags.add('enemy')\n\nexpect(addedTag).toBe('enemy')"
               },
               {
                 "title": "tags.delete() emits delete event",
-                "line": 1193,
+                "line": 1335,
                 "source": "const module = new PerkyModule({$tags: ['enemy']})\nlet deletedTag\n\nmodule.tags.on('delete', (tag) => {\n    deletedTag = tag\n})\n\nmodule.tags.delete('enemy')\n\nexpect(deletedTag).toBe('enemy')"
               },
               {
                 "title": "tags.clear() emits clear event",
-                "line": 1207,
+                "line": 1349,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable']})\nlet clearedTags\n\nmodule.tags.on('clear', (tags) => {\n    clearedTags = tags\n})\n\nmodule.tags.clear()\n\nexpect(clearedTags).toEqual(['enemy', 'collidable'])"
               },
               {
                 "title": "tags support chaining",
-                "line": 1221,
+                "line": 1363,
                 "source": "const module = new PerkyModule()\n\nmodule.tags.add('enemy').add('collidable').add('flying')\n\nexpect(module.$tags).toEqual(['enemy', 'collidable', 'flying'])"
               },
               {
                 "title": "tags support iteration",
-                "line": 1230,
+                "line": 1372,
                 "source": "const module = new PerkyModule({$tags: ['a', 'b', 'c']})\n\nconst collected = []\nfor (const tag of module.tags) {\n    collected.push(tag)\n}\n\nexpect(collected).toEqual(['a', 'b', 'c'])"
               },
               {
                 "title": "can set $tags with array",
-                "line": 1242,
+                "line": 1384,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable']})\n\nmodule.$tags = ['friendly', 'flying']\n\nexpect(module.$tags).toEqual(['friendly', 'flying'])\nexpect(module.tags.size).toBe(2)"
               },
               {
                 "title": "setting $tags clears old tags",
-                "line": 1252,
+                "line": 1394,
                 "source": "const module = new PerkyModule({$tags: ['a', 'b', 'c']})\n\nmodule.$tags = ['x', 'y']\n\nexpect(module.$tags).toEqual(['x', 'y'])\nexpect(module.tags.has('a')).toBe(false)\nexpect(module.tags.has('b')).toBe(false)"
               },
               {
                 "title": "setting $tags emits clear and add events",
-                "line": 1263,
+                "line": 1405,
                 "source": "const module = new PerkyModule({$tags: ['old']})\nlet clearedTags\nlet addedTags = []\n\nmodule.tags.on('clear', (tags) => {\n    clearedTags = tags\n})\nmodule.tags.on('add', (tag) => {\n    addedTags.push(tag)\n})\n\nmodule.$tags = ['new1', 'new2']\n\nexpect(clearedTags).toEqual(['old'])\nexpect(addedTags).toEqual(['new1', 'new2'])"
               },
               {
                 "title": "setting $tags to empty array clears all",
-                "line": 1282,
+                "line": 1424,
                 "source": "const module = new PerkyModule({$tags: ['a', 'b']})\n\nmodule.$tags = []\n\nexpect(module.$tags).toEqual([])\nexpect(module.tags.size).toBe(0)"
               },
               {
                 "title": "hasTag returns true when tag exists",
-                "line": 1292,
+                "line": 1434,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable']})\nexpect(module.hasTag('enemy')).toBe(true)\nexpect(module.hasTag('collidable')).toBe(true)"
               },
               {
                 "title": "hasTag returns false when tag does not exist",
-                "line": 1299,
+                "line": 1441,
                 "source": "const module = new PerkyModule({$tags: ['enemy']})\nexpect(module.hasTag('friendly')).toBe(false)\nexpect(module.hasTag('collidable')).toBe(false)"
               },
               {
                 "title": "hasTag returns false when no tags set",
-                "line": 1306,
+                "line": 1448,
                 "source": "const module = new PerkyModule()\nexpect(module.hasTag('enemy')).toBe(false)"
               },
               {
                 "title": "addTag adds a tag",
-                "line": 1312,
+                "line": 1454,
                 "source": "const module = new PerkyModule()\nmodule.addTag('enemy')\nexpect(module.hasTag('enemy')).toBe(true)"
               },
               {
                 "title": "addTag returns true when tag is new",
-                "line": 1319,
+                "line": 1461,
                 "source": "const module = new PerkyModule()\nexpect(module.addTag('enemy')).toBe(true)"
               },
               {
                 "title": "addTag returns false when tag already exists",
-                "line": 1325,
+                "line": 1467,
                 "source": "const module = new PerkyModule({$tags: ['enemy']})\nexpect(module.addTag('enemy')).toBe(false)"
               },
               {
                 "title": "removeTag removes a tag",
-                "line": 1331,
+                "line": 1473,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable']})\nmodule.removeTag('enemy')\nexpect(module.hasTag('enemy')).toBe(false)\nexpect(module.hasTag('collidable')).toBe(true)"
               },
               {
                 "title": "removeTag returns true when tag existed",
-                "line": 1339,
+                "line": 1481,
                 "source": "const module = new PerkyModule({$tags: ['enemy']})\nexpect(module.removeTag('enemy')).toBe(true)"
               },
               {
                 "title": "removeTag returns false when tag did not exist",
-                "line": 1345,
+                "line": 1487,
                 "source": "const module = new PerkyModule()\nexpect(module.removeTag('enemy')).toBe(false)"
               },
               {
                 "title": "hasTags returns true when all tags exist (array)",
-                "line": 1351,
+                "line": 1493,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable', 'flying']})\nexpect(module.hasTags(['enemy', 'collidable'])).toBe(true)\nexpect(module.hasTags(['enemy'])).toBe(true)"
               },
               {
                 "title": "hasTags returns false when some tags missing (array)",
-                "line": 1358,
+                "line": 1500,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable']})\nexpect(module.hasTags(['enemy', 'flying'])).toBe(false)\nexpect(module.hasTags(['friendly', 'enemy'])).toBe(false)"
               },
               {
                 "title": "hasTags returns false when no tags match (array)",
-                "line": 1365,
+                "line": 1507,
                 "source": "const module = new PerkyModule({$tags: ['enemy']})\nexpect(module.hasTags(['friendly', 'collidable'])).toBe(false)"
               },
               {
                 "title": "hasTags fallback: accepts string and checks single tag",
-                "line": 1371,
+                "line": 1513,
                 "source": "const module = new PerkyModule({$tags: ['enemy', 'collidable']})\nexpect(module.hasTags('enemy')).toBe(true)\nexpect(module.hasTags('collidable')).toBe(true)\nexpect(module.hasTags('friendly')).toBe(false)"
               },
               {
                 "title": "hasTags returns true for empty array",
-                "line": 1379,
+                "line": 1521,
                 "source": "const module = new PerkyModule({$tags: ['enemy']})\nexpect(module.hasTags([])).toBe(true)"
               },
               {
                 "title": "hasTags returns false when no tags set",
-                "line": 1385,
+                "line": 1527,
                 "source": "const module = new PerkyModule()\nexpect(module.hasTags(['enemy'])).toBe(false)\nexpect(module.hasTags('enemy')).toBe(false)"
               }
             ],
@@ -573,108 +637,108 @@
           },
           {
             "title": "composite tag indexing",
-            "line": 1394,
+            "line": 1536,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "childrenByTags returns children matching all tags (without index)",
-                "line": 1396,
+                "line": 1538,
                 "source": "const child1 = child.create(PerkyModule, {$id: 'c1', $tags: ['enemy', 'collidable', 'flying']})\nconst child2 = child.create(PerkyModule, {$id: 'c2', $tags: ['enemy', 'collidable']})\nchild.create(PerkyModule, {$id: 'c3', $tags: ['friendly', 'collidable']})\n\nconst enemyColliders = child.childrenByTags(['enemy', 'collidable'])\n\nexpect(enemyColliders).toHaveLength(2)\nexpect(enemyColliders).toContain(child1)\nexpect(enemyColliders).toContain(child2)"
               },
               {
                 "title": "childrenByTags returns empty array for no matches",
-                "line": 1409,
+                "line": 1551,
                 "source": "child.create(PerkyModule, {$id: 'c1', $tags: ['enemy']})\n\nconst result = child.childrenByTags(['enemy', 'collidable'])\n\nexpect(result).toEqual([])"
               },
               {
                 "title": "childrenByTags returns empty array for empty tags",
-                "line": 1418,
+                "line": 1560,
                 "source": "const result = child.childrenByTags()\n\nexpect(result).toEqual([])"
               },
               {
                 "title": "addTagsIndex creates composite index",
-                "line": 1425,
+                "line": 1567,
                 "source": "const result = child.addTagsIndex(['enemy', 'collidable'])\n\nexpect(result).toBe(true)\nexpect(child.childrenRegistry.hasIndex('collidable_enemy')).toBe(true)"
               },
               {
                 "title": "addTagsIndex normalizes tag order",
-                "line": 1433,
+                "line": 1575,
                 "source": "child.addTagsIndex(['collidable', 'enemy'])\n\nexpect(child.childrenRegistry.hasIndex('collidable_enemy')).toBe(true)"
               },
               {
                 "title": "addTagsIndex returns false if already indexed",
-                "line": 1440,
+                "line": 1582,
                 "source": "const result1 = child.addTagsIndex(['enemy', 'collidable'])\nconst result2 = child.addTagsIndex(['enemy', 'collidable'])\n\nexpect(result1).toBe(true)\nexpect(result2).toBe(false)"
               },
               {
                 "title": "addTagsIndex returns false for empty array",
-                "line": 1449,
+                "line": 1591,
                 "source": "const result = child.addTagsIndex([])\n\nexpect(result).toBe(false)"
               },
               {
                 "title": "addTagsIndex returns false for non-array",
-                "line": 1456,
+                "line": 1598,
                 "source": "const result = child.addTagsIndex('invalid')\n\nexpect(result).toBe(false)"
               },
               {
                 "title": "childrenByTags uses index when available",
-                "line": 1463,
+                "line": 1605,
                 "source": "const child1 = child.create(PerkyModule, {$id: 'c1', $tags: ['enemy', 'collidable']})\nchild.create(PerkyModule, {$id: 'c2', $tags: ['enemy']})\n\nchild.addTagsIndex(['enemy', 'collidable'])\n\nconst result = child.childrenByTags(['enemy', 'collidable'])\n\nexpect(result).toHaveLength(1)\nexpect(result).toContain(child1)"
               },
               {
                 "title": "removeTagsIndex removes composite index",
-                "line": 1476,
+                "line": 1618,
                 "source": "child.addTagsIndex(['enemy', 'collidable'])\nconst result = child.removeTagsIndex(['enemy', 'collidable'])\n\nexpect(result).toBe(true)\nexpect(child.childrenRegistry.hasIndex('collidable_enemy')).toBe(false)"
               },
               {
                 "title": "removeTagsIndex returns false if not indexed",
-                "line": 1485,
+                "line": 1627,
                 "source": "const result = child.removeTagsIndex(['enemy', 'collidable'])\n\nexpect(result).toBe(false)"
               },
               {
                 "title": "index automatically updates when child tags change (add)",
-                "line": 1492,
+                "line": 1634,
                 "source": "const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})\nchild.addTagsIndex(['enemy', 'collidable'])\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)\n\ntestChild.tags.add('collidable')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\nexpect(child.childrenByTags(['enemy', 'collidable'])).toContain(testChild)"
               },
               {
                 "title": "index automatically updates when child tags change (delete)",
-                "line": 1504,
+                "line": 1646,
                 "source": "const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable']})\nchild.addTagsIndex(['enemy', 'collidable'])\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\n\ntestChild.tags.delete('collidable')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)"
               },
               {
                 "title": "index automatically updates when child tags change (clear)",
-                "line": 1516,
+                "line": 1658,
                 "source": "const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable']})\nchild.addTagsIndex(['enemy', 'collidable'])\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\n\ntestChild.tags.clear()\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)"
               },
               {
                 "title": "index updates when $tags is reassigned",
-                "line": 1528,
+                "line": 1670,
                 "source": "const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})\nchild.addTagsIndex(['enemy', 'collidable'])\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)\n\ntestChild.$tags = ['enemy', 'collidable']\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)"
               },
               {
                 "title": "multiple composite indexes work independently",
-                "line": 1540,
+                "line": 1682,
                 "source": "const enemy = child.create(PerkyModule, {$id: 'enemy', $tags: ['enemy', 'collidable']})\nconst friendly = child.create(PerkyModule, {$id: 'friendly', $tags: ['friendly', 'collidable']})\n\nchild.addTagsIndex(['enemy', 'collidable'])\nchild.addTagsIndex(['friendly', 'collidable'])\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toEqual([enemy])\nexpect(child.childrenByTags(['friendly', 'collidable'])).toEqual([friendly])"
               },
               {
                 "title": "events are cleaned up when child is removed",
-                "line": 1552,
+                "line": 1694,
                 "source": "const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable']})\nchild.addTagsIndex(['enemy', 'collidable'])\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\n\nchild.removeChild('test')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)\n\ntestChild.tags.add('flying')\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)"
               },
               {
                 "title": "index hooks are added to existing children",
-                "line": 1567,
+                "line": 1709,
                 "source": "const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})\n\nchild.addTagsIndex(['enemy', 'collidable'])\n\ntestChild.tags.add('collidable')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)"
               },
               {
                 "title": "single tag query works",
-                "line": 1578,
+                "line": 1720,
                 "source": "const child1 = child.create(PerkyModule, {$id: 'c1', $tags: ['enemy']})\nconst child2 = child.create(PerkyModule, {$id: 'c2', $tags: ['enemy', 'flying']})\nchild.create(PerkyModule, {$id: 'c3', $tags: ['friendly']})\n\nconst enemies = child.childrenByTags('enemy')\n\nexpect(enemies).toHaveLength(2)\nexpect(enemies).toContain(child1)\nexpect(enemies).toContain(child2)"
               },
               {
                 "title": "works with children without tags",
-                "line": 1591,
+                "line": 1733,
                 "source": "child.create(PerkyModule, {$id: 'c1'})\nconst child2 = child.create(PerkyModule, {$id: 'c2', $tags: ['enemy']})\n\nconst result = child.childrenByTags('enemy')\n\nexpect(result).toEqual([child2])"
               }
             ],
@@ -682,53 +746,53 @@
           },
           {
             "title": "#setupTagIndexListeners",
-            "line": 1603,
+            "line": 1745,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "listeners are set up when creating a child with tags and indexes exist",
-                "line": 1605,
+                "line": 1747,
                 "source": "child.addTagsIndex(['enemy', 'collidable'])\n\nconst testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})\n\ntestChild.tags.add('collidable')\n\nconst result = child.childrenByTags(['enemy', 'collidable'])\nexpect(result).toHaveLength(1)\nexpect(result).toContain(testChild)"
               },
               {
                 "title": "listeners ARE set up when addTagsIndex is called for existing children",
-                "line": 1618,
+                "line": 1760,
                 "source": "const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})\n\nchild.addTagsIndex(['enemy', 'collidable'])\n\ntestChild.tags.add('collidable')\n\nconst result = child.childrenByTags(['enemy', 'collidable'])\nexpect(result).toHaveLength(1)\nexpect(result).toContain(testChild)"
               },
               {
                 "title": "listeners ARE set up for children even without initial tags",
-                "line": 1631,
+                "line": 1773,
                 "source": "child.addTagsIndex(['enemy', 'collidable'])\n\nconst testChild = child.create(PerkyModule, {$id: 'test'})\n\ntestChild.tags.add('enemy')\ntestChild.tags.add('collidable')\n\nconst result = child.childrenByTags(['enemy', 'collidable'])\nexpect(result).toHaveLength(1)\nexpect(result).toContain(testChild)"
               },
               {
                 "title": "adding a tag triggers index update for all registered indexes",
-                "line": 1645,
+                "line": 1787,
                 "source": "child.addTagsIndex(['enemy', 'collidable'])\nchild.addTagsIndex(['enemy', 'flying'])\n\nconst testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)\nexpect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(0)\n\ntestChild.tags.add('collidable')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\nexpect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(0)\n\ntestChild.tags.add('flying')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\nexpect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(1)"
               },
               {
                 "title": "deleting a tag triggers index update for all registered indexes",
-                "line": 1666,
+                "line": 1808,
                 "source": "child.addTagsIndex(['enemy', 'collidable'])\nchild.addTagsIndex(['enemy', 'flying'])\n\nconst testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable', 'flying']})\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\nexpect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(1)\n\ntestChild.tags.delete('collidable')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)\nexpect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(1)\n\ntestChild.tags.delete('flying')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)\nexpect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(0)"
               },
               {
                 "title": "clearing tags triggers index update for all registered indexes",
-                "line": 1687,
+                "line": 1829,
                 "source": "child.addTagsIndex(['enemy', 'collidable'])\nchild.addTagsIndex(['enemy', 'flying'])\n\nconst testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy', 'collidable', 'flying']})\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\nexpect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(1)\n\ntestChild.tags.clear()\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)\nexpect(child.childrenByTags(['enemy', 'flying'])).toHaveLength(0)"
               },
               {
                 "title": "multiple children with different tag combinations",
-                "line": 1703,
+                "line": 1845,
                 "source": "child.addTagsIndex(['enemy', 'collidable'])\nchild.addTagsIndex(['friendly', 'collidable'])\n\nconst enemy = child.create(PerkyModule, {$id: 'enemy', $tags: ['enemy']})\nconst friendly = child.create(PerkyModule, {$id: 'friendly', $tags: ['friendly']})\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(0)\nexpect(child.childrenByTags(['friendly', 'collidable'])).toHaveLength(0)\n\nenemy.tags.add('collidable')\nfriendly.tags.add('collidable')\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toHaveLength(1)\nexpect(child.childrenByTags(['enemy', 'collidable'])).toContain(enemy)\n\nexpect(child.childrenByTags(['friendly', 'collidable'])).toHaveLength(1)\nexpect(child.childrenByTags(['friendly', 'collidable'])).toContain(friendly)"
               },
               {
                 "title": "tag changes work correctly when adding index before creating children",
-                "line": 1724,
+                "line": 1866,
                 "source": "child.addTagsIndex(['enemy', 'collidable'])\n\nconst enemy1 = child.create(PerkyModule, {$id: 'enemy1', $tags: ['enemy']})\nconst enemy2 = child.create(PerkyModule, {$id: 'enemy2', $tags: ['enemy', 'collidable']})\n\nexpect(child.childrenByTags(['enemy', 'collidable'])).toEqual([enemy2])\n\nenemy1.tags.add('collidable')\n\nconst result = child.childrenByTags(['enemy', 'collidable'])\nexpect(result).toHaveLength(2)\nexpect(result).toContain(enemy1)\nexpect(result).toContain(enemy2)\n\nenemy2.tags.delete('enemy')\n\nconst result2 = child.childrenByTags(['enemy', 'collidable'])\nexpect(result2).toHaveLength(1)\nexpect(result2).toContain(enemy1)"
               },
               {
                 "title": "listeners are set up for existing children when adding a new index",
-                "line": 1747,
+                "line": 1889,
                 "source": "const testChild = child.create(PerkyModule, {$id: 'test', $tags: ['enemy']})\n\nchild.addTagsIndex(['enemy', 'collidable'])\n\ntestChild.tags.add('collidable')\n\nconst result = child.childrenByTags(['enemy', 'collidable'])\nexpect(result).toHaveLength(1)\nexpect(result).toContain(testChild)"
               }
             ],
@@ -736,48 +800,48 @@
           },
           {
             "title": "query and queryAll",
-            "line": 1762,
+            "line": 1904,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "query finds direct child by id",
-                "line": 1764,
+                "line": 1906,
                 "source": "const player = child.create(PerkyModule, {$id: 'player'})\n\nconst result = child.query('#player')\n\nexpect(result).toBe(player)"
               },
               {
                 "title": "query returns null when not found",
-                "line": 1773,
+                "line": 1915,
                 "source": "child.create(PerkyModule, {$id: 'player'})\n\nconst result = child.query('#enemy')\n\nexpect(result).toBeNull()"
               },
               {
                 "title": "query finds child by tag",
-                "line": 1782,
+                "line": 1924,
                 "source": "const enemy = child.create(PerkyModule, {$id: 'e1', $tags: ['enemy']})\n\nconst result = child.query('.enemy')\n\nexpect(result).toBe(enemy)"
               },
               {
                 "title": "query finds nested children",
-                "line": 1791,
+                "line": 1933,
                 "source": "const world = child.create(PerkyModule, {$id: 'world'})\nconst player = world.create(PerkyModule, {$id: 'player'})\n\nconst result = child.query('#world #player')\n\nexpect(result).toBe(player)"
               },
               {
                 "title": "queryAll finds all matching children",
-                "line": 1801,
+                "line": 1943,
                 "source": "const enemy1 = child.create(PerkyModule, {$id: 'e1', $tags: ['enemy']})\nconst enemy2 = child.create(PerkyModule, {$id: 'e2', $tags: ['enemy']})\nchild.create(PerkyModule, {$id: 'player'})\n\nconst result = child.queryAll('.enemy')\n\nexpect(result).toHaveLength(2)\nexpect(result).toContain(enemy1)\nexpect(result).toContain(enemy2)"
               },
               {
                 "title": "queryAll returns empty array when none found",
-                "line": 1814,
+                "line": 1956,
                 "source": "child.create(PerkyModule, {$id: 'player'})\n\nconst result = child.queryAll('.enemy')\n\nexpect(result).toEqual([])"
               },
               {
                 "title": "queryAll finds nested children from multiple parents",
-                "line": 1823,
+                "line": 1965,
                 "source": "const scene1 = child.create(PerkyModule, {$id: 's1', $category: 'scene'})\nconst scene2 = child.create(PerkyModule, {$id: 's2', $category: 'scene'})\nconst enemy1 = scene1.create(PerkyModule, {$id: 'e1', $tags: ['enemy']})\nconst enemy2 = scene2.create(PerkyModule, {$id: 'e2', $tags: ['enemy']})\n\nconst result = child.queryAll('@scene .enemy')\n\nexpect(result).toHaveLength(2)\nexpect(result).toContain(enemy1)\nexpect(result).toContain(enemy2)"
               },
               {
                 "title": "query with combined selectors",
-                "line": 1837,
+                "line": 1979,
                 "source": "child.create(PerkyModule, {$id: 'e1', $tags: ['enemy']})\nconst boss = child.create(PerkyModule, {$id: 'e2', $tags: ['enemy', 'boss']})\n\nconst result = child.query('.enemy.boss')\n\nexpect(result).toBe(boss)"
               }
             ],
@@ -785,18 +849,18 @@
           },
           {
             "title": "childrenByCategory",
-            "line": 1849,
+            "line": 1991,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "returns children matching category",
-                "line": 1851,
+                "line": 1993,
                 "source": "const controller1 = child.create(PerkyModule, {$id: 'c1', $category: 'controller'})\nconst controller2 = child.create(PerkyModule, {$id: 'c2', $category: 'controller'})\nchild.create(PerkyModule, {$id: 's1', $category: 'service'})\n\nconst controllers = child.childrenByCategory('controller')\n\nexpect(controllers).toHaveLength(2)\nexpect(controllers).toContain(controller1)\nexpect(controllers).toContain(controller2)"
               },
               {
                 "title": "returns empty array for non-existent category",
-                "line": 1864,
+                "line": 2006,
                 "source": "child.create(PerkyModule, {$id: 'c1', $category: 'controller'})\n\nconst result = child.childrenByCategory('nonexistent')\n\nexpect(result).toEqual([])"
               }
             ],
@@ -804,18 +868,18 @@
           },
           {
             "title": "cleanEventDelegations",
-            "line": 1875,
+            "line": 2017,
             "beforeEach": null,
             "afterEach": null,
             "tests": [
               {
                 "title": "removes all event delegations",
-                "line": 1877,
+                "line": 2019,
                 "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = hostModule.create(PerkyModule, {$id: 'child'})\n\nconst spy = vi.fn()\nhostModule.on('update', spy)\n\nchildModule.delegateEventsTo(hostModule, ['update'])\n\nchildModule.emit('update', 1)\nexpect(spy).toHaveBeenCalledTimes(1)\n\nchildModule.cleanEventDelegations()\n\nchildModule.emit('update', 2)\nexpect(spy).toHaveBeenCalledTimes(1)"
               },
               {
                 "title": "cleanEventDelegations clears delegation list",
-                "line": 1896,
+                "line": 2038,
                 "source": "const hostModule = new PerkyModule({$id: 'host'})\nconst childModule = new PerkyModule({$id: 'child'})\n\nchildModule.delegateEventsTo(hostModule, ['update', 'render'])\n\nchildModule.cleanEventDelegations()\n\nchildModule.delegateEventsTo(hostModule, ['update'])\n\nconst spy = vi.fn()\nhostModule.on('update', spy)\nchildModule.emit('update')\nexpect(spy).toHaveBeenCalledTimes(1)"
               }
             ],
@@ -4527,6 +4591,159 @@
       }
     ]
   },
+  "/game/entity.doc.js": {
+    "file": "/game/entity.test.js",
+    "describes": [
+      {
+        "title": "Entity",
+        "line": 6,
+        "beforeEach": null,
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "has static $category \"entity\"",
+            "line": 8,
+            "source": "expect(Entity.$category).toBe('entity')"
+          },
+          {
+            "title": "can be instantiated with tags",
+            "line": 13,
+            "source": "const entity = new Entity({$tags: ['enemy', 'collidable']})\n\nexpect(entity.$category).toBe('entity')\nexpect(entity.$tags).toEqual(['enemy', 'collidable'])"
+          },
+          {
+            "title": "has default position at origin",
+            "line": 21,
+            "source": "const entity = new Entity()\n\nexpect(entity.position).toBeInstanceOf(Vec2)\nexpect(entity.x).toBe(0)\nexpect(entity.y).toBe(0)"
+          },
+          {
+            "title": "accepts initial position",
+            "line": 30,
+            "source": "const entity = new Entity({x: 5, y: 10})\n\nexpect(entity.x).toBe(5)\nexpect(entity.y).toBe(10)"
+          },
+          {
+            "title": "has default velocity at zero",
+            "line": 38,
+            "source": "const entity = new Entity()\n\nexpect(entity.velocity).toBeInstanceOf(Vec2)\nexpect(entity.velocity.x).toBe(0)\nexpect(entity.velocity.y).toBe(0)"
+          },
+          {
+            "title": "x and y setters update position",
+            "line": 47,
+            "source": "const entity = new Entity()\n\nentity.x = 42\nentity.y = 84\n\nexpect(entity.position.x).toBe(42)\nexpect(entity.position.y).toBe(84)"
+          },
+          {
+            "title": "has update method",
+            "line": 58,
+            "source": "const entity = new Entity()\n\nexpect(typeof entity.update).toBe('function')"
+          }
+        ],
+        "describes": []
+      }
+    ]
+  },
+  "/game/entity_view.doc.js": {
+    "file": "/game/entity_view.test.js",
+    "describes": [
+      {
+        "title": "EntityView",
+        "line": 22,
+        "beforeEach": {
+          "line": 28,
+          "source": "entity = new MockEntity(10, 20)\ncontext = new MockContext()\nview = new EntityView(entity, context)"
+        },
+        "afterEach": null,
+        "tests": [],
+        "describes": [
+          {
+            "title": "constructor",
+            "line": 35,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "stores entity reference",
+                "line": 37,
+                "source": "expect(view.entity).toBe(entity)"
+              },
+              {
+                "title": "stores context reference",
+                "line": 42,
+                "source": "expect(view.context).toBe(context)"
+              },
+              {
+                "title": "initializes root as null",
+                "line": 47,
+                "source": "expect(view.root).toBeNull()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "sync",
+            "line": 54,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "does nothing when root is null",
+                "line": 56,
+                "source": "expect(() => view.sync()).not.toThrow()"
+              },
+              {
+                "title": "syncs root position from entity",
+                "line": 61,
+                "source": "view.root = {x: 0, y: 0}\n\nentity.x = 100\nentity.y = 200\nview.sync()\n\nexpect(view.root.x).toBe(100)\nexpect(view.root.y).toBe(200)"
+              },
+              {
+                "title": "updates root when entity moves",
+                "line": 73,
+                "source": "view.root = {x: 0, y: 0}\n\nview.sync()\nexpect(view.root.x).toBe(10)\nexpect(view.root.y).toBe(20)\n\nentity.x = 50\nentity.y = 75\nview.sync()\n\nexpect(view.root.x).toBe(50)\nexpect(view.root.y).toBe(75)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "dispose",
+            "line": 91,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "removes root from context group",
+                "line": 93,
+                "source": "const mockRoot = new Group2D({name: 'mock-root'})\ncontext.group.addChild(mockRoot)\nview.root = mockRoot\n\nexpect(context.group.children).toContain(mockRoot)\n\nview.dispose()\n\nexpect(context.group.children).not.toContain(mockRoot)"
+              },
+              {
+                "title": "sets root to null",
+                "line": 106,
+                "source": "view.root = {x: 0, y: 0}\nview.dispose()\n\nexpect(view.root).toBeNull()"
+              },
+              {
+                "title": "sets entity to null",
+                "line": 114,
+                "source": "view.dispose()\nexpect(view.entity).toBeNull()"
+              },
+              {
+                "title": "sets context to null",
+                "line": 120,
+                "source": "view.dispose()\nexpect(view.context).toBeNull()"
+              },
+              {
+                "title": "handles null root gracefully",
+                "line": 126,
+                "source": "view.root = null\nexpect(() => view.dispose()).not.toThrow()"
+              },
+              {
+                "title": "handles null context.group gracefully",
+                "line": 132,
+                "source": "view.root = {x: 0, y: 0}\ncontext.group = null\n\nexpect(() => view.dispose()).not.toThrow()"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
   "/game/game_loop.doc.js": {
     "file": "/game/game_loop.test.js",
     "describes": [
@@ -4624,6 +4841,115 @@
           }
         ],
         "describes": []
+      }
+    ]
+  },
+  "/game/world.doc.js": {
+    "file": "/game/world.test.js",
+    "describes": [
+      {
+        "title": "World",
+        "line": 6,
+        "beforeEach": {
+          "line": 10,
+          "source": "world = new World()"
+        },
+        "afterEach": null,
+        "tests": [],
+        "describes": [
+          {
+            "title": "static properties",
+            "line": 15,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "has correct $category",
+                "line": 17,
+                "source": "expect(World.$category).toBe('world')"
+              },
+              {
+                "title": "extends PerkyModule",
+                "line": 22,
+                "source": "expect(world.constructor.name).toBe('World')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "entities",
+            "line": 29,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns empty array when no entities",
+                "line": 31,
+                "source": "expect(world.entities).toEqual([])"
+              },
+              {
+                "title": "returns entities created in world",
+                "line": 36,
+                "source": "const entity1 = world.create(Entity, {$id: 'entity-1'})\nconst entity2 = world.create(Entity, {$id: 'entity-2'})\n\nconst entities = world.entities\n\nexpect(entities).toContain(entity1)\nexpect(entities).toContain(entity2)\nexpect(entities.length).toBe(2)"
+              },
+              {
+                "title": "does not return non-entity children",
+                "line": 48,
+                "source": "world.create(Entity, {$id: 'entity-1'})\n\n// Create a non-entity child\nclass NonEntity extends Entity {\n    static $category = 'other'\n}\nworld.create(NonEntity, {$id: 'non-entity'})\n\nconst entities = world.entities\n\nexpect(entities.length).toBe(1)\nexpect(entities[0].$id).toBe('entity-1')"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "update",
+            "line": 66,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "does not call preUpdate when not started",
+                "line": 68,
+                "source": "let called = false\nworld.preUpdate = () => {\n    called = true\n}\n\nworld.update(0.016, {})\n\nexpect(called).toBe(false)"
+              },
+              {
+                "title": "calls preUpdate when started",
+                "line": 80,
+                "source": "let called = false\nworld.preUpdate = () => {\n    called = true\n}\n\nworld.start()\nworld.update(0.016, {})\n\nexpect(called).toBe(true)"
+              },
+              {
+                "title": "calls postUpdate when started",
+                "line": 93,
+                "source": "let called = false\nworld.postUpdate = () => {\n    called = true\n}\n\nworld.start()\nworld.update(0.016, {})\n\nexpect(called).toBe(true)"
+              },
+              {
+                "title": "passes deltaTime and context to preUpdate",
+                "line": 106,
+                "source": "let receivedDeltaTime\nlet receivedContext\nconst context = {foo: 'bar'}\nworld.preUpdate = (dt, ctx) => {\n    receivedDeltaTime = dt\n    receivedContext = ctx\n}\n\nworld.start()\nworld.update(0.016, context)\n\nexpect(receivedDeltaTime).toBe(0.016)\nexpect(receivedContext).toBe(context)"
+              },
+              {
+                "title": "passes deltaTime and context to postUpdate",
+                "line": 123,
+                "source": "let receivedDeltaTime\nlet receivedContext\nconst context = {foo: 'bar'}\nworld.postUpdate = (dt, ctx) => {\n    receivedDeltaTime = dt\n    receivedContext = ctx\n}\n\nworld.start()\nworld.update(0.016, context)\n\nexpect(receivedDeltaTime).toBe(0.016)\nexpect(receivedContext).toBe(context)"
+              },
+              {
+                "title": "calls update on started entities",
+                "line": 140,
+                "source": "let updateCalled = false\nclass TestEntity extends Entity {\n    update () {  \n        updateCalled = true\n    }\n}\n\nworld.start()\nconst entity = world.create(TestEntity, {$id: 'test'})\nentity.start()\n\nworld.update(0.016, {})\n\nexpect(updateCalled).toBe(true)"
+              },
+              {
+                "title": "does not call update on non-started entities",
+                "line": 158,
+                "source": "let updateCalled = false\nclass TestEntity extends Entity {\n    update () {  \n        updateCalled = true\n    }\n}\n\nworld.start()\nworld.create(TestEntity, {$id: 'test', $eagerStart: false})\n\nworld.update(0.016, {})\n\nexpect(updateCalled).toBe(false)"
+              },
+              {
+                "title": "passes deltaTime to entity update",
+                "line": 175,
+                "source": "let receivedDeltaTime\nclass TestEntity extends Entity {\n    update (deltaTime) {  \n        receivedDeltaTime = deltaTime\n    }\n}\n\nworld.start()\nconst entity = world.create(TestEntity, {$id: 'test'})\nentity.start()\n\nworld.update(0.033, {})\n\nexpect(receivedDeltaTime).toBe(0.033)"
+              }
+            ],
+            "describes": []
+          }
+        ]
       }
     ]
   },
@@ -4861,9 +5187,9 @@
                 "source": "worldView.register(MockEntity, Circle, {radius: 0.5})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'viewname-test'})\nmockWorld.addEntity(entity)\n\nconst child = worldView.rootGroup.children[0]\nexpect(child.$viewName).toBe('Circle')"
               },
               {
-                "title": "works with Image2D",
+                "title": "works with Sprite",
                 "line": 479,
-                "source": "const mockImage = {width: 100, height: 100}\nworldView.register(MockEntity, Image2D, {image: mockImage, width: 1, height: 1})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'image-test', x: 0, y: 0})\nmockWorld.addEntity(entity)\n\nconst view = worldView.getViews('image-test')[0]\nexpect(view.root).toBeInstanceOf(Image2D)\nexpect(view.root.image).toBe(mockImage)"
+                "source": "const mockImage = {width: 100, height: 100}\nworldView.register(MockEntity, Sprite, {image: mockImage, width: 1, height: 1})\nworldView.onStart()\n\nconst entity = new MockEntity({$id: 'image-test', x: 0, y: 0})\nmockWorld.addEntity(entity)\n\nconst view = worldView.getViews('image-test')[0]\nexpect(view.root).toBeInstanceOf(Sprite)\nexpect(view.root.image).toBe(mockImage)"
               },
               {
                 "title": "disposes correctly",
@@ -6280,80 +6606,6 @@
       }
     ]
   },
-  "/render/image_2d.doc.js": {
-    "file": "/render/image_2d.test.js",
-    "describes": [
-      {
-        "title": "Image2D",
-        "line": 6,
-        "beforeEach": {
-          "line": 10,
-          "source": "image2d = new Image2D()"
-        },
-        "afterEach": null,
-        "tests": [
-          {
-            "title": "constructor defaults",
-            "line": 15,
-            "source": "expect(image2d.image).toBe(null)\nexpect(image2d.width).toBe(10)\nexpect(image2d.height).toBe(10)"
-          },
-          {
-            "title": "constructor with options",
-            "line": 22,
-            "source": "const img = {complete: true}\nconst i = new Image2D({\n    x: 10,\n    y: 20,\n    image: img,\n    width: 100,\n    height: 50,\n    opacity: 0.5,\n    rotation: Math.PI / 4\n})\n\nexpect(i.x).toBe(10)\nexpect(i.y).toBe(20)\nexpect(i.image).toBe(img)\nexpect(i.width).toBe(100)\nexpect(i.height).toBe(50)\nexpect(i.opacity).toBe(0.5)\nexpect(i.rotation).toBeCloseTo(Math.PI / 4)"
-          },
-          {
-            "title": "getBounds",
-            "line": 44,
-            "source": "image2d.width = 100\nimage2d.height = 50\nimage2d.anchorX = 0.5\nimage2d.anchorY = 0.5\n\nconst bounds = image2d.getBounds()\n\nexpect(bounds.minX).toBe(-50)\nexpect(bounds.minY).toBe(-25)\nexpect(bounds.maxX).toBe(50)\nexpect(bounds.maxY).toBe(25)\nexpect(bounds.width).toBe(100)\nexpect(bounds.height).toBe(50)"
-          }
-        ],
-        "describes": []
-      },
-      {
-        "title": "CanvasImageRenderer",
-        "line": 63,
-        "beforeEach": {
-          "line": 68,
-          "source": "renderer = new CanvasImageRenderer()\nctx = {\n    save: vi.fn(),\n    scale: vi.fn(),\n    drawImage: vi.fn(),\n    restore: vi.fn()\n}"
-        },
-        "afterEach": null,
-        "tests": [
-          {
-            "title": "handles Image2D class",
-            "line": 79,
-            "source": "expect(CanvasImageRenderer.handles).toContain(Image2D)"
-          },
-          {
-            "title": "render does nothing when image is null",
-            "line": 84,
-            "source": "const image2d = new Image2D({image: null})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.drawImage).not.toHaveBeenCalled()"
-          },
-          {
-            "title": "render does nothing when image is not complete",
-            "line": 93,
-            "source": "const image2d = new Image2D({image: {complete: false}})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.drawImage).not.toHaveBeenCalled()"
-          },
-          {
-            "title": "render draws image when complete",
-            "line": 102,
-            "source": "const img = {complete: true}\nconst image2d = new Image2D({\n    image: img,\n    width: 100,\n    height: 50,\n    anchorX: 0.5,\n    anchorY: 0.5\n})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.save).toHaveBeenCalled()\nexpect(ctx.scale).toHaveBeenCalledWith(1, -1)\nexpect(ctx.drawImage).toHaveBeenCalledWith(img, -50, -25, 100, 50)\nexpect(ctx.restore).toHaveBeenCalled()"
-          },
-          {
-            "title": "render with custom anchor",
-            "line": 121,
-            "source": "const img = {complete: true}\nconst image2d = new Image2D({\n    image: img,\n    width: 100,\n    height: 50,\n    anchorX: 0,\n    anchorY: 0\n})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.save).toHaveBeenCalled()\nexpect(ctx.scale).toHaveBeenCalledWith(1, -1)\nexpect(ctx.drawImage).toHaveBeenCalledWith(img, -0, -50, 100, 50)\nexpect(ctx.restore).toHaveBeenCalled()"
-          },
-          {
-            "title": "render with bottom-right anchor",
-            "line": 140,
-            "source": "const img = {complete: true}\nconst image2d = new Image2D({\n    image: img,\n    width: 100,\n    height: 50,\n    anchorX: 1,\n    anchorY: 1\n})\n\nrenderer.render(image2d, ctx)\n\nexpect(ctx.save).toHaveBeenCalled()\nexpect(ctx.scale).toHaveBeenCalledWith(1, -1)\nexpect(ctx.drawImage).toHaveBeenCalledWith(img, -100, 0, 100, 50)\nexpect(ctx.restore).toHaveBeenCalled()"
-          }
-        ],
-        "describes": []
-      }
-    ]
-  },
   "/render/object_2d.doc.js": {
     "file": "/render/object_2d.test.js",
     "describes": [
@@ -6545,68 +6797,93 @@
     "describes": [
       {
         "title": "Sprite",
-        "line": 6,
+        "line": 7,
         "beforeEach": {
-          "line": 11,
+          "line": 13,
           "source": "mockImage = {\n    width: 100,\n    height: 100,\n    naturalWidth: 100,\n    naturalHeight: 100,\n    complete: true\n}\nmockFrame = {\n    filename: 'frame1',\n    frame: {x: 0, y: 0, w: 10, h: 10},\n    image: mockImage\n}\nsprite = new Sprite({\n    frame: mockFrame,\n    width: 5\n})"
         },
         "afterEach": null,
         "tests": [
           {
-            "title": "initializes with frame and options",
-            "line": 30,
-            "source": "expect(sprite.currentFrame).toBe(mockFrame)\nexpect(sprite.width).toBe(5)\nexpect(sprite.height).toBeNull()"
+            "title": "initializes with frame and converts to region",
+            "line": 33,
+            "source": "expect(sprite.region).toBeInstanceOf(TextureRegion)\nexpect(sprite.region.width).toBe(10)\nexpect(sprite.region.height).toBe(10)\nexpect(sprite.width).toBe(5)\nexpect(sprite.height).toBeNull()"
           },
           {
-            "title": "getBounds calculates bounds from frame and width",
-            "line": 36,
+            "title": "initializes with image",
+            "line": 42,
+            "source": "const s = new Sprite({image: mockImage})\n\nexpect(s.region).toBeInstanceOf(TextureRegion)\nexpect(s.image).toBe(mockImage)"
+          },
+          {
+            "title": "initializes with region",
+            "line": 50,
+            "source": "const region = new TextureRegion({image: mockImage, x: 0, y: 0, width: 50, height: 50})\nconst s = new Sprite({region})\n\nexpect(s.region).toBe(region)"
+          },
+          {
+            "title": "getBounds calculates bounds from region and width",
+            "line": 58,
             "source": "const bounds = sprite.getBounds()\n\nexpect(bounds.width).toBe(5)\nexpect(bounds.height).toBe(5)"
           },
           {
-            "title": "getBounds calculates bounds from frame and height",
-            "line": 43,
+            "title": "getBounds calculates bounds from region and height",
+            "line": 66,
             "source": "sprite = new Sprite({\n    frame: mockFrame,\n    height: 10\n})\nconst bounds = sprite.getBounds()\n\nexpect(bounds.width).toBe(10)\nexpect(bounds.height).toBe(10)"
           },
           {
             "title": "addAnimation stores animation",
-            "line": 54,
+            "line": 78,
             "source": "const mockAnim = {\n    play: vi.fn(),\n    stop: vi.fn()\n}\n\nsprite.addAnimation('walk', mockAnim)\nexpect(sprite.animations.get('walk')).toBe(mockAnim)"
           },
           {
             "title": "play starts animation",
-            "line": 64,
+            "line": 89,
             "source": "const mockAnim = {\n    play: vi.fn(),\n    stop: vi.fn()\n}\n\nsprite.addAnimation('walk', mockAnim)\nsprite.play('walk')\n\nexpect(sprite.currentAnimation).toBe(mockAnim)\nexpect(mockAnim.play).toHaveBeenCalled()"
           },
           {
             "title": "stop stops current animation",
-            "line": 77,
+            "line": 103,
             "source": "const mockAnim = {\n    play: vi.fn(),\n    stop: vi.fn()\n}\n\nsprite.addAnimation('walk', mockAnim)\nsprite.play('walk')\nsprite.stop()\n\nexpect(sprite.currentAnimation).toBeNull()\nexpect(mockAnim.stop).toHaveBeenCalled()"
           },
           {
-            "title": "setFrame updates currentFrame",
-            "line": 92,
-            "source": "const newFrame = {\n    filename: 'frame2',\n    frame: {x: 10, y: 0, w: 20, h: 20},\n    image: mockImage\n}\n\nsprite.setFrame(newFrame)\n\nexpect(sprite.currentFrame).toBe(newFrame)"
+            "title": "setFrame updates region from legacy frame format",
+            "line": 118,
+            "source": "const newFrame = {\n    filename: 'frame2',\n    frame: {x: 10, y: 0, w: 20, h: 20},\n    image: mockImage\n}\n\nsprite.setFrame(newFrame)\n\nexpect(sprite.region).toBeInstanceOf(TextureRegion)\nexpect(sprite.region.x).toBe(10)\nexpect(sprite.region.width).toBe(20)"
+          },
+          {
+            "title": "setFrame accepts TextureRegion directly",
+            "line": 133,
+            "source": "const region = new TextureRegion({image: mockImage, x: 32, y: 64, width: 16, height: 16})\n\nsprite.setFrame(region)\n\nexpect(sprite.region).toBe(region)"
+          },
+          {
+            "title": "image setter updates region",
+            "line": 142,
+            "source": "const newImage = {width: 200, height: 200}\nsprite.image = newImage\n\nexpect(sprite.image).toBe(newImage)\nexpect(sprite.region).toBeInstanceOf(TextureRegion)\nexpect(sprite.region.width).toBe(200)"
+          },
+          {
+            "title": "image setter with null clears region",
+            "line": 152,
+            "source": "sprite.image = null\n\nexpect(sprite.image).toBeNull()\nexpect(sprite.region).toBeNull()"
           }
         ],
         "describes": []
       },
       {
         "title": "CanvasSpriteRenderer",
-        "line": 106,
+        "line": 162,
         "beforeEach": {
-          "line": 112,
+          "line": 169,
           "source": "renderer = new CanvasSpriteRenderer()\nctx = {\n    save: vi.fn(),\n    restore: vi.fn(),\n    scale: vi.fn(),\n    drawImage: vi.fn(),\n    translate: vi.fn(),\n    rotate: vi.fn()\n}\nmockImage = {\n    width: 100,\n    height: 100,\n    naturalWidth: 100,\n    naturalHeight: 100,\n    complete: true\n}\nmockFrame = {\n    filename: 'frame1',\n    frame: {x: 0, y: 0, w: 10, h: 10},\n    image: mockImage\n}"
         },
         "afterEach": null,
         "tests": [
           {
             "title": "handles Sprite class",
-            "line": 137,
+            "line": 194,
             "source": "expect(CanvasSpriteRenderer.handles).toContain(Sprite)"
           },
           {
-            "title": "render draws frame using image from frame data",
-            "line": 142,
+            "title": "render draws frame using region data",
+            "line": 199,
             "source": "const sprite = new Sprite({\n    frame: mockFrame,\n    width: 5\n})\n\nrenderer.render(sprite, ctx)\n\nexpect(ctx.drawImage).toHaveBeenCalledWith(\n    mockImage,\n    0, 0, 10, 10,\n    expect.any(Number), expect.any(Number),\n    5, 5\n)"
           }
         ],
@@ -6728,6 +7005,522 @@
           }
         ],
         "describes": []
+      }
+    ]
+  },
+  "/render/textures/texture_atlas.doc.js": {
+    "file": "/render/textures/texture_atlas.test.js",
+    "describes": [
+      {
+        "title": "TextureAtlas",
+        "line": 43,
+        "beforeEach": {
+          "line": 47,
+          "source": "atlas = new TextureAtlas({width: 256, height: 256})"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "regionCount counts added regions",
+            "line": 195,
+            "source": "expect(atlas.regionCount).toBe(0)\n\natlas.add('s1', createMockImage(32, 32))\nexpect(atlas.regionCount).toBe(1)\n\natlas.add('s2', createMockImage(32, 32))\nexpect(atlas.regionCount).toBe(2)"
+          },
+          {
+            "title": "markClean clears dirty flag",
+            "line": 206,
+            "source": "atlas.add('sprite1', createMockImage(32, 32))\nexpect(atlas.dirty).toBe(true)\n\natlas.markClean()\nexpect(atlas.dirty).toBe(false)"
+          }
+        ],
+        "describes": [
+          {
+            "title": "constructor",
+            "line": 52,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "default dimensions",
+                "line": 54,
+                "source": "const defaultAtlas = new TextureAtlas()\nexpect(defaultAtlas.width).toBe(2048)\nexpect(defaultAtlas.height).toBe(2048)"
+              },
+              {
+                "title": "custom dimensions",
+                "line": 61,
+                "source": "expect(atlas.width).toBe(256)\nexpect(atlas.height).toBe(256)"
+              },
+              {
+                "title": "creates canvas",
+                "line": 67,
+                "source": "expect(atlas.canvas).toBeDefined()\nexpect(atlas.canvas.width).toBe(256)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "add",
+            "line": 75,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "adds image and returns region",
+                "line": 77,
+                "source": "const image = createMockImage(32, 32)\nconst region = atlas.add('sprite1', image)\n\nexpect(region).not.toBeNull()\nexpect(region.width).toBe(32)\nexpect(region.height).toBe(32)\nexpect(region.image).toBe(atlas.canvas)"
+              },
+              {
+                "title": "marks atlas as dirty",
+                "line": 88,
+                "source": "expect(atlas.dirty).toBe(false)\n\nconst image = createMockImage(32, 32)\natlas.add('sprite1', image)\n\nexpect(atlas.dirty).toBe(true)"
+              },
+              {
+                "title": "returns existing region for duplicate id",
+                "line": 98,
+                "source": "const image1 = createMockImage(32, 32)\nconst image2 = createMockImage(64, 64)\n\nconst region1 = atlas.add('sprite1', image1)\nconst region2 = atlas.add('sprite1', image2)\n\nexpect(region1).toBe(region2)\nexpect(region2.width).toBe(32)"
+              },
+              {
+                "title": "places images without overlap",
+                "line": 110,
+                "source": "const image1 = createMockImage(64, 64)\nconst image2 = createMockImage(64, 64)\n\nconst region1 = atlas.add('sprite1', image1)\nconst region2 = atlas.add('sprite2', image2)\n\nconst noOverlap = region1.x + region1.width <= region2.x ||\n                  region2.x + region2.width <= region1.x ||\n                  region1.y + region1.height <= region2.y ||\n                  region2.y + region2.height <= region1.y ||\n                  (region1.x === region2.x && region1.y !== region2.y) ||\n                  (region1.y === region2.y && region1.x !== region2.x)\n\nexpect(noOverlap).toBe(true)"
+              },
+              {
+                "title": "returns null when atlas is full",
+                "line": 128,
+                "source": "const largeImage = createMockImage(250, 250)\natlas.add('large', largeImage)\n\nconst anotherLarge = createMockImage(200, 200)\nconst result = atlas.add('another', anotherLarge)\n\nexpect(result).toBeNull()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "get",
+            "line": 141,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns region by id",
+                "line": 143,
+                "source": "const image = createMockImage(32, 32)\natlas.add('sprite1', image)\n\nconst region = atlas.get('sprite1')\n\nexpect(region).not.toBeNull()\nexpect(region.width).toBe(32)"
+              },
+              {
+                "title": "returns null for unknown id",
+                "line": 154,
+                "source": "expect(atlas.get('unknown')).toBeNull()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "has",
+            "line": 161,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns true for existing id",
+                "line": 163,
+                "source": "const image = createMockImage(32, 32)\natlas.add('sprite1', image)\n\nexpect(atlas.has('sprite1')).toBe(true)"
+              },
+              {
+                "title": "returns false for unknown id",
+                "line": 171,
+                "source": "expect(atlas.has('unknown')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "canFit",
+            "line": 178,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns true when space available",
+                "line": 180,
+                "source": "expect(atlas.canFit(64, 64)).toBe(true)"
+              },
+              {
+                "title": "returns false when no space",
+                "line": 185,
+                "source": "const largeImage = createMockImage(250, 250)\natlas.add('large', largeImage)\n\nexpect(atlas.canFit(200, 200)).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "clear",
+            "line": 215,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "removes all regions",
+                "line": 217,
+                "source": "atlas.add('s1', createMockImage(32, 32))\natlas.add('s2', createMockImage(32, 32))\n\natlas.clear()\n\nexpect(atlas.regionCount).toBe(0)\nexpect(atlas.has('s1')).toBe(false)"
+              },
+              {
+                "title": "allows adding new images after clear",
+                "line": 228,
+                "source": "const largeImage = createMockImage(250, 250)\natlas.add('large', largeImage)\n\natlas.clear()\n\nconst region = atlas.add('new', createMockImage(100, 100))\nexpect(region).not.toBeNull()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "full",
+            "line": 241,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "false initially",
+                "line": 243,
+                "source": "expect(atlas.full).toBe(false)"
+              },
+              {
+                "title": "true when no more space",
+                "line": 248,
+                "source": "const largeImage = createMockImage(250, 250)\natlas.add('large', largeImage)\n\natlas.add('overflow', createMockImage(200, 200))\n\nexpect(atlas.full).toBe(true)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "getAllRegions",
+            "line": 260,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns map of all regions",
+                "line": 262,
+                "source": "atlas.add('s1', createMockImage(32, 32))\natlas.add('s2', createMockImage(48, 48))\n\nconst regions = atlas.getAllRegions()\n\nexpect(regions).toBeInstanceOf(Map)\nexpect(regions.size).toBe(2)\nexpect(regions.has('s1')).toBe(true)\nexpect(regions.has('s2')).toBe(true)"
+              },
+              {
+                "title": "returns empty map when no regions",
+                "line": 275,
+                "source": "const regions = atlas.getAllRegions()\n\nexpect(regions).toBeInstanceOf(Map)\nexpect(regions.size).toBe(0)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "static properties",
+            "line": 285,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "DEFAULT_SIZE",
+                "line": 287,
+                "source": "expect(TextureAtlas.DEFAULT_SIZE).toBe(2048)"
+              },
+              {
+                "title": "MAX_SIZE",
+                "line": 292,
+                "source": "expect(TextureAtlas.MAX_SIZE).toBe(4096)"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/render/textures/texture_region.doc.js": {
+    "file": "/render/textures/texture_region.test.js",
+    "describes": [
+      {
+        "title": "TextureRegion",
+        "line": 10,
+        "beforeEach": null,
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "bounds returns bounds object",
+            "line": 115,
+            "source": "const image = createMockImage(256, 256)\nconst region = new TextureRegion({\n    image,\n    x: 10,\n    y: 20,\n    width: 30,\n    height: 40\n})\n\nconst bounds = region.bounds\n\nexpect(bounds.x).toBe(10)\nexpect(bounds.y).toBe(20)\nexpect(bounds.width).toBe(30)\nexpect(bounds.height).toBe(40)"
+          }
+        ],
+        "describes": [
+          {
+            "title": "constructor",
+            "line": 12,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "default values",
+                "line": 14,
+                "source": "const region = new TextureRegion()\n\nexpect(region.image).toBe(null)\nexpect(region.x).toBe(0)\nexpect(region.y).toBe(0)\nexpect(region.width).toBe(0)\nexpect(region.height).toBe(0)"
+              },
+              {
+                "title": "derives dimensions from image",
+                "line": 25,
+                "source": "const image = createMockImage(128, 64)\nconst region = new TextureRegion({image})\n\nexpect(region.image).toBe(image)\nexpect(region.width).toBe(128)\nexpect(region.height).toBe(64)"
+              },
+              {
+                "title": "accepts explicit dimensions",
+                "line": 35,
+                "source": "const image = createMockImage(256, 256)\nconst region = new TextureRegion({\n    image,\n    x: 32,\n    y: 64,\n    width: 48,\n    height: 32\n})\n\nexpect(region.x).toBe(32)\nexpect(region.y).toBe(64)\nexpect(region.width).toBe(48)\nexpect(region.height).toBe(32)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "UV coordinates",
+            "line": 54,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "full image UVs",
+                "line": 56,
+                "source": "const image = createMockImage(256, 256)\nconst region = new TextureRegion({image})\n\nexpect(region.u0).toBe(0)\nexpect(region.v0).toBe(0)\nexpect(region.u1).toBe(1)\nexpect(region.v1).toBe(1)"
+              },
+              {
+                "title": "sub-region UVs",
+                "line": 67,
+                "source": "const image = createMockImage(256, 256)\nconst region = new TextureRegion({\n    image,\n    x: 64,\n    y: 128,\n    width: 64,\n    height: 64\n})\n\nexpect(region.u0).toBe(0.25)\nexpect(region.v0).toBe(0.5)\nexpect(region.u1).toBe(0.5)\nexpect(region.v1).toBe(0.75)"
+              },
+              {
+                "title": "default UVs when no image",
+                "line": 84,
+                "source": "const region = new TextureRegion()\n\nexpect(region.u0).toBe(0)\nexpect(region.v0).toBe(0)\nexpect(region.u1).toBe(1)\nexpect(region.v1).toBe(1)"
+              },
+              {
+                "title": "uvs getter",
+                "line": 94,
+                "source": "const image = createMockImage(100, 100)\nconst region = new TextureRegion({\n    image,\n    x: 10,\n    y: 20,\n    width: 30,\n    height: 40\n})\n\nconst uvs = region.uvs\n\nexpect(uvs.u0).toBe(0.1)\nexpect(uvs.v0).toBe(0.2)\nexpect(uvs.u1).toBe(0.4)\nexpect(uvs.v1).toBe(0.6)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "valid",
+            "line": 134,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "invalid without image",
+                "line": 136,
+                "source": "const region = new TextureRegion({width: 10, height: 10})\nexpect(region.valid).toBe(false)"
+              },
+              {
+                "title": "invalid with zero dimensions",
+                "line": 142,
+                "source": "const image = createMockImage()\nconst region = new TextureRegion({image, width: 0, height: 10})\nexpect(region.valid).toBe(false)"
+              },
+              {
+                "title": "valid with image and dimensions",
+                "line": 149,
+                "source": "const image = createMockImage()\nconst region = new TextureRegion({image, width: 10, height: 10})\nexpect(region.valid).toBe(true)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "fromImage",
+            "line": 158,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "creates region covering full image",
+                "line": 160,
+                "source": "const image = createMockImage(200, 100)\nconst region = TextureRegion.fromImage(image)\n\nexpect(region.image).toBe(image)\nexpect(region.x).toBe(0)\nexpect(region.y).toBe(0)\nexpect(region.width).toBe(200)\nexpect(region.height).toBe(100)"
+              },
+              {
+                "title": "handles null image",
+                "line": 172,
+                "source": "const region = TextureRegion.fromImage(null)\n\nexpect(region.image).toBe(null)\nexpect(region.width).toBe(0)\nexpect(region.height).toBe(0)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "fromFrame",
+            "line": 183,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "creates region from frame with w/h",
+                "line": 185,
+                "source": "const image = createMockImage(512, 512)\nconst frame = {x: 100, y: 200, w: 50, h: 60}\nconst region = TextureRegion.fromFrame(image, frame)\n\nexpect(region.image).toBe(image)\nexpect(region.x).toBe(100)\nexpect(region.y).toBe(200)\nexpect(region.width).toBe(50)\nexpect(region.height).toBe(60)"
+              },
+              {
+                "title": "creates region from frame with width/height",
+                "line": 198,
+                "source": "const image = createMockImage(512, 512)\nconst frame = {x: 10, y: 20, width: 30, height: 40}\nconst region = TextureRegion.fromFrame(image, frame)\n\nexpect(region.width).toBe(30)\nexpect(region.height).toBe(40)"
+              }
+            ],
+            "describes": []
+          }
+        ]
+      }
+    ]
+  },
+  "/render/textures/texture_system.doc.js": {
+    "file": "/render/textures/texture_system.test.js",
+    "describes": [
+      {
+        "title": "TextureSystem",
+        "line": 43,
+        "beforeEach": {
+          "line": 47,
+          "source": "system = new TextureSystem({atlasSize: 256})"
+        },
+        "afterEach": null,
+        "tests": [
+          {
+            "title": "constructor initializes with atlas manager",
+            "line": 52,
+            "source": "expect(system.atlasManager).toBeDefined()\nexpect(system.regionCount).toBe(0)"
+          },
+          {
+            "title": "addRegions adds multiple images",
+            "line": 80,
+            "source": "const images = {\n    s1: createMockImage(32, 32),\n    s2: createMockImage(48, 48)\n}\n\nsystem.addRegions(images)\n\nexpect(system.regionCount).toBe(2)"
+          },
+          {
+            "title": "atlases returns list of atlases",
+            "line": 189,
+            "source": "system.addRegion('s1', createMockImage(32, 32))\n\nexpect(system.atlases.length).toBe(1)"
+          },
+          {
+            "title": "clear removes all regions",
+            "line": 215,
+            "source": "system.addRegion('s1', createMockImage(32, 32))\nsystem.registerManualAtlas('atlas', createMockImage(256, 256), {\n    frame1: {x: 0, y: 0, w: 32, h: 32}\n})\n\nsystem.clear()\n\nexpect(system.regionCount).toBe(0)\nexpect(system.hasRegion('s1')).toBe(false)\nexpect(system.hasRegion('atlas:frame1')).toBe(false)"
+          },
+          {
+            "title": "onInstall delegates methods to host",
+            "line": 229,
+            "source": "const host = {}\nsystem.onInstall(host)\n\nexpect(host.getRegion).toBeDefined()\nexpect(host.hasRegion).toBeDefined()\nexpect(host.addRegion).toBeDefined()"
+          },
+          {
+            "title": "onDispose clears all regions",
+            "line": 239,
+            "source": "system.addRegion('s1', createMockImage(32, 32))\nsystem.registerManualAtlas('atlas', createMockImage(256, 256), {\n    frame1: {x: 0, y: 0, w: 32, h: 32}\n})\n\nsystem.onDispose()\n\nexpect(system.regionCount).toBe(0)\nexpect(system.hasRegion('s1')).toBe(false)\nexpect(system.hasRegion('atlas:frame1')).toBe(false)"
+          }
+        ],
+        "describes": [
+          {
+            "title": "addRegion",
+            "line": 58,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "adds image to atlas",
+                "line": 60,
+                "source": "const image = createMockImage(32, 32)\nconst region = system.addRegion('sprite1', image)\n\nexpect(region).not.toBeNull()\nexpect(region.width).toBe(32)"
+              },
+              {
+                "title": "returns existing region for duplicate",
+                "line": 69,
+                "source": "const image = createMockImage(32, 32)\nconst region1 = system.addRegion('sprite1', image)\nconst region2 = system.addRegion('sprite1', createMockImage(64, 64))\n\nexpect(region1).toBe(region2)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "getRegion",
+            "line": 92,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns region by id",
+                "line": 94,
+                "source": "system.addRegion('sprite1', createMockImage(32, 32))\nconst region = system.getRegion('sprite1')\n\nexpect(region).not.toBeNull()"
+              },
+              {
+                "title": "returns null for unknown",
+                "line": 102,
+                "source": "expect(system.getRegion('unknown')).toBeNull()"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "hasRegion",
+            "line": 109,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns true for existing",
+                "line": 111,
+                "source": "system.addRegion('sprite1', createMockImage(32, 32))\nexpect(system.hasRegion('sprite1')).toBe(true)"
+              },
+              {
+                "title": "returns false for unknown",
+                "line": 117,
+                "source": "expect(system.hasRegion('unknown')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "registerManualAtlas",
+            "line": 124,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "registers frames from manual atlas",
+                "line": 126,
+                "source": "const atlasImage = createMockImage(256, 256)\nconst frames = {\n    idle: {x: 0, y: 0, w: 32, h: 32},\n    walk: {x: 32, y: 0, w: 32, h: 32}\n}\n\nsystem.registerManualAtlas('player', atlasImage, frames)\n\nexpect(system.hasRegion('player:idle')).toBe(true)\nexpect(system.hasRegion('player:walk')).toBe(true)"
+              },
+              {
+                "title": "creates correct regions from frames",
+                "line": 140,
+                "source": "const atlasImage = createMockImage(256, 256)\nconst frames = {\n    frame1: {x: 64, y: 128, w: 32, h: 48}\n}\n\nsystem.registerManualAtlas('atlas', atlasImage, frames)\n\nconst region = system.getRegion('atlas:frame1')\n\nexpect(region.x).toBe(64)\nexpect(region.y).toBe(128)\nexpect(region.width).toBe(32)\nexpect(region.height).toBe(48)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "buildFromAssets",
+            "line": 159,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "builds atlas from image assets",
+                "line": 161,
+                "source": "const assets = [\n    {id: 'img1', type: 'image', source: createMockImage(32, 32)},\n    {id: 'img2', type: 'image', source: createMockImage(48, 48)},\n    {id: 'sound1', type: 'audio', source: {}}\n]\n\nsystem.buildFromAssets(assets)\n\nexpect(system.hasRegion('img1')).toBe(true)\nexpect(system.hasRegion('img2')).toBe(true)\nexpect(system.hasRegion('sound1')).toBe(false)"
+              },
+              {
+                "title": "skips assets without source",
+                "line": 176,
+                "source": "const assets = [\n    {id: 'img1', type: 'image', source: null}\n]\n\nsystem.buildFromAssets(assets)\n\nexpect(system.hasRegion('img1')).toBe(false)"
+              }
+            ],
+            "describes": []
+          },
+          {
+            "title": "getDirtyAtlases",
+            "line": 196,
+            "beforeEach": null,
+            "afterEach": null,
+            "tests": [
+              {
+                "title": "returns dirty atlases",
+                "line": 198,
+                "source": "system.addRegion('s1', createMockImage(32, 32))\n\nexpect(system.getDirtyAtlases().length).toBe(1)"
+              },
+              {
+                "title": "empty after markAllClean",
+                "line": 205,
+                "source": "system.addRegion('s1', createMockImage(32, 32))\nsystem.markAllClean()\n\nexpect(system.getDirtyAtlases().length).toBe(0)"
+              }
+            ],
+            "describes": []
+          }
+        ]
       }
     ]
   },
@@ -8389,12 +9182,12 @@
               {
                 "title": "should minimize when clicking minimize button",
                 "line": 309,
-                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst minimizeBtn = explorer.shadowRoot.querySelectorAll('.explorer-btn')[2]\nminimizeBtn.click()\n\nconst minimized = explorer.shadowRoot.querySelector('.explorer-minimized')\nexpect(minimized.classList.contains('hidden')).toBe(false)"
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst minimizeBtn = explorer.shadowRoot.querySelectorAll('.explorer-btn')[3]\nminimizeBtn.click()\n\nconst minimized = explorer.shadowRoot.querySelector('.explorer-minimized')\nexpect(minimized.classList.contains('hidden')).toBe(false)"
               },
               {
                 "title": "should restore when clicking minimized icon",
                 "line": 321,
-                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst minimizeBtn = explorer.shadowRoot.querySelectorAll('.explorer-btn')[2]\nminimizeBtn.click()\n\nconst minimized = explorer.shadowRoot.querySelector('.explorer-minimized')\nminimized.click()\n\nconst explorerPanel = explorer.shadowRoot.querySelector('.explorer')\nexpect(explorerPanel.classList.contains('hidden')).toBe(false)"
+                "source": "const module = new PerkyModule({$id: 'test'})\nexplorer.setModule(module)\n\nconst minimizeBtn = explorer.shadowRoot.querySelectorAll('.explorer-btn')[3]\nminimizeBtn.click()\n\nconst minimized = explorer.shadowRoot.querySelector('.explorer-minimized')\nminimized.click()\n\nconst explorerPanel = explorer.shadowRoot.querySelector('.explorer')\nexpect(explorerPanel.classList.contains('hidden')).toBe(false)"
               }
             ],
             "describes": []

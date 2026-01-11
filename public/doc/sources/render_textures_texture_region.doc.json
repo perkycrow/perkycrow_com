@@ -1,0 +1,27 @@
+[
+  {
+    "type": "container",
+    "title": "UV visualization",
+    "source": "const wrapper = ctx.column({gap: 12})\n\nconst img = new Image()\nimg.src = './assets/images/shroom.png'\n\nimg.onload = () => {\n    const region = new TextureRegion({\n        image: img,\n        x: 50,\n        y: 30,\n        width: 150,\n        height: 180\n    })\n\n    ctx.label(`Image: ${img.width}x${img.height}px`, {parent: wrapper})\n    ctx.label(`Region: x=${region.x}, y=${region.y}, ${region.width}x${region.height}px`, {parent: wrapper})\n    ctx.label(`UVs: u0=${region.u0.toFixed(3)}, v0=${region.v0.toFixed(3)}, u1=${region.u1.toFixed(3)}, v1=${region.v1.toFixed(3)}`, {parent: wrapper})\n\n    const canvas = document.createElement('canvas')\n    canvas.width = img.width\n    canvas.height = img.height\n    const cctx = canvas.getContext('2d')\n\n    cctx.drawImage(img, 0, 0)\n    cctx.strokeStyle = '#4a9eff'\n    cctx.lineWidth = 2\n    cctx.strokeRect(region.x, region.y, region.width, region.height)\n\n    ctx.canvas(canvas, {maxWidth: 250, parent: wrapper})\n}"
+  },
+  {
+    "type": "code",
+    "title": "From options",
+    "source": "const region = new TextureRegion({\n    image: spritesheet,\n    x: 0,\n    y: 0,\n    width: 64,\n    height: 64\n})"
+  },
+  {
+    "type": "code",
+    "title": "From full image",
+    "source": "// Creates a region covering the entire image\nconst region = TextureRegion.fromImage(image)"
+  },
+  {
+    "type": "code",
+    "title": "From frame data",
+    "source": "// Useful for spritesheet JSON formats\nconst frame = {x: 128, y: 0, w: 64, h: 64}\nconst region = TextureRegion.fromFrame(spritesheet, frame)"
+  },
+  {
+    "type": "code",
+    "title": "Accessing UVs",
+    "source": "const region = new TextureRegion({\n    image: texture,\n    x: 100,\n    y: 50,\n    width: 64,\n    height: 64\n})\n\n// Individual UV values\nconst topLeftU = region.u0\nconst topLeftV = region.v0\nconst bottomRightU = region.u1\nconst bottomRightV = region.v1\n\n// All at once\nconst {u0, v0, u1, v1} = region.uvs"
+  }
+]

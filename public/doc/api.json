@@ -8,72 +8,72 @@
     "statics": [
       {
         "name": "$category",
-        "line": 29,
+        "line": 30,
         "source": "static $category = 'perkyModule'",
         "kind": "property",
         "value": "'perkyModule'"
       },
       {
         "name": "$name",
-        "line": 30,
+        "line": 31,
         "source": "static $name = null",
         "kind": "property",
         "value": "null"
       },
       {
         "name": "$lifecycle",
-        "line": 31,
+        "line": 32,
         "source": "static $lifecycle = true",
         "kind": "property",
         "value": "true"
       },
       {
         "name": "$eagerStart",
-        "line": 32,
+        "line": 33,
         "source": "static $eagerStart = true",
         "kind": "property",
         "value": "true"
       },
       {
         "name": "$tags",
-        "line": 33,
+        "line": 34,
         "source": "static $tags = []",
         "kind": "property",
         "value": "[]"
       },
       {
         "name": "perkyModuleMethods",
-        "line": 504,
-        "source": "static perkyModuleMethods = Notifier.notifierMethods.concat([\n    'start',\n    'stop',\n    'dispose',\n    'install',\n    'uninstall',\n    'create',\n    'getChild',\n    'hasChild',\n    'removeChild',\n    'listNamesFor',\n    'lookup',\n    'childrenByCategory',\n    'hasTag',\n    'addTag',\n    'removeTag',\n    'hasTags',\n    'childrenByTags',\n    'addTagsIndex',\n    'removeTagsIndex',\n    'delegateTo',\n    'cleanDelegations',\n    'delegateEventsTo',\n    'cleanEventDelegations',\n    'query',\n    'queryAll'\n])",
+        "line": 533,
+        "source": "static perkyModuleMethods = Notifier.notifierMethods.concat([\n    'start',\n    'stop',\n    'dispose',\n    'install',\n    'uninstall',\n    'create',\n    'addChild',\n    'getChild',\n    'hasChild',\n    'removeChild',\n    'listNamesFor',\n    'lookup',\n    'childrenByCategory',\n    'hasTag',\n    'addTag',\n    'removeTag',\n    'hasTags',\n    'childrenByTags',\n    'addTagsIndex',\n    'removeTagsIndex',\n    'delegateTo',\n    'cleanDelegations',\n    'delegateEventsTo',\n    'cleanEventDelegations',\n    'query',\n    'queryAll'\n])",
         "kind": "property",
-        "value": "Notifier.notifierMethods.concat([\n    'start',\n    'stop',\n    'dispose',\n    'install',\n    'uninstall',\n    'create',\n    'getChild',\n    'hasChild',\n    'removeChild',\n    'listNamesFor',\n    'lookup',\n    'childrenByCategory',\n    'hasTag',\n    'addTag',\n    'removeTag',\n    'hasTags',\n    'childrenByTags',\n    'addTagsIndex',\n    'removeTagsIndex',\n    'delegateTo',\n    'cleanDelegations',\n    'delegateEventsTo',\n    'cleanEventDelegations',\n    'query',\n    'queryAll'\n])"
+        "value": "Notifier.notifierMethods.concat([\n    'start',\n    'stop',\n    'dispose',\n    'install',\n    'uninstall',\n    'create',\n    'addChild',\n    'getChild',\n    'hasChild',\n    'removeChild',\n    'listNamesFor',\n    'lookup',\n    'childrenByCategory',\n    'hasTag',\n    'addTag',\n    'removeTag',\n    'hasTags',\n    'childrenByTags',\n    'addTagsIndex',\n    'removeTagsIndex',\n    'delegateTo',\n    'cleanDelegations',\n    'delegateEventsTo',\n    'cleanEventDelegations',\n    'query',\n    'queryAll'\n])"
       }
     ],
     "methods": [
       {
         "name": "start",
-        "line": 168,
+        "line": 169,
         "source": "start () {\n    if (this.#started) {\n        return false\n    }\n\n    this.#started = true\n    this.onStart?.()\n    this.emit('start')\n\n    return true\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "stop",
-        "line": 181,
+        "line": 182,
         "source": "stop () {\n    if (!this.#started) {\n        return false\n    }\n\n    this.#started = false\n    this.onStop?.()\n    this.emit('stop')\n\n    return true\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "dispose",
-        "line": 194,
+        "line": 195,
         "source": "dispose () {\n    if (this.#disposed) {\n        return false\n    }\n\n    this.#disposed = true\n    this.stop()\n\n    this.cleanExternalListeners()\n\n    this.#childrenRegistry.forEach(child => {\n        if (child && !child.disposed) {\n            child.dispose()\n        }\n    })\n    this.#childrenRegistry.clear()\n\n    this.onDispose?.()\n    this.emit('dispose')\n    this.removeListeners()\n\n    return true\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "install",
-        "line": 219,
+        "line": 220,
         "source": "install (host, options) {\n    if (this.#installed) {\n        return this.uninstall()\n    }\n\n    this.#host = host\n    if (this.$bind) {\n        host[this.$bind] = this\n    }\n    this.#installed = true\n\n    this.onInstall?.(host, options)\n\n    return true\n}",
         "kind": "method",
         "params": [
@@ -83,15 +83,15 @@
       },
       {
         "name": "uninstall",
-        "line": 236,
+        "line": 237,
         "source": "uninstall () {\n    if (!this.#installed) {\n        return false\n    }\n\n    this.cleanDelegations()\n    this.cleanEventDelegations()\n    this.onUninstall?.(this.#host)\n    this.#installed = false\n    this.#host = null\n\n    return true\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "create",
-        "line": 261,
-        "source": "create (Child, options = {}) {\n    options.$category ||= Child.$category\n    options.$name ||= Child.$name || options.$category\n    options.$id ||= uniqueId(this.#childrenRegistry, options.$name)\n    options.$lifecycle = options.$lifecycle ?? Child.$lifecycle ?? true\n    options.$eagerStart = options.$eagerStart ?? Child.$eagerStart ?? true\n\n    return this.#addChild(new Child(options), options)\n}",
+        "line": 262,
+        "source": "create (Child, options = {}) {\n    options.$category ||= Child.$category\n    options.$name ||= Child.$name || options.$category\n    options.$lifecycle = options.$lifecycle ?? Child.$lifecycle ?? true\n    options.$eagerStart = options.$eagerStart ?? Child.$eagerStart ?? true\n\n    const hasExplicitId = '$id' in options\n\n    if (hasExplicitId) {\n        unregisterExisting(this, options.$id)\n    }\n\n    return this.addChild(new Child(options))\n}",
         "kind": "method",
         "params": [
           "Child",
@@ -99,8 +99,17 @@
         ]
       },
       {
+        "name": "addChild",
+        "line": 278,
+        "source": "addChild (child) {\n    if (!(child instanceof PerkyModule)) {\n        throw new Error('addChild expects a PerkyModule instance')\n    }\n\n    if (child.installed) {\n        throw new Error('Module is already installed in another parent')\n    }\n\n    if (this.#childrenRegistry.has(child.$id)) {\n        child.$id = this.#findUniqueId(child.$name)\n    }\n\n    return this.#addChild(child, child.options)\n}",
+        "kind": "method",
+        "params": [
+          "child"
+        ]
+      },
+      {
         "name": "getChild",
-        "line": 288,
+        "line": 317,
         "source": "getChild (name) {\n    return this.#childrenRegistry.get(name) || null\n}",
         "kind": "method",
         "params": [
@@ -109,7 +118,7 @@
       },
       {
         "name": "hasChild",
-        "line": 293,
+        "line": 322,
         "source": "hasChild (name) {\n    return this.#childrenRegistry.has(name)\n}",
         "kind": "method",
         "params": [
@@ -118,7 +127,7 @@
       },
       {
         "name": "removeChild",
-        "line": 298,
+        "line": 327,
         "source": "removeChild (name) {\n    const child = this.#childrenRegistry.get(name)\n\n    if (!child) {\n        return false\n    }\n\n    unregisterChild(this, child)\n\n    return true\n}",
         "kind": "method",
         "params": [
@@ -127,7 +136,7 @@
       },
       {
         "name": "listNamesFor",
-        "line": 311,
+        "line": 340,
         "source": "listNamesFor (key, indexName = '$category') {\n    return this.#childrenRegistry.lookupKeys(indexName, key)\n}",
         "kind": "method",
         "params": [
@@ -137,7 +146,7 @@
       },
       {
         "name": "lookup",
-        "line": 316,
+        "line": 345,
         "source": "lookup (indexName, key) {\n    return this.#childrenRegistry.lookup(indexName, key)\n}",
         "kind": "method",
         "params": [
@@ -147,7 +156,7 @@
       },
       {
         "name": "childrenByCategory",
-        "line": 321,
+        "line": 350,
         "source": "childrenByCategory (category) {\n    return this.lookup('$category', category)\n}",
         "kind": "method",
         "params": [
@@ -156,7 +165,7 @@
       },
       {
         "name": "hasTag",
-        "line": 344,
+        "line": 373,
         "source": "hasTag (tag) {\n    return this.#tags.has(tag)\n}",
         "kind": "method",
         "params": [
@@ -165,7 +174,7 @@
       },
       {
         "name": "addTag",
-        "line": 349,
+        "line": 378,
         "source": "addTag (tag) {\n    if (this.#tags.has(tag)) {\n        return false\n    }\n    this.#tags.add(tag)\n    return true\n}",
         "kind": "method",
         "params": [
@@ -174,7 +183,7 @@
       },
       {
         "name": "removeTag",
-        "line": 358,
+        "line": 387,
         "source": "removeTag (tag) {\n    return this.#tags.delete(tag)\n}",
         "kind": "method",
         "params": [
@@ -183,7 +192,7 @@
       },
       {
         "name": "hasTags",
-        "line": 363,
+        "line": 392,
         "source": "hasTags (tags) {\n    if (typeof tags === 'string') {\n        return this.hasTag(tags)\n    }\n\n    return Array.isArray(tags) && tags.every(tag => this.#tags.has(tag))\n}",
         "kind": "method",
         "params": [
@@ -192,7 +201,7 @@
       },
       {
         "name": "childrenByTags",
-        "line": 372,
+        "line": 401,
         "source": "childrenByTags (tags) {\n    const tagArray = Array.isArray(tags) ? tags : [tags]\n\n    if (tagArray.length === 0) {\n        return []\n    }\n\n    const indexKey = getTagIndexKey(tagArray)\n\n    if (this.#tagIndexes.has(indexKey)) {\n        return this.#childrenRegistry.lookup(indexKey, indexKey)\n    }\n\n    return this.#childrenRegistry.all.filter(\n        child => tagArray.every(tag => child.$tags?.includes(tag))\n    )\n}",
         "kind": "method",
         "params": [
@@ -201,7 +210,7 @@
       },
       {
         "name": "addTagsIndex",
-        "line": 391,
+        "line": 420,
         "source": "addTagsIndex (tags) {\n    if (!Array.isArray(tags) || tags.length === 0) {\n        return false\n    }\n\n    const indexKey = getTagIndexKey(tags)\n\n    if (this.#tagIndexes.has(indexKey)) {\n        return false\n    }\n\n    this.#childrenRegistry.addIndex(indexKey, child => {\n        const hasAllTags = tags.every(tag => child.tags?.has(tag))\n        return hasAllTags ? indexKey : null\n    })\n\n    this.#tagIndexes.set(indexKey, tags)\n\n    this.#childrenRegistry.forEach(child => {\n        if (child.tags) {\n            this.#setupTagIndexListeners(child)\n        }\n    })\n\n    return true\n}",
         "kind": "method",
         "params": [
@@ -210,7 +219,7 @@
       },
       {
         "name": "removeTagsIndex",
-        "line": 419,
+        "line": 448,
         "source": "removeTagsIndex (tags) {\n    const indexKey = getTagIndexKey(tags)\n\n    if (!this.#tagIndexes.has(indexKey)) {\n        return false\n    }\n\n    this.#childrenRegistry.removeIndex(indexKey)\n    this.#tagIndexes.delete(indexKey)\n    return true\n}",
         "kind": "method",
         "params": [
@@ -219,7 +228,7 @@
       },
       {
         "name": "delegateTo",
-        "line": 449,
+        "line": 478,
         "source": "delegateTo (host, names) {\n    delegateProperties(host, this, names)\n\n    const propertyNames = Array.isArray(names)\n        ? names\n        : Object.values(names)\n\n    this.#delegations.push({host, propertyNames})\n}",
         "kind": "method",
         "params": [
@@ -229,14 +238,14 @@
       },
       {
         "name": "cleanDelegations",
-        "line": 460,
+        "line": 489,
         "source": "cleanDelegations () {\n    for (const {host, propertyNames} of this.#delegations) {\n        for (const name of propertyNames) {\n            delete host[name]\n        }\n    }\n    this.#delegations.length = 0\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "delegateEventsTo",
-        "line": 470,
+        "line": 499,
         "source": "delegateEventsTo (host, events, namespace) {\n    const eventArray = Array.isArray(events) ? events : Object.keys(events)\n    const callbacks = []\n\n    for (const event of eventArray) {\n        const prefixedEvent = namespace ? `${namespace}:${event}` : event\n        const callback = (...args) => host.emit(prefixedEvent, ...args)\n        this.on(event, callback)\n        callbacks.push({event, callback})\n    }\n\n    this.#eventDelegations.push({callbacks})\n}",
         "kind": "method",
         "params": [
@@ -247,14 +256,14 @@
       },
       {
         "name": "cleanEventDelegations",
-        "line": 485,
+        "line": 514,
         "source": "cleanEventDelegations () {\n    for (const {callbacks} of this.#eventDelegations) {\n        for (const {event, callback} of callbacks) {\n            this.off(event, callback)\n        }\n    }\n    this.#eventDelegations.length = 0\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "query",
-        "line": 495,
+        "line": 524,
         "source": "query (selector) {\n    return perkyQuery(this, selector)\n}",
         "kind": "method",
         "params": [
@@ -263,7 +272,7 @@
       },
       {
         "name": "queryAll",
-        "line": 500,
+        "line": 529,
         "source": "queryAll (selector) {\n    return perkyQueryAll(this, selector)\n}",
         "kind": "method",
         "params": [
@@ -274,112 +283,112 @@
     "getters": [
       {
         "name": "$id",
-        "line": 56,
+        "line": 57,
         "source": "get $id () {\n    return this.#id\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "$name",
-        "line": 71,
+        "line": 72,
         "source": "get $name () {\n    return this.#name\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "$category",
-        "line": 86,
+        "line": 87,
         "source": "get $category () {\n    return this.#category\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "$bind",
-        "line": 101,
+        "line": 102,
         "source": "get $bind () {\n    return this.#bind\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "host",
-        "line": 116,
+        "line": 117,
         "source": "get host () {\n    return this.#host\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "started",
-        "line": 121,
+        "line": 122,
         "source": "get started () {\n    return this.#started\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "disposed",
-        "line": 126,
+        "line": 127,
         "source": "get disposed () {\n    return this.#disposed\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "installed",
-        "line": 131,
+        "line": 132,
         "source": "get installed () {\n    return this.#installed\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "$eagerStart",
-        "line": 136,
+        "line": 137,
         "source": "get $eagerStart () {\n    return this.#eagerStart\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "$lifecycle",
-        "line": 141,
+        "line": 142,
         "source": "get $lifecycle () {\n    return this.#lifecycle\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "$status",
-        "line": 146,
+        "line": 147,
         "source": "get $status () {\n    if (!this.#lifecycle) {\n        return 'static'\n    }\n\n    if (this.#disposed) {\n        return 'disposed'\n    }\n\n    if (this.#started) {\n        return 'started'\n    }\n\n    return 'stopped'\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "running",
-        "line": 163,
+        "line": 164,
         "source": "get running () {\n    return this.#started\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "children",
-        "line": 251,
+        "line": 252,
         "source": "get children () {\n    return this.#childrenRegistry.all\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "childrenRegistry",
-        "line": 256,
+        "line": 257,
         "source": "get childrenRegistry () {\n    return this.#childrenRegistry\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "$tags",
-        "line": 326,
+        "line": 355,
         "source": "get $tags () {\n    return this.#tags.toArray()\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "tags",
-        "line": 339,
+        "line": 368,
         "source": "get tags () {\n    return this.#tags\n}",
         "kind": "method",
         "params": []
@@ -388,7 +397,7 @@
     "setters": [
       {
         "name": "$id",
-        "line": 61,
+        "line": 62,
         "source": "set $id (newId) {\n    const oldId = this.#id\n\n    if (oldId !== newId) {\n        this.#id = newId\n        this.emit('$id:changed', newId, oldId)\n    }\n}",
         "kind": "method",
         "params": [
@@ -397,7 +406,7 @@
       },
       {
         "name": "$name",
-        "line": 76,
+        "line": 77,
         "source": "set $name (newName) {\n    const oldName = this.#name\n\n    if (oldName !== newName) {\n        this.#name = newName\n        this.emit('$name:changed', newName, oldName)\n    }\n}",
         "kind": "method",
         "params": [
@@ -406,7 +415,7 @@
       },
       {
         "name": "$category",
-        "line": 91,
+        "line": 92,
         "source": "set $category (newCategory) {\n    const oldCategory = this.#category\n\n    if (oldCategory !== newCategory) {\n        this.#category = newCategory\n        this.emit('$category:changed', newCategory, oldCategory)\n    }\n}",
         "kind": "method",
         "params": [
@@ -415,7 +424,7 @@
       },
       {
         "name": "$bind",
-        "line": 106,
+        "line": 107,
         "source": "set $bind (newBind) {\n    const oldBind = this.#bind\n\n    if (oldBind !== newBind) {\n        this.#bind = newBind\n        this.emit('$bind:changed', newBind, oldBind)\n    }\n}",
         "kind": "method",
         "params": [
@@ -424,7 +433,7 @@
       },
       {
         "name": "$tags",
-        "line": 331,
+        "line": 360,
         "source": "set $tags (newTags) {\n    this.#tags.clear()\n    if (Array.isArray(newTags)) {\n        newTags.forEach(tag => this.#tags.add(tag))\n    }\n}",
         "kind": "method",
         "params": [
@@ -434,7 +443,7 @@
     ],
     "constructor": {
       "name": "constructor",
-      "line": 35,
+      "line": 36,
       "source": "constructor (options = {}) {\n    super()\n\n    this.options = {...options}\n    this.#name = options.$name || this.constructor.$name || this.constructor.name\n    this.#id = options.$id || this.#name\n    this.#category = options.$category || this.constructor.$category\n    this.#bind = options.$bind\n    this.#eagerStart = (options.$eagerStart ?? this.constructor.$eagerStart) !== false\n    this.#lifecycle = (options.$lifecycle ?? this.constructor.$lifecycle) !== false\n\n    this.#tags = new ObservableSet([\n        ...this.constructor.$tags,\n        ...(options.$tags || [])\n    ])\n\n    this.#childrenRegistry = new Registry()\n    this.#childrenRegistry.addIndex('$category')\n}",
       "kind": "constructor",
       "params": [
@@ -2430,7 +2439,7 @@
     "type": "class",
     "file": "/game/game.js",
     "name": "Game",
-    "line": 6,
+    "line": 7,
     "extends": "Application",
     "statics": [],
     "methods": [],
@@ -2438,11 +2447,119 @@
     "setters": [],
     "constructor": {
       "name": "constructor",
-      "line": 8,
-      "source": "constructor (params = {}) {\n    super(params)\n\n    this.create(GameLoop, {$bind: 'gameLoop'})\n    this.create(RenderSystem, {\n        $bind: 'renderSystem',\n        ...params.renderSystem\n    })\n\n    this.on('update', this.#updateActiveControllers)\n\n    this.configureGame?.(params)\n}",
+      "line": 9,
+      "source": "constructor (params = {}) {\n    super(params)\n\n    this.create(GameLoop, {$bind: 'gameLoop'})\n    this.create(RenderSystem, {\n        $bind: 'renderSystem',\n        ...params.renderSystem\n    })\n    this.create(TextureSystem, {\n        $bind: 'textureSystem',\n        fallback: (id) => this.getSource(id),\n        ...params.textureSystem\n    })\n\n    this.on('update', this.#updateActiveControllers)\n\n    this.configureGame?.(params)\n}",
       "kind": "constructor",
       "params": [
         "params = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/game/entity.doc.js": {
+    "type": "class",
+    "file": "/game/entity.js",
+    "name": "Entity",
+    "line": 5,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "$category",
+        "line": 7,
+        "source": "static $category = 'entity'",
+        "kind": "property",
+        "value": "'entity'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "update",
+        "line": 39,
+        "source": "update () {\n\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [
+      {
+        "name": "x",
+        "line": 19,
+        "source": "get x () {\n    return this.position.x\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "y",
+        "line": 29,
+        "source": "get y () {\n    return this.position.y\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [
+      {
+        "name": "x",
+        "line": 24,
+        "source": "set x (value) {\n    this.position.x = value\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "y",
+        "line": 34,
+        "source": "set y (value) {\n    this.position.y = value\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      }
+    ],
+    "constructor": {
+      "name": "constructor",
+      "line": 9,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    const {x = 0, y = 0} = options\n\n    this.position = new Vec2(x, y)\n    this.velocity = new Vec2(0, 0)\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/game/entity_view.doc.js": {
+    "type": "class",
+    "file": "/game/entity_view.js",
+    "name": "EntityView",
+    "line": 1,
+    "extends": null,
+    "statics": [],
+    "methods": [
+      {
+        "name": "sync",
+        "line": 10,
+        "source": "sync () {\n    if (this.root) {\n        this.root.x = this.entity.x\n        this.root.y = this.entity.y\n    }\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "dispose",
+        "line": 18,
+        "source": "dispose () {\n    if (this.root && this.context.group) {\n        this.context.group.remove(this.root)\n    }\n    this.root = null\n    this.entity = null\n    this.context = null\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 3,
+      "source": "constructor (entity, context) {\n    this.entity = entity\n    this.context = context\n    this.root = null\n}",
+      "kind": "constructor",
+      "params": [
+        "entity",
+        "context"
       ]
     },
     "isDefault": true
@@ -2580,6 +2697,60 @@
         "params = ..."
       ]
     },
+    "isDefault": true
+  },
+  "/game/world.doc.js": {
+    "type": "class",
+    "file": "/game/world.js",
+    "name": "World",
+    "line": 4,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "$category",
+        "line": 6,
+        "source": "static $category = 'world'",
+        "kind": "property",
+        "value": "'world'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "update",
+        "line": 13,
+        "source": "update (deltaTime, context) {\n    if (!this.started) {\n        return\n    }\n\n    this.preUpdate(deltaTime, context)\n\n    for (const entity of this.entities) {\n        if (entity.started) {\n            entity.update(deltaTime)\n        }\n    }\n\n    this.postUpdate(deltaTime, context)\n}",
+        "kind": "method",
+        "params": [
+          "deltaTime",
+          "context"
+        ]
+      },
+      {
+        "name": "preUpdate",
+        "line": 30,
+        "source": "preUpdate () {\n\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "postUpdate",
+        "line": 35,
+        "source": "postUpdate () {\n\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [
+      {
+        "name": "entities",
+        "line": 8,
+        "source": "get entities () {\n    return this.childrenByCategory('entity')\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [],
+    "constructor": null,
     "isDefault": true
   },
   "/game/world_view.doc.js": {
@@ -3286,12 +3457,12 @@
     "type": "class",
     "file": "/render/canvas_renderer.js",
     "name": "CanvasRenderer",
-    "line": 11,
+    "line": 10,
     "extends": "BaseRenderer",
     "statics": [
       {
         "name": "$name",
-        "line": 13,
+        "line": 12,
         "source": "static $name = 'canvasRenderer'",
         "kind": "property",
         "value": "'canvasRenderer'"
@@ -3300,7 +3471,7 @@
     "methods": [
       {
         "name": "registerRenderer",
-        "line": 50,
+        "line": 48,
         "source": "registerRenderer (renderer) {\n    renderer.init({ctx: this.ctx, canvas: this.canvas})\n\n    for (const ObjectClass of renderer.constructor.handles) {\n        this.#rendererRegistry.set(ObjectClass, renderer)\n    }\n\n    if (!this.#renderers.includes(renderer)) {\n        this.#renderers.push(renderer)\n    }\n\n    return this\n}",
         "kind": "method",
         "params": [
@@ -3309,7 +3480,7 @@
       },
       {
         "name": "unregisterRenderer",
-        "line": 65,
+        "line": 63,
         "source": "unregisterRenderer (renderer) {\n    for (const ObjectClass of renderer.constructor.handles) {\n        if (this.#rendererRegistry.get(ObjectClass) === renderer) {\n            this.#rendererRegistry.delete(ObjectClass)\n        }\n    }\n\n    const index = this.#renderers.indexOf(renderer)\n    if (index !== -1) {\n        this.#renderers.splice(index, 1)\n    }\n\n    renderer.dispose()\n    return this\n}",
         "kind": "method",
         "params": [
@@ -3318,14 +3489,14 @@
       },
       {
         "name": "onDispose",
-        "line": 82,
+        "line": 80,
         "source": "onDispose () {\n    for (const renderer of this.#renderers) {\n        renderer.dispose()\n    }\n    this.#renderers = []\n    this.#rendererRegistry.clear()\n\n    if (this.#debugGizmoRenderer) {\n        this.#debugGizmoRenderer.dispose()\n        this.#debugGizmoRenderer = null\n    }\n\n    super.onDispose()\n    this.ctx = null\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "render",
-        "line": 99,
+        "line": 97,
         "source": "render (scene) {\n    const ctx = this.ctx\n\n    this.stats.totalObjects = 0\n    this.stats.renderedObjects = 0\n    this.stats.culledObjects = 0\n\n    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)\n\n    if (this.backgroundColor && this.backgroundColor !== 'transparent') {\n        ctx.fillStyle = this.backgroundColor\n        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)\n    }\n\n    this.camera.update()\n\n    ctx.save()\n    this.camera.applyToContext(ctx, this.pixelRatio)\n\n    scene.updateWorldMatrix(false)\n\n    for (const renderer of this.#renderers) {\n        renderer.reset()\n    }\n\n    const debugGizmoRenderer = this.enableDebugGizmos ? this.#debugGizmoRenderer : null\n    if (debugGizmoRenderer) {\n        debugGizmoRenderer.reset()\n    }\n\n    traverseAndCollect(scene, this.#rendererRegistry, {\n        camera: this.camera,\n        enableCulling: this.enableCulling,\n        stats: this.stats,\n        debugGizmoRenderer\n    })\n\n    for (const renderer of this.#renderers) {\n        renderer.flush()\n    }\n\n    if (debugGizmoRenderer) {\n        debugGizmoRenderer.flush()\n    }\n\n    ctx.restore()\n}",
         "kind": "method",
         "params": [
@@ -3337,7 +3508,7 @@
     "setters": [],
     "constructor": {
       "name": "constructor",
-      "line": 19,
+      "line": 18,
       "source": "constructor (options = {}) {\n    super(options)\n\n    this.ctx = this.canvas.getContext('2d')\n\n    this.#setupDefaultRenderers()\n    this.applyPixelRatio()\n\n    this.backgroundColor = options.backgroundColor ?? null\n    this.enableCulling = options.enableCulling ?? false\n    this.enableDebugGizmos = options.enableDebugGizmos ?? true\n\n    this.stats = {\n        totalObjects: 0,\n        renderedObjects: 0,\n        culledObjects: 0\n    }\n}",
       "kind": "constructor",
       "params": [
@@ -3604,35 +3775,6 @@
     },
     "isDefault": true
   },
-  "/render/image_2d.doc.js": {
-    "type": "class",
-    "file": "/render/image_2d.js",
-    "name": "Image2D",
-    "line": 4,
-    "extends": "Object2D",
-    "statics": [],
-    "methods": [
-      {
-        "name": "getBounds",
-        "line": 15,
-        "source": "getBounds () {\n    const offsetX = -this.width * this.anchorX\n    const offsetY = -this.height * this.anchorY\n\n    return {\n        minX: offsetX,\n        minY: offsetY,\n        maxX: offsetX + this.width,\n        maxY: offsetY + this.height,\n        width: this.width,\n        height: this.height\n    }\n}",
-        "kind": "method",
-        "params": []
-      }
-    ],
-    "getters": [],
-    "setters": [],
-    "constructor": {
-      "name": "constructor",
-      "line": 6,
-      "source": "constructor (options = {}) {\n    super(options)\n\n    this.image = options.image ?? null\n    this.width = options.width ?? 10\n    this.height = options.height ?? 10\n}",
-      "kind": "constructor",
-      "params": [
-        "options = ..."
-      ]
-    },
-    "isDefault": true
-  },
   "/render/object_2d.doc.js": {
     "type": "class",
     "file": "/render/object_2d.js",
@@ -3849,14 +3991,14 @@
     "type": "class",
     "file": "/render/sprite.js",
     "name": "Sprite",
-    "line": 4,
+    "line": 5,
     "extends": "Object2D",
     "statics": [],
     "methods": [
       {
         "name": "setFrame",
-        "line": 19,
-        "source": "setFrame (frame) {\n    this.currentFrame = frame\n}",
+        "line": 57,
+        "source": "setFrame (frame) {\n    if (frame instanceof TextureRegion) {\n        this.#region = frame\n    } else if (frame && frame.frame) {\n        const image = frame.image\n        this.#region = TextureRegion.fromFrame(image, frame.frame)\n    } else {\n        this.#region = null\n    }\n}",
         "kind": "method",
         "params": [
           "frame"
@@ -3864,7 +4006,7 @@
       },
       {
         "name": "addAnimation",
-        "line": 24,
+        "line": 69,
         "source": "addAnimation (name, animation) {\n    this.animations.set(name, animation)\n}",
         "kind": "method",
         "params": [
@@ -3874,7 +4016,7 @@
       },
       {
         "name": "play",
-        "line": 29,
+        "line": 74,
         "source": "play (name) {\n    const animation = this.animations.get(name)\n    if (animation) {\n        if (this.currentAnimation && this.currentAnimation !== animation) {\n            this.currentAnimation.stop()\n        }\n        this.currentAnimation = animation\n        this.currentAnimation.play()\n    }\n}",
         "kind": "method",
         "params": [
@@ -3883,25 +4025,66 @@
       },
       {
         "name": "stop",
-        "line": 41,
+        "line": 86,
         "source": "stop () {\n    if (this.currentAnimation) {\n        this.currentAnimation.stop()\n        this.currentAnimation = null\n    }\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "getBounds",
-        "line": 49,
-        "source": "getBounds () {\n    if (!this.currentFrame) {\n        return super.getBounds()\n    }\n\n    const {w, h} = this.currentFrame.frame\n\n    let renderW = w\n    let renderH = h\n\n    if (this.width !== null) {\n        renderW = this.width\n        renderH = (h / w) * renderW\n    } else if (this.height !== null) {\n        renderH = this.height\n        renderW = (w / h) * renderH\n    }\n\n    const offsetX = -renderW * this.anchorX\n    const offsetY = -renderH * this.anchorY\n\n    return {\n        minX: offsetX,\n        minY: offsetY,\n        maxX: offsetX + renderW,\n        maxY: offsetY + renderH,\n        width: renderW,\n        height: renderH\n    }\n}",
+        "line": 94,
+        "source": "getBounds () {\n    const region = this.#region\n    const hasWidth = this.width !== null\n    const hasHeight = this.height !== null\n\n    if (!region) {\n        const renderW = hasWidth ? this.width : 10\n        const renderH = hasHeight ? this.height : 10\n        const offsetX = -renderW * this.anchorX\n        const offsetY = -renderH * this.anchorY\n\n        return {\n            minX: offsetX,\n            minY: offsetY,\n            maxX: offsetX + renderW,\n            maxY: offsetY + renderH,\n            width: renderW,\n            height: renderH\n        }\n    }\n\n    const w = region.width\n    const h = region.height\n\n    let renderW\n    let renderH\n\n    if (hasWidth && hasHeight) {\n        renderW = this.width\n        renderH = this.height\n    } else if (hasWidth) {\n        renderW = this.width\n        renderH = (h / w) * renderW\n    } else if (hasHeight) {\n        renderH = this.height\n        renderW = (w / h) * renderH\n    } else {\n        renderW = w\n        renderH = h\n    }\n\n    const offsetX = -renderW * this.anchorX\n    const offsetY = -renderH * this.anchorY\n\n    return {\n        minX: offsetX,\n        minY: offsetY,\n        maxX: offsetX + renderW,\n        maxY: offsetY + renderH,\n        width: renderW,\n        height: renderH\n    }\n}",
         "kind": "method",
         "params": []
       }
     ],
-    "getters": [],
-    "setters": [],
+    "getters": [
+      {
+        "name": "region",
+        "line": 28,
+        "source": "get region () {\n    return this.#region\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "image",
+        "line": 38,
+        "source": "get image () {\n    return this.#region?.image ?? null\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "currentFrame",
+        "line": 52,
+        "source": "get currentFrame () {\n    return this.#region\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [
+      {
+        "name": "region",
+        "line": 33,
+        "source": "set region (value) {\n    this.#region = value\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "image",
+        "line": 43,
+        "source": "set image (value) {\n    if (value) {\n        this.#region = TextureRegion.fromImage(value)\n    } else {\n        this.#region = null\n    }\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      }
+    ],
     "constructor": {
       "name": "constructor",
-      "line": 6,
-      "source": "constructor (options = {}) {\n    super(options)\n\n    this.image = options.image || null\n    this.currentFrame = options.frame || null\n    this.width = options.width ?? null\n    this.height = options.height ?? null\n\n    this.animations = new Map()\n    this.currentAnimation = null\n}",
+      "line": 9,
+      "source": "constructor (options = {}) {\n    super(options)\n\n    this.width = options.width ?? null\n    this.height = options.height ?? null\n\n    this.animations = new Map()\n    this.currentAnimation = null\n\n    if (options.region) {\n        this.#region = options.region\n    } else if (options.frame) {\n        this.setFrame(options.frame)\n    } else if (options.image) {\n        this.#region = TextureRegion.fromImage(options.image)\n    }\n}",
       "kind": "constructor",
       "params": [
         "options = ..."
@@ -4112,6 +4295,375 @@
       "source": "constructor () {\n    this.parent = null\n    this.children = []\n    this.#sortedChildren = null\n    this.#childrenNeedSort = false\n\n    this.#localMatrix = [1, 0, 0, 1, 0, 0]\n    this.#worldMatrix = [1, 0, 0, 1, 0, 0]\n    this.#dirty = true\n}",
       "kind": "constructor",
       "params": []
+    },
+    "isDefault": true
+  },
+  "/render/textures/texture_atlas.doc.js": {
+    "type": "class",
+    "file": "/render/textures/texture_atlas.js",
+    "name": "TextureAtlas",
+    "line": 10,
+    "extends": null,
+    "statics": [
+      {
+        "name": "DEFAULT_SIZE",
+        "line": 118,
+        "source": "static get DEFAULT_SIZE () {\n    return DEFAULT_SIZE\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "MAX_SIZE",
+        "line": 123,
+        "source": "static get MAX_SIZE () {\n    return MAX_SIZE\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "methods": [
+      {
+        "name": "markClean",
+        "line": 49,
+        "source": "markClean () {\n    this.#dirty = false\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "add",
+        "line": 54,
+        "source": "add (id, image) {\n    if (this.#regions.has(id)) {\n        return this.#regions.get(id)\n    }\n\n    const slot = this.#packer.pack(image.width, image.height)\n\n    if (!slot) {\n        return null\n    }\n\n    this.#ctx.drawImage(image, slot.x, slot.y)\n\n    const region = new TextureRegion({\n        image: this.#canvas,\n        x: slot.x,\n        y: slot.y,\n        width: image.width,\n        height: image.height\n    })\n\n    this.#regions.set(id, region)\n    this.#dirty = true\n\n    return region\n}",
+        "kind": "method",
+        "params": [
+          "id",
+          "image"
+        ]
+      },
+      {
+        "name": "get",
+        "line": 82,
+        "source": "get (id) {\n    return this.#regions.get(id) || null\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "name": "has",
+        "line": 87,
+        "source": "has (id) {\n    return this.#regions.has(id)\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "name": "getAllRegions",
+        "line": 92,
+        "source": "getAllRegions () {\n    return this.#regions\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "canFit",
+        "line": 97,
+        "source": "canFit (width, height) {\n    return this.#packer.canFit(width, height)\n}",
+        "kind": "method",
+        "params": [
+          "width",
+          "height"
+        ]
+      },
+      {
+        "name": "clear",
+        "line": 102,
+        "source": "clear () {\n    this.#ctx.clearRect(0, 0, this.width, this.height)\n    this.#packer = new ShelfPacker(this.width, this.height, this.padding)\n    this.#regions.clear()\n    this.#dirty = true\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "dispose",
+        "line": 110,
+        "source": "dispose () {\n    this.#canvas = null\n    this.#ctx = null\n    this.#packer = null\n    this.#regions.clear()\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [
+      {
+        "name": "canvas",
+        "line": 29,
+        "source": "get canvas () {\n    return this.#canvas\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "dirty",
+        "line": 34,
+        "source": "get dirty () {\n    return this.#dirty\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "full",
+        "line": 39,
+        "source": "get full () {\n    return this.#packer.full\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "regionCount",
+        "line": 44,
+        "source": "get regionCount () {\n    return this.#regions.size\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 18,
+      "source": "constructor (options = {}) {\n    this.width = options.width ?? DEFAULT_SIZE\n    this.height = options.height ?? DEFAULT_SIZE\n    this.padding = options.padding ?? PADDING\n\n    this.#canvas = createCanvas(this.width, this.height)\n    this.#ctx = this.#canvas.getContext('2d')\n    this.#packer = new ShelfPacker(this.width, this.height, this.padding)\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/textures/texture_region.doc.js": {
+    "type": "class",
+    "file": "/render/textures/texture_region.js",
+    "name": "TextureRegion",
+    "line": 1,
+    "extends": null,
+    "statics": [
+      {
+        "name": "fromImage",
+        "line": 69,
+        "source": "static fromImage (image) {\n    return new TextureRegion({\n        image,\n        x: 0,\n        y: 0,\n        width: image?.width || 0,\n        height: image?.height || 0\n    })\n}",
+        "kind": "method",
+        "params": [
+          "image"
+        ]
+      },
+      {
+        "name": "fromFrame",
+        "line": 80,
+        "source": "static fromFrame (image, frame) {\n    return new TextureRegion({\n        image,\n        x: frame.x,\n        y: frame.y,\n        width: frame.w ?? frame.width,\n        height: frame.h ?? frame.height\n    })\n}",
+        "kind": "method",
+        "params": [
+          "image",
+          "frame"
+        ]
+      }
+    ],
+    "methods": [],
+    "getters": [
+      {
+        "name": "u0",
+        "line": 12,
+        "source": "get u0 () {\n    if (!this.image || !this.image.width) {\n        return 0\n    }\n    return this.x / this.image.width\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "v0",
+        "line": 20,
+        "source": "get v0 () {\n    if (!this.image || !this.image.height) {\n        return 0\n    }\n    return this.y / this.image.height\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "u1",
+        "line": 28,
+        "source": "get u1 () {\n    if (!this.image || !this.image.width) {\n        return 1\n    }\n    return (this.x + this.width) / this.image.width\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "v1",
+        "line": 36,
+        "source": "get v1 () {\n    if (!this.image || !this.image.height) {\n        return 1\n    }\n    return (this.y + this.height) / this.image.height\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "uvs",
+        "line": 44,
+        "source": "get uvs () {\n    return {\n        u0: this.u0,\n        v0: this.v0,\n        u1: this.u1,\n        v1: this.v1\n    }\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "bounds",
+        "line": 54,
+        "source": "get bounds () {\n    return {\n        x: this.x,\n        y: this.y,\n        width: this.width,\n        height: this.height\n    }\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "valid",
+        "line": 64,
+        "source": "get valid () {\n    return this.image !== null && this.width > 0 && this.height > 0\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 3,
+      "source": "constructor (options = {}) {\n    this.image = options.image || null\n    this.x = options.x ?? 0\n    this.y = options.y ?? 0\n    this.width = options.width ?? getImageWidth(this.image)\n    this.height = options.height ?? getImageHeight(this.image)\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
+    },
+    "isDefault": true
+  },
+  "/render/textures/texture_system.doc.js": {
+    "type": "class",
+    "file": "/render/textures/texture_system.js",
+    "name": "TextureSystem",
+    "line": 6,
+    "extends": "PerkyModule",
+    "statics": [
+      {
+        "name": "$category",
+        "line": 8,
+        "source": "static $category = 'textureSystem'",
+        "kind": "property",
+        "value": "'textureSystem'"
+      }
+    ],
+    "methods": [
+      {
+        "name": "onInstall",
+        "line": 22,
+        "source": "onInstall (host) {\n    this.delegateTo(host, [\n        'getRegion',\n        'hasRegion',\n        'addRegion',\n        'addRegions',\n        'registerManualAtlas'\n    ])\n}",
+        "kind": "method",
+        "params": [
+          "host"
+        ]
+      },
+      {
+        "name": "getRegion",
+        "line": 48,
+        "source": "getRegion (id) {\n    const region = this.#manualRegions.get(id) || this.#atlasManager.get(id)\n    if (region) {\n        return region\n    }\n\n    const source = this.fallback?.(id)\n    if (source) {\n        return TextureRegion.fromImage(source)\n    }\n\n    return null\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "name": "hasRegion",
+        "line": 63,
+        "source": "hasRegion (id) {\n    return this.#manualRegions.has(id) || this.#atlasManager.has(id)\n}",
+        "kind": "method",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "name": "addRegion",
+        "line": 68,
+        "source": "addRegion (id, image) {\n    if (this.hasRegion(id)) {\n        return this.getRegion(id)\n    }\n\n    return this.#atlasManager.add(id, image)\n}",
+        "kind": "method",
+        "params": [
+          "id",
+          "image"
+        ]
+      },
+      {
+        "name": "addRegions",
+        "line": 77,
+        "source": "addRegions (images) {\n    return this.#atlasManager.addBatch(images)\n}",
+        "kind": "method",
+        "params": [
+          "images"
+        ]
+      },
+      {
+        "name": "registerManualAtlas",
+        "line": 82,
+        "source": "registerManualAtlas (id, image, frames) {\n    for (const [frameName, frameData] of Object.entries(frames)) {\n        const regionId = `${id}:${frameName}`\n        const region = TextureRegion.fromFrame(image, frameData)\n        this.#manualRegions.set(regionId, region)\n    }\n}",
+        "kind": "method",
+        "params": [
+          "id",
+          "image",
+          "frames"
+        ]
+      },
+      {
+        "name": "buildFromAssets",
+        "line": 91,
+        "source": "buildFromAssets (assets) {\n    const images = {}\n\n    for (const asset of assets) {\n        if (isImageAsset(asset) && asset.source) {\n            images[asset.id] = asset.source\n        }\n    }\n\n    return this.addRegions(images)\n}",
+        "kind": "method",
+        "params": [
+          "assets"
+        ]
+      },
+      {
+        "name": "getDirtyAtlases",
+        "line": 104,
+        "source": "getDirtyAtlases () {\n    return this.#atlasManager.getDirtyAtlases()\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "markAllClean",
+        "line": 109,
+        "source": "markAllClean () {\n    this.#atlasManager.markAllClean()\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "clear",
+        "line": 114,
+        "source": "clear () {\n    this.#atlasManager.clear()\n    this.#manualRegions.clear()\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "onDispose",
+        "line": 120,
+        "source": "onDispose () {\n    this.clear()\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "getters": [
+      {
+        "name": "atlasManager",
+        "line": 33,
+        "source": "get atlasManager () {\n    return this.#atlasManager\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "atlases",
+        "line": 38,
+        "source": "get atlases () {\n    return this.#atlasManager.atlases\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "regionCount",
+        "line": 43,
+        "source": "get regionCount () {\n    return this.#atlasManager.regionCount + this.#manualRegions.size\n}",
+        "kind": "method",
+        "params": []
+      }
+    ],
+    "setters": [],
+    "constructor": {
+      "name": "constructor",
+      "line": 13,
+      "source": "constructor (options = {}) {\n    super(options)\n    this.#atlasManager = new TextureAtlasManager({\n        atlasSize: options.atlasSize\n    })\n    this.fallback = options.fallback ?? null\n}",
+      "kind": "constructor",
+      "params": [
+        "options = ..."
+      ]
     },
     "isDefault": true
   },
@@ -5058,12 +5610,12 @@
     "type": "class",
     "file": "/editor/perky_explorer.js",
     "name": "PerkyExplorer",
-    "line": 10,
+    "line": 24,
     "extends": "BaseEditorComponent",
     "statics": [
       {
         "name": "observedAttributes",
-        "line": 12,
+        "line": 26,
         "source": "static observedAttributes = ['embedded']",
         "kind": "property",
         "value": "['embedded']"
@@ -5072,21 +5624,21 @@
     "methods": [
       {
         "name": "connectedCallback",
-        "line": 36,
+        "line": 53,
         "source": "connectedCallback () {\n    this.#buildDOM()\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "disconnectedCallback",
-        "line": 41,
+        "line": 58,
         "source": "disconnectedCallback () {\n    if (this.#contextMenuEl && this.#contextMenuEl.parentNode) {\n        this.#contextMenuEl.parentNode.removeChild(this.#contextMenuEl)\n    }\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "attributeChangedCallback",
-        "line": 48,
+        "line": 65,
         "source": "attributeChangedCallback (name, oldValue, newValue) {\n    if (oldValue === newValue) {\n        return\n    }\n\n    if (name === 'embedded') {\n        this.#embedded = newValue !== null\n        this.#updateEmbeddedMode()\n    }\n}",
         "kind": "method",
         "params": [
@@ -5096,8 +5648,17 @@
         ]
       },
       {
+        "name": "isSystemModule",
+        "line": 119,
+        "source": "isSystemModule (module) {\n    return module && this.#systemCategories.includes(module.$category)\n}",
+        "kind": "method",
+        "params": [
+          "module"
+        ]
+      },
+      {
         "name": "setModule",
-        "line": 76,
+        "line": 124,
         "source": "setModule (module) {\n    this.#module = module\n    this.#rootModule = module\n    this.#selectedModule = null\n\n    if (this.#rootNode) {\n        this.#rootNode.setModule(module, 0)\n        if (module) {\n            this.#rootNode.setExpanded(true)\n        }\n    }\n\n    this.#updateTreeVisibility()\n    this.#updateDetails()\n    this.#updateHeaderControls()\n    this.#closeSceneTree()\n}",
         "kind": "method",
         "params": [
@@ -5106,14 +5667,14 @@
       },
       {
         "name": "getModule",
-        "line": 95,
+        "line": 143,
         "source": "getModule () {\n    return this.#module\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "focusModule",
-        "line": 466,
+        "line": 550,
         "source": "focusModule (module) {\n    if (!module) {\n        return\n    }\n\n    this.#rootModule = module\n    this.#rootNode.setModule(module, 0)\n    this.#rootNode.setExpanded(true)\n    this.#updateHeaderControls()\n\n\n    if (this.#selectedModule) {\n        const node = this.#rootNode.findNode(n => n.getModule() === this.#selectedModule)\n        if (node) {\n            node.setSelected(true)\n        } else {\n\n\n            this.#handleNodeSelect(module)\n        }\n    }\n}",
         "kind": "method",
         "params": [
@@ -5124,8 +5685,22 @@
     "getters": [
       {
         "name": "embedded",
-        "line": 60,
+        "line": 77,
         "source": "get embedded () {\n    return this.#embedded\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "systemCategories",
+        "line": 93,
+        "source": "get systemCategories () {\n    return this.#systemCategories\n}",
+        "kind": "method",
+        "params": []
+      },
+      {
+        "name": "showSystemModules",
+        "line": 104,
+        "source": "get showSystemModules () {\n    return this.#showSystemModules\n}",
         "kind": "method",
         "params": []
       }
@@ -5133,8 +5708,26 @@
     "setters": [
       {
         "name": "embedded",
-        "line": 65,
+        "line": 82,
         "source": "set embedded (value) {\n    this.#embedded = value\n    if (value) {\n        this.setAttribute('embedded', '')\n    } else {\n        this.removeAttribute('embedded')\n    }\n    this.#updateEmbeddedMode()\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "systemCategories",
+        "line": 98,
+        "source": "set systemCategories (value) {\n    this.#systemCategories = value\n    this.#refresh()\n}",
+        "kind": "method",
+        "params": [
+          "value"
+        ]
+      },
+      {
+        "name": "showSystemModules",
+        "line": 109,
+        "source": "set showSystemModules (value) {\n    this.#showSystemModules = value\n    this.#updateLayersButton()\n    this.#refresh()\n    this.dispatchEvent(new CustomEvent('showSystemModules:change', {\n        detail: {showSystemModules: value}\n    }))\n}",
         "kind": "method",
         "params": [
           "value"
@@ -5858,11 +6451,11 @@
           "containerEl",
           "sectionSetup = ..."
         ],
-        "source": "async function executeContainer (block, containerEl, sectionSetup = null) {\n    addSpacerIfNeeded()\n\n    const prevApp = containerEl._currentApp\n    if (prevApp?.dispose) {\n        prevApp.dispose()\n    }\n    containerEl.innerHTML = ''\n\n    if (block.preset) {\n        applyContainerPreset(containerEl, block.preset)\n    }\n\n    if (block.scrollable) {\n        containerEl.style.overflow = 'auto'\n    }\n\n    try {\n        let actionsBar = null\n        let slidersBar = null\n        let infoBar = null\n\n        const ctx = {\n            container: containerEl,\n            setApp: (app, ...args) => {\n                containerEl._currentApp = app\n                const [scene] = args\n                if (scene && app.autoFitEnabled && app.render) {\n                    app.on('resize', () => app.render(scene))\n                }\n            },\n            action: (label, callback) => {\n                if (!actionsBar) {\n                    actionsBar = document.createElement('div')\n                    actionsBar.className = 'doc-actions-bar'\n                    containerEl.appendChild(actionsBar)\n                }\n\n                const isFirst = actionsBar.children.length === 0\n                const btn = document.createElement('button')\n                btn.className = 'doc-actions-btn'\n                if (isFirst) {\n                    btn.classList.add('doc-actions-btn--active')\n                }\n                btn.textContent = label\n                btn.addEventListener('click', () => {\n                    actionsBar.querySelectorAll('.doc-actions-btn').forEach(b => b.classList.remove('doc-actions-btn--active'))\n                    btn.classList.add('doc-actions-btn--active')\n                    callback()\n                })\n                actionsBar.appendChild(btn)\n\n                if (isFirst) {\n                    callback()\n                }\n            },\n            slider: (label, opts, onChange) => {\n                if (!slidersBar) {\n                    slidersBar = document.createElement('div')\n                    slidersBar.className = 'doc-sliders-bar'\n                    containerEl.appendChild(slidersBar)\n                }\n\n                const wrapper = document.createElement('div')\n                wrapper.className = 'doc-slider-wrapper'\n\n                const labelEl = document.createElement('span')\n                labelEl.className = 'doc-slider-label'\n                labelEl.textContent = label\n\n                const valueEl = document.createElement('span')\n                valueEl.className = 'doc-slider-value'\n                valueEl.textContent = opts.default ?? opts.min\n\n                const input = document.createElement('input')\n                input.type = 'range'\n                input.className = 'doc-slider'\n                input.min = opts.min\n                input.max = opts.max\n                input.step = opts.step ?? (opts.max - opts.min) / 100\n                input.value = opts.default ?? opts.min\n\n                input.addEventListener('input', () => {\n                    const value = parseFloat(input.value)\n                    valueEl.textContent = Number.isInteger(value) ? value : value.toFixed(2)\n                    onChange(value)\n                })\n\n                wrapper.appendChild(labelEl)\n                wrapper.appendChild(input)\n                wrapper.appendChild(valueEl)\n                slidersBar.appendChild(wrapper)\n\n                onChange(parseFloat(input.value))\n            },\n            info: (formatter) => {\n                if (!infoBar) {\n                    infoBar = document.createElement('div')\n                    infoBar.className = 'doc-info-bar'\n                    containerEl.appendChild(infoBar)\n                }\n\n                const el = document.createElement('div')\n                el.className = 'doc-info'\n                infoBar.appendChild(el)\n                const update = (...args) => {\n                    el.textContent = formatter(...args)\n                }\n                update()\n                return update\n            },\n            hint: (message) => {\n                const el = document.createElement('div')\n                el.className = 'doc-hint'\n                el.textContent = message\n                containerEl.appendChild(el)\n            },\n            display: (formatter) => {\n                const el = document.createElement('div')\n                el.className = 'doc-display'\n                containerEl.appendChild(el)\n                const update = (...args) => {\n                    const result = formatter(...args)\n                    if (result instanceof HTMLElement) {\n                        el.innerHTML = ''\n                        el.appendChild(result)\n                    } else if (Array.isArray(result)) {\n                        el.innerHTML = result.map(item => `<span class=\"doc-display-tag\">${item}</span>`).join('')\n                    } else {\n                        el.innerHTML = result\n                    }\n                }\n                update()\n                return update\n            },\n            box: (opts = {}) => {\n                const size = opts.size || 40\n                const color = opts.color || '#4a9eff'\n                const el = document.createElement('div')\n                el.style.cssText = `width:${size}px;height:${size}px;background:${color};position:absolute;border-radius:4px;left:50%;top:50%;transform:translate(-50%,-50%)`\n                containerEl.appendChild(el)\n                return el\n            },\n            marker: (x = 0, y = 0, opts = {}) => {\n                const size = opts.size || 20\n                const color = opts.color || '#4a9eff'\n                const el = document.createElement('div')\n                el.style.cssText = `width:${size}px;height:${size}px;background:${color};position:absolute;border-radius:50%;transform:translate(-50%,-50%);left:${x}px;top:${y}px`\n                containerEl.appendChild(el)\n                return el\n            }\n        }\n\n        if (sectionSetup?.fn) {\n            await sectionSetup.fn(ctx)\n        }\n        await block.fn(ctx)\n\n        if (containerEl.tabIndex >= 0) {\n            containerEl.focus()\n        }\n    } catch (error) {\n        logger.error('Container error:', error.message)\n    }\n}"
+        "source": "async function executeContainer (block, containerEl, sectionSetup = null) {\n    addSpacerIfNeeded()\n\n    const prevApp = containerEl._currentApp\n    if (prevApp?.dispose) {\n        prevApp.dispose()\n    }\n    containerEl.innerHTML = ''\n\n    if (block.preset) {\n        applyContainerPreset(containerEl, block.preset)\n    }\n\n    if (block.scrollable) {\n        containerEl.style.overflow = 'auto'\n    }\n\n    try {\n        let actionsBar = null\n        let slidersBar = null\n        let infoBar = null\n\n        const ctx = {\n            container: containerEl,\n            setApp: (app, ...args) => {\n                containerEl._currentApp = app\n                const [scene] = args\n                if (scene && app.autoFitEnabled && app.render) {\n                    app.on('resize', () => app.render(scene))\n                }\n            },\n            action: (label, callback) => {\n                if (!actionsBar) {\n                    actionsBar = document.createElement('div')\n                    actionsBar.className = 'doc-actions-bar'\n                    containerEl.appendChild(actionsBar)\n                }\n\n                const isFirst = actionsBar.children.length === 0\n                const btn = document.createElement('button')\n                btn.className = 'doc-actions-btn'\n                if (isFirst) {\n                    btn.classList.add('doc-actions-btn--active')\n                }\n                btn.textContent = label\n                btn.addEventListener('click', () => {\n                    actionsBar.querySelectorAll('.doc-actions-btn').forEach(b => b.classList.remove('doc-actions-btn--active'))\n                    btn.classList.add('doc-actions-btn--active')\n                    callback()\n                })\n                actionsBar.appendChild(btn)\n\n                if (isFirst) {\n                    callback()\n                }\n            },\n            slider: (label, opts, onChange) => {\n                if (!slidersBar) {\n                    slidersBar = document.createElement('div')\n                    slidersBar.className = 'doc-sliders-bar'\n                    containerEl.appendChild(slidersBar)\n                }\n\n                const wrapper = document.createElement('div')\n                wrapper.className = 'doc-slider-wrapper'\n\n                const labelEl = document.createElement('span')\n                labelEl.className = 'doc-slider-label'\n                labelEl.textContent = label\n\n                const valueEl = document.createElement('span')\n                valueEl.className = 'doc-slider-value'\n                valueEl.textContent = opts.default ?? opts.min\n\n                const input = document.createElement('input')\n                input.type = 'range'\n                input.className = 'doc-slider'\n                input.min = opts.min\n                input.max = opts.max\n                input.step = opts.step ?? (opts.max - opts.min) / 100\n                input.value = opts.default ?? opts.min\n\n                input.addEventListener('input', () => {\n                    const value = parseFloat(input.value)\n                    valueEl.textContent = Number.isInteger(value) ? value : value.toFixed(2)\n                    onChange(value)\n                })\n\n                wrapper.appendChild(labelEl)\n                wrapper.appendChild(input)\n                wrapper.appendChild(valueEl)\n                slidersBar.appendChild(wrapper)\n\n                onChange(parseFloat(input.value))\n            },\n            info: (formatter) => {\n                if (!infoBar) {\n                    infoBar = document.createElement('div')\n                    infoBar.className = 'doc-info-bar'\n                    containerEl.appendChild(infoBar)\n                }\n\n                const el = document.createElement('div')\n                el.className = 'doc-info'\n                infoBar.appendChild(el)\n                const update = (...args) => {\n                    el.textContent = formatter(...args)\n                }\n                update()\n                return update\n            },\n            hint: (message) => {\n                const el = document.createElement('div')\n                el.className = 'doc-hint'\n                el.textContent = message\n                containerEl.appendChild(el)\n            },\n            display: (formatter) => {\n                const el = document.createElement('div')\n                el.className = 'doc-display'\n                containerEl.appendChild(el)\n                const update = (...args) => {\n                    const result = formatter(...args)\n                    if (result instanceof HTMLElement) {\n                        el.innerHTML = ''\n                        el.appendChild(result)\n                    } else if (Array.isArray(result)) {\n                        el.innerHTML = result.map(item => `<span class=\"doc-display-tag\">${item}</span>`).join('')\n                    } else {\n                        el.innerHTML = result\n                    }\n                }\n                update()\n                return update\n            },\n            box: (opts = {}) => {\n                const size = opts.size || 40\n                const color = opts.color || '#4a9eff'\n                const el = document.createElement('div')\n                el.style.cssText = `width:${size}px;height:${size}px;background:${color};position:absolute;border-radius:4px;left:50%;top:50%;transform:translate(-50%,-50%)`\n                containerEl.appendChild(el)\n                return el\n            },\n            marker: (x = 0, y = 0, opts = {}) => {\n                const size = opts.size || 20\n                const color = opts.color || '#4a9eff'\n                const el = document.createElement('div')\n                el.style.cssText = `width:${size}px;height:${size}px;background:${color};position:absolute;border-radius:50%;transform:translate(-50%,-50%);left:${x}px;top:${y}px`\n                containerEl.appendChild(el)\n                return el\n            },\n            column: (opts = {}) => {\n                const gap = opts.gap || 4\n                const el = document.createElement('div')\n                el.style.cssText = `display:flex;flex-direction:column;align-items:center;gap:${gap}px;`\n                if (opts.parent) {\n                    opts.parent.appendChild(el)\n                } else {\n                    containerEl.appendChild(el)\n                }\n                return el\n            },\n            row: (opts = {}) => {\n                const gap = opts.gap || 8\n                const el = document.createElement('div')\n                el.style.cssText = `display:flex;flex-direction:row;align-items:center;gap:${gap}px;flex-wrap:wrap;justify-content:center;`\n                if (opts.parent) {\n                    opts.parent.appendChild(el)\n                } else {\n                    containerEl.appendChild(el)\n                }\n                return el\n            },\n            label: (content, opts = {}) => {\n                const el = document.createElement('div')\n                el.style.cssText = 'color:#666;font-family:monospace;font-size:11px;'\n                el.textContent = content\n                if (opts.parent) {\n                    opts.parent.appendChild(el)\n                } else {\n                    containerEl.appendChild(el)\n                }\n                return el\n            },\n            checkerBoard: (opts = {}) => {\n                const size = opts.size || 8\n                const color1 = opts.color1 || '#222'\n                const color2 = opts.color2 || '#1a1a1a'\n                const el = document.createElement('div')\n                el.style.cssText = `background:repeating-conic-gradient(${color1} 0% 25%, ${color2} 0% 50%) 50% / ${size * 2}px ${size * 2}px;border:1px solid #333;overflow:hidden;`\n                if (opts.width) {\n                    el.style.width = opts.width + 'px'\n                }\n                if (opts.height) {\n                    el.style.height = opts.height + 'px'\n                }\n                if (opts.parent) {\n                    opts.parent.appendChild(el)\n                } else {\n                    containerEl.appendChild(el)\n                }\n                return el\n            },\n            canvas: (source, opts = {}) => {\n                const wrapper = document.createElement('div')\n                const size = opts.checkerSize || 8\n                wrapper.style.cssText = `background:repeating-conic-gradient(#222 0% 25%, #1a1a1a 0% 50%) 50% / ${size * 2}px ${size * 2}px;border:1px solid #333;display:inline-block;`\n                if (opts.parent) {\n                    opts.parent.appendChild(wrapper)\n                } else {\n                    containerEl.appendChild(wrapper)\n                }\n\n                const displayCanvas = document.createElement('canvas')\n                displayCanvas.style.cssText = 'display:block;'\n                if (opts.maxWidth) {\n                    displayCanvas.style.maxWidth = opts.maxWidth + 'px'\n                    displayCanvas.style.height = 'auto'\n                }\n                wrapper.appendChild(displayCanvas)\n\n                const update = (src) => {\n                    const canvas = src || source\n                    displayCanvas.width = canvas.width\n                    displayCanvas.height = canvas.height\n                    const dctx = displayCanvas.getContext('2d')\n                    dctx.clearRect(0, 0, canvas.width, canvas.height)\n                    dctx.drawImage(canvas, 0, 0)\n                }\n\n                if (source) {\n                    update(source)\n                }\n\n                return {element: wrapper, canvas: displayCanvas, update}\n            }\n        }\n\n        if (sectionSetup?.fn) {\n            await sectionSetup.fn(ctx)\n        }\n        await block.fn(ctx)\n\n        if (containerEl.tabIndex >= 0) {\n            containerEl.focus()\n        }\n    } catch (error) {\n        logger.error('Container error:', error.message)\n    }\n}"
       },
       {
         "name": "renderAction",
-        "line": 447,
+        "line": 532,
         "params": [
           "block",
           "sectionSetup = ...",

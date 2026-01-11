@@ -205,6 +205,30 @@
       "advanced": false
     },
     {
+      "id": "entity",
+      "file": "/game/entity.doc.js",
+      "category": "game",
+      "title": "Entity",
+      "tags": [
+        "game",
+        "entity"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "entity_view",
+      "file": "/game/entity_view.doc.js",
+      "category": "game",
+      "title": "EntityView",
+      "tags": [
+        "game",
+        "entity_view"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
       "id": "game_loop",
       "file": "/game/game_loop.doc.js",
       "category": "game",
@@ -212,6 +236,18 @@
       "tags": [
         "game",
         "game_loop"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "world",
+      "file": "/game/world.doc.js",
+      "category": "game",
+      "title": "World",
+      "tags": [
+        "game",
+        "world"
       ],
       "featured": false,
       "advanced": false
@@ -301,18 +337,6 @@
       "advanced": false
     },
     {
-      "id": "image_2d",
-      "file": "/render/image_2d.doc.js",
-      "category": "render",
-      "title": "Image2D",
-      "tags": [
-        "render",
-        "image_2d"
-      ],
-      "featured": false,
-      "advanced": false
-    },
-    {
       "id": "object_2d",
       "file": "/render/object_2d.doc.js",
       "category": "render",
@@ -356,6 +380,42 @@
       "tags": [
         "render",
         "transform"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "texture_atlas",
+      "file": "/render/textures/texture_atlas.doc.js",
+      "category": "render/textures",
+      "title": "TextureAtlas",
+      "tags": [
+        "render/textures",
+        "texture_atlas"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "texture_region",
+      "file": "/render/textures/texture_region.doc.js",
+      "category": "render/textures",
+      "title": "TextureRegion",
+      "tags": [
+        "render/textures",
+        "texture_region"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "texture_system",
+      "file": "/render/textures/texture_system.doc.js",
+      "category": "render/textures",
+      "title": "TextureSystem",
+      "tags": [
+        "render/textures",
+        "texture_system"
       ],
       "featured": false,
       "advanced": true

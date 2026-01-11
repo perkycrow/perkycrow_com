@@ -1,0 +1,27 @@
+[
+  {
+    "type": "container",
+    "title": "Texture system in action",
+    "source": "const system = new TextureSystem({atlasSize: 512})\n\nconst images = [\n    {name: 'logo', src: './assets/images/logo.png', scale: 0.5},\n    {name: 'shroom', src: './assets/images/shroom.png', scale: 0.5},\n    {name: 'spore', src: './assets/images/spore.png', scale: 1},\n    {name: 'next', src: './assets/images/next.png', scale: 0.5},\n    {name: 'restart', src: './assets/images/restart.png', scale: 0.5}\n]\n\nlet loaded = 0\nconst loadedImages = []\n\nconst wrapper = ctx.column({gap: 8})\nconst infoLabel = ctx.label('Loading images...', {parent: wrapper})\nconst atlasesRow = ctx.row({gap: 12, parent: wrapper})\n\nfunction scaleImage (img, scale) {\n    const w = Math.floor(img.width * scale)\n    const h = Math.floor(img.height * scale)\n    const canvas = document.createElement('canvas')\n    canvas.width = w\n    canvas.height = h\n    canvas.getContext('2d').drawImage(img, 0, 0, w, h)\n    return canvas\n}\n\nfunction buildSystem () {\n    const scaled = loadedImages.map(({name, img, scale}) => ({\n        name,\n        canvas: scaleImage(img, scale)\n    }))\n\n    scaled.sort((a, b) => b.canvas.height - a.canvas.height)\n\n    for (const {name, canvas} of scaled) {\n        system.addRegion(name, canvas)\n    }\n\n    system.atlases.forEach((atlas, i) => {\n        const col = ctx.column({parent: atlasesRow})\n        ctx.label(`Atlas ${i + 1} (${pluralize('region', atlas.regionCount, true)})`, {parent: col})\n        ctx.canvas(atlas.canvas, {maxWidth: 300, parent: col})\n    })\n\n    infoLabel.textContent = `TextureSystem: ${pluralize('region', system.regionCount, true)} in ${pluralize('atlas', system.atlases.length, true)}`\n}\n\nimages.forEach(({name, src, scale}) => {\n    const img = new Image()\n    img.src = src\n    img.onload = () => {\n        loadedImages.push({name, img, scale})\n        loaded++\n        infoLabel.textContent = `Loading ${loaded}/${images.length}...`\n\n        if (loaded === images.length) {\n            buildSystem()\n        }\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Adding regions",
+    "source": "const textureSystem = new TextureSystem({\n    atlasSize: 2048  // Optional, default is 2048\n})\n\n// Add a single image\nconst region = textureSystem.addRegion('player', playerImage)\n\n// Add multiple images at once\ntextureSystem.addRegions({\n    enemy: enemyImage,\n    bullet: bulletImage,\n    explosion: explosionImage\n})\n\n// Retrieve a region later\nconst playerRegion = textureSystem.getRegion('player')\n\n// Check if region exists\nif (textureSystem.hasRegion('player')) {\n    // Use region\n}"
+  },
+  {
+    "type": "code",
+    "title": "Registering a spritesheet",
+    "source": "const textureSystem = new TextureSystem()\n\n// Define frames for a spritesheet\nconst frames = {\n    idle: {x: 0, y: 0, w: 64, h: 64},\n    run1: {x: 64, y: 0, w: 64, h: 64},\n    run2: {x: 128, y: 0, w: 64, h: 64},\n    jump: {x: 192, y: 0, w: 64, h: 64}\n}\n\ntextureSystem.registerManualAtlas('hero', spritesheetImage, frames)\n\n// Access regions with prefixed IDs\nconst idleRegion = textureSystem.getRegion('hero:idle')\nconst run1Region = textureSystem.getRegion('hero:run1')"
+  },
+  {
+    "type": "code",
+    "title": "As a module",
+    "source": "// TextureSystem delegates these methods to its host:\n// - getRegion\n// - hasRegion\n// - addRegion\n// - addRegions\n// - registerManualAtlas\n\n// After installation, you can call them directly on the host\nhost.addRegion('sprite', image)\nconst region = host.getRegion('sprite')"
+  },
+  {
+    "type": "code",
+    "title": "Syncing with GPU",
+    "source": "const textureSystem = new TextureSystem()\n\n// Add some images...\ntextureSystem.addRegion('a', imageA)\ntextureSystem.addRegion('b', imageB)\n\n// Get atlases that need uploading\nconst dirtyAtlases = textureSystem.getDirtyAtlases()\n\nfor (const atlas of dirtyAtlases) {\n    // Upload atlas.canvas to GPU texture\n    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, atlas.canvas)\n}\n\n// Mark all as clean after upload\ntextureSystem.markAllClean()"
+  }
+]

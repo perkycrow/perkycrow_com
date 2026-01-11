@@ -41,6 +41,11 @@
   },
   {
     "type": "action",
+    "title": "addChild",
+    "source": "const parent = new PerkyModule({$id: 'parent'})\n\n// Create module separately\nconst player = new PerkyModule({$id: 'player', $category: 'entity'})\n\n// Add it later\nparent.addChild(player)\n\nlogger.log('player.host:', player.host.$id)\nlogger.log('player.installed:', player.installed)"
+  },
+  {
+    "type": "action",
     "title": "Lifecycle propagation",
     "source": "const parent = new PerkyModule({$id: 'parent'})\nconst child = parent.create(PerkyModule, {$id: 'child'})\n\nchild.on('start', () => logger.log('child started'))\nchild.on('stop', () => logger.log('child stopped'))\n\nlogger.log('Starting parent...')\nparent.start()\n\nlogger.log('Stopping parent...')\nparent.stop()"
   },
