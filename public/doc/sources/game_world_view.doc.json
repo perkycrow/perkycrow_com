@@ -42,6 +42,6 @@
   {
     "type": "code",
     "title": "Lifecycle",
-    "source": "const app = new PerkyModule()\nconst world = app.create(World)\nconst worldView = app.create(WorldView, {world})\n\n// Register views before start\nworldView.register(Enemy, EnemyView)\n\n// app.start() triggers worldView.onStart()\napp.start()\n\n// In game loop\nworldView.sync(deltaTime)\n\n// app.stop() triggers worldView.onStop()\napp.stop()"
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\nconst worldView = app.create(WorldView, {world})\n\n// Register views before start\nworldView.register(Enemy, EnemyView)\n\n// app.start() triggers worldView.onStart()\napp.start()\n\n// In game loop\nworldView.sync()\n\n// app.stop() triggers worldView.onStop()\napp.stop()"
   }
 ]

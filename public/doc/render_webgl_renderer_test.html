@@ -175,41 +175,28 @@ expect(result).toBe(renderer)</code></pre>
         
             <div class="test-case">
                 <h4>can add post pass</h4>
-                <pre><code>const mockPass = {
-    init: vi.fn(),
-    getShaderDefinition: () =&gt; ({
-        vertex: 'void main() {}',
-        fragment: 'void main() {}',
-        uniforms: [],
-        attributes: []
-    }),
-    enabled: true,
-    render: vi.fn(),
-    dispose: vi.fn()
-}
-
-renderer.addPostPass(mockPass)
-expect(renderer.postProcessor.passes.length).toBe(1)</code></pre>
+                <pre><code>const pass = renderer.addPostPass(MockPass)
+expect(renderer.postProcessor.passes.length).toBe(1)
+expect(pass).toBeInstanceOf(MockPass)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>can get post pass by name</h4>
+                <pre><code>renderer.addPostPass(MockPass)
+expect(renderer.getPass('mockPass')).toBeInstanceOf(MockPass)</code></pre>
             </div>
         
             <div class="test-case">
                 <h4>can remove post pass</h4>
-                <pre><code>const mockPass = {
-    init: vi.fn(),
-    getShaderDefinition: () =&gt; ({
-        vertex: 'void main() {}',
-        fragment: 'void main() {}',
-        uniforms: [],
-        attributes: []
-    }),
-    enabled: true,
-    render: vi.fn(),
-    dispose: vi.fn()
-}
-
-renderer.addPostPass(mockPass)
-renderer.removePostPass(mockPass)
+                <pre><code>const pass = renderer.addPostPass(MockPass)
+renderer.removePostPass(pass)
 expect(renderer.postProcessor.passes.length).toBe(0)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>postPasses returns all render passes</h4>
+                <pre><code>renderer.addPostPass(MockPass)
+expect(renderer.postPasses.length).toBe(1)</code></pre>
             </div>
         </section><section class="test-section-nested"><h3>render</h3>
             <div class="test-case">
@@ -395,6 +382,127 @@ renderer.setRenderGroups([
 expect(renderer.renderGroups.length).toBe(1)
 expect(renderer.renderGroups[0].$id).toBe('newGroup')</code></pre>
             </div>
+        </section><section class="test-section-nested"><h3>prependRenderGroup</h3>
+            <div class="test-case">
+                <h4>adds group at the beginning</h4>
+                <pre><code>const scene1 = new Group2D()
+const scene2 = new Group2D()
+
+renderer.appendRenderGroup({$id: 'existing', content: scene1})
+renderer.prependRenderGroup({$id: 'first', content: scene2})
+
+expect(renderer.renderGroups.length).toBe(2)
+expect(renderer.renderGroups[0].$id).toBe('first')
+expect(renderer.renderGroups[1].$id).toBe('existing')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns the created group</h4>
+                <pre><code>const scene = new Group2D()
+
+const group = renderer.prependRenderGroup({$id: 'test', content: scene})
+
+expect(group).toBeDefined()
+expect(group.$id).toBe('test')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>creates group with content</h4>
+                <pre><code>const scene = new Group2D()
+
+const group = renderer.prependRenderGroup({$id: 'test', content: scene})
+
+expect(group.content).toBe(scene)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>appendRenderGroup</h3>
+            <div class="test-case">
+                <h4>adds group at the end</h4>
+                <pre><code>const scene1 = new Group2D()
+const scene2 = new Group2D()
+
+renderer.appendRenderGroup({$id: 'first', content: scene1})
+renderer.appendRenderGroup({$id: 'second', content: scene2})
+
+expect(renderer.renderGroups.length).toBe(2)
+expect(renderer.renderGroups[0].$id).toBe('first')
+expect(renderer.renderGroups[1].$id).toBe('second')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>returns the created group</h4>
+                <pre><code>const scene = new Group2D()
+
+const group = renderer.appendRenderGroup({$id: 'test', content: scene})
+
+expect(group).toBeDefined()
+expect(group.$id).toBe('test')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>creates group with content</h4>
+                <pre><code>const scene = new Group2D()
+
+const group = renderer.appendRenderGroup({$id: 'test', content: scene})
+
+expect(group.content).toBe(scene)</code></pre>
+            </div>
+        </section><section class="test-section-nested"><h3>removeRenderGroup</h3>
+            <div class="test-case">
+                <h4>removes group by id string</h4>
+                <pre><code>const scene = new Group2D()
+
+renderer.appendRenderGroup({$id: 'group1', content: scene})
+renderer.appendRenderGroup({$id: 'group2', content: scene})
+
+expect(renderer.renderGroups.length).toBe(2)
+
+const result = renderer.removeRenderGroup('group1')
+
+expect(result).toBe(renderer)
+expect(renderer.renderGroups.length).toBe(1)
+expect(renderer.renderGroups[0].$id).toBe('group2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removes group by group object</h4>
+                <pre><code>const scene = new Group2D()
+
+const group1 = renderer.appendRenderGroup({$id: 'group1', content: scene})
+renderer.appendRenderGroup({$id: 'group2', content: scene})
+
+const result = renderer.removeRenderGroup(group1)
+
+expect(result).toBe(renderer)
+expect(renderer.renderGroups.length).toBe(1)
+expect(renderer.renderGroups[0].$id).toBe('group2')</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>does nothing for non-existent group</h4>
+                <pre><code>const scene = new Group2D()
+
+renderer.appendRenderGroup({$id: 'existing', content: scene})
+
+const result = renderer.removeRenderGroup('nonexistent')
+
+expect(result).toBe(renderer)
+expect(renderer.renderGroups.length).toBe(1)</code></pre>
+            </div>
+        
+            <div class="test-case">
+                <h4>removes correct group when multiple exist</h4>
+                <pre><code>const scene = new Group2D()
+
+renderer.appendRenderGroup({$id: 'first', content: scene})
+renderer.appendRenderGroup({$id: 'middle', content: scene})
+renderer.appendRenderGroup({$id: 'last', content: scene})
+
+renderer.removeRenderGroup('middle')
+
+expect(renderer.renderGroups.length).toBe(2)
+expect(renderer.renderGroups[0].$id).toBe('first')
+expect(renderer.renderGroups[1].$id).toBe('last')</code></pre>
+            </div>
         </section></section>
         </div>
     </noscript>
@@ -424,7 +532,7 @@ expect(renderer.renderGroups[0].$id).toBe('newGroup')</code></pre>
                     <span class="advanced-toggle-label">Show advanced</span>
                 </label>
             </div>
-            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item featured" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item featured" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item advanced hidden-advanced" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item advanced hidden-advanced" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item advanced hidden-advanced" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item advanced hidden-advanced" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item advanced hidden-advanced" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><div class="nav-category">application</div><a class="nav-item featured" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item advanced hidden-advanced" href="application_asset.html" data-file="/application/asset.doc.js" data-title="asset" data-category="application">Asset</a><a class="nav-item" href="application_manifest.html" data-file="/application/manifest.doc.js" data-title="manifest" data-category="application">Manifest</a><a class="nav-item advanced hidden-advanced" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><a class="nav-item advanced hidden-advanced" href="application_source_manager.html" data-file="/application/source_manager.doc.js" data-title="sourcemanager" data-category="application">SourceManager</a><div class="nav-category">game</div><a class="nav-item featured" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_entity.html" data-file="/game/entity.doc.js" data-title="entity" data-category="game">Entity</a><a class="nav-item" href="game_entity_view.html" data-file="/game/entity_view.doc.js" data-title="entityview" data-category="game">EntityView</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><a class="nav-item" href="game_world.html" data-file="/game/world.doc.js" data-title="world" data-category="game">World</a><a class="nav-item" href="game_world_view.html" data-file="/game/world_view.doc.js" data-title="worldview" data-category="game">WorldView</a><div class="nav-category">math</div><a class="nav-item featured" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item featured" href="render_canvas_renderer.html" data-file="/render/canvas_renderer.doc.js" data-title="canvasrenderer" data-category="render">CanvasRenderer</a><a class="nav-item active featured" href="render_webgl_renderer.html" data-file="/render/webgl_renderer.doc.js" data-title="webglrenderer" data-category="render">WebGLRenderer</a><a class="nav-item" href="render_circle.html" data-file="/render/circle.doc.js" data-title="circle" data-category="render">Circle</a><a class="nav-item" href="render_group_2d.html" data-file="/render/group_2d.doc.js" data-title="group2d" data-category="render">Group2D</a><a class="nav-item" href="render_object_2d.html" data-file="/render/object_2d.doc.js" data-title="object2d" data-category="render">Object2D</a><a class="nav-item" href="render_rectangle.html" data-file="/render/rectangle.doc.js" data-title="rectangle" data-category="render">Rectangle</a><a class="nav-item" href="render_sprite.html" data-file="/render/sprite.doc.js" data-title="sprite" data-category="render">Sprite</a><a class="nav-item advanced hidden-advanced" href="render_transform.html" data-file="/render/transform.doc.js" data-title="transform" data-category="render">Transform</a><div class="nav-category hidden">render/textures</div><a class="nav-item advanced hidden-advanced" href="render_textures_texture_atlas.html" data-file="/render/textures/texture_atlas.doc.js" data-title="textureatlas" data-category="render/textures">TextureAtlas</a><a class="nav-item advanced hidden-advanced" href="render_textures_texture_region.html" data-file="/render/textures/texture_region.doc.js" data-title="textureregion" data-category="render/textures">TextureRegion</a><a class="nav-item advanced hidden-advanced" href="render_textures_texture_system.html" data-file="/render/textures/texture_system.doc.js" data-title="texturesystem" data-category="render/textures">TextureSystem</a><div class="nav-category">input</div><a class="nav-item featured" href="input_input_system.html" data-file="/input/input_system.doc.js" data-title="inputsystem" data-category="input">InputSystem</a><a class="nav-item advanced hidden-advanced" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category hidden">input/input_controls</div><a class="nav-item advanced hidden-advanced" href="input_input_controls_button_control.html" data-file="/input/input_controls/button_control.doc.js" data-title="buttoncontrol" data-category="input/input_controls">ButtonControl</a><a class="nav-item advanced hidden-advanced" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category hidden">input/input_devices</div><a class="nav-item advanced hidden-advanced" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item advanced hidden-advanced" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><a class="nav-item advanced hidden-advanced" href="input_input_devices_touch_device.html" data-file="/input/input_devices/touch_device.doc.js" data-title="touchdevice" data-category="input/input_devices">TouchDevice</a><div class="nav-category">audio</div><a class="nav-item featured" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a><div class="nav-category hidden">editor</div><a class="nav-item advanced hidden-advanced" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item advanced hidden-advanced" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item advanced hidden-advanced" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item advanced hidden-advanced" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category hidden">editor/inspectors</div><a class="nav-item advanced hidden-advanced" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item advanced hidden-advanced" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category hidden">editor/log_renderers</div><a class="nav-item advanced hidden-advanced" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category hidden">doc</div><a class="nav-item advanced hidden-advanced" href="doc_doc_page.html" data-file="/doc/doc_page.doc.js" data-title="doc page" data-category="doc">Doc Page</a><a class="nav-item advanced hidden-advanced" href="doc_runtime.html" data-file="/doc/runtime.doc.js" data-title="doc runtime" data-category="doc">Doc Runtime</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
+            <nav class="sidebar-nav" id="docs-nav"><div class="nav-section" data-section="docs"><div class="nav-category">core</div><a class="nav-item featured" href="core_perky_module.html" data-file="/core/perky_module.doc.js" data-title="perkymodule" data-category="core">PerkyModule</a><a class="nav-item featured" href="core_utils.html" data-file="/core/utils.doc.js" data-title="utils" data-category="core">Utils</a><a class="nav-item" href="core_action_controller.html" data-file="/core/action_controller.doc.js" data-title="actioncontroller" data-category="core">ActionController</a><a class="nav-item advanced hidden-advanced" href="core_action_dispatcher.html" data-file="/core/action_dispatcher.doc.js" data-title="actiondispatcher" data-category="core">ActionDispatcher</a><a class="nav-item advanced hidden-advanced" href="core_inflector.html" data-file="/core/inflector.doc.js" data-title="inflector" data-category="core">Inflector</a><a class="nav-item" href="core_logger.html" data-file="/core/logger.doc.js" data-title="logger" data-category="core">Logger</a><a class="nav-item" href="core_notifier.html" data-file="/core/notifier.doc.js" data-title="notifier" data-category="core">Notifier</a><a class="nav-item advanced hidden-advanced" href="core_observable_map.html" data-file="/core/observable_map.doc.js" data-title="observablemap" data-category="core">ObservableMap</a><a class="nav-item advanced hidden-advanced" href="core_observable_set.html" data-file="/core/observable_set.doc.js" data-title="observableset" data-category="core">ObservableSet</a><a class="nav-item advanced hidden-advanced" href="core_perky_query.html" data-file="/core/perky_query.doc.js" data-title="perkyquery" data-category="core">PerkyQuery</a><a class="nav-item" href="core_registry.html" data-file="/core/registry.doc.js" data-title="registry" data-category="core">Registry</a><div class="nav-category">application</div><a class="nav-item featured" href="application_application.html" data-file="/application/application.doc.js" data-title="application" data-category="application">Application</a><a class="nav-item advanced hidden-advanced" href="application_asset.html" data-file="/application/asset.doc.js" data-title="asset" data-category="application">Asset</a><a class="nav-item" href="application_manifest.html" data-file="/application/manifest.doc.js" data-title="manifest" data-category="application">Manifest</a><a class="nav-item advanced hidden-advanced" href="application_perky_view.html" data-file="/application/perky_view.doc.js" data-title="perkyview" data-category="application">PerkyView</a><a class="nav-item advanced hidden-advanced" href="application_source_manager.html" data-file="/application/source_manager.doc.js" data-title="sourcemanager" data-category="application">SourceManager</a><div class="nav-category">game</div><a class="nav-item featured" href="game_game.html" data-file="/game/game.doc.js" data-title="game" data-category="game">Game</a><a class="nav-item" href="game_entity.html" data-file="/game/entity.doc.js" data-title="entity" data-category="game">Entity</a><a class="nav-item" href="game_entity_view.html" data-file="/game/entity_view.doc.js" data-title="entityview" data-category="game">EntityView</a><a class="nav-item" href="game_game_loop.html" data-file="/game/game_loop.doc.js" data-title="gameloop" data-category="game">GameLoop</a><a class="nav-item" href="game_world.html" data-file="/game/world.doc.js" data-title="world" data-category="game">World</a><a class="nav-item" href="game_world_view.html" data-file="/game/world_view.doc.js" data-title="worldview" data-category="game">WorldView</a><div class="nav-category">math</div><a class="nav-item featured" href="math_random.html" data-file="/math/random.doc.js" data-title="random" data-category="math">Random</a><a class="nav-item" href="math_vec2.html" data-file="/math/vec2.doc.js" data-title="vec2" data-category="math">Vec2</a><div class="nav-category">render</div><a class="nav-item featured" href="render_canvas_renderer.html" data-file="/render/canvas_renderer.doc.js" data-title="canvasrenderer" data-category="render">CanvasRenderer</a><a class="nav-item active featured" href="render_webgl_renderer.html" data-file="/render/webgl_renderer.doc.js" data-title="webglrenderer" data-category="render">WebGLRenderer</a><a class="nav-item" href="render_circle.html" data-file="/render/circle.doc.js" data-title="circle" data-category="render">Circle</a><a class="nav-item" href="render_group_2d.html" data-file="/render/group_2d.doc.js" data-title="group2d" data-category="render">Group2D</a><a class="nav-item" href="render_object_2d.html" data-file="/render/object_2d.doc.js" data-title="object2d" data-category="render">Object2D</a><a class="nav-item" href="render_rectangle.html" data-file="/render/rectangle.doc.js" data-title="rectangle" data-category="render">Rectangle</a><a class="nav-item" href="render_sprite.html" data-file="/render/sprite.doc.js" data-title="sprite" data-category="render">Sprite</a><a class="nav-item" href="render_sprite_animation.html" data-file="/render/sprite_animation.doc.js" data-title="spriteanimation" data-category="render">SpriteAnimation</a><a class="nav-item" href="render_spritesheet.html" data-file="/render/spritesheet.doc.js" data-title="spritesheet" data-category="render">Spritesheet</a><a class="nav-item advanced hidden-advanced" href="render_transform.html" data-file="/render/transform.doc.js" data-title="transform" data-category="render">Transform</a><div class="nav-category">render/sprite_effects</div><a class="nav-item" href="render_sprite_effects_sprite_effect_stack.html" data-file="/render/sprite_effects/sprite_effect_stack.doc.js" data-title="spriteeffectstack" data-category="render/sprite_effects">SpriteEffectStack</a><div class="nav-category hidden">render/textures</div><a class="nav-item advanced hidden-advanced" href="render_textures_texture_atlas.html" data-file="/render/textures/texture_atlas.doc.js" data-title="textureatlas" data-category="render/textures">TextureAtlas</a><a class="nav-item advanced hidden-advanced" href="render_textures_texture_region.html" data-file="/render/textures/texture_region.doc.js" data-title="textureregion" data-category="render/textures">TextureRegion</a><a class="nav-item advanced hidden-advanced" href="render_textures_texture_system.html" data-file="/render/textures/texture_system.doc.js" data-title="texturesystem" data-category="render/textures">TextureSystem</a><div class="nav-category">input</div><a class="nav-item featured" href="input_input_system.html" data-file="/input/input_system.doc.js" data-title="inputsystem" data-category="input">InputSystem</a><a class="nav-item advanced hidden-advanced" href="input_input_control.html" data-file="/input/input_control.doc.js" data-title="inputcontrol" data-category="input">InputControl</a><div class="nav-category hidden">input/input_controls</div><a class="nav-item advanced hidden-advanced" href="input_input_controls_button_control.html" data-file="/input/input_controls/button_control.doc.js" data-title="buttoncontrol" data-category="input/input_controls">ButtonControl</a><a class="nav-item advanced hidden-advanced" href="input_input_controls_vec2_control.html" data-file="/input/input_controls/vec2_control.doc.js" data-title="vec2control" data-category="input/input_controls">Vec2Control</a><div class="nav-category hidden">input/input_devices</div><a class="nav-item advanced hidden-advanced" href="input_input_devices_keyboard_device.html" data-file="/input/input_devices/keyboard_device.doc.js" data-title="keyboarddevice" data-category="input/input_devices">KeyboardDevice</a><a class="nav-item advanced hidden-advanced" href="input_input_devices_mouse_device.html" data-file="/input/input_devices/mouse_device.doc.js" data-title="mousedevice" data-category="input/input_devices">MouseDevice</a><a class="nav-item advanced hidden-advanced" href="input_input_devices_touch_device.html" data-file="/input/input_devices/touch_device.doc.js" data-title="touchdevice" data-category="input/input_devices">TouchDevice</a><div class="nav-category">audio</div><a class="nav-item featured" href="audio_audio_system.html" data-file="/audio/audio_system.doc.js" data-title="audiosystem" data-category="audio">AudioSystem</a><div class="nav-category hidden">editor</div><a class="nav-item advanced hidden-advanced" href="editor_perky_explorer.html" data-file="/editor/perky_explorer.doc.js" data-title="perkyexplorer" data-category="editor">PerkyExplorer</a><a class="nav-item advanced hidden-advanced" href="editor_perky_logger.html" data-file="/editor/perky_logger.doc.js" data-title="perkylogger" data-category="editor">PerkyLogger</a><a class="nav-item advanced hidden-advanced" href="editor_toggle_input.html" data-file="/editor/toggle_input.doc.js" data-title="toggleinput" data-category="editor">ToggleInput</a><a class="nav-item advanced hidden-advanced" href="editor_vec2_input.html" data-file="/editor/vec2_input.doc.js" data-title="vec2input" data-category="editor">Vec2Input</a><div class="nav-category hidden">editor/inspectors</div><a class="nav-item advanced hidden-advanced" href="editor_inspectors_action_controller_inspector.html" data-file="/editor/inspectors/action_controller_inspector.doc.js" data-title="actioncontrollerinspector" data-category="editor/inspectors">ActionControllerInspector</a><a class="nav-item advanced hidden-advanced" href="editor_inspectors_action_dispatcher_inspector.html" data-file="/editor/inspectors/action_dispatcher_inspector.doc.js" data-title="actiondispatcherinspector" data-category="editor/inspectors">ActionDispatcherInspector</a><div class="nav-category hidden">editor/log_renderers</div><a class="nav-item advanced hidden-advanced" href="editor_log_renderers_vec2_log_renderer.html" data-file="/editor/log_renderers/vec2_log_renderer.doc.js" data-title="vec2logrenderer" data-category="editor/log_renderers">Vec2LogRenderer</a><div class="nav-category hidden">doc</div><a class="nav-item advanced hidden-advanced" href="doc_doc_page.html" data-file="/doc/doc_page.doc.js" data-title="doc page" data-category="doc">Doc Page</a><a class="nav-item advanced hidden-advanced" href="doc_runtime.html" data-file="/doc/runtime.doc.js" data-title="doc runtime" data-category="doc">Doc Runtime</a></div><div class="nav-section" data-section="guides" style="display:none"><div class="nav-category">prologue</div><a class="nav-item" href="guide_foreword.html" data-file="/doc/guides/prologue/foreword.guide.js" data-title="foreword" data-category="prologue">Foreword</a><a class="nav-item" href="guide_philosophy.html" data-file="/doc/guides/prologue/philosophy.guide.js" data-title="philosophy" data-category="prologue">Philosophy</a><div class="nav-category">general</div><a class="nav-item" href="guide_conventions.html" data-file="/doc/guides/conventions.guide.js" data-title="conventions" data-category="general">Conventions</a><a class="nav-item" href="guide_perky_module.html" data-file="/doc/guides/perky_module.guide.js" data-title="perkymodule" data-category="general">Perky Module</a></div></nav>
         </aside>
 
         <main class="docs-main">
@@ -435,6 +543,6 @@ expect(renderer.renderGroups[0].$id).toBe('newGroup')</code></pre>
         </main>
     </div>
 
-    <script type="module" src="assets/main-DKWI1rHC.js"></script>
+    <script type="module" src="assets/main-B565t3Dw.js"></script>
 </body>
 </html>

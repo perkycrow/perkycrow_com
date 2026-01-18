@@ -1,0 +1,57 @@
+[
+  {
+    "type": "container",
+    "title": "Sprite with outline",
+    "source": "const renderer = new WebGLRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\n\nrenderer.registerShaderEffect(OutlineEffect)\n\nconst scene = new Group2D()\n\nconst shroomImage = new Image()\nshroomImage.src = './assets/images/shroom.png'\n\nshroomImage.onload = () => {\n    const sprite = new Sprite({\n        x: 0,\n        y: 0,\n        width: 5,\n        height: 5,\n        image: shroomImage\n    })\n\n    sprite.effects.add(new OutlineEffect({\n        width: 0.03\n    }))\n\n    scene.add(sprite)\n    renderer.render(scene)\n}"
+  },
+  {
+    "type": "container",
+    "title": "Interactive outline width",
+    "source": "const renderer = new WebGLRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\n\nrenderer.registerShaderEffect(OutlineEffect)\n\nconst scene = new Group2D()\nlet outline = null\n\nconst shroomImage = new Image()\nshroomImage.src = './assets/images/shroom.png'\n\nshroomImage.onload = () => {\n    const sprite = new Sprite({\n        x: 0,\n        y: 0,\n        width: 5,\n        height: 5,\n        image: shroomImage\n    })\n\n    outline = new OutlineEffect({width: 0.03})\n    sprite.effects.add(outline)\n\n    scene.add(sprite)\n    renderer.render(scene)\n}\n\nctx.slider('width', {min: 0.01, max: 0.1, default: 0.03}, value => {\n    if (outline) {\n        outline.width = value\n        renderer.render(scene)\n    }\n})"
+  },
+  {
+    "type": "container",
+    "title": "Multiple sprites with outlines",
+    "source": "const renderer = new WebGLRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\n\nrenderer.registerShaderEffect(OutlineEffect)\n\nconst scene = new Group2D()\n\nconst shroomImage = new Image()\nshroomImage.src = './assets/images/shroom.png'\n\nshroomImage.onload = () => {\n    const sprite1 = new Sprite({\n        x: -4,\n        y: 0,\n        width: 4,\n        height: 4,\n        image: shroomImage\n    })\n    sprite1.effects.add(new OutlineEffect({width: 0.02}))\n\n    const sprite2 = new Sprite({\n        x: 0,\n        y: 0,\n        width: 4,\n        height: 4,\n        image: shroomImage\n    })\n    sprite2.effects.add(new OutlineEffect({width: 0.04}))\n\n    const sprite3 = new Sprite({\n        x: 4,\n        y: 0,\n        width: 4,\n        height: 4,\n        image: shroomImage\n    })\n    sprite3.effects.add(new OutlineEffect({width: 0.06}))\n\n    scene.add(sprite1, sprite2, sprite3)\n    renderer.render(scene)\n}"
+  },
+  {
+    "type": "action",
+    "title": "Adding an effect",
+    "source": "const sprite = new Sprite({width: 100, height: 100})\n\nsprite.effects.add(new OutlineEffect({width: 0.05}))\n\nlogger.log('effect count:', sprite.effects.count)\nlogger.log('has outline:', sprite.effects.has(OutlineEffect))"
+  },
+  {
+    "type": "action",
+    "title": "Removing an effect",
+    "source": "const sprite = new Sprite({width: 100, height: 100})\n\nsprite.effects.add(new OutlineEffect())\nlogger.log('before remove:', sprite.effects.count)\n\nsprite.effects.remove(OutlineEffect)\nlogger.log('after remove:', sprite.effects.count)"
+  },
+  {
+    "type": "action",
+    "title": "Getting an effect",
+    "source": "const sprite = new Sprite({width: 100, height: 100})\n\nsprite.effects.add(new OutlineEffect({width: 0.1}))\n\nconst outline = sprite.effects.get(OutlineEffect)\nlogger.log('outline width:', outline.width)\n\noutline.width = 0.2\nlogger.log('modified width:', outline.width)"
+  },
+  {
+    "type": "action",
+    "title": "Duplicate prevention",
+    "source": "const stack = new SpriteEffectStack()\n\nstack.add(new OutlineEffect({width: 0.05}))\nstack.add(new OutlineEffect({width: 0.1}))\n\nlogger.log('count (still 1):', stack.count)\nlogger.log('width (first added):', stack.get(OutlineEffect).width)"
+  },
+  {
+    "type": "action",
+    "title": "Clear all effects",
+    "source": "const stack = new SpriteEffectStack()\n\nstack.add(new OutlineEffect())\nlogger.log('before clear:', stack.count)\n\nstack.clear()\nlogger.log('after clear:', stack.count)"
+  },
+  {
+    "type": "action",
+    "title": "Enable/disable effect",
+    "source": "const outline = new OutlineEffect()\n\nlogger.log('default enabled:', outline.enabled)\n\noutline.enabled = false\nlogger.log('after disable:', outline.enabled)\n\noutline.enabled = true\nlogger.log('after enable:', outline.enabled)"
+  },
+  {
+    "type": "code",
+    "title": "Best case",
+    "source": "// All sprites with same effect are consecutive in depth\n// → 1 draw call for OutlineEffect sprites\n// → 1 draw call for no-effect sprites\n\nspriteA.depth = 0  // OutlineEffect\nspriteB.depth = 1  // OutlineEffect\nspriteC.depth = 2  // no effect\nspriteD.depth = 3  // no effect"
+  },
+  {
+    "type": "code",
+    "title": "Worst case",
+    "source": "// Sprites with different effects interleaved in depth\n// → Up to N draw calls for N sprites\n\nspriteA.depth = 0  // OutlineEffect\nspriteB.depth = 1  // no effect\nspriteC.depth = 2  // OutlineEffect\nspriteD.depth = 3  // no effect"
+  }
+]

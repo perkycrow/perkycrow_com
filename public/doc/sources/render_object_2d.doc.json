@@ -71,16 +71,6 @@
   },
   {
     "type": "action",
-    "title": "effects",
-    "source": "const obj = new Object2D()\n\n// Accessing effects creates the stack lazily\nconst stack = obj.effects\nlogger.log('effects stack:', stack.constructor.name)"
-  },
-  {
-    "type": "code",
-    "title": "Adding effects",
-    "source": "const obj = new Object2D()\n\n// Effects are added to the stack\nobj.effects.add(myEffect)"
-  },
-  {
-    "type": "action",
     "title": "showDebugGizmos / hideDebugGizmos",
     "source": "const obj = new Object2D()\nlogger.log('default gizmos:', obj.debugGizmos)\n\nobj.showDebugGizmos()\nlogger.log('after show:', obj.debugGizmos)\n\nobj.hideDebugGizmos()\nlogger.log('after hide:', obj.debugGizmos)"
   },

@@ -1,0 +1,47 @@
+[
+  {
+    "type": "container",
+    "title": "Simple entity rendering",
+    "source": "const app = new PerkyModule()\nconst renderer = app.create(CanvasRenderer, {\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\nclass Ball extends Entity {}\n\ngameView.register(Ball, Circle, {\n    radius: 0.8,\n    color: '#e94560'\n})\n\napp.start()\n\nconst scene = new Group2D()\nscene.add(gameView.rootGroup)\n\nworld.create(Ball, {x: -3, y: 0})\nworld.create(Ball, {x: 0, y: 0})\nworld.create(Ball, {x: 3, y: 0})\n\nrenderer.render(scene)"
+  },
+  {
+    "type": "container",
+    "title": "Moving entities",
+    "source": "const app = new PerkyModule()\nconst renderer = app.create(CanvasRenderer, {\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\nclass Particle extends Entity {}\n\ngameView.register(Particle, Circle, {\n    radius: 0.5,\n    color: '#4a9eff'\n})\n\napp.start()\n\nconst scene = new Group2D()\nscene.add(gameView.rootGroup)\n\nconst particles = []\nfor (let i = 0; i < 5; i++) {\n    const entity = world.create(Particle, {\n        x: (i - 2) * 2,\n        y: 0\n    })\n    particles.push(entity)\n}\n\nrenderer.render(scene)\n\nctx.slider('Wave', {min: 0, max: 100, default: 0}, value => {\n    const t = value / 100 * Math.PI * 2\n    particles.forEach((p, i) => {\n        p.y = Math.sin(t + i * 0.5) * 2\n    })\n    gameView.sync()\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Health bar with sync",
+    "source": "const app = new PerkyModule()\nconst renderer = app.create(CanvasRenderer, {\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\nclass HealthOrb extends Entity {\n    constructor (options) {\n        super(options)\n        this.health = options.health ?? 1\n    }\n}\n\ngameView.register(HealthOrb, Circle, {\n    radius: 1,\n    color: '#4aff4a',\n    sync: {\n        scaleX: 'health',\n        scaleY: 'health',\n        opacity: 'health'\n    }\n})\n\napp.start()\n\nconst scene = new Group2D()\nscene.add(gameView.rootGroup)\n\nconst orb = world.create(HealthOrb, {x: 0, y: 0, health: 1})\n\nrenderer.render(scene)\n\nctx.slider('Health', {min: 0, max: 100, default: 100}, value => {\n    orb.health = value / 100\n    gameView.sync()\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Function bindings",
+    "source": "const app = new PerkyModule()\nconst renderer = app.create(CanvasRenderer, {\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\nclass Spinner extends Entity {\n    constructor (options) {\n        super(options)\n        this.angle = options.angle ?? 0\n        this.speed = options.speed ?? 1\n    }\n}\n\ngameView.register(Spinner, Rectangle, {\n    width: 2,\n    height: 0.5,\n    color: '#ff4a4a',\n    sync: {\n        rotation: (entity) => entity.angle\n    }\n})\n\napp.start()\n\nconst scene = new Group2D()\nscene.add(gameView.rootGroup)\n\nconst spinners = []\nfor (let i = 0; i < 3; i++) {\n    const entity = world.create(Spinner, {\n        x: (i - 1) * 3,\n        y: 0,\n        speed: 1 + i * 0.5\n    })\n    spinners.push(entity)\n}\n\nrenderer.render(scene)\n\nctx.slider('Rotation', {min: 0, max: 100, default: 0}, value => {\n    const t = value / 100 * Math.PI * 4\n    spinners.forEach((s, i) => {\n        s.angle = t * s.speed\n    })\n    gameView.sync()\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Custom view with multiple shapes",
+    "source": "const app = new PerkyModule()\nconst renderer = app.create(CanvasRenderer, {\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\nclass Robot extends Entity {\n    constructor (options) {\n        super(options)\n        this.mood = options.mood ?? 0\n    }\n}\n\nclass RobotView extends EntityView {\n    constructor (entity, context) {\n        super(entity, context)\n\n        this.root = new Group2D()\n\n        this.body = new Rectangle({\n            width: 1.5,\n            height: 2,\n            color: '#533483',\n            y: 0\n        })\n\n        this.head = new Circle({\n            radius: 0.6,\n            color: '#e94560',\n            y: 1.5\n        })\n\n        this.leftEye = new Circle({\n            radius: 0.15,\n            color: '#ffffff',\n            x: -0.2,\n            y: 1.6\n        })\n\n        this.rightEye = new Circle({\n            radius: 0.15,\n            color: '#ffffff',\n            x: 0.2,\n            y: 1.6\n        })\n\n        this.root.add(this.body, this.head, this.leftEye, this.rightEye)\n    }\n\n    sync () {\n        super.sync()\n        const bounce = Math.sin(this.entity.mood * Math.PI * 2) * 0.2\n        this.head.y = 1.5 + bounce\n        this.leftEye.y = 1.6 + bounce\n        this.rightEye.y = 1.6 + bounce\n    }\n}\n\ngameView.register(Robot, RobotView)\n\napp.start()\n\nconst scene = new Group2D()\nscene.add(gameView.rootGroup)\n\nconst robot = world.create(Robot, {x: 0, y: -0.5, mood: 0})\n\nrenderer.render(scene)\n\nctx.slider('Mood', {min: 0, max: 100, default: 0}, value => {\n    robot.mood = value / 100\n    gameView.sync()\n    renderer.render(scene)\n})"
+  },
+  {
+    "type": "container",
+    "title": "Tag-based matching",
+    "source": "const app = new PerkyModule()\nconst renderer = app.create(CanvasRenderer, {\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\ngameView.register(\n    entity => entity.hasTag('friendly'),\n    Circle,\n    {radius: 0.6, color: '#4aff4a'}\n)\ngameView.register(\n    entity => entity.hasTag('hostile'),\n    Circle,\n    {radius: 0.6, color: '#ff4a4a'}\n)\n\napp.start()\n\nconst scene = new Group2D()\nscene.add(gameView.rootGroup)\n\nworld.create(Entity, {x: -4, y: 0, $tags: ['friendly']})\nworld.create(Entity, {x: -2, y: 0, $tags: ['friendly']})\nworld.create(Entity, {x: 0, y: 0, $tags: ['hostile']})\nworld.create(Entity, {x: 2, y: 0, $tags: ['hostile']})\nworld.create(Entity, {x: 4, y: 0, $tags: ['hostile']})\n\nrenderer.render(scene)"
+  },
+  {
+    "type": "container",
+    "title": "Spawn and despawn",
+    "source": "const app = new PerkyModule()\nconst renderer = app.create(CanvasRenderer, {\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\nclass Bullet extends Entity {}\n\ngameView.register(Bullet, Circle, {\n    radius: 0.3,\n    color: '#ffff4a'\n})\n\napp.start()\n\nconst scene = new Group2D()\nscene.add(gameView.rootGroup)\n\nrenderer.render(scene)\n\nconst updateInfo = ctx.info(() => {\n    return `Entities: ${world.entities.length}`\n})\n\nctx.action('Spawn', () => {\n    const x = (Math.random() - 0.5) * 10\n    const y = (Math.random() - 0.5) * 4\n    world.create(Bullet, {x, y})\n    renderer.render(scene)\n    updateInfo()\n})\n\nctx.action('Remove Last', () => {\n    const entities = world.entities\n    if (entities.length > 0) {\n        world.removeChild(entities[entities.length - 1].$id)\n        renderer.render(scene)\n        updateInfo()\n    }\n})\n\nctx.action('Clear All', () => {\n    const ids = world.entities.map(e => e.$id)\n    ids.forEach(id => world.removeChild(id))\n    renderer.render(scene)\n    updateInfo()\n})"
+  },
+  {
+    "type": "code",
+    "title": "register",
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\n// Custom EntityView\ngameView.register(Player, PlayerView)\n\n// Object2D with config\ngameView.register(Bullet, Circle, {radius: 0.2, color: '#fff'})\n\n// Object2D with sync bindings\ngameView.register(Enemy, Rectangle, {\n    width: 1,\n    height: 1,\n    sync: {\n        opacity: 'health',\n        scaleX: (entity) => entity.size\n    }\n})\n\n// Matcher function\ngameView.register(\n    entity => entity.hasTag('visible'),\n    Circle,\n    {radius: 0.5}\n)"
+  },
+  {
+    "type": "code",
+    "title": "Lifecycle",
+    "source": "const app = new PerkyModule()\nconst world = app.create(World)\nconst gameView = app.create(GameView, {world})\n\n// Register views before start\ngameView.register(Enemy, EnemyView)\n\n// app.start() triggers gameView.onStart()\napp.start()\n\n// In game loop\ngameView.sync(deltaTime)\n\n// app.stop() triggers gameView.onStop()\napp.stop()"
+  }
+]

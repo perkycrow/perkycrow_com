@@ -1,0 +1,57 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "// Load the image and JSON data first\n// const image = await loadImage('character.png')\n// const data = await loadJSON('character.json')\n\nconst spritesheet = new Spritesheet({\n    image: image,\n    data: data\n})"
+  },
+  {
+    "type": "code",
+    "title": "Multiple atlas images",
+    "source": "// Some spritesheets span multiple images\nconst spritesheet = new Spritesheet({\n    images: [image0, image1],\n    data: data\n})"
+  },
+  {
+    "type": "code",
+    "title": "JSON format",
+    "source": "// Expected JSON structure\nconst data = {\n    frames: [\n        {\n            filename: 'idle/1',\n            frame: {x: 0, y: 0, w: 64, h: 64},\n            atlas: 0  // Optional, defaults to 0\n        },\n        {\n            filename: 'idle/2',\n            frame: {x: 64, y: 0, w: 64, h: 64}\n        }\n    ],\n    animations: {\n        idle: ['idle/1', 'idle/2'],\n        walk: ['walk/1', 'walk/2', 'walk/3', 'walk/4']\n    },\n    meta: {}  // Optional metadata\n}"
+  },
+  {
+    "type": "container",
+    "title": "Frame access demo",
+    "source": "const wrapper = ctx.column({gap: 12})\n\nconst source = await loadSpritesheet('./assets/spritesheets/red.json')\nconst spritesheet = new Spritesheet(source)\n\nctx.label(`Frames: ${spritesheet.listFrames().length}`, {parent: wrapper})\nctx.label(`Animations: ${spritesheet.listAnimations().join(', ')}`, {parent: wrapper})\n\nconst frame = spritesheet.getFrame('throw/1')\nif (frame) {\n    ctx.label(`Frame 'throw/1': ${frame.frame.w}x${frame.frame.h}px`, {parent: wrapper})\n}\n\nconst region = spritesheet.getRegion('throw/1')\nif (region) {\n    const canvas = document.createElement('canvas')\n    canvas.width = region.width\n    canvas.height = region.height\n    const cctx = canvas.getContext('2d')\n    cctx.drawImage(\n        region.image,\n        region.x, region.y, region.width, region.height,\n        0, 0, region.width, region.height\n    )\n    ctx.canvas(canvas, {maxWidth: 100, parent: wrapper})\n}"
+  },
+  {
+    "type": "code",
+    "title": "getFrame / getRegion",
+    "source": "const frame = spritesheet.getFrame('hero/idle')\n\n// Returns frame data or null\n\nconst region = spritesheet.getRegion('hero/idle')\n\n// Returns TextureRegion or null"
+  },
+  {
+    "type": "code",
+    "title": "getFrames / getRegions",
+    "source": "// Get specific frames by name\nconst frames = spritesheet.getFrames(['a', 'c'])\n\n// Get all frames\nconst allFrames = spritesheet.getFrames()\n\n// Get regions for animation\nconst regions = spritesheet.getRegions(['a', 'b', 'c'])"
+  },
+  {
+    "type": "container",
+    "title": "Animation frames",
+    "source": "const wrapper = ctx.row({gap: 8})\n\nconst source = await loadSpritesheet('./assets/spritesheets/red.json')\nconst spritesheet = new Spritesheet(source)\nconst regions = spritesheet.getAnimationRegions('throw')\n\nfor (const region of regions.slice(0, 4)) {\n    const canvas = document.createElement('canvas')\n    canvas.width = region.width\n    canvas.height = region.height\n    const cctx = canvas.getContext('2d')\n    cctx.drawImage(\n        region.image,\n        region.x, region.y, region.width, region.height,\n        0, 0, region.width, region.height\n    )\n    ctx.canvas(canvas, {maxWidth: 80, parent: wrapper})\n}"
+  },
+  {
+    "type": "code",
+    "title": "getAnimation / getAnimationRegions",
+    "source": "// Get array of frame names for an animation\nconst frameNames = spritesheet.getAnimation('walk')\n\n// ['walk/1', 'walk/2', 'walk/3']\n\n// Get TextureRegions directly for use with SpriteAnimation\nconst regions = spritesheet.getAnimationRegions('walk')"
+  },
+  {
+    "type": "code",
+    "title": "With SpriteAnimation",
+    "source": "// const source = await loadSpritesheet('character.json')\n// const spritesheet = new Spritesheet(source)\n\nconst sprite = new Sprite({\n    image: spritesheet.images[0]\n})\n\nconst animation = new SpriteAnimation({\n    sprite: sprite,\n    frames: spritesheet.getAnimationRegions('walk'),\n    fps: 12,\n    loop: true\n})\n\nanimation.play()"
+  },
+  {
+    "type": "code",
+    "title": "listFrames / listAnimations",
+    "source": "// Get all frame names\nconst frames = spritesheet.listFrames()\n\n// ['idle/1', 'idle/2', 'walk/1', 'walk/2']\n\n// Get all animation names\nconst animations = spritesheet.listAnimations()\n\n// ['idle', 'walk']"
+  },
+  {
+    "type": "code",
+    "title": "Accessing properties",
+    "source": "// Primary image (for single-atlas spritesheets)\nconst mainImage = spritesheet.images[0]\n\n// All defined animations\nconst animationNames = Object.keys(spritesheet.animations)\n\n// Raw data access\nconst meta = spritesheet.data.meta"
+  }
+]

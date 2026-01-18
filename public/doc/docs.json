@@ -373,6 +373,30 @@
       "advanced": false
     },
     {
+      "id": "sprite_animation",
+      "file": "/render/sprite_animation.doc.js",
+      "category": "render",
+      "title": "SpriteAnimation",
+      "tags": [
+        "render",
+        "sprite_animation"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "spritesheet",
+      "file": "/render/spritesheet.doc.js",
+      "category": "render",
+      "title": "Spritesheet",
+      "tags": [
+        "render",
+        "spritesheet"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
       "id": "transform",
       "file": "/render/transform.doc.js",
       "category": "render",
@@ -383,6 +407,18 @@
       ],
       "featured": false,
       "advanced": true
+    },
+    {
+      "id": "sprite_effect_stack",
+      "file": "/render/sprite_effects/sprite_effect_stack.doc.js",
+      "category": "render/sprite_effects",
+      "title": "SpriteEffectStack",
+      "tags": [
+        "render/sprite_effects",
+        "sprite_effect_stack"
+      ],
+      "featured": false,
+      "advanced": false
     },
     {
       "id": "texture_atlas",

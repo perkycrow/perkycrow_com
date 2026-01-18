@@ -17,6 +17,6 @@
   {
     "type": "container",
     "title": "No controllers",
-    "source": "const dispatcher = new ActionDispatcher({$id: 'empty', main: false})\n\nconst inspector = document.createElement('action-dispatcher-inspector')\ninspector.setModule(dispatcher)\nctx.container.appendChild(inspector)"
+    "source": "const dispatcher = new ActionDispatcher({$id: 'empty'})\n\nconst inspector = document.createElement('action-dispatcher-inspector')\ninspector.setModule(dispatcher)\nctx.container.appendChild(inspector)"
   }
 ]

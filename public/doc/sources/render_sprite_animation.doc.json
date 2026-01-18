@@ -1,0 +1,132 @@
+[
+  {
+    "type": "container",
+    "title": "Animation playback",
+    "source": "const source = await loadSpritesheet('./assets/spritesheets/red.json')\nconst spritesheet = new Spritesheet(source)\n\nconst renderer = new WebGLRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#1a1a2e'\n})\n\nconst scene = new Group2D()\n\nconst sprite = new Sprite({\n    image: spritesheet.images[0],\n    width: 8,\n    height: 8,\n    anchorX: 0.5,\n    anchorY: 0.5\n})\n\nscene.add(sprite)\n\nconst animation = new SpriteAnimation({\n    sprite: sprite,\n    frames: spritesheet.getAnimationRegions('skip'),\n    fps: 12,\n    loop: true\n})\n\nrenderer.render(scene)\n\nconst frameLabel = ctx.label(`Frame: 0 / ${animation.totalFrames - 1}`, {overlay: true})\n\nconst frameSlider = ctx.slider('frame', {\n    min: 0,\n    max: animation.totalFrames - 1,\n    step: 1\n}, value => {\n    animation.setFrame(value)\n    renderer.render(scene)\n})\n\nanimation.on('frameChanged', () => {\n    frameLabel.textContent = `Frame: ${animation.currentIndex} / ${animation.totalFrames - 1}`\n    frameSlider.set(animation.currentIndex)\n    renderer.render(scene)\n})\n\nctx.action('Next', () => {\n    animation.nextFrame()\n})\n\nctx.action('Previous', () => {\n    animation.previousFrame()\n})"
+  },
+  {
+    "type": "container",
+    "title": "Playback modes",
+    "source": "const source = await loadSpritesheet('./assets/spritesheets/red.json')\nconst spritesheet = new Spritesheet(source)\n\nconst renderer = new WebGLRenderer({\n    container: ctx.container,\n    autoFit: true,\n    backgroundColor: '#16213e'\n})\n\nconst scene = new Group2D()\n\nconst sprite = new Sprite({\n    image: spritesheet.images[0],\n    width: 8,\n    height: 8,\n    anchorX: 0.5,\n    anchorY: 0.5\n})\n\nscene.add(sprite)\n\nlet playbackMode = 'forward'\n\nconst animation = new SpriteAnimation({\n    sprite: sprite,\n    frames: spritesheet.getAnimationRegions('skip'),\n    fps: 10,\n    loop: true,\n    playbackMode\n})\n\nrenderer.render(scene)\n\nctx.slider('frame', {min: 0, max: animation.totalFrames - 1, step: 1, default: 0}, value => {\n    animation.setFrame(value)\n    renderer.render(scene)\n})\n\nctx.action('Forward', () => {\n    playbackMode = 'forward'\n    animation.setPlaybackMode(playbackMode)\n})\n\nctx.action('Reverse', () => {\n    playbackMode = 'reverse'\n    animation.setPlaybackMode(playbackMode)\n})\n\nctx.action('Ping-pong', () => {\n    playbackMode = 'pingpong'\n    animation.setPlaybackMode(playbackMode)\n})"
+  },
+  {
+    "type": "code",
+    "title": "Basic animation",
+    "source": "const animation = new SpriteAnimation({\n    sprite: mySprite,\n    frames: [frame1, frame2, frame3, frame4],\n    fps: 12\n})"
+  },
+  {
+    "type": "code",
+    "title": "Full options",
+    "source": "const animation = new SpriteAnimation({\n    sprite: mySprite,\n    frames: frames,\n    fps: 24,\n    loop: true,\n    speed: 1,\n    playbackMode: 'forward'\n})"
+  },
+  {
+    "type": "code",
+    "title": "Frame structure",
+    "source": "// Frames can be simple region objects\nconst frames = [\n    {x: 0, y: 0, w: 32, h: 32},\n    {x: 32, y: 0, w: 32, h: 32},\n    {x: 64, y: 0, w: 32, h: 32}\n]\n\n// Or objects with region and custom duration\nconst framesWithDuration = [\n    {region: {x: 0, y: 0, w: 32, h: 32}, duration: 1},\n    {region: {x: 32, y: 0, w: 32, h: 32}, duration: 2}, // Holds 2x longer\n    {region: {x: 64, y: 0, w: 32, h: 32}, duration: 1}\n]"
+  },
+  {
+    "type": "action",
+    "title": "play / pause / stop",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}],\n    fps: 12\n})\n\nanimation.play()\nlogger.log('playing:', animation.playing)\n\nanimation.pause()\nlogger.log('after pause:', animation.playing)\n\nanimation.play()\nanimation.stop()\nlogger.log('after stop:', animation.playing, 'index:', animation.currentIndex)"
+  },
+  {
+    "type": "action",
+    "title": "restart",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}, {}],\n    fps: 12\n})\n\nanimation.play()\nanimation.setFrame(2)\nlogger.log('at frame:', animation.currentIndex)\n\nanimation.restart()\nlogger.log('after restart:', animation.currentIndex, 'playing:', animation.playing)"
+  },
+  {
+    "type": "code",
+    "title": "Method chaining",
+    "source": "const animation = new SpriteAnimation({frames, fps: 12})\n\nanimation\n    .setSpeed(1.5)\n    .setLoop(true)\n    .play()"
+  },
+  {
+    "type": "action",
+    "title": "setPlaybackMode",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}, {}],\n    fps: 12\n})\n\nanimation.setPlaybackMode('forward')\nlogger.log('forward mode:', animation.playbackMode)\n\nanimation.setPlaybackMode('reverse')\nlogger.log('reverse mode:', animation.playbackMode)\n\nanimation.setPlaybackMode('pingpong')\nlogger.log('pingpong mode:', animation.playbackMode)"
+  },
+  {
+    "type": "code",
+    "title": "Playback mode constants",
+    "source": "// Import constants from sprite_animation.js\n// import {'forward', 'reverse', 'pingpong'} from './sprite_animation.js'\n\nconst animation = new SpriteAnimation({\n    frames: walkFrames,\n    playbackMode: 'pingpong'\n})"
+  },
+  {
+    "type": "action",
+    "title": "setFrame",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}, {}],\n    fps: 12\n})\n\nanimation.setFrame(2)\nlogger.log('currentIndex:', animation.currentIndex)\nlogger.log('currentFrame:', animation.currentFrame ? 'set' : 'null')"
+  },
+  {
+    "type": "action",
+    "title": "nextFrame / previousFrame",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}, {}],\n    fps: 12\n})\n\nanimation.setFrame(1)\nlogger.log('start:', animation.currentIndex)\n\nanimation.nextFrame()\nlogger.log('after next:', animation.currentIndex)\n\nanimation.previousFrame()\nlogger.log('after previous:', animation.currentIndex)"
+  },
+  {
+    "type": "action",
+    "title": "seekToFrame / seekToProgress",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}, {}],\n    fps: 12\n})\n\nanimation.seekToFrame(3)\nlogger.log('seekToFrame(3):', animation.currentIndex)\n\nanimation.seekToProgress(0.5)\nlogger.log('seekToProgress(0.5):', animation.currentIndex)\n\nanimation.seekToProgress(0)\nlogger.log('seekToProgress(0):', animation.currentIndex)"
+  },
+  {
+    "type": "action",
+    "title": "fps / setFps",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}],\n    fps: 12\n})\n\nlogger.log('fps:', animation.fps)\nlogger.log('frameDuration:', animation.frameDuration, 'seconds')\n\nanimation.setFps(24)\nlogger.log('after setFps(24):', animation.frameDuration, 'seconds')"
+  },
+  {
+    "type": "action",
+    "title": "speed / setSpeed",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}],\n    fps: 12,\n    speed: 1\n})\n\nlogger.log('default speed:', animation.speed)\n\nanimation.setSpeed(2)\nlogger.log('2x speed:', animation.speed)\n\nanimation.setSpeed(0.5)\nlogger.log('half speed:', animation.speed)"
+  },
+  {
+    "type": "code",
+    "title": "Per-frame duration",
+    "source": "// Each frame can have a custom duration multiplier\nconst frames = [\n    {region: {x: 0, y: 0, w: 32, h: 32}, duration: 1},\n    {region: {x: 32, y: 0, w: 32, h: 32}, duration: 3}, // 3x longer\n    {region: {x: 64, y: 0, w: 32, h: 32}, duration: 1}\n]\n\nconst animation = new SpriteAnimation({frames, fps: 12})\n\n// Frame 1 will display for 3/12 = 0.25 seconds\n// Other frames display for 1/12 ≈ 0.083 seconds"
+  },
+  {
+    "type": "action",
+    "title": "loop / setLoop",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}],\n    fps: 12,\n    loop: true\n})\n\nlogger.log('default loop:', animation.loop)\n\nanimation.setLoop(false)\nlogger.log('after setLoop(false):', animation.loop)"
+  },
+  {
+    "type": "code",
+    "title": "Non-looping animation",
+    "source": "const deathAnimation = new SpriteAnimation({\n    sprite: mySprite,\n    frames: deathFrames,\n    fps: 12,\n    loop: false\n})\n\ndeathAnimation.on('complete', () => {\n    // Animation finished, remove sprite\n    sprite.dispose()\n})\n\ndeathAnimation.play()"
+  },
+  {
+    "type": "code",
+    "title": "Listening to events",
+    "source": "const animation = new SpriteAnimation({frames, fps: 12})\n\nanimation.on('play', () => {\n    logger.log('Animation started')\n})\n\nanimation.on('complete', () => {\n    logger.log('Animation finished')\n})\n\nanimation.on('loop', () => {\n    logger.log('Animation looped')\n})\n\nanimation.on('frameChanged', (frame, index) => {\n    logger.log('Now on frame', index)\n})"
+  },
+  {
+    "type": "action",
+    "title": "addEvent / removeEvent",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}, {}, {}],\n    fps: 12\n})\n\nanimation.addEvent(2, 'footstep')\nanimation.addEvent(4, 'footstep')\nanimation.addEvent(3, 'attack')\n\nlogger.log('events at frame 2:', animation.getEvents(2))\nlogger.log('events at frame 3:', animation.getEvents(3))\nlogger.log('events at frame 4:', animation.getEvents(4))\n\nanimation.removeEvent(2, 'footstep')\nlogger.log('after remove:', animation.getEvents(2))"
+  },
+  {
+    "type": "action",
+    "title": "clearEvents",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}, {}],\n    fps: 12\n})\n\nanimation.addEvent(0, 'start')\nanimation.addEvent(1, 'middle')\nanimation.addEvent(3, 'end')\n\nanimation.clearEvents()\nlogger.log('events at 0:', animation.getEvents(0))\nlogger.log('events at 1:', animation.getEvents(1))\nlogger.log('events at 3:', animation.getEvents(3))"
+  },
+  {
+    "type": "code",
+    "title": "Frame event usage",
+    "source": "const walkAnimation = new SpriteAnimation({\n    sprite: playerSprite,\n    frames: walkFrames,\n    fps: 12\n})\n\n// Add footstep events to specific frames\nwalkAnimation.addEvent(2, 'footstep')\nwalkAnimation.addEvent(6, 'footstep')\n\n// Listen for the events\nwalkAnimation.on('event:footstep', (frameIndex) => {\n    playSound('footstep.wav')\n})\n\n// Or listen to all frame events\nwalkAnimation.on('event', (eventName, frameIndex) => {\n    logger.log(`Event \"${eventName}\" at frame ${frameIndex}`)\n})"
+  },
+  {
+    "type": "action",
+    "title": "progress / totalFrames",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}, {}, {}],\n    fps: 12\n})\n\nlogger.log('totalFrames:', animation.totalFrames)\n\nanimation.setFrame(0)\nlogger.log('progress at 0:', animation.progress)\n\nanimation.setFrame(2)\nlogger.log('progress at 2:', animation.progress)\n\nanimation.setFrame(4)\nlogger.log('progress at 4:', animation.progress)"
+  },
+  {
+    "type": "action",
+    "title": "State properties",
+    "source": "const animation = new SpriteAnimation({\n    frames: [{}, {}, {}],\n    fps: 12,\n    loop: false\n})\n\nlogger.log('playing:', animation.playing)\nlogger.log('completed:', animation.completed)\n\nanimation.play()\nlogger.log('after play - playing:', animation.playing)"
+  },
+  {
+    "type": "code",
+    "title": "Manual update",
+    "source": "const animation = new SpriteAnimation({\n    sprite: mySprite,\n    frames: frames,\n    fps: 12\n})\n\nanimation.play()\n\n// In your game loop\nfunction gameLoop (deltaTime) {\n    animation.update(deltaTime)\n}"
+  },
+  {
+    "type": "code",
+    "title": "With Perky engine",
+    "source": "// SpriteAnimation extends PerkyModule\n// When added to the engine, update() is called automatically\n\nconst sprite = new Sprite({image: spritesheet})\nconst animation = new SpriteAnimation({\n    sprite: sprite,\n    frames: walkFrames,\n    fps: 12\n})\n\n// Add to engine for automatic updates\nengine.add(animation)\nanimation.play()"
+  }
+]

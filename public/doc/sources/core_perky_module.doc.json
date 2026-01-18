@@ -103,5 +103,20 @@
     "type": "action",
     "title": "delegateEventsTo",
     "source": "const game = new PerkyModule({$id: 'game'})\nconst player = game.create(PerkyModule, {$id: 'player'})\n\nplayer.delegateEventsTo(game, ['damage', 'death'], 'player')\n\ngame.on('player:damage', amount => logger.log('game heard player damage:', amount))\ngame.on('player:death', () => logger.log('game heard player death'))\n\nplayer.emit('damage', 50)\nplayer.emit('death')"
+  },
+  {
+    "type": "action",
+    "title": "link / unlink",
+    "source": "const game = new PerkyModule({$id: 'game'})\nconst textureSystem = game.create(PerkyModule, {$id: 'textureSystem'})\n\nconst tool = new PerkyModule({$id: 'tool'})\ntool.link(textureSystem, 'textures')\n\nlogger.log('linked:', tool.textures.$id)\nlogger.log('hasLinked:', tool.hasLinked('textures'))\n\ntool.unlink('textures')\nlogger.log('after unlink:', tool.hasLinked('textures'))"
+  },
+  {
+    "type": "action",
+    "title": "Auto-unlink on dispose",
+    "source": "const moduleA = new PerkyModule({$id: 'moduleA'})\nconst moduleB = new PerkyModule({$id: 'moduleB'})\n\nmoduleA.link(moduleB, 'ref')\nmoduleA.on('unlink', (key) => logger.log('unlinked:', key))\n\nlogger.log('before dispose:', moduleA.hasLinked('ref'))\nmoduleB.dispose()\nlogger.log('after dispose:', moduleA.hasLinked('ref'))"
+  },
+  {
+    "type": "code",
+    "title": "Link without binding",
+    "source": "const moduleA = new PerkyModule({$id: 'moduleA'})\nconst moduleB = new PerkyModule({$id: 'moduleB'})\n\nmoduleA.link(moduleB)              // creates moduleA.moduleB\nmoduleA.link(moduleB, 'custom')    // creates moduleA.custom\nmoduleA.link(moduleB, false)       // no binding, use getLinked()"
   }
 ]
