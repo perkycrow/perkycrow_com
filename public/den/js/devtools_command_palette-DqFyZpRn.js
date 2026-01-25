@@ -1,13 +1,17 @@
+var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
 };
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
 var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _state, _overlayEl, _containerEl, _inputEl, _resultsEl, _appActions, _internalCommands, _filteredCommands, _selectedIndex, _history, _maxHistory, _DevToolsCommandPalette_instances, buildDOM_fn, rebuildAll_fn, buildAppActions_fn, buildInternalCommands_fn, addFloatingToolCommands_fn, onInput_fn, showHistory_fn, filterCommands_fn, renderResults_fn, groupCommands_fn, createResultItem_fn, updateSelection_fn, onKeydown_fn, executeCurrentCommand_fn, autocompleteSelected_fn, executeCommand_fn, executeTemplateCommand_fn, executeToolCommand_fn, executeHistoryEntry_fn, addToHistory_fn, executeInspectCommand_fn;
-import { B as BaseEditorComponent, b as buildCommandPaletteStyles, g as getAllTools, I as ICONS, l as logger } from "./index-DPyWspCr.js";
+import { h as EditorComponent, s as editorScrollbarStyles, w as editorBaseStyles, c as createElement, I as ICONS, l as logger } from "./spritesheet_viewer-BPrGoNat.js";
+import { c as commandPaletteStyles, g as getAllTools } from "./main-BXzKS0-A.js";
 function tokenize(input) {
   const args = [];
   let current = "";
@@ -86,7 +90,7 @@ function parseCommand(input) {
   const argsString = trimmed.slice(spaceIndex + 1);
   return { command, args: tokenize(argsString) };
 }
-class DevToolsCommandPalette extends BaseEditorComponent {
+class DevToolsCommandPalette extends EditorComponent {
   constructor() {
     super(...arguments);
     __privateAdd(this, _DevToolsCommandPalette_instances);
@@ -102,7 +106,7 @@ class DevToolsCommandPalette extends BaseEditorComponent {
     __privateAdd(this, _history, []);
     __privateAdd(this, _maxHistory, 20);
   }
-  connectedCallback() {
+  onConnected() {
     __privateMethod(this, _DevToolsCommandPalette_instances, buildDOM_fn).call(this);
     __privateMethod(this, _DevToolsCommandPalette_instances, rebuildAll_fn).call(this);
   }
@@ -138,34 +142,25 @@ _history = new WeakMap();
 _maxHistory = new WeakMap();
 _DevToolsCommandPalette_instances = new WeakSet();
 buildDOM_fn = function() {
-  const style = document.createElement("style");
-  style.textContent = STYLES;
-  this.shadowRoot.appendChild(style);
-  __privateSet(this, _overlayEl, document.createElement("div"));
-  __privateGet(this, _overlayEl).className = "command-palette-overlay hidden";
+  __privateSet(this, _overlayEl, createElement("div", { class: "command-palette-overlay hidden" }));
   __privateGet(this, _overlayEl).addEventListener("click", (e) => {
     var _a;
     if (e.target === __privateGet(this, _overlayEl)) {
       (_a = __privateGet(this, _state)) == null ? void 0 : _a.closeCommandPalette();
     }
   });
-  __privateSet(this, _containerEl, document.createElement("div"));
-  __privateGet(this, _containerEl).className = "command-palette-container";
-  const inputWrapper = document.createElement("div");
-  inputWrapper.className = "command-palette-input-wrapper";
-  const icon = document.createElement("span");
-  icon.className = "command-palette-icon";
-  icon.textContent = ">_";
-  __privateSet(this, _inputEl, document.createElement("input"));
-  __privateGet(this, _inputEl).className = "command-palette-input";
-  __privateGet(this, _inputEl).type = "text";
-  __privateGet(this, _inputEl).placeholder = "Type a command...";
+  __privateSet(this, _containerEl, createElement("div", { class: "command-palette-container" }));
+  const inputWrapper = createElement("div", { class: "command-palette-input-wrapper" });
+  const icon = createElement("span", { class: "command-palette-icon", text: ">_" });
+  __privateSet(this, _inputEl, createElement("input", {
+    class: "command-palette-input",
+    attrs: { type: "text", placeholder: "Type a command..." }
+  }));
   __privateGet(this, _inputEl).addEventListener("input", () => __privateMethod(this, _DevToolsCommandPalette_instances, onInput_fn).call(this));
   __privateGet(this, _inputEl).addEventListener("keydown", (e) => __privateMethod(this, _DevToolsCommandPalette_instances, onKeydown_fn).call(this, e));
   inputWrapper.appendChild(icon);
   inputWrapper.appendChild(__privateGet(this, _inputEl));
-  __privateSet(this, _resultsEl, document.createElement("div"));
-  __privateGet(this, _resultsEl).className = "command-palette-results";
+  __privateSet(this, _resultsEl, createElement("div", { class: "command-palette-results" }));
   __privateGet(this, _containerEl).appendChild(inputWrapper);
   __privateGet(this, _containerEl).appendChild(__privateGet(this, _resultsEl));
   __privateGet(this, _overlayEl).appendChild(__privateGet(this, _containerEl));
@@ -351,23 +346,17 @@ renderResults_fn = function() {
   if (__privateGet(this, _filteredCommands).length === 0) {
     const query = __privateGet(this, _inputEl).value.trim();
     if (query) {
-      const empty = document.createElement("div");
-      empty.className = "command-palette-empty";
-      empty.textContent = "No results found";
+      const empty = createElement("div", { class: "command-palette-empty", text: "No results found" });
       __privateGet(this, _resultsEl).appendChild(empty);
     } else {
-      const hint = document.createElement("div");
-      hint.className = "command-palette-hint";
-      hint.textContent = "Type to search actions, / for commands";
+      const hint = createElement("div", { class: "command-palette-hint", text: "Type to search actions, / for commands" });
       __privateGet(this, _resultsEl).appendChild(hint);
     }
     return;
   }
   const groups = __privateMethod(this, _DevToolsCommandPalette_instances, groupCommands_fn).call(this);
   for (const [subtitle, commands] of Object.entries(groups)) {
-    const sectionTitle = document.createElement("div");
-    sectionTitle.className = "command-palette-section-title";
-    sectionTitle.textContent = subtitle;
+    const sectionTitle = createElement("div", { class: "command-palette-section-title", text: subtitle });
     __privateGet(this, _resultsEl).appendChild(sectionTitle);
     for (const cmd of commands) {
       const result = __privateMethod(this, _DevToolsCommandPalette_instances, createResultItem_fn).call(this, cmd);
@@ -387,21 +376,12 @@ groupCommands_fn = function() {
   return groups;
 };
 createResultItem_fn = function(cmd) {
-  const result = document.createElement("div");
-  result.className = "command-palette-result";
-  result.dataset.id = cmd.id;
-  const icon = document.createElement("span");
-  icon.className = "command-palette-result-icon";
-  icon.innerHTML = cmd.icon;
-  const text = document.createElement("div");
-  text.className = "command-palette-result-text";
-  const title = document.createElement("div");
-  title.className = "command-palette-result-title";
-  title.textContent = cmd.title;
+  const result = createElement("div", { class: "command-palette-result", attrs: { "data-id": cmd.id } });
+  const icon = createElement("span", { class: "command-palette-result-icon", html: cmd.icon });
+  const text = createElement("div", { class: "command-palette-result-text" });
+  const title = createElement("div", { class: "command-palette-result-title", text: cmd.title });
   if (cmd.placeholder) {
-    const placeholder = document.createElement("span");
-    placeholder.className = "command-palette-placeholder";
-    placeholder.textContent = ` ${cmd.placeholder}`;
+    const placeholder = createElement("span", { class: "command-palette-placeholder", text: ` ${cmd.placeholder}` });
     title.appendChild(placeholder);
   }
   text.appendChild(title);
@@ -566,6 +546,11 @@ executeInspectCommand_fn = function(expression) {
     (_b = __privateGet(this, _state)) == null ? void 0 : _b.openLogger();
   }
 };
+__publicField(DevToolsCommandPalette, "styles", `
+    ${editorScrollbarStyles}
+    ${editorBaseStyles}
+    ${commandPaletteStyles}
+    `);
 function collectActionsFromApp(app, actions) {
   var _a;
   const actionsMap = (_a = app.actionDispatcher) == null ? void 0 : _a.listAllActions();
@@ -754,7 +739,6 @@ function fuzzyScore(query, target) {
   }
   return score;
 }
-const STYLES = buildCommandPaletteStyles();
 customElements.define("devtools-command-palette", DevToolsCommandPalette);
 export {
   DevToolsCommandPalette as default
