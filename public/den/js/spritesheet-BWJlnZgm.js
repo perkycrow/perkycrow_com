@@ -1,4 +1,4 @@
-import { S as ShelfPacker } from "./shelf_packer-CV_Bclqz.js";
+import { h as toCamelCase, S as ShelfPacker } from "./shelf_packer-B9xAzSmX.js";
 import { _ as __vitePreload } from "./preload-helper-BbOs9S9B.js";
 class BinaryReader {
   constructor(buffer) {
@@ -535,6 +535,7 @@ async function resizeCanvas(sourceCanvas, targetWidth, targetHeight, nearest = f
   ctx.drawImage(sourceCanvas, 0, 0, targetWidth, targetHeight);
   return destCanvas;
 }
+const ANIM_GROUP_PATTERN = /^anim[\s-]+(.+)$/i;
 const MAX_ATLAS_SIZE = 4096;
 const PADDING = 1;
 let currentPsd = null;
@@ -628,12 +629,15 @@ function displayPsdInfo(psd) {
   elements.settingsPanel.classList.remove("hidden");
   elements.previewPanel.classList.add("hidden");
 }
+function isAnimationGroup(name) {
+  return ANIM_GROUP_PATTERN.test(name);
+}
 function findAnimationGroups(tree) {
   const groups = [];
   function traverse(nodes) {
     for (const node of nodes) {
       if (node.type === "group") {
-        if (node.name.startsWith("anim - ")) {
+        if (isAnimationGroup(node.name)) {
           groups.push(node);
         } else {
           traverse(node.children);
@@ -645,7 +649,10 @@ function findAnimationGroups(tree) {
   return groups;
 }
 function parseAnimationName(groupName) {
-  return groupName.replace("anim - ", "");
+  const match = groupName.match(ANIM_GROUP_PATTERN);
+  if (!match) return groupName;
+  const rawName = match[1].trim().toLowerCase();
+  return toCamelCase(rawName);
 }
 function parseFrameNumber(layerName) {
   const match = layerName.match(/^(\d+)\s*-/);
