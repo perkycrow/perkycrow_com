@@ -10,43 +10,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _listenersFor, _externalListeners, _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _pluralRules, _singularRules, _uncountables, _irregularPlurals, _irregularSingles, _Inflector_instances, sanitizeWord_fn, replaceWord_fn, checkWord_fn, loadIrregulars_fn, loadPlurals_fn, loadSingulars_fn, loadUncountables_fn, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _idCounters, _delegations, _eventDelegations, _linked, _PerkyModule_instances, findUniqueId_fn, addChild_fn, setupTagIndexListeners_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _history, _maxHistory, _consoleOutput, _Logger_instances, record_fn, trimHistory_fn, emit_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _resizeObserver, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _tint, _debugGizmos, _depth, _enabled, _effects, _region, _effects2, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context, _collected, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry, _renderers, _shaderRegistry3, _shaderEffectRegistry2, _debugGizmoRenderer, _compositeQuad, _compositeProgram, _renderGroupOrder, _WebGLRenderer_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn, ensureCompositeSetup_fn, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _canvas, _ctx, _packer, _regions, _dirty2, _atlases, _atlasGroups, _regionIndex, _atlasSize, _TextureAtlasManager_instances, addToAtlas_fn, addToNamedAtlas_fn, addOversizedImage_fn, _Spritesheet_instances, initializeFrames_fn, _atlasManager, _manualRegions, _spritesheets, _elapsed, _events, _framesByEvent, _pingpongDirection, _SpriteAnimation_instances, advanceFrame_fn, getNextFrameIndex_fn, getNextForward_fn, getNextReverse_fn, getNextPingpong_fn, emitFrameEvents_fn, updateSpriteFrame_fn, _listeners, _PerkyElement_instances, adoptStyles_fn, collectStyleSheets_fn, cleanListeners_fn, _value, _min, _max, _step, _label, _slider, _labelEl, _valueEl, _SliderInput_instances, buildDOM_fn, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl2, _ToggleInput_instances, buildDOM_fn2, updateDisplay_fn2, handleClick_fn, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl3, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn3, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _perm, _gradP, _Color_instances, parseString_fn, parseHex_fn, parseRgbString_fn, parseHslString_fn, parseNumber_fn, parseArray_fn, parseObject_fn, hslToRgb_fn, _canvas2, _renderer, _camera, _scene, _backgroundSprite, _animatorSprite, _animation, _anchor, _size, _unitsInView, _isPlaying, _lastTime, _animationFrameId, _onFrame, _onComplete, _spriteX, _motion, _AnimatorPreview_instances, setup_fn, updateBackground_fn, updateAnimatorSprite_fn, loop_fn, updateMotion_fn, getSpriteDirection_fn, _canvas3, _previewArea, _renderer2, _scene2, _sprite, _animation2, _animationFrameId2, _lastTime2, _isPlaying2, _resizeObserver2, _sceneryEnabled, _sceneryOffset, _spriteOffset, _sceneryCanvas, _sceneryCtx, _gridCanvas, _gridCtx, _gridEnabled, _motion2, _anchor2, _noise, _moveSpriteMode, _backgroundImage, _backgroundRegion, _unitsInView2, _size2, _gamePreview, _gamePreviewCanvas, _AnimationPreview_instances, buildDOM_fn4, toggleSettings_fn, hasMotion_get, sceneryActive_get, toggleScenery_fn, toggleGrid_fn, syncGridButton_fn, useGamePreview_get, updateGamePreviewConfig_fn, applyGamePreviewSettings_fn, createGamePreview_fn, updatePlayButtonIcon_fn, syncPreviewVisibility_fn, syncSceneryState_fn, updateSceneryButton_fn, pauseAllPreviews_fn, setupNormalPreview_fn, updateGamePreviewSize_fn, centerSprite_fn, setupRenderer_fn, updateSprite_fn, setupResizeObserver_fn, resizeCanvas_fn, fitToContainer_fn, updateSceneryCanvas_fn, updateGridCanvas_fn, togglePlay_fn, loop_fn2, updateScenery_fn, wrapSpritePosition_fn, getSpriteDirection_fn2, clearSceneryCanvas_fn, renderScenery_fn, renderSimpleGrid_fn, getSpriteSize_fn, renderSidescroller_fn, renderBackgroundImage_fn, renderBuildings_fn, getGroundY_fn, renderTopdown_fn, render_fn, renderGrid_fn, updateSpritePosition_fn, _wrapperEl, _viewportEl, _containerEl, _scrubberEl, _scrubberThumbEl, _dropIndicator, _frames, _currentIndex, _selectedIndex, _dropIndex, _scrollLeft, _maxScroll, _scrubberDragging, _scrubberStartX, _scrubberStartScroll, _internalDragActive, _internalDragIndex, _internalDragGhost, _internalDragStartX, _internalDragStartY, _isDragOutside, _AnimationTimeline_instances, buildDOM_fn5, setupScrubber_fn, _boundScrubberMove, _boundScrubberUp, cleanupScrubberEvents_fn, _boundPointerMove, _boundPointerUp, setupInternalDrag_fn, cleanupInternalDrag_fn, onInternalDragStart_fn, onInternalDragMove_fn, isPointerOutsideTimeline_fn, updateDragGhostState_fn, onInternalDragEnd_fn, markFrameDragging_fn, createInternalDragGhost_fn, updateInternalDragGhost_fn, removeInternalDragGhost_fn, onScrubberStart_fn, onScrubberMove_fn, updateScrollFromScrubber_fn, setScrollLeft_fn, onScrubberEnd_fn, onScrubberClick_fn, updateScrubberThumb_fn, setupDeselect_fn, setupDropZone_fn, handleSpritesheetDrop_fn, calculateDropIndex_fn, updateDropIndicator_fn, hideDropIndicator_fn, render_fn2, createAddButton_fn, createFrameElement_fn, updateHighlight_fn, handleFrameTap_fn, dispatchDeleteEvent_fn, handleKeydown_fn, flashFrameAt_fn, _containerEl2, _filterEl, _gridEl, _spritesheet, _filter, _animationColorMap, _dragData, _dragGhost, _dragStartPos, _dragStartEl, _lastTimeline, _SpritesheetViewer_instances, buildDOM_fn6, buildAnimationColorMap_fn, renderFilter_fn, renderGrid_fn2, getFilteredFrames_fn, createFrameElement_fn2, setupPointerDrag_fn, _boundPointerMove2, _boundPointerEnd, cleanupPointerDrag_fn, onPointerStart_fn, findFrameFromPoint_fn, onPointerMove_fn, onPointerEnd_fn, startDrag_fn2, createDragGhost_fn, updateDragGhost_fn, removeDragGhost_fn;
-(function polyfill() {
-  const relList = document.createElement("link").relList;
-  if (relList && relList.supports && relList.supports("modulepreload")) {
-    return;
-  }
-  for (const link of document.querySelectorAll('link[rel="modulepreload"]')) {
-    processPreload(link);
-  }
-  new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.type !== "childList") {
-        continue;
-      }
-      for (const node of mutation.addedNodes) {
-        if (node.tagName === "LINK" && node.rel === "modulepreload")
-          processPreload(node);
-      }
-    }
-  }).observe(document, { childList: true, subtree: true });
-  function getFetchOpts(link) {
-    const fetchOpts = {};
-    if (link.integrity) fetchOpts.integrity = link.integrity;
-    if (link.referrerPolicy) fetchOpts.referrerPolicy = link.referrerPolicy;
-    if (link.crossOrigin === "use-credentials")
-      fetchOpts.credentials = "include";
-    else if (link.crossOrigin === "anonymous") fetchOpts.credentials = "omit";
-    else fetchOpts.credentials = "same-origin";
-    return fetchOpts;
-  }
-  function processPreload(link) {
-    if (link.ep)
-      return;
-    link.ep = true;
-    const fetchOpts = getFetchOpts(link);
-    fetch(link.href, fetchOpts);
-  }
-})();
+import { S as ShelfPacker } from "./shelf_packer-CV_Bclqz.js";
 class Notifier {
   constructor() {
     __privateAdd(this, _listenersFor, {});
@@ -5971,51 +5935,6 @@ applyBlendMode_fn = function(blendMode) {
   gl.blendFunc(src, dst);
 };
 __publicField(WebGLRenderer, "$name", "webGLRenderer");
-class ShelfPacker {
-  constructor(width, height, padding = 1) {
-    this.width = width;
-    this.height = height;
-    this.padding = padding;
-    this.shelves = [];
-    this.currentY = 0;
-    this.full = false;
-  }
-  pack(w, h) {
-    const pw = w + this.padding;
-    const ph = h + this.padding;
-    for (const shelf2 of this.shelves) {
-      if (shelf2.height >= ph && shelf2.remainingWidth >= pw) {
-        const slot = { x: shelf2.x, y: shelf2.y };
-        shelf2.x += pw;
-        shelf2.remainingWidth -= pw;
-        return slot;
-      }
-    }
-    if (this.currentY + ph > this.height) {
-      this.full = true;
-      return null;
-    }
-    const shelf = {
-      y: this.currentY,
-      x: pw,
-      height: ph,
-      remainingWidth: this.width - pw
-    };
-    this.shelves.push(shelf);
-    this.currentY += ph;
-    return { x: 0, y: shelf.y };
-  }
-  canFit(w, h) {
-    const pw = w + this.padding;
-    const ph = h + this.padding;
-    for (const shelf of this.shelves) {
-      if (shelf.height >= ph && shelf.remainingWidth >= pw) {
-        return true;
-      }
-    }
-    return this.currentY + ph <= this.height;
-  }
-}
 const DEFAULT_SIZE = 4096;
 const MAX_SIZE = 4096;
 const PADDING = 1;
