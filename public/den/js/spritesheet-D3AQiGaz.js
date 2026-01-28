@@ -1,4 +1,4 @@
-import { h as toCamelCase, S as ShelfPacker } from "./shelf_packer-B9xAzSmX.js";
+import { j as toCamelCase, S as ShelfPacker, l as logger } from "./shelf_packer--IBfIqnG.js";
 import { _ as __vitePreload } from "./preload-helper-BbOs9S9B.js";
 class BinaryReader {
   constructor(buffer) {
@@ -96,6 +96,66 @@ const COLOR_MODES = {
   8: "Duotone",
   9: "Lab"
 };
+function readUtf16String(reader, byteLength) {
+  const chars = [];
+  const charCount = byteLength / 2;
+  for (let i = 0; i < charCount; i++) {
+    const charCode = reader.readUint16();
+    if (charCode > 0) {
+      chars.push(String.fromCharCode(charCode));
+    }
+  }
+  return chars.join("");
+}
+function readProfileName(reader, startOffset, descOffset) {
+  if (descOffset <= 0) {
+    return "Unknown";
+  }
+  reader.seek(startOffset + descOffset);
+  const descType = reader.readString(4);
+  if (descType === "desc") {
+    reader.skip(4);
+    const strLength2 = reader.readUint32();
+    return reader.readString(strLength2 - 1);
+  }
+  if (descType !== "mluc") {
+    return "Unknown";
+  }
+  reader.skip(4);
+  const recordCount = reader.readUint32();
+  reader.skip(4);
+  if (recordCount <= 0) {
+    return "Unknown";
+  }
+  reader.skip(4);
+  const strLength = reader.readUint32();
+  const strOffset = reader.readUint32();
+  reader.seek(startOffset + descOffset + strOffset);
+  return readUtf16String(reader, strLength);
+}
+function processRlePacket(reader, ctx) {
+  const header = reader.readInt8();
+  if (header >= 0) {
+    const count = header + 1;
+    for (let i = 0; i < count && ctx.offset < ctx.rowEnd; i++) {
+      ctx.output[ctx.offset++] = reader.readUint8();
+    }
+    return;
+  }
+  if (header > -128) {
+    const count = -header + 1;
+    const value = reader.readUint8();
+    for (let i = 0; i < count && ctx.offset < ctx.rowEnd; i++) {
+      ctx.output[ctx.offset++] = value;
+    }
+  }
+}
+function copyPixelToRgba(rgba, dstIdx, channels, srcIdx) {
+  rgba[dstIdx * 4] = channels.red ? channels.red[srcIdx] : 0;
+  rgba[dstIdx * 4 + 1] = channels.green ? channels.green[srcIdx] : 0;
+  rgba[dstIdx * 4 + 2] = channels.blue ? channels.blue[srcIdx] : 0;
+  rgba[dstIdx * 4 + 3] = channels.alpha ? channels.alpha[srcIdx] : 255;
+}
 function parsePsd(buffer) {
   const reader = new BinaryReader(buffer);
   const header = parseHeader(reader);
@@ -187,34 +247,7 @@ function parseICCProfile(reader, length) {
       break;
     }
   }
-  let profileName = "Unknown";
-  if (descOffset > 0) {
-    reader.seek(startOffset + descOffset);
-    const descType = reader.readString(4);
-    if (descType === "desc") {
-      reader.skip(4);
-      const strLength = reader.readUint32();
-      profileName = reader.readString(strLength - 1);
-    } else if (descType === "mluc") {
-      reader.skip(4);
-      const recordCount = reader.readUint32();
-      reader.skip(4);
-      if (recordCount > 0) {
-        reader.skip(4);
-        const strLength = reader.readUint32();
-        const strOffset = reader.readUint32();
-        reader.seek(startOffset + descOffset + strOffset);
-        const chars = [];
-        for (let i = 0; i < strLength / 2; i++) {
-          const charCode = reader.readUint16();
-          if (charCode > 0) {
-            chars.push(String.fromCharCode(charCode));
-          }
-        }
-        profileName = chars.join("");
-      }
-    }
-  }
+  const profileName = readProfileName(reader, startOffset, descOffset);
   reader.seek(startOffset + length);
   const nameLower = profileName.toLowerCase();
   const isP3 = nameLower.includes("p3") || nameLower.includes("display p3");
@@ -311,6 +344,7 @@ function parseLayerRecord(reader) {
     isGroup,
     isGroupEnd,
     visible: (flags & 2) === 0
+    // eslint-disable-line no-bitwise -- clean
   };
 }
 function readLayerName(reader) {
@@ -343,28 +377,15 @@ function parseChannelData(reader, layer) {
   return channelData;
 }
 function decodeRLE(reader, width, height) {
-  const rowLengths = [];
   for (let y = 0; y < height; y++) {
-    rowLengths.push(reader.readUint16());
+    reader.readUint16();
   }
   const output = new Uint8Array(width * height);
-  let outOffset = 0;
+  const ctx = { output, offset: 0, rowEnd: 0 };
   for (let y = 0; y < height; y++) {
-    const rowEnd = outOffset + width;
-    while (outOffset < rowEnd) {
-      const header = reader.readInt8();
-      if (header >= 0) {
-        const count = header + 1;
-        for (let i = 0; i < count && outOffset < rowEnd; i++) {
-          output[outOffset++] = reader.readUint8();
-        }
-      } else if (header > -128) {
-        const count = -header + 1;
-        const value = reader.readUint8();
-        for (let i = 0; i < count && outOffset < rowEnd; i++) {
-          output[outOffset++] = value;
-        }
-      }
+    ctx.rowEnd = ctx.offset + width;
+    while (ctx.offset < ctx.rowEnd) {
+      processRlePacket(reader, ctx);
     }
   }
   return output;
@@ -429,42 +450,49 @@ function layerToRGBA(layer, psdWidth, psdHeight, options = {}) {
   if (width === 0 || height === 0) {
     return null;
   }
-  const red = channelData[0];
-  const green = channelData[1];
-  const blue = channelData[2];
-  const alpha = channelData[-1];
-  if (trim) {
-    const rgba2 = new Uint8Array(width * height * 4);
-    for (let i = 0; i < width * height; i++) {
-      rgba2[i * 4] = red ? red[i] : 0;
-      rgba2[i * 4 + 1] = green ? green[i] : 0;
-      rgba2[i * 4 + 2] = blue ? blue[i] : 0;
-      rgba2[i * 4 + 3] = alpha ? alpha[i] : 255;
-    }
-    return { pixels: rgba2, width, height, left, top };
-  }
-  const rgba = new Uint8Array(psdWidth * psdHeight * 4);
-  for (let ly = 0; ly < height; ly++) {
-    for (let lx = 0; lx < width; lx++) {
-      const srcIdx = ly * width + lx;
-      const dstX = left + lx;
-      const dstY = top + ly;
-      if (dstX >= 0 && dstX < psdWidth && dstY >= 0 && dstY < psdHeight) {
-        const dstIdx = dstY * psdWidth + dstX;
-        rgba[dstIdx * 4] = red ? red[srcIdx] : 0;
-        rgba[dstIdx * 4 + 1] = green ? green[srcIdx] : 0;
-        rgba[dstIdx * 4 + 2] = blue ? blue[srcIdx] : 0;
-        rgba[dstIdx * 4 + 3] = alpha ? alpha[srcIdx] : 255;
-      }
-    }
-  }
-  return {
-    pixels: rgba,
-    width: psdWidth,
-    height: psdHeight,
-    left: 0,
-    top: 0
+  const channels = {
+    red: channelData[0],
+    green: channelData[1],
+    blue: channelData[2],
+    alpha: channelData[-1]
   };
+  if (trim) {
+    return createTrimmedRgba(channels, { width, height, left, top });
+  }
+  return createFullRgba(channels, layer, psdWidth, psdHeight);
+}
+function createTrimmedRgba(channels, bounds) {
+  const { width, height, left, top } = bounds;
+  const rgba = new Uint8Array(width * height * 4);
+  for (let i = 0; i < width * height; i++) {
+    copyPixelToRgba(rgba, i, channels, i);
+  }
+  return { pixels: rgba, width, height, left, top };
+}
+function createFullRgba(channels, layer, psdWidth, psdHeight) {
+  const rgba = new Uint8Array(psdWidth * psdHeight * 4);
+  const ctx = { rgba, channels, layer, psdWidth, psdHeight };
+  for (let ly = 0; ly < layer.height; ly++) {
+    copyRowToRgba(ctx, ly);
+  }
+  return { pixels: rgba, width: psdWidth, height: psdHeight, left: 0, top: 0 };
+}
+function copyRowToRgba(ctx, ly) {
+  const { rgba, channels, layer, psdWidth, psdHeight } = ctx;
+  const { width, left, top } = layer;
+  const dstY = top + ly;
+  if (dstY < 0 || dstY >= psdHeight) {
+    return;
+  }
+  for (let lx = 0; lx < width; lx++) {
+    const dstX = left + lx;
+    if (dstX < 0 || dstX >= psdWidth) {
+      continue;
+    }
+    const srcIdx = ly * width + lx;
+    const dstIdx = dstY * psdWidth + dstX;
+    copyPixelToRgba(rgba, dstIdx, channels, srcIdx);
+  }
 }
 let nodeCanvas = null;
 async function getNodeCanvas() {
@@ -481,8 +509,8 @@ function isNode() {
 }
 async function createCanvas(width, height) {
   if (isNode()) {
-    const { createCanvas: createCanvas2 } = await getNodeCanvas();
-    return createCanvas2(width, height);
+    const { createCanvas: nodeCreateCanvas } = await getNodeCanvas();
+    return nodeCreateCanvas(width, height);
   }
   const canvas = document.createElement("canvas");
   canvas.width = width;
@@ -504,7 +532,7 @@ async function canvasToBlob(canvas) {
     }, "image/png");
   });
 }
-function putPixels(ctx, pixels, width, height, x = 0, y = 0) {
+function putPixels(ctx, { pixels, width, height, x = 0, y = 0 }) {
   const imageData = ctx.createImageData(width, height);
   imageData.data.set(new Uint8ClampedArray(pixels.buffer, pixels.byteOffset, pixels.byteLength));
   ctx.putImageData(imageData, x, y);
@@ -535,100 +563,9 @@ async function resizeCanvas(sourceCanvas, targetWidth, targetHeight, nearest = f
   ctx.drawImage(sourceCanvas, 0, 0, targetWidth, targetHeight);
   return destCanvas;
 }
-const ANIM_GROUP_PATTERN = /^anim[\s-]+(.+)$/i;
 const MAX_ATLAS_SIZE = 4096;
 const PADDING = 1;
-let currentPsd = null;
-let currentResult = null;
-const elements = {
-  fileDrop: document.getElementById("file-drop"),
-  fileInput: document.getElementById("file-input"),
-  infoPanel: document.getElementById("info-panel"),
-  infoDimensions: document.getElementById("info-dimensions"),
-  infoProfile: document.getElementById("info-profile"),
-  infoLayers: document.getElementById("info-layers"),
-  infoAnimations: document.getElementById("info-animations"),
-  p3Warning: document.getElementById("p3-warning"),
-  animationsList: document.getElementById("animations-list"),
-  settingsPanel: document.getElementById("settings-panel"),
-  outputWidth: document.getElementById("output-width"),
-  outputHeight: document.getElementById("output-height"),
-  resizeMode: document.getElementById("resize-mode"),
-  convertBtn: document.getElementById("convert-btn"),
-  previewPanel: document.getElementById("preview-panel"),
-  previewContainer: document.getElementById("preview-container"),
-  downloadPng: document.getElementById("download-png"),
-  downloadJson: document.getElementById("download-json")
-};
-function init() {
-  elements.fileDrop.addEventListener("click", () => elements.fileInput.click());
-  elements.fileInput.addEventListener("change", handleFileSelect);
-  elements.fileDrop.addEventListener("dragover", handleDragOver);
-  elements.fileDrop.addEventListener("dragleave", handleDragLeave);
-  elements.fileDrop.addEventListener("drop", handleDrop);
-  elements.convertBtn.addEventListener("click", handleConvert);
-  elements.downloadPng.addEventListener("click", downloadPng);
-  elements.downloadJson.addEventListener("click", downloadJson);
-}
-function handleDragOver(e) {
-  e.preventDefault();
-  elements.fileDrop.classList.add("dragover");
-}
-function handleDragLeave() {
-  elements.fileDrop.classList.remove("dragover");
-}
-function handleDrop(e) {
-  e.preventDefault();
-  elements.fileDrop.classList.remove("dragover");
-  const file = e.dataTransfer.files[0];
-  if (file && file.name.endsWith(".psd")) {
-    loadPsdFile(file);
-  }
-}
-function handleFileSelect(e) {
-  const file = e.target.files[0];
-  if (file) {
-    loadPsdFile(file);
-  }
-}
-async function loadPsdFile(file) {
-  const buffer = await file.arrayBuffer();
-  const psd = parsePsd(new Uint8Array(buffer));
-  currentPsd = {
-    ...psd,
-    filename: file.name.replace(".psd", "")
-  };
-  displayPsdInfo(psd);
-}
-function displayPsdInfo(psd) {
-  elements.infoDimensions.textContent = `${psd.width} x ${psd.height}`;
-  elements.infoProfile.textContent = psd.colorProfile.name;
-  elements.infoLayers.textContent = psd.layers.length;
-  const animGroups = findAnimationGroups(psd.tree);
-  const totalFrames = animGroups.reduce((sum, g) => sum + countFrames(g), 0);
-  elements.infoAnimations.textContent = `${animGroups.length} (${totalFrames} frames)`;
-  if (psd.colorProfile.isP3) {
-    elements.p3Warning.classList.remove("hidden");
-  } else {
-    elements.p3Warning.classList.add("hidden");
-  }
-  elements.animationsList.innerHTML = "";
-  for (const group of animGroups) {
-    const tag = document.createElement("div");
-    tag.className = "animation-tag";
-    const name = parseAnimationName(group.name);
-    const frameCount = countFrames(group);
-    tag.innerHTML = `${name}<span>${frameCount}f</span>`;
-    elements.animationsList.appendChild(tag);
-  }
-  elements.outputWidth.value = "";
-  elements.outputHeight.value = "";
-  elements.outputWidth.placeholder = psd.width;
-  elements.outputHeight.placeholder = psd.height;
-  elements.infoPanel.classList.remove("hidden");
-  elements.settingsPanel.classList.remove("hidden");
-  elements.previewPanel.classList.add("hidden");
-}
+const ANIM_GROUP_PATTERN = /^anim[\s-]+(.+)$/i;
 function isAnimationGroup(name) {
   return ANIM_GROUP_PATTERN.test(name);
 }
@@ -650,100 +587,58 @@ function findAnimationGroups(tree) {
 }
 function parseAnimationName(groupName) {
   const match = groupName.match(ANIM_GROUP_PATTERN);
-  if (!match) return groupName;
+  if (!match) {
+    return groupName;
+  }
   const rawName = match[1].trim().toLowerCase();
   return toCamelCase(rawName);
 }
 function parseFrameNumber(layerName) {
-  const match = layerName.match(/^(\d+)\s*-/);
+  const match = layerName.match(/^(\d+)/);
   return match ? match[1] : null;
 }
 function countFrames(group) {
   return group.children.filter((c) => c.type === "layer" && parseFrameNumber(c.name)).length;
 }
-async function handleConvert() {
-  if (!currentPsd) return;
-  elements.convertBtn.disabled = true;
-  elements.convertBtn.textContent = "Converting...";
-  elements.previewPanel.classList.remove("hidden");
-  elements.previewContainer.innerHTML = '<p class="preview-placeholder">Converting...</p>';
-  await new Promise((r) => setTimeout(r, 50));
-  try {
-    const result = await convertPsd(currentPsd);
-    currentResult = result;
-    displayPreview(result);
-  } catch (error) {
-    elements.previewContainer.innerHTML = `<p class="preview-placeholder">Error: ${error.message}</p>`;
-  }
-  elements.convertBtn.disabled = false;
-  elements.convertBtn.textContent = "Convert to Spritesheet";
-}
-async function convertPsd(psd) {
-  const targetWidth = parseInt(elements.outputWidth.value, 10) || null;
-  const targetHeight = parseInt(elements.outputHeight.value, 10) || null;
-  const nearest = elements.resizeMode.value === "nearest";
-  const resize = calculateResizeDimensions(psd.width, psd.height, targetWidth, targetHeight);
-  const needsResize = resize.width !== psd.width || resize.height !== psd.height;
-  const animGroups = findAnimationGroups(psd.tree);
+function extractFramesFromGroup(group, psdWidth, psdHeight) {
+  const animName = parseAnimationName(group.name);
   const frames = [];
-  const animations = {};
-  for (const group of animGroups) {
-    const animName = parseAnimationName(group.name);
-    animations[animName] = [];
-    const layersWithFrameNumbers = [];
-    for (const child of group.children) {
-      if (child.type !== "layer") continue;
-      const frameNumber = parseFrameNumber(child.name);
-      if (!frameNumber) continue;
-      layersWithFrameNumbers.push({
-        layer: child.layer,
-        name: child.name,
-        frameNumber: parseInt(frameNumber, 10)
-      });
+  const layersWithFrameNumbers = [];
+  for (const child of group.children) {
+    if (child.type !== "layer") {
+      continue;
     }
-    layersWithFrameNumbers.sort((a, b) => a.frameNumber - b.frameNumber);
-    for (const { layer, frameNumber } of layersWithFrameNumbers) {
-      const filename = `${animName}/${frameNumber}`;
-      const rgba = layerToRGBA(layer, psd.width, psd.height);
-      if (!rgba) continue;
-      let finalPixels = rgba.pixels;
-      let finalWidth = rgba.width;
-      let finalHeight = rgba.height;
-      if (needsResize) {
-        const resized = await resizeFrame(rgba, resize.width, resize.height, nearest);
-        finalPixels = resized.pixels;
-        finalWidth = resized.width;
-        finalHeight = resized.height;
-      }
-      frames.push({
-        filename,
-        pixels: finalPixels,
-        width: finalWidth,
-        height: finalHeight,
-        animName,
-        frameNumber
-      });
-      animations[animName].push(filename);
+    const frameNumber = parseFrameNumber(child.name);
+    if (!frameNumber) {
+      continue;
     }
+    layersWithFrameNumbers.push({
+      layer: child.layer,
+      name: child.name,
+      frameNumber: parseInt(frameNumber, 10)
+    });
   }
-  const atlases = packFramesIntoAtlases(frames, MAX_ATLAS_SIZE);
-  for (let i = 0; i < atlases.length; i++) {
-    const atlas = atlases[i];
-    const usedHeight = atlas.packer.currentY;
-    atlas.finalHeight = nextPowerOfTwo(usedHeight);
-    atlas.canvas = await compositeAtlas(atlas.frames, MAX_ATLAS_SIZE, atlas.finalHeight);
+  layersWithFrameNumbers.sort((a, b) => a.frameNumber - b.frameNumber);
+  for (const { layer, frameNumber } of layersWithFrameNumbers) {
+    const rgba = layerToRGBA(layer, psdWidth, psdHeight);
+    if (!rgba) {
+      continue;
+    }
+    frames.push({
+      filename: `${animName}/${frameNumber}`,
+      pixels: rgba.pixels,
+      width: rgba.width,
+      height: rgba.height,
+      animName,
+      frameNumber
+    });
   }
-  const jsonData = buildJsonData(atlases, animations, psd.filename);
-  return {
-    atlases,
-    jsonData,
-    filename: psd.filename
-  };
+  return frames;
 }
 async function resizeFrame(frameData, targetWidth, targetHeight, nearest) {
   const srcCanvas = await createCanvas(frameData.width, frameData.height);
   const srcCtx = srcCanvas.getContext("2d");
-  putPixels(srcCtx, frameData.pixels, frameData.width, frameData.height);
+  putPixels(srcCtx, { pixels: frameData.pixels, width: frameData.width, height: frameData.height });
   const resizedCanvas = await resizeCanvas(srcCanvas, targetWidth, targetHeight, nearest);
   const resizedCtx = resizedCanvas.getContext("2d");
   const imageData = resizedCtx.getImageData(0, 0, targetWidth, targetHeight);
@@ -753,10 +648,28 @@ async function resizeFrame(frameData, targetWidth, targetHeight, nearest) {
     height: targetHeight
   };
 }
-function packFramesIntoAtlases(frames, atlasSize) {
+async function resizeFrames(frames, { psdWidth, psdHeight, targetWidth, targetHeight, nearest }) {
+  const resize = calculateResizeDimensions(psdWidth, psdHeight, targetWidth, targetHeight);
+  const needsResize = resize.width !== psdWidth || resize.height !== psdHeight;
+  if (!needsResize) {
+    return frames;
+  }
+  const resized = [];
+  for (const frame of frames) {
+    const resizedFrame = await resizeFrame(frame, resize.width, resize.height, nearest);
+    resized.push({
+      ...frame,
+      pixels: resizedFrame.pixels,
+      width: resizedFrame.width,
+      height: resizedFrame.height
+    });
+  }
+  return resized;
+}
+function packFramesIntoAtlases(frames, atlasSize = MAX_ATLAS_SIZE, padding = PADDING) {
   const atlases = [];
   let currentAtlas = {
-    packer: new ShelfPacker(atlasSize, atlasSize, PADDING),
+    packer: new ShelfPacker(atlasSize, atlasSize, padding),
     frames: []
   };
   atlases.push(currentAtlas);
@@ -764,13 +677,13 @@ function packFramesIntoAtlases(frames, atlasSize) {
     let slot = currentAtlas.packer.pack(frame.width, frame.height);
     if (!slot) {
       currentAtlas = {
-        packer: new ShelfPacker(atlasSize, atlasSize, PADDING),
+        packer: new ShelfPacker(atlasSize, atlasSize, padding),
         frames: []
       };
       atlases.push(currentAtlas);
       slot = currentAtlas.packer.pack(frame.width, frame.height);
       if (!slot) {
-        console.warn(`Frame too large: ${frame.filename}`);
+        logger.warn(`Frame too large: ${frame.filename}`);
         continue;
       }
     }
@@ -787,16 +700,25 @@ async function compositeAtlas(packedFrames, atlasWidth, atlasHeight) {
   const canvas = await createCanvas(atlasWidth, atlasHeight);
   const ctx = canvas.getContext("2d");
   for (const frame of packedFrames) {
-    putPixels(ctx, frame.pixels, frame.width, frame.height, frame.x, frame.y);
+    putPixels(ctx, { pixels: frame.pixels, width: frame.width, height: frame.height, x: frame.x, y: frame.y });
   }
   return canvas;
 }
-function buildJsonData(atlases, animations, psdName) {
+function nextPowerOfTwo(n) {
+  const powers = [16, 32, 64, 128, 256, 512, 1024, 2048, 4096];
+  for (const p of powers) {
+    if (p >= n) {
+      return p;
+    }
+  }
+  return 4096;
+}
+function buildJsonData(atlases, animations, baseName, appName = "perky-spritesheet") {
   const allFrames = [];
   const images = [];
   for (let i = 0; i < atlases.length; i++) {
     const atlas = atlases[i];
-    const imageName = atlases.length === 1 ? `${psdName}.png` : `${psdName}_${i}.png`;
+    const imageName = atlases.length === 1 ? `${baseName}.png` : `${baseName}_${i}.png`;
     images.push({
       filename: imageName,
       size: {
@@ -825,53 +747,25 @@ function buildJsonData(atlases, animations, psdName) {
     frames: allFrames,
     animations,
     meta: {
-      app: "perky-spritesheet",
+      app: appName,
       version: "1.0",
       images
     }
   };
 }
-function nextPowerOfTwo(n) {
-  const powers = [16, 32, 64, 128, 256, 512, 1024, 2048, 4096];
-  for (const p of powers) {
-    if (p >= n) return p;
-  }
-  return 4096;
-}
-function displayPreview(result) {
-  elements.previewContainer.innerHTML = "";
-  for (const atlas of result.atlases) {
-    const img = document.createElement("img");
-    img.src = atlas.canvas.toDataURL("image/png");
-    img.alt = "Atlas preview";
-    elements.previewContainer.appendChild(img);
-  }
-}
-async function downloadPng() {
-  if (!currentResult) return;
-  for (let i = 0; i < currentResult.atlases.length; i++) {
-    const atlas = currentResult.atlases[i];
-    const blob = await canvasToBlob(atlas.canvas);
-    const filename = currentResult.atlases.length === 1 ? `${currentResult.filename}.png` : `${currentResult.filename}_${i}.png`;
-    downloadBlob(blob, filename);
-  }
-}
-function downloadJson() {
-  if (!currentResult) return;
-  const json = JSON.stringify(currentResult.jsonData, null, 2);
-  const blob = new Blob([json], { type: "application/json" });
-  downloadBlob(blob, `${currentResult.filename}.json`);
-}
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
-} else {
-  init();
-}
+export {
+  MAX_ATLAS_SIZE as M,
+  calculateResizeDimensions as a,
+  packFramesIntoAtlases as b,
+  countFrames as c,
+  compositeAtlas as d,
+  extractFramesFromGroup as e,
+  buildJsonData as f,
+  parsePsd as g,
+  findAnimationGroups as h,
+  putPixels as i,
+  canvasToBlob as j,
+  nextPowerOfTwo as n,
+  parseAnimationName as p,
+  resizeFrames as r
+};

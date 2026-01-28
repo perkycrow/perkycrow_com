@@ -17,427 +17,22 @@ var __privateWrapper = (obj, member, setter, getter) => ({
     return __privateGet(obj, member, getter);
   }
 });
-var _headerEl, _titleEl, _menuBtn, _closeBtn, _contentEl, _footerEl, _AppLayout_instances, buildDOM_fn, updateTitle_fn, updateButtonVisibility_fn, emitEvent_fn, _backdrop, _container, _Overlay_instances, buildDOM_fn2, _closeBtn2, _contentEl2, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn3, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn4, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn5, renderItems_fn, _context, _animators, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _drawerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, selectAnimator_fn, buildDOM_fn6, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, syncDrawerAnimSelect_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn;
-import "./shelf_packer-B9xAzSmX.js";
-import { h as EditorComponent, c as createElement, j as controlsSheet, n as emitChange, u as createStyleSheet, g as SpriteAnimator, v as adoptStyleSheets, w as TextureRegion, I as ICONS, M as Manifest, S as SourceManager, R as Registry, a as loaders, T as TextureSystem, l as logger, m as manifest } from "./spritesheet_viewer-C7jRwWG4.js";
-class AppLayout extends EditorComponent {
-  constructor() {
-    super(...arguments);
-    __privateAdd(this, _AppLayout_instances);
-    __privateAdd(this, _headerEl, null);
-    __privateAdd(this, _titleEl, null);
-    __privateAdd(this, _menuBtn, null);
-    __privateAdd(this, _closeBtn, null);
-    __privateAdd(this, _contentEl, null);
-    __privateAdd(this, _footerEl, null);
-  }
-  onConnected() {
-    __privateMethod(this, _AppLayout_instances, buildDOM_fn).call(this);
-    __privateMethod(this, _AppLayout_instances, updateButtonVisibility_fn).call(this);
-  }
-  static get observedAttributes() {
-    return ["title", "no-header", "no-footer", "no-menu", "no-close"];
-  }
-  attributeChangedCallback(name) {
-    if (name === "title") {
-      __privateMethod(this, _AppLayout_instances, updateTitle_fn).call(this);
-    } else if (name === "no-menu" || name === "no-close") {
-      __privateMethod(this, _AppLayout_instances, updateButtonVisibility_fn).call(this);
-    }
-  }
-  get title() {
-    return this.getAttribute("title") || "";
-  }
-  set title(value) {
-    this.setAttribute("title", value);
-  }
-  setTitle(value) {
-    this.title = value;
-  }
-}
-_headerEl = new WeakMap();
-_titleEl = new WeakMap();
-_menuBtn = new WeakMap();
-_closeBtn = new WeakMap();
-_contentEl = new WeakMap();
-_footerEl = new WeakMap();
-_AppLayout_instances = new WeakSet();
-buildDOM_fn = function() {
-  __privateSet(this, _headerEl, createElement("header", { class: "header" }));
-  const headerStart = createElement("div", { class: "header-start" });
-  __privateSet(this, _menuBtn, createElement("button", { class: "header-btn menu-btn", html: "≡" }));
-  __privateGet(this, _menuBtn).addEventListener("click", () => __privateMethod(this, _AppLayout_instances, emitEvent_fn).call(this, "menu"));
-  headerStart.appendChild(__privateGet(this, _menuBtn));
-  const headerStartSlot = createElement("slot", { name: "header-start" });
-  headerStart.appendChild(headerStartSlot);
-  const headerCenter = createElement("div", { class: "header-center" });
-  __privateSet(this, _titleEl, createElement("span", { class: "title" }));
-  headerCenter.appendChild(__privateGet(this, _titleEl));
-  const headerCenterSlot = createElement("slot", { name: "header-center" });
-  headerCenter.appendChild(headerCenterSlot);
-  const headerEnd = createElement("div", { class: "header-end" });
-  const headerEndSlot = createElement("slot", { name: "header-end" });
-  headerEnd.appendChild(headerEndSlot);
-  __privateSet(this, _closeBtn, createElement("button", { class: "header-btn close-btn", html: "✕" }));
-  __privateGet(this, _closeBtn).addEventListener("click", () => __privateMethod(this, _AppLayout_instances, emitEvent_fn).call(this, "close"));
-  headerEnd.appendChild(__privateGet(this, _closeBtn));
-  __privateGet(this, _headerEl).appendChild(headerStart);
-  __privateGet(this, _headerEl).appendChild(headerCenter);
-  __privateGet(this, _headerEl).appendChild(headerEnd);
-  __privateSet(this, _contentEl, createElement("main", { class: "content" }));
-  const contentSlot = createElement("slot");
-  __privateGet(this, _contentEl).appendChild(contentSlot);
-  const overlayContainer = createElement("div", { class: "overlay-container" });
-  const overlaySlot = createElement("slot", { name: "overlay" });
-  overlayContainer.appendChild(overlaySlot);
-  __privateGet(this, _contentEl).appendChild(overlayContainer);
-  __privateSet(this, _footerEl, createElement("footer", { class: "footer" }));
-  const footerStart = createElement("div", { class: "footer-start" });
-  const footerStartSlot = createElement("slot", { name: "footer-start" });
-  footerStart.appendChild(footerStartSlot);
-  const footerCenter = createElement("div", { class: "footer-center" });
-  const footerCenterSlot = createElement("slot", { name: "footer-center" });
-  footerCenter.appendChild(footerCenterSlot);
-  const footerEnd = createElement("div", { class: "footer-end" });
-  const footerEndSlot = createElement("slot", { name: "footer-end" });
-  footerEnd.appendChild(footerEndSlot);
-  __privateGet(this, _footerEl).appendChild(footerStart);
-  __privateGet(this, _footerEl).appendChild(footerCenter);
-  __privateGet(this, _footerEl).appendChild(footerEnd);
-  this.shadowRoot.appendChild(__privateGet(this, _headerEl));
-  this.shadowRoot.appendChild(__privateGet(this, _contentEl));
-  this.shadowRoot.appendChild(__privateGet(this, _footerEl));
-  __privateMethod(this, _AppLayout_instances, updateTitle_fn).call(this);
-};
-updateTitle_fn = function() {
-  if (__privateGet(this, _titleEl)) {
-    __privateGet(this, _titleEl).textContent = this.title;
-  }
-};
-updateButtonVisibility_fn = function() {
-  if (__privateGet(this, _menuBtn)) {
-    __privateGet(this, _menuBtn).classList.toggle("hidden", this.hasAttribute("no-menu"));
-  }
-  if (__privateGet(this, _closeBtn)) {
-    __privateGet(this, _closeBtn).classList.toggle("hidden", this.hasAttribute("no-close"));
-  }
-};
-emitEvent_fn = function(name) {
-  this.dispatchEvent(new CustomEvent(name, { bubbles: true }));
-};
-__publicField(AppLayout, "styles", `
-    :host {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-        background: var(--bg-primary);
-        color: var(--fg-primary);
-        font-family: var(--font-mono);
-        overflow: hidden;
-    }
-
-
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: var(--touch-target);
-        padding: 0 var(--spacing-md);
-        background: var(--bg-secondary);
-        flex-shrink: 0;
-        gap: var(--spacing-md);
-    }
-
-    .header-start {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-    }
-
-    .header-center {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-        flex: 1;
-        justify-content: center;
-    }
-
-    .header-end {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-    }
-
-    .title {
-        font-size: var(--font-size-lg);
-        font-weight: 500;
-        color: var(--fg-primary);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .title:empty {
-        display: none;
-    }
-
-    .header-btn {
-        appearance: none;
-        background: transparent;
-        border: none;
-        color: var(--fg-secondary);
-        font-size: 18px;
-        width: var(--touch-target);
-        height: var(--touch-target);
-        min-width: var(--touch-target);
-        min-height: var(--touch-target);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        border-radius: var(--radius-md);
-        transition: background var(--transition-fast), color var(--transition-fast);
-        padding: 0;
-    }
-
-    .header-btn:hover {
-        background: var(--bg-hover);
-        color: var(--fg-primary);
-    }
-
-    .header-btn:active {
-        background: var(--bg-selected);
-    }
-
-    .header-btn.hidden {
-        display: none;
-    }
-
-
-    .content {
-        flex: 1;
-        overflow: auto;
-        position: relative;
-    }
-
-    ::slotted(*) {
-        height: 100%;
-    }
-
-
-    .footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: var(--touch-target);
-        padding: var(--spacing-sm) var(--spacing-md);
-        padding-bottom: max(var(--spacing-sm), env(safe-area-inset-bottom));
-        background: var(--bg-secondary);
-        border-top: 1px solid var(--border);
-        flex-shrink: 0;
-        gap: var(--spacing-md);
-    }
-
-    .footer-start {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-    }
-
-    .footer-center {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-        flex: 1;
-        justify-content: center;
-    }
-
-    .footer-end {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-    }
-
-    :host([no-footer]) .footer {
-        display: none;
-    }
-
-    :host([no-header]) .header {
-        display: none;
-    }
-
-
-    .overlay-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        pointer-events: none;
-        z-index: 100;
-    }
-
-    .overlay-container ::slotted(*) {
-        pointer-events: auto;
-    }
-    `);
-customElements.define("app-layout", AppLayout);
-class Overlay extends EditorComponent {
-  constructor() {
-    super();
-    __privateAdd(this, _Overlay_instances);
-    __privateAdd(this, _backdrop, null);
-    __privateAdd(this, _container, null);
-    __privateMethod(this, _Overlay_instances, buildDOM_fn2).call(this);
-  }
-  static get observedAttributes() {
-    return ["open"];
-  }
-  get isOpen() {
-    return this.hasAttribute("open");
-  }
-  open() {
-    if (!this.isOpen) {
-      this.setAttribute("open", "");
-      this.dispatchEvent(new CustomEvent("open", { bubbles: true }));
-    }
-  }
-  close() {
-    if (this.isOpen) {
-      this.removeAttribute("open");
-      this.dispatchEvent(new CustomEvent("close", { bubbles: true }));
-    }
-  }
-  toggle() {
-    if (this.isOpen) {
-      this.close();
-    } else {
-      this.open();
-    }
-  }
-}
-_backdrop = new WeakMap();
-_container = new WeakMap();
-_Overlay_instances = new WeakSet();
-buildDOM_fn2 = function() {
-  __privateSet(this, _backdrop, createElement("div", { class: "backdrop" }));
-  __privateGet(this, _backdrop).addEventListener("click", (e) => {
-    if (e.target === __privateGet(this, _backdrop) && !this.hasAttribute("no-close-on-backdrop")) {
-      this.close();
-    }
-  });
-  __privateSet(this, _container, createElement("div", { class: "container" }));
-  const slot = document.createElement("slot");
-  __privateGet(this, _container).appendChild(slot);
-  this.shadowRoot.appendChild(__privateGet(this, _backdrop));
-  this.shadowRoot.appendChild(__privateGet(this, _container));
-  this.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !this.hasAttribute("no-close-on-escape")) {
-      this.close();
-    }
-  });
-};
-__publicField(Overlay, "styles", `
-        :host {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1000;
-            font-family: var(--font-mono);
-        }
-
-        :host([open]) {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-
-        :host([no-backdrop]) .backdrop {
-            background: transparent;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-        }
-
-        .container {
-            position: relative;
-            display: flex;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            max-width: 90vw;
-            max-height: 90vh;
-            overflow: hidden;
-            animation: overlay-enter 0.15s ease-out;
-        }
-
-        @keyframes overlay-enter {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        :host([position="top"]) {
-            align-items: flex-start;
-            padding-top: 10vh;
-        }
-
-        :host([position="bottom"]) {
-            align-items: flex-end;
-            padding-bottom: 10vh;
-        }
-
-
-        :host([fullscreen]) .container {
-            width: 100%;
-            height: 100%;
-            max-width: 100vw;
-            max-height: 100vh;
-            border-radius: 0;
-            border: none;
-        }
-
-
-        :host([context="studio"]) .container {
-            border-radius: var(--radius-xl);
-        }
-
-        :host([context="studio"][fullscreen]) .container {
-            border-radius: 0;
-        }
-    `);
-customElements.define("editor-overlay", Overlay);
+var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn2, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn3, renderItems_fn, _context, _animatorName, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _isCustom, _store, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _drawerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, initAnimator_fn, buildDOM_fn4, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, syncDrawerAnimSelect_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn, saveCustomAnimator_fn, exportPerkyFile_fn, buildAnimatorConfig_fn;
+import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./shelf_packer--IBfIqnG.js";
+import { P as PerkyStore, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./overlay-DaU5ku9E.js";
+import { E as EditorComponent, d as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./devtools_icons-CkXJWoC9.js";
+import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-BPbdQpFl.js";
 const SWIPE_THRESHOLD = 50;
 class SideDrawer extends EditorComponent {
   constructor() {
     super();
     __privateAdd(this, _SideDrawer_instances);
-    __privateAdd(this, _closeBtn2, null);
-    __privateAdd(this, _contentEl2, null);
+    __privateAdd(this, _closeBtn, null);
+    __privateAdd(this, _contentEl, null);
     __privateAdd(this, _dragStartX, 0);
     __privateAdd(this, _currentTranslate, 0);
     __privateAdd(this, _isDragging, false);
-    __privateMethod(this, _SideDrawer_instances, buildDOM_fn3).call(this);
+    __privateMethod(this, _SideDrawer_instances, buildDOM_fn).call(this);
   }
   static get observedAttributes() {
     return ["open"];
@@ -465,8 +60,8 @@ class SideDrawer extends EditorComponent {
     }
   }
 }
-_closeBtn2 = new WeakMap();
-_contentEl2 = new WeakMap();
+_closeBtn = new WeakMap();
+_contentEl = new WeakMap();
 _dragStartX = new WeakMap();
 _currentTranslate = new WeakMap();
 _isDragging = new WeakMap();
@@ -474,14 +69,14 @@ _SideDrawer_instances = new WeakSet();
 position_get = function() {
   return this.getAttribute("position") || "left";
 };
-buildDOM_fn3 = function() {
-  __privateSet(this, _closeBtn2, createElement("button", { class: "drawer-close", html: "✕" }));
-  __privateGet(this, _closeBtn2).addEventListener("click", () => this.close());
-  __privateSet(this, _contentEl2, createElement("div", { class: "drawer-content" }));
+buildDOM_fn = function() {
+  __privateSet(this, _closeBtn, createElement("button", { class: "drawer-close", html: "✕" }));
+  __privateGet(this, _closeBtn).addEventListener("click", () => this.close());
+  __privateSet(this, _contentEl, createElement("div", { class: "drawer-content" }));
   const slot = document.createElement("slot");
-  __privateGet(this, _contentEl2).appendChild(slot);
-  this.shadowRoot.appendChild(__privateGet(this, _closeBtn2));
-  this.shadowRoot.appendChild(__privateGet(this, _contentEl2));
+  __privateGet(this, _contentEl).appendChild(slot);
+  this.shadowRoot.appendChild(__privateGet(this, _closeBtn));
+  this.shadowRoot.appendChild(__privateGet(this, _contentEl));
   __privateMethod(this, _SideDrawer_instances, setupSwipeToClose_fn).call(this);
 };
 setupSwipeToClose_fn = function() {
@@ -766,7 +361,7 @@ class SelectInput extends EditorComponent {
       }
       __privateMethod(this, _SelectInput_instances, handleOpenKeyDown_fn).call(this, e);
     });
-    __privateMethod(this, _SelectInput_instances, buildDOM_fn4).call(this);
+    __privateMethod(this, _SelectInput_instances, buildDOM_fn2).call(this);
   }
   onConnected() {
     __privateMethod(this, _SelectInput_instances, updateDisplay_fn).call(this);
@@ -840,7 +435,7 @@ handleOpenKeyDown_fn = function(e) {
   };
   (_a = keyHandlers[e.key]) == null ? void 0 : _a.call(keyHandlers);
 };
-buildDOM_fn4 = function() {
+buildDOM_fn2 = function() {
   __privateSet(this, _buttonEl, createElement("button", {
     class: "select-button",
     type: "button"
@@ -977,7 +572,7 @@ class DropdownMenu extends EditorComponent {
         this.close();
       }
     });
-    __privateMethod(this, _DropdownMenu_instances, buildDOM_fn5).call(this);
+    __privateMethod(this, _DropdownMenu_instances, buildDOM_fn3).call(this);
   }
   onConnected() {
     document.addEventListener("click", __privateGet(this, _handleOutsideClick2));
@@ -1011,7 +606,7 @@ _menuEl = new WeakMap();
 _items = new WeakMap();
 _handleOutsideClick2 = new WeakMap();
 _DropdownMenu_instances = new WeakSet();
-buildDOM_fn5 = function() {
+buildDOM_fn3 = function() {
   __privateSet(this, _triggerEl, createElement("button", { class: "trigger" }));
   __privateGet(this, _triggerEl).addEventListener("click", (e) => {
     e.stopPropagation();
@@ -2090,11 +1685,13 @@ class AnimatorView extends EditorComponent {
     super(...arguments);
     __privateAdd(this, _AnimatorView_instances);
     __privateAdd(this, _context, null);
-    __privateAdd(this, _animators, {});
+    __privateAdd(this, _animatorName, null);
     __privateAdd(this, _animatorConfig, null);
     __privateAdd(this, _animator, null);
     __privateAdd(this, _spritesheet, null);
     __privateAdd(this, _selectedAnimation, null);
+    __privateAdd(this, _isCustom, false);
+    __privateAdd(this, _store, new PerkyStore());
     __privateAdd(this, _appLayout, null);
     __privateAdd(this, _containerEl, null);
     __privateAdd(this, _previewSectionEl, null);
@@ -2114,32 +1711,30 @@ class AnimatorView extends EditorComponent {
     __privateAdd(this, _backgroundImage, null);
   }
   onConnected() {
-    __privateMethod(this, _AnimatorView_instances, buildDOM_fn6).call(this);
-    if (__privateGet(this, _context)) {
-      const firstKey = Object.keys(__privateGet(this, _animators))[0];
-      if (firstKey) {
-        __privateMethod(this, _AnimatorView_instances, selectAnimator_fn).call(this, firstKey);
-      }
+    __privateMethod(this, _AnimatorView_instances, buildDOM_fn4).call(this);
+    if (__privateGet(this, _context) && __privateGet(this, _animatorConfig)) {
+      __privateMethod(this, _AnimatorView_instances, initAnimator_fn).call(this);
     }
   }
-  setContext({ textureSystem, animators, backgroundImage, studioConfig }) {
+  setContext({ textureSystem, animatorConfig, animatorName, backgroundImage, studioConfig, isCustom }) {
     __privateSet(this, _context, { textureSystem, studioConfig });
-    __privateSet(this, _animators, animators || {});
+    __privateSet(this, _animatorConfig, animatorConfig);
+    __privateSet(this, _animatorName, animatorName || "animator");
     __privateSet(this, _backgroundImage, backgroundImage || null);
-    if (this.isConnected) {
-      const firstKey = Object.keys(__privateGet(this, _animators))[0];
-      if (firstKey) {
-        __privateMethod(this, _AnimatorView_instances, selectAnimator_fn).call(this, firstKey);
-      }
+    __privateSet(this, _isCustom, isCustom || false);
+    if (this.isConnected && __privateGet(this, _animatorConfig)) {
+      __privateMethod(this, _AnimatorView_instances, initAnimator_fn).call(this);
     }
   }
 }
 _context = new WeakMap();
-_animators = new WeakMap();
+_animatorName = new WeakMap();
 _animatorConfig = new WeakMap();
 _animator = new WeakMap();
 _spritesheet = new WeakMap();
 _selectedAnimation = new WeakMap();
+_isCustom = new WeakMap();
+_store = new WeakMap();
 _appLayout = new WeakMap();
 _containerEl = new WeakMap();
 _previewSectionEl = new WeakMap();
@@ -2158,24 +1753,22 @@ _anchorEditor = new WeakMap();
 _animationSettings = new WeakMap();
 _backgroundImage = new WeakMap();
 _AnimatorView_instances = new WeakSet();
-selectAnimator_fn = function(name) {
-  const animatorConfig = __privateGet(this, _animators)[name];
-  if (!animatorConfig) {
+initAnimator_fn = function() {
+  if (!__privateGet(this, _animatorConfig)) {
     return;
   }
-  __privateSet(this, _animatorConfig, animatorConfig);
   __privateSet(this, _animator, new SpriteAnimator({
     sprite: null,
-    config: animatorConfig,
+    config: __privateGet(this, _animatorConfig),
     textureSystem: __privateGet(this, _context).textureSystem
   }));
-  const spritesheetName = inferSpritesheetName(animatorConfig);
+  const spritesheetName = inferSpritesheetName(__privateGet(this, _animatorConfig));
   __privateSet(this, _spritesheet, spritesheetName ? __privateGet(this, _context).textureSystem.getSpritesheet(spritesheetName) : null);
-  __privateSet(this, _anchor, animatorConfig.anchor || { x: 0.5, y: 0.5 });
+  __privateSet(this, _anchor, __privateGet(this, _animatorConfig).anchor || { x: 0.5, y: 0.5 });
   __privateSet(this, _selectedAnimation, __privateGet(this, _animator).children[0] || null);
   __privateMethod(this, _AnimatorView_instances, render_fn).call(this);
 };
-buildDOM_fn6 = function() {
+buildDOM_fn4 = function() {
   adoptStyleSheets(this.shadowRoot, animatorViewStyles, frameEditorStyles, settingsStyles);
   __privateSet(this, _appLayout, createElement("app-layout", {
     attrs: { "no-menu": "", "no-close": "", "no-footer": "" }
@@ -2246,25 +1839,22 @@ buildHeaderControls_fn = function() {
     title: "Back to gallery"
   });
   backBtn.addEventListener("click", () => {
-    this.dispatchEvent(new CustomEvent("close", { bubbles: true }));
+    window.location.href = "index.html";
   });
   headerStart.appendChild(backBtn);
   const settingsMenu = document.createElement("dropdown-menu");
   settingsMenu.setIcon(ICONS.wrench);
-  settingsMenu.setItems([
+  const menuItems = [
     { label: "Animation Settings", action: () => __privateMethod(this, _AnimatorView_instances, openAnimationSettings_fn).call(this) },
     { label: "Anchor Settings", action: () => __privateMethod(this, _AnimatorView_instances, openSpritesheetSettings_fn).call(this) },
-    { label: "Export", action: () => __privateMethod(this, _AnimatorView_instances, exportToClipboard_fn).call(this) }
-  ]);
+    { label: "Copy to Clipboard", action: () => __privateMethod(this, _AnimatorView_instances, exportToClipboard_fn).call(this) }
+  ];
+  if (__privateGet(this, _isCustom)) {
+    menuItems.push({ label: "Save", action: () => __privateMethod(this, _AnimatorView_instances, saveCustomAnimator_fn).call(this) });
+    menuItems.push({ label: "Export .perky", action: () => __privateMethod(this, _AnimatorView_instances, exportPerkyFile_fn).call(this) });
+  }
+  settingsMenu.setItems(menuItems);
   headerStart.appendChild(settingsMenu);
-  const animatorSelect = createElement("select-input", { attrs: { context: "studio" } });
-  const animatorNames = Object.keys(__privateGet(this, _animators));
-  const currentAnimatorName = animatorNames.find((name) => __privateGet(this, _animators)[name] === __privateGet(this, _animatorConfig));
-  animatorSelect.setOptions(animatorNames);
-  animatorSelect.setValue(currentAnimatorName);
-  animatorSelect.addEventListener("change", (e) => {
-    __privateMethod(this, _AnimatorView_instances, selectAnimator_fn).call(this, e.detail.value);
-  });
   __privateSet(this, _headerAnimSelect, createElement("select-input", { attrs: { context: "studio" } }));
   const animOptions = __privateGet(this, _animator).children.map((anim) => ({ value: anim.$id, label: anim.$id }));
   __privateGet(this, _headerAnimSelect).setOptions(animOptions);
@@ -2274,7 +1864,6 @@ buildHeaderControls_fn = function() {
     __privateMethod(this, _AnimatorView_instances, updateForSelectedAnimation_fn).call(this);
     __privateMethod(this, _AnimatorView_instances, syncDrawerAnimSelect_fn).call(this);
   });
-  headerStart.appendChild(animatorSelect);
   headerStart.appendChild(__privateGet(this, _headerAnimSelect));
   __privateGet(this, _appLayout).appendChild(headerStart);
   if (__privateGet(this, _selectedAnimation)) {
@@ -2535,54 +2124,58 @@ exportToClipboard_fn = function() {
   lines.push(`static animations = ${JSON.stringify(animations, null, 4)}`);
   navigator.clipboard.writeText(lines.join("\n"));
 };
+saveCustomAnimator_fn = async function() {
+  if (!__privateGet(this, _isCustom) || !__privateGet(this, _animator)) {
+    return;
+  }
+  const animatorConfig = __privateMethod(this, _AnimatorView_instances, buildAnimatorConfig_fn).call(this);
+  const resource = await __privateGet(this, _store).get(__privateGet(this, _animatorName));
+  if (!resource) {
+    return;
+  }
+  const configFile = resource.files.find((f) => f.name.endsWith("Animator.json"));
+  if (configFile) {
+    configFile.blob = new Blob([JSON.stringify(animatorConfig)], { type: "application/json" });
+  }
+  await __privateGet(this, _store).save(__privateGet(this, _animatorName), {
+    type: "animator",
+    name: resource.name,
+    files: resource.files
+  });
+};
+exportPerkyFile_fn = async function() {
+  if (!__privateGet(this, _isCustom)) {
+    return;
+  }
+  await __privateGet(this, _store).export(__privateGet(this, _animatorName));
+};
+buildAnimatorConfig_fn = function() {
+  const spritesheetName = inferSpritesheetName(__privateGet(this, _animatorConfig));
+  const animations = {};
+  for (const anim of __privateGet(this, _animator).children) {
+    animations[anim.$id] = buildAnimationConfig(anim, __privateGet(this, _spritesheet));
+  }
+  return {
+    spritesheet: spritesheetName,
+    anchor: { ...__privateGet(this, _anchor) },
+    animations
+  };
+};
 customElements.define("animator-view", AnimatorView);
-function rewriteUrls(data, basePath) {
-  if (!basePath) {
-    return data;
-  }
-  const rewritten = { ...data, assets: {} };
-  for (const [id, asset] of Object.entries(data.assets)) {
-    rewritten.assets[id] = {
-      ...asset,
-      url: asset.url.replace("./", basePath)
-    };
-  }
-  return rewritten;
-}
-async function launchAnimatorStudio(manifestData, container, options = {}) {
+async function launchAnimatorStudio(manifestData2, container, options = {}) {
   try {
-    const data = rewriteUrls(manifestData, options.basePath);
-    const manifest2 = new Manifest({ data });
-    const sourceManager = new SourceManager({
-      loaders: new Registry(loaders),
-      manifest: manifest2
-    });
-    await sourceManager.loadAll();
-    const textureSystem = new TextureSystem();
-    const imageAssets = manifest2.getAssetsByType("image");
-    textureSystem.buildFromAssets(imageAssets);
-    const spritesheetAssets = manifest2.getAssetsByType("spritesheet");
-    for (const asset of spritesheetAssets) {
-      if (asset.source) {
-        textureSystem.registerSpritesheet(asset.id, asset.source);
-      }
+    const manifest = await loadManifest(manifestData2, options.basePath);
+    const studioConfig = getStudioConfig(manifest, "animator");
+    const backgroundImage = getBackgroundImage(manifest, studioConfig);
+    const animatorData = await resolveAnimatorData(manifest, options);
+    if (!animatorData.animatorConfig) {
+      container.innerHTML = '<div class="loading" style="color: #f66;">No animator found</div>';
+      return;
     }
-    const animatorAssets = manifest2.getAssetsByType("animator");
-    const animators = {};
-    for (const asset of animatorAssets) {
-      if (asset.source) {
-        animators[asset.id] = asset.source;
-      }
-    }
-    const studioConfig = manifest2.getConfig("studio.animator") || {};
-    const backgroundId = studioConfig.background;
-    const backgroundAsset = backgroundId ? manifest2.getAsset(backgroundId) : null;
-    const backgroundImage = (backgroundAsset == null ? void 0 : backgroundAsset.source) || null;
     container.innerHTML = "";
     const animatorView = document.createElement("animator-view");
     animatorView.setContext({
-      textureSystem,
-      animators,
+      ...animatorData,
       backgroundImage,
       studioConfig
     });
@@ -2592,9 +2185,97 @@ async function launchAnimatorStudio(manifestData, container, options = {}) {
     logger.error(error);
   }
 }
+async function resolveAnimatorData(manifest, options) {
+  if (options.isCustom && options.animatorId) {
+    const customData = await loadCustomAnimator(options.animatorId);
+    if (customData) {
+      return {
+        textureSystem: customData.textureSystem,
+        animatorConfig: customData.animatorConfig,
+        animatorName: options.animatorId,
+        isCustom: true
+      };
+    }
+  }
+  return loadGameAnimator(manifest, options.animatorId);
+}
+function loadGameAnimator(manifest, animatorId) {
+  const textureSystem = buildTextureSystem(manifest);
+  const animators = collectAnimators(manifest);
+  const result = { textureSystem, animatorConfig: null, animatorName: null, isCustom: false };
+  if (animatorId && animators[animatorId]) {
+    result.animatorConfig = animators[animatorId];
+    result.animatorName = animatorId;
+    return result;
+  }
+  const firstKey = Object.keys(animators)[0];
+  if (firstKey) {
+    result.animatorConfig = animators[firstKey];
+    result.animatorName = firstKey;
+  }
+  return result;
+}
+async function loadCustomAnimator(animatorId) {
+  const store = new PerkyStore();
+  const resource = await store.get(animatorId);
+  if (!resource) {
+    return null;
+  }
+  const configFile = resource.files.find((f) => f.name.endsWith("Animator.json"));
+  const spritesheetJsonFile = resource.files.find((f) => f.name.endsWith("Spritesheet.json"));
+  const pngFiles = resource.files.filter((f) => f.name.endsWith(".png")).sort((a, b) => a.name.localeCompare(b.name));
+  if (!configFile || !spritesheetJsonFile || pngFiles.length === 0) {
+    return null;
+  }
+  const configText = await blobToText(configFile.blob);
+  const animatorConfig = JSON.parse(configText);
+  const spritesheetText = await blobToText(spritesheetJsonFile.blob);
+  const spritesheetData = JSON.parse(spritesheetText);
+  const images = await Promise.all(pngFiles.map((f) => blobToImage(f.blob)));
+  const textureSystem = new TextureSystem();
+  const spritesheetName = spritesheetJsonFile.name.replace(".json", "");
+  textureSystem.registerSpritesheet(spritesheetName, {
+    images,
+    data: spritesheetData
+  });
+  return { textureSystem, animatorConfig };
+}
+function blobToText(blob) {
+  if (typeof blob.text === "function") {
+    return blob.text();
+  }
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsText(blob);
+  });
+}
+function blobToImage(blob) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(img);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Failed to load image"));
+    };
+    img.src = url;
+  });
+}
 async function init() {
   const container = document.getElementById("app");
-  await launchAnimatorStudio(manifest, container, { basePath: "../" });
+  const params = new URLSearchParams(window.location.search);
+  const animatorId = params.get("id");
+  const isCustom = params.get("custom") === "1";
+  await launchAnimatorStudio(manifestData, container, {
+    basePath: "../",
+    animatorId,
+    isCustom
+  });
 }
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", init);
