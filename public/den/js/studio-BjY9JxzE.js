@@ -557,7 +557,7 @@ buildBody_fn = function() {
 buildDropStep_fn = function() {
   const step = createElement("div", { class: "step", attrs: { "data-step": "drop" } });
   __privateSet(this, _fileInput, createElement("input", {
-    attrs: { type: "file", accept: ".psd" }
+    attrs: { type: "file", accept: ".psd,image/vnd.adobe.photoshop,image/x-photoshop,application/x-photoshop,application/photoshop" }
   }));
   __privateGet(this, _fileInput).style.display = "none";
   __privateGet(this, _fileInput).addEventListener("change", (e) => __privateMethod(this, _PsdImporter_instances, handleFileSelect_fn).call(this, e));
