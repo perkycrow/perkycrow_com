@@ -6,11 +6,11 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _overlay, _step, _psd, _converter, _store, _fileInput, _aspectRatioLocked, _aspectRatio, _existingNames, _elements, _PsdImporter_instances, reset_fn, buildDOM_fn, buildHeader_fn, buildBody_fn, buildDropStep_fn, buildPreviewStep_fn, buildProgressStep_fn, toggleAspectLock_fn, handleWidthChange_fn, handleHeightChange_fn, syncDimension_fn, updateStep_fn, updateHeader_fn, handleBack_fn, handleDrop_fn, handleFileSelect_fn, loadFile_fn, populatePreview_fn, validateName_fn, onProgress_fn, handleCreate_fn, showError_fn, _overlay2, _conflicts, _choices, _resolvePromise, _ConflictResolver_instances, buildDOM_fn2, renderConflicts_fn, createConflictItem_fn, createVersionCard_fn, selectVersion_fn, applyChoices_fn, _popoverEl, _isOpen, _boundClose, _StorageInfo_instances, buildDOM_fn3, toggle_fn, open_fn, close_fn, onOutsideClick_fn, refreshContent_fn, _manifest, _animators, _customAnimators, _textureSystem, _appLayout, _contentEl, _psdImporter, _thumbnails, _customMeta, _store2, _conflictResolver, _selectionMode, _selectedItems, _selectBtn, _exportBtn, _deleteBtn, _revertBtn, _playBtn, _HubView_instances, buildDOM_fn4, buildHeaderActions_fn, render_fn, loadCustomAnimators_fn, reconcile_fn, compareVersions_fn, resolveConflicts_fn, deleteCustom_fn, createAnimatorCard_fn, createNewAnimatorCard_fn, openPsdImporter_fn, handleImportComplete_fn, createThumbnail_fn, getFirstFrameRegion_fn, resolveRegion_fn, openAnimator_fn, toggleSelectionMode_fn, toggleItemSelection_fn, updateActionButtons_fn, exportSelected_fn, revertSelected_fn, deleteSelected_fn;
-import { b as createStyleSheet, d as adoptStyleSheets, c as createElement, a as formatBytes, p as pluralize, l as logger } from "./preload-helper-DNpi5zPU.js";
-import { P as PsdConverter, l as loadManifest, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-C7G6Pnhl.js";
-import { E as EditorComponent, d as PerkyStore, I as ICONS, m as manifestData } from "./perky_store-CSYJ9bT0.js";
-import { f as findAnimationGroups, e as extractFramesFromGroup, p as putPixels } from "./spritesheet-DugE56K2.js";
+var _overlay, _step, _psd, _converter, _store, _fileInput, _aspectRatioLocked, _aspectRatio, _existingNames, _elements, _PsdImporter_instances, reset_fn, buildDOM_fn, buildHeader_fn, buildBody_fn, buildDropStep_fn, buildPreviewStep_fn, buildProgressStep_fn, toggleAspectLock_fn, handleWidthChange_fn, handleHeightChange_fn, syncDimension_fn, updateStep_fn, updateHeader_fn, handleBack_fn, handleDrop_fn, handleFileSelect_fn, loadFile_fn, populatePreview_fn, validateName_fn, onProgress_fn, handleCreate_fn, showError_fn, _overlay2, _conflicts, _choices, _resolvePromise, _ConflictResolver_instances, buildDOM_fn2, renderConflicts_fn, createConflictItem_fn, createVersionCard_fn, selectVersion_fn, applyChoices_fn, _popoverEl, _isOpen, _boundClose, _StorageInfo_instances, buildDOM_fn3, toggle_fn, open_fn, close_fn, onOutsideClick_fn, refreshContent_fn, _manifest, _animators, _customAnimators, _textureSystem, _appLayout, _contentEl, _psdImporter, _thumbnails, _customMeta, _store2, _conflictResolver, _selectionMode, _selectedItems, _selectBtn, _exportBtn, _deleteBtn, _revertBtn, _HubView_instances, buildDOM_fn4, buildHeaderActions_fn, render_fn, loadCustomAnimators_fn, reconcile_fn, compareVersions_fn, resolveConflicts_fn, deleteCustom_fn, createAnimatorCard_fn, createNewAnimatorCard_fn, openPsdImporter_fn, handleImportComplete_fn, createThumbnail_fn, getFirstFrameRegion_fn, resolveRegion_fn, openAnimator_fn, toggleSelectionMode_fn, toggleItemSelection_fn, updateActionButtons_fn, importFile_fn, exportSelected_fn, revertSelected_fn, deleteSelected_fn;
+import { b as createStyleSheet, d as adoptStyleSheets, c as createElement, a as formatBytes, p as pluralize, l as logger } from "./preload-helper-CeD19KcA.js";
+import { P as PsdConverter, l as loadManifest, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-WjySAn51.js";
+import { E as EditorComponent, d as PerkyStore, I as ICONS, m as manifestData } from "./perky_store-zqg6msJT.js";
+import { f as findAnimationGroups, e as extractFramesFromGroup, p as putPixels } from "./spritesheet-BBD5cSQg.js";
 const styles$2 = createStyleSheet(`
     :host {
         display: contents;
@@ -1065,8 +1065,7 @@ const styles = createStyleSheet(`
     .popover {
         position: absolute;
         top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
         margin-top: var(--spacing-sm);
         background: var(--bg-secondary);
         border: 1px solid var(--border, #333);
@@ -1389,6 +1388,54 @@ const hubViewStyles = createStyleSheet(`
     :host([selection-mode]) .create-card {
         display: none;
     }
+
+    .header-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .header-actions button {
+        padding: 8px 12px;
+        background: transparent;
+        border: none;
+        color: var(--accent);
+        font-size: var(--font-size-md);
+        font-family: var(--font-mono);
+        cursor: pointer;
+        border-radius: var(--radius-md);
+        min-height: 44px;
+    }
+
+    .header-actions button:disabled {
+        opacity: 0.3;
+        cursor: default;
+    }
+
+    .header-actions .danger {
+        color: #f66;
+    }
+
+    .header-actions .warning {
+        color: var(--warning, #f90);
+    }
+
+    .default-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .selection-actions {
+        display: none;
+    }
+
+    :host([selection-mode]) .default-actions {
+        display: none;
+    }
+
+    :host([selection-mode]) .selection-actions {
+        display: flex;
+        gap: 8px;
+    }
 `);
 class HubView extends EditorComponent {
   constructor() {
@@ -1411,7 +1458,6 @@ class HubView extends EditorComponent {
     __privateAdd(this, _exportBtn, null);
     __privateAdd(this, _deleteBtn, null);
     __privateAdd(this, _revertBtn, null);
-    __privateAdd(this, _playBtn, null);
   }
   onConnected() {
     adoptStyleSheets(this.shadowRoot, hubViewStyles);
@@ -1443,14 +1489,13 @@ _selectBtn = new WeakMap();
 _exportBtn = new WeakMap();
 _deleteBtn = new WeakMap();
 _revertBtn = new WeakMap();
-_playBtn = new WeakMap();
 _HubView_instances = new WeakSet();
 buildDOM_fn4 = function() {
   __privateSet(this, _appLayout, createElement("app-layout", {
     attrs: { "no-menu": "", "no-close": "", "no-footer": "" }
   }));
   const storageInfo = document.createElement("storage-info");
-  storageInfo.setAttribute("slot", "header-center");
+  storageInfo.setAttribute("slot", "header-start");
   __privateGet(this, _appLayout).appendChild(storageInfo);
   const headerActions = __privateMethod(this, _HubView_instances, buildHeaderActions_fn).call(this);
   headerActions.setAttribute("slot", "header-end");
@@ -1461,40 +1506,30 @@ buildDOM_fn4 = function() {
   __privateMethod(this, _HubView_instances, render_fn).call(this);
 };
 buildHeaderActions_fn = function() {
-  const container = createElement("div");
-  container.style.cssText = "display: flex; gap: 8px;";
-  const btnStyle = `
-            padding: 8px 12px;
-            background: transparent;
-            border: none;
-            color: var(--accent);
-            font-size: var(--font-size-md);
-            font-family: var(--font-mono);
-            cursor: pointer;
-            border-radius: var(--radius-md);
-            min-height: 44px;
-        `;
-  __privateSet(this, _exportBtn, createElement("button", { text: "Export" }));
-  __privateGet(this, _exportBtn).style.cssText = btnStyle + "display: none;";
-  __privateGet(this, _exportBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, exportSelected_fn).call(this));
-  __privateSet(this, _revertBtn, createElement("button", { text: "Revert" }));
-  __privateGet(this, _revertBtn).style.cssText = btnStyle + "display: none; color: var(--warning, #f90);";
-  __privateGet(this, _revertBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, revertSelected_fn).call(this));
-  __privateSet(this, _deleteBtn, createElement("button", { text: "Delete" }));
-  __privateGet(this, _deleteBtn).style.cssText = btnStyle + "display: none; color: #f66;";
-  __privateGet(this, _deleteBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, deleteSelected_fn).call(this));
-  __privateSet(this, _selectBtn, createElement("button", { text: "Select" }));
-  __privateGet(this, _selectBtn).style.cssText = btnStyle;
-  __privateGet(this, _selectBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, toggleSelectionMode_fn).call(this));
-  __privateSet(this, _playBtn, createElement("button", { text: "▶ Preview" }));
-  __privateGet(this, _playBtn).style.cssText = btnStyle + "background: var(--accent); color: var(--bg-primary); font-weight: 600;";
-  __privateGet(this, _playBtn).addEventListener("click", () => {
+  const container = createElement("div", { class: "header-actions" });
+  const defaultActions = createElement("div", { class: "default-actions" });
+  const previewBtn = createElement("button", { text: "▶ Preview" });
+  previewBtn.addEventListener("click", () => {
     window.location.href = "../index.html?studio";
   });
-  container.appendChild(__privateGet(this, _playBtn));
-  container.appendChild(__privateGet(this, _exportBtn));
-  container.appendChild(__privateGet(this, _revertBtn));
-  container.appendChild(__privateGet(this, _deleteBtn));
+  const importBtn = createElement("button", { text: "Import" });
+  importBtn.addEventListener("click", () => __privateMethod(this, _HubView_instances, importFile_fn).call(this));
+  defaultActions.appendChild(previewBtn);
+  defaultActions.appendChild(importBtn);
+  const selectionActions = createElement("div", { class: "selection-actions" });
+  __privateSet(this, _exportBtn, createElement("button", { text: "Export" }));
+  __privateGet(this, _exportBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, exportSelected_fn).call(this));
+  __privateSet(this, _revertBtn, createElement("button", { text: "Revert", class: "warning" }));
+  __privateGet(this, _revertBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, revertSelected_fn).call(this));
+  __privateSet(this, _deleteBtn, createElement("button", { text: "Delete", class: "danger" }));
+  __privateGet(this, _deleteBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, deleteSelected_fn).call(this));
+  selectionActions.appendChild(__privateGet(this, _exportBtn));
+  selectionActions.appendChild(__privateGet(this, _revertBtn));
+  selectionActions.appendChild(__privateGet(this, _deleteBtn));
+  __privateSet(this, _selectBtn, createElement("button", { text: "Select" }));
+  __privateGet(this, _selectBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, toggleSelectionMode_fn).call(this));
+  container.appendChild(defaultActions);
+  container.appendChild(selectionActions);
   container.appendChild(__privateGet(this, _selectBtn));
   return container;
 };
@@ -1628,7 +1663,7 @@ createAnimatorCard_fn = function(name, config, state = "game") {
   const thumbnail = __privateMethod(this, _HubView_instances, createThumbnail_fn).call(this, name, config);
   preview.appendChild(thumbnail);
   if (state === "custom") {
-    preview.appendChild(createElement("div", { class: "card-badge", text: "Custom" }));
+    preview.appendChild(createElement("div", { class: "card-badge", text: "New" }));
   } else if (state === "modified") {
     preview.appendChild(createElement("div", { class: "card-badge modified", text: "Modified" }));
   }
@@ -1775,15 +1810,9 @@ toggleSelectionMode_fn = function() {
   if (__privateGet(this, _selectionMode)) {
     this.setAttribute("selection-mode", "");
     __privateGet(this, _selectBtn).textContent = "Done";
-    __privateGet(this, _exportBtn).style.display = "block";
-    __privateGet(this, _revertBtn).style.display = "block";
-    __privateGet(this, _deleteBtn).style.display = "block";
   } else {
     this.removeAttribute("selection-mode");
     __privateGet(this, _selectBtn).textContent = "Select";
-    __privateGet(this, _exportBtn).style.display = "none";
-    __privateGet(this, _revertBtn).style.display = "none";
-    __privateGet(this, _deleteBtn).style.display = "none";
   }
   __privateMethod(this, _HubView_instances, updateActionButtons_fn).call(this);
 };
@@ -1801,6 +1830,20 @@ updateActionButtons_fn = function() {
   __privateGet(this, _deleteBtn).disabled = !hasSelection;
   const hasModified = [...__privateGet(this, _selectedItems)].some((id) => __privateGet(this, _animators)[id]);
   __privateGet(this, _revertBtn).disabled = !hasModified;
+};
+importFile_fn = async function() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".perky";
+  input.addEventListener("change", async () => {
+    const file = input.files[0];
+    if (!file) {
+      return;
+    }
+    await __privateGet(this, _store2).import(file);
+    __privateMethod(this, _HubView_instances, render_fn).call(this);
+  });
+  input.click();
 };
 exportSelected_fn = async function() {
   for (const name of __privateGet(this, _selectedItems)) {

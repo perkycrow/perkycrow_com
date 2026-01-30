@@ -18,11 +18,11 @@ var __privateWrapper = (obj, member, setter, getter) => ({
   }
 });
 var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn2, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn3, renderItems_fn, _context, _animatorName, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _isCustom, _store, _dirty, _autoSaveTimer, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _drawerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, initAnimator_fn, buildDOM_fn4, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, syncDrawerAnimSelect_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn, markDirty_fn, autoSave_fn, saveCustomAnimator_fn, forkAndSave_fn, exportPerkyFile_fn, buildAnimatorConfig_fn, replaceSpritesheet_fn;
-import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./preload-helper-DNpi5zPU.js";
-import { E as EditorComponent, d as PerkyStore, f as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./perky_store-CSYJ9bT0.js";
-import { P as PsdConverter, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-C7G6Pnhl.js";
-import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-B3_sTZdE.js";
-import { c as canvasToBlob } from "./spritesheet-DugE56K2.js";
+import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./preload-helper-CeD19KcA.js";
+import { E as EditorComponent, d as PerkyStore, f as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./perky_store-zqg6msJT.js";
+import { P as PsdConverter, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-WjySAn51.js";
+import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-pyJtBZMV.js";
+import { c as canvasToBlob } from "./spritesheet-BBD5cSQg.js";
 const SWIPE_THRESHOLD = 50;
 class SideDrawer extends EditorComponent {
   constructor() {

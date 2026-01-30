@@ -626,7 +626,14 @@ function isSpecial(value) {
   return stringValue === "[object RegExp]" || stringValue === "[object Date]";
 }
 function isMergeableObject(value) {
-  return isNonNullObject(value) && !isSpecial(value);
+  if (!isNonNullObject(value) || isSpecial(value)) {
+    return false;
+  }
+  if (Array.isArray(value)) {
+    return true;
+  }
+  const proto = Object.getPrototypeOf(value);
+  return proto === null || proto === Object.prototype;
 }
 function emptyTarget(value) {
   return Array.isArray(value) ? [] : {};

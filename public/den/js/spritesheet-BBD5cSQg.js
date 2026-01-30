@@ -1,4 +1,4 @@
-import { _ as __vitePreload, j as toCamelCase, S as ShelfPacker, l as logger } from "./preload-helper-DNpi5zPU.js";
+import { _ as __vitePreload, j as toCamelCase, S as ShelfPacker, l as logger } from "./preload-helper-CeD19KcA.js";
 class BinaryReader {
   constructor(buffer) {
     if (buffer instanceof ArrayBuffer) {

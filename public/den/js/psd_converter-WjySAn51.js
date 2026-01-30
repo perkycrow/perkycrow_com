@@ -10,9 +10,9 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _headerEl, _titleEl, _menuBtn, _closeBtn, _contentEl, _footerEl, _AppLayout_instances, buildDOM_fn, updateTitle_fn, updateButtonVisibility_fn, emitEvent_fn, _backdrop, _container, _Overlay_instances, buildDOM_fn2;
-import { M as Manifest, S as SourceManager, R as Registry, l as loaders, T as TextureSystem, E as EditorComponent } from "./perky_store-CSYJ9bT0.js";
-import { c as createElement, N as Notifier } from "./preload-helper-DNpi5zPU.js";
-import { a as countFrames, b as parseAnimationName, d as calculateResizeDimensions, e as extractFramesFromGroup, r as resizeFrames, g as packFramesIntoAtlases, n as nextPowerOfTwo, h as compositeAtlas, M as MAX_ATLAS_SIZE, i as buildJsonData, j as parsePsd, f as findAnimationGroups } from "./spritesheet-DugE56K2.js";
+import { M as Manifest, S as SourceManager, R as Registry, l as loaders, T as TextureSystem, E as EditorComponent } from "./perky_store-zqg6msJT.js";
+import { c as createElement, N as Notifier } from "./preload-helper-CeD19KcA.js";
+import { a as countFrames, b as parseAnimationName, d as calculateResizeDimensions, e as extractFramesFromGroup, r as resizeFrames, g as packFramesIntoAtlases, n as nextPowerOfTwo, h as compositeAtlas, M as MAX_ATLAS_SIZE, i as buildJsonData, j as parsePsd, f as findAnimationGroups } from "./spritesheet-BBD5cSQg.js";
 function rewriteUrls(data, basePath) {
   if (!basePath) {
     return data;
@@ -265,10 +265,6 @@ __publicField(AppLayout, "styles", `
         flex: 1;
         overflow: auto;
         position: relative;
-    }
-
-    ::slotted(*) {
-        height: 100%;
     }
 
 
