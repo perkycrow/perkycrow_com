@@ -9,8 +9,8 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _idCounters, _delegations, _eventDelegations, _linked, _PerkyModule_instances, findUniqueId_fn, addChild_fn, setupTagIndexListeners_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _canvas, _ctx, _packer, _regions, _dirty, _atlases, _atlasGroups, _regionIndex, _atlasSize, _TextureAtlasManager_instances, addToAtlas_fn, addToNamedAtlas_fn, addOversizedImage_fn, _Spritesheet_instances, initializeFrames_fn, _atlasManager, _manualRegions, _spritesheets, _listeners, _PerkyElement_instances, adoptStyles_fn, collectStyleSheets_fn, cleanListeners_fn;
-import { N as Notifier, e as delegateProperties, u as uniqueId, t as toSnakeCase, s as setDefaults, g as deepMerge, h as getNestedValue, i as setNestedValue, S as ShelfPacker, d as adoptStyleSheets, b as createStyleSheet } from "./shelf_packer--IBfIqnG.js";
+var _map, _values, _keyByValue, _ObservableMap_instances, removeFromValues_fn, _indexes, _Registry_instances, handleSet_fn, handleDelete_fn, addToIndex_fn, removeFromIndex_fn, _set, _id, _name, _category, _bind, _host, _started, _disposed, _installed, _eagerStart, _lifecycle, _childrenRegistry, _tags, _tagIndexes, _idCounters, _delegations, _eventDelegations, _linked, _PerkyModule_instances, findUniqueId_fn, addChild_fn, setupTagIndexListeners_fn, _data, _Manifest_instances, initAssets_fn, exportAssets_fn, _loadingPromises, _SourceManager_instances, setupLoaderEvents_fn, _canvas, _ctx, _packer, _regions, _dirty, _atlases, _atlasGroups, _regionIndex, _atlasSize, _TextureAtlasManager_instances, addToAtlas_fn, addToNamedAtlas_fn, addOversizedImage_fn, _Spritesheet_instances, initializeFrames_fn, _atlasManager, _manualRegions, _spritesheets, _listeners, _PerkyElement_instances, adoptStyles_fn, collectStyleSheets_fn, cleanListeners_fn, _db, _dbName;
+import { N as Notifier, e as delegateProperties, u as uniqueId, t as toSnakeCase, s as setDefaults, g as deepMerge, h as getNestedValue, i as setNestedValue, S as ShelfPacker, d as adoptStyleSheets, b as createStyleSheet } from "./preload-helper-DNpi5zPU.js";
 class ObservableMap extends Notifier {
   constructor(collection) {
     super();
@@ -984,6 +984,7 @@ class Asset {
     this.source = params.source;
     this.tags = params.tags || [];
     this.config = params.config || {};
+    this.updatedAt = params.updatedAt || 0;
   }
   get loaded() {
     return Boolean(this.source);
@@ -1882,9 +1883,11 @@ __publicField(TextureSystem, "$category", "textureSystem");
 function isImageAsset(asset) {
   return asset.type === "image";
 }
+const version = "0.0.1";
 const config = { "name": "Den", "audio": { "masterVolume": 0.5, "channels": { "sfx": { "muted": true, "volume": 0.5 }, "ambiance": { "muted": true }, "music": { "muted": false } } }, "studio": { "animator": { "unitsInView": { "width": 7, "height": 5 }, "background": "background" } } };
 const assets = { "background": { "type": "image", "url": "./assets/images/background.png", "config": { "atlas": false } }, "wolf": { "type": "image", "url": "./assets/images/wolf.png", "config": { "atlas": "characters" } }, "wolf_right": { "type": "image", "url": "./assets/images/wolf_right.png", "config": { "atlas": "characters" } }, "wolf_up": { "type": "image", "url": "./assets/images/wolf_up.png", "config": { "atlas": "characters" } }, "wolf_down": { "type": "image", "url": "./assets/images/wolf_down.png", "config": { "atlas": "characters" } }, "pig": { "type": "image", "url": "./assets/images/pig.png", "config": { "atlas": "characters" } }, "red": { "type": "image", "url": "./assets/images/red.png", "config": { "atlas": "characters" } }, "granny": { "type": "image", "url": "./assets/images/granny.png", "config": { "atlas": "characters" } }, "amalgam": { "type": "image", "url": "./assets/images/amalgam.png", "config": { "atlas": "characters" } }, "brick": { "type": "image", "url": "./assets/images/brick.png", "config": { "atlas": "projectiles" } }, "pie": { "type": "image", "url": "./assets/images/pie.png", "config": { "atlas": "projectiles" } }, "cake": { "type": "image", "url": "./assets/images/cake.png", "config": { "atlas": "projectiles" } }, "fireball": { "type": "image", "url": "./assets/images/fireball.png", "config": { "atlas": "projectiles" } }, "redSpritesheet": { "type": "spritesheet", "url": "./assets/spritesheets/red.json" }, "redAnimator": { "type": "animator", "url": "./assets/animators/red_animator.json" }, "click": { "type": "audio", "url": "./assets/audio/click.ogg", "tags": ["sfx"] }, "howl": { "type": "audio", "url": "./assets/audio/howl.ogg", "tags": ["sfx"] }, "throw": { "type": "audio", "url": "./assets/audio/throw.ogg", "tags": ["sfx"] }, "wound": { "type": "audio", "url": "./assets/audio/wound.ogg", "tags": ["sfx"] }, "music": { "type": "audio", "url": "./assets/audio/music.ogg", "tags": ["music"] } };
 const manifestData = {
+  version,
   config,
   assets
 };
@@ -2287,6 +2290,270 @@ const ICONS = {
   image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>',
   film: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>'
 };
+function blobToArrayBuffer(blob) {
+  if (typeof blob.arrayBuffer === "function") {
+    return blob.arrayBuffer();
+  }
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(blob);
+  });
+}
+async function compress(blob) {
+  if (typeof CompressionStream === "undefined") {
+    return blob;
+  }
+  if (typeof blob.stream !== "function") {
+    const buffer = await blobToArrayBuffer(blob);
+    const stream2 = new Response(buffer).body.pipeThrough(new CompressionStream("gzip"));
+    return new Response(stream2).blob();
+  }
+  const stream = blob.stream().pipeThrough(new CompressionStream("gzip"));
+  return new Response(stream).blob();
+}
+async function decompress(blob) {
+  if (typeof DecompressionStream === "undefined") {
+    return blob;
+  }
+  if (typeof blob.stream !== "function") {
+    const buffer = await blobToArrayBuffer(blob);
+    const stream2 = new Response(buffer).body.pipeThrough(new DecompressionStream("gzip"));
+    return new Response(stream2).blob();
+  }
+  const stream = blob.stream().pipeThrough(new DecompressionStream("gzip"));
+  return new Response(stream).blob();
+}
+async function pack(files, { compress: shouldCompress = true } = {}) {
+  const header = {
+    files: files.map((f) => ({
+      name: f.name,
+      size: f.blob.size,
+      type: f.blob.type
+    }))
+  };
+  const headerBytes = new TextEncoder().encode(JSON.stringify(header));
+  const headerSize = new Uint32Array([headerBytes.length]);
+  const blob = new Blob([headerSize, headerBytes, ...files.map((f) => f.blob)]);
+  return shouldCompress ? compress(blob) : blob;
+}
+async function unpack(blob, { compressed = true } = {}) {
+  const data = compressed ? await decompress(blob) : blob;
+  const buffer = await blobToArrayBuffer(data);
+  const headerSize = new Uint32Array(buffer, 0, 1)[0];
+  const headerBytes = new Uint8Array(buffer, 4, headerSize);
+  const header = JSON.parse(new TextDecoder().decode(headerBytes));
+  let offset = 4 + headerSize;
+  return header.files.map((file) => {
+    const fileBlob = new Blob([buffer.slice(offset, offset + file.size)], { type: file.type });
+    offset += file.size;
+    return { name: file.name, blob: fileBlob };
+  });
+}
+const DB_PREFIX = "perky-";
+const STORE_NAME = "resources";
+const DB_VERSION = 1;
+const META_FILENAME = "meta.json";
+class PerkyStore {
+  constructor(dbName = "studio") {
+    __privateAdd(this, _db, null);
+    __privateAdd(this, _dbName);
+    __privateSet(this, _dbName, `${DB_PREFIX}${dbName}`);
+  }
+  async open() {
+    if (__privateGet(this, _db)) {
+      return __privateGet(this, _db);
+    }
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(__privateGet(this, _dbName), DB_VERSION);
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          const store = db.createObjectStore(STORE_NAME, { keyPath: "id" });
+          store.createIndex("type", "type", { unique: false });
+        }
+      };
+      request.onsuccess = (event) => {
+        __privateSet(this, _db, event.target.result);
+        resolve(__privateGet(this, _db));
+      };
+      request.onerror = () => {
+        reject(new Error("Failed to open database"));
+      };
+    });
+  }
+  async list(type = null) {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, "readonly");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = type ? store.index("type").getAll(type) : store.getAll();
+      request.onsuccess = () => {
+        const items = request.result.map((item) => ({
+          id: item.id,
+          type: item.type,
+          name: item.name,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt
+        }));
+        resolve(items);
+      };
+      request.onerror = () => {
+        reject(new Error("Failed to list resources"));
+      };
+    });
+  }
+  async get(id) {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, "readonly");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.get(id);
+      request.onsuccess = async () => {
+        const item = request.result;
+        if (!item) {
+          resolve(null);
+          return;
+        }
+        const allFiles = await unpack(item.blob);
+        const files = allFiles.filter((f) => f.name !== META_FILENAME);
+        resolve({
+          id: item.id,
+          type: item.type,
+          name: item.name,
+          files,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt
+        });
+      };
+      request.onerror = () => {
+        reject(new Error("Failed to get resource"));
+      };
+    });
+  }
+  async save(id, data) {
+    const db = await this.open();
+    const { type, name, files } = data;
+    if (!type) {
+      throw new Error("Resource type is required");
+    }
+    const now = Date.now();
+    const meta = {
+      type,
+      name: name || id,
+      version: 1,
+      updatedAt: now
+    };
+    const allFiles = [
+      { name: META_FILENAME, blob: new Blob([JSON.stringify(meta)], { type: "application/json" }) },
+      ...files
+    ];
+    const blob = await pack(allFiles);
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
+      const getRequest = store.get(id);
+      getRequest.onsuccess = () => {
+        const existing = getRequest.result;
+        const record = {
+          id,
+          type,
+          name: name || id,
+          blob,
+          createdAt: (existing == null ? void 0 : existing.createdAt) || now,
+          updatedAt: now
+        };
+        const putRequest = store.put(record);
+        putRequest.onsuccess = () => {
+          resolve({ id, type, name: record.name });
+        };
+        putRequest.onerror = () => {
+          reject(new Error("Failed to save resource"));
+        };
+      };
+      getRequest.onerror = () => {
+        reject(new Error("Failed to save resource"));
+      };
+    });
+  }
+  async delete(id) {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.delete(id);
+      request.onsuccess = () => {
+        resolve();
+      };
+      request.onerror = () => {
+        reject(new Error("Failed to delete resource"));
+      };
+    });
+  }
+  async export(id) {
+    const db = await this.open();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, "readonly");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.get(id);
+      request.onsuccess = () => {
+        const item = request.result;
+        if (!item) {
+          reject(new Error("Resource not found"));
+          return;
+        }
+        const url = URL.createObjectURL(item.blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${item.name}.perky`;
+        a.click();
+        URL.revokeObjectURL(url);
+        resolve();
+      };
+      request.onerror = () => {
+        reject(new Error("Failed to export resource"));
+      };
+    });
+  }
+  async import(file) {
+    const blob = file instanceof Blob ? file : new Blob([await file.arrayBuffer()]);
+    const allFiles = await unpack(blob);
+    const metaFile = allFiles.find((f) => f.name === META_FILENAME);
+    if (!metaFile) {
+      throw new Error("Invalid .perky file: missing meta.json");
+    }
+    const metaText = await blobToText(metaFile.blob);
+    const meta = JSON.parse(metaText);
+    if (!meta.type || !meta.name) {
+      throw new Error("Invalid .perky file: meta.json must have type and name");
+    }
+    const files = allFiles.filter((f) => f.name !== META_FILENAME);
+    const id = `${meta.name}${capitalize(meta.type)}`;
+    await this.save(id, {
+      type: meta.type,
+      name: meta.name,
+      files
+    });
+    return { id, type: meta.type, name: meta.name };
+  }
+}
+_db = new WeakMap();
+_dbName = new WeakMap();
+function blobToText(blob) {
+  if (typeof blob.text === "function") {
+    return blob.text();
+  }
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsText(blob);
+  });
+}
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 export {
   EditorComponent as E,
   ICONS as I,
@@ -2298,8 +2565,9 @@ export {
   editorButtonStyles as a,
   editorBaseStyles as b,
   editorHeaderStyles as c,
-  TextureRegion as d,
+  PerkyStore as d,
   editorScrollbarStyles as e,
+  TextureRegion as f,
   loaders as l,
   manifestData as m
 };

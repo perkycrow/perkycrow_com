@@ -17,11 +17,12 @@ var __privateWrapper = (obj, member, setter, getter) => ({
     return __privateGet(obj, member, getter);
   }
 });
-var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn2, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn3, renderItems_fn, _context, _animatorName, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _isCustom, _store, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _drawerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, initAnimator_fn, buildDOM_fn4, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, syncDrawerAnimSelect_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn, saveCustomAnimator_fn, exportPerkyFile_fn, buildAnimatorConfig_fn;
-import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./shelf_packer--IBfIqnG.js";
-import { P as PerkyStore, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./overlay-DaU5ku9E.js";
-import { E as EditorComponent, d as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./devtools_icons-CkXJWoC9.js";
-import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-BPbdQpFl.js";
+var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn2, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn3, renderItems_fn, _context, _animatorName, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _isCustom, _store, _dirty, _autoSaveTimer, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _drawerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, initAnimator_fn, buildDOM_fn4, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, syncDrawerAnimSelect_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn, markDirty_fn, autoSave_fn, saveCustomAnimator_fn, forkAndSave_fn, exportPerkyFile_fn, buildAnimatorConfig_fn, replaceSpritesheet_fn;
+import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./preload-helper-DNpi5zPU.js";
+import { E as EditorComponent, d as PerkyStore, f as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./perky_store-CSYJ9bT0.js";
+import { P as PsdConverter, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-C7G6Pnhl.js";
+import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-B3_sTZdE.js";
+import { c as canvasToBlob } from "./spritesheet-DugE56K2.js";
 const SWIPE_THRESHOLD = 50;
 class SideDrawer extends EditorComponent {
   constructor() {
@@ -1692,6 +1693,8 @@ class AnimatorView extends EditorComponent {
     __privateAdd(this, _selectedAnimation, null);
     __privateAdd(this, _isCustom, false);
     __privateAdd(this, _store, new PerkyStore());
+    __privateAdd(this, _dirty, false);
+    __privateAdd(this, _autoSaveTimer, null);
     __privateAdd(this, _appLayout, null);
     __privateAdd(this, _containerEl, null);
     __privateAdd(this, _previewSectionEl, null);
@@ -1716,8 +1719,11 @@ class AnimatorView extends EditorComponent {
       __privateMethod(this, _AnimatorView_instances, initAnimator_fn).call(this);
     }
   }
-  setContext({ textureSystem, animatorConfig, animatorName, backgroundImage, studioConfig, isCustom }) {
-    __privateSet(this, _context, { textureSystem, studioConfig });
+  onDisconnected() {
+    clearTimeout(__privateGet(this, _autoSaveTimer));
+  }
+  setContext({ textureSystem, animatorConfig, animatorName, backgroundImage, studioConfig, isCustom, manifest }) {
+    __privateSet(this, _context, { textureSystem, studioConfig, manifest });
     __privateSet(this, _animatorConfig, animatorConfig);
     __privateSet(this, _animatorName, animatorName || "animator");
     __privateSet(this, _backgroundImage, backgroundImage || null);
@@ -1735,6 +1741,8 @@ _spritesheet = new WeakMap();
 _selectedAnimation = new WeakMap();
 _isCustom = new WeakMap();
 _store = new WeakMap();
+_dirty = new WeakMap();
+_autoSaveTimer = new WeakMap();
 _appLayout = new WeakMap();
 _containerEl = new WeakMap();
 _previewSectionEl = new WeakMap();
@@ -1847,11 +1855,11 @@ buildHeaderControls_fn = function() {
   const menuItems = [
     { label: "Animation Settings", action: () => __privateMethod(this, _AnimatorView_instances, openAnimationSettings_fn).call(this) },
     { label: "Anchor Settings", action: () => __privateMethod(this, _AnimatorView_instances, openSpritesheetSettings_fn).call(this) },
-    { label: "Copy to Clipboard", action: () => __privateMethod(this, _AnimatorView_instances, exportToClipboard_fn).call(this) }
+    { label: "Copy to Clipboard", action: () => __privateMethod(this, _AnimatorView_instances, exportToClipboard_fn).call(this) },
+    { label: "Export .perky", action: () => __privateMethod(this, _AnimatorView_instances, exportPerkyFile_fn).call(this) }
   ];
   if (__privateGet(this, _isCustom)) {
-    menuItems.push({ label: "Save", action: () => __privateMethod(this, _AnimatorView_instances, saveCustomAnimator_fn).call(this) });
-    menuItems.push({ label: "Export .perky", action: () => __privateMethod(this, _AnimatorView_instances, exportPerkyFile_fn).call(this) });
+    menuItems.push({ label: "Replace Spritesheet", action: () => __privateMethod(this, _AnimatorView_instances, replaceSpritesheet_fn).call(this) });
   }
   settingsMenu.setItems(menuItems);
   headerStart.appendChild(settingsMenu);
@@ -1881,12 +1889,14 @@ buildHeaderControls_fn = function() {
     fpsInput.setMax(60);
     fpsInput.addEventListener("change", (e) => {
       anim.setFps(e.detail.value);
+      __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
     });
     const loopToggle = createElement("toggle-input", { attrs: { context: "studio" } });
     loopToggle.setLabel("Loop");
     loopToggle.setChecked(anim.loop);
     loopToggle.addEventListener("change", (e) => {
       anim.setLoop(e.detail.checked);
+      __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
     });
     const modeSelect = createElement("select-input", { attrs: { context: "studio" } });
     modeSelect.setOptions([
@@ -1897,6 +1907,7 @@ buildHeaderControls_fn = function() {
     modeSelect.setValue(anim.playbackMode);
     modeSelect.addEventListener("change", (e) => {
       anim.setPlaybackMode(e.detail.value);
+      __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
     });
     headerEnd.appendChild(fpsInput);
     headerEnd.appendChild(loopToggle);
@@ -1939,6 +1950,7 @@ openSpritesheetSettings_fn = function() {
     __privateGet(this, _anchorEditor).syncInputs();
     __privateGet(this, _anchorEditor).updatePreview();
     (_a = __privateGet(this, _previewEl)) == null ? void 0 : _a.setAnchor(anchor);
+    __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
   }));
   __privateGet(this, _spritesheetSettingsDrawerEl).appendChild(__privateGet(this, _anchorEditor).container);
   __privateGet(this, _spritesheetSettingsDrawerEl).open();
@@ -1961,10 +1973,12 @@ openAnimationSettings_fn = function() {
     onMotionChange: (motion) => {
       var _a2;
       (_a2 = __privateGet(this, _previewEl)) == null ? void 0 : _a2.setMotion(motion);
+      __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
     },
     onMotionUpdate: (motion) => {
       var _a2;
       (_a2 = __privateGet(this, _previewEl)) == null ? void 0 : _a2.updateMotion(motion);
+      __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
     }
   }));
   __privateSet(this, _drawerAnimSelect, __privateGet(this, _animationSettings).animSelect);
@@ -2000,6 +2014,7 @@ updateEditorDrawer_fn = function() {
   const frameEditor = buildFrameEditor(frame, {
     onFramesUpdate: () => {
       __privateGet(this, _timelineEl).setFrames(__privateGet(this, _selectedAnimation).frames);
+      __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
     },
     getSuggestions: (excludeEvents) => {
       return collectEventSuggestions(__privateGet(this, _animator), excludeEvents);
@@ -2014,6 +2029,7 @@ addFrameToTimeline_fn = function({ name, region }) {
   }
   __privateGet(this, _selectedAnimation).frames.push({ region, name });
   __privateGet(this, _timelineEl).setFrames(__privateGet(this, _selectedAnimation).frames);
+  __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
   requestAnimationFrame(() => {
     var _a;
     const frames = (_a = __privateGet(this, _timelineEl).shadowRoot) == null ? void 0 : _a.querySelectorAll(".frame");
@@ -2074,6 +2090,7 @@ handleFrameDrop_fn = function({ index, frameName }) {
   }
   __privateGet(this, _selectedAnimation).frames.splice(index, 0, { region, name: frameName });
   __privateGet(this, _timelineEl).setFrames(__privateGet(this, _selectedAnimation).frames);
+  __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
 };
 handleFrameMove_fn = function({ fromIndex, toIndex }) {
   if (!__privateGet(this, _selectedAnimation)) {
@@ -2085,6 +2102,7 @@ handleFrameMove_fn = function({ fromIndex, toIndex }) {
   frames.splice(insertIndex, 0, moved);
   __privateGet(this, _timelineEl).setFrames(frames);
   __privateGet(this, _timelineEl).flashMovedFrame(insertIndex);
+  __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
 };
 handleFrameDelete_fn = function({ index }) {
   if (!__privateGet(this, _selectedAnimation)) {
@@ -2099,6 +2117,7 @@ handleFrameDelete_fn = function({ index }) {
   }
   __privateGet(this, _selectedAnimation).frames.splice(index, 1);
   __privateGet(this, _timelineEl).setFrames(__privateGet(this, _selectedAnimation).frames);
+  __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
 };
 handleFrameDuration_fn = function({ index, duration }) {
   if (!__privateGet(this, _selectedAnimation)) {
@@ -2108,6 +2127,7 @@ handleFrameDuration_fn = function({ index, duration }) {
   if (frame) {
     frame.duration = duration;
     __privateGet(this, _timelineEl).setFrames(__privateGet(this, _selectedAnimation).frames);
+    __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
   }
 };
 exportToClipboard_fn = function() {
@@ -2124,10 +2144,23 @@ exportToClipboard_fn = function() {
   lines.push(`static animations = ${JSON.stringify(animations, null, 4)}`);
   navigator.clipboard.writeText(lines.join("\n"));
 };
-saveCustomAnimator_fn = async function() {
-  if (!__privateGet(this, _isCustom) || !__privateGet(this, _animator)) {
+markDirty_fn = function() {
+  __privateSet(this, _dirty, true);
+  clearTimeout(__privateGet(this, _autoSaveTimer));
+  __privateSet(this, _autoSaveTimer, setTimeout(() => __privateMethod(this, _AnimatorView_instances, autoSave_fn).call(this), 2e3));
+};
+autoSave_fn = async function() {
+  if (!__privateGet(this, _dirty) || !__privateGet(this, _animator)) {
     return;
   }
+  __privateSet(this, _dirty, false);
+  if (__privateGet(this, _isCustom)) {
+    await __privateMethod(this, _AnimatorView_instances, saveCustomAnimator_fn).call(this);
+  } else {
+    await __privateMethod(this, _AnimatorView_instances, forkAndSave_fn).call(this);
+  }
+};
+saveCustomAnimator_fn = async function() {
   const animatorConfig = __privateMethod(this, _AnimatorView_instances, buildAnimatorConfig_fn).call(this);
   const resource = await __privateGet(this, _store).get(__privateGet(this, _animatorName));
   if (!resource) {
@@ -2143,9 +2176,29 @@ saveCustomAnimator_fn = async function() {
     files: resource.files
   });
 };
+forkAndSave_fn = async function() {
+  const manifest = __privateGet(this, _context).manifest;
+  if (!manifest) {
+    return;
+  }
+  const spritesheetId = inferSpritesheetName(__privateGet(this, _animatorConfig));
+  const spritesheetAsset = manifest.getAsset(spritesheetId);
+  if (!(spritesheetAsset == null ? void 0 : spritesheetAsset.source)) {
+    return;
+  }
+  const name = __privateGet(this, _animatorName).replace(/Animator$/, "");
+  const animatorConfig = __privateMethod(this, _AnimatorView_instances, buildAnimatorConfig_fn).call(this);
+  const files = await buildForkFiles(name, spritesheetId, animatorConfig, spritesheetAsset.source);
+  await __privateGet(this, _store).save(__privateGet(this, _animatorName), {
+    type: "animator",
+    name,
+    files
+  });
+  __privateSet(this, _isCustom, true);
+};
 exportPerkyFile_fn = async function() {
   if (!__privateGet(this, _isCustom)) {
-    return;
+    await __privateMethod(this, _AnimatorView_instances, forkAndSave_fn).call(this);
   }
   await __privateGet(this, _store).export(__privateGet(this, _animatorName));
 };
@@ -2161,7 +2214,88 @@ buildAnimatorConfig_fn = function() {
     animations
   };
 };
+replaceSpritesheet_fn = async function() {
+  if (!__privateGet(this, _isCustom) || !__privateGet(this, _animator)) {
+    return;
+  }
+  const file = await pickFile(".psd");
+  if (!file) {
+    return;
+  }
+  const name = __privateGet(this, _animatorName).replace(/Animator$/, "");
+  const spritesheetName = `${name}Spritesheet`;
+  const buffer = new Uint8Array(await file.arrayBuffer());
+  const converter = new PsdConverter();
+  const psd = converter.parse(buffer);
+  const result = await converter.convert(psd, { name });
+  const animatorConfig = __privateMethod(this, _AnimatorView_instances, buildAnimatorConfig_fn).call(this);
+  cleanAnimatorConfig(animatorConfig, result.spritesheetJson);
+  const files = [
+    { name: `${name}Animator.json`, blob: new Blob([JSON.stringify(animatorConfig)], { type: "application/json" }) },
+    { name: `${spritesheetName}.json`, blob: new Blob([JSON.stringify(result.spritesheetJson)], { type: "application/json" }) }
+  ];
+  for (let i = 0; i < result.atlases.length; i++) {
+    files.push({
+      name: `${spritesheetName}_${i}.png`,
+      blob: await canvasToBlob(result.atlases[i].canvas)
+    });
+  }
+  await __privateGet(this, _store).save(__privateGet(this, _animatorName), {
+    type: "animator",
+    name,
+    files
+  });
+  window.location.href = `animator.html?id=${encodeURIComponent(__privateGet(this, _animatorName))}&custom=1`;
+};
 customElements.define("animator-view", AnimatorView);
+async function buildForkFiles(name, spritesheetId, animatorConfig, spritesheetSource) {
+  const { data, images } = spritesheetSource;
+  const files = [];
+  files.push({
+    name: `${name}Animator.json`,
+    blob: new Blob([JSON.stringify(animatorConfig)], { type: "application/json" })
+  });
+  files.push({
+    name: `${spritesheetId}.json`,
+    blob: new Blob([JSON.stringify(data)], { type: "application/json" })
+  });
+  for (let i = 0; i < images.length; i++) {
+    files.push({
+      name: `${spritesheetId}_${i}.png`,
+      blob: await imageToBlob(images[i])
+    });
+  }
+  return files;
+}
+function imageToBlob(image) {
+  const canvas = document.createElement("canvas");
+  canvas.width = image.naturalWidth || image.width;
+  canvas.height = image.naturalHeight || image.height;
+  canvas.getContext("2d").drawImage(image, 0, 0);
+  return new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+}
+function cleanAnimatorConfig(config, spritesheetJson) {
+  const frameNames = new Set(spritesheetJson.frames.map((f) => f.filename));
+  for (const anim of Object.values(config.animations)) {
+    if (!anim.frames) {
+      continue;
+    }
+    anim.frames = anim.frames.filter((frame) => {
+      const source = frame.source || "";
+      const name = source.includes(":") ? source.split(":")[1] : source;
+      return frameNames.has(name);
+    });
+  }
+}
+function pickFile(accept) {
+  return new Promise((resolve) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = accept;
+    input.addEventListener("change", () => resolve(input.files[0] || null));
+    input.click();
+  });
+}
 async function launchAnimatorStudio(manifestData2, container, options = {}) {
   try {
     const manifest = await loadManifest(manifestData2, options.basePath);
@@ -2202,7 +2336,7 @@ async function resolveAnimatorData(manifest, options) {
 function loadGameAnimator(manifest, animatorId) {
   const textureSystem = buildTextureSystem(manifest);
   const animators = collectAnimators(manifest);
-  const result = { textureSystem, animatorConfig: null, animatorName: null, isCustom: false };
+  const result = { textureSystem, animatorConfig: null, animatorName: null, isCustom: false, manifest };
   if (animatorId && animators[animatorId]) {
     result.animatorConfig = animators[animatorId];
     result.animatorName = animatorId;

@@ -9,9 +9,10 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _db, _dbName, _headerEl, _titleEl, _menuBtn, _closeBtn, _contentEl, _footerEl, _AppLayout_instances, buildDOM_fn, updateTitle_fn, updateButtonVisibility_fn, emitEvent_fn, _backdrop, _container, _Overlay_instances, buildDOM_fn2;
-import { M as Manifest, S as SourceManager, R as Registry, l as loaders, T as TextureSystem, E as EditorComponent } from "./devtools_icons-CkXJWoC9.js";
-import { c as createElement } from "./shelf_packer--IBfIqnG.js";
+var _headerEl, _titleEl, _menuBtn, _closeBtn, _contentEl, _footerEl, _AppLayout_instances, buildDOM_fn, updateTitle_fn, updateButtonVisibility_fn, emitEvent_fn, _backdrop, _container, _Overlay_instances, buildDOM_fn2;
+import { M as Manifest, S as SourceManager, R as Registry, l as loaders, T as TextureSystem, E as EditorComponent } from "./perky_store-CSYJ9bT0.js";
+import { c as createElement, N as Notifier } from "./preload-helper-DNpi5zPU.js";
+import { a as countFrames, b as parseAnimationName, d as calculateResizeDimensions, e as extractFramesFromGroup, r as resizeFrames, g as packFramesIntoAtlases, n as nextPowerOfTwo, h as compositeAtlas, M as MAX_ATLAS_SIZE, i as buildJsonData, j as parsePsd, f as findAnimationGroups } from "./spritesheet-DugE56K2.js";
 function rewriteUrls(data, basePath) {
   if (!basePath) {
     return data;
@@ -64,269 +65,6 @@ function getBackgroundImage(manifest, studioConfig) {
   const backgroundId = studioConfig.background;
   const backgroundAsset = backgroundId ? manifest.getAsset(backgroundId) : null;
   return (backgroundAsset == null ? void 0 : backgroundAsset.source) || null;
-}
-function blobToArrayBuffer(blob) {
-  if (typeof blob.arrayBuffer === "function") {
-    return blob.arrayBuffer();
-  }
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(blob);
-  });
-}
-async function compress(blob) {
-  if (typeof CompressionStream === "undefined") {
-    return blob;
-  }
-  if (typeof blob.stream !== "function") {
-    const buffer = await blobToArrayBuffer(blob);
-    const stream2 = new Response(buffer).body.pipeThrough(new CompressionStream("gzip"));
-    return new Response(stream2).blob();
-  }
-  const stream = blob.stream().pipeThrough(new CompressionStream("gzip"));
-  return new Response(stream).blob();
-}
-async function decompress(blob) {
-  if (typeof DecompressionStream === "undefined") {
-    return blob;
-  }
-  if (typeof blob.stream !== "function") {
-    const buffer = await blobToArrayBuffer(blob);
-    const stream2 = new Response(buffer).body.pipeThrough(new DecompressionStream("gzip"));
-    return new Response(stream2).blob();
-  }
-  const stream = blob.stream().pipeThrough(new DecompressionStream("gzip"));
-  return new Response(stream).blob();
-}
-async function pack(files, { compress: shouldCompress = true } = {}) {
-  const header = {
-    files: files.map((f) => ({
-      name: f.name,
-      size: f.blob.size,
-      type: f.blob.type
-    }))
-  };
-  const headerBytes = new TextEncoder().encode(JSON.stringify(header));
-  const headerSize = new Uint32Array([headerBytes.length]);
-  const blob = new Blob([headerSize, headerBytes, ...files.map((f) => f.blob)]);
-  return shouldCompress ? compress(blob) : blob;
-}
-async function unpack(blob, { compressed = true } = {}) {
-  const data = compressed ? await decompress(blob) : blob;
-  const buffer = await blobToArrayBuffer(data);
-  const headerSize = new Uint32Array(buffer, 0, 1)[0];
-  const headerBytes = new Uint8Array(buffer, 4, headerSize);
-  const header = JSON.parse(new TextDecoder().decode(headerBytes));
-  let offset = 4 + headerSize;
-  return header.files.map((file) => {
-    const fileBlob = new Blob([buffer.slice(offset, offset + file.size)], { type: file.type });
-    offset += file.size;
-    return { name: file.name, blob: fileBlob };
-  });
-}
-const DB_PREFIX = "perky-";
-const STORE_NAME = "resources";
-const DB_VERSION = 1;
-const META_FILENAME = "meta.json";
-class PerkyStore {
-  constructor(dbName = "studio") {
-    __privateAdd(this, _db, null);
-    __privateAdd(this, _dbName);
-    __privateSet(this, _dbName, `${DB_PREFIX}${dbName}`);
-  }
-  async open() {
-    if (__privateGet(this, _db)) {
-      return __privateGet(this, _db);
-    }
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(__privateGet(this, _dbName), DB_VERSION);
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          const store = db.createObjectStore(STORE_NAME, { keyPath: "id" });
-          store.createIndex("type", "type", { unique: false });
-        }
-      };
-      request.onsuccess = (event) => {
-        __privateSet(this, _db, event.target.result);
-        resolve(__privateGet(this, _db));
-      };
-      request.onerror = () => {
-        reject(new Error("Failed to open database"));
-      };
-    });
-  }
-  async list(type = null) {
-    const db = await this.open();
-    return new Promise((resolve, reject) => {
-      const transaction = db.transaction(STORE_NAME, "readonly");
-      const store = transaction.objectStore(STORE_NAME);
-      const request = type ? store.index("type").getAll(type) : store.getAll();
-      request.onsuccess = () => {
-        const items = request.result.map((item) => ({
-          id: item.id,
-          type: item.type,
-          name: item.name,
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt
-        }));
-        resolve(items);
-      };
-      request.onerror = () => {
-        reject(new Error("Failed to list resources"));
-      };
-    });
-  }
-  async get(id) {
-    const db = await this.open();
-    return new Promise((resolve, reject) => {
-      const transaction = db.transaction(STORE_NAME, "readonly");
-      const store = transaction.objectStore(STORE_NAME);
-      const request = store.get(id);
-      request.onsuccess = async () => {
-        const item = request.result;
-        if (!item) {
-          resolve(null);
-          return;
-        }
-        const allFiles = await unpack(item.blob);
-        const files = allFiles.filter((f) => f.name !== META_FILENAME);
-        resolve({
-          id: item.id,
-          type: item.type,
-          name: item.name,
-          files,
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt
-        });
-      };
-      request.onerror = () => {
-        reject(new Error("Failed to get resource"));
-      };
-    });
-  }
-  async save(id, data) {
-    const db = await this.open();
-    const { type, name, files } = data;
-    if (!type) {
-      throw new Error("Resource type is required");
-    }
-    const meta = {
-      type,
-      name: name || id,
-      version: 1
-    };
-    const allFiles = [
-      { name: META_FILENAME, blob: new Blob([JSON.stringify(meta)], { type: "application/json" }) },
-      ...files
-    ];
-    const blob = await pack(allFiles);
-    const now = Date.now();
-    return new Promise((resolve, reject) => {
-      const transaction = db.transaction(STORE_NAME, "readwrite");
-      const store = transaction.objectStore(STORE_NAME);
-      const getRequest = store.get(id);
-      getRequest.onsuccess = () => {
-        const existing = getRequest.result;
-        const record = {
-          id,
-          type,
-          name: name || id,
-          blob,
-          createdAt: (existing == null ? void 0 : existing.createdAt) || now,
-          updatedAt: now
-        };
-        const putRequest = store.put(record);
-        putRequest.onsuccess = () => {
-          resolve({ id, type, name: record.name });
-        };
-        putRequest.onerror = () => {
-          reject(new Error("Failed to save resource"));
-        };
-      };
-      getRequest.onerror = () => {
-        reject(new Error("Failed to save resource"));
-      };
-    });
-  }
-  async delete(id) {
-    const db = await this.open();
-    return new Promise((resolve, reject) => {
-      const transaction = db.transaction(STORE_NAME, "readwrite");
-      const store = transaction.objectStore(STORE_NAME);
-      const request = store.delete(id);
-      request.onsuccess = () => {
-        resolve();
-      };
-      request.onerror = () => {
-        reject(new Error("Failed to delete resource"));
-      };
-    });
-  }
-  async export(id) {
-    const db = await this.open();
-    return new Promise((resolve, reject) => {
-      const transaction = db.transaction(STORE_NAME, "readonly");
-      const store = transaction.objectStore(STORE_NAME);
-      const request = store.get(id);
-      request.onsuccess = () => {
-        const item = request.result;
-        if (!item) {
-          reject(new Error("Resource not found"));
-          return;
-        }
-        const url = URL.createObjectURL(item.blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `${item.name}.perky`;
-        a.click();
-        URL.revokeObjectURL(url);
-        resolve();
-      };
-      request.onerror = () => {
-        reject(new Error("Failed to export resource"));
-      };
-    });
-  }
-  async import(file) {
-    const blob = file instanceof Blob ? file : new Blob([await file.arrayBuffer()]);
-    const allFiles = await unpack(blob);
-    const metaFile = allFiles.find((f) => f.name === META_FILENAME);
-    if (!metaFile) {
-      throw new Error("Invalid .perky file: missing meta.json");
-    }
-    const metaText = await blobToText(metaFile.blob);
-    const meta = JSON.parse(metaText);
-    if (!meta.type || !meta.name) {
-      throw new Error("Invalid .perky file: meta.json must have type and name");
-    }
-    const files = allFiles.filter((f) => f.name !== META_FILENAME);
-    const id = `${meta.name}${capitalize(meta.type)}`;
-    await this.save(id, {
-      type: meta.type,
-      name: meta.name,
-      files
-    });
-    return { id, type: meta.type, name: meta.name };
-  }
-}
-_db = new WeakMap();
-_dbName = new WeakMap();
-function blobToText(blob) {
-  if (typeof blob.text === "function") {
-    return blob.text();
-  }
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsText(blob);
-  });
-}
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 class AppLayout extends EditorComponent {
   constructor() {
@@ -735,8 +473,105 @@ __publicField(Overlay, "styles", `
         }
     `);
 customElements.define("editor-overlay", Overlay);
+class PsdConverter extends Notifier {
+  parse(buffer) {
+    return parse(buffer);
+  }
+  getAnimationGroups(psd) {
+    return getAnimationGroups(psd);
+  }
+  getAnimationInfo(psd) {
+    const groups = getAnimationGroups(psd);
+    return groups.map((group) => ({
+      name: parseAnimationName(group.name),
+      frameCount: countFrames(group)
+    }));
+  }
+  async convert(psd, options = {}) {
+    const {
+      targetWidth = null,
+      targetHeight = null,
+      nearest = false,
+      name = psd.filename || "sprite"
+    } = options;
+    this.emit("progress", { stage: "extracting", percent: 0 });
+    const resize = calculateResizeDimensions(
+      psd.width,
+      psd.height,
+      targetWidth,
+      targetHeight
+    );
+    const animGroups = getAnimationGroups(psd);
+    let frames = [];
+    const animations = {};
+    for (const group of animGroups) {
+      const animName = parseAnimationName(group.name);
+      const groupFrames = extractFramesFromGroup(group, psd.width, psd.height);
+      frames = frames.concat(groupFrames);
+      animations[animName] = groupFrames.map((f) => f.filename);
+    }
+    this.emit("progress", { stage: "resizing", percent: 20 });
+    frames = await resizeFrames(frames, {
+      psdWidth: psd.width,
+      psdHeight: psd.height,
+      targetWidth: resize.width,
+      targetHeight: resize.height,
+      nearest
+    });
+    this.emit("progress", { stage: "packing", percent: 40 });
+    const atlases = packFramesIntoAtlases(frames, MAX_ATLAS_SIZE);
+    this.emit("progress", { stage: "compositing", percent: 60 });
+    for (const atlas of atlases) {
+      const usedHeight = atlas.packer.currentY;
+      atlas.finalHeight = nextPowerOfTwo(usedHeight);
+      atlas.canvas = await compositeAtlas(
+        atlas.frames,
+        MAX_ATLAS_SIZE,
+        atlas.finalHeight
+      );
+    }
+    this.emit("progress", { stage: "finalizing", percent: 80 });
+    const spritesheetName = `${name}Spritesheet`;
+    const spritesheetJson = buildJsonData(atlases, animations, name);
+    const animatorConfig = buildAnimatorConfig(spritesheetName, animations);
+    this.emit("progress", { stage: "complete", percent: 100 });
+    return {
+      atlases,
+      spritesheetJson,
+      animatorConfig,
+      name,
+      spritesheetName
+    };
+  }
+  buildAnimatorConfig(spritesheetName, animations) {
+    return buildAnimatorConfig(spritesheetName, animations);
+  }
+}
+function parse(buffer) {
+  return parsePsd(new Uint8Array(buffer));
+}
+function getAnimationGroups(psd) {
+  return findAnimationGroups(psd.tree);
+}
+function buildAnimatorConfig(spritesheetName, animations) {
+  const config = {
+    spritesheet: spritesheetName,
+    anchor: { x: 0.5, y: 0.5 },
+    animations: {}
+  };
+  for (const [animName, frameNames] of Object.entries(animations)) {
+    config.animations[animName] = {
+      fps: 10,
+      loop: true,
+      frames: frameNames.map((frameName) => ({
+        source: `${spritesheetName}:${frameName}`
+      }))
+    };
+  }
+  return config;
+}
 export {
-  PerkyStore as P,
+  PsdConverter as P,
   getBackgroundImage as a,
   buildTextureSystem as b,
   collectAnimators as c,

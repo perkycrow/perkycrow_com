@@ -6,110 +6,12 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _overlay, _step, _psd, _converter, _store, _fileInput, _aspectRatioLocked, _aspectRatio, _existingNames, _elements, _PsdImporter_instances, reset_fn, buildDOM_fn, buildHeader_fn, buildBody_fn, buildDropStep_fn, buildPreviewStep_fn, buildProgressStep_fn, toggleAspectLock_fn, handleWidthChange_fn, handleHeightChange_fn, syncDimension_fn, updateStep_fn, updateHeader_fn, handleBack_fn, handleDrop_fn, handleFileSelect_fn, loadFile_fn, populatePreview_fn, validateName_fn, onProgress_fn, handleCreate_fn, showError_fn, _manifest, _animators, _customAnimators, _textureSystem, _appLayout, _contentEl, _psdImporter, _thumbnails, _store2, _selectionMode, _selectedItems, _selectBtn, _exportBtn, _deleteBtn, _HubView_instances, buildDOM_fn2, buildHeaderActions_fn, render_fn, loadCustomAnimators_fn, createAnimatorCard_fn, createNewAnimatorCard_fn, openPsdImporter_fn, handleImportComplete_fn, createThumbnail_fn, getFirstFrameRegion_fn, resolveRegion_fn, openAnimator_fn, toggleSelectionMode_fn, toggleItemSelection_fn, updateActionButtons_fn, exportSelected_fn, deleteSelected_fn;
-import { N as Notifier, b as createStyleSheet, d as adoptStyleSheets, c as createElement, p as pluralize, l as logger } from "./shelf_packer--IBfIqnG.js";
-import { P as PerkyStore, l as loadManifest, b as buildTextureSystem, c as collectAnimators } from "./overlay-DaU5ku9E.js";
-import { E as EditorComponent, I as ICONS, m as manifestData } from "./devtools_icons-CkXJWoC9.js";
-import { c as countFrames, p as parseAnimationName, a as calculateResizeDimensions, e as extractFramesFromGroup, r as resizeFrames, b as packFramesIntoAtlases, n as nextPowerOfTwo, d as compositeAtlas, M as MAX_ATLAS_SIZE, f as buildJsonData, g as parsePsd, h as findAnimationGroups, i as putPixels } from "./spritesheet-D3AQiGaz.js";
-import "./preload-helper-BbOs9S9B.js";
-class PsdConverter extends Notifier {
-  parse(buffer) {
-    return parse(buffer);
-  }
-  getAnimationGroups(psd) {
-    return getAnimationGroups(psd);
-  }
-  getAnimationInfo(psd) {
-    const groups = getAnimationGroups(psd);
-    return groups.map((group) => ({
-      name: parseAnimationName(group.name),
-      frameCount: countFrames(group)
-    }));
-  }
-  async convert(psd, options = {}) {
-    const {
-      targetWidth = null,
-      targetHeight = null,
-      nearest = false,
-      name = psd.filename || "sprite"
-    } = options;
-    this.emit("progress", { stage: "extracting", percent: 0 });
-    const resize = calculateResizeDimensions(
-      psd.width,
-      psd.height,
-      targetWidth,
-      targetHeight
-    );
-    const animGroups = getAnimationGroups(psd);
-    let frames = [];
-    const animations = {};
-    for (const group of animGroups) {
-      const animName = parseAnimationName(group.name);
-      const groupFrames = extractFramesFromGroup(group, psd.width, psd.height);
-      frames = frames.concat(groupFrames);
-      animations[animName] = groupFrames.map((f) => f.filename);
-    }
-    this.emit("progress", { stage: "resizing", percent: 20 });
-    frames = await resizeFrames(frames, {
-      psdWidth: psd.width,
-      psdHeight: psd.height,
-      targetWidth: resize.width,
-      targetHeight: resize.height,
-      nearest
-    });
-    this.emit("progress", { stage: "packing", percent: 40 });
-    const atlases = packFramesIntoAtlases(frames, MAX_ATLAS_SIZE);
-    this.emit("progress", { stage: "compositing", percent: 60 });
-    for (const atlas of atlases) {
-      const usedHeight = atlas.packer.currentY;
-      atlas.finalHeight = nextPowerOfTwo(usedHeight);
-      atlas.canvas = await compositeAtlas(
-        atlas.frames,
-        MAX_ATLAS_SIZE,
-        atlas.finalHeight
-      );
-    }
-    this.emit("progress", { stage: "finalizing", percent: 80 });
-    const spritesheetName = `${name}Spritesheet`;
-    const spritesheetJson = buildJsonData(atlases, animations, name);
-    const animatorConfig = buildAnimatorConfig(spritesheetName, animations);
-    this.emit("progress", { stage: "complete", percent: 100 });
-    return {
-      atlases,
-      spritesheetJson,
-      animatorConfig,
-      name,
-      spritesheetName
-    };
-  }
-  buildAnimatorConfig(spritesheetName, animations) {
-    return buildAnimatorConfig(spritesheetName, animations);
-  }
-}
-function parse(buffer) {
-  return parsePsd(new Uint8Array(buffer));
-}
-function getAnimationGroups(psd) {
-  return findAnimationGroups(psd.tree);
-}
-function buildAnimatorConfig(spritesheetName, animations) {
-  const config = {
-    spritesheet: spritesheetName,
-    anchor: { x: 0.5, y: 0.5 },
-    animations: {}
-  };
-  for (const [animName, frameNames] of Object.entries(animations)) {
-    config.animations[animName] = {
-      fps: 10,
-      loop: true,
-      frames: frameNames.map((frameName) => ({
-        source: `${spritesheetName}:${frameName}`
-      }))
-    };
-  }
-  return config;
-}
-const styles = createStyleSheet(`
+var _overlay, _step, _psd, _converter, _store, _fileInput, _aspectRatioLocked, _aspectRatio, _existingNames, _elements, _PsdImporter_instances, reset_fn, buildDOM_fn, buildHeader_fn, buildBody_fn, buildDropStep_fn, buildPreviewStep_fn, buildProgressStep_fn, toggleAspectLock_fn, handleWidthChange_fn, handleHeightChange_fn, syncDimension_fn, updateStep_fn, updateHeader_fn, handleBack_fn, handleDrop_fn, handleFileSelect_fn, loadFile_fn, populatePreview_fn, validateName_fn, onProgress_fn, handleCreate_fn, showError_fn, _overlay2, _conflicts, _choices, _resolvePromise, _ConflictResolver_instances, buildDOM_fn2, renderConflicts_fn, createConflictItem_fn, createVersionCard_fn, selectVersion_fn, applyChoices_fn, _popoverEl, _isOpen, _boundClose, _StorageInfo_instances, buildDOM_fn3, toggle_fn, open_fn, close_fn, onOutsideClick_fn, refreshContent_fn, _manifest, _animators, _customAnimators, _textureSystem, _appLayout, _contentEl, _psdImporter, _thumbnails, _customMeta, _store2, _conflictResolver, _selectionMode, _selectedItems, _selectBtn, _exportBtn, _deleteBtn, _revertBtn, _playBtn, _HubView_instances, buildDOM_fn4, buildHeaderActions_fn, render_fn, loadCustomAnimators_fn, reconcile_fn, compareVersions_fn, resolveConflicts_fn, deleteCustom_fn, createAnimatorCard_fn, createNewAnimatorCard_fn, openPsdImporter_fn, handleImportComplete_fn, createThumbnail_fn, getFirstFrameRegion_fn, resolveRegion_fn, openAnimator_fn, toggleSelectionMode_fn, toggleItemSelection_fn, updateActionButtons_fn, exportSelected_fn, revertSelected_fn, deleteSelected_fn;
+import { b as createStyleSheet, d as adoptStyleSheets, c as createElement, a as formatBytes, p as pluralize, l as logger } from "./preload-helper-DNpi5zPU.js";
+import { P as PsdConverter, l as loadManifest, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-C7G6Pnhl.js";
+import { E as EditorComponent, d as PerkyStore, I as ICONS, m as manifestData } from "./perky_store-CSYJ9bT0.js";
+import { f as findAnimationGroups, e as extractFramesFromGroup, p as putPixels } from "./spritesheet-DugE56K2.js";
+const styles$2 = createStyleSheet(`
     :host {
         display: contents;
     }
@@ -489,7 +391,7 @@ class PsdImporter extends EditorComponent {
     __privateAdd(this, _elements, {});
   }
   onConnected() {
-    adoptStyleSheets(this.shadowRoot, styles);
+    adoptStyleSheets(this.shadowRoot, styles$2);
     __privateGet(this, _converter).on("progress", ({ stage, percent }) => __privateMethod(this, _PsdImporter_instances, onProgress_fn).call(this, stage, percent));
     __privateMethod(this, _PsdImporter_instances, buildDOM_fn).call(this);
   }
@@ -888,6 +790,429 @@ async function buildPerkyFiles(result) {
   }
   return files;
 }
+const styles$1 = createStyleSheet(`
+    :host {
+        display: block;
+    }
+
+    .conflict-content {
+        padding: var(--spacing-xl);
+        max-width: 560px;
+        width: 90vw;
+    }
+
+    .conflict-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--fg-primary);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .conflict-subtitle {
+        font-size: var(--font-size-md);
+        color: var(--fg-muted);
+        margin-bottom: var(--spacing-xl);
+        line-height: 1.4;
+    }
+
+    .conflict-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xl);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .conflict-item {
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-lg);
+    }
+
+    .conflict-name {
+        font-size: var(--font-size-lg);
+        font-weight: 600;
+        color: var(--fg-primary);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .conflict-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .version-card {
+        padding: var(--spacing-lg);
+        border-radius: var(--radius-md);
+        border: 2px solid var(--border, #333);
+        cursor: pointer;
+        transition: border-color var(--transition-normal), background var(--transition-normal);
+        -webkit-tap-highlight-color: transparent;
+        min-height: var(--touch-target, 44px);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+
+    .version-card:hover {
+        background: var(--bg-hover);
+    }
+
+    .version-card.selected {
+        border-color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+
+    .version-label {
+        font-size: var(--font-size-md);
+        font-weight: 600;
+        color: var(--fg-primary);
+    }
+
+    .version-card.selected .version-label {
+        color: var(--accent);
+    }
+
+    .version-detail {
+        font-size: var(--font-size-sm);
+        color: var(--fg-muted);
+    }
+
+    .version-date {
+        font-size: var(--font-size-sm);
+        color: var(--fg-muted);
+        margin-top: var(--spacing-xs);
+    }
+
+    .conflict-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .continue-btn {
+        padding: var(--spacing-md) var(--spacing-xl);
+        background: var(--accent);
+        color: var(--bg-primary);
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-md);
+        font-family: var(--font-mono);
+        font-weight: 600;
+        cursor: pointer;
+        min-height: var(--touch-target, 44px);
+        transition: opacity var(--transition-normal);
+    }
+
+    .continue-btn:hover {
+        opacity: 0.9;
+    }
+
+    .continue-btn:active {
+        opacity: 0.8;
+    }
+`);
+class ConflictResolver extends EditorComponent {
+  constructor() {
+    super(...arguments);
+    __privateAdd(this, _ConflictResolver_instances);
+    __privateAdd(this, _overlay2, null);
+    __privateAdd(this, _conflicts, []);
+    __privateAdd(this, _choices, /* @__PURE__ */ new Map());
+    __privateAdd(this, _resolvePromise, null);
+  }
+  onConnected() {
+    adoptStyleSheets(this.shadowRoot, styles$1);
+    __privateMethod(this, _ConflictResolver_instances, buildDOM_fn2).call(this);
+  }
+  resolve(conflicts) {
+    __privateSet(this, _conflicts, conflicts);
+    __privateGet(this, _choices).clear();
+    for (const conflict of conflicts) {
+      __privateGet(this, _choices).set(conflict.id, "custom");
+    }
+    __privateMethod(this, _ConflictResolver_instances, renderConflicts_fn).call(this);
+    __privateGet(this, _overlay2).open();
+    return new Promise((resolve) => {
+      __privateSet(this, _resolvePromise, resolve);
+    });
+  }
+}
+_overlay2 = new WeakMap();
+_conflicts = new WeakMap();
+_choices = new WeakMap();
+_resolvePromise = new WeakMap();
+_ConflictResolver_instances = new WeakSet();
+buildDOM_fn2 = function() {
+  __privateSet(this, _overlay2, createElement("editor-overlay", {
+    attrs: { fullscreen: "" }
+  }));
+  this.shadowRoot.appendChild(__privateGet(this, _overlay2));
+};
+renderConflicts_fn = function() {
+  __privateGet(this, _overlay2).innerHTML = "";
+  const content = createElement("div", { class: "conflict-content" });
+  content.appendChild(createElement("div", {
+    class: "conflict-title",
+    text: "Updates Available"
+  }));
+  content.appendChild(createElement("div", {
+    class: "conflict-subtitle",
+    text: "Some animators have been updated in the game. You also have local changes on these animators. Which version would you like to keep?"
+  }));
+  const list = createElement("div", { class: "conflict-list" });
+  for (const conflict of __privateGet(this, _conflicts)) {
+    list.appendChild(__privateMethod(this, _ConflictResolver_instances, createConflictItem_fn).call(this, conflict));
+  }
+  content.appendChild(list);
+  const actions = createElement("div", { class: "conflict-actions" });
+  const continueBtn = createElement("button", {
+    class: "continue-btn",
+    text: "Continue"
+  });
+  continueBtn.addEventListener("click", () => __privateMethod(this, _ConflictResolver_instances, applyChoices_fn).call(this));
+  actions.appendChild(continueBtn);
+  content.appendChild(actions);
+  __privateGet(this, _overlay2).appendChild(content);
+};
+createConflictItem_fn = function(conflict) {
+  const item = createElement("div", { class: "conflict-item" });
+  item.appendChild(createElement("div", { class: "conflict-name", text: conflict.name }));
+  const columns = createElement("div", { class: "conflict-columns" });
+  const customCard = __privateMethod(this, _ConflictResolver_instances, createVersionCard_fn).call(this, conflict.id, "custom", "My version", "Local changes", conflict.customDate, true);
+  const gameCard = __privateMethod(this, _ConflictResolver_instances, createVersionCard_fn).call(this, conflict.id, "game", "Native version", "Game update", conflict.gameDate, false);
+  columns.appendChild(customCard);
+  columns.appendChild(gameCard);
+  item.appendChild(columns);
+  return item;
+};
+createVersionCard_fn = function(conflictId, value, label, detail, date, selected) {
+  const card = createElement("div", { class: "version-card" });
+  if (selected) {
+    card.classList.add("selected");
+  }
+  card.appendChild(createElement("div", { class: "version-label", text: label }));
+  card.appendChild(createElement("div", { class: "version-detail", text: detail }));
+  if (date) {
+    card.appendChild(createElement("div", {
+      class: "version-date",
+      text: formatDate(date)
+    }));
+  }
+  card.addEventListener("click", () => {
+    __privateMethod(this, _ConflictResolver_instances, selectVersion_fn).call(this, conflictId, value, card);
+  });
+  return card;
+};
+selectVersion_fn = function(conflictId, value, selectedCard) {
+  __privateGet(this, _choices).set(conflictId, value);
+  const columns = selectedCard.parentElement;
+  for (const card of columns.children) {
+    card.classList.remove("selected");
+  }
+  selectedCard.classList.add("selected");
+};
+applyChoices_fn = function() {
+  __privateGet(this, _overlay2).close();
+  const result = __privateGet(this, _conflicts).map((conflict) => ({
+    id: conflict.id,
+    choice: __privateGet(this, _choices).get(conflict.id) || "custom"
+  }));
+  if (__privateGet(this, _resolvePromise)) {
+    __privateGet(this, _resolvePromise).call(this, result);
+    __privateSet(this, _resolvePromise, null);
+  }
+};
+customElements.define("conflict-resolver", ConflictResolver);
+function formatDate(timestamp) {
+  if (!timestamp) {
+    return "";
+  }
+  const date = new Date(timestamp);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  return `${day}/${month} ${hours}:${minutes}`;
+}
+const styles = createStyleSheet(`
+    :host {
+        display: block;
+        position: relative;
+    }
+
+    .title-btn {
+        background: none;
+        border: none;
+        font-size: var(--font-size-lg);
+        font-weight: 500;
+        color: var(--fg-primary);
+        font-family: var(--font-mono);
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: var(--radius-md);
+        -webkit-tap-highlight-color: transparent;
+        transition: background var(--transition-normal);
+    }
+
+    .title-btn:hover {
+        background: var(--bg-hover);
+    }
+
+    .title-btn:active {
+        background: var(--bg-secondary);
+    }
+
+    .popover {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: var(--spacing-sm);
+        background: var(--bg-secondary);
+        border: 1px solid var(--border, #333);
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-lg);
+        min-width: 240px;
+        z-index: 100;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-normal);
+    }
+
+    .popover.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .popover-section {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .popover-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .popover-label {
+        font-size: var(--font-size-sm);
+        color: var(--fg-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .popover-value {
+        font-size: var(--font-size-md);
+        color: var(--fg-primary);
+        font-weight: 500;
+    }
+
+    .storage-bar {
+        height: 6px;
+        background: var(--bg-primary);
+        border-radius: 3px;
+        margin-top: var(--spacing-sm);
+        overflow: hidden;
+    }
+
+    .storage-fill {
+        height: 100%;
+        background: var(--accent);
+        border-radius: 3px;
+        transition: width var(--transition-normal);
+    }
+`);
+class StorageInfo extends EditorComponent {
+  constructor() {
+    super(...arguments);
+    __privateAdd(this, _StorageInfo_instances);
+    __privateAdd(this, _popoverEl, null);
+    __privateAdd(this, _isOpen, false);
+    __privateAdd(this, _boundClose, null);
+  }
+  onConnected() {
+    adoptStyleSheets(this.shadowRoot, styles);
+    __privateMethod(this, _StorageInfo_instances, buildDOM_fn3).call(this);
+    __privateSet(this, _boundClose, (e) => __privateMethod(this, _StorageInfo_instances, onOutsideClick_fn).call(this, e));
+  }
+  onDisconnected() {
+    document.removeEventListener("pointerdown", __privateGet(this, _boundClose));
+  }
+}
+_popoverEl = new WeakMap();
+_isOpen = new WeakMap();
+_boundClose = new WeakMap();
+_StorageInfo_instances = new WeakSet();
+buildDOM_fn3 = function() {
+  const btn = createElement("button", {
+    class: "title-btn",
+    text: "Perky Studio"
+  });
+  btn.addEventListener("click", () => __privateMethod(this, _StorageInfo_instances, toggle_fn).call(this));
+  __privateSet(this, _popoverEl, createElement("div", { class: "popover" }));
+  this.shadowRoot.appendChild(btn);
+  this.shadowRoot.appendChild(__privateGet(this, _popoverEl));
+};
+toggle_fn = function() {
+  if (__privateGet(this, _isOpen)) {
+    __privateMethod(this, _StorageInfo_instances, close_fn).call(this);
+  } else {
+    __privateMethod(this, _StorageInfo_instances, open_fn).call(this);
+  }
+};
+open_fn = async function() {
+  __privateSet(this, _isOpen, true);
+  await __privateMethod(this, _StorageInfo_instances, refreshContent_fn).call(this);
+  __privateGet(this, _popoverEl).classList.add("open");
+  requestAnimationFrame(() => {
+    document.addEventListener("pointerdown", __privateGet(this, _boundClose));
+  });
+};
+close_fn = function() {
+  __privateSet(this, _isOpen, false);
+  __privateGet(this, _popoverEl).classList.remove("open");
+  document.removeEventListener("pointerdown", __privateGet(this, _boundClose));
+};
+onOutsideClick_fn = function(e) {
+  if (!this.contains(e.target)) {
+    __privateMethod(this, _StorageInfo_instances, close_fn).call(this);
+  }
+};
+refreshContent_fn = async function() {
+  __privateGet(this, _popoverEl).innerHTML = "";
+  const storage = await estimateStorage();
+  __privateGet(this, _popoverEl).appendChild(
+    buildSection("Storage", `${storage.usedText} / ${storage.totalText}`)
+  );
+  const bar = createElement("div", { class: "storage-bar" });
+  const fill = createElement("div", { class: "storage-fill" });
+  fill.style.width = `${storage.percent}%`;
+  bar.appendChild(fill);
+  __privateGet(this, _popoverEl).appendChild(bar);
+};
+customElements.define("storage-info", StorageInfo);
+function buildSection(label, value) {
+  const section = createElement("div", { class: "popover-section" });
+  section.appendChild(createElement("div", { class: "popover-label", text: label }));
+  section.appendChild(createElement("div", { class: "popover-value", text: value }));
+  return section;
+}
+async function estimateStorage() {
+  try {
+    const estimate = await navigator.storage.estimate();
+    const used = estimate.usage || 0;
+    const total = estimate.quota || 0;
+    const percent = total > 0 ? Math.min(100, used / total * 100) : 0;
+    return {
+      used,
+      total,
+      percent: Math.round(percent * 10) / 10,
+      usedText: formatBytes(used),
+      totalText: formatBytes(total)
+    };
+  } catch {
+    return { used: 0, total: 0, percent: 0, usedText: "—", totalText: "—" };
+  }
+}
 const hubViewStyles = createStyleSheet(`
     :host {
         display: block;
@@ -1012,6 +1337,10 @@ const hubViewStyles = createStyleSheet(`
         border-radius: var(--radius-sm);
     }
 
+    .card-badge.modified {
+        background: var(--warning, #f90);
+    }
+
     .card-preview {
         position: relative;
     }
@@ -1073,16 +1402,20 @@ class HubView extends EditorComponent {
     __privateAdd(this, _contentEl, null);
     __privateAdd(this, _psdImporter, null);
     __privateAdd(this, _thumbnails, /* @__PURE__ */ new Map());
+    __privateAdd(this, _customMeta, /* @__PURE__ */ new Map());
     __privateAdd(this, _store2, new PerkyStore());
+    __privateAdd(this, _conflictResolver, null);
     __privateAdd(this, _selectionMode, false);
     __privateAdd(this, _selectedItems, /* @__PURE__ */ new Set());
     __privateAdd(this, _selectBtn, null);
     __privateAdd(this, _exportBtn, null);
     __privateAdd(this, _deleteBtn, null);
+    __privateAdd(this, _revertBtn, null);
+    __privateAdd(this, _playBtn, null);
   }
   onConnected() {
     adoptStyleSheets(this.shadowRoot, hubViewStyles);
-    __privateMethod(this, _HubView_instances, buildDOM_fn2).call(this);
+    __privateMethod(this, _HubView_instances, buildDOM_fn4).call(this);
   }
   setContext({ manifest, animators, textureSystem }) {
     __privateSet(this, _manifest, manifest);
@@ -1101,18 +1434,24 @@ _appLayout = new WeakMap();
 _contentEl = new WeakMap();
 _psdImporter = new WeakMap();
 _thumbnails = new WeakMap();
+_customMeta = new WeakMap();
 _store2 = new WeakMap();
+_conflictResolver = new WeakMap();
 _selectionMode = new WeakMap();
 _selectedItems = new WeakMap();
 _selectBtn = new WeakMap();
 _exportBtn = new WeakMap();
 _deleteBtn = new WeakMap();
+_revertBtn = new WeakMap();
+_playBtn = new WeakMap();
 _HubView_instances = new WeakSet();
-buildDOM_fn2 = function() {
+buildDOM_fn4 = function() {
   __privateSet(this, _appLayout, createElement("app-layout", {
     attrs: { "no-menu": "", "no-close": "", "no-footer": "" }
   }));
-  __privateGet(this, _appLayout).setTitle("Studio");
+  const storageInfo = document.createElement("storage-info");
+  storageInfo.setAttribute("slot", "header-center");
+  __privateGet(this, _appLayout).appendChild(storageInfo);
   const headerActions = __privateMethod(this, _HubView_instances, buildHeaderActions_fn).call(this);
   headerActions.setAttribute("slot", "header-end");
   __privateGet(this, _appLayout).appendChild(headerActions);
@@ -1138,29 +1477,48 @@ buildHeaderActions_fn = function() {
   __privateSet(this, _exportBtn, createElement("button", { text: "Export" }));
   __privateGet(this, _exportBtn).style.cssText = btnStyle + "display: none;";
   __privateGet(this, _exportBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, exportSelected_fn).call(this));
+  __privateSet(this, _revertBtn, createElement("button", { text: "Revert" }));
+  __privateGet(this, _revertBtn).style.cssText = btnStyle + "display: none; color: var(--warning, #f90);";
+  __privateGet(this, _revertBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, revertSelected_fn).call(this));
   __privateSet(this, _deleteBtn, createElement("button", { text: "Delete" }));
   __privateGet(this, _deleteBtn).style.cssText = btnStyle + "display: none; color: #f66;";
   __privateGet(this, _deleteBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, deleteSelected_fn).call(this));
   __privateSet(this, _selectBtn, createElement("button", { text: "Select" }));
   __privateGet(this, _selectBtn).style.cssText = btnStyle;
   __privateGet(this, _selectBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, toggleSelectionMode_fn).call(this));
+  __privateSet(this, _playBtn, createElement("button", { text: "▶ Preview" }));
+  __privateGet(this, _playBtn).style.cssText = btnStyle + "background: var(--accent); color: var(--bg-primary); font-weight: 600;";
+  __privateGet(this, _playBtn).addEventListener("click", () => {
+    window.location.href = "../index.html?studio";
+  });
+  container.appendChild(__privateGet(this, _playBtn));
   container.appendChild(__privateGet(this, _exportBtn));
+  container.appendChild(__privateGet(this, _revertBtn));
   container.appendChild(__privateGet(this, _deleteBtn));
   container.appendChild(__privateGet(this, _selectBtn));
   return container;
 };
 render_fn = async function() {
   await __privateMethod(this, _HubView_instances, loadCustomAnimators_fn).call(this);
+  await __privateMethod(this, _HubView_instances, reconcile_fn).call(this);
   const hasCustoms = Object.keys(__privateGet(this, _customAnimators)).length > 0;
   __privateGet(this, _selectBtn).style.display = hasCustoms ? "block" : "none";
   const section = createElement("div", { class: "section" });
   section.appendChild(createElement("h2", { class: "section-title", text: "Animators" }));
   const grid = createElement("div", { class: "animator-grid" });
+  const renderedCustoms = /* @__PURE__ */ new Set();
   for (const [name, config] of Object.entries(__privateGet(this, _animators))) {
-    grid.appendChild(__privateMethod(this, _HubView_instances, createAnimatorCard_fn).call(this, name, config, false));
+    if (__privateGet(this, _customAnimators)[name]) {
+      grid.appendChild(__privateMethod(this, _HubView_instances, createAnimatorCard_fn).call(this, name, __privateGet(this, _customAnimators)[name], "modified"));
+      renderedCustoms.add(name);
+    } else {
+      grid.appendChild(__privateMethod(this, _HubView_instances, createAnimatorCard_fn).call(this, name, config, "game"));
+    }
   }
   for (const [name, config] of Object.entries(__privateGet(this, _customAnimators))) {
-    grid.appendChild(__privateMethod(this, _HubView_instances, createAnimatorCard_fn).call(this, name, config, true));
+    if (!renderedCustoms.has(name)) {
+      grid.appendChild(__privateMethod(this, _HubView_instances, createAnimatorCard_fn).call(this, name, config, "custom"));
+    }
   }
   grid.appendChild(__privateMethod(this, _HubView_instances, createNewAnimatorCard_fn).call(this));
   section.appendChild(grid);
@@ -1184,6 +1542,7 @@ loadCustomAnimators_fn = async function() {
     const configText = await blobToText(configFile.blob);
     const config = JSON.parse(configText);
     __privateGet(this, _customAnimators)[resource.id] = config;
+    __privateGet(this, _customMeta).set(resource.id, { updatedAt: resource.updatedAt || 0 });
     if (!__privateGet(this, _thumbnails).has(resource.id)) {
       const thumbnail = await extractThumbnailFromPerky(full.files);
       if (thumbnail) {
@@ -1192,8 +1551,75 @@ loadCustomAnimators_fn = async function() {
     }
   }
 };
-createAnimatorCard_fn = function(name, config, isCustom = false) {
+reconcile_fn = async function() {
+  const synced = [];
+  const conflicts = [];
+  for (const id of Object.keys(__privateGet(this, _customAnimators))) {
+    const state = __privateMethod(this, _HubView_instances, compareVersions_fn).call(this, id);
+    if (state === "synced") {
+      synced.push(id);
+    } else if (state === "conflict") {
+      conflicts.push(id);
+    }
+  }
+  for (const id of synced) {
+    await __privateMethod(this, _HubView_instances, deleteCustom_fn).call(this, id);
+  }
+  if (conflicts.length > 0) {
+    await __privateMethod(this, _HubView_instances, resolveConflicts_fn).call(this, conflicts);
+  }
+};
+compareVersions_fn = function(id) {
+  var _a, _b, _c, _d;
+  if (!__privateGet(this, _animators)[id]) {
+    return "custom-only";
+  }
+  const gameUpdatedAt = ((_c = (_b = (_a = __privateGet(this, _manifest)) == null ? void 0 : _a.getAsset) == null ? void 0 : _b.call(_a, id)) == null ? void 0 : _c.updatedAt) || 0;
+  const customUpdatedAt = ((_d = __privateGet(this, _customMeta).get(id)) == null ? void 0 : _d.updatedAt) || 0;
+  if (gameUpdatedAt >= customUpdatedAt) {
+    return "synced";
+  }
+  const lastSeen = getLastSeenGameUpdate(id);
+  if (lastSeen >= gameUpdatedAt) {
+    return "modified";
+  }
+  return "conflict";
+};
+resolveConflicts_fn = async function(ids) {
+  var _a, _b, _c;
+  if (!__privateGet(this, _conflictResolver)) {
+    __privateSet(this, _conflictResolver, document.createElement("conflict-resolver"));
+    this.shadowRoot.appendChild(__privateGet(this, _conflictResolver));
+  }
+  const conflicts = ids.map((id) => {
+    var _a2, _b2, _c2, _d;
+    return {
+      id,
+      name: id,
+      customDate: ((_a2 = __privateGet(this, _customMeta).get(id)) == null ? void 0 : _a2.updatedAt) || 0,
+      gameDate: ((_d = (_c2 = (_b2 = __privateGet(this, _manifest)) == null ? void 0 : _b2.getAsset) == null ? void 0 : _c2.call(_b2, id)) == null ? void 0 : _d.updatedAt) || 0
+    };
+  });
+  const choices = await __privateGet(this, _conflictResolver).resolve(conflicts);
+  for (const { id, choice } of choices) {
+    if (choice === "game") {
+      await __privateMethod(this, _HubView_instances, deleteCustom_fn).call(this, id);
+    } else {
+      const gameUpdatedAt = ((_c = (_b = (_a = __privateGet(this, _manifest)) == null ? void 0 : _a.getAsset) == null ? void 0 : _b.call(_a, id)) == null ? void 0 : _c.updatedAt) || 0;
+      setLastSeenGameUpdate(id, gameUpdatedAt);
+    }
+  }
+};
+deleteCustom_fn = async function(id) {
+  await __privateGet(this, _store2).delete(id);
+  delete __privateGet(this, _customAnimators)[id];
+  __privateGet(this, _customMeta).delete(id);
+  __privateGet(this, _thumbnails).delete(id);
+  localStorage.removeItem(`${SEEN_KEY_PREFIX}${id}`);
+};
+createAnimatorCard_fn = function(name, config, state = "game") {
   const card = createElement("div", { class: "animator-card" });
+  const isCustom = state === "custom" || state === "modified";
   if (isCustom) {
     card.classList.add("selectable");
     card.dataset.name = name;
@@ -1201,8 +1627,12 @@ createAnimatorCard_fn = function(name, config, isCustom = false) {
   const preview = createElement("div", { class: "card-preview" });
   const thumbnail = __privateMethod(this, _HubView_instances, createThumbnail_fn).call(this, name, config);
   preview.appendChild(thumbnail);
-  if (isCustom) {
+  if (state === "custom") {
     preview.appendChild(createElement("div", { class: "card-badge", text: "Custom" }));
+  } else if (state === "modified") {
+    preview.appendChild(createElement("div", { class: "card-badge modified", text: "Modified" }));
+  }
+  if (isCustom) {
     const checkbox = createElement("div", { class: "card-checkbox" });
     checkbox.dataset.name = name;
     preview.appendChild(checkbox);
@@ -1346,11 +1776,13 @@ toggleSelectionMode_fn = function() {
     this.setAttribute("selection-mode", "");
     __privateGet(this, _selectBtn).textContent = "Done";
     __privateGet(this, _exportBtn).style.display = "block";
+    __privateGet(this, _revertBtn).style.display = "block";
     __privateGet(this, _deleteBtn).style.display = "block";
   } else {
     this.removeAttribute("selection-mode");
     __privateGet(this, _selectBtn).textContent = "Select";
     __privateGet(this, _exportBtn).style.display = "none";
+    __privateGet(this, _revertBtn).style.display = "none";
     __privateGet(this, _deleteBtn).style.display = "none";
   }
   __privateMethod(this, _HubView_instances, updateActionButtons_fn).call(this);
@@ -1367,11 +1799,29 @@ updateActionButtons_fn = function() {
   const hasSelection = __privateGet(this, _selectedItems).size > 0;
   __privateGet(this, _exportBtn).disabled = !hasSelection;
   __privateGet(this, _deleteBtn).disabled = !hasSelection;
+  const hasModified = [...__privateGet(this, _selectedItems)].some((id) => __privateGet(this, _animators)[id]);
+  __privateGet(this, _revertBtn).disabled = !hasModified;
 };
 exportSelected_fn = async function() {
   for (const name of __privateGet(this, _selectedItems)) {
     await __privateGet(this, _store2).export(name);
   }
+};
+revertSelected_fn = async function() {
+  const revertable = [...__privateGet(this, _selectedItems)].filter((id) => __privateGet(this, _animators)[id]);
+  if (revertable.length === 0) {
+    return;
+  }
+  const message = revertable.length === 1 ? `Revert "${revertable[0]}" to native version?` : `Revert ${revertable.length} animators to native version?`;
+  if (!confirm(message)) {
+    return;
+  }
+  for (const id of revertable) {
+    await __privateMethod(this, _HubView_instances, deleteCustom_fn).call(this, id);
+  }
+  __privateGet(this, _selectedItems).clear();
+  __privateMethod(this, _HubView_instances, toggleSelectionMode_fn).call(this);
+  __privateMethod(this, _HubView_instances, render_fn).call(this);
 };
 deleteSelected_fn = async function() {
   const count = __privateGet(this, _selectedItems).size;
@@ -1454,6 +1904,13 @@ async function extractThumbnailFromPerky(files) {
     frame.frame.h
   );
   return canvas;
+}
+const SEEN_KEY_PREFIX = "perky-seen-game-";
+function getLastSeenGameUpdate(id) {
+  return Number(localStorage.getItem(`${SEEN_KEY_PREFIX}${id}`)) || 0;
+}
+function setLastSeenGameUpdate(id, timestamp) {
+  localStorage.setItem(`${SEEN_KEY_PREFIX}${id}`, String(timestamp));
 }
 async function init() {
   const container = document.getElementById("app");
