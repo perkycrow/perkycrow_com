@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _resizeObserver, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _tint, _debugGizmos, _depth, _enabled, _effects, _region, _effects2, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context, _collected, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry, _renderers, _shaderRegistry3, _shaderEffectRegistry2, _debugGizmoRenderer, _compositeQuad, _compositeProgram, _renderGroupOrder, _WebGLRenderer_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn, ensureCompositeSetup_fn, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _elapsed, _events, _framesByEvent, _pingpongDirection, _SpriteAnimation_instances, advanceFrame_fn, getNextFrameIndex_fn, getNextForward_fn, getNextReverse_fn, getNextPingpong_fn, emitFrameEvents_fn, updateSpriteFrame_fn, _value, _min, _max, _step, _label, _slider, _labelEl, _valueEl, _SliderInput_instances, buildDOM_fn, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl2, _ToggleInput_instances, buildDOM_fn2, updateDisplay_fn2, handleClick_fn, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl3, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn3, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _perm, _gradP, _Color_instances, parseString_fn, parseHex_fn, parseRgbString_fn, parseHslString_fn, parseNumber_fn, parseArray_fn, parseObject_fn, hslToRgb_fn, _canvas, _renderer, _camera, _scene, _backgroundSprite, _animatorSprite, _animation, _anchor, _size, _unitsInView, _isPlaying, _lastTime, _animationFrameId, _onFrame, _onComplete, _spriteX, _motion, _AnimatorPreview_instances, setup_fn, updateBackground_fn, updateAnimatorSprite_fn, loop_fn, updateMotion_fn, getSpriteDirection_fn, _canvas2, _previewArea, _renderer2, _scene2, _sprite, _animation2, _animationFrameId2, _lastTime2, _isPlaying2, _resizeObserver2, _sceneryEnabled, _sceneryOffset, _spriteOffset, _sceneryCanvas, _sceneryCtx, _gridCanvas, _gridCtx, _gridEnabled, _motion2, _anchor2, _noise, _moveSpriteMode, _backgroundImage, _backgroundRegion, _unitsInView2, _size2, _gamePreview, _gamePreviewCanvas, _AnimationPreview_instances, buildDOM_fn4, toggleSettings_fn, hasMotion_get, sceneryActive_get, toggleScenery_fn, toggleGrid_fn, syncGridButton_fn, useGamePreview_get, updateGamePreviewConfig_fn, applyGamePreviewSettings_fn, createGamePreview_fn, updatePlayButtonIcon_fn, syncPreviewVisibility_fn, syncSceneryState_fn, updateSceneryButton_fn, pauseAllPreviews_fn, setupNormalPreview_fn, updateGamePreviewSize_fn, centerSprite_fn, setupRenderer_fn, updateSprite_fn, setupResizeObserver_fn, resizeCanvas_fn, fitToContainer_fn, updateSceneryCanvas_fn, updateGridCanvas_fn, togglePlay_fn, loop_fn2, updateScenery_fn, wrapSpritePosition_fn, getSpriteDirection_fn2, clearSceneryCanvas_fn, renderScenery_fn, renderSimpleGrid_fn, getSpriteSize_fn, renderSidescroller_fn, renderBackgroundImage_fn, renderBuildings_fn, getGroundY_fn, renderTopdown_fn, render_fn, renderGrid_fn, updateSpritePosition_fn, _wrapperEl, _viewportEl, _containerEl, _scrubberEl, _scrubberThumbEl, _dropIndicator, _frames, _currentIndex, _selectedIndex, _dropIndex, _scrollLeft, _maxScroll, _scrubberDragging, _scrubberStartX, _scrubberStartScroll, _internalDragActive, _internalDragIndex, _internalDragGhost, _internalDragStartX, _internalDragStartY, _isDragOutside, _AnimationTimeline_instances, buildDOM_fn5, setupScrubber_fn, _boundScrubberMove, _boundScrubberUp, cleanupScrubberEvents_fn, _boundPointerMove, _boundPointerUp, setupInternalDrag_fn, cleanupInternalDrag_fn, onInternalDragStart_fn, onInternalDragMove_fn, isPointerOutsideTimeline_fn, updateDragGhostState_fn, onInternalDragEnd_fn, markFrameDragging_fn, createInternalDragGhost_fn, updateInternalDragGhost_fn, removeInternalDragGhost_fn, onScrubberStart_fn, onScrubberMove_fn, updateScrollFromScrubber_fn, setScrollLeft_fn, onScrubberEnd_fn, onScrubberClick_fn, updateScrubberThumb_fn, setupDeselect_fn, setupDropZone_fn, handleSpritesheetDrop_fn, calculateDropIndex_fn, updateDropIndicator_fn, hideDropIndicator_fn, render_fn2, createAddButton_fn, createFrameElement_fn, updateHighlight_fn, handleFrameTap_fn, dispatchDeleteEvent_fn, handleKeydown_fn, flashFrameAt_fn, _containerEl2, _filterEl, _gridEl, _spritesheet, _filter, _animationColorMap, _dragData, _dragGhost, _dragStartPos, _dragStartEl, _lastTimeline, _SpritesheetViewer_instances, buildDOM_fn6, buildAnimationColorMap_fn, renderFilter_fn, renderGrid_fn2, getFilteredFrames_fn, createFrameElement_fn2, setupPointerDrag_fn, _boundPointerMove2, _boundPointerEnd, cleanupPointerDrag_fn, onPointerStart_fn, findFrameFromPoint_fn, onPointerMove_fn, onPointerEnd_fn, startDrag_fn2, createDragGhost_fn, updateDragGhost_fn, removeDragGhost_fn;
+var _resizeObserver, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _tint, _debugGizmos, _depth, _enabled, _effects, _region, _effects2, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context, _collected, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry, _renderers, _shaderRegistry3, _shaderEffectRegistry2, _debugGizmoRenderer, _compositeQuad, _compositeProgram, _renderGroupOrder, _WebGLRenderer_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn, ensureCompositeSetup_fn, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _elapsed, _events, _framesByEvent, _pingpongDirection, _SpriteAnimation_instances, advanceFrame_fn, getNextFrameIndex_fn, getNextForward_fn, getNextReverse_fn, getNextPingpong_fn, emitFrameEvents_fn, updateSpriteFrame_fn, _value, _min, _max, _step, _label, _slider, _labelEl, _valueEl, _SliderInput_instances, buildDOM_fn, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl2, _ToggleInput_instances, buildDOM_fn2, updateDisplay_fn2, handleClick_fn, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl3, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn3, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _perm, _gradP, _Color_instances, parseString_fn, parseHex_fn, parseRgbString_fn, parseHslString_fn, parseNumber_fn, parseArray_fn, parseObject_fn, hslToRgb_fn, _canvas, _renderer, _camera, _scene, _backgroundSprite, _animatorSprite, _animation, _anchor, _size, _unitsInView, _isPlaying, _lastTime, _animationFrameId, _onFrame, _onComplete, _spriteX, _motion, _AnimatorPreview_instances, setup_fn, updateBackground_fn, updateAnimatorSprite_fn, loop_fn, updateMotion_fn, getSpriteDirection_fn, _canvas2, _previewArea, _renderer2, _scene2, _sprite, _animation2, _animationFrameId2, _lastTime2, _isPlaying2, _resizeObserver2, _sceneryEnabled, _sceneryOffset, _spriteOffset, _sceneryCanvas, _sceneryCtx, _gridCanvas, _gridCtx, _gridEnabled, _motion2, _anchor2, _noise, _moveSpriteMode, _backgroundImage, _backgroundRegion, _unitsInView2, _size2, _gamePreview, _gamePreviewCanvas, _AnimationPreview_instances, buildDOM_fn4, toggleSettings_fn, hasMotion_get, sceneryActive_get, toggleScenery_fn, toggleGrid_fn, syncGridButton_fn, useGamePreview_get, updateGamePreviewConfig_fn, applyGamePreviewSettings_fn, createGamePreview_fn, updatePlayButtonIcon_fn, syncPreviewVisibility_fn, syncSceneryState_fn, updateSceneryButton_fn, pauseAllPreviews_fn, setupNormalPreview_fn, updateGamePreviewSize_fn, centerSprite_fn, setupRenderer_fn, updateSprite_fn, setupResizeObserver_fn, resizeCanvas_fn, fitToContainer_fn, updateSceneryCanvas_fn, updateGridCanvas_fn, togglePlay_fn, loop_fn2, updateScenery_fn, wrapSpritePosition_fn, getSpriteDirection_fn2, clearSceneryCanvas_fn, renderScenery_fn, renderSimpleGrid_fn, getSpriteSize_fn, renderSidescroller_fn, renderBackgroundImage_fn, renderBuildings_fn, getGroundY_fn, renderTopdown_fn, render_fn, renderGrid_fn, updateSpritePosition_fn, _wrapperEl, _viewportEl, _containerEl, _scrubberEl, _scrubberThumbEl, _dropIndicator, _frames, _currentIndex, _selectedIndex, _dropIndex, _scrollLeft, _maxScroll, _scrubberDragging, _scrubberStartX, _scrubberStartScroll, _internalDragActive, _internalDragIndex, _internalDragGhost, _internalDragStartX, _internalDragStartY, _isDragOutside, _dragFrameStep, _AnimationTimeline_instances, buildDOM_fn5, setupScrubber_fn, _boundScrubberMove, _boundScrubberUp, cleanupScrubberEvents_fn, _boundPointerMove, _boundPointerUp, setupInternalDrag_fn, cleanupInternalDrag_fn, onInternalDragStart_fn, onInternalDragMove_fn, isPointerOutsideTimeline_fn, updateDragGhostState_fn, onInternalDragEnd_fn, updateFrameGaps_fn, applySourceGap_fn, clearFrameGaps_fn, markFrameDragging_fn, createInternalDragGhost_fn, updateInternalDragGhost_fn, removeInternalDragGhost_fn, onScrubberStart_fn, onScrubberMove_fn, updateScrollFromScrubber_fn, setScrollLeft_fn, onScrubberEnd_fn, onScrubberClick_fn, updateScrubberThumb_fn, setupDeselect_fn, setupDropZone_fn, handleSpritesheetDrop_fn, calculateDropIndex_fn, updateDropIndicator_fn, hideDropIndicator_fn, render_fn2, createAddButton_fn, createFrameElement_fn, updateHighlight_fn, handleFrameTap_fn, dispatchDeleteEvent_fn, handleKeydown_fn, flashFrameAt_fn, _containerEl2, _filterEl, _gridEl, _spritesheet, _filter, _animationColorMap, _dragData, _dragGhost, _dragStartPos, _dragStartEl, _lastTimeline, _SpritesheetViewer_instances, buildDOM_fn6, buildAnimationColorMap_fn, renderFilter_fn, renderGrid_fn2, getFilteredFrames_fn, createFrameElement_fn2, setupPointerDrag_fn, _boundPointerMove2, _boundPointerEnd, cleanupPointerDrag_fn, onPointerStart_fn, findFrameFromPoint_fn, onPointerMove_fn, onPointerEnd_fn, startDrag_fn2, createDragGhost_fn, updateDragGhost_fn, removeDragGhost_fn;
 import { P as PerkyModule, f as TextureRegion, E as EditorComponent, I as ICONS } from "./perky_store-C6_wT1fL.js";
 import { l as logger, b as createStyleSheet, c as createElement } from "./preload-helper-CeD19KcA.js";
 const Easing = {
@@ -6895,6 +6895,7 @@ class AnimationTimeline extends EditorComponent {
     __privateAdd(this, _internalDragStartX, 0);
     __privateAdd(this, _internalDragStartY, 0);
     __privateAdd(this, _isDragOutside, false);
+    __privateAdd(this, _dragFrameStep, 0);
     __privateAdd(this, _boundScrubberMove, null);
     __privateAdd(this, _boundScrubberUp, null);
     __privateAdd(this, _boundPointerMove, null);
@@ -6963,9 +6964,9 @@ class AnimationTimeline extends EditorComponent {
       if (!frameEl) {
         return;
       }
-      frameEl.classList.add("just-moved");
+      frameEl.classList.add("just-settled");
       frameEl.addEventListener("animationend", () => {
-        frameEl.classList.remove("just-moved");
+        frameEl.classList.remove("just-settled");
       }, { once: true });
     });
   }
@@ -6991,6 +6992,7 @@ _internalDragGhost = new WeakMap();
 _internalDragStartX = new WeakMap();
 _internalDragStartY = new WeakMap();
 _isDragOutside = new WeakMap();
+_dragFrameStep = new WeakMap();
 _AnimationTimeline_instances = new WeakSet();
 buildDOM_fn5 = function() {
   __privateSet(this, _wrapperEl, createElement("div", { class: "timeline-wrapper" }));
@@ -7069,9 +7071,16 @@ onInternalDragMove_fn = function(e) {
   const distance = Math.sqrt(dx * dx + dy * dy);
   if (!__privateGet(this, _internalDragActive) && distance > 10) {
     __privateSet(this, _internalDragActive, true);
+    const frameEls = __privateGet(this, _containerEl).querySelectorAll(".frame");
+    if (frameEls.length > 1) {
+      __privateSet(this, _dragFrameStep, frameEls[1].getBoundingClientRect().left - frameEls[0].getBoundingClientRect().left);
+    } else if (frameEls.length > 0) {
+      __privateSet(this, _dragFrameStep, frameEls[0].offsetWidth);
+    }
     __privateMethod(this, _AnimationTimeline_instances, createInternalDragGhost_fn).call(this, e.clientX, e.clientY);
     __privateMethod(this, _AnimationTimeline_instances, markFrameDragging_fn).call(this, __privateGet(this, _internalDragIndex), true);
     this.classList.add("dragging");
+    __privateGet(this, _containerEl).classList.add("gap-active");
   }
   if (__privateGet(this, _internalDragActive)) {
     e.preventDefault();
@@ -7083,11 +7092,11 @@ onInternalDragMove_fn = function(e) {
     }
     if (isOutside) {
       __privateGet(this, _containerEl).classList.remove("drag-over");
-      __privateMethod(this, _AnimationTimeline_instances, hideDropIndicator_fn).call(this);
+      __privateMethod(this, _AnimationTimeline_instances, clearFrameGaps_fn).call(this);
     } else {
       __privateGet(this, _containerEl).classList.add("drag-over");
       __privateSet(this, _dropIndex, __privateMethod(this, _AnimationTimeline_instances, calculateDropIndex_fn).call(this, e.clientX));
-      __privateMethod(this, _AnimationTimeline_instances, updateDropIndicator_fn).call(this);
+      __privateMethod(this, _AnimationTimeline_instances, updateFrameGaps_fn).call(this);
     }
   }
 };
@@ -7162,13 +7171,52 @@ onInternalDragEnd_fn = function() {
     }
     __privateMethod(this, _AnimationTimeline_instances, markFrameDragging_fn).call(this, __privateGet(this, _internalDragIndex), false);
     __privateMethod(this, _AnimationTimeline_instances, removeInternalDragGhost_fn).call(this);
-    __privateGet(this, _containerEl).classList.remove("drag-over");
+    __privateMethod(this, _AnimationTimeline_instances, clearFrameGaps_fn).call(this);
+    __privateGet(this, _containerEl).classList.remove("drag-over", "gap-active");
     __privateMethod(this, _AnimationTimeline_instances, hideDropIndicator_fn).call(this);
     this.classList.remove("dragging");
   }
   __privateSet(this, _internalDragIndex, -1);
   __privateSet(this, _internalDragActive, false);
   __privateSet(this, _isDragOutside, false);
+};
+updateFrameGaps_fn = function() {
+  const frameEls = __privateGet(this, _containerEl).querySelectorAll(".frame");
+  if (frameEls.length === 0) {
+    return;
+  }
+  const S = __privateGet(this, _internalDragIndex);
+  const D = __privateGet(this, _dropIndex);
+  const noMove = D < 0 || D === S || D === S + 1;
+  const step = __privateGet(this, _dragFrameStep);
+  const sourceShift = S < D ? (D - S - 1) * step : (D - S) * step;
+  __privateMethod(this, _AnimationTimeline_instances, applySourceGap_fn).call(this, frameEls[S], noMove, sourceShift);
+  frameEls.forEach((el, i) => {
+    if (i === S) {
+      return;
+    }
+    if (noMove) {
+      el.style.transform = "";
+      return;
+    }
+    el.style.transform = computeFrameShift(i, S, D, step);
+  });
+};
+applySourceGap_fn = function(el, noMove, shift) {
+  if (noMove) {
+    el.style.transform = "";
+    el.classList.remove("drag-placeholder");
+  } else {
+    el.style.transform = `translateX(${shift}px)`;
+    el.classList.add("drag-placeholder");
+  }
+};
+clearFrameGaps_fn = function() {
+  const frameEls = __privateGet(this, _containerEl).querySelectorAll(".frame");
+  frameEls.forEach((el) => {
+    el.style.transform = "";
+    el.classList.remove("drag-placeholder");
+  });
 };
 markFrameDragging_fn = function(index, isDragging) {
   const frameEls = __privateGet(this, _containerEl).querySelectorAll(".frame");
@@ -7404,8 +7452,8 @@ createFrameElement_fn = function(frame, index) {
   frameEl.dataset.index = index;
   const thumbnailWrapper = createElement("div", { class: "frame-thumbnail-wrapper" });
   const canvas = createElement("canvas", { class: "frame-thumbnail" });
-  canvas.width = 80;
-  canvas.height = 80;
+  canvas.width = 100;
+  canvas.height = 100;
   drawFrameThumbnail$1(canvas, frame);
   thumbnailWrapper.appendChild(canvas);
   const indexEl = createElement("div", { class: "frame-index", text: String(index) });
@@ -7512,7 +7560,7 @@ __publicField(AnimationTimeline, "styles", `
     .timeline {
         display: flex;
         gap: var(--spacing-sm);
-        padding: var(--spacing-sm) 0;
+        padding: 0;
         position: relative;
         width: fit-content;
         min-width: 100%;
@@ -7563,7 +7611,6 @@ __publicField(AnimationTimeline, "styles", `
     }
 
     .frame:hover {
-        transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
@@ -7582,9 +7629,18 @@ __publicField(AnimationTimeline, "styles", `
     }
 
     .frame.dragging {
-        opacity: 0.4;
-        transform: scale(0.95);
+        opacity: 0;
         pointer-events: none;
+    }
+
+    .frame.drag-placeholder {
+        opacity: 0.3 !important;
+        outline: 2px dashed var(--accent);
+        outline-offset: -2px;
+    }
+
+    .timeline.gap-active .frame {
+        transition: transform 0.15s ease-out;
     }
 
     .frame.just-added {
@@ -7602,16 +7658,18 @@ __publicField(AnimationTimeline, "styles", `
         }
     }
 
-    .frame.just-moved {
-        animation: frame-moved 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    .frame.just-settled {
+        animation: frame-settle 0.4s ease-out;
     }
 
-    @keyframes frame-moved {
+    @keyframes frame-settle {
         0% {
-            transform: scale(1.15);
+            transform: scale(1.05);
+            box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(99, 102, 241, 0.4);
         }
         100% {
             transform: scale(1);
+            box-shadow: none;
         }
     }
 
@@ -7696,8 +7754,8 @@ __publicField(AnimationTimeline, "styles", `
         color: var(--fg-muted);
         font-size: 24px;
         font-weight: 300;
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         margin: var(--spacing-xs);
         cursor: pointer;
         transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform 0.1s;
@@ -7721,6 +7779,15 @@ __publicField(AnimationTimeline, "styles", `
         display: none !important;
     }
     `);
+function computeFrameShift(i, S, D, step) {
+  if (S < D && i > S && i < D) {
+    return `translateX(${-step}px)`;
+  }
+  if (S > D && i >= D && i < S) {
+    return `translateX(${step}px)`;
+  }
+  return "";
+}
 function isInteractiveElement(el, stopAt) {
   var _a;
   const interactiveTags = ["button", "number-input", "input"];

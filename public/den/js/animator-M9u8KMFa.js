@@ -21,7 +21,7 @@ var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDra
 import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./preload-helper-CeD19KcA.js";
 import { E as EditorComponent, d as PerkyStore, f as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./perky_store-C6_wT1fL.js";
 import { P as PsdConverter, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-CfSMogkT.js";
-import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-C5w6xJdT.js";
+import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-vW8iC0tq.js";
 import { c as canvasToBlob } from "./spritesheet-BBD5cSQg.js";
 const SWIPE_THRESHOLD = 50;
 class SideDrawer extends EditorComponent {
@@ -85,7 +85,10 @@ setupSwipeToClose_fn = function() {
 };
 onPointerDown_fn = function(e) {
   const interactive = "button, input, select, textarea, slider-input, number-input, toggle-input, select-input";
-  if (e.target.closest(interactive)) {
+  if (e.composedPath().some((el) => {
+    var _a;
+    return (_a = el.matches) == null ? void 0 : _a.call(el, interactive);
+  })) {
     return;
   }
   __privateSet(this, _isDragging, true);
@@ -845,8 +848,7 @@ const animatorViewStyles = createStyleSheet(`
     .timeline-section {
         flex-shrink: 0;
         background: var(--bg-secondary);
-        padding: var(--spacing-md) var(--spacing-lg);
-        min-height: 120px;
+        padding: var(--spacing-sm) var(--spacing-lg);
         overflow: hidden;
         max-width: 100%;
     }
@@ -914,18 +916,22 @@ const frameEditorStyles = createStyleSheet(`
     .frame-editor-events {
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-sm);
+        gap: var(--spacing-xs);
     }
 
     .event-chip {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: var(--spacing-xs);
+        gap: var(--spacing-sm);
         background: var(--bg-tertiary);
         border-radius: var(--radius-md);
-        padding: var(--spacing-xs) var(--spacing-sm);
+        padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) var(--spacing-md);
         font-size: var(--font-size-sm);
         color: var(--fg-primary);
+    }
+
+    .event-chip span {
+        flex: 1;
     }
 
     .event-chip-remove {
@@ -933,15 +939,16 @@ const frameEditorStyles = createStyleSheet(`
         background: transparent;
         border: none;
         color: var(--fg-muted);
-        font-size: 14px;
-        width: 20px;
-        height: 20px;
+        font-size: 16px;
+        width: 32px;
+        height: 32px;
         padding: 0;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: var(--radius-sm);
+        flex-shrink: 0;
         transition: background var(--transition-fast), color var(--transition-fast);
     }
 
@@ -975,50 +982,24 @@ const frameEditorStyles = createStyleSheet(`
         color: var(--fg-primary);
     }
 
-    .event-add-row {
-        display: flex;
-        gap: var(--spacing-sm);
-        margin-top: var(--spacing-xs);
-    }
-
     .event-input {
-        flex: 1;
         background: var(--bg-tertiary);
-        border: none;
+        border: 1px solid var(--border);
         border-radius: var(--radius-md);
         padding: var(--spacing-sm) var(--spacing-md);
         font-size: var(--font-size-sm);
         font-family: var(--font-mono);
         color: var(--fg-primary);
-        min-height: var(--touch-target);
+        margin-top: var(--spacing-xs);
     }
 
     .event-input:focus {
-        outline: 1px solid var(--accent);
+        outline: none;
+        border-color: var(--accent);
     }
 
     .event-input::placeholder {
         color: var(--fg-muted);
-    }
-
-    .event-add-btn {
-        appearance: none;
-        background: var(--accent);
-        border: none;
-        border-radius: var(--radius-md);
-        padding: var(--spacing-sm) var(--spacing-md);
-        font-size: var(--font-size-sm);
-        font-family: var(--font-mono);
-        font-weight: 500;
-        color: var(--bg-primary);
-        cursor: pointer;
-        min-height: var(--touch-target);
-        min-width: var(--touch-target);
-        transition: background var(--transition-fast);
-    }
-
-    .event-add-btn:hover {
-        background: var(--accent-hover);
     }
 `);
 const settingsStyles = createStyleSheet(`
@@ -1335,37 +1316,27 @@ function buildEventsSection(frame, { onFramesUpdate, getSuggestions }) {
       }
       eventsContainer.appendChild(suggestionsEl);
     }
-    const addRow = document.createElement("div");
-    addRow.className = "event-add-row";
     const input = document.createElement("input");
     input.type = "text";
     input.className = "event-input";
     input.placeholder = "New event...";
-    const addBtn = document.createElement("button");
-    addBtn.className = "event-add-btn";
-    addBtn.textContent = "Add";
-    addBtn.addEventListener("click", () => {
-      const value = input.value.trim();
-      if (value) {
-        if (!frame.events) {
-          frame.events = [];
-        }
-        if (!frame.events.includes(value)) {
-          frame.events.push(value);
-          onFramesUpdate == null ? void 0 : onFramesUpdate();
-          renderEvents();
-        }
-        input.value = "";
-      }
-    });
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
-        addBtn.click();
+        const value = input.value.trim();
+        if (value) {
+          if (!frame.events) {
+            frame.events = [];
+          }
+          if (!frame.events.includes(value)) {
+            frame.events.push(value);
+            onFramesUpdate == null ? void 0 : onFramesUpdate();
+            renderEvents();
+          }
+          input.value = "";
+        }
       }
     });
-    addRow.appendChild(input);
-    addRow.appendChild(addBtn);
-    eventsContainer.appendChild(addRow);
+    eventsContainer.appendChild(input);
   };
   renderEvents();
   section.appendChild(eventsContainer);
