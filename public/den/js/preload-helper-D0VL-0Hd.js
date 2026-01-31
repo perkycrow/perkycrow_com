@@ -1014,13 +1014,13 @@ export {
   adoptStyleSheets as d,
   delegateProperties as e,
   formatNumber as f,
-  deepMerge as g,
-  getNestedValue as h,
-  setNestedValue as i,
-  toCamelCase as j,
+  toSnakeCase as g,
+  deepMerge as h,
+  getNestedValue as i,
+  setNestedValue as j,
   logger as l,
   pluralize as p,
   setDefaults as s,
-  toSnakeCase as t,
+  toCamelCase as t,
   uniqueId as u
 };

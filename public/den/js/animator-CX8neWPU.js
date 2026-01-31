@@ -17,12 +17,12 @@ var __privateWrapper = (obj, member, setter, getter) => ({
     return __privateGet(obj, member, getter);
   }
 });
-var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn2, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn3, renderItems_fn, _context, _animatorName, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _isCustom, _store, _dirty, _autoSaveTimer, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _drawerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, initAnimator_fn, buildDOM_fn4, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, syncDrawerAnimSelect_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn, markDirty_fn, autoSave_fn, saveCustomAnimator_fn, forkAndSave_fn, exportPerkyFile_fn, buildAnimatorConfig_fn, replaceSpritesheet_fn;
-import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./preload-helper-CeD19KcA.js";
-import { E as EditorComponent, d as PerkyStore, f as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./perky_store-C6_wT1fL.js";
-import { P as PsdConverter, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-CfSMogkT.js";
-import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-B2WzEW2o.js";
-import { c as canvasToBlob } from "./spritesheet-BBD5cSQg.js";
+var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn2, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn3, renderItems_fn, _context, _animatorName, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _isCustom, _store, _dirty, _autoSaveTimer, _boundBeforeUnload, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, initAnimator_fn, buildDOM_fn4, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, deleteSelectedAnimation_fn, syncDrawerAnimSelect_fn, createNewAnimation_fn, generateUniqueName_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn, markDirty_fn, flushSave_fn, autoSave_fn, saveCustomAnimator_fn, forkAndSave_fn, exportPerkyFile_fn, buildAnimatorConfig_fn, replaceSpritesheet_fn;
+import { c as createElement, b as createStyleSheet, t as toCamelCase, d as adoptStyleSheets, l as logger } from "./preload-helper-D0VL-0Hd.js";
+import { E as EditorComponent, d as PerkyStore, f as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./perky_store-D7zG7vkz.js";
+import { P as PsdConverter, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-BCP6Puog.js";
+import { e as controlsSheet, f as emitChange, c as SpriteAnimator, i as SpriteAnimation } from "./spritesheet_viewer-D1KKiwQL.js";
+import { c as canvasToBlob } from "./spritesheet-Dcgp3HOr.js";
 const SWIPE_THRESHOLD = 50;
 class SideDrawer extends EditorComponent {
   constructor() {
@@ -194,7 +194,7 @@ __publicField(SideDrawer, "styles", `
             min-height: 0;
             padding: var(--spacing-md);
             box-sizing: border-box;
-            overflow: hidden;
+            overflow: auto;
         }
 
         :host([no-padding]) .drawer-content {
@@ -263,7 +263,7 @@ const selectInputCSS = `
         position: absolute;
         top: 100%;
         left: 0;
-        right: 0;
+        min-width: 100%;
         margin-top: 4px;
         background: var(--bg-secondary);
         border: none;
@@ -294,6 +294,7 @@ const selectInputCSS = `
         cursor: pointer;
         transition: background var(--transition-fast);
         -webkit-tap-highlight-color: transparent;
+        white-space: nowrap;
     }
 
     .select-option:first-child {
@@ -335,6 +336,16 @@ const selectInputCSS = `
 
     :host([context="studio"]) .select-chevron {
         font-size: 12px;
+    }
+
+    .select-separator {
+        height: 1px;
+        background: var(--border);
+        margin: var(--spacing-xs) 0;
+    }
+
+    .select-action {
+        color: var(--accent);
     }
 `;
 class SelectInput extends EditorComponent {
@@ -458,28 +469,41 @@ renderOptions_fn = function() {
   __privateGet(this, _dropdownEl).innerHTML = "";
   for (let i = 0; i < __privateGet(this, _options).length; i++) {
     const opt = __privateGet(this, _options)[i];
+    if (opt.separator) {
+      __privateGet(this, _dropdownEl).appendChild(createElement("div", { class: "select-separator" }));
+      continue;
+    }
     const optionEl = createElement("div", {
-      class: "select-option",
+      class: "select-option" + (opt.action ? " select-action" : ""),
       text: opt.label
     });
     optionEl.dataset.index = i;
-    if (opt.value === __privateGet(this, _value)) {
+    if (!opt.action && opt.value === __privateGet(this, _value)) {
       optionEl.classList.add("selected");
     }
     optionEl.addEventListener("click", (e) => {
       e.stopPropagation();
-      __privateMethod(this, _SelectInput_instances, selectIndex_fn).call(this, i);
+      if (opt.action) {
+        __privateMethod(this, _SelectInput_instances, close_fn).call(this);
+        this.dispatchEvent(new CustomEvent("action", {
+          detail: { value: opt.value },
+          bubbles: true
+        }));
+      } else {
+        __privateMethod(this, _SelectInput_instances, selectIndex_fn).call(this, i);
+      }
     });
     __privateGet(this, _dropdownEl).appendChild(optionEl);
   }
 };
 updateDisplay_fn = function() {
-  const selected = __privateGet(this, _options).find((opt) => opt.value === __privateGet(this, _value));
+  const selected = __privateGet(this, _options).find((opt) => !opt.separator && !opt.action && opt.value === __privateGet(this, _value));
   __privateGet(this, _labelEl).textContent = selected ? selected.label : "";
   const optionEls = __privateGet(this, _dropdownEl).querySelectorAll(".select-option");
-  optionEls.forEach((el, i) => {
-    var _a;
-    el.classList.toggle("selected", ((_a = __privateGet(this, _options)[i]) == null ? void 0 : _a.value) === __privateGet(this, _value));
+  optionEls.forEach((el) => {
+    const idx = parseInt(el.dataset.index, 10);
+    const opt = __privateGet(this, _options)[idx];
+    el.classList.toggle("selected", !(opt == null ? void 0 : opt.action) && (opt == null ? void 0 : opt.value) === __privateGet(this, _value));
   });
 };
 toggle_fn = function() {
@@ -529,7 +553,15 @@ positionDropdown_fn = function() {
 };
 selectIndex_fn = function(index) {
   const opt = __privateGet(this, _options)[index];
-  if (!opt) {
+  if (!opt || opt.separator) {
+    return;
+  }
+  if (opt.action) {
+    __privateMethod(this, _SelectInput_instances, close_fn).call(this);
+    this.dispatchEvent(new CustomEvent("action", {
+      detail: { value: opt.value },
+      bubbles: true
+    }));
     return;
   }
   const oldValue = __privateGet(this, _value);
@@ -542,7 +574,10 @@ selectIndex_fn = function(index) {
   }
 };
 moveFocus_fn = function(direction) {
-  const newIndex = __privateGet(this, _focusedIndex) + direction;
+  let newIndex = __privateGet(this, _focusedIndex) + direction;
+  while (newIndex >= 0 && newIndex < __privateGet(this, _options).length && __privateGet(this, _options)[newIndex].separator) {
+    newIndex += direction;
+  }
   if (newIndex >= 0 && newIndex < __privateGet(this, _options).length) {
     __privateSet(this, _focusedIndex, newIndex);
     __privateMethod(this, _SelectInput_instances, updateFocusedOption_fn).call(this);
@@ -1008,6 +1043,8 @@ const settingsStyles = createStyleSheet(`
         flex-direction: column;
         gap: var(--spacing-lg);
         padding-top: calc(28px + var(--spacing-sm));
+        min-height: 100%;
+        box-sizing: border-box;
     }
 
     .settings-section {
@@ -1133,6 +1170,31 @@ const settingsStyles = createStyleSheet(`
     .anchor-inputs number-input {
         flex: 1;
     }
+
+    .settings-delete-btn {
+        appearance: none;
+        background: transparent;
+        border: none;
+        border-radius: var(--radius-md);
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+        font-family: var(--font-mono);
+        color: var(--status-error);
+        cursor: pointer;
+        width: 100%;
+        min-height: var(--touch-target);
+        transition: background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .settings-delete-btn:hover {
+        background: var(--status-error);
+        color: white;
+    }
+
+    .settings-delete-btn.confirming {
+        background: var(--status-error);
+        color: white;
+    }
 `);
 function inferSpritesheetName(animatorConfig) {
   var _a, _b;
@@ -1160,7 +1222,7 @@ function collectEventSuggestions(animator, excludeEvents) {
   excludeEvents.forEach((event) => allEvents.delete(event));
   return Array.from(allEvents).slice(0, 6);
 }
-function buildAnimationConfig(anim, spritesheet) {
+function buildAnimationConfig(anim, spritesheetName) {
   var _a;
   const config = {
     fps: anim.fps,
@@ -1181,7 +1243,7 @@ function buildAnimationConfig(anim, spritesheet) {
     if (frame.source) {
       fc.source = frame.source;
     } else if (frame.name) {
-      fc.source = `${(spritesheet == null ? void 0 : spritesheet.$id) || "spritesheet"}:${frame.name}`;
+      fc.source = `${spritesheetName || "spritesheet"}:${frame.name}`;
     }
     if (frame.duration && frame.duration !== 1) {
       fc.duration = frame.duration;
@@ -1502,31 +1564,63 @@ function buildAnchorInputs(anchor, onChange) {
 function buildAnimationSettings(animator, selectedAnimation, callbacks) {
   const container = document.createElement("div");
   container.className = "animation-settings";
-  const animSection = document.createElement("div");
-  animSection.className = "settings-section";
-  const animLabel = document.createElement("div");
-  animLabel.className = "settings-label";
-  animLabel.textContent = "Animation";
-  animSection.appendChild(animLabel);
-  const animSelect = document.createElement("select-input");
-  animSelect.setAttribute("context", "studio");
-  const animOptions = animator.children.map((anim) => ({ value: anim.$id, label: anim.$id }));
-  animSelect.setOptions(animOptions);
-  animSelect.setValue(selectedAnimation == null ? void 0 : selectedAnimation.$id);
-  animSelect.addEventListener("change", (e) => {
+  const nameSection = document.createElement("div");
+  nameSection.className = "settings-section";
+  const nameLabel = document.createElement("div");
+  nameLabel.className = "settings-label";
+  nameLabel.textContent = "Name";
+  nameSection.appendChild(nameLabel);
+  const nameInput = document.createElement("input");
+  nameInput.className = "event-input";
+  nameInput.type = "text";
+  nameInput.spellcheck = false;
+  nameInput.value = (selectedAnimation == null ? void 0 : selectedAnimation.$id) || "";
+  const commitRename = () => {
     var _a;
-    (_a = callbacks.onAnimationChange) == null ? void 0 : _a.call(callbacks, e.detail.value);
+    const raw = nameInput.value.trim();
+    if (!raw) {
+      nameInput.value = (selectedAnimation == null ? void 0 : selectedAnimation.$id) || "";
+      return;
+    }
+    let newName = toCamelCase(raw);
+    if (!newName) {
+      nameInput.value = (selectedAnimation == null ? void 0 : selectedAnimation.$id) || "";
+      return;
+    }
+    if (newName === (selectedAnimation == null ? void 0 : selectedAnimation.$id)) {
+      nameInput.value = newName;
+      return;
+    }
+    if (animator.hasChild(newName)) {
+      let counter = 2;
+      while (animator.hasChild(`${newName}${counter}`)) {
+        counter++;
+      }
+      newName = `${newName}${counter}`;
+    }
+    nameInput.value = newName;
+    (_a = callbacks.onRename) == null ? void 0 : _a.call(callbacks, newName);
+  };
+  nameInput.addEventListener("blur", commitRename);
+  nameInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      nameInput.blur();
+    }
   });
-  animSection.appendChild(animSelect);
-  container.appendChild(animSection);
+  nameSection.appendChild(nameInput);
+  container.appendChild(nameSection);
   buildAnimationSettingsContent(container, selectedAnimation, callbacks);
+  buildDeleteSection(container, callbacks);
   return {
     container,
-    animSelect,
+    nameInput,
     rebuild: (animation) => {
+      nameInput.value = (animation == null ? void 0 : animation.$id) || "";
       const sections = container.querySelectorAll("[data-setting]");
       sections.forEach((s) => s.remove());
       buildAnimationSettingsContent(container, animation, callbacks);
+      buildDeleteSection(container, callbacks);
     }
   };
 }
@@ -1652,6 +1746,32 @@ function rebuildDirectionPad(pad, animation, callbacks) {
     pad.appendChild(btn);
   }
 }
+function buildDeleteSection(container, callbacks) {
+  const section = document.createElement("div");
+  section.className = "settings-section";
+  section.style.marginTop = "auto";
+  section.dataset.setting = "delete";
+  const btn = document.createElement("button");
+  btn.className = "settings-delete-btn";
+  btn.textContent = "Delete Animation";
+  let confirmTimer = null;
+  btn.addEventListener("click", () => {
+    var _a;
+    if (btn.classList.contains("confirming")) {
+      clearTimeout(confirmTimer);
+      (_a = callbacks.onDelete) == null ? void 0 : _a.call(callbacks);
+      return;
+    }
+    btn.textContent = "Confirm?";
+    btn.classList.add("confirming");
+    confirmTimer = setTimeout(() => {
+      btn.textContent = "Delete Animation";
+      btn.classList.remove("confirming");
+    }, 3e3);
+  });
+  section.appendChild(btn);
+  container.appendChild(section);
+}
 class AnimatorView extends EditorComponent {
   constructor() {
     super(...arguments);
@@ -1666,6 +1786,7 @@ class AnimatorView extends EditorComponent {
     __privateAdd(this, _store, new PerkyStore());
     __privateAdd(this, _dirty, false);
     __privateAdd(this, _autoSaveTimer, null);
+    __privateAdd(this, _boundBeforeUnload, null);
     __privateAdd(this, _appLayout, null);
     __privateAdd(this, _containerEl, null);
     __privateAdd(this, _previewSectionEl, null);
@@ -1678,7 +1799,6 @@ class AnimatorView extends EditorComponent {
     __privateAdd(this, _selectedFrameIndex, -1);
     __privateAdd(this, _drawerMode, null);
     __privateAdd(this, _headerAnimSelect, null);
-    __privateAdd(this, _drawerAnimSelect, null);
     __privateAdd(this, _anchor, { x: 0.5, y: 0.5 });
     __privateAdd(this, _anchorEditor, null);
     __privateAdd(this, _animationSettings, null);
@@ -1689,9 +1809,13 @@ class AnimatorView extends EditorComponent {
     if (__privateGet(this, _context) && __privateGet(this, _animatorConfig)) {
       __privateMethod(this, _AnimatorView_instances, initAnimator_fn).call(this);
     }
+    __privateSet(this, _boundBeforeUnload, () => __privateMethod(this, _AnimatorView_instances, flushSave_fn).call(this));
+    window.addEventListener("beforeunload", __privateGet(this, _boundBeforeUnload));
   }
   onDisconnected() {
     clearTimeout(__privateGet(this, _autoSaveTimer));
+    __privateMethod(this, _AnimatorView_instances, flushSave_fn).call(this);
+    window.removeEventListener("beforeunload", __privateGet(this, _boundBeforeUnload));
   }
   setContext({ textureSystem, animatorConfig, animatorName, backgroundImage, studioConfig, isCustom, manifest }) {
     __privateSet(this, _context, { textureSystem, studioConfig, manifest });
@@ -1714,6 +1838,7 @@ _isCustom = new WeakMap();
 _store = new WeakMap();
 _dirty = new WeakMap();
 _autoSaveTimer = new WeakMap();
+_boundBeforeUnload = new WeakMap();
 _appLayout = new WeakMap();
 _containerEl = new WeakMap();
 _previewSectionEl = new WeakMap();
@@ -1726,7 +1851,6 @@ _spritesheetEl = new WeakMap();
 _selectedFrameIndex = new WeakMap();
 _drawerMode = new WeakMap();
 _headerAnimSelect = new WeakMap();
-_drawerAnimSelect = new WeakMap();
 _anchor = new WeakMap();
 _anchorEditor = new WeakMap();
 _animationSettings = new WeakMap();
@@ -1836,12 +1960,19 @@ buildHeaderControls_fn = function() {
   headerStart.appendChild(settingsMenu);
   __privateSet(this, _headerAnimSelect, createElement("select-input", { attrs: { context: "studio" } }));
   const animOptions = __privateGet(this, _animator).children.map((anim) => ({ value: anim.$id, label: anim.$id }));
+  animOptions.push({ separator: true });
+  animOptions.push({ action: true, value: "__new__", label: "+ New Animation" });
   __privateGet(this, _headerAnimSelect).setOptions(animOptions);
   __privateGet(this, _headerAnimSelect).setValue((_a = __privateGet(this, _selectedAnimation)) == null ? void 0 : _a.$id);
   __privateGet(this, _headerAnimSelect).addEventListener("change", (e) => {
     __privateSet(this, _selectedAnimation, __privateGet(this, _animator).getChild(e.detail.value));
     __privateMethod(this, _AnimatorView_instances, updateForSelectedAnimation_fn).call(this);
     __privateMethod(this, _AnimatorView_instances, syncDrawerAnimSelect_fn).call(this);
+  });
+  __privateGet(this, _headerAnimSelect).addEventListener("action", (e) => {
+    if (e.detail.value === "__new__") {
+      __privateMethod(this, _AnimatorView_instances, createNewAnimation_fn).call(this);
+    }
   });
   headerStart.appendChild(__privateGet(this, _headerAnimSelect));
   __privateGet(this, _appLayout).appendChild(headerStart);
@@ -1934,12 +2065,13 @@ openAnimationSettings_fn = function() {
   __privateSet(this, _drawerMode, "settings");
   __privateGet(this, _editorDrawerEl).innerHTML = "";
   __privateSet(this, _animationSettings, buildAnimationSettings(__privateGet(this, _animator), __privateGet(this, _selectedAnimation), {
-    onAnimationChange: (animId) => {
-      var _a2;
-      __privateSet(this, _selectedAnimation, __privateGet(this, _animator).getChild(animId));
+    onRename: (newName) => {
+      if (!__privateGet(this, _selectedAnimation)) {
+        return;
+      }
+      __privateGet(this, _selectedAnimation).$id = newName;
       __privateMethod(this, _AnimatorView_instances, updateForSelectedAnimation_fn).call(this);
-      (_a2 = __privateGet(this, _headerAnimSelect)) == null ? void 0 : _a2.setValue(animId);
-      __privateGet(this, _animationSettings).rebuild(__privateGet(this, _selectedAnimation));
+      __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
     },
     onMotionChange: (motion) => {
       var _a2;
@@ -1950,18 +2082,55 @@ openAnimationSettings_fn = function() {
       var _a2;
       (_a2 = __privateGet(this, _previewEl)) == null ? void 0 : _a2.updateMotion(motion);
       __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
+    },
+    onDelete: () => {
+      __privateMethod(this, _AnimatorView_instances, deleteSelectedAnimation_fn).call(this);
     }
   }));
-  __privateSet(this, _drawerAnimSelect, __privateGet(this, _animationSettings).animSelect);
   __privateGet(this, _editorDrawerEl).appendChild(__privateGet(this, _animationSettings).container);
   __privateGet(this, _editorDrawerEl).open();
 };
-syncDrawerAnimSelect_fn = function() {
-  var _a, _b;
-  if (__privateGet(this, _drawerAnimSelect) && __privateGet(this, _drawerMode) === "settings") {
-    __privateGet(this, _drawerAnimSelect).setValue((_a = __privateGet(this, _selectedAnimation)) == null ? void 0 : _a.$id);
-    (_b = __privateGet(this, _animationSettings)) == null ? void 0 : _b.rebuild(__privateGet(this, _selectedAnimation));
+deleteSelectedAnimation_fn = function() {
+  if (!__privateGet(this, _selectedAnimation)) {
+    return;
   }
+  const id = __privateGet(this, _selectedAnimation).$id;
+  __privateGet(this, _animator).removeChild(id);
+  __privateSet(this, _selectedAnimation, __privateGet(this, _animator).children[0] || null);
+  __privateGet(this, _editorDrawerEl).close();
+  __privateSet(this, _drawerMode, null);
+  __privateMethod(this, _AnimatorView_instances, render_fn).call(this);
+  __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
+};
+syncDrawerAnimSelect_fn = function() {
+  if (__privateGet(this, _animationSettings) && __privateGet(this, _drawerMode) === "settings") {
+    __privateGet(this, _animationSettings).rebuild(__privateGet(this, _selectedAnimation));
+  }
+};
+createNewAnimation_fn = function() {
+  const name = __privateMethod(this, _AnimatorView_instances, generateUniqueName_fn).call(this, "untitled");
+  __privateGet(this, _animator).create(SpriteAnimation, {
+    $id: name,
+    sprite: null,
+    frames: [],
+    fps: 12,
+    loop: true,
+    playbackMode: "forward"
+  });
+  __privateSet(this, _selectedAnimation, __privateGet(this, _animator).getChild(name));
+  __privateMethod(this, _AnimatorView_instances, updateForSelectedAnimation_fn).call(this);
+  __privateMethod(this, _AnimatorView_instances, openAnimationSettings_fn).call(this);
+  __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
+};
+generateUniqueName_fn = function(base) {
+  if (!__privateGet(this, _animator).hasChild(base)) {
+    return base;
+  }
+  let counter = 2;
+  while (__privateGet(this, _animator).hasChild(`${base}${counter}`)) {
+    counter++;
+  }
+  return `${base}${counter}`;
 };
 updateEditorDrawer_fn = function() {
   var _a, _b, _c;
@@ -2088,9 +2257,10 @@ exportToClipboard_fn = function() {
   if (!__privateGet(this, _animator)) {
     return;
   }
+  const spritesheetName = inferSpritesheetName(__privateGet(this, _animatorConfig));
   const animations = {};
   for (const anim of __privateGet(this, _animator).children) {
-    animations[anim.$id] = buildAnimationConfig(anim, __privateGet(this, _spritesheet));
+    animations[anim.$id] = buildAnimationConfig(anim, spritesheetName);
   }
   const lines = [];
   lines.push(`static anchor = {x: ${__privateGet(this, _anchor).x}, y: ${__privateGet(this, _anchor).y}}`);
@@ -2102,6 +2272,12 @@ markDirty_fn = function() {
   __privateSet(this, _dirty, true);
   clearTimeout(__privateGet(this, _autoSaveTimer));
   __privateSet(this, _autoSaveTimer, setTimeout(() => __privateMethod(this, _AnimatorView_instances, autoSave_fn).call(this), 2e3));
+};
+flushSave_fn = function() {
+  if (__privateGet(this, _dirty)) {
+    clearTimeout(__privateGet(this, _autoSaveTimer));
+    __privateMethod(this, _AnimatorView_instances, autoSave_fn).call(this);
+  }
 };
 autoSave_fn = async function() {
   if (!__privateGet(this, _dirty) || !__privateGet(this, _animator)) {
@@ -2160,7 +2336,7 @@ buildAnimatorConfig_fn = function() {
   const spritesheetName = inferSpritesheetName(__privateGet(this, _animatorConfig));
   const animations = {};
   for (const anim of __privateGet(this, _animator).children) {
-    animations[anim.$id] = buildAnimationConfig(anim, __privateGet(this, _spritesheet));
+    animations[anim.$id] = buildAnimationConfig(anim, spritesheetName);
   }
   return {
     spritesheet: spritesheetName,
