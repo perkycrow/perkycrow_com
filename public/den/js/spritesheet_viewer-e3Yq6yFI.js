@@ -9,7 +9,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _resizeObserver, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _tint, _debugGizmos, _depth, _enabled, _effects, _region, _effects2, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context, _collected, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry, _renderers, _shaderRegistry3, _shaderEffectRegistry2, _debugGizmoRenderer, _compositeQuad, _compositeProgram, _renderGroupOrder, _WebGLRenderer_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn, ensureCompositeSetup_fn, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _elapsed, _events, _framesByEvent, _pingpongDirection, _SpriteAnimation_instances, advanceFrame_fn, getNextFrameIndex_fn, getNextForward_fn, getNextReverse_fn, getNextPingpong_fn, emitFrameEvents_fn, updateSpriteFrame_fn, _value, _min, _max, _step, _label, _slider, _labelEl, _valueEl, _SliderInput_instances, buildDOM_fn, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl2, _ToggleInput_instances, buildDOM_fn2, updateDisplay_fn2, handleClick_fn, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl3, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn3, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _perm, _gradP, _Color_instances, parseString_fn, parseHex_fn, parseRgbString_fn, parseHslString_fn, parseNumber_fn, parseArray_fn, parseObject_fn, hslToRgb_fn, _canvas, _renderer, _camera, _scene, _backgroundSprite, _animatorSprite, _animation, _anchor, _size, _unitsInView, _isPlaying, _lastTime, _animationFrameId, _onFrame, _onComplete, _spriteX, _motion, _AnimatorPreview_instances, setup_fn, updateBackground_fn, updateAnimatorSprite_fn, loop_fn, updateMotion_fn, getSpriteDirection_fn, _canvas2, _previewArea, _renderer2, _scene2, _sprite, _animation2, _animationFrameId2, _lastTime2, _isPlaying2, _resizeObserver2, _sceneryEnabled, _sceneryOffset, _spriteOffset, _sceneryCanvas, _sceneryCtx, _gridCanvas, _gridCtx, _gridEnabled, _motion2, _anchor2, _noise, _moveSpriteMode, _backgroundImage, _backgroundRegion, _unitsInView2, _size2, _gamePreview, _gamePreviewCanvas, _AnimationPreview_instances, buildDOM_fn4, toggleSettings_fn, hasMotion_get, sceneryActive_get, toggleScenery_fn, toggleGrid_fn, syncGridButton_fn, useGamePreview_get, updateGamePreviewConfig_fn, applyGamePreviewSettings_fn, createGamePreview_fn, updatePlayButtonIcon_fn, syncPreviewVisibility_fn, syncSceneryState_fn, updateSceneryButton_fn, pauseAllPreviews_fn, setupNormalPreview_fn, updateGamePreviewSize_fn, centerSprite_fn, setupRenderer_fn, updateSprite_fn, setupResizeObserver_fn, resizeCanvas_fn, fitToContainer_fn, updateSceneryCanvas_fn, updateGridCanvas_fn, togglePlay_fn, loop_fn2, updateScenery_fn, wrapSpritePosition_fn, getSpriteDirection_fn2, clearSceneryCanvas_fn, renderScenery_fn, renderSimpleGrid_fn, getSpriteSize_fn, renderSidescroller_fn, renderBackgroundImage_fn, renderBuildings_fn, getGroundY_fn, renderTopdown_fn, render_fn, renderGrid_fn, updateSpritePosition_fn, _wrapperEl, _viewportEl, _containerEl, _scrubberEl, _scrubberThumbEl, _dropIndicator, _frames, _currentIndex, _selectedIndex, _dropIndex, _scrollLeft, _maxScroll, _scrubberDragging, _scrubberStartX, _scrubberStartScroll, _internalDragActive, _internalDragIndex, _internalDragGhost, _internalDragStartX, _internalDragStartY, _isDragOutside, _dragFrameStep, _AnimationTimeline_instances, buildDOM_fn5, setupScrubber_fn, _boundScrubberMove, _boundScrubberUp, cleanupScrubberEvents_fn, _boundPointerMove, _boundPointerUp, setupInternalDrag_fn, cleanupInternalDrag_fn, onInternalDragStart_fn, onInternalDragMove_fn, isPointerOutsideTimeline_fn, updateDragGhostState_fn, onInternalDragEnd_fn, updateFrameGaps_fn, applySourceGap_fn, clearFrameGaps_fn, markFrameDragging_fn, createInternalDragGhost_fn, updateInternalDragGhost_fn, removeInternalDragGhost_fn, onScrubberStart_fn, onScrubberMove_fn, updateScrollFromScrubber_fn, setScrollLeft_fn, onScrubberEnd_fn, onScrubberClick_fn, updateScrubberThumb_fn, setupDeselect_fn, setupDropZone_fn, handleSpritesheetDrop_fn, calculateDropIndex_fn, updateDropIndicator_fn, hideDropIndicator_fn, render_fn2, createAddButton_fn, createFrameElement_fn, updateHighlight_fn, handleFrameTap_fn, dispatchDeleteEvent_fn, handleKeydown_fn, flashFrameAt_fn, _containerEl2, _filterEl, _gridEl, _spritesheet, _filter, _animationColorMap, _dragData, _dragGhost, _dragStartPos, _dragStartEl, _lastTimeline, _SpritesheetViewer_instances, buildDOM_fn6, buildAnimationColorMap_fn, renderFilter_fn, renderGrid_fn2, getFilteredFrames_fn, createFrameElement_fn2, setupPointerDrag_fn, _boundPointerMove2, _boundPointerEnd, cleanupPointerDrag_fn, onPointerStart_fn, findFrameFromPoint_fn, onPointerMove_fn, onPointerEnd_fn, startDrag_fn2, createDragGhost_fn, updateDragGhost_fn, removeDragGhost_fn;
+var _resizeObserver, _autoFitEnabled, _BaseRenderer_instances, updateAutoFitObserver_fn, refreshAutoFit_fn, _x, _y, _rotation, _scaleX, _scaleY, _pivotX, _pivotY, _localMatrix, _worldMatrix, _dirty, _sortedChildren, _childrenNeedSort, _tint, _debugGizmos, _depth, _enabled, _effects, _region, _effects2, _gl, _program, _uniforms, _attributes, _ShaderProgram_instances, createShader_fn, createProgram_fn, _gl2, _programs, _defaults, _gl3, _shaderRegistry, _effects3, _shaderCache, _uniformValues, _uniformTypes, _ShaderEffectRegistry_instances, collectUniforms_fn, parseUniform_fn, compileShader_fn, _gl4, _width, _height, _samples, _msaaFramebuffer, _msaaRenderbuffer, _sceneFramebuffer, _sceneTexture, _pingPongFramebuffers, _pingPongTextures, _currentPingPong, _namedBuffers, _FramebufferManager_instances, createFramebuffers_fn, createMSAAFramebuffer_fn, createResolveFramebuffer_fn, createFramebuffer_fn, resizeNamedBuffers_fn, deleteFramebuffers_fn, _vertexBuffer, _texCoordBuffer, _FullscreenQuad_instances, createBuffers_fn, _gl5, _shaderRegistry2, _framebufferManager, _fullscreenQuad, _passes, _enabled2, _gl6, _active, _zombies, _zombieSize, _flushInterval, _WebGLTextureManager_instances, resurrect_fn, createEntry_fn, createTexture_fn, deleteTexture_fn, _initialized, _RenderGroup_instances, initTransform_fn, initPasses_fn, _gl7, _context, _collected, _tempCorners, _tempTexCoords, _WebGLSpriteBatch_instances, ensureTexture_fn, writeVertices_fn, bindOptionalAttributes_fn, _spriteBatch, _shaderEffectRegistry, _WebGLSpriteRenderer_instances, groupByShaderEffects_fn, getProgramForEffects_fn, _vertexBuffer2, _vertexBuffer3, _gizmoObjects, _rendererRegistry, _renderers, _shaderRegistry3, _shaderEffectRegistry2, _debugGizmoRenderer, _compositeQuad, _compositeProgram, _renderGroupOrder, _WebGLRenderer_instances, setupWebGL_fn, setupBuiltinShaders_fn, setupDefaultRenderers_fn, ensureCompositeSetup_fn, setupCompositeShader_fn, getMatrices_fn, renderSingleScene_fn, renderWithGroups_fn, renderGroupsToTextures_fn, renderGroupToTexture_fn, compositeGroups_fn, drawAllGroups_fn, drawGroup_fn, resetStats_fn, clearWithBackground_fn, applyGroupPasses_fn, applyBlendMode_fn, _elapsed, _events, _framesByEvent, _pingpongDirection, _SpriteAnimation_instances, advanceFrame_fn, getNextFrameIndex_fn, getNextForward_fn, getNextReverse_fn, getNextPingpong_fn, emitFrameEvents_fn, updateSpriteFrame_fn, _value, _min, _max, _step, _label, _slider, _labelEl, _valueEl, _SliderInput_instances, buildDOM_fn, updateDisplay_fn, handleInput_fn, clamp_fn, _checked, _label2, _toggle, _labelEl2, _ToggleInput_instances, buildDOM_fn2, updateDisplay_fn2, handleClick_fn, _value2, _step2, _precision, _label3, _min2, _max2, _input, _labelEl3, _decrementBtn, _incrementBtn, _isDragging, _dragStartX, _dragStartValue, _onDragMove, _onDragEnd, _NumberInput_instances, buildDOM_fn3, updateDisplay_fn3, handleInputChange_fn, handleBlur_fn, handleKeyDown_fn, handleStep_fn, adjustValue_fn, clamp_fn2, startDrag_fn, _perm, _gradP, _Color_instances, parseString_fn, parseHex_fn, parseRgbString_fn, parseHslString_fn, parseNumber_fn, parseArray_fn, parseObject_fn, hslToRgb_fn, _canvas, _renderer, _camera, _scene, _backgroundSprite, _animatorSprite, _animation, _anchor, _size, _unitsInView, _isPlaying, _lastTime, _animationFrameId, _onFrame, _onComplete, _spriteX, _motion, _AnimatorPreview_instances, setup_fn, updateBackground_fn, updateAnimatorSprite_fn, loop_fn, updateMotion_fn, getSpriteDirection_fn, _canvas2, _previewArea, _renderer2, _scene2, _sprite, _animation2, _animationFrameId2, _lastTime2, _isPlaying2, _resizeObserver2, _sceneryEnabled, _sceneryOffset, _spriteOffset, _sceneryCanvas, _sceneryCtx, _gridCanvas, _gridCtx, _gridEnabled, _motion2, _anchor2, _noise, _moveSpriteMode, _backgroundImage, _backgroundRegion, _unitsInView2, _size2, _gamePreview, _gamePreviewCanvas, _AnimationPreview_instances, buildDOM_fn4, toggleSettings_fn, hasMotion_get, sceneryActive_get, toggleScenery_fn, toggleGrid_fn, syncGridButton_fn, useGamePreview_get, updateGamePreviewConfig_fn, applyGamePreviewSettings_fn, createGamePreview_fn, updatePlayButtonIcon_fn, syncPreviewVisibility_fn, syncSceneryState_fn, updateSceneryButton_fn, pauseAllPreviews_fn, setupNormalPreview_fn, updateGamePreviewSize_fn, centerSprite_fn, setupRenderer_fn, updateSprite_fn, setupResizeObserver_fn, resizeCanvas_fn, fitToContainer_fn, updateSceneryCanvas_fn, updateGridCanvas_fn, togglePlay_fn, loop_fn2, updateScenery_fn, wrapSpritePosition_fn, getSpriteDirection_fn2, clearSceneryCanvas_fn, renderScenery_fn, renderSimpleGrid_fn, getSpriteSize_fn, renderSidescroller_fn, renderBackgroundImage_fn, renderBuildings_fn, getGroundY_fn, renderTopdown_fn, render_fn, renderGrid_fn, updateSpritePosition_fn, _wrapperEl, _viewportEl, _containerEl, _scrubberEl, _scrubberThumbEl, _frames, _currentIndex, _selectedIndex, _dropIndex, _scrollLeft, _maxScroll, _scrubberDragging, _scrubberStartX, _scrubberStartScroll, _internalDragActive, _internalDragIndex, _internalDragGhost, _internalDragStartX, _internalDragStartY, _isDragOutside, _dragFrameStep, _AnimationTimeline_instances, buildDOM_fn5, setupScrubber_fn, _boundScrubberMove, _boundScrubberUp, cleanupScrubberEvents_fn, _boundPointerMove, _boundPointerUp, setupInternalDrag_fn, cleanupInternalDrag_fn, onInternalDragStart_fn, onInternalDragMove_fn, isPointerOutsideTimeline_fn, updateDragGhostState_fn, onInternalDragEnd_fn, updateFrameGaps_fn, applySourceGap_fn, clearFrameGaps_fn, markFrameDragging_fn, createInternalDragGhost_fn, updateInternalDragGhost_fn, removeInternalDragGhost_fn, onScrubberStart_fn, onScrubberMove_fn, updateScrollFromScrubber_fn, setScrollLeft_fn, onScrubberEnd_fn, onScrubberClick_fn, updateScrubberThumb_fn, setupDeselect_fn, calculateDropIndex_fn, render_fn2, createAddButton_fn, createFrameElement_fn, updateHighlight_fn, handleFrameTap_fn, dispatchDeleteEvent_fn, handleKeydown_fn, _containerEl2, _filterEl, _gridEl, _spritesheet, _filter, _animationColorMap, _SpritesheetViewer_instances, buildDOM_fn6, buildAnimationColorMap_fn, renderFilter_fn, renderGrid_fn2, getFilteredFrames_fn, createFrameElement_fn2;
 import { P as PerkyModule, f as TextureRegion, E as EditorComponent, I as ICONS } from "./perky_store-C6_wT1fL.js";
 import { l as logger, b as createStyleSheet, c as createElement } from "./preload-helper-CeD19KcA.js";
 const Easing = {
@@ -6869,7 +6869,6 @@ __publicField(AnimationPreview, "styles", `
     }
     `);
 customElements.define("animation-preview", AnimationPreview);
-const DRAG_TYPE_SPRITESHEET = "application/x-spritesheet-frame";
 class AnimationTimeline extends EditorComponent {
   constructor() {
     super(...arguments);
@@ -6879,7 +6878,6 @@ class AnimationTimeline extends EditorComponent {
     __privateAdd(this, _containerEl, null);
     __privateAdd(this, _scrubberEl, null);
     __privateAdd(this, _scrubberThumbEl, null);
-    __privateAdd(this, _dropIndicator, null);
     __privateAdd(this, _frames, []);
     __privateAdd(this, _currentIndex, 0);
     __privateAdd(this, _selectedIndex, -1);
@@ -6939,23 +6937,25 @@ class AnimationTimeline extends EditorComponent {
   getSelectedIndex() {
     return __privateGet(this, _selectedIndex);
   }
-  handleTouchDragOver(clientX) {
-    __privateGet(this, _containerEl).classList.add("drag-over");
-    __privateSet(this, _dropIndex, __privateMethod(this, _AnimationTimeline_instances, calculateDropIndex_fn).call(this, clientX));
-    __privateMethod(this, _AnimationTimeline_instances, updateDropIndicator_fn).call(this);
-  }
-  handleTouchDrop(frameData) {
-    __privateGet(this, _containerEl).classList.remove("drag-over");
-    const insertIndex = __privateGet(this, _dropIndex);
-    if (insertIndex >= 0) {
-      __privateMethod(this, _AnimationTimeline_instances, handleSpritesheetDrop_fn).call(this, JSON.stringify(frameData));
-      requestAnimationFrame(() => __privateMethod(this, _AnimationTimeline_instances, flashFrameAt_fn).call(this, insertIndex));
-    }
-    __privateMethod(this, _AnimationTimeline_instances, hideDropIndicator_fn).call(this);
-  }
-  handleTouchDragLeave() {
-    __privateGet(this, _containerEl).classList.remove("drag-over");
-    __privateMethod(this, _AnimationTimeline_instances, hideDropIndicator_fn).call(this);
+  flashAddedFrame(index) {
+    requestAnimationFrame(() => {
+      const frameEls = __privateGet(this, _containerEl).querySelectorAll(".frame");
+      const frameEl = frameEls[index];
+      if (!frameEl) {
+        return;
+      }
+      frameEl.classList.add("just-added");
+      frameEl.addEventListener("animationend", () => {
+        frameEl.classList.remove("just-added");
+      }, { once: true });
+      for (let i = index + 1; i < frameEls.length; i++) {
+        const el = frameEls[i];
+        el.classList.add("pushed-right");
+        el.addEventListener("animationend", () => {
+          el.classList.remove("pushed-right");
+        }, { once: true });
+      }
+    });
   }
   flashMovedFrame(newIndex) {
     requestAnimationFrame(() => {
@@ -6976,7 +6976,6 @@ _viewportEl = new WeakMap();
 _containerEl = new WeakMap();
 _scrubberEl = new WeakMap();
 _scrubberThumbEl = new WeakMap();
-_dropIndicator = new WeakMap();
 _frames = new WeakMap();
 _currentIndex = new WeakMap();
 _selectedIndex = new WeakMap();
@@ -6998,12 +6997,9 @@ buildDOM_fn5 = function() {
   __privateSet(this, _wrapperEl, createElement("div", { class: "timeline-wrapper" }));
   __privateSet(this, _viewportEl, createElement("div", { class: "timeline-viewport" }));
   __privateSet(this, _containerEl, createElement("div", { class: "timeline" }));
-  __privateSet(this, _dropIndicator, createElement("div", { class: "drop-indicator" }));
-  __privateGet(this, _containerEl).appendChild(__privateGet(this, _dropIndicator));
   __privateSet(this, _scrubberEl, createElement("div", { class: "scrubber hidden" }));
   __privateSet(this, _scrubberThumbEl, createElement("div", { class: "scrubber-thumb" }));
   __privateGet(this, _scrubberEl).appendChild(__privateGet(this, _scrubberThumbEl));
-  __privateMethod(this, _AnimationTimeline_instances, setupDropZone_fn).call(this);
   __privateMethod(this, _AnimationTimeline_instances, setupScrubber_fn).call(this);
   __privateMethod(this, _AnimationTimeline_instances, setupDeselect_fn).call(this);
   __privateGet(this, _viewportEl).appendChild(__privateGet(this, _containerEl));
@@ -7173,7 +7169,6 @@ onInternalDragEnd_fn = function() {
     __privateMethod(this, _AnimationTimeline_instances, removeInternalDragGhost_fn).call(this);
     __privateMethod(this, _AnimationTimeline_instances, clearFrameGaps_fn).call(this);
     __privateGet(this, _containerEl).classList.remove("drag-over", "gap-active");
-    __privateMethod(this, _AnimationTimeline_instances, hideDropIndicator_fn).call(this);
     this.classList.remove("dragging");
   }
   __privateSet(this, _internalDragIndex, -1);
@@ -7267,12 +7262,13 @@ removeInternalDragGhost_fn = function() {
   }
 };
 onScrubberStart_fn = function(e) {
+  e.preventDefault();
   if (e.target === __privateGet(this, _scrubberThumbEl)) {
-    e.preventDefault();
     __privateSet(this, _scrubberDragging, true);
     __privateSet(this, _scrubberStartX, e.clientX);
     __privateSet(this, _scrubberStartScroll, __privateGet(this, _scrollLeft));
     __privateGet(this, _scrubberEl).classList.add("dragging");
+    __privateGet(this, _scrubberEl).setPointerCapture(e.pointerId);
   }
 };
 onScrubberMove_fn = function(e) {
@@ -7342,50 +7338,6 @@ setupDeselect_fn = function() {
     }
   });
 };
-setupDropZone_fn = function() {
-  const handleDragOver = (e) => {
-    if (!e.dataTransfer.types.includes(DRAG_TYPE_SPRITESHEET)) {
-      return;
-    }
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "copy";
-    __privateGet(this, _containerEl).classList.add("drag-over");
-    __privateSet(this, _dropIndex, __privateMethod(this, _AnimationTimeline_instances, calculateDropIndex_fn).call(this, e.clientX));
-    __privateMethod(this, _AnimationTimeline_instances, updateDropIndicator_fn).call(this);
-  };
-  const handleDragLeave = (e) => {
-    const rect = __privateGet(this, _viewportEl).getBoundingClientRect();
-    if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
-      __privateGet(this, _containerEl).classList.remove("drag-over");
-      __privateMethod(this, _AnimationTimeline_instances, hideDropIndicator_fn).call(this);
-    }
-  };
-  const handleDrop = (e) => {
-    e.preventDefault();
-    __privateGet(this, _containerEl).classList.remove("drag-over");
-    const spritesheetData = e.dataTransfer.getData(DRAG_TYPE_SPRITESHEET);
-    if (spritesheetData) {
-      __privateMethod(this, _AnimationTimeline_instances, handleSpritesheetDrop_fn).call(this, spritesheetData);
-    }
-    __privateMethod(this, _AnimationTimeline_instances, hideDropIndicator_fn).call(this);
-  };
-  __privateGet(this, _viewportEl).addEventListener("dragover", handleDragOver);
-  __privateGet(this, _viewportEl).addEventListener("dragleave", handleDragLeave);
-  __privateGet(this, _viewportEl).addEventListener("drop", handleDrop);
-};
-handleSpritesheetDrop_fn = function(data) {
-  try {
-    const frameData = JSON.parse(data);
-    this.dispatchEvent(new CustomEvent("framedrop", {
-      detail: {
-        index: __privateGet(this, _dropIndex),
-        frameName: frameData.name,
-        regionData: frameData.regionData
-      }
-    }));
-  } catch {
-  }
-};
 calculateDropIndex_fn = function(clientX) {
   const frameEls = __privateGet(this, _containerEl).querySelectorAll(".frame");
   if (frameEls.length === 0) {
@@ -7400,33 +7352,8 @@ calculateDropIndex_fn = function(clientX) {
   }
   return frameEls.length;
 };
-updateDropIndicator_fn = function() {
-  const frameEls = __privateGet(this, _containerEl).querySelectorAll(".frame");
-  __privateGet(this, _dropIndicator).classList.add("visible");
-  if (frameEls.length === 0 || __privateGet(this, _dropIndex) === 0) {
-    __privateGet(this, _dropIndicator).style.left = "0px";
-    return;
-  }
-  if (__privateGet(this, _dropIndex) >= frameEls.length) {
-    const lastFrame = frameEls[frameEls.length - 1];
-    const containerRect2 = __privateGet(this, _containerEl).getBoundingClientRect();
-    const frameRect2 = lastFrame.getBoundingClientRect();
-    __privateGet(this, _dropIndicator).style.left = `${frameRect2.right - containerRect2.left + __privateGet(this, _scrollLeft) + 2}px`;
-    return;
-  }
-  const targetFrame = frameEls[__privateGet(this, _dropIndex)];
-  const containerRect = __privateGet(this, _containerEl).getBoundingClientRect();
-  const frameRect = targetFrame.getBoundingClientRect();
-  __privateGet(this, _dropIndicator).style.left = `${frameRect.left - containerRect.left + __privateGet(this, _scrollLeft) - 2}px`;
-};
-hideDropIndicator_fn = function() {
-  __privateGet(this, _dropIndicator).classList.remove("visible");
-  __privateSet(this, _dropIndex, -1);
-};
 render_fn2 = function() {
   __privateGet(this, _containerEl).innerHTML = "";
-  __privateSet(this, _dropIndicator, createElement("div", { class: "drop-indicator" }));
-  __privateGet(this, _containerEl).appendChild(__privateGet(this, _dropIndicator));
   for (let i = 0; i < __privateGet(this, _frames).length; i++) {
     const frame = __privateGet(this, _frames)[i];
     const frameEl = __privateMethod(this, _AnimationTimeline_instances, createFrameElement_fn).call(this, frame, i);
@@ -7518,24 +7445,6 @@ handleKeydown_fn = function(e) {
     }
   }
 };
-flashFrameAt_fn = function(index) {
-  const frameEls = __privateGet(this, _containerEl).querySelectorAll(".frame");
-  const frameEl = frameEls[index];
-  if (!frameEl) {
-    return;
-  }
-  frameEl.classList.add("just-added");
-  frameEl.addEventListener("animationend", () => {
-    frameEl.classList.remove("just-added");
-  }, { once: true });
-  for (let i = index + 1; i < frameEls.length; i++) {
-    const el = frameEls[i];
-    el.classList.add("pushed-right");
-    el.addEventListener("animationend", () => {
-      el.classList.remove("pushed-right");
-    }, { once: true });
-  }
-};
 __publicField(AnimationTimeline, "styles", `
     :host {
         display: block;
@@ -7608,6 +7517,9 @@ __publicField(AnimationTimeline, "styles", `
         border-radius: var(--radius-md);
         flex-shrink: 0;
         cursor: grab;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
     }
 
     .frame:hover {
@@ -7728,24 +7640,6 @@ __publicField(AnimationTimeline, "styles", `
         cursor: help;
     }
 
-    .drop-indicator {
-        position: absolute;
-        top: var(--spacing-sm);
-        bottom: var(--spacing-sm);
-        width: 3px;
-        background: var(--accent);
-        border-radius: 2px;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.15s, left 0.15s;
-        z-index: 10;
-        box-shadow: 0 0 8px var(--accent);
-    }
-
-    .drop-indicator.visible {
-        opacity: 1;
-    }
-
     .add-frame-btn {
         appearance: none;
         background: var(--bg-tertiary);
@@ -7853,24 +7747,13 @@ class SpritesheetViewer extends EditorComponent {
     __privateAdd(this, _spritesheet, null);
     __privateAdd(this, _filter, null);
     __privateAdd(this, _animationColorMap, /* @__PURE__ */ new Map());
-    __privateAdd(this, _dragData, null);
-    __privateAdd(this, _dragGhost, null);
-    __privateAdd(this, _dragStartPos, null);
-    __privateAdd(this, _dragStartEl, null);
-    __privateAdd(this, _lastTimeline, null);
-    __privateAdd(this, _boundPointerMove2, null);
-    __privateAdd(this, _boundPointerEnd, null);
   }
   onConnected() {
     __privateMethod(this, _SpritesheetViewer_instances, buildDOM_fn6).call(this);
-    __privateMethod(this, _SpritesheetViewer_instances, setupPointerDrag_fn).call(this);
     if (__privateGet(this, _spritesheet)) {
       __privateMethod(this, _SpritesheetViewer_instances, renderFilter_fn).call(this);
       __privateMethod(this, _SpritesheetViewer_instances, renderGrid_fn2).call(this);
     }
-  }
-  onDisconnected() {
-    __privateMethod(this, _SpritesheetViewer_instances, cleanupPointerDrag_fn).call(this);
   }
   setSpritesheet(spritesheet) {
     __privateSet(this, _spritesheet, spritesheet);
@@ -7888,11 +7771,6 @@ _gridEl = new WeakMap();
 _spritesheet = new WeakMap();
 _filter = new WeakMap();
 _animationColorMap = new WeakMap();
-_dragData = new WeakMap();
-_dragGhost = new WeakMap();
-_dragStartPos = new WeakMap();
-_dragStartEl = new WeakMap();
-_lastTimeline = new WeakMap();
 _SpritesheetViewer_instances = new WeakSet();
 buildDOM_fn6 = function() {
   __privateSet(this, _containerEl2, createElement("div", { class: "viewer-container" }));
@@ -7958,7 +7836,7 @@ createFrameElement_fn2 = function(name, frameData) {
   const frameEl = createElement("div", {
     class: "frame",
     title: name,
-    attrs: { "data-name": name, draggable: "true" }
+    attrs: { "data-name": name }
   });
   const animPrefix = getAnimationPrefix(name);
   if (animPrefix && __privateGet(this, _animationColorMap).has(animPrefix)) {
@@ -7976,175 +7854,7 @@ createFrameElement_fn2 = function(name, frameData) {
       detail: { name, region: frameData.region, frameData }
     }));
   });
-  frameEl.addEventListener("dragstart", (e) => {
-    var _a, _b, _c, _d;
-    e.dataTransfer.setData("application/x-spritesheet-frame", JSON.stringify({
-      name,
-      regionData: {
-        x: (_a = frameData.region) == null ? void 0 : _a.x,
-        y: (_b = frameData.region) == null ? void 0 : _b.y,
-        width: (_c = frameData.region) == null ? void 0 : _c.width,
-        height: (_d = frameData.region) == null ? void 0 : _d.height
-      }
-    }));
-    e.dataTransfer.effectAllowed = "copy";
-    frameEl.classList.add("dragging");
-  });
-  frameEl.addEventListener("dragend", () => {
-    frameEl.classList.remove("dragging");
-  });
   return frameEl;
-};
-setupPointerDrag_fn = function() {
-  this.addEventListener("pointerdown", (e) => __privateMethod(this, _SpritesheetViewer_instances, onPointerStart_fn).call(this, e));
-  __privateSet(this, _boundPointerMove2, (e) => __privateMethod(this, _SpritesheetViewer_instances, onPointerMove_fn).call(this, e));
-  __privateSet(this, _boundPointerEnd, (e) => __privateMethod(this, _SpritesheetViewer_instances, onPointerEnd_fn).call(this, e));
-  document.addEventListener("pointermove", __privateGet(this, _boundPointerMove2));
-  document.addEventListener("pointerup", __privateGet(this, _boundPointerEnd));
-  document.addEventListener("pointercancel", __privateGet(this, _boundPointerEnd));
-};
-_boundPointerMove2 = new WeakMap();
-_boundPointerEnd = new WeakMap();
-cleanupPointerDrag_fn = function() {
-  if (__privateGet(this, _boundPointerMove2)) {
-    document.removeEventListener("pointermove", __privateGet(this, _boundPointerMove2));
-  }
-  if (__privateGet(this, _boundPointerEnd)) {
-    document.removeEventListener("pointerup", __privateGet(this, _boundPointerEnd));
-    document.removeEventListener("pointercancel", __privateGet(this, _boundPointerEnd));
-  }
-  __privateMethod(this, _SpritesheetViewer_instances, removeDragGhost_fn).call(this);
-};
-onPointerStart_fn = function(e) {
-  var _a;
-  if (e.pointerType === "mouse") {
-    return;
-  }
-  const target = e.composedPath()[0];
-  const frameEl = ((_a = target.closest) == null ? void 0 : _a.call(target, ".frame")) || __privateMethod(this, _SpritesheetViewer_instances, findFrameFromPoint_fn).call(this, e.clientX, e.clientY);
-  if (!frameEl) {
-    return;
-  }
-  __privateSet(this, _dragStartPos, { x: e.clientX, y: e.clientY });
-  __privateSet(this, _dragStartEl, frameEl);
-  __privateSet(this, _dragData, null);
-};
-findFrameFromPoint_fn = function(x, y) {
-  var _a;
-  const elements = this.shadowRoot.elementsFromPoint(x, y);
-  for (const el of elements) {
-    if ((_a = el.classList) == null ? void 0 : _a.contains("frame")) {
-      return el;
-    }
-  }
-  return null;
-};
-onPointerMove_fn = function(e) {
-  if (!__privateGet(this, _dragStartEl)) {
-    return;
-  }
-  if (e.pointerType === "mouse") {
-    return;
-  }
-  const dx = e.clientX - __privateGet(this, _dragStartPos).x;
-  const dy = e.clientY - __privateGet(this, _dragStartPos).y;
-  const distance = Math.sqrt(dx * dx + dy * dy);
-  if (!__privateGet(this, _dragData) && distance > 10) {
-    e.preventDefault();
-    __privateMethod(this, _SpritesheetViewer_instances, startDrag_fn2).call(this, e.clientX, e.clientY);
-  }
-  if (__privateGet(this, _dragData)) {
-    e.preventDefault();
-    __privateMethod(this, _SpritesheetViewer_instances, updateDragGhost_fn).call(this, e.clientX, e.clientY);
-    const timeline = findTimeline(e.clientX, e.clientY);
-    if (timeline) {
-      timeline.handleTouchDragOver(e.clientX);
-    } else if (__privateGet(this, _lastTimeline)) {
-      __privateGet(this, _lastTimeline).handleTouchDragLeave();
-      __privateSet(this, _lastTimeline, null);
-    }
-    __privateSet(this, _lastTimeline, timeline);
-  }
-};
-onPointerEnd_fn = function(e) {
-  var _a;
-  if (!__privateGet(this, _dragStartEl)) {
-    return;
-  }
-  if (e.pointerType === "mouse") {
-    return;
-  }
-  if (__privateGet(this, _dragData)) {
-    const timeline = findTimeline(e.clientX, e.clientY);
-    if (timeline) {
-      timeline.handleTouchDrop(__privateGet(this, _dragData));
-    } else if (__privateGet(this, _lastTimeline)) {
-      __privateGet(this, _lastTimeline).handleTouchDragLeave();
-    }
-    (_a = __privateGet(this, _dragStartEl)) == null ? void 0 : _a.classList.remove("dragging");
-    __privateMethod(this, _SpritesheetViewer_instances, removeDragGhost_fn).call(this);
-  }
-  __privateSet(this, _dragStartPos, null);
-  __privateSet(this, _dragStartEl, null);
-  __privateSet(this, _dragData, null);
-  __privateSet(this, _lastTimeline, null);
-};
-startDrag_fn2 = function(x, y) {
-  var _a, _b, _c, _d, _e;
-  const frameEl = __privateGet(this, _dragStartEl);
-  const name = frameEl.dataset.name;
-  const frameData = (_a = __privateGet(this, _spritesheet)) == null ? void 0 : _a.framesMap.get(name);
-  if (!frameData) {
-    return;
-  }
-  __privateSet(this, _dragData, {
-    name,
-    regionData: {
-      x: (_b = frameData.region) == null ? void 0 : _b.x,
-      y: (_c = frameData.region) == null ? void 0 : _c.y,
-      width: (_d = frameData.region) == null ? void 0 : _d.width,
-      height: (_e = frameData.region) == null ? void 0 : _e.height
-    }
-  });
-  frameEl.classList.add("dragging");
-  __privateMethod(this, _SpritesheetViewer_instances, createDragGhost_fn).call(this, frameEl, x, y);
-};
-createDragGhost_fn = function(frameEl, x, y) {
-  const canvas = frameEl.querySelector("canvas");
-  if (!canvas) {
-    return;
-  }
-  __privateSet(this, _dragGhost, createElement("div", {
-    class: "drag-ghost",
-    style: `
-                position: fixed;
-                pointer-events: none;
-                z-index: 10000;
-                opacity: 0.8;
-                transform: translate(-50%, -50%) scale(0.8);
-            `
-  }));
-  const clonedCanvas = createElement("canvas", {
-    style: "border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"
-  });
-  clonedCanvas.width = canvas.width;
-  clonedCanvas.height = canvas.height;
-  clonedCanvas.getContext("2d").drawImage(canvas, 0, 0);
-  __privateGet(this, _dragGhost).appendChild(clonedCanvas);
-  document.body.appendChild(__privateGet(this, _dragGhost));
-  __privateMethod(this, _SpritesheetViewer_instances, updateDragGhost_fn).call(this, x, y);
-};
-updateDragGhost_fn = function(x, y) {
-  if (__privateGet(this, _dragGhost)) {
-    __privateGet(this, _dragGhost).style.left = `${x}px`;
-    __privateGet(this, _dragGhost).style.top = `${y}px`;
-  }
-};
-removeDragGhost_fn = function() {
-  if (__privateGet(this, _dragGhost)) {
-    __privateGet(this, _dragGhost).remove();
-    __privateSet(this, _dragGhost, null);
-  }
 };
 __publicField(SpritesheetViewer, "styles", `
     :host {
@@ -8212,7 +7922,7 @@ __publicField(SpritesheetViewer, "styles", `
         flex-direction: column;
         align-items: center;
         padding: 2px;
-        cursor: grab;
+        cursor: pointer;
         transition: filter 0.15s;
     }
 
@@ -8221,11 +7931,7 @@ __publicField(SpritesheetViewer, "styles", `
     }
 
     .frame:active {
-        cursor: grabbing;
-    }
-
-    .frame.dragging {
-        opacity: 0.5;
+        transform: scale(0.95);
     }
 
     .frame-thumbnail {
@@ -8242,36 +7948,12 @@ __publicField(SpritesheetViewer, "styles", `
         text-align: center;
     }
     `);
-function findTimeline(x, y) {
-  const visited = /* @__PURE__ */ new Set();
-  return findElementInShadowDom({ root: document, x, y, tagName: "animation-timeline", visited });
-}
 function getAnimationPrefix(frameName) {
   const slashIndex = frameName.lastIndexOf("/");
   if (slashIndex === -1) {
     return null;
   }
   return frameName.substring(0, slashIndex);
-}
-function findElementInShadowDom({ root, x, y, tagName, visited }) {
-  var _a;
-  const elements = root.elementsFromPoint(x, y);
-  for (const el of elements) {
-    if (visited.has(el)) {
-      continue;
-    }
-    visited.add(el);
-    if (((_a = el.tagName) == null ? void 0 : _a.toLowerCase()) === tagName) {
-      return el;
-    }
-    if (el.shadowRoot) {
-      const found = findElementInShadowDom({ root: el.shadowRoot, x, y, tagName, visited });
-      if (found) {
-        return found;
-      }
-    }
-  }
-  return null;
 }
 function drawFrameThumbnail(canvas, region) {
   const ctx = canvas.getContext("2d");

@@ -17,11 +17,11 @@ var __privateWrapper = (obj, member, setter, getter) => ({
     return __privateGet(obj, member, getter);
   }
 });
-var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn2, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn3, renderItems_fn, _context, _animatorName, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _isCustom, _store, _dirty, _autoSaveTimer, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _drawerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, initAnimator_fn, buildDOM_fn4, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, syncDrawerAnimSelect_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn, markDirty_fn, autoSave_fn, saveCustomAnimator_fn, forkAndSave_fn, exportPerkyFile_fn, buildAnimatorConfig_fn, replaceSpritesheet_fn;
+var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDrawer_instances, position_get, buildDOM_fn, setupSwipeToClose_fn, onPointerDown_fn, _value, _options, _focusedIndex, _isOpen, _buttonEl, _labelEl, _chevronEl, _dropdownEl, _handleOutsideClick, _handleKeyDown, _SelectInput_instances, handleOpenKeyDown_fn, buildDOM_fn2, renderOptions_fn, updateDisplay_fn, toggle_fn, open_fn, close_fn, positionDropdown_fn, selectIndex_fn, moveFocus_fn, updateFocusedOption_fn, scrollToFocused_fn, _triggerEl, _menuEl, _items, _handleOutsideClick2, _DropdownMenu_instances, buildDOM_fn3, renderItems_fn, _context, _animatorName, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _isCustom, _store, _dirty, _autoSaveTimer, _appLayout, _containerEl, _previewSectionEl, _previewEl, _timelineEl, _framesDrawerEl, _editorDrawerEl, _spritesheetSettingsDrawerEl, _spritesheetEl, _selectedFrameIndex, _drawerMode, _headerAnimSelect, _drawerAnimSelect, _anchor, _anchorEditor, _animationSettings, _backgroundImage, _AnimatorView_instances, initAnimator_fn, buildDOM_fn4, render_fn, createPreviewSection_fn, buildHeaderControls_fn, buildDrawers_fn, toggleFramesDrawer_fn, toggleAnimationSettings_fn, openSpritesheetSettings_fn, openAnimationSettings_fn, syncDrawerAnimSelect_fn, updateEditorDrawer_fn, addFrameToTimeline_fn, setupTimelineEvents_fn, handleFrameSelect_fn, updateForSelectedAnimation_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, exportToClipboard_fn, markDirty_fn, autoSave_fn, saveCustomAnimator_fn, forkAndSave_fn, exportPerkyFile_fn, buildAnimatorConfig_fn, replaceSpritesheet_fn;
 import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./preload-helper-CeD19KcA.js";
 import { E as EditorComponent, d as PerkyStore, f as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./perky_store-C6_wT1fL.js";
 import { P as PsdConverter, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-CfSMogkT.js";
-import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-vW8iC0tq.js";
+import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-e3Yq6yFI.js";
 import { c as canvasToBlob } from "./spritesheet-BBD5cSQg.js";
 const SWIPE_THRESHOLD = 50;
 class SideDrawer extends EditorComponent {
@@ -1998,28 +1998,23 @@ addFrameToTimeline_fn = function({ name, region }) {
   if (!__privateGet(this, _selectedAnimation) || !region) {
     return;
   }
-  __privateGet(this, _selectedAnimation).frames.push({ region, name });
-  __privateGet(this, _timelineEl).setFrames(__privateGet(this, _selectedAnimation).frames);
+  const frames = __privateGet(this, _selectedAnimation).frames;
+  let insertIndex;
+  if (__privateGet(this, _selectedFrameIndex) >= 0) {
+    insertIndex = __privateGet(this, _selectedFrameIndex) + 1;
+    frames.splice(insertIndex, 0, { region, name });
+  } else {
+    frames.push({ region, name });
+    insertIndex = frames.length - 1;
+  }
+  __privateGet(this, _timelineEl).setFrames(frames);
+  __privateGet(this, _timelineEl).flashAddedFrame(insertIndex);
   __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
-  requestAnimationFrame(() => {
-    var _a;
-    const frames = (_a = __privateGet(this, _timelineEl).shadowRoot) == null ? void 0 : _a.querySelectorAll(".frame");
-    const lastFrame = frames == null ? void 0 : frames[frames.length - 1];
-    if (lastFrame) {
-      lastFrame.classList.add("just-added");
-      lastFrame.addEventListener("animationend", () => {
-        lastFrame.classList.remove("just-added");
-      }, { once: true });
-    }
-  });
 };
 setupTimelineEvents_fn = function() {
   __privateGet(this, _timelineEl).addEventListener("frameclick", (e) => {
     var _a;
     (_a = __privateGet(this, _previewEl)) == null ? void 0 : _a.setCurrentIndex(e.detail.index);
-  });
-  __privateGet(this, _timelineEl).addEventListener("framedrop", (e) => {
-    __privateMethod(this, _AnimatorView_instances, handleFrameDrop_fn).call(this, e.detail);
   });
   __privateGet(this, _timelineEl).addEventListener("framemove", (e) => {
     __privateMethod(this, _AnimatorView_instances, handleFrameMove_fn).call(this, e.detail);
@@ -2050,18 +2045,6 @@ updateForSelectedAnimation_fn = function() {
   }
   __privateGet(this, _appLayout).querySelectorAll('[slot^="header"]').forEach((el) => el.remove());
   __privateMethod(this, _AnimatorView_instances, buildHeaderControls_fn).call(this);
-};
-handleFrameDrop_fn = function({ index, frameName }) {
-  if (!__privateGet(this, _selectedAnimation) || !__privateGet(this, _spritesheet)) {
-    return;
-  }
-  const region = __privateGet(this, _spritesheet).getRegion(frameName);
-  if (!region) {
-    return;
-  }
-  __privateGet(this, _selectedAnimation).frames.splice(index, 0, { region, name: frameName });
-  __privateGet(this, _timelineEl).setFrames(__privateGet(this, _selectedAnimation).frames);
-  __privateMethod(this, _AnimatorView_instances, markDirty_fn).call(this);
 };
 handleFrameMove_fn = function({ fromIndex, toIndex }) {
   if (!__privateGet(this, _selectedAnimation)) {
