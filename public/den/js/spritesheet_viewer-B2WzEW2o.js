@@ -7003,8 +7003,8 @@ buildDOM_fn5 = function() {
   __privateMethod(this, _AnimationTimeline_instances, setupScrubber_fn).call(this);
   __privateMethod(this, _AnimationTimeline_instances, setupDeselect_fn).call(this);
   __privateGet(this, _viewportEl).appendChild(__privateGet(this, _containerEl));
-  __privateGet(this, _wrapperEl).appendChild(__privateGet(this, _viewportEl));
   __privateGet(this, _wrapperEl).appendChild(__privateGet(this, _scrubberEl));
+  __privateGet(this, _wrapperEl).appendChild(__privateGet(this, _viewportEl));
   this.shadowRoot.appendChild(__privateGet(this, _wrapperEl));
 };
 setupScrubber_fn = function() {
@@ -7262,13 +7262,12 @@ removeInternalDragGhost_fn = function() {
   }
 };
 onScrubberStart_fn = function(e) {
-  e.preventDefault();
   if (e.target === __privateGet(this, _scrubberThumbEl)) {
+    e.preventDefault();
     __privateSet(this, _scrubberDragging, true);
     __privateSet(this, _scrubberStartX, e.clientX);
     __privateSet(this, _scrubberStartScroll, __privateGet(this, _scrollLeft));
     __privateGet(this, _scrubberEl).classList.add("dragging");
-    __privateGet(this, _scrubberEl).setPointerCapture(e.pointerId);
   }
 };
 onScrubberMove_fn = function(e) {

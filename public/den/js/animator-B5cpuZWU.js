@@ -21,7 +21,7 @@ var _closeBtn, _contentEl, _dragStartX, _currentTranslate, _isDragging, _SideDra
 import { c as createElement, b as createStyleSheet, d as adoptStyleSheets, l as logger } from "./preload-helper-CeD19KcA.js";
 import { E as EditorComponent, d as PerkyStore, f as TextureRegion, I as ICONS, T as TextureSystem, m as manifestData } from "./perky_store-C6_wT1fL.js";
 import { P as PsdConverter, l as loadManifest, g as getStudioConfig, a as getBackgroundImage, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-CfSMogkT.js";
-import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-e3Yq6yFI.js";
+import { e as controlsSheet, f as emitChange, c as SpriteAnimator } from "./spritesheet_viewer-B2WzEW2o.js";
 import { c as canvasToBlob } from "./spritesheet-BBD5cSQg.js";
 const SWIPE_THRESHOLD = 50;
 class SideDrawer extends EditorComponent {
