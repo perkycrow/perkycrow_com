@@ -17,12 +17,12 @@
   {
     "type": "code",
     "title": "Query methods",
-    "source": "// Check specific key/button\napp.isKeyPressed('Space')\napp.isMousePressed('left')\napp.isTouchPressed('touch0')\n\n// Check across all devices\napp.isPressedAny('Space')\n\n// Get control value (0 or 1 for buttons)\napp.getKeyValue('KeyW')\napp.getMouseValue('left')"
+    "source": "// Check specific key/button\napp.isKeyPressed('Space')\napp.isMousePressed('leftButton')\napp.isTouchPressed('tap')\n\n// Check across all devices\napp.isPressedAny('Space')\n\n// Get control value (0 or 1 for buttons)\napp.getKeyValue('KeyW')\napp.getMouseValue('leftButton')"
   },
   {
     "type": "code",
     "title": "Device methods",
-    "source": "// Check specific device\ninputSystem.isPressed('keyboard', 'Space')\ninputSystem.isPressed('mouse', 'left')\ninputSystem.isPressed('touch', 'touch0')\n\n// Get control value (0 or 1 for buttons)\ninputSystem.getValueFor('keyboard', 'KeyW')\n\n// Get all pressed controls from a device\ninputSystem.getPressedControls('keyboard')"
+    "source": "// Check specific device\ninputSystem.isPressed('keyboard', 'Space')\ninputSystem.isPressed('mouse', 'leftButton')\ninputSystem.isPressed('touch', 'tap')\n\n// Get control value (0 or 1 for buttons)\ninputSystem.getValueFor('keyboard', 'KeyW')\n\n// Get all pressed controls from a device\ninputSystem.getPressedControls('keyboard')"
   },
   {
     "type": "container",
@@ -32,12 +32,12 @@
   {
     "type": "code",
     "title": "bindInput / isActionPressed",
-    "source": "app.bindInput({\n    controlName: 'Space',\n    actionName: 'jump',\n    eventType: 'pressed'\n})\n\n// Check if action is currently triggered\nif (app.isActionPressed('jump')) {\n    player.jump()\n}\n\n// Check if binding exists\napp.hasBinding('jump') // true"
+    "source": "app.bindInput({\n    controlName: 'Space',\n    actionName: 'jump',\n    eventType: 'pressed'\n})\n\n// Check if action is currently triggered\nif (app.isActionPressed('jump')) {\n    player.jump()\n}\n\n// Check if binding exists\napp.hasBinding({actionName: 'jump'}) // true"
   },
   {
     "type": "code",
     "title": "Binding options",
-    "source": "// Basic binding\ninputSystem.bindInput({\n    controlName: 'Space',\n    actionName: 'jump',\n    eventType: 'pressed' // or 'released'\n})\n\n// With device name (defaults to 'keyboard')\ninputSystem.bindInput({\n    deviceName: 'mouse',\n    controlName: 'left',\n    actionName: 'shoot',\n    eventType: 'pressed'\n})\n\n// With controller name (for multiplayer)\ninputSystem.bindInput({\n    controlName: 'KeyW',\n    actionName: 'moveUp',\n    controllerName: 'player1'\n})"
+    "source": "// Basic binding\ninputSystem.bindInput({\n    controlName: 'Space',\n    actionName: 'jump',\n    eventType: 'pressed' // or 'released'\n})\n\n// With device name (defaults to 'keyboard')\ninputSystem.bindInput({\n    deviceName: 'mouse',\n    controlName: 'leftButton',\n    actionName: 'shoot',\n    eventType: 'pressed'\n})\n\n// With controller name (for multiplayer)\ninputSystem.bindInput({\n    controlName: 'KeyW',\n    actionName: 'moveUp',\n    controllerName: 'player1'\n})"
   },
   {
     "type": "container",
@@ -62,12 +62,12 @@
   {
     "type": "code",
     "title": "Binding queries",
-    "source": "app.bindInput({controlName: 'Space', actionName: 'jump'})\napp.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\n\napp.hasBinding('jump')           // true\napp.getAllBindings()             // [binding1, binding2]\napp.getBindingsForAction('jump') // [binding1]\napp.getBindingsForInput({deviceName: 'keyboard', controlName: 'Space'})"
+    "source": "app.bindInput({controlName: 'Space', actionName: 'jump'})\napp.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\n\napp.hasBinding({actionName: 'jump'})  // true\napp.getAllBindings()                    // [binding1, binding2]\napp.getBindingsForAction('jump')        // [binding1]\napp.getBindingsForInput({deviceName: 'keyboard', controlName: 'Space', eventType: 'pressed'})"
   },
   {
     "type": "code",
     "title": "Unbind / clear",
-    "source": "// Remove specific binding\ninputSystem.unbind('jump')\n\n// Clear all bindings\ninputSystem.clearBindings()"
+    "source": "// Remove specific binding\ninputSystem.unbind({actionName: 'jump'})\n\n// Clear all bindings\ninputSystem.clearBindings()"
   },
   {
     "type": "code",
@@ -76,7 +76,7 @@
   },
   {
     "type": "code",
-    "title": "Unregister device",
-    "source": "inputSystem.unregisterDevice('gamepad')"
+    "title": "Remove device",
+    "source": "inputSystem.removeChild('gamepad')"
   }
 ]

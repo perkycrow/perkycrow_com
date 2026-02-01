@@ -145,6 +145,18 @@
       "advanced": false
     },
     {
+      "id": "application_manager",
+      "file": "/application/application_manager.doc.js",
+      "category": "application",
+      "title": "ApplicationManager",
+      "tags": [
+        "application",
+        "application_manager"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
       "id": "asset",
       "file": "/application/asset.doc.js",
       "category": "application",
@@ -152,6 +164,30 @@
       "tags": [
         "application",
         "asset"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "dom_utils",
+      "file": "/application/dom_utils.doc.js",
+      "category": "application",
+      "title": "DOM Utils",
+      "tags": [
+        "application",
+        "dom_utils"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "loaders",
+      "file": "/application/loaders.doc.js",
+      "category": "application",
+      "title": "Loaders",
+      "tags": [
+        "application",
+        "loaders"
       ],
       "featured": false,
       "advanced": true
@@ -169,6 +205,18 @@
       "advanced": false
     },
     {
+      "id": "perky_element",
+      "file": "/application/perky_element.doc.js",
+      "category": "application",
+      "title": "PerkyElement",
+      "tags": [
+        "application",
+        "perky_element"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
       "id": "perky_view",
       "file": "/application/perky_view.doc.js",
       "category": "application",
@@ -176,6 +224,18 @@
       "tags": [
         "application",
         "perky_view"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "source_loader",
+      "file": "/application/source_loader.doc.js",
+      "category": "application",
+      "title": "SourceLoader",
+      "tags": [
+        "application",
+        "source_loader"
       ],
       "featured": false,
       "advanced": true
@@ -205,6 +265,30 @@
       "advanced": false
     },
     {
+      "id": "auto_view",
+      "file": "/game/auto_view.doc.js",
+      "category": "game",
+      "title": "AutoView",
+      "tags": [
+        "game",
+        "auto_view"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "collision_box_view",
+      "file": "/game/collision_box_view.doc.js",
+      "category": "game",
+      "title": "CollisionBoxView",
+      "tags": [
+        "game",
+        "collision_box_view"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
       "id": "entity",
       "file": "/game/entity.doc.js",
       "category": "game",
@@ -229,6 +313,18 @@
       "advanced": false
     },
     {
+      "id": "game_controller",
+      "file": "/game/game_controller.doc.js",
+      "category": "game",
+      "title": "GameController",
+      "tags": [
+        "game",
+        "game_controller"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
       "id": "game_loop",
       "file": "/game/game_loop.doc.js",
       "category": "game",
@@ -236,6 +332,18 @@
       "tags": [
         "game",
         "game_loop"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "stage",
+      "file": "/game/stage.doc.js",
+      "category": "game",
+      "title": "Stage",
+      "tags": [
+        "game",
+        "stage"
       ],
       "featured": false,
       "advanced": false
@@ -277,6 +385,66 @@
       "advanced": false
     },
     {
+      "id": "color",
+      "file": "/math/color.doc.js",
+      "category": "math",
+      "title": "Color",
+      "tags": [
+        "math",
+        "color"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "easing",
+      "file": "/math/easing.doc.js",
+      "category": "math",
+      "title": "Easing",
+      "tags": [
+        "math",
+        "easing"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "grid",
+      "file": "/math/grid.doc.js",
+      "category": "math",
+      "title": "Grid",
+      "tags": [
+        "math",
+        "grid"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "noise",
+      "file": "/math/noise.doc.js",
+      "category": "math",
+      "title": "Noise",
+      "tags": [
+        "math",
+        "noise"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "pathfinder",
+      "file": "/math/pathfinder.doc.js",
+      "category": "math",
+      "title": "Pathfinder",
+      "tags": [
+        "math",
+        "pathfinder"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
       "id": "vec2",
       "file": "/math/vec2.doc.js",
       "category": "math",
@@ -287,6 +455,42 @@
       ],
       "featured": false,
       "advanced": false
+    },
+    {
+      "id": "vec3",
+      "file": "/math/vec3.doc.js",
+      "category": "math",
+      "title": "Vec3",
+      "tags": [
+        "math",
+        "vec3"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "vec4",
+      "file": "/math/vec4.doc.js",
+      "category": "math",
+      "title": "Vec4",
+      "tags": [
+        "math",
+        "vec4"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "pathfinding_service",
+      "file": "/math/services/pathfinding_service.doc.js",
+      "category": "math/services",
+      "title": "PathfindingService",
+      "tags": [
+        "math/services",
+        "pathfinding_service"
+      ],
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "canvas_renderer",
@@ -313,6 +517,42 @@
       "advanced": false
     },
     {
+      "id": "base_renderer",
+      "file": "/render/base_renderer.doc.js",
+      "category": "render",
+      "title": "BaseRenderer",
+      "tags": [
+        "render",
+        "base_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "camera",
+      "file": "/render/camera.doc.js",
+      "category": "render",
+      "title": "Camera",
+      "tags": [
+        "render",
+        "camera"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "canvas_layer",
+      "file": "/render/canvas_layer.doc.js",
+      "category": "render",
+      "title": "CanvasLayer",
+      "tags": [
+        "render",
+        "canvas_layer"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
       "id": "circle",
       "file": "/render/circle.doc.js",
       "category": "render",
@@ -332,6 +572,30 @@
       "tags": [
         "render",
         "group_2d"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "html_layer",
+      "file": "/render/html_layer.doc.js",
+      "category": "render",
+      "title": "HTMLLayer",
+      "tags": [
+        "render",
+        "html_layer"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "layer",
+      "file": "/render/layer.doc.js",
+      "category": "render",
+      "title": "Layer",
+      "tags": [
+        "render",
+        "layer"
       ],
       "featured": false,
       "advanced": false
@@ -361,6 +625,42 @@
       "advanced": false
     },
     {
+      "id": "render_group",
+      "file": "/render/render_group.doc.js",
+      "category": "render",
+      "title": "RenderGroup",
+      "tags": [
+        "render",
+        "render_group"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "render_system",
+      "file": "/render/render_system.doc.js",
+      "category": "render",
+      "title": "RenderSystem",
+      "tags": [
+        "render",
+        "render_system"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "render_transform",
+      "file": "/render/render_transform.doc.js",
+      "category": "render",
+      "title": "RenderTransform",
+      "tags": [
+        "render",
+        "render_transform"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
       "id": "sprite",
       "file": "/render/sprite.doc.js",
       "category": "render",
@@ -380,6 +680,18 @@
       "tags": [
         "render",
         "sprite_animation"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "sprite_animator",
+      "file": "/render/sprite_animator.doc.js",
+      "category": "render",
+      "title": "SpriteAnimator",
+      "tags": [
+        "render",
+        "sprite_animator"
       ],
       "featured": false,
       "advanced": false
@@ -409,6 +721,306 @@
       "advanced": true
     },
     {
+      "id": "traverse",
+      "file": "/render/traverse.doc.js",
+      "category": "render",
+      "title": "Traverse",
+      "tags": [
+        "render",
+        "traverse"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "webgl_texture_manager",
+      "file": "/render/webgl_texture_manager.doc.js",
+      "category": "render",
+      "title": "WebGLTextureManager",
+      "tags": [
+        "render",
+        "webgl_texture_manager"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "canvas_circle_renderer",
+      "file": "/render/canvas/canvas_circle_renderer.doc.js",
+      "category": "render/canvas",
+      "title": "CanvasCircleRenderer",
+      "tags": [
+        "render/canvas",
+        "canvas_circle_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "canvas_debug_gizmo_renderer",
+      "file": "/render/canvas/canvas_debug_gizmo_renderer.doc.js",
+      "category": "render/canvas",
+      "title": "CanvasDebugGizmoRenderer",
+      "tags": [
+        "render/canvas",
+        "canvas_debug_gizmo_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "canvas_object_renderer",
+      "file": "/render/canvas/canvas_object_renderer.doc.js",
+      "category": "render/canvas",
+      "title": "CanvasObjectRenderer",
+      "tags": [
+        "render/canvas",
+        "canvas_object_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "canvas_post_processor",
+      "file": "/render/canvas/canvas_post_processor.doc.js",
+      "category": "render/canvas",
+      "title": "CanvasPostProcessor",
+      "tags": [
+        "render/canvas",
+        "canvas_post_processor"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "canvas_rectangle_renderer",
+      "file": "/render/canvas/canvas_rectangle_renderer.doc.js",
+      "category": "render/canvas",
+      "title": "CanvasRectangleRenderer",
+      "tags": [
+        "render/canvas",
+        "canvas_rectangle_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "canvas_sprite_renderer",
+      "file": "/render/canvas/canvas_sprite_renderer.doc.js",
+      "category": "render/canvas",
+      "title": "CanvasSpriteRenderer",
+      "tags": [
+        "render/canvas",
+        "canvas_sprite_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "framebuffer_manager",
+      "file": "/render/postprocessing/framebuffer_manager.doc.js",
+      "category": "render/postprocessing",
+      "title": "FramebufferManager",
+      "tags": [
+        "render/postprocessing",
+        "framebuffer_manager"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "fullscreen_quad",
+      "file": "/render/postprocessing/fullscreen_quad.doc.js",
+      "category": "render/postprocessing",
+      "title": "FullscreenQuad",
+      "tags": [
+        "render/postprocessing",
+        "fullscreen_quad"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "post_processor",
+      "file": "/render/postprocessing/post_processor.doc.js",
+      "category": "render/postprocessing",
+      "title": "PostProcessor",
+      "tags": [
+        "render/postprocessing",
+        "post_processor"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "render_pass",
+      "file": "/render/postprocessing/render_pass.doc.js",
+      "category": "render/postprocessing",
+      "title": "RenderPass",
+      "tags": [
+        "render/postprocessing",
+        "render_pass"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "color_grade_pass",
+      "file": "/render/postprocessing/passes/color_grade_pass.doc.js",
+      "category": "render/postprocessing/passes",
+      "title": "ColorGradePass",
+      "tags": [
+        "render/postprocessing/passes",
+        "color_grade_pass"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "vignette_pass",
+      "file": "/render/postprocessing/passes/vignette_pass.doc.js",
+      "category": "render/postprocessing/passes",
+      "title": "VignettePass",
+      "tags": [
+        "render/postprocessing/passes",
+        "vignette_pass"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "shader_effect",
+      "file": "/render/shaders/shader_effect.doc.js",
+      "category": "render/shaders",
+      "title": "ShaderEffect",
+      "tags": [
+        "render/shaders",
+        "shader_effect"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "shader_effect_registry",
+      "file": "/render/shaders/shader_effect_registry.doc.js",
+      "category": "render/shaders",
+      "title": "ShaderEffectRegistry",
+      "tags": [
+        "render/shaders",
+        "shader_effect_registry"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "shader_program",
+      "file": "/render/shaders/shader_program.doc.js",
+      "category": "render/shaders",
+      "title": "ShaderProgram",
+      "tags": [
+        "render/shaders",
+        "shader_program"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "shader_registry",
+      "file": "/render/shaders/shader_registry.doc.js",
+      "category": "render/shaders",
+      "title": "ShaderRegistry",
+      "tags": [
+        "render/shaders",
+        "shader_registry"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "primitive_shader",
+      "file": "/render/shaders/builtin/primitive_shader.doc.js",
+      "category": "render/shaders/builtin",
+      "title": "Primitive Shader",
+      "tags": [
+        "render/shaders/builtin",
+        "primitive_shader"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "shadow_shader",
+      "file": "/render/shaders/builtin/shadow_shader.doc.js",
+      "category": "render/shaders/builtin",
+      "title": "Shadow Shader",
+      "tags": [
+        "render/shaders/builtin",
+        "shadow_shader"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "sprite_shader",
+      "file": "/render/shaders/builtin/sprite_shader.doc.js",
+      "category": "render/shaders/builtin",
+      "title": "Sprite Shader",
+      "tags": [
+        "render/shaders/builtin",
+        "sprite_shader"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "outline_effect",
+      "file": "/render/shaders/builtin/effects/outline_effect.doc.js",
+      "category": "render/shaders/builtin/effects",
+      "title": "OutlineEffect (Shader)",
+      "tags": [
+        "render/shaders/builtin/effects",
+        "outline_effect"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "outline_effect",
+      "file": "/render/sprite_effects/outline_effect.doc.js",
+      "category": "render/sprite_effects",
+      "title": "OutlineEffect",
+      "tags": [
+        "render/sprite_effects",
+        "outline_effect"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "splatter_effect",
+      "file": "/render/sprite_effects/splatter_effect.doc.js",
+      "category": "render/sprite_effects",
+      "title": "SplatterEffect",
+      "tags": [
+        "render/sprite_effects",
+        "splatter_effect"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "sprite_effect",
+      "file": "/render/sprite_effects/sprite_effect.doc.js",
+      "category": "render/sprite_effects",
+      "title": "SpriteEffect",
+      "tags": [
+        "render/sprite_effects",
+        "sprite_effect"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
       "id": "sprite_effect_stack",
       "file": "/render/sprite_effects/sprite_effect_stack.doc.js",
       "category": "render/sprite_effects",
@@ -421,6 +1033,18 @@
       "advanced": false
     },
     {
+      "id": "shelf_packer",
+      "file": "/render/textures/shelf_packer.doc.js",
+      "category": "render/textures",
+      "title": "ShelfPacker",
+      "tags": [
+        "render/textures",
+        "shelf_packer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
       "id": "texture_atlas",
       "file": "/render/textures/texture_atlas.doc.js",
       "category": "render/textures",
@@ -428,6 +1052,18 @@
       "tags": [
         "render/textures",
         "texture_atlas"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "texture_atlas_manager",
+      "file": "/render/textures/texture_atlas_manager.doc.js",
+      "category": "render/textures",
+      "title": "TextureAtlasManager",
+      "tags": [
+        "render/textures",
+        "texture_atlas_manager"
       ],
       "featured": false,
       "advanced": true
@@ -457,6 +1093,114 @@
       "advanced": true
     },
     {
+      "id": "shadow_transform",
+      "file": "/render/transforms/shadow_transform.doc.js",
+      "category": "render/transforms",
+      "title": "ShadowTransform",
+      "tags": [
+        "render/transforms",
+        "shadow_transform"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "color_utils",
+      "file": "/render/webgl/color_utils.doc.js",
+      "category": "render/webgl",
+      "title": "Color Utils",
+      "tags": [
+        "render/webgl",
+        "color_utils"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "webgl_circle_renderer",
+      "file": "/render/webgl/webgl_circle_renderer.doc.js",
+      "category": "render/webgl",
+      "title": "WebGLCircleRenderer",
+      "tags": [
+        "render/webgl",
+        "webgl_circle_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "webgl_debug_gizmo_renderer",
+      "file": "/render/webgl/webgl_debug_gizmo_renderer.doc.js",
+      "category": "render/webgl",
+      "title": "WebGLDebugGizmoRenderer",
+      "tags": [
+        "render/webgl",
+        "webgl_debug_gizmo_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "webgl_object_renderer",
+      "file": "/render/webgl/webgl_object_renderer.doc.js",
+      "category": "render/webgl",
+      "title": "WebGLObjectRenderer",
+      "tags": [
+        "render/webgl",
+        "webgl_object_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "webgl_primitive_renderer",
+      "file": "/render/webgl/webgl_primitive_renderer.doc.js",
+      "category": "render/webgl",
+      "title": "WebGLPrimitiveRenderer",
+      "tags": [
+        "render/webgl",
+        "webgl_primitive_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "webgl_rectangle_renderer",
+      "file": "/render/webgl/webgl_rectangle_renderer.doc.js",
+      "category": "render/webgl",
+      "title": "WebGLRectangleRenderer",
+      "tags": [
+        "render/webgl",
+        "webgl_rectangle_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "webgl_sprite_batch",
+      "file": "/render/webgl/webgl_sprite_batch.doc.js",
+      "category": "render/webgl",
+      "title": "WebGLSpriteBatch",
+      "tags": [
+        "render/webgl",
+        "webgl_sprite_batch"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "webgl_sprite_renderer",
+      "file": "/render/webgl/webgl_sprite_renderer.doc.js",
+      "category": "render/webgl",
+      "title": "WebGLSpriteRenderer",
+      "tags": [
+        "render/webgl",
+        "webgl_sprite_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
       "id": "input_system",
       "file": "/input/input_system.doc.js",
       "category": "input",
@@ -469,6 +1213,54 @@
       "advanced": false
     },
     {
+      "id": "composite_binding",
+      "file": "/input/composite_binding.doc.js",
+      "category": "input",
+      "title": "CompositeBinding",
+      "tags": [
+        "input",
+        "composite_binding"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "gamepad_info",
+      "file": "/input/gamepad_info.doc.js",
+      "category": "input",
+      "title": "GamepadInfo",
+      "tags": [
+        "input",
+        "gamepad_info"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "input_binder",
+      "file": "/input/input_binder.doc.js",
+      "category": "input",
+      "title": "InputBinder",
+      "tags": [
+        "input",
+        "input_binder"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "input_binding",
+      "file": "/input/input_binding.doc.js",
+      "category": "input",
+      "title": "InputBinding",
+      "tags": [
+        "input",
+        "input_binding"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
       "id": "input_control",
       "file": "/input/input_control.doc.js",
       "category": "input",
@@ -476,6 +1268,18 @@
       "tags": [
         "input",
         "input_control"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "input_device",
+      "file": "/input/input_device.doc.js",
+      "category": "input",
+      "title": "InputDevice",
+      "tags": [
+        "input",
+        "input_device"
       ],
       "featured": false,
       "advanced": true
@@ -493,6 +1297,18 @@
       "advanced": true
     },
     {
+      "id": "navigation_control",
+      "file": "/input/input_controls/navigation_control.doc.js",
+      "category": "input/input_controls",
+      "title": "NavigationControl",
+      "tags": [
+        "input/input_controls",
+        "navigation_control"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
       "id": "vec2_control",
       "file": "/input/input_controls/vec2_control.doc.js",
       "category": "input/input_controls",
@@ -500,6 +1316,18 @@
       "tags": [
         "input/input_controls",
         "vec2_control"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "vec3_control",
+      "file": "/input/input_controls/vec3_control.doc.js",
+      "category": "input/input_controls",
+      "title": "Vec3Control",
+      "tags": [
+        "input/input_controls",
+        "vec3_control"
       ],
       "featured": false,
       "advanced": true
@@ -551,6 +1379,90 @@
       ],
       "featured": true,
       "advanced": false
+    },
+    {
+      "id": "audio_channel",
+      "file": "/audio/audio_channel.doc.js",
+      "category": "audio",
+      "title": "AudioChannel",
+      "tags": [
+        "audio",
+        "audio_channel"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "audio_context",
+      "file": "/audio/audio_context.doc.js",
+      "category": "audio",
+      "title": "AudioContext",
+      "tags": [
+        "audio",
+        "audio_context"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "audio_source",
+      "file": "/audio/audio_source.doc.js",
+      "category": "audio",
+      "title": "AudioSource",
+      "tags": [
+        "audio",
+        "audio_source"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "audio_unlock",
+      "file": "/audio/audio_unlock.doc.js",
+      "category": "audio",
+      "title": "AudioUnlock",
+      "tags": [
+        "audio",
+        "audio_unlock"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "pattern",
+      "file": "/audio/patterns/pattern.doc.js",
+      "category": "audio/patterns",
+      "title": "Pattern",
+      "tags": [
+        "audio/patterns",
+        "pattern"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "sequencer",
+      "file": "/audio/patterns/sequencer.doc.js",
+      "category": "audio/patterns",
+      "title": "Sequencer",
+      "tags": [
+        "audio/patterns",
+        "sequencer"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "number_input",
+      "file": "/editor/number_input.doc.js",
+      "category": "editor",
+      "title": "NumberInput",
+      "tags": [
+        "editor",
+        "number_input"
+      ],
+      "featured": false,
+      "advanced": true
     },
     {
       "id": "perky_explorer",
@@ -625,6 +1537,78 @@
       "advanced": true
     },
     {
+      "id": "editor_button",
+      "file": "/editor/interactive/editor_button.doc.js",
+      "category": "editor/interactive",
+      "title": "EditorButton",
+      "tags": [
+        "editor/interactive",
+        "editor_button"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "tab_bar",
+      "file": "/editor/interactive/tab_bar.doc.js",
+      "category": "editor/interactive",
+      "title": "TabBar",
+      "tags": [
+        "editor/interactive",
+        "tab_bar"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "app_layout",
+      "file": "/editor/layout/app_layout.doc.js",
+      "category": "editor/layout",
+      "title": "AppLayout",
+      "tags": [
+        "editor/layout",
+        "app_layout"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "overlay",
+      "file": "/editor/layout/overlay.doc.js",
+      "category": "editor/layout",
+      "title": "Overlay",
+      "tags": [
+        "editor/layout",
+        "overlay"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "panel",
+      "file": "/editor/layout/panel.doc.js",
+      "category": "editor/layout",
+      "title": "Panel",
+      "tags": [
+        "editor/layout",
+        "panel"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "toolbar",
+      "file": "/editor/layout/toolbar.doc.js",
+      "category": "editor/layout",
+      "title": "Toolbar",
+      "tags": [
+        "editor/layout",
+        "toolbar"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
       "id": "vec2_log_renderer",
       "file": "/editor/log_renderers/vec2_log_renderer.doc.js",
       "category": "editor/log_renderers",
@@ -632,6 +1616,30 @@
       "tags": [
         "editor/log_renderers",
         "vec2_log_renderer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "api_parser",
+      "file": "/doc/api_parser.doc.js",
+      "category": "doc",
+      "title": "Api Parser",
+      "tags": [
+        "doc",
+        "api_parser"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "discovery",
+      "file": "/doc/discovery.doc.js",
+      "category": "doc",
+      "title": "Discovery",
+      "tags": [
+        "doc",
+        "discovery"
       ],
       "featured": false,
       "advanced": true
@@ -649,6 +1657,30 @@
       "advanced": true
     },
     {
+      "id": "doc_parser",
+      "file": "/doc/doc_parser.doc.js",
+      "category": "doc",
+      "title": "Doc Parser",
+      "tags": [
+        "doc",
+        "doc_parser"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "doc_registry",
+      "file": "/doc/doc_registry.doc.js",
+      "category": "doc",
+      "title": "Doc Registry",
+      "tags": [
+        "doc",
+        "doc_registry"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
       "id": "runtime",
       "file": "/doc/runtime.doc.js",
       "category": "doc",
@@ -656,6 +1688,498 @@
       "tags": [
         "doc",
         "runtime"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "doc_viewer",
+      "file": "/doc/doc_viewer.doc.js",
+      "category": "doc",
+      "title": "Doc Viewer",
+      "tags": [
+        "doc",
+        "doc_viewer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "generate_pages",
+      "file": "/doc/generate_pages.doc.js",
+      "category": "doc",
+      "title": "Generate Pages",
+      "tags": [
+        "doc",
+        "generate_pages"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "parse_markdown",
+      "file": "/doc/parse_markdown.doc.js",
+      "category": "doc",
+      "title": "Parse Markdown",
+      "tags": [
+        "doc",
+        "parse_markdown"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "test_parser",
+      "file": "/doc/test_parser.doc.js",
+      "category": "doc",
+      "title": "Test Parser",
+      "tags": [
+        "doc",
+        "test_parser"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "api_renderers",
+      "file": "/doc/renderers/api_renderers.doc.js",
+      "category": "doc/renderers",
+      "title": "API Renderers",
+      "tags": [
+        "doc/renderers",
+        "api_renderers"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "block_renderers",
+      "file": "/doc/renderers/block_renderers.doc.js",
+      "category": "doc/renderers",
+      "title": "Block Renderers",
+      "tags": [
+        "doc/renderers",
+        "block_renderers"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "test_renderers",
+      "file": "/doc/renderers/test_renderers.doc.js",
+      "category": "doc/renderers",
+      "title": "Test Renderers",
+      "tags": [
+        "doc/renderers",
+        "test_renderers"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "dedent",
+      "file": "/doc/utils/dedent.doc.js",
+      "category": "doc/utils",
+      "title": "Dedent",
+      "tags": [
+        "doc/utils",
+        "dedent"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "paths",
+      "file": "/doc/utils/paths.doc.js",
+      "category": "doc/utils",
+      "title": "Paths",
+      "tags": [
+        "doc/utils",
+        "paths"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "collision_detector",
+      "file": "/collision/collision_detector.doc.js",
+      "category": "collision",
+      "title": "CollisionDetector",
+      "tags": [
+        "collision",
+        "collision_detector"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "collision_resolver",
+      "file": "/collision/collision_resolver.doc.js",
+      "category": "collision",
+      "title": "CollisionResolver",
+      "tags": [
+        "collision",
+        "collision_resolver"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "collision_system",
+      "file": "/collision/collision_system.doc.js",
+      "category": "collision",
+      "title": "CollisionSystem",
+      "tags": [
+        "collision",
+        "collision_system"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "simple_collision_detector",
+      "file": "/collision/simple_collision_detector.doc.js",
+      "category": "collision",
+      "title": "SimpleCollisionDetector",
+      "tags": [
+        "collision",
+        "simple_collision_detector"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "box_shape",
+      "file": "/collision/shapes/box_shape.doc.js",
+      "category": "collision/shapes",
+      "title": "BoxShape",
+      "tags": [
+        "collision/shapes",
+        "box_shape"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "circle_shape",
+      "file": "/collision/shapes/circle_shape.doc.js",
+      "category": "collision/shapes",
+      "title": "CircleShape",
+      "tags": [
+        "collision/shapes",
+        "circle_shape"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "binary_reader",
+      "file": "/io/binary_reader.doc.js",
+      "category": "io",
+      "title": "BinaryReader",
+      "tags": [
+        "io",
+        "binary_reader"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "canvas",
+      "file": "/io/canvas.doc.js",
+      "category": "io",
+      "title": "Canvas Utils",
+      "tags": [
+        "io",
+        "canvas"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "manifest_patcher",
+      "file": "/io/manifest_patcher.doc.js",
+      "category": "io",
+      "title": "ManifestPatcher",
+      "tags": [
+        "io",
+        "manifest_patcher"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "pack",
+      "file": "/io/pack.doc.js",
+      "category": "io",
+      "title": "Pack",
+      "tags": [
+        "io",
+        "pack"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "perky_store",
+      "file": "/io/perky_store.doc.js",
+      "category": "io",
+      "title": "PerkyStore",
+      "tags": [
+        "io",
+        "perky_store"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "psd",
+      "file": "/io/psd.doc.js",
+      "category": "io",
+      "title": "PSD Parser",
+      "tags": [
+        "io",
+        "psd"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "psd_converter",
+      "file": "/io/psd_converter.doc.js",
+      "category": "io",
+      "title": "PsdConverter",
+      "tags": [
+        "io",
+        "psd_converter"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "spritesheet",
+      "file": "/io/spritesheet.doc.js",
+      "category": "io",
+      "title": "Spritesheet",
+      "tags": [
+        "io",
+        "spritesheet"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "service_client",
+      "file": "/service/service_client.doc.js",
+      "category": "service",
+      "title": "ServiceClient",
+      "tags": [
+        "service",
+        "service_client"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "service_host",
+      "file": "/service/service_host.doc.js",
+      "category": "service",
+      "title": "ServiceHost",
+      "tags": [
+        "service",
+        "service_host"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "service_request",
+      "file": "/service/service_request.doc.js",
+      "category": "service",
+      "title": "ServiceRequest",
+      "tags": [
+        "service",
+        "service_request"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "service_response",
+      "file": "/service/service_response.doc.js",
+      "category": "service",
+      "title": "ServiceResponse",
+      "tags": [
+        "service",
+        "service_response"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "service_transport",
+      "file": "/service/service_transport.doc.js",
+      "category": "service",
+      "title": "ServiceTransport",
+      "tags": [
+        "service",
+        "service_transport"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "service_worker",
+      "file": "/service/service_worker.doc.js",
+      "category": "service",
+      "title": "ServiceWorker",
+      "tags": [
+        "service",
+        "service_worker"
+      ],
+      "featured": false,
+      "advanced": false
+    },
+    {
+      "id": "hub_view",
+      "file": "/studio/hub_view.doc.js",
+      "category": "studio",
+      "title": "HubView",
+      "tags": [
+        "studio",
+        "hub_view"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "launcher",
+      "file": "/studio/launcher.doc.js",
+      "category": "studio",
+      "title": "Launcher",
+      "tags": [
+        "studio",
+        "launcher"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "animator_helpers",
+      "file": "/studio/animator/animator_helpers.doc.js",
+      "category": "studio/animator",
+      "title": "Animator Helpers",
+      "tags": [
+        "studio/animator",
+        "animator_helpers"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "launcher",
+      "file": "/studio/animator/launcher.doc.js",
+      "category": "studio/animator",
+      "title": "Animator Launcher",
+      "tags": [
+        "studio/animator",
+        "launcher"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "animator_preview",
+      "file": "/studio/animator/animator_preview.doc.js",
+      "category": "studio/animator",
+      "title": "Animator Preview",
+      "tags": [
+        "studio/animator",
+        "animator_preview"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "animator_view",
+      "file": "/studio/animator/animator_view.doc.js",
+      "category": "studio/animator",
+      "title": "Animator View",
+      "tags": [
+        "studio/animator",
+        "animator_view"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "anchor_editor",
+      "file": "/studio/animator/components/anchor_editor.doc.js",
+      "category": "studio/animator/components",
+      "title": "Anchor Editor",
+      "tags": [
+        "studio/animator/components",
+        "anchor_editor"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "animation_settings",
+      "file": "/studio/animator/components/animation_settings.doc.js",
+      "category": "studio/animator/components",
+      "title": "Animation Settings",
+      "tags": [
+        "studio/animator/components",
+        "animation_settings"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "frame_editor",
+      "file": "/studio/animator/components/frame_editor.doc.js",
+      "category": "studio/animator/components",
+      "title": "Frame Editor",
+      "tags": [
+        "studio/animator/components",
+        "frame_editor"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "conflict_resolver",
+      "file": "/studio/components/conflict_resolver.doc.js",
+      "category": "studio/components",
+      "title": "Conflict Resolver",
+      "tags": [
+        "studio/components",
+        "conflict_resolver"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "psd_importer",
+      "file": "/studio/components/psd_importer.doc.js",
+      "category": "studio/components",
+      "title": "PSD Importer",
+      "tags": [
+        "studio/components",
+        "psd_importer"
+      ],
+      "featured": false,
+      "advanced": true
+    },
+    {
+      "id": "storage_info",
+      "file": "/studio/components/storage_info.doc.js",
+      "category": "studio/components",
+      "title": "Storage Info",
+      "tags": [
+        "studio/components",
+        "storage_info"
       ],
       "featured": false,
       "advanced": true

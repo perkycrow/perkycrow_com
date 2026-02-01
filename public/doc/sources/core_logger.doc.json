@@ -86,12 +86,12 @@
   },
   {
     "type": "code",
-    "title": "loggerOutput",
-    "source": "// Disable logger output (logs still recorded in history)\nlogger.loggerOutput = false\n\nlogger.log('This is silent but recorded')\n\n// Re-enable\nlogger.loggerOutput = true"
+    "title": "consoleOutput",
+    "source": "// Disable console output (logs still recorded in history)\nlogger.consoleOutput = false\n\nlogger.log('This is silent but recorded')\n\n// Re-enable\nlogger.consoleOutput = true"
   },
   {
     "type": "code",
-    "title": "Logger method mapping",
-    "source": "logger.info('Uses logger.info')\nlogger.warn('Uses logger.warn')\nlogger.error('Uses logger.error')\nlogger.notice('Uses logger.log')\nlogger.success('Uses logger.log')"
+    "title": "Console method mapping",
+    "source": "logger.info('Uses console.info')\nlogger.warn('Uses console.warn')\nlogger.error('Uses console.error')\nlogger.notice('Uses console.log')\nlogger.success('Uses console.log')"
   }
 ]

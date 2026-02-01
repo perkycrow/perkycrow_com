@@ -22,7 +22,7 @@
   {
     "type": "code",
     "title": "Event handling",
-    "source": "app.on('loader:progress', ({loaded, total, asset}) => {\n    const percent = Math.round((loaded / total) * 100)\n    logger.log(`Loading: ${percent}% - ${asset.id}`)\n})\n\napp.on('loader:complete', (assets) => {\n    logger.log(`Loaded ${assets.length} assets`)\n})\n\napp.on('loader:error', ({asset, error}) => {\n    logger.error(`Failed to load ${asset.id}:`, error)\n})"
+    "source": "app.on('loader:progress', (progress, {asset}) => {\n    const percent = Math.round(progress * 100)\n    logger.log(`Loading: ${percent}% - ${asset.id}`)\n})\n\napp.on('loader:complete', (assets) => {\n    logger.log(`Loaded ${assets.length} assets`)\n})\n\napp.on('loader:error', (asset, error) => {\n    logger.error(`Failed to load ${asset.id}:`, error)\n})"
   },
   {
     "type": "code",
@@ -42,6 +42,6 @@
   {
     "type": "code",
     "title": "Delegated events",
-    "source": "// Events are prefixed with 'loader:':\n// - loader:progress  -> progress during loading\n// - loader:complete  -> all requested assets loaded\n// - loader:error     -> asset failed to load"
+    "source": "// Events are prefixed with 'loader:':\n// - loader:progress  -> progress during loading\n// - loader:complete  -> all requested assets loaded\n// - loader:error     -> asset failed to load\n// - asset:loaded     -> individual asset finished loading"
   }
 ]
