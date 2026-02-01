@@ -1,0 +1,22 @@
+[
+  {
+    "type": "action",
+    "title": "Register and query",
+    "source": "const device = new InputDevice()\n\nconst button = new ButtonControl({device, name: 'fire'})\ndevice.registerControl(button)\n\nlogger.log('Has fire:', device.getControl('fire') !== undefined)\nlogger.log('Value:', device.getValueFor('fire'))"
+  },
+  {
+    "type": "action",
+    "title": "Check pressed state",
+    "source": "const device = new InputDevice()\n\nconst jump = new ButtonControl({device, name: 'jump'})\ndevice.registerControl(jump)\n\nlogger.log('Before press:', device.isPressed('jump'))\n\njump.press()\nlogger.log('After press:', device.isPressed('jump'))\n\nconst pressed = device.getPressedControls()\nlogger.log('Pressed controls:', pressed.map(c => c.name))"
+  },
+  {
+    "type": "action",
+    "title": "Listen for events",
+    "source": "const device = new InputDevice()\n\ndevice.on('control:pressed', (control) => {\n    logger.log('Pressed:', control.name)\n})\n\ndevice.on('control:released', (control) => {\n    logger.log('Released:', control.name)\n})\n\nconst button = new ButtonControl({device, name: 'action'})\ndevice.registerControl(button)\n\nbutton.press()\nbutton.release()"
+  },
+  {
+    "type": "code",
+    "title": "Lazy creation",
+    "source": "const device = new InputDevice()\n\nconst control = device.findOrCreateControl(ButtonControl, {name: 'fire'})\nconst same = device.findOrCreateControl(ButtonControl, {name: 'fire'})\n\nlogger.log(control === same)  // true"
+  }
+]

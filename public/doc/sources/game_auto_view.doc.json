@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "WorldView registration",
+    "source": "// worldView.register(Player, Sprite, {\n//     texture: 'hero',\n//     sync: {\n//         rotation: 'angle',\n//         opacity: (entity) => entity.health / 100\n//     }\n// })"
+  },
+  {
+    "type": "action",
+    "title": "String bindings",
+    "source": "class Spinner extends Entity {\n    constructor (options = {}) {\n        super(options)\n        this.angle = 0\n    }\n}\n\nconst entity = new Spinner({x: 0, y: 0})\nentity.angle = 1.5\n\nconst view = new AutoView(entity, {\n    ObjectClass: Rectangle,\n    config: {\n        width: 2,\n        height: 0.5,\n        sync: {rotation: 'angle'}\n    }\n})\n\nview.sync()\n\nlogger.log('rotation:', view.root.rotation)"
+  },
+  {
+    "type": "action",
+    "title": "Function bindings",
+    "source": "class HealthOrb extends Entity {\n    constructor (options = {}) {\n        super(options)\n        this.health = options.health ?? 100\n        this.maxHealth = 100\n    }\n}\n\nconst entity = new HealthOrb({x: 0, y: 0, health: 50})\n\nconst view = new AutoView(entity, {\n    ObjectClass: Circle,\n    config: {\n        radius: 1,\n        sync: {opacity: (e) => e.health / e.maxHealth}\n    }\n})\n\nview.sync()\n\nlogger.log('opacity:', view.root.opacity)"
+  },
+  {
+    "type": "code",
+    "title": "Constructor",
+    "source": "// entity: The Entity instance\n// context: {\n//   ObjectClass: Object2D subclass to instantiate\n//   config: {\n//     ...objectOptions,  // passed to ObjectClass constructor\n//     sync: {            // optional property bindings\n//       prop: 'entityProp',        // string binding\n//       prop: (entity) => value     // function binding\n//     }\n//   }\n// }"
+  },
+  {
+    "type": "code",
+    "title": "Methods",
+    "source": "// sync() - Syncs x/y plus all configured bindings"
+  }
+]

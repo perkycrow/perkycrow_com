@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Parse a PSD file",
+    "source": "const converter = new PsdConverter()\nconst psd = converter.parse(buffer)\n\npsd.width   // 512\npsd.height  // 512\npsd.tree    // layer tree"
+  },
+  {
+    "type": "action",
+    "title": "getAnimationGroups",
+    "source": "const converter = new PsdConverter()\n\nlogger.log('getAnimationGroups returns PSD groups named \"anim - ...\"')\nlogger.log('getAnimationInfo returns [{name, frameCount}, ...]')"
+  },
+  {
+    "type": "code",
+    "title": "Inspect animations",
+    "source": "const converter = new PsdConverter()\nconst groups = converter.getAnimationGroups(psd)\nconst info = converter.getAnimationInfo(psd)\n\n// info: [{name: 'idle', frameCount: 4}, {name: 'run', frameCount: 6}]"
+  },
+  {
+    "type": "code",
+    "title": "Full conversion",
+    "source": "const converter = new PsdConverter()\n\nconverter.on('progress', ({stage, percent}) => {\n    // 'extracting' -> 'resizing' -> 'packing' -> 'compositing' -> 'complete'\n})\n\nconst result = await converter.convert(psd, {\n    targetWidth: 256,\n    name: 'hero'\n})\n\nresult.atlases          // [{canvas, frames, finalHeight}]\nresult.spritesheetJson  // atlas JSON data\nresult.animatorConfig   // animation config for the game\nresult.name             // 'hero'\nresult.spritesheetName  // 'heroSpritesheet'"
+  },
+  {
+    "type": "code",
+    "title": "Config structure",
+    "source": "const config = converter.buildAnimatorConfig('heroSpritesheet', {\n    idle: ['idle_1', 'idle_2'],\n    run: ['run_1', 'run_2', 'run_3']\n})\n\n// config.spritesheet: 'heroSpritesheet'\n// config.anchor: {x: 0.5, y: 0.5}\n// config.animations.idle.fps: 10\n// config.animations.idle.loop: true"
+  }
+]

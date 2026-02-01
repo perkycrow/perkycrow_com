@@ -1,0 +1,42 @@
+[
+  {
+    "type": "action",
+    "title": "isAnimationGroup",
+    "source": "logger.log('anim - idle:', isAnimationGroup('anim - idle'))\nlogger.log('anim run:', isAnimationGroup('anim run'))\nlogger.log('background:', isAnimationGroup('background'))\nlogger.log('Anim-Jump:', isAnimationGroup('Anim-Jump'))"
+  },
+  {
+    "type": "action",
+    "title": "parseAnimationName",
+    "source": "logger.log('anim - idle:', parseAnimationName('anim - idle'))\nlogger.log('anim run fast:', parseAnimationName('anim run fast'))\nlogger.log('Anim-Jump:', parseAnimationName('Anim-Jump'))"
+  },
+  {
+    "type": "action",
+    "title": "findAnimationGroups",
+    "source": "const tree = [\n    {type: 'group', name: 'anim - idle', children: []},\n    {type: 'group',\n        name: 'background',\n        children: [\n            {type: 'group', name: 'anim - walk', children: []}\n        ]},\n    {type: 'layer', name: 'overlay'}\n]\n\nconst groups = findAnimationGroups(tree)\nfor (const group of groups) {\n    logger.log('found:', group.name)\n}"
+  },
+  {
+    "type": "action",
+    "title": "parseFrameNumber",
+    "source": "logger.log('1:', parseFrameNumber('1'))\nlogger.log('2 detail:', parseFrameNumber('2 detail'))\nlogger.log('background:', parseFrameNumber('background'))\nlogger.log('03 extra:', parseFrameNumber('03 extra'))"
+  },
+  {
+    "type": "action",
+    "title": "countFrames",
+    "source": "const group = {\n    children: [\n        {type: 'layer', name: '1'},\n        {type: 'layer', name: '2'},\n        {type: 'layer', name: '3'},\n        {type: 'layer', name: 'shadow'},\n        {type: 'group', name: 'sub'}\n    ]\n}\nlogger.log('frame count:', countFrames(group))"
+  },
+  {
+    "type": "action",
+    "title": "packFramesIntoAtlases",
+    "source": "const frames = [\n    {filename: 'idle/1', width: 64, height: 64, pixels: null},\n    {filename: 'idle/2', width: 64, height: 64, pixels: null},\n    {filename: 'walk/1', width: 64, height: 64, pixels: null},\n    {filename: 'walk/2', width: 64, height: 64, pixels: null}\n]\n\nconst atlases = packFramesIntoAtlases(frames, 256)\nlogger.log('atlas count:', atlases.length)\nlogger.log('frames in first atlas:', atlases[0].frames.length)\nfor (const frame of atlases[0].frames) {\n    logger.log(`${frame.filename} at (${frame.x}, ${frame.y})`)\n}"
+  },
+  {
+    "type": "action",
+    "title": "nextPowerOfTwo",
+    "source": "logger.log('10 →', nextPowerOfTwo(10))\nlogger.log('33 →', nextPowerOfTwo(33))\nlogger.log('128 →', nextPowerOfTwo(128))\nlogger.log('500 →', nextPowerOfTwo(500))\nlogger.log('2000 →', nextPowerOfTwo(2000))"
+  },
+  {
+    "type": "action",
+    "title": "buildJsonData",
+    "source": "const atlases = [{\n    frames: [\n        {filename: 'idle/1', x: 0, y: 0, width: 64, height: 64},\n        {filename: 'idle/2', x: 65, y: 0, width: 64, height: 64}\n    ],\n    finalHeight: 64\n}]\n\nconst animations = {\n    idle: {frames: ['idle/1', 'idle/2'], fps: 8}\n}\n\nconst json = buildJsonData(atlases, animations, 'hero')\nlogger.log('frames:', json.frames.length)\nlogger.log('animations:', Object.keys(json.animations))\nlogger.log('images:', json.meta.images.length)"
+  }
+]

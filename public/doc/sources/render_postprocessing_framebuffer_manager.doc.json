@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Post-processing loop",
+    "source": "const fbm = new FramebufferManager(gl, 800, 600)\n\nfbm.bindSceneBuffer()\n\n// ... render scene ...\n\nfbm.resolveSceneBuffer()\nfbm.resetPingPong()\n\nlet input = fbm.getSceneTexture()\nfor (const pass of passes) {\n    fbm.bindPingPong()\n    pass.render(gl, input, fullscreenQuad)\n    input = fbm.swapAndGetTexture()\n}\n\nfbm.bindScreen()\n\n// ... draw final quad with `input` ..."
+  },
+  {
+    "type": "code",
+    "title": "Named buffer usage",
+    "source": "const fbm = new FramebufferManager(gl, 800, 600)\n\nfbm.getOrCreateBuffer('shadow')\nfbm.bindBuffer('shadow')\n\n// ... render shadow map ...\n\nconst shadowTexture = fbm.getBufferTexture('shadow')\n\nfbm.disposeBuffer('shadow')"
+  },
+  {
+    "type": "code",
+    "title": "Resize",
+    "source": "fbm.resize(1024, 768)"
+  }
+]

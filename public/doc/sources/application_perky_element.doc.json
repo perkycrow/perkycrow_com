@@ -1,0 +1,32 @@
+[
+  {
+    "type": "code",
+    "title": "Basic component",
+    "source": "class MyPanel extends PerkyElement {\n\n    onInit () {\n        this.shadowRoot.innerHTML = '<p>Hello</p>'\n    }\n\n}\n\ncustomElements.define('my-panel', MyPanel)"
+  },
+  {
+    "type": "code",
+    "title": "Available hooks",
+    "source": "class MyWidget extends PerkyElement {\n\n    onInit () {\n        // Called during constructor\n    }\n\n    onConnected () {\n        // Called when added to the DOM\n    }\n\n    onDisconnected () {\n        // Called when removed from the DOM\n    }\n\n}"
+  },
+  {
+    "type": "code",
+    "title": "Static styles",
+    "source": "class StyledPanel extends PerkyElement {\n    static styles = `\n        :host { display: block; padding: 8px; }\n        p { color: #ccc; }\n    `\n}"
+  },
+  {
+    "type": "code",
+    "title": "Multiple stylesheets",
+    "source": "class MultiStyled extends PerkyElement {\n    static styles = [\n        ':host { display: block; }',\n        '.title { font-weight: bold; }'\n    ]\n}"
+  },
+  {
+    "type": "code",
+    "title": "listenTo",
+    "source": "class AppInspector extends PerkyElement {\n\n    observe (app) {\n        this.listenTo(app, 'start', () => this.render())\n        this.listenTo(app, 'stop', () => this.render())\n    }\n\n}"
+  },
+  {
+    "type": "code",
+    "title": "Manual cleanup",
+    "source": "const element = new PerkyElement()\nelement.cleanListeners()"
+  }
+]

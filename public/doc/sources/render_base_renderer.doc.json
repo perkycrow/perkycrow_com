@@ -1,0 +1,32 @@
+[
+  {
+    "type": "action",
+    "title": "Default renderer",
+    "source": "const renderer = new BaseRenderer()\nlogger.log('width:', renderer.displayWidth)\nlogger.log('height:', renderer.displayHeight)\nlogger.log('pixel ratio:', renderer.pixelRatio)"
+  },
+  {
+    "type": "action",
+    "title": "With dimensions",
+    "source": "const renderer = new BaseRenderer({width: 800, height: 600})\nlogger.log('width:', renderer.displayWidth)\nlogger.log('height:', renderer.displayHeight)"
+  },
+  {
+    "type": "action",
+    "title": "Set pixel ratio",
+    "source": "const renderer = new BaseRenderer({width: 400, height: 300})\nrenderer.setPixelRatio(2)\nlogger.log('display:', renderer.displayWidth, '×', renderer.displayHeight)\nlogger.log('canvas:', renderer.canvas.width, '×', renderer.canvas.height)"
+  },
+  {
+    "type": "action",
+    "title": "Manual resize",
+    "source": "const renderer = new BaseRenderer({width: 100, height: 100})\nlet resized = false\nrenderer.on('resize', () => {\n    resized = true\n})\n\nrenderer.resize(640, 480)\nlogger.log('new width:', renderer.displayWidth)\nlogger.log('new height:', renderer.displayHeight)\nlogger.log('event emitted:', resized)"
+  },
+  {
+    "type": "code",
+    "title": "Enable auto-fit",
+    "source": "const renderer = new BaseRenderer({\n    container: document.getElementById('game'),\n    autoFit: true\n})"
+  },
+  {
+    "type": "action",
+    "title": "Dispose",
+    "source": "const renderer = new BaseRenderer({width: 100, height: 100})\nrenderer.dispose()\nlogger.log('canvas:', renderer.canvas)\nlogger.log('camera:', renderer.camera)"
+  }
+]

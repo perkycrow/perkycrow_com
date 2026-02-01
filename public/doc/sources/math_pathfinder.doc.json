@@ -1,0 +1,42 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const pathfinder = new Pathfinder()\n\nconst custom = new Pathfinder({\n    heuristic: heuristics.euclidean,\n    allowDiagonal: true,\n    isWalkable: cell => cell !== 'wall'\n})"
+  },
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.grid = new Grid({width: 5, height: 5})\nctx.pathfinder = new Pathfinder({\n    isWalkable: cell => cell !== 'wall'\n})"
+  },
+  {
+    "type": "action",
+    "title": "Simple path",
+    "source": "const path = ctx.pathfinder.findPath(ctx.grid, {x: 0, y: 0}, {x: 4, y: 4})\nfor (const step of path) {\n    logger.log(`(${step.x}, ${step.y})`)\n}"
+  },
+  {
+    "type": "action",
+    "title": "Path with obstacles",
+    "source": "ctx.grid.setCell({x: 1, y: 0}, 'wall')\nctx.grid.setCell({x: 1, y: 1}, 'wall')\nctx.grid.setCell({x: 1, y: 2}, 'wall')\nconst path = ctx.pathfinder.findPath(ctx.grid, {x: 0, y: 0}, {x: 4, y: 0})\nif (path) {\n    for (const step of path) {\n        logger.log(`(${step.x}, ${step.y})`)\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "No path",
+    "source": "for (let y = 0; y < 5; y++) {\n    ctx.grid.setCell({x: 2, y}, 'wall')\n}\nconst path = ctx.pathfinder.findPath(ctx.grid, {x: 0, y: 0}, {x: 4, y: 0})\nlogger.log('path:', path)"
+  },
+  {
+    "type": "action",
+    "title": "Compare heuristics",
+    "source": "const a = {x: 0, y: 0}\nconst b = {x: 3, y: 4}\nlogger.log('manhattan:', heuristics.manhattan(a, b))\nlogger.log('euclidean:', heuristics.euclidean(a, b))\nlogger.log('diagonal:', heuristics.diagonal(a, b))"
+  },
+  {
+    "type": "action",
+    "title": "With diagonal",
+    "source": "const grid = new Grid({width: 5, height: 5})\nconst pathfinder = new Pathfinder({allowDiagonal: true})\nconst path = pathfinder.findPath(grid, {x: 0, y: 0}, {x: 4, y: 4})\nlogger.log('steps:', path.length)\nfor (const step of path) {\n    logger.log(`(${step.x}, ${step.y})`)\n}"
+  },
+  {
+    "type": "action",
+    "title": "Without diagonal",
+    "source": "const grid = new Grid({width: 5, height: 5})\nconst pathfinder = new Pathfinder({allowDiagonal: false})\nconst path = pathfinder.findPath(grid, {x: 0, y: 0}, {x: 4, y: 4})\nlogger.log('steps:', path.length)\nfor (const step of path) {\n    logger.log(`(${step.x}, ${step.y})`)\n}"
+  }
+]

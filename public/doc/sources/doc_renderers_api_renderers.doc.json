@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const items = getApiItems(api, {key: 'methods', single: false})\n\nconst constructor = getApiItems(api, {key: 'constructor', single: true})"
+  },
+  {
+    "type": "code",
+    "title": "Signature formats",
+    "source": "renderApiMember({name: 'update', params: ['dt']}, file)\n\nrenderApiMember({name: 'MAX_SPEED', value: '100'}, file)\n\nrenderApiMember({name: 'enabled'}, file)"
+  }
+]

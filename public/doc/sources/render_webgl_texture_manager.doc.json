@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "const texture = textureManager.acquire(image)\ntextureManager.release(image)"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Simple Vec3 control",
+    "source": "const control = new Vec3Control({\n    device: null,\n    name: 'position',\n    value: new Vec3(0, 0, 0)\n})\n\ncontrol.on('updated', (newValue, oldValue) => {\n    logger.log(`Moved: (${newValue.x}, ${newValue.y}, ${newValue.z})`)\n})\n\ncontrol.setValue(new Vec3(1, 2, 3))"
+  },
+  {
+    "type": "code",
+    "title": "Object to Vec3",
+    "source": "const control = new Vec3Control({\n    device: null,\n    name: 'sensor'\n})\n\ncontrol.setValue({x: 10, y: 20, z: 30})\n\nlogger.log(control.value instanceof Vec3)  // true\nlogger.log(control.value.x, control.value.y, control.value.z)"
+  },
+  {
+    "type": "action",
+    "title": "Change detection",
+    "source": "const control = new Vec3Control({\n    device: null,\n    name: 'gyro'\n})\n\nlet updateCount = 0\ncontrol.on('updated', () => {\n    updateCount++\n})\n\ncontrol.setValue(new Vec3(1, 1, 1))\ncontrol.setValue(new Vec3(1, 1, 1))\ncontrol.setValue(new Vec3(2, 2, 2))\n\nlogger.log('Updates:', updateCount)"
+  }
+]

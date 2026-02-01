@@ -1,0 +1,27 @@
+[
+  {
+    "type": "container",
+    "title": "Basic overlay",
+    "source": "const btn = document.createElement('editor-button')\nbtn.textContent = 'Open Overlay'\nbtn.variant = 'primary'\nctx.container.appendChild(btn)\n\nconst overlay = document.createElement('editor-overlay')\noverlay.innerHTML = `\n    <div style=\"padding:24px;text-align:center;\">\n        <h3 style=\"margin:0 0 12px;color:#e4e4e8;font-size:16px;\">Hello!</h3>\n        <p style=\"margin:0 0 16px;color:#888;font-size:14px;\">Click backdrop to close</p>\n    </div>\n`\nctx.container.appendChild(overlay)\n\nbtn.addEventListener('click', () => overlay.open())\n\noverlay.addEventListener('close', () => {\n    logger.log('Overlay closed')\n})"
+  },
+  {
+    "type": "container",
+    "title": "Overlay with actions",
+    "source": "const btn = document.createElement('editor-button')\nbtn.textContent = 'Confirm Dialog'\nctx.container.appendChild(btn)\n\nconst overlay = document.createElement('editor-overlay')\n\nconst content = document.createElement('div')\ncontent.style.cssText = 'padding:24px;min-width:280px;'\n\ncontent.innerHTML = `\n    <h3 style=\"margin:0 0 8px;color:#e4e4e8;font-size:16px;\">Delete Item?</h3>\n    <p style=\"margin:0 0 20px;color:#888;font-size:14px;\">This action cannot be undone.</p>\n`\n\nconst actions = document.createElement('div')\nactions.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;'\n\nconst cancelBtn = document.createElement('editor-button')\ncancelBtn.textContent = 'Cancel'\ncancelBtn.addEventListener('click', () => {\n    overlay.close()\n    logger.log('Cancelled')\n})\n\nconst deleteBtn = document.createElement('editor-button')\ndeleteBtn.textContent = 'Delete'\ndeleteBtn.variant = 'danger'\ndeleteBtn.addEventListener('click', () => {\n    overlay.close()\n    logger.log('Deleted!')\n})\n\nactions.appendChild(cancelBtn)\nactions.appendChild(deleteBtn)\ncontent.appendChild(actions)\noverlay.appendChild(content)\nctx.container.appendChild(overlay)\n\nbtn.addEventListener('click', () => overlay.open())"
+  },
+  {
+    "type": "container",
+    "title": "Top position",
+    "source": "const row = ctx.row({gap: 8})\n\nconst topBtn = document.createElement('editor-button')\ntopBtn.textContent = 'Top'\nrow.appendChild(topBtn)\n\nconst bottomBtn = document.createElement('editor-button')\nbottomBtn.textContent = 'Bottom'\nrow.appendChild(bottomBtn)\n\nconst topOverlay = document.createElement('editor-overlay')\ntopOverlay.setAttribute('position', 'top')\ntopOverlay.innerHTML = '<div style=\"padding:20px;color:#888;\">Top aligned</div>'\nctx.container.appendChild(topOverlay)\n\nconst bottomOverlay = document.createElement('editor-overlay')\nbottomOverlay.setAttribute('position', 'bottom')\nbottomOverlay.innerHTML = '<div style=\"padding:20px;color:#888;\">Bottom aligned</div>'\nctx.container.appendChild(bottomOverlay)\n\ntopBtn.addEventListener('click', () => topOverlay.open())\nbottomBtn.addEventListener('click', () => bottomOverlay.open())"
+  },
+  {
+    "type": "container",
+    "title": "Must use button to close",
+    "source": "const btn = document.createElement('editor-button')\nbtn.textContent = 'Open Locked'\nctx.container.appendChild(btn)\n\nconst overlay = document.createElement('editor-overlay')\noverlay.setAttribute('no-close-on-backdrop', '')\n\nconst content = document.createElement('div')\ncontent.style.cssText = 'padding:24px;text-align:center;'\ncontent.innerHTML = '<p style=\"margin:0 0 16px;color:#888;\">Backdrop click disabled</p>'\n\nconst closeBtn = document.createElement('editor-button')\ncloseBtn.textContent = 'Close'\ncloseBtn.variant = 'primary'\ncloseBtn.addEventListener('click', () => overlay.close())\ncontent.appendChild(closeBtn)\n\noverlay.appendChild(content)\nctx.container.appendChild(overlay)\n\nbtn.addEventListener('click', () => overlay.open())"
+  },
+  {
+    "type": "container",
+    "title": "Event handling",
+    "source": "const btn = document.createElement('editor-button')\nbtn.textContent = 'Toggle'\nctx.container.appendChild(btn)\n\nconst overlay = document.createElement('editor-overlay')\noverlay.innerHTML = '<div style=\"padding:24px;color:#888;\">Press Escape or click backdrop</div>'\nctx.container.appendChild(overlay)\n\noverlay.addEventListener('open', () => logger.log('Opened'))\noverlay.addEventListener('close', () => logger.log('Closed'))\n\nbtn.addEventListener('click', () => overlay.toggle())"
+  }
+]

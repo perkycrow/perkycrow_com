@@ -1,0 +1,47 @@
+[
+  {
+    "type": "code",
+    "title": "Basic layer",
+    "source": "const layer = new HTMLLayer({$id: 'ui'})"
+  },
+  {
+    "type": "code",
+    "title": "With options",
+    "source": "const layer = new HTMLLayer({\n    $id: 'labels',\n    className: 'game-labels',\n    zIndex: 10,\n    pointerEvents: 'none'\n})"
+  },
+  {
+    "type": "action",
+    "title": "String content",
+    "source": "const layer = new HTMLLayer({$id: 'test'})\nlayer.setContent('<div style=\"color:#fff\">Hello</div>')\nlogger.log('innerHTML:', layer.div.innerHTML)"
+  },
+  {
+    "type": "action",
+    "title": "DOM element",
+    "source": "const layer = new HTMLLayer({$id: 'test'})\nconst el = document.createElement('span')\nel.textContent = 'world'\nlayer.setContent(el)\nlogger.log('children:', layer.div.children.length)"
+  },
+  {
+    "type": "action",
+    "title": "addClass / removeClass",
+    "source": "const layer = new HTMLLayer({$id: 'test'})\nlayer.addClass('active').addClass('highlighted')\nlogger.log('classes:', layer.div.className)\nlayer.removeClass('highlighted')\nlogger.log('after remove:', layer.div.className)"
+  },
+  {
+    "type": "action",
+    "title": "setStyle",
+    "source": "const layer = new HTMLLayer({$id: 'test'})\nlayer.setStyle('background', '#1a1a2e')\nlogger.log('background:', layer.div.style.background)"
+  },
+  {
+    "type": "action",
+    "title": "createWorldElement / removeWorldElement",
+    "source": "const camera = new Camera({\n    $id: 'main',\n    viewportWidth: 800,\n    viewportHeight: 600,\n    unitsInView: 10\n})\n\nconst layer = new HTMLLayer({$id: 'test', camera})\nconst el = layer.createWorldElement('label', 0, 0)\nlogger.log('world elements:', layer.worldElements.length)\n\nlayer.removeWorldElement(el)\nlogger.log('after remove:', layer.worldElements.length)"
+  },
+  {
+    "type": "code",
+    "title": "World element options",
+    "source": "const el = layer.createWorldElement('HP: 100', 5, 3, {\n    offsetX: 0,\n    offsetY: -20,\n    autoCenter: true,\n    pointerEvents: 'none'\n})"
+  },
+  {
+    "type": "action",
+    "title": "cssToWorldUnits / worldUnitsToCss",
+    "source": "const camera = new Camera({\n    $id: 'main',\n    viewportWidth: 800,\n    viewportHeight: 600,\n    unitsInView: 10\n})\n\nconst layer = new HTMLLayer({$id: 'test', camera})\nlogger.log('100px in world:', layer.cssToWorldUnits(100))\nlogger.log('1 unit in css:', layer.worldUnitsToCss(1))"
+  }
+]

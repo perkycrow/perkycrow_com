@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "const div = createElement('div', {class: 'container'})\nconst btn = createElement('button', {text: 'Click me', class: 'btn'})\nconst input = createElement('input', {type: 'text', placeholder: 'Name'})"
+  },
+  {
+    "type": "code",
+    "title": "With styles and attributes",
+    "source": "const el = createElement('div', {\n    class: 'panel',\n    style: {background: '#1a1a2e', padding: '12px'},\n    attrs: {'data-role': 'sidebar', 'aria-label': 'Navigation'}\n})"
+  },
+  {
+    "type": "action",
+    "title": "Object syntax",
+    "source": "const el = createElement('div')\nsetStyle(el, {color: 'red', fontSize: '14px'})\nlogger.log('color:', el.style.color)\nlogger.log('fontSize:', el.style.fontSize)"
+  },
+  {
+    "type": "action",
+    "title": "String syntax",
+    "source": "const el = createElement('div')\nsetStyle(el, 'display:flex;gap:8px;')\nlogger.log('cssText:', el.style.cssText)"
+  },
+  {
+    "type": "action",
+    "title": "Example",
+    "source": "const el = createElement('div')\nsetAttributes(el, {dataValue: '42', ariaHidden: 'true'})\nlogger.log('data-value:', el.getAttribute('data-value'))\nlogger.log('aria-hidden:', el.getAttribute('aria-hidden'))"
+  }
+]

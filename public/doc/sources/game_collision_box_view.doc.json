@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Register with WorldView",
+    "source": "// worldView.register(\n//     (entity) => entity.hasTag('collidable'),\n//     CollisionBoxView,\n//     {width: 1, height: 1, strokeColor: '#ff0000'}\n// )"
+  },
+  {
+    "type": "action",
+    "title": "Create directly",
+    "source": "const entity = new Entity({x: 5, y: 3})\n\nconst view = new CollisionBoxView(entity, {\n    config: {\n        width: 2,\n        height: 1.5,\n        strokeColor: '#00ff00',\n        strokeWidth: 3\n    }\n})\n\nlogger.log('root width:', view.root.width)\nlogger.log('root height:', view.root.height)\nlogger.log('stroke color:', view.root.strokeColor)\nlogger.log('stroke width:', view.root.strokeWidth)\nlogger.log('fill color:', view.root.color)"
+  },
+  {
+    "type": "code",
+    "title": "Constructor",
+    "source": "// entity: The Entity instance\n// context: {\n//   config: {\n//     width: 1,              // Box width (default: 1)\n//     height: 1,             // Box height (default: 1)\n//     strokeColor: '#ff0000', // Outline color (default: red)\n//     strokeWidth: 2          // Outline thickness (default: 2)\n//   }\n// }"
+  }
+]

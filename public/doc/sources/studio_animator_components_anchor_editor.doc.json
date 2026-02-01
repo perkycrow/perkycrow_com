@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const {container, syncInputs, updatePreview} = buildAnchorEditor(\n    spritesheet,\n    {x: 0.5, y: 0},\n    (anchor) => save(anchor)\n)\n\nsyncInputs()\nupdatePreview()"
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const hub = document.createElement('hub-view')\n\nhub.setContext({\n    manifest,\n    animators: {playerAnimator: config},\n    textureSystem\n})"
+  }
+]

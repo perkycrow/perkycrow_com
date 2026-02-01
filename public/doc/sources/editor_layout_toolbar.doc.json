@@ -1,0 +1,27 @@
+[
+  {
+    "type": "container",
+    "title": "Basic toolbar",
+    "source": "const toolbar = document.createElement('editor-toolbar')\n\nconst btn1 = document.createElement('editor-button')\nbtn1.textContent = '◀'\nbtn1.setAttribute('icon', '')\nbtn1.setAttribute('slot', 'start')\ntoolbar.appendChild(btn1)\n\nconst btn2 = document.createElement('editor-button')\nbtn2.textContent = '▶'\nbtn2.setAttribute('icon', '')\ntoolbar.appendChild(btn2)\n\nconst btn3 = document.createElement('editor-button')\nbtn3.textContent = '■'\nbtn3.setAttribute('icon', '')\ntoolbar.appendChild(btn3)\n\nconst btn4 = document.createElement('editor-button')\nbtn4.textContent = 'Export'\nbtn4.variant = 'primary'\nbtn4.setAttribute('slot', 'end')\ntoolbar.appendChild(btn4)\n\nctx.container.appendChild(toolbar)"
+  },
+  {
+    "type": "container",
+    "title": "Slot positions",
+    "source": "const toolbar = document.createElement('editor-toolbar')\n\nconst left = document.createElement('span')\nleft.setAttribute('slot', 'start')\nleft.style.cssText = 'color:#888;font-size:12px;'\nleft.textContent = 'Start'\ntoolbar.appendChild(left)\n\nconst middle = document.createElement('span')\nmiddle.setAttribute('slot', 'center')\nmiddle.style.cssText = 'color:#888;font-size:12px;'\nmiddle.textContent = 'Center'\ntoolbar.appendChild(middle)\n\nconst right = document.createElement('span')\nright.setAttribute('slot', 'end')\nright.style.cssText = 'color:#888;font-size:12px;'\nright.textContent = 'End'\ntoolbar.appendChild(right)\n\nctx.container.appendChild(toolbar)"
+  },
+  {
+    "type": "container",
+    "title": "Compact toolbar",
+    "source": "const toolbar = document.createElement('editor-toolbar')\ntoolbar.setAttribute('variant', 'compact')\n\nconst label = document.createElement('span')\nlabel.style.cssText = 'color:#888;font-size:11px;'\nlabel.textContent = 'Frame: 1/24'\ntoolbar.appendChild(label)\n\nconst btn = document.createElement('editor-button')\nbtn.textContent = '⚙'\nbtn.setAttribute('icon', '')\nbtn.setAttribute('variant', 'ghost')\nbtn.setAttribute('slot', 'end')\ntoolbar.appendChild(btn)\n\nctx.container.appendChild(toolbar)"
+  },
+  {
+    "type": "container",
+    "title": "Footer toolbar",
+    "source": "const toolbar = document.createElement('editor-toolbar')\ntoolbar.setAttribute('variant', 'footer')\n\nconst status = document.createElement('span')\nstatus.setAttribute('slot', 'start')\nstatus.style.cssText = 'color:#888;font-size:12px;'\nstatus.textContent = 'Ready'\ntoolbar.appendChild(status)\n\nconst version = document.createElement('span')\nversion.setAttribute('slot', 'end')\nversion.style.cssText = 'color:#666;font-size:11px;'\nversion.textContent = 'v1.0.0'\ntoolbar.appendChild(version)\n\nctx.container.appendChild(toolbar)"
+  },
+  {
+    "type": "container",
+    "title": "Animation toolbar",
+    "source": "const toolbar = document.createElement('editor-toolbar')\n\n// Frame counter (start)\nconst frame = document.createElement('span')\nframe.setAttribute('slot', 'start')\nframe.style.cssText = 'color:#888;font-size:12px;font-variant-numeric:tabular-nums;'\nframe.textContent = '1 / 24'\ntoolbar.appendChild(frame)\n\n// Playback controls (center)\nconst prev = document.createElement('editor-button')\nprev.textContent = '⏮'\nprev.setAttribute('icon', '')\nprev.setAttribute('variant', 'ghost')\ntoolbar.appendChild(prev)\n\nconst play = document.createElement('editor-button')\nplay.textContent = '▶'\nplay.setAttribute('icon', '')\ntoolbar.appendChild(play)\n\nconst next = document.createElement('editor-button')\nnext.textContent = '⏭'\nnext.setAttribute('icon', '')\nnext.setAttribute('variant', 'ghost')\ntoolbar.appendChild(next)\n\n// FPS (end)\nconst fps = document.createElement('span')\nfps.setAttribute('slot', 'end')\nfps.style.cssText = 'color:#666;font-size:11px;'\nfps.textContent = '12 fps'\ntoolbar.appendChild(fps)\n\nctx.container.appendChild(toolbar)"
+  }
+]

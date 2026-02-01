@@ -1,0 +1,22 @@
+[
+  {
+    "type": "action",
+    "title": "Default effect",
+    "source": "const effect = new SpriteEffect()\n\nlogger.log('type:', effect.type)\nlogger.log('enabled:', effect.enabled)"
+  },
+  {
+    "type": "action",
+    "title": "Created disabled",
+    "source": "const effect = new SpriteEffect({enabled: false})\n\nlogger.log('enabled:', effect.enabled)"
+  },
+  {
+    "type": "action",
+    "title": "Toggle enabled",
+    "source": "const effect = new SpriteEffect()\n\nlogger.log('default:', effect.enabled)\n\neffect.enabled = false\nlogger.log('after disable:', effect.enabled)\n\neffect.enabled = true\nlogger.log('after enable:', effect.enabled)"
+  },
+  {
+    "type": "code",
+    "title": "Custom effect skeleton",
+    "source": "class MyEffect extends SpriteEffect {\n\n    static type = 'my-effect'\n\n    getHints () {\n        return {intensity: 0.5}\n    }\n\n    update () {\n        // Animate properties per frame\n    }\n\n    dispose () {\n        // Clean up\n    }\n\n}"
+  }
+]

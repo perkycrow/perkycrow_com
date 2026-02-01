@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const config = {\n    animations: {\n        idle: {source: 'player:idle_0'}\n    }\n}\n\ninferSpritesheetName(config) // 'player'\ninferSpritesheetName(null) // null"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const anim = {\n    fps: 12,\n    loop: true,\n    playbackMode: 'forward',\n    motion: {enabled: false},\n    frames: [\n        {source: 'player:idle_0', duration: 1, events: []}\n    ]\n}\n\nconst config = buildAnimationConfig(anim, 'player')\nconfig.fps // 12\nconfig.frames.length // 1"
+  }
+]

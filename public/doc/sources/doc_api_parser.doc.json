@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "const result = parseSourceFile(`\n    export default class Player {\n        constructor(name) {}\n        get health() {}\n        move(x, y) {}\n    }\n`)\n\nresult.classes[0].name       // \"Player\"\nresult.classes[0].methods    // [{name: \"move\", params: [\"x\", \"y\"], ...}]\nresult.classes[0].getters    // [{name: \"health\", ...}]\nresult.classes[0].constructor // {params: [\"name\"], ...}"
+  },
+  {
+    "type": "code",
+    "title": "Functions and variables",
+    "source": "const result = parseSourceFile(`\n    export function createEnemy(type) {}\n    export const MAX_HEALTH = 100\n`)\n\nresult.functions[0].name   // \"createEnemy\"\nresult.functions[0].params // [\"type\"]\nresult.exports[0].name     // \"MAX_HEALTH\""
+  },
+  {
+    "type": "code",
+    "title": "Single class file",
+    "source": "const api = getApiForFile(source, '/core/player.js')\n\napi.type // \"class\"\napi.name // \"Player\""
+  },
+  {
+    "type": "code",
+    "title": "Multi-export file",
+    "source": "const api = getApiForFile(source, '/core/utils.js')\n\napi.type      // \"module\"\napi.functions // [...]\napi.exports   // [...]"
+  },
+  {
+    "type": "code",
+    "title": "Result structure",
+    "source": "const classInfo = {\n    name: 'Player',\n    extends: 'Entity',\n    constructor: {params: ['name', 'options = ...']},\n    methods: [{name: 'move', params: ['x', 'y']}],\n    getters: [{name: 'health'}],\n    setters: [{name: 'health'}],\n    statics: [{name: 'create', params: ['config']}]\n}"
+  }
+]

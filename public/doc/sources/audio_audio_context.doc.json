@@ -1,0 +1,27 @@
+[
+  {
+    "type": "action",
+    "title": "Init and inspect",
+    "source": "const ctx = new AudioContext()\nctx.init()\n\nlogger.log('Sample rate:', ctx.sampleRate)\nlogger.log('Current time:', ctx.currentTime)\nlogger.log('Suspended:', ctx.suspended)\n\nctx.dispose()"
+  },
+  {
+    "type": "action",
+    "title": "Volume control",
+    "source": "const ctx = new AudioContext()\nctx.init()\n\nctx.setMasterVolume(0.5)\nlogger.log('Master volume:', ctx.getMasterVolume())\n\nctx.setMasterVolume(1)\nlogger.log('Master volume:', ctx.getMasterVolume())\n\nctx.dispose()"
+  },
+  {
+    "type": "code",
+    "title": "Suspend and resume",
+    "source": "const ctx = new AudioContext()\nctx.init()\n\nctx.suspend()\nctx.suspended // true\n\nawait ctx.resume()\nctx.suspended // false\n\nctx.dispose()"
+  },
+  {
+    "type": "code",
+    "title": "Available factories",
+    "source": "const ctx = new AudioContext()\n\nctx.createGain()           // GainNode\nctx.createOscillator()     // OscillatorNode\nctx.createBufferSource()   // AudioBufferSourceNode\nctx.createPanner()         // PannerNode\nctx.createStereoPanner()   // StereoPannerNode\n\nctx.dispose()"
+  },
+  {
+    "type": "action",
+    "title": "Listener position",
+    "source": "const ctx = new AudioContext()\nctx.init()\n\nctx.setListenerPosition(5, 3, 0)\nconst pos = ctx.getListenerPosition()\nlogger.log('Listener:', pos.x, pos.y, pos.z)\n\nctx.dispose()"
+  }
+]

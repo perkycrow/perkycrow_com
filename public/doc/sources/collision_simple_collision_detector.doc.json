@@ -1,0 +1,37 @@
+[
+  {
+    "type": "action",
+    "title": "Register bodies",
+    "source": "const detector = new SimpleCollisionDetector()\n\nconst player = {position: {x: 0, y: 0}}\nconst enemy = {position: {x: 30, y: 0}}\n\ndetector.addBody(player, {type: 'player', radius: 20})\ndetector.addBody(enemy, {type: 'enemy', radius: 20})\n\nlogger.log('bodies:', detector.bodies.length)"
+  },
+  {
+    "type": "action",
+    "title": "Detect player-enemy collision",
+    "source": "const detector = new SimpleCollisionDetector()\n\nconst player = {position: {x: 0, y: 0}}\nconst enemy = {position: {x: 10, y: 0}}\n\ndetector.addBody(player, {type: 'player', radius: 20})\ndetector.addBody(enemy, {type: 'enemy', radius: 20})\n\ndetector.onCollision('player', 'enemy', (a, b, info) => {\n    logger.log('hit! distance:', info.distance.toFixed(1))\n})\n\ndetector.detectCollisions()"
+  },
+  {
+    "type": "action",
+    "title": "Toggle detection",
+    "source": "const detector = new SimpleCollisionDetector()\nlogger.log('enabled:', detector.enabled)\n\ndetector.disable()\nlogger.log('after disable:', detector.enabled)\n\ndetector.enable()\nlogger.log('after enable:', detector.enabled)"
+  },
+  {
+    "type": "action",
+    "title": "Get bodies by type",
+    "source": "const detector = new SimpleCollisionDetector()\ndetector.addBody({position: {x: 0, y: 0}}, {type: 'bullet'})\ndetector.addBody({position: {x: 10, y: 0}}, {type: 'bullet'})\ndetector.addBody({position: {x: 50, y: 0}}, {type: 'enemy'})\n\nconst bullets = detector.getBodiesOfType('bullet')\nlogger.log('bullets:', bullets.length)"
+  },
+  {
+    "type": "action",
+    "title": "Get bodies near a point",
+    "source": "const detector = new SimpleCollisionDetector()\ndetector.addBody({position: {x: 5, y: 5}}, {type: 'item'})\ndetector.addBody({position: {x: 500, y: 500}}, {type: 'item'})\n\nconst nearby = detector.getBodiesNear(0, 0, 50)\nlogger.log('nearby:', nearby.length)"
+  },
+  {
+    "type": "action",
+    "title": "Remove a body",
+    "source": "const detector = new SimpleCollisionDetector()\nconst obj = {position: {x: 0, y: 0}}\ndetector.addBody(obj, {type: 'player'})\n\nlogger.log('before:', detector.bodies.length)\ndetector.removeBody(obj)\nlogger.log('after:', detector.bodies.length)"
+  },
+  {
+    "type": "action",
+    "title": "Clear all",
+    "source": "const detector = new SimpleCollisionDetector()\ndetector.addBody({position: {x: 0, y: 0}})\ndetector.addBody({position: {x: 10, y: 0}})\ndetector.onCollision('default', 'default', () => {})\n\ndetector.clear()\nlogger.log('bodies:', detector.bodies.length)\nlogger.log('callbacks:', detector.callbacks.size)"
+  }
+]

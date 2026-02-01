@@ -1,0 +1,22 @@
+[
+  {
+    "type": "container",
+    "title": "Programmatic tabs",
+    "source": "const tabBar = document.createElement('tab-bar')\ntabBar.setTabs([\n    {value: 'sprites', label: 'Sprites'},\n    {value: 'animations', label: 'Animations'},\n    {value: 'settings', label: 'Settings'}\n])\ntabBar.value = 'sprites'\n\ntabBar.addEventListener('change', (e) => {\n    logger.log('Selected:', e.detail.value)\n})\n\nctx.container.appendChild(tabBar)"
+  },
+  {
+    "type": "container",
+    "title": "Slotted tabs",
+    "source": "const tabBar = document.createElement('tab-bar')\ntabBar.value = 'edit'\n\nconst tab1 = document.createElement('button')\ntab1.setAttribute('slot', 'tab')\ntab1.dataset.value = 'edit'\ntab1.textContent = '✏️ Edit'\ntabBar.appendChild(tab1)\n\nconst tab2 = document.createElement('button')\ntab2.setAttribute('slot', 'tab')\ntab2.dataset.value = 'preview'\ntab2.textContent = '👁️ Preview'\ntabBar.appendChild(tab2)\n\ntabBar.addEventListener('change', (e) => {\n    logger.log('Mode:', e.detail.value)\n})\n\nctx.container.appendChild(tabBar)"
+  },
+  {
+    "type": "container",
+    "title": "View switcher",
+    "source": "const col = ctx.column({gap: 16})\n\nconst tabBar = document.createElement('tab-bar')\ntabBar.setTabs([\n    {value: 'grid', label: '⊞ Grid'},\n    {value: 'list', label: '☰ List'},\n    {value: 'tree', label: '⊟ Tree'}\n])\ntabBar.value = 'grid'\ncol.appendChild(tabBar)\n\nconst preview = document.createElement('div')\npreview.style.cssText = 'padding:16px;background:#1a1a1e;border-radius:8px;color:#888;font-size:12px;text-align:center;'\npreview.textContent = 'Grid view'\ncol.appendChild(preview)\n\ntabBar.addEventListener('change', (e) => {\n    preview.textContent = `${e.detail.value.charAt(0).toUpperCase() + e.detail.value.slice(1)} view`\n})"
+  },
+  {
+    "type": "container",
+    "title": "Studio tabs",
+    "source": "const tabBar = document.createElement('tab-bar')\ntabBar.setAttribute('context', 'studio')\ntabBar.setTabs([\n    {value: 'draw', label: 'Draw'},\n    {value: 'animate', label: 'Animate'},\n    {value: 'export', label: 'Export'}\n])\ntabBar.value = 'draw'\n\ntabBar.addEventListener('change', (e) => {\n    logger.log('Tab:', e.detail.value)\n})\n\nctx.container.appendChild(tabBar)"
+  }
+]

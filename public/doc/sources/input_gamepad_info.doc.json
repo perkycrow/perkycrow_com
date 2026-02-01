@@ -1,0 +1,32 @@
+[
+  {
+    "type": "action",
+    "title": "Parse a gamepad ID",
+    "source": "const info = new GamepadInfo('Xbox 360 Controller (STANDARD GAMEPAD Vendor: 045e Product: 028e)')\n\nlogger.log('Type:', info.type)\nlogger.log('Vendor:', info.vendor)\nlogger.log('Product:', info.product)\nlogger.log('Name:', info.name)"
+  },
+  {
+    "type": "action",
+    "title": "PlayStation detection",
+    "source": "const ps5 = new GamepadInfo('DualSense Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 0ce6)')\nlogger.log('Type:', ps5.type)\nlogger.log('Model:', ps5.model)\n\nconst ps4 = new GamepadInfo('054c-09cc-Sony Interactive Entertainment Wireless Controller')\nlogger.log('Type:', ps4.type)\nlogger.log('Model:', ps4.model)"
+  },
+  {
+    "type": "action",
+    "title": "Nintendo detection",
+    "source": "const info = new GamepadInfo('057e-2009-Pro Controller')\nlogger.log('Type:', info.type)\nlogger.log('Name:', info.name)"
+  },
+  {
+    "type": "code",
+    "title": "Chrome format",
+    "source": "// Chrome: \"Name (STANDARD GAMEPAD Vendor: XXXX Product: XXXX)\"\nconst info = new GamepadInfo('Xbox 360 Controller (STANDARD GAMEPAD Vendor: 045e Product: 028e)')\nlogger.log(info.vendor)  // '045e'"
+  },
+  {
+    "type": "code",
+    "title": "Firefox format",
+    "source": "// Firefox: \"XXXX-XXXX-Name\"\nconst info = new GamepadInfo('045e-028e-Xbox 360 Controller')\nlogger.log(info.vendor)  // '045e'"
+  },
+  {
+    "type": "action",
+    "title": "Invalid input",
+    "source": "const empty = new GamepadInfo(null)\nlogger.log('Null:', empty.type)\n\nconst unknown = new GamepadInfo('Some Random Controller')\nlogger.log('Unrecognized:', unknown.type)"
+  }
+]

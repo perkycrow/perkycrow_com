@@ -1,0 +1,42 @@
+[
+  {
+    "type": "action",
+    "title": "Create a canvas",
+    "source": "const canvas = await createCanvas(64, 32)\nlogger.log('width:', canvas.width)\nlogger.log('height:', canvas.height)"
+  },
+  {
+    "type": "action",
+    "title": "Write pixel data",
+    "source": "const canvas = await createCanvas(2, 2)\nconst ctx = canvas.getContext('2d')\n\nconst pixels = new Uint8Array([\n    255, 0, 0, 255,\n    0, 255, 0, 255,\n    0, 0, 255, 255,\n    255, 255, 0, 255\n])\n\nputPixels(ctx, {pixels, width: 2, height: 2})\n\nconst imageData = ctx.getImageData(0, 0, 2, 2)\nlogger.log('top-left red:', imageData.data[0])\nlogger.log('top-right green:', imageData.data[5])"
+  },
+  {
+    "type": "action",
+    "title": "Resize by width",
+    "source": "const result = calculateResizeDimensions(100, 200, 50, null)\nlogger.log('width:', result.width)\nlogger.log('height:', result.height)"
+  },
+  {
+    "type": "action",
+    "title": "Resize by height",
+    "source": "const result = calculateResizeDimensions(100, 200, null, 100)\nlogger.log('width:', result.width)\nlogger.log('height:', result.height)"
+  },
+  {
+    "type": "action",
+    "title": "Explicit dimensions",
+    "source": "const result = calculateResizeDimensions(100, 200, 50, 50)\nlogger.log('width:', result.width)\nlogger.log('height:', result.height)"
+  },
+  {
+    "type": "code",
+    "title": "Resize with smoothing",
+    "source": "const resized = await resizeCanvas(sourceCanvas, 128, 128)"
+  },
+  {
+    "type": "code",
+    "title": "Nearest-neighbor (pixel art)",
+    "source": "const resized = await resizeCanvas(sourceCanvas, 128, 128, true)"
+  },
+  {
+    "type": "action",
+    "title": "Export canvas",
+    "source": "const canvas = await createCanvas(4, 4)\nconst blob = await canvasToBlob(canvas)\nlogger.log('type:', blob.type)\nlogger.log('size:', blob.size, 'bytes')"
+  }
+]

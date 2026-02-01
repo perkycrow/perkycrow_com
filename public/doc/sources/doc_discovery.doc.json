@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "order.json structure",
+    "source": "const order = {\n    docs: {\n        categories: ['core', 'application', 'game'],\n        items: {\n            core: ['perky_module', 'utils', 'logger']\n        }\n    },\n    guides: {\n        categories: ['prologue'],\n        items: {\n            prologue: ['foreword', 'philosophy']\n        }\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "Doc entry",
+    "source": "const entry = {\n    id: 'logger',\n    file: '/core/logger.doc.js',\n    category: 'core',\n    title: 'Logger',\n    tags: ['core', 'logger'],\n    featured: false,\n    advanced: false\n}"
+  }
+]

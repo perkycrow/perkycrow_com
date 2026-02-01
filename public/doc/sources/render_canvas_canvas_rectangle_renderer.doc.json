@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Registration",
+    "source": "CanvasRectangleRenderer.handles // [Rectangle]"
+  },
+  {
+    "type": "code",
+    "title": "Render call",
+    "source": "const renderer = new CanvasRectangleRenderer()\n\n// Called internally by CanvasRenderer during flush\n// renderer.render(rect, ctx)"
+  }
+]

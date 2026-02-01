@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "How it works",
+    "source": "const client = ServiceClient.fromWorker('./my_service.js')"
+  }
+]

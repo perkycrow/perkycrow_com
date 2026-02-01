@@ -1,0 +1,27 @@
+[
+  {
+    "type": "container",
+    "title": "Basic layout",
+    "source": "const layout = document.createElement('app-layout')\nlayout.title = 'My App'\nlayout.style.height = '100%'\n\nconst content = document.createElement('div')\ncontent.style.cssText = 'display:flex;align-items:center;justify-content:center;height:100%;color:#888;'\ncontent.textContent = 'Content area'\nlayout.appendChild(content)\n\nctx.container.appendChild(layout)"
+  },
+  {
+    "type": "container",
+    "title": "Layout with footer",
+    "source": "const layout = document.createElement('app-layout')\nlayout.title = 'Sprite Animator'\nlayout.style.height = '100%'\n\nconst content = document.createElement('div')\ncontent.style.cssText = 'display:flex;align-items:center;justify-content:center;height:100%;background:#0d0d10;'\ncontent.textContent = 'Preview area'\nlayout.appendChild(content)\n\n// Footer start\nconst backBtn = document.createElement('editor-button')\nbackBtn.setAttribute('slot', 'footer-start')\nbackBtn.setAttribute('icon', '')\nbackBtn.textContent = '◀'\nlayout.appendChild(backBtn)\n\n// Footer center\nconst playBtn = document.createElement('editor-button')\nplayBtn.setAttribute('slot', 'footer-center')\nplayBtn.setAttribute('icon', '')\nplayBtn.textContent = '▶'\nlayout.appendChild(playBtn)\n\nconst stopBtn = document.createElement('editor-button')\nstopBtn.setAttribute('slot', 'footer-center')\nstopBtn.setAttribute('icon', '')\nstopBtn.textContent = '■'\nlayout.appendChild(stopBtn)\n\n// Footer end\nconst exportBtn = document.createElement('editor-button')\nexportBtn.setAttribute('slot', 'footer-end')\nexportBtn.variant = 'primary'\nexportBtn.textContent = 'Export'\nlayout.appendChild(exportBtn)\n\nctx.container.appendChild(layout)"
+  },
+  {
+    "type": "container",
+    "title": "Custom header",
+    "source": "const layout = document.createElement('app-layout')\nlayout.style.height = '100%'\n\n// Header center - custom title area\nconst select = document.createElement('select')\nselect.setAttribute('slot', 'header-center')\nselect.style.cssText = 'padding:8px 12px;border-radius:8px;background:#24242a;color:#e4e4e8;border:none;'\nselect.innerHTML = '<option>Animation 1</option><option>Animation 2</option><option>Animation 3</option>'\nlayout.appendChild(select)\n\n// Header end - custom actions\nconst settingsBtn = document.createElement('editor-button')\nsettingsBtn.setAttribute('slot', 'header-end')\nsettingsBtn.setAttribute('icon', '')\nsettingsBtn.setAttribute('variant', 'ghost')\nsettingsBtn.textContent = '⚙'\nlayout.appendChild(settingsBtn)\n\nconst content = document.createElement('div')\ncontent.style.cssText = 'display:flex;align-items:center;justify-content:center;height:100%;color:#888;'\ncontent.textContent = 'Content'\nlayout.appendChild(content)\n\nctx.container.appendChild(layout)"
+  },
+  {
+    "type": "container",
+    "title": "Content only",
+    "source": "const layout = document.createElement('app-layout')\nlayout.setAttribute('no-header', '')\nlayout.setAttribute('no-footer', '')\nlayout.style.height = '100%'\n\nconst content = document.createElement('div')\ncontent.style.cssText = 'display:flex;align-items:center;justify-content:center;height:100%;background:#0d0d10;color:#888;'\ncontent.textContent = 'Fullscreen content (no header/footer)'\nlayout.appendChild(content)\n\nctx.container.appendChild(layout)"
+  },
+  {
+    "type": "container",
+    "title": "Event handling",
+    "source": "const layout = document.createElement('app-layout')\nlayout.title = 'Event Demo'\nlayout.style.height = '100%'\n\nconst log = document.createElement('div')\nlog.style.cssText = 'padding:16px;color:#888;font-size:12px;'\nlog.textContent = 'Click menu (≡) or close (✕) buttons...'\nlayout.appendChild(log)\n\nlayout.addEventListener('menu', () => {\n    log.textContent = '📋 Menu clicked!'\n})\n\nlayout.addEventListener('close', () => {\n    log.textContent = '❌ Close clicked!'\n})\n\nctx.container.appendChild(layout)"
+  }
+]

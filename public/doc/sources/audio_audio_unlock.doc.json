@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Register a callback",
+    "source": "onAudioUnlock(() => {\n    logger.log('Audio is ready')\n})"
+  },
+  {
+    "type": "action",
+    "title": "Check state",
+    "source": "logger.log('Audio unlocked:', isAudioUnlocked())"
+  }
+]

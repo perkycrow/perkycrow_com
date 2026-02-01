@@ -1,0 +1,17 @@
+[
+  {
+    "type": "action",
+    "title": "send",
+    "source": "const response = new ServiceResponse('req-123')\nresponse.send({greeting: 'Hello, Perky'})\n\nlogger.log('success:', response.success)\nlogger.log('data:', response.data)\nlogger.log('error:', response.error)"
+  },
+  {
+    "type": "action",
+    "title": "fail",
+    "source": "const response = new ServiceResponse('req-456')\nresponse.fail('Something went wrong')\n\nlogger.log('success:', response.success)\nlogger.log('data:', response.data)\nlogger.log('error:', response.error)"
+  },
+  {
+    "type": "action",
+    "title": "export",
+    "source": "const response = new ServiceResponse('req-789')\nresponse.send({score: 100})\n\nconst data = response.export()\nlogger.log('exported:', data)"
+  }
+]

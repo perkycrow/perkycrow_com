@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Basic creation",
+    "source": "const vertex = `#version 300 es\n    in vec2 aPosition;\n    void main() {\n        gl_Position = vec4(aPosition, 0.0, 1.0);\n    }`\n\nconst fragment = `#version 300 es\n    precision mediump float;\n    out vec4 fragColor;\n    void main() {\n        fragColor = vec4(1.0, 0.0, 0.0, 1.0);\n    }`\n\nconst program = new ShaderProgram(gl, vertex, fragment)\n\nprogram.registerUniform('uColor')\nprogram.registerAttribute('aPosition')\n\nprogram.use()\nprogram.setUniform3f('uColor', 1.0, 0.0, 0.0)"
+  },
+  {
+    "type": "code",
+    "title": "Register and set",
+    "source": "const program = new ShaderProgram(gl, vertexSrc, fragmentSrc)\n\nprogram\n    .registerUniform('uProjection')\n    .registerUniform('uTime')\n    .registerAttribute('aPosition')\n    .registerAttribute('aTexCoord')\n\nprogram.use()\nprogram.setUniformMatrix3fv('uProjection', false, projectionMatrix)\nprogram.setUniform1f('uTime', 0.5)"
+  },
+  {
+    "type": "code",
+    "title": "Clean up",
+    "source": "const program = new ShaderProgram(gl, vertexSrc, fragmentSrc)\nprogram.dispose()"
+  }
+]

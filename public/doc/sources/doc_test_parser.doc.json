@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const result = parseTestFile(source, '/core/logger.test.js')\n\nresult.file                     // '/core/logger.test.js'\nresult.describes[0].title       // 'Logger'\nresult.describes[0].tests[0]    // {title, line, source}"
+  },
+  {
+    "type": "code",
+    "title": "Result structure",
+    "source": "const describe = {\n    title: 'Logger',\n    line: 5,\n    beforeEach: {line: 6, source: '...'},\n    afterEach: null,\n    tests: [{title: 'log', line: 10, source: '...'}],\n    describes: []\n}"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const tests = getTestsForFile(source, '/core/logger.test.js')\n\ntests.describes.length // number of top-level describe blocks"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "type": "action",
+    "title": "Basic request",
+    "source": "class EchoService extends ServiceHost {\n    static serviceMethods = ['echo']\n\n    echo (req, res) {\n        res.send(`echo: ${req.params.message}`)\n    }\n}\n\nconst client = await ServiceClient.fromService(EchoService)\nconst result = await client.request('echo', {message: 'hello'})\nlogger.log('result:', result)"
+  },
+  {
+    "type": "action",
+    "title": "Error response",
+    "source": "class FailService extends ServiceHost {\n    static serviceMethods = ['fail']\n\n    fail (req, res) {\n        res.error('Something went wrong')\n    }\n}\n\nconst client = await ServiceClient.fromService(FailService)\n\ntry {\n    await client.request('fail')\n} catch (error) {\n    logger.log('caught:', error.message)\n}"
+  },
+  {
+    "type": "action",
+    "title": "Client-host events",
+    "source": "class PingService extends ServiceHost {\n    constructor (options) {\n        super(options)\n        this.on('client:ping', () => {\n            logger.log('host received ping')\n            this.emitToClient('pong')\n        })\n    }\n}\n\nconst client = await ServiceClient.fromService(PingService)\n\nclient.on('host:pong', () => {\n    logger.log('client received pong')\n})\n\nclient.emitToHost('ping')"
+  },
+  {
+    "type": "code",
+    "title": "from() options",
+    "source": "ServiceClient.from({service: MyService})\n\nServiceClient.from({worker: './my_service.js'})\n\nServiceClient.from({path: './my_service.js'})"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "const psd = parsePsd(new Uint8Array(buffer))\n\npsd.width         // 512\npsd.height        // 512\npsd.colorMode     // 'RGB'\npsd.colorProfile  // {name: 'sRGB', isP3: false}\npsd.layers        // flat array of layer records\npsd.tree          // [{type: 'group', name: 'anim - idle', children: [...]}]\npsd.animations    // {idle: [layer, layer, ...], run: [...]}"
+  },
+  {
+    "type": "code",
+    "title": "Full-size output",
+    "source": "const rgba = layerToRGBA(layer, psd.width, psd.height)\n\nrgba.pixels  // Uint8Array of RGBA data\nrgba.width   // psd.width\nrgba.height  // psd.height"
+  },
+  {
+    "type": "code",
+    "title": "Trimmed output",
+    "source": "const rgba = layerToRGBA(layer, psd.width, psd.height, {trim: true})\n\nrgba.pixels  // cropped RGBA data\nrgba.width   // layer width\nrgba.height  // layer height\nrgba.left    // x offset within PSD\nrgba.top     // y offset within PSD"
+  },
+  {
+    "type": "code",
+    "title": "Tree structure",
+    "source": "psd.tree[0].type     // 'group'\npsd.tree[0].name     // 'anim - idle'\npsd.tree[0].children // [{type: 'layer', name: '1', layer: {...}}, ...]"
+  }
+]

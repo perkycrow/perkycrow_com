@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Initialization",
+    "source": "const viewer = new DocViewer()\nviewer.init()"
+  },
+  {
+    "type": "code",
+    "title": "switchSection",
+    "source": "viewer.switchSection('guides')"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "type": "code",
+    "title": "Access via AudioSystem",
+    "source": "const channel = audioSystem.getChannel('music')\nchannel.volume    // current volume (0–1)\nchannel.muted     // boolean\nchannel.sources   // active AudioSource instances"
+  },
+  {
+    "type": "action",
+    "title": "Volume methods",
+    "source": "const channel = new AudioChannel({$id: 'sfx'})\n\nchannel.setVolume(0.5)\nlogger.log('Volume:', channel.getVolume())\n\nchannel.setVolume(1)\nlogger.log('Volume:', channel.getVolume())\n\nchannel.volume = 0.8\nlogger.log('Volume:', channel.volume)"
+  },
+  {
+    "type": "action",
+    "title": "Mute toggle",
+    "source": "const channel = new AudioChannel({$id: 'music'})\nchannel.setVolume(0.7)\n\nchannel.mute()\nlogger.log('Muted:', channel.muted)\n\nchannel.unmute()\nlogger.log('Muted:', channel.muted)\n\nchannel.toggleMute()\nlogger.log('Muted:', channel.muted)"
+  },
+  {
+    "type": "action",
+    "title": "Register and query sources",
+    "source": "const channel = new AudioChannel({$id: 'sfx'})\n\nconst fakeSource = {$id: 'explosion_1', stop () {}}\nchannel.registerSource(fakeSource)\nlogger.log('Source count:', channel.sourceCount)\nlogger.log('Has source:', channel.hasSource('explosion_1'))\n\nchannel.unregisterSource(fakeSource)\nlogger.log('Source count:', channel.sourceCount)"
+  },
+  {
+    "type": "code",
+    "title": "Stop all sources",
+    "source": "channel.stopAll()\nchannel.sourceCount // 0"
+  },
+  {
+    "type": "code",
+    "title": "Event list",
+    "source": "channel.on('volume:changed', (volume) => {})\nchannel.on('muted', () => {})\nchannel.on('unmuted', () => {})\nchannel.on('source:added', (source) => {})\nchannel.on('source:removed', (source) => {})"
+  }
+]

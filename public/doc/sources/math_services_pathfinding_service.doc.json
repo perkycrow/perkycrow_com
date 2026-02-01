@@ -1,0 +1,32 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const service = new PathfindingService()\n\nconst withOptions = new PathfindingService({\n    heuristic: 'euclidean',\n    allowDiagonal: true,\n    maxCacheSize: 1000\n})"
+  },
+  {
+    "type": "action",
+    "title": "setGrid",
+    "source": "const service = new PathfindingService()\nconst req = new ServiceRequest('setGrid', {\n    gridData: {\n        width: 5,\n        height: 5,\n        cells: {'2,0': 'wall', '2,1': 'wall', '2,2': 'wall'}\n    }\n})\nconst res = new ServiceResponse()\nservice.setGrid(req, res)\nlogger.log('result:', JSON.stringify(res.result))"
+  },
+  {
+    "type": "action",
+    "title": "Basic pathfinding",
+    "source": "const service = new PathfindingService()\n\nconst setupReq = new ServiceRequest('setGrid', {\n    gridData: {width: 5, height: 5, cells: {}}\n})\nconst setupRes = new ServiceResponse()\nservice.setGrid(setupReq, setupRes)\n\nconst req = new ServiceRequest('findPath', {\n    start: {x: 0, y: 0},\n    goal: {x: 4, y: 4}\n})\nconst res = new ServiceResponse()\nservice.findPath(req, res)\n\nlogger.log('found:', res.result.found)\nlogger.log('length:', res.result.length)\nlogger.log('cached:', res.result.cached)"
+  },
+  {
+    "type": "action",
+    "title": "With obstacles",
+    "source": "const service = new PathfindingService()\n\nconst setupReq = new ServiceRequest('setGrid', {\n    gridData: {\n        width: 5,\n        height: 5,\n        cells: {'2,0': 'wall', '2,1': 'wall', '2,2': 'wall'}\n    }\n})\nconst setupRes = new ServiceResponse()\nservice.setGrid(setupReq, setupRes)\n\nconst req = new ServiceRequest('findPath', {\n    start: {x: 0, y: 0},\n    goal: {x: 4, y: 0}\n})\nconst res = new ServiceResponse()\nservice.findPath(req, res)\n\nlogger.log('found:', res.result.found)\nlogger.log('path length:', res.result.length)\nif (res.result.path) {\n    for (const step of res.result.path) {\n        logger.log(`(${step.x}, ${step.y})`)\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "Cached result",
+    "source": "const service = new PathfindingService()\n\nconst setupReq = new ServiceRequest('setGrid', {\n    gridData: {width: 5, height: 5, cells: {}}\n})\nconst setupRes = new ServiceResponse()\nservice.setGrid(setupReq, setupRes)\n\nconst req1 = new ServiceRequest('findPath', {\n    start: {x: 0, y: 0}, goal: {x: 4, y: 4}\n})\nconst res1 = new ServiceResponse()\nservice.findPath(req1, res1)\nlogger.log('first call cached:', res1.result.cached)\n\nconst req2 = new ServiceRequest('findPath', {\n    start: {x: 0, y: 0}, goal: {x: 4, y: 4}\n})\nconst res2 = new ServiceResponse()\nservice.findPath(req2, res2)\nlogger.log('second call cached:', res2.result.cached)"
+  },
+  {
+    "type": "action",
+    "title": "setCell",
+    "source": "const service = new PathfindingService()\n\nconst setupReq = new ServiceRequest('setGrid', {\n    gridData: {width: 5, height: 5, cells: {}}\n})\nconst setupRes = new ServiceResponse()\nservice.setGrid(setupReq, setupRes)\n\nconst cellReq = new ServiceRequest('setCell', {\n    coords: {x: 2, y: 2},\n    value: 'wall'\n})\nconst cellRes = new ServiceResponse()\nservice.setCell(cellReq, cellRes)\nlogger.log('setCell result:', JSON.stringify(cellRes.result))"
+  }
+]

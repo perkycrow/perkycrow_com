@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Uniforms",
+    "source": "const uniforms = SPRITE_SHADER_DEF.uniforms"
+  }
+]

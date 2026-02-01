@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Source-based config",
+    "source": "const animator = new SpriteAnimator({\n    config: {\n        animations: {\n            idle: {\n                source: 'character:idle',\n                fps: 8,\n                loop: true\n            },\n            run: {\n                source: 'character:run',\n                fps: 12,\n                playbackMode: 'forward'\n            }\n        }\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Frame-based config",
+    "source": "const animator = new SpriteAnimator({\n    config: {\n        animations: {\n            attack: {\n                frames: [\n                    {source: 'character:attack_01', duration: 100},\n                    {source: 'character:attack_02', duration: 80},\n                    {source: 'character:attack_03', events: ['hit']}\n                ],\n                fps: 10,\n                loop: false\n            }\n        }\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Playing animations",
+    "source": "const animator = new SpriteAnimator()\n\nanimator.play('idle')\nanimator.play('run')  // stops idle, starts run\n\n// In your game loop\n// animator.update(deltaTime)"
+  },
+  {
+    "type": "code",
+    "title": "Getting an animation",
+    "source": "const animator = new SpriteAnimator()\n\nconst idle = animator.get('idle')\n\n// Returns the SpriteAnimation instance or undefined"
+  },
+  {
+    "type": "code",
+    "title": "Frame events config",
+    "source": "const animator = new SpriteAnimator({\n    config: {\n        animations: {\n            attack: {\n                frames: [\n                    {source: 'hero:swing_01'},\n                    {source: 'hero:swing_02', events: ['hit']},\n                    {source: 'hero:swing_03'}\n                ]\n            }\n        }\n    }\n})\n\nconst attack = animator.get('attack')\n\n// attack.on('hit', () => { ... })"
+  }
+]

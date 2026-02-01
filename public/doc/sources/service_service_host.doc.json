@@ -1,0 +1,22 @@
+[
+  {
+    "type": "action",
+    "title": "register",
+    "source": "const host = new ServiceHost({\n    transport: ServiceTransport.local()\n})\n\nhost.register('greet', (req, res) => {\n    res.send(`Hello ${req.params.name}`)\n})\n\nhost.register('add', (req, res) => {\n    res.send(req.params.a + req.params.b)\n})\n\nlogger.log('actions registered:', [...host.actions.keys()])"
+  },
+  {
+    "type": "code",
+    "title": "serviceMethods",
+    "source": "class MathService extends ServiceHost {\n    static serviceMethods = ['add', 'multiply']\n\n    add (req, res) {\n        res.send(req.params.a + req.params.b)\n    }\n\n    multiply (req, res) {\n        res.send(req.params.a * req.params.b)\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "unregister",
+    "source": "const host = new ServiceHost({\n    transport: ServiceTransport.local()\n})\n\nhost.register('temp', (req, res) => res.send('ok'))\nlogger.log('before:', [...host.actions.keys()])\n\nhost.unregister('temp')\nlogger.log('after:', [...host.actions.keys()])"
+  },
+  {
+    "type": "code",
+    "title": "Event handling",
+    "source": "const host = new ServiceHost()\n\nhost.on('client:ping', () => {\n    host.emitToClient('pong')\n})"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "type": "container",
+    "title": "Button variants",
+    "source": "const row = ctx.row({gap: 12})\n\nconst defaultBtn = document.createElement('editor-button')\ndefaultBtn.textContent = 'Default'\nrow.appendChild(defaultBtn)\n\nconst primaryBtn = document.createElement('editor-button')\nprimaryBtn.variant = 'primary'\nprimaryBtn.textContent = 'Primary'\nrow.appendChild(primaryBtn)\n\nconst dangerBtn = document.createElement('editor-button')\ndangerBtn.variant = 'danger'\ndangerBtn.textContent = 'Danger'\nrow.appendChild(dangerBtn)\n\nconst ghostBtn = document.createElement('editor-button')\nghostBtn.variant = 'ghost'\nghostBtn.textContent = 'Ghost'\nrow.appendChild(ghostBtn)"
+  },
+  {
+    "type": "container",
+    "title": "Icon buttons",
+    "source": "const row = ctx.row({gap: 12})\n\nconst addBtn = document.createElement('editor-button')\naddBtn.setAttribute('icon', '')\naddBtn.textContent = '+'\nrow.appendChild(addBtn)\n\nconst playBtn = document.createElement('editor-button')\nplayBtn.setAttribute('icon', '')\nplayBtn.variant = 'primary'\nplayBtn.textContent = '▶'\nrow.appendChild(playBtn)\n\nconst deleteBtn = document.createElement('editor-button')\ndeleteBtn.setAttribute('icon', '')\ndeleteBtn.variant = 'danger'\ndeleteBtn.textContent = '✕'\nrow.appendChild(deleteBtn)\n\nconst menuBtn = document.createElement('editor-button')\nmenuBtn.setAttribute('icon', '')\nmenuBtn.variant = 'ghost'\nmenuBtn.textContent = '≡'\nrow.appendChild(menuBtn)"
+  },
+  {
+    "type": "container",
+    "title": "Toggle button",
+    "source": "const row = ctx.row({gap: 12})\n\nconst toggle = document.createElement('editor-button')\ntoggle.textContent = 'Loop'\ntoggle.addEventListener('press', () => {\n    toggle.active = !toggle.active\n    logger.log('Loop:', toggle.active)\n})\nrow.appendChild(toggle)\n\nconst toggle2 = document.createElement('editor-button')\ntoggle2.setAttribute('icon', '')\ntoggle2.textContent = '⟳'\ntoggle2.active = true\ntoggle2.addEventListener('press', () => {\n    toggle2.active = !toggle2.active\n    logger.log('Repeat:', toggle2.active)\n})\nrow.appendChild(toggle2)"
+  },
+  {
+    "type": "container",
+    "title": "Disabled buttons",
+    "source": "const row = ctx.row({gap: 12})\n\nconst btn1 = document.createElement('editor-button')\nbtn1.textContent = 'Disabled'\nbtn1.disabled = true\nrow.appendChild(btn1)\n\nconst btn2 = document.createElement('editor-button')\nbtn2.variant = 'primary'\nbtn2.textContent = 'Disabled'\nbtn2.disabled = true\nrow.appendChild(btn2)"
+  },
+  {
+    "type": "container",
+    "title": "Press event",
+    "source": "const btn = document.createElement('editor-button')\nbtn.variant = 'primary'\nbtn.textContent = 'Click me'\nbtn.addEventListener('press', () => {\n    logger.log('Button pressed!')\n})\nctx.container.appendChild(btn)"
+  },
+  {
+    "type": "container",
+    "title": "Context comparison",
+    "source": "const col = ctx.column({gap: 16})\n\nconst row1 = ctx.row({gap: 12, parent: col})\nctx.label('Editor (compact):', {parent: row1})\nconst btn1 = document.createElement('editor-button')\nbtn1.setAttribute('context', 'editor')\nbtn1.textContent = 'Save'\nrow1.appendChild(btn1)\n\nconst row2 = ctx.row({gap: 12, parent: col})\nctx.label('Default:', {parent: row2})\nconst btn2 = document.createElement('editor-button')\nbtn2.textContent = 'Save'\nrow2.appendChild(btn2)\n\nconst row3 = ctx.row({gap: 12, parent: col})\nctx.label('Studio (touch):', {parent: row3})\nconst btn3 = document.createElement('editor-button')\nbtn3.setAttribute('context', 'studio')\nbtn3.textContent = 'Save'\nrow3.appendChild(btn3)"
+  }
+]

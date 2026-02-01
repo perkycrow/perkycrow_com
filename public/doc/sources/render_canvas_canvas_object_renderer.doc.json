@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Collect and flush",
+    "source": "const renderer = new CanvasObjectRenderer()\n\nrenderer.reset()\n\n// renderer.collect(object, opacity, hints)\n// renderer.flush()"
+  },
+  {
+    "type": "code",
+    "title": "Handled types",
+    "source": "CanvasObjectRenderer.handles // []"
+  }
+]

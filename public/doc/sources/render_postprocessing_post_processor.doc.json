@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Build a chain",
+    "source": "postProcessor.addPass(new VignettePass())\npostProcessor.addPass(new ColorGradePass())"
+  },
+  {
+    "type": "code",
+    "title": "Typical usage",
+    "source": "const usingPost = postProcessor.begin()\n\n// ... render scene ...\n\nif (usingPost) {\n    postProcessor.finish()\n}"
+  },
+  {
+    "type": "code",
+    "title": "Remove and clear",
+    "source": "postProcessor.removePass(vignettePass)\n\npostProcessor.clearPasses()"
+  },
+  {
+    "type": "code",
+    "title": "Toggle",
+    "source": "postProcessor.enabled = false"
+  }
+]

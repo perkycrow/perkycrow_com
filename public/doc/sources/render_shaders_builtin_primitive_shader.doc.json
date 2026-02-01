@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Using the definition",
+    "source": "const program = shaderRegistry.createProgram(\n    PRIMITIVE_SHADER_DEF.vertex,\n    PRIMITIVE_SHADER_DEF.fragment,\n    PRIMITIVE_SHADER_DEF.uniforms,\n    PRIMITIVE_SHADER_DEF.attributes\n)"
+  }
+]

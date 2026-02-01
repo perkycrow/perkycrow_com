@@ -1,0 +1,42 @@
+[
+  {
+    "type": "action",
+    "title": "Direct call",
+    "source": "logger.log('linear(0.5):', Easing.linear(0.5))\nlogger.log('easeInQuad(0.5):', Easing.easeInQuad(0.5))\nlogger.log('easeOutCubic(0.5):', Easing.easeOutCubic(0.5))\nlogger.log('easeInOutSine(0.5):', Easing.easeInOutSine(0.5))"
+  },
+  {
+    "type": "action",
+    "title": "By name",
+    "source": "const ease = Easing.resolve('easeOutQuad')\nlogger.log('easeOutQuad(0.5):', ease(0.5))"
+  },
+  {
+    "type": "action",
+    "title": "Custom function",
+    "source": "const custom = t => t * t * t\nconst ease = Easing.resolve(custom)\nlogger.log('custom(0.5):', ease(0.5))"
+  },
+  {
+    "type": "action",
+    "title": "Unknown fallback",
+    "source": "const ease = Easing.resolve('nonexistent')\nlogger.log('fallback(0.5):', ease(0.5))"
+  },
+  {
+    "type": "action",
+    "title": "Linear interpolation",
+    "source": "logger.log('0%:', Easing.lerp(0, 100, 0))\nlogger.log('50%:', Easing.lerp(0, 100, 0.5))\nlogger.log('100%:', Easing.lerp(0, 100, 1))"
+  },
+  {
+    "type": "action",
+    "title": "With easing",
+    "source": "logger.log('linear 50%:', Easing.lerp(0, 100, 0.5, 'linear'))\nlogger.log('easeInQuad 50%:', Easing.lerp(0, 100, 0.5, 'easeInQuad'))\nlogger.log('easeOutCubic 50%:', Easing.lerp(0, 100, 0.5, 'easeOutCubic'))"
+  },
+  {
+    "type": "action",
+    "title": "Compare variants",
+    "source": "const t = 0.25\nlogger.log('easeInQuad:', Easing.easeInQuad(t).toFixed(4))\nlogger.log('easeOutQuad:', Easing.easeOutQuad(t).toFixed(4))\nlogger.log('easeInOutQuad:', Easing.easeInOutQuad(t).toFixed(4))"
+  },
+  {
+    "type": "action",
+    "title": "Bouncy easings",
+    "source": "logger.log('easeOutBounce(0.5):', Easing.easeOutBounce(0.5).toFixed(4))\nlogger.log('easeOutElastic(0.5):', Easing.easeOutElastic(0.5).toFixed(4))\nlogger.log('easeOutBack(0.5):', Easing.easeOutBack(0.5).toFixed(4))"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "type": "action",
+    "title": "Parse hex colors",
+    "source": "logger.log(parseColor('#ff0000'))\nlogger.log(parseColor('#00ff00'))\nlogger.log(parseColor('#ffffff'))"
+  },
+  {
+    "type": "action",
+    "title": "Parse HSL colors",
+    "source": "logger.log(parseColor('hsl(0, 100, 50)'))\nlogger.log(parseColor('hsl(120, 50, 50)'))\nlogger.log(parseColor('hsl(0, 0, 100)'))"
+  },
+  {
+    "type": "action",
+    "title": "Invalid input",
+    "source": "logger.log(parseColor('not-a-color'))"
+  }
+]

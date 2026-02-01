@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Manual batching",
+    "source": "batch.begin(spriteProgram)\n\nfor (const sprite of sprites) {\n    batch.addSprite(sprite, 1.0)\n}\n\nbatch.end()"
+  }
+]

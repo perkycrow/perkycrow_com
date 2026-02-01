@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Registration",
+    "source": "CanvasSpriteRenderer.handles // [Sprite]"
+  },
+  {
+    "type": "code",
+    "title": "Render call",
+    "source": "const renderer = new CanvasSpriteRenderer()\n\n// Called internally by CanvasRenderer during flush\n// renderer.render(sprite, ctx)"
+  }
+]

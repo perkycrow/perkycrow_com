@@ -1,0 +1,37 @@
+[
+  {
+    "type": "action",
+    "title": "Bind and query",
+    "source": "const binder = new InputBinder({$id: 'binder'})\n\nbinder.bindInput({controlName: 'Space', actionName: 'jump'})\nbinder.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\n\nlogger.log('Has jump:', binder.hasBinding({actionName: 'jump'}))\nlogger.log('All bindings:', binder.getAllBindings().length)"
+  },
+  {
+    "type": "code",
+    "title": "With explicit device",
+    "source": "binder.bindInput({\n    deviceName: 'mouse',\n    controlName: 'leftButton',\n    actionName: 'shoot',\n    eventType: 'pressed'\n})"
+  },
+  {
+    "type": "action",
+    "title": "Query methods",
+    "source": "const binder = new InputBinder({$id: 'binder'})\nbinder.bindInput({controlName: 'Space', actionName: 'jump'})\nbinder.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\nbinder.bindInput({controlName: 'ArrowUp', actionName: 'moveUp'})\n\nconst jumpBindings = binder.getBindingsForAction('jump')\nlogger.log('Jump bindings:', jumpBindings.length)\n\nconst moveBindings = binder.getBindingsForAction('moveUp')\nlogger.log('MoveUp bindings:', moveBindings.length)\n\nconst spaceBindings = binder.getBindingsForInput({\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    eventType: 'pressed'\n})\nlogger.log('Space bindings:', spaceBindings.length)"
+  },
+  {
+    "type": "action",
+    "title": "Bind a combo",
+    "source": "const binder = new InputBinder({$id: 'binder'})\n\nbinder.bindCombo(['ControlLeft', 'KeyS'], 'save')\nbinder.bindCombo(['ShiftLeft', 'KeyZ'], 'undo')\n\nlogger.log('Has save:', binder.hasBinding({actionName: 'save'}))\nlogger.log('All bindings:', binder.getAllBindings().length)"
+  },
+  {
+    "type": "action",
+    "title": "Unbind and clear",
+    "source": "const binder = new InputBinder({$id: 'binder'})\nbinder.bindInput({controlName: 'Space', actionName: 'jump'})\nbinder.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\n\nlogger.log('Before unbind:', binder.getAllBindings().length)\n\nbinder.unbind({actionName: 'jump'})\nlogger.log('After unbind:', binder.getAllBindings().length)\n\nbinder.clearBindings()\nlogger.log('After clear:', binder.getAllBindings().length)"
+  },
+  {
+    "type": "action",
+    "title": "Export and import",
+    "source": "const binder = new InputBinder({$id: 'binder'})\nbinder.bindInput({controlName: 'Space', actionName: 'jump'})\nbinder.bindInput({controlName: 'KeyW', actionName: 'moveUp'})\n\nconst exported = binder.export()\nlogger.log('Exported bindings:', exported.bindings.length)\n\nconst binder2 = new InputBinder({$id: 'binder2', inputBinder: binder})\nlogger.log('Imported bindings:', binder2.getAllBindings().length)"
+  },
+  {
+    "type": "code",
+    "title": "Multiplayer bindings",
+    "source": "binder.bindInput({\n    controlName: 'KeyW',\n    actionName: 'moveUp',\n    controllerName: 'player1'\n})\n\nbinder.bindInput({\n    controlName: 'ArrowUp',\n    actionName: 'moveUp',\n    controllerName: 'player2'\n})\n\n// Query for a specific controller\nbinder.getBindingsForAction('moveUp', 'player1')"
+  }
+]

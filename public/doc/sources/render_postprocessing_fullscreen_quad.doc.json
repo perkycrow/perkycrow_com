@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Draw a fullscreen pass",
+    "source": "const quad = new FullscreenQuad(gl)\n\nprogram.use()\ngl.activeTexture(gl.TEXTURE0)\ngl.bindTexture(gl.TEXTURE_2D, inputTexture)\nprogram.setUniform1i('uTexture', 0)\n\nquad.draw(gl, program)"
+  },
+  {
+    "type": "code",
+    "title": "Clean up",
+    "source": "quad.dispose(gl)"
+  }
+]

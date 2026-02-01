@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Register an effect",
+    "source": "const registry = new ShaderEffectRegistry(gl, shaderRegistry)\n\nclass GlowEffect extends ShaderEffect {\n    static shader = {\n        params: ['intensity'],\n        uniforms: [],\n        fragment: 'color.rgb += intensity * color.a;'\n    }\n    intensity = 1.0\n}\n\nregistry.register(GlowEffect)\nregistry.has('GlowEffect')\nregistry.get('GlowEffect')"
+  },
+  {
+    "type": "code",
+    "title": "Get a combined shader",
+    "source": "const registry = new ShaderEffectRegistry(gl, shaderRegistry)\n\nregistry.register(OutlineEffect)\nregistry.register(GlowEffect)\n\nconst program = registry.getShaderForEffects(['OutlineEffect', 'GlowEffect'])\nprogram.use()"
+  },
+  {
+    "type": "code",
+    "title": "Set and apply uniforms",
+    "source": "const registry = new ShaderEffectRegistry(gl, shaderRegistry)\n\nregistry.setUniform('uTime', 1.5, 'float')\nregistry.getUniform('uTime')\n\nregistry.applyUniforms(gl, program)"
+  },
+  {
+    "type": "code",
+    "title": "Clean up",
+    "source": "const registry = new ShaderEffectRegistry(gl, shaderRegistry)\nregistry.dispose()"
+  }
+]

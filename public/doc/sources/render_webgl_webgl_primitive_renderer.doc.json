@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Subclass pattern",
+    "source": "class MyShapeRenderer extends WebGLPrimitiveRenderer {\n\n    static get handles () {\n        return [MyShape]\n    }\n\n    renderObject (shape, opacity) {\n        const gl = this.gl\n        const program = this.context.primitiveProgram\n        const vertices = buildVertices(shape, opacity)\n\n        gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer)\n        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.DYNAMIC_DRAW)\n        gl.drawArrays(gl.TRIANGLE_FAN, 0, vertices.length / 6)\n    }\n\n}"
+  }
+]

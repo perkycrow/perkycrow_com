@@ -1,0 +1,32 @@
+[
+  {
+    "type": "code",
+    "title": "Custom controller",
+    "source": "class BattleController extends GameController {\n    shoot () {\n        this.spawn(Bullet, {\n            x: this.camera.x,\n            y: this.camera.y\n        })\n    }\n\n    clearEnemies () {\n        for (const entity of this.world.entities) {\n            if (entity.hasTag('enemy')) {\n                this.world.removeChild(entity.$id)\n            }\n        }\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "Spawn entities",
+    "source": "const controller = new GameController({$id: 'battle'})\n\nlogger.log('spawn without world:', controller.spawn(Entity))"
+  },
+  {
+    "type": "code",
+    "title": "Available resources",
+    "source": "// this.game      - The game instance (alias for this.engine)\n// this.world     - The game's World\n// this.renderer  - The game's renderer\n// this.camera    - The game's camera"
+  },
+  {
+    "type": "code",
+    "title": "Static properties",
+    "source": "// GameController.resources = ['world', 'renderer', 'camera']"
+  },
+  {
+    "type": "code",
+    "title": "Properties",
+    "source": "// controller.game - The game instance (alias for engine)"
+  },
+  {
+    "type": "code",
+    "title": "Methods",
+    "source": "// spawn(EntityClass, options) - Create entity in the world"
+  }
+]

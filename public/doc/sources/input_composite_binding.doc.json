@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Ctrl+S combo",
+    "source": "const binding = new CompositeBinding({\n    controls: [\n        {deviceName: 'keyboard', controlName: 'ControlLeft'},\n        {deviceName: 'keyboard', controlName: 'KeyS'}\n    ],\n    actionName: 'save'\n})\n\nlogger.log(binding.controlName)\nlogger.log(binding.actionName)"
+  },
+  {
+    "type": "action",
+    "title": "Generated name",
+    "source": "const name = CompositeBinding.generateControlName([\n    {deviceName: 'keyboard', controlName: 'ShiftLeft'},\n    {deviceName: 'keyboard', controlName: 'KeyZ'}\n])\n\nlogger.log(name)"
+  },
+  {
+    "type": "action",
+    "title": "Match against input",
+    "source": "const binding = new CompositeBinding({\n    controls: [\n        {deviceName: 'keyboard', controlName: 'ControlLeft'},\n        {deviceName: 'keyboard', controlName: 'KeyS'}\n    ],\n    actionName: 'save'\n})\n\nlogger.log('Matches ControlLeft:', binding.matches({\n    deviceName: 'keyboard',\n    controlName: 'ControlLeft',\n    eventType: 'pressed'\n}))\n\nlogger.log('Matches KeyA:', binding.matches({\n    deviceName: 'keyboard',\n    controlName: 'KeyA',\n    eventType: 'pressed'\n}))"
+  }
+]

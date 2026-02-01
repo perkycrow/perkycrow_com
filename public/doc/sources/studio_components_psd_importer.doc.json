@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const importer = document.createElement('psd-importer')\ndocument.body.appendChild(importer)\n\nimporter.open()"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "importer.setExistingNames(['playerAnimator', 'enemyAnimator'])"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Canvas 2D layer",
+    "source": "const layer = new CanvasLayer({\n    $id: 'game',\n    rendererType: 'canvas',\n    width: 800,\n    height: 600,\n    backgroundColor: '#1a1a2e'\n})"
+  },
+  {
+    "type": "code",
+    "title": "WebGL layer",
+    "source": "const layer = new CanvasLayer({\n    $id: 'effects',\n    rendererType: 'webgl',\n    width: 800,\n    height: 600,\n    pixelRatio: 2\n})"
+  },
+  {
+    "type": "action",
+    "title": "setContent and render",
+    "source": "const layer = new CanvasLayer({\n    $id: 'test',\n    rendererType: 'canvas',\n    width: 400,\n    height: 300,\n    backgroundColor: '#16213e'\n})\n\nconst scene = new Group2D()\nscene.add(new Rectangle({width: 4, height: 2, color: '#e94560'}))\n\nlayer.setContent(scene)\nlayer.render()\nlogger.log('content set and rendered')"
+  },
+  {
+    "type": "action",
+    "title": "resize",
+    "source": "const layer = new CanvasLayer({\n    $id: 'test',\n    rendererType: 'canvas',\n    width: 800,\n    height: 600\n})\n\nlogger.log('before:', layer.renderer.width, 'x', layer.renderer.height)\nlayer.resize(1024, 768)\nlogger.log('after:', layer.renderer.width, 'x', layer.renderer.height)"
+  },
+  {
+    "type": "code",
+    "title": "Manual render",
+    "source": "const layer = new CanvasLayer({\n    $id: 'game',\n    rendererType: 'canvas',\n    autoRender: false\n})\n\nlayer.setContent(scene)\nlayer.render()"
+  }
+]

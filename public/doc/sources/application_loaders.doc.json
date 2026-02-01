@@ -1,0 +1,32 @@
+[
+  {
+    "type": "code",
+    "title": "Loader registry",
+    "source": "loaders.response    // fetch() wrapper, returns raw Response\nloaders.blob        // fetches as Blob\nloaders.image       // fetches and returns an Image element\nloaders.text        // fetches as text string\nloaders.json        // fetches and parses JSON\nloaders.arrayBuffer // fetches as ArrayBuffer\nloaders.audio       // returns deferred audio descriptor\nloaders.font        // loads a FontFace\nloaders.spritesheet // loads spritesheet JSON + images\nloaders.animator    // alias for json loader"
+  },
+  {
+    "type": "action",
+    "title": "String input",
+    "source": "const result = normalizeParams('/sprites/hero.png')\nlogger.log('url:', result.url)\nlogger.log('config:', JSON.stringify(result.config))"
+  },
+  {
+    "type": "action",
+    "title": "Object input",
+    "source": "const result = normalizeParams({\n    url: '/data/levels.json',\n    config: {credentials: 'include'}\n})\nlogger.log('url:', result.url)\nlogger.log('config:', JSON.stringify(result.config))"
+  },
+  {
+    "type": "action",
+    "title": "replaceUrlFilename",
+    "source": "const original = '/assets/sprites/hero.json'\nconst replaced = replaceUrlFilename(original, 'hero.png')\nlogger.log('original:', original)\nlogger.log('replaced:', replaced)"
+  },
+  {
+    "type": "action",
+    "title": "removeFileExtension",
+    "source": "logger.log(removeFileExtension('hero.png'))\nlogger.log(removeFileExtension('data.level.json'))\nlogger.log(removeFileExtension('readme'))"
+  },
+  {
+    "type": "code",
+    "title": "Custom loader example",
+    "source": "const csvLoader = async ({url}) => {\n    const response = await fetch(url)\n    const content = await response.text()\n    return content.split('\\n').map(line => line.split(','))\n}\n\n// Register via SourceManager loaders\napp.loaders.set('csv', csvLoader)"
+  }
+]

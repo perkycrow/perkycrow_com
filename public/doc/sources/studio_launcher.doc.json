@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const manifest = await loadManifest(manifestData, '../game/')"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const textureSystem = buildTextureSystem(manifest)"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const animators = collectAnimators(manifest)"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const config = getStudioConfig(manifest, 'animator')\nconst bgImage = getBackgroundImage(manifest, config)"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "type": "action",
+    "title": "Default values",
+    "source": "const pass = new ColorGradePass()\n\nlogger.log('brightness:', pass.uniforms.uBrightness)\nlogger.log('contrast:', pass.uniforms.uContrast)\nlogger.log('saturation:', pass.uniforms.uSaturation)"
+  },
+  {
+    "type": "code",
+    "title": "Desaturated look",
+    "source": "const pass = new ColorGradePass()\n\npass.setUniform('uBrightness', -0.05)\npass.setUniform('uContrast', 1.1)\npass.setUniform('uSaturation', 0.6)"
+  }
+]

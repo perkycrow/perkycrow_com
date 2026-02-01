@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const view = document.createElement('animator-view')\n\nview.setContext({\n    textureSystem,\n    animatorConfig,\n    animatorName: 'playerAnimator',\n    backgroundImage: img,\n    studioConfig: {unitsInView: {width: 7, height: 5}},\n    isCustom: false,\n    manifest\n})"
+  }
+]

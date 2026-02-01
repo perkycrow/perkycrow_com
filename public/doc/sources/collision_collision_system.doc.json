@@ -1,0 +1,37 @@
+[
+  {
+    "type": "action",
+    "title": "Add dynamic and static bodies",
+    "source": "const system = new CollisionSystem({gravity: {x: 0, y: 0}})\n\nconst objectA = {position: {x: 0, y: 0}, constructor: {name: 'Entity'}}\nconst objectB = {position: {x: 50, y: 0}, constructor: {name: 'Entity'}}\n\nsystem.addBody(objectA, {mass: 1})\nsystem.addBody(objectB, {isStatic: true})\n\nlogger.log('dynamic bodies:', system.collisionBodies.length)\nlogger.log('static bodies:', system.staticBodies.length)"
+  },
+  {
+    "type": "action",
+    "title": "Remove a body",
+    "source": "const system = new CollisionSystem({gravity: {x: 0, y: 0}})\nconst object = {position: {x: 0, y: 0}, constructor: {name: 'Entity'}}\n\nsystem.addBody(object)\nlogger.log('before:', system.collisionBodies.length)\n\nsystem.removeBody(object)\nlogger.log('after:', system.collisionBodies.length)"
+  },
+  {
+    "type": "action",
+    "title": "Set custom gravity",
+    "source": "const system = new CollisionSystem()\nlogger.log('default:', system.gravity)\n\nsystem.setGravity(0, -400)\nlogger.log('updated:', system.gravity)"
+  },
+  {
+    "type": "action",
+    "title": "Register callback",
+    "source": "const system = new CollisionSystem({gravity: {x: 0, y: 0}})\n\nsystem.setCollisionCallback((a, b, collision) => {\n    logger.log('collision between bodies, depth:', collision.depth)\n})\n\nconst objectA = {position: {x: 0, y: 0}, constructor: {name: 'Entity'}}\nconst objectB = {position: {x: 20, y: 0}, constructor: {name: 'Entity'}}\n\nsystem.addBody(objectA)\nsystem.addBody(objectB)\nsystem.detectCollisions()"
+  },
+  {
+    "type": "action",
+    "title": "Query by point",
+    "source": "const system = new CollisionSystem({gravity: {x: 0, y: 0}})\n\nconst object = {position: {x: 0, y: 0}, constructor: {name: 'Entity'}}\nsystem.addBody(object)\n\nconst hits = system.queryPoint(0, 0)\nlogger.log('bodies at (0,0):', hits.length)\n\nconst misses = system.queryPoint(1000, 1000)\nlogger.log('bodies at (1000,1000):', misses.length)"
+  },
+  {
+    "type": "action",
+    "title": "Query by radius",
+    "source": "const system = new CollisionSystem({gravity: {x: 0, y: 0}})\n\nconst object = {position: {x: 10, y: 0}, constructor: {name: 'Entity'}}\nsystem.addBody(object)\n\nconst nearby = system.queryRadius(0, 0, 50)\nlogger.log('bodies within radius 50:', nearby.length)"
+  },
+  {
+    "type": "action",
+    "title": "Pause and resume",
+    "source": "const system = new CollisionSystem({gravity: {x: 0, y: 0}})\nconst object = {position: {x: 0, y: 0}, constructor: {name: 'Entity'}}\nsystem.addBody(object, {velocity: {x: 100, y: 50}})\n\nlogger.log('before pause:', object.velocity)\nsystem.pauseBody(object)\nlogger.log('paused:', object.velocity)\n\nsystem.resumeBody(object)\nlogger.log('resumed:', object.velocity)"
+  }
+]

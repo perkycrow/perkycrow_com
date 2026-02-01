@@ -1,0 +1,37 @@
+[
+  {
+    "type": "code",
+    "title": "Simple component",
+    "source": "class MyButton extends PerkyComponent {\n    static styles = `\n        button {\n            background: var(--accent);\n            color: var(--bg-primary);\n            border: none;\n            padding: 8px 16px;\n            border-radius: 4px;\n        }\n    `\n\n    onConnected () {\n        this.shadowRoot.innerHTML = '<button>Click me</button>'\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "Inheritance example",
+    "source": "class BasePanel extends EditorComponent {\n    static styles = `\n        :host { display: block; padding: 12px; }\n    `\n}\n\nclass FancyPanel extends BasePanel {\n    static styles = `\n        :host { border: 1px solid var(--border); }\n    `\n}"
+  },
+  {
+    "type": "code",
+    "title": "Lifecycle example",
+    "source": "class Counter extends EditorComponent {\n    count = 0\n\n    onConnected () {\n        this.render()\n    }\n\n    render () {\n        this.shadowRoot.innerHTML = `<span>${this.count}</span>`\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "listenTo example",
+    "source": "class PlayerHealth extends EditorComponent {\n    setPlayer (player) {\n        this.listenTo(player, 'damage', () => this.render())\n        this.listenTo(player, 'heal', () => this.render())\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "Editor component",
+    "source": "class MyInspector extends EditorComponent {\n    static styles = `\n        .label { color: var(--fg-muted); }\n        .value { color: var(--fg-primary); }\n    `\n}"
+  },
+  {
+    "type": "code",
+    "title": "Style file pattern",
+    "source": "const myPanelStyles = `\n    .panel { background: var(--bg-secondary); }\n    .panel-header { padding: 10px 12px; }\n`"
+  },
+  {
+    "type": "code",
+    "title": "Using style file",
+    "source": "class MyPanel extends EditorComponent {\n    static styles = myPanelStyles\n}"
+  }
+]

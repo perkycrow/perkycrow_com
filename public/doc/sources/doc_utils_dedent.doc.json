@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "const result = dedent(`\n    hello\n    world\n`)\n\n// → \"hello\\nworld\""
+  },
+  {
+    "type": "action",
+    "title": "Dedent a string",
+    "source": "const result = dedent(`\n    first line\n        indented line\n    back to base\n`)\nlogger.log(result)"
+  },
+  {
+    "type": "code",
+    "title": "trimEmptyLines",
+    "source": "// Default: true — removes empty leading/trailing lines\ndedent('\\n    hello\\n', {trimEmptyLines: false})"
+  },
+  {
+    "type": "code",
+    "title": "preserveFirstLine",
+    "source": "// Default: false — when true, the first line keeps its original indent\ndedent('first\\n    second\\n    third', {preserveFirstLine: true})"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const source = dedentSource('function foo() {\\n    return 1\\n}')"
+  }
+]

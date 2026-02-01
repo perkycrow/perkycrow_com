@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "const blocks = parseDocFile('/path/to/logger.doc.js')\n\n// [{type: 'code', title: 'Example', source: '...'}, ...]"
+  },
+  {
+    "type": "code",
+    "title": "Extracted block structure",
+    "source": "const codeBlock = {\n    type: 'code',\n    title: 'Basic usage',\n    source: 'const x = 1\\nconst y = 2'\n}\n\nconst setupBlock = {\n    type: 'setup',\n    index: 0,\n    source: 'logger.clear()'\n}"
+  }
+]

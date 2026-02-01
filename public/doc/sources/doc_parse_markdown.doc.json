@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "parseMarkdown('Hello **world**')\n\n// → \"<p>Hello <strong>world</strong></p>\"\n\nparseMarkdown('Use `code` here')\n\n// → \"<p>Use <code>code</code> here</p>\""
+  },
+  {
+    "type": "action",
+    "title": "Parse markdown",
+    "source": "const html = parseMarkdown(`\n    First paragraph with **bold** and *italic*.\n\n    Second paragraph with \\`inline code\\`.\n\n    - Item one\n    - Item two\n`)\nlogger.log(html)"
+  },
+  {
+    "type": "code",
+    "title": "Link syntax",
+    "source": "// Basic link\nparseMarkdown('See [[Logger]]')\n\n// Link to API page\nparseMarkdown('See [[Logger:api]]')\n\n// Link with category\nparseMarkdown('See [[Application@application]]')\n\n// Link with section anchor\nparseMarkdown('See [[Logger#Events]]')"
+  }
+]

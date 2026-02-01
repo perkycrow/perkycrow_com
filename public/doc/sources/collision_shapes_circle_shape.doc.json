@@ -1,0 +1,32 @@
+[
+  {
+    "type": "action",
+    "title": "Default circle",
+    "source": "const circle = new CircleShape()\nlogger.log('type:', circle.type)\nlogger.log('radius:', circle.radius)\nlogger.log('position:', circle.x, circle.y)"
+  },
+  {
+    "type": "action",
+    "title": "Custom circle",
+    "source": "const circle = new CircleShape({radius: 25, x: 10, y: -5})\nlogger.log('radius:', circle.radius)\nlogger.log('position:', circle.x, circle.y)"
+  },
+  {
+    "type": "action",
+    "title": "Get bounds",
+    "source": "const circle = new CircleShape({radius: 20, x: 5, y: 5})\nconst bounds = circle.getBounds()\nlogger.log('left:', bounds.left, 'right:', bounds.right)\nlogger.log('top:', bounds.top, 'bottom:', bounds.bottom)\nlogger.log('size:', bounds.width, 'x', bounds.height)"
+  },
+  {
+    "type": "action",
+    "title": "Check if point is inside",
+    "source": "const circle = new CircleShape({radius: 20, x: 0, y: 0})\nlogger.log('(5, 5) inside:', circle.containsPoint(5, 5))\nlogger.log('(100, 100) inside:', circle.containsPoint(100, 100))"
+  },
+  {
+    "type": "action",
+    "title": "Sync with body",
+    "source": "const circle = new CircleShape({radius: 10, offset: {x: 5, y: 0}})\nconst body = {position: {x: 50, y: 30}, scale: {x: 1, y: 3}}\n\ncircle.updateFromBody(body)\nlogger.log('position:', circle.x, circle.y)\nlogger.log('scaled radius:', circle.scaledRadius)"
+  },
+  {
+    "type": "action",
+    "title": "setRadius and setOffset",
+    "source": "const circle = new CircleShape()\ncircle.setRadius(50)\nlogger.log('new radius:', circle.radius)\n\ncircle.setOffset(3, -3)\nlogger.log('offset:', circle.offset)"
+  }
+]

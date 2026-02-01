@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Shadow uniforms",
+    "source": "const uniforms = SHADOW_SHADER_DEF.uniforms"
+  }
+]

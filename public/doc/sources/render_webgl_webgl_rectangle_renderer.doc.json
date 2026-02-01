@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Rectangle with stroke",
+    "source": "const rect = new Rectangle({\n    width: 100,\n    height: 50,\n    color: '#00ff00',\n    strokeColor: '#000000',\n    strokeWidth: 2\n})\n\nrect.setPosition(50, 50)\nwebglRenderer.render(scene)"
+  }
+]

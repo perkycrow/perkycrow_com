@@ -1,0 +1,27 @@
+[
+  {
+    "type": "action",
+    "title": "Add patterns",
+    "source": "const seq = new Sequencer({bpm: 140})\n\nseq.addPattern('drums', 'kick . snare . kick kick snare .')\nseq.addPattern('melody', 'C . E G . . A .')\n\nlogger.log('Pattern count:', seq.patternCount)\nlogger.log('Has drums:', seq.hasPattern('drums'))\nlogger.log('BPM:', seq.bpm)"
+  },
+  {
+    "type": "code",
+    "title": "Play and stop",
+    "source": "const seq = new Sequencer({bpm: 120})\nseq.addPattern('beat', 'kick . snare .')\n\nseq.playPatterns()\nseq.playing // true\n\n// In your update loop:\n// seq.update(deltaTime)\n\nseq.stopPatterns()\nseq.playing // false"
+  },
+  {
+    "type": "action",
+    "title": "Change BPM",
+    "source": "const seq = new Sequencer({bpm: 120})\nseq.addPattern('beat', 'kick . snare .')\n\nlogger.log('BPM:', seq.bpm)\n\nseq.setBpm(180)\nlogger.log('BPM:', seq.bpm)\n\nconst pattern = seq.getPattern('beat')\nlogger.log('Pattern BPM:', pattern.bpm)"
+  },
+  {
+    "type": "action",
+    "title": "Manage patterns",
+    "source": "const seq = new Sequencer({bpm: 120})\n\nseq.addPattern('drums', 'kick . snare .')\nseq.addPattern('bass', 'C . . E . . G .')\nlogger.log('Count:', seq.patternCount)\n\nseq.removePattern('bass')\nlogger.log('Count:', seq.patternCount)\nlogger.log('Has bass:', seq.hasPattern('bass'))\n\nseq.clear()\nlogger.log('Count after clear:', seq.patternCount)"
+  },
+  {
+    "type": "code",
+    "title": "Bind sounds",
+    "source": "const seq = new Sequencer({audioSystem, bpm: 140})\n\nseq.addPattern('drums', 'kick . snare . kick kick snare .', {\n    sounds: {kick: 'kickSample', snare: 'snareSample'}\n})\n\nseq.addPattern('melody', 'C . E G . . A .')"
+  }
+]

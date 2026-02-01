@@ -1,0 +1,52 @@
+[
+  {
+    "type": "code",
+    "title": "Basic setup",
+    "source": "const renderSystem = new RenderSystem({\n    width: 800,\n    height: 600\n})"
+  },
+  {
+    "type": "code",
+    "title": "With layers",
+    "source": "const renderSystem = new RenderSystem({\n    layers: [\n        {name: 'game', type: 'canvas'},\n        {name: 'ui', type: 'html'}\n    ]\n})"
+  },
+  {
+    "type": "action",
+    "title": "createCamera / getCamera",
+    "source": "const rs = new RenderSystem()\nconst main = rs.getCamera('main')\nlogger.log('main camera:', main.$id)\n\nrs.createCamera('minimap', {unitsInView: 50})\nconst minimap = rs.getCamera('minimap')\nlogger.log('minimap:', minimap.$id)"
+  },
+  {
+    "type": "action",
+    "title": "setCamera",
+    "source": "const rs = new RenderSystem()\nrs.setCamera('main', {unitsInView: 20, zoom: 2})\nconst cam = rs.getCamera('main')\nlogger.log('zoom:', cam.zoom)"
+  },
+  {
+    "type": "action",
+    "title": "createLayer / getLayer",
+    "source": "const rs = new RenderSystem()\nrs.createLayer('game', 'canvas', {backgroundColor: '#1a1a2e'})\nrs.createLayer('ui', 'html', {zIndex: 10})\n\nconst game = rs.getLayer('game')\nconst ui = rs.getLayer('ui')\nlogger.log('game layer:', game.$id)\nlogger.log('ui layer:', ui.$id)"
+  },
+  {
+    "type": "action",
+    "title": "removeLayer",
+    "source": "const rs = new RenderSystem()\nrs.createLayer('temp', 'canvas')\nlogger.log('before:', rs.childrenByCategory('layer').length)\nrs.removeLayer('temp')\nlogger.log('after:', rs.childrenByCategory('layer').length)"
+  },
+  {
+    "type": "action",
+    "title": "showLayer / hideLayer",
+    "source": "const rs = new RenderSystem()\nrs.createLayer('debug', 'canvas')\nrs.hideLayer('debug')\nlogger.log('visible:', rs.getLayer('debug').visible)\nrs.showLayer('debug')\nlogger.log('visible:', rs.getLayer('debug').visible)"
+  },
+  {
+    "type": "code",
+    "title": "Render all",
+    "source": "renderSystem.render()"
+  },
+  {
+    "type": "code",
+    "title": "Render one layer",
+    "source": "renderSystem.renderLayer('game')"
+  },
+  {
+    "type": "action",
+    "title": "Manual resize",
+    "source": "const rs = new RenderSystem({width: 800, height: 600})\nrs.disableAutoResize()\nrs.resize(1024, 768)\nlogger.log('width:', rs.layerWidth, 'height:', rs.layerHeight)"
+  }
+]

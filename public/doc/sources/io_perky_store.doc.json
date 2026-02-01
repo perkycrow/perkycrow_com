@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Basic workflow",
+    "source": "const store = new PerkyStore()\n\nawait store.save('playerAnimator', {\n    type: 'animator',\n    name: 'player',\n    files: [\n        {name: 'playerAnimator.json', blob: jsonBlob},\n        {name: 'playerSpritesheet.json', blob: sheetBlob},\n        {name: 'player.png', blob: pngBlob}\n    ]\n})\n\nconst resource = await store.get('playerAnimator')\nresource.id        // 'playerAnimator'\nresource.type      // 'animator'\nresource.files     // [{name, blob}, ...]\n\nconst all = await store.list()\nconst animators = await store.list('animator')"
+  },
+  {
+    "type": "code",
+    "title": "save and get",
+    "source": "await store.save('heroAnimator', {\n    type: 'animator',\n    name: 'hero',\n    files: [{name: 'heroAnimator.json', blob: configBlob}]\n})\n\nconst resource = await store.get('heroAnimator')\nresource.name       // 'hero'\nresource.createdAt  // timestamp\nresource.updatedAt  // timestamp"
+  },
+  {
+    "type": "code",
+    "title": "List resources",
+    "source": "const all = await store.list()\nconst animators = await store.list('animator')"
+  },
+  {
+    "type": "code",
+    "title": "Export and import",
+    "source": "await store.export('playerAnimator')\n\nconst result = await store.import(file)\nresult.id    // derived from meta.json name + type\nresult.type  // 'animator'\nresult.name  // 'player'"
+  },
+  {
+    "type": "code",
+    "title": "Delete a resource",
+    "source": "await store.delete('playerAnimator')"
+  }
+]

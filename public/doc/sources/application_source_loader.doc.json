@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Loading assets",
+    "source": "const assets = [\n    new Asset({id: 'config', type: 'json', url: '/config.json'}),\n    new Asset({id: 'hero', type: 'image', url: '/hero.png'})\n]\n\nconst loaders = {\n    json: async ({url}) => (await fetch(url)).json(),\n    image: async ({url}) => {\n        const img = new Image()\n        img.src = url\n        return img\n    }\n}\n\nconst loader = new SourceLoader(assets, loaders)\n\nloader.on('progress', (progress, {asset}) => {\n    logger.log(`${Math.round(progress * 100)}% - loaded ${asset.id}`)\n})\n\nloader.on('complete', (loadedAssets) => {\n    logger.log(`Done! Loaded ${loadedAssets.length} assets`)\n})\n\nloader.load()"
+  },
+  {
+    "type": "action",
+    "title": "Progress properties",
+    "source": "const assets = [\n    new Asset({id: 'a', type: 'json', source: {ready: true}}),\n    new Asset({id: 'b', type: 'json', url: '/b.json'}),\n    new Asset({id: 'c', type: 'json', url: '/c.json'})\n]\n\nconst loader = new SourceLoader(assets, {json: async () => ({})})\n\nlogger.log('assetCount:', loader.assetCount)\nlogger.log('loadedCount:', loader.loadedCount)\nlogger.log('progress:', loader.progress)"
+  },
+  {
+    "type": "code",
+    "title": "Event handling",
+    "source": "loader.on('progress', (progress, {asset, source}) => {\n    // progress: number between 0 and 1\n    // asset: the Asset that just loaded\n    // source: the loaded data\n})\n\nloader.on('complete', (assets) => {\n    // All assets finished loading\n})\n\nloader.on('error', (asset, error) => {\n    // An asset failed to load\n})"
+  },
+  {
+    "type": "code",
+    "title": "Concurrent loads",
+    "source": "const loader = new SourceLoader(assets, loaders)\n\n// Both calls share the same underlying promise\nloader.loadAsset(asset)\nloader.loadAsset(asset)"
+  }
+]

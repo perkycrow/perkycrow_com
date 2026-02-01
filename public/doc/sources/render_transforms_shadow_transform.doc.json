@@ -1,0 +1,22 @@
+[
+  {
+    "type": "action",
+    "title": "Default shadow",
+    "source": "const shadow = new ShadowTransform()\n\nlogger.log('skewX:', shadow.skewX)\nlogger.log('scaleY:', shadow.scaleY)\nlogger.log('offsetY:', shadow.offsetY)\nlogger.log('color:', shadow.color)"
+  },
+  {
+    "type": "action",
+    "title": "Custom shadow",
+    "source": "const shadow = new ShadowTransform({\n    skewX: 0.8,\n    scaleY: -0.5,\n    offsetY: 0.1,\n    color: [0.1, 0, 0.2, 0.6]\n})\n\nlogger.log('skewX:', shadow.skewX)\nlogger.log('scaleY:', shadow.scaleY)\nlogger.log('offsetY:', shadow.offsetY)\nlogger.log('color:', shadow.color)"
+  },
+  {
+    "type": "action",
+    "title": "Modify properties",
+    "source": "const shadow = new ShadowTransform()\n\nshadow.skewX = 1.0\nshadow.scaleY = -0.4\nshadow.offsetY = 0.05\nshadow.color = [0, 0, 0, 0.8]\n\nlogger.log('skewX:', shadow.skewX)\nlogger.log('scaleY:', shadow.scaleY)\nlogger.log('offsetY:', shadow.offsetY)\nlogger.log('color:', shadow.color)"
+  },
+  {
+    "type": "action",
+    "title": "getPropertyConfig",
+    "source": "const shadow = new ShadowTransform()\nconst config = shadow.getPropertyConfig()\n\nlogger.log('skewX range:', config.skewX.min, 'to', config.skewX.max)\nlogger.log('scaleY range:', config.scaleY.min, 'to', config.scaleY.max)\nlogger.log('color type:', config.color.type)"
+  }
+]

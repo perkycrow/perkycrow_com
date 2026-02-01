@@ -1,0 +1,62 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const bounded = new Grid({width: 5, height: 5})\nconst infinite = new Grid()"
+  },
+  {
+    "type": "action",
+    "title": "Set and get cells",
+    "source": "const grid = new Grid({width: 5, height: 5})\ngrid.setCell({x: 2, y: 3}, 'wall')\ngrid.setCell({x: 0, y: 0}, 'floor')\nlogger.log('(2,3):', grid.getCell({x: 2, y: 3}))\nlogger.log('(0,0):', grid.getCell({x: 0, y: 0}))\nlogger.log('(1,1):', grid.getCell({x: 1, y: 1}))"
+  },
+  {
+    "type": "action",
+    "title": "Remove a cell",
+    "source": "const grid = new Grid()\ngrid.setCell({x: 0, y: 0}, 'wall')\nlogger.log('before:', grid.getCell({x: 0, y: 0}))\ngrid.setCell({x: 0, y: 0}, undefined)\nlogger.log('after:', grid.getCell({x: 0, y: 0}))"
+  },
+  {
+    "type": "action",
+    "title": "Bounds checking",
+    "source": "const grid = new Grid({width: 3, height: 3})\nlogger.log('(1,1) inside:', grid.isInside({x: 1, y: 1}))\nlogger.log('(5,0) inside:', grid.isInside({x: 5, y: 0}))"
+  },
+  {
+    "type": "action",
+    "title": "Four neighbours",
+    "source": "const grid = new Grid({width: 5, height: 5})\ngrid.setCell({x: 2, y: 3}, 'wall')\nconst neighbours = grid.fourNeighboursOf({x: 2, y: 2})\nfor (const n of neighbours) {\n    logger.log(`(${n.x},${n.y}):`, n.cell ?? 'empty')\n}"
+  },
+  {
+    "type": "action",
+    "title": "Eight neighbours",
+    "source": "const grid = new Grid({width: 5, height: 5})\ngrid.setCell({x: 1, y: 1}, 'A')\ngrid.setCell({x: 3, y: 3}, 'B')\nconst neighbours = grid.eightNeighboursOf({x: 2, y: 2})\nfor (const n of neighbours) {\n    logger.log(`(${n.x},${n.y}):`, n.cell ?? 'empty')\n}"
+  },
+  {
+    "type": "action",
+    "title": "forEachCell (bounded)",
+    "source": "const grid = new Grid({width: 3, height: 2})\ngrid.setCell({x: 1, y: 0}, 'X')\ngrid.forEachCell((coords, value) => {\n    if (value) {\n        logger.log(`(${coords.x},${coords.y}):`, value)\n    }\n})"
+  },
+  {
+    "type": "action",
+    "title": "forEachDefinedCell",
+    "source": "const grid = new Grid()\ngrid.setCell({x: 10, y: 20}, 'A')\ngrid.setCell({x: -5, y: 3}, 'B')\ngrid.forEachDefinedCell((coords, value) => {\n    logger.log(`(${coords.x},${coords.y}):`, value)\n})"
+  },
+  {
+    "type": "action",
+    "title": "Get row and column",
+    "source": "const grid = new Grid({width: 3, height: 3})\ngrid.setCell({x: 0, y: 1}, 'A')\ngrid.setCell({x: 2, y: 1}, 'B')\nlogger.log('row 1:', grid.getRow(1))\nlogger.log('col 2:', grid.getCol(2))"
+  },
+  {
+    "type": "action",
+    "title": "getBounds",
+    "source": "const grid = new Grid()\ngrid.setCell({x: -2, y: 5}, 'A')\ngrid.setCell({x: 10, y: -3}, 'B')\nlogger.log('bounds:', grid.getBounds())"
+  },
+  {
+    "type": "action",
+    "title": "fourDirections",
+    "source": "for (const [name, dir] of Object.entries(fourDirections)) {\n    logger.log(`${name}:`, `(${dir.x}, ${dir.y})`)\n}"
+  },
+  {
+    "type": "action",
+    "title": "eightDirections",
+    "source": "for (const [name, dir] of Object.entries(eightDirections)) {\n    logger.log(`${name}:`, `(${dir.x}, ${dir.y})`)\n}"
+  }
+]

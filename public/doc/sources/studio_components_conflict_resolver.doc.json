@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const resolver = document.createElement('conflict-resolver')\ndocument.body.appendChild(resolver)\n\nconst choices = await resolver.resolve([\n    {id: 'playerAnimator', name: 'playerAnimator', customDate: 1700000000, gameDate: 1700100000}\n])\n\nchoices[0].choice // 'custom' or 'game'"
+  }
+]

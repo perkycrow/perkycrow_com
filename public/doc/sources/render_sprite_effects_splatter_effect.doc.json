@@ -1,0 +1,22 @@
+[
+  {
+    "type": "action",
+    "title": "Default splatter",
+    "source": "const splatter = new SplatterEffect()\n\nlogger.log('type:', splatter.type)\nlogger.log('intensity:', splatter.intensity)\nlogger.log('pattern:', splatter.pattern)\nlogger.log('atlas:', splatter.atlas)"
+  },
+  {
+    "type": "action",
+    "title": "Custom splatter",
+    "source": "const splatter = new SplatterEffect({\n    intensity: 0.5,\n    pattern: 2\n})\n\nlogger.log('intensity:', splatter.intensity)\nlogger.log('pattern:', splatter.pattern)"
+  },
+  {
+    "type": "action",
+    "title": "Clamped intensity",
+    "source": "const splatter = new SplatterEffect()\n\nsplatter.intensity = 0.7\nlogger.log('set 0.7:', splatter.intensity)\n\nsplatter.intensity = 2.0\nlogger.log('set 2.0 (clamped):', splatter.intensity)\n\nsplatter.intensity = -1\nlogger.log('set -1 (clamped):', splatter.intensity)"
+  },
+  {
+    "type": "action",
+    "title": "getHints",
+    "source": "const splatter = new SplatterEffect({\n    intensity: 0.3,\n    pattern: 1\n})\n\nconst hints = splatter.getHints()\nlogger.log('hints.intensity:', hints.intensity)\nlogger.log('hints.pattern:', hints.pattern)\nlogger.log('hints.atlas:', hints.atlas)"
+  }
+]

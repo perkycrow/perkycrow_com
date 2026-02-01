@@ -1,0 +1,32 @@
+[
+  {
+    "type": "container",
+    "title": "Docked panel",
+    "source": "const panel = document.createElement('editor-panel')\npanel.title = 'Properties'\npanel.style.width = '250px'\n\nconst content = document.createElement('div')\ncontent.style.cssText = 'color:#888;font-size:12px;'\ncontent.textContent = 'Panel content goes here'\npanel.appendChild(content)\n\nctx.container.appendChild(panel)"
+  },
+  {
+    "type": "container",
+    "title": "Floating panel",
+    "source": "ctx.container.style.position = 'relative'\n\nconst panel = document.createElement('editor-panel')\npanel.title = 'Inspector'\npanel.setAttribute('floating', '')\npanel.style.cssText = 'left:20px;top:20px;width:200px;height:150px;'\n\nconst content = document.createElement('div')\ncontent.style.cssText = 'color:#888;font-size:12px;'\ncontent.textContent = 'Drag the header to move'\npanel.appendChild(content)\n\nctx.container.appendChild(panel)"
+  },
+  {
+    "type": "container",
+    "title": "Collapsible panel",
+    "source": "const panel = document.createElement('editor-panel')\npanel.title = 'Layers'\npanel.style.width = '250px'\n\nconst list = document.createElement('div')\nlist.style.cssText = 'display:flex;flex-direction:column;gap:4px;'\nlist.innerHTML = `\n    <div style=\"padding:4px 8px;background:#24242a;border-radius:4px;font-size:12px;color:#e4e4e8;\">Layer 1</div>\n    <div style=\"padding:4px 8px;background:#24242a;border-radius:4px;font-size:12px;color:#e4e4e8;\">Layer 2</div>\n    <div style=\"padding:4px 8px;background:#24242a;border-radius:4px;font-size:12px;color:#e4e4e8;\">Layer 3</div>\n`\npanel.appendChild(list)\n\nctx.container.appendChild(panel)"
+  },
+  {
+    "type": "container",
+    "title": "Stacked panels",
+    "source": "const wrapper = document.createElement('div')\nwrapper.style.cssText = 'display:flex;flex-direction:column;gap:8px;width:250px;'\n\nconst panel1 = document.createElement('editor-panel')\npanel1.title = 'Transform'\npanel1.innerHTML = '<div style=\"color:#888;font-size:12px;\">Position, rotation, scale</div>'\n\nconst panel2 = document.createElement('editor-panel')\npanel2.title = 'Sprite'\npanel2.innerHTML = '<div style=\"color:#888;font-size:12px;\">Texture, frame, tint</div>'\n\nconst panel3 = document.createElement('editor-panel')\npanel3.title = 'Animation'\npanel3.setAttribute('collapsed', '')\npanel3.innerHTML = '<div style=\"color:#888;font-size:12px;\">Clips, keyframes</div>'\n\nwrapper.appendChild(panel1)\nwrapper.appendChild(panel2)\nwrapper.appendChild(panel3)\n\nctx.container.appendChild(wrapper)"
+  },
+  {
+    "type": "container",
+    "title": "Event handling",
+    "source": "const panel = document.createElement('editor-panel')\npanel.title = 'Closable Panel'\npanel.style.width = '250px'\n\nconst log = document.createElement('div')\nlog.style.cssText = 'color:#888;font-size:12px;'\nlog.textContent = 'Click close button (✕)...'\npanel.appendChild(log)\n\npanel.addEventListener('close', () => {\n    log.textContent = '❌ Close clicked!'\n})\n\nctx.container.appendChild(panel)"
+  },
+  {
+    "type": "container",
+    "title": "No padding",
+    "source": "const panel = document.createElement('editor-panel')\npanel.title = 'Preview'\npanel.setAttribute('no-padding', '')\npanel.style.width = '250px'\n\nconst preview = document.createElement('div')\npreview.style.cssText = 'height:100px;background:#0d0d10;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;'\npreview.textContent = 'Full bleed content'\npanel.appendChild(preview)\n\nctx.container.appendChild(panel)"
+  }
+]

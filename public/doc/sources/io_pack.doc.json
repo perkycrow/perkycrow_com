@@ -1,0 +1,17 @@
+[
+  {
+    "type": "action",
+    "title": "Pack files",
+    "source": "const files = [\n    {name: 'data.json', blob: new Blob(['{\"hello\":\"world\"}'], {type: 'application/json'})},\n    {name: 'readme.txt', blob: new Blob(['Hello'], {type: 'text/plain'})}\n]\n\nconst packed = await pack(files)\nlogger.log('type:', packed.type)\nlogger.log('size:', packed.size, 'bytes')"
+  },
+  {
+    "type": "action",
+    "title": "Pack without compression",
+    "source": "const files = [\n    {name: 'data.json', blob: new Blob(['{\"key\":\"value\"}'], {type: 'application/json'})}\n]\n\nconst packed = await pack(files, {compress: false})\nlogger.log('uncompressed size:', packed.size, 'bytes')"
+  },
+  {
+    "type": "action",
+    "title": "Round-trip",
+    "source": "const original = [\n    {name: 'config.json', blob: new Blob(['{\"fps\":60}'], {type: 'application/json'})},\n    {name: 'notes.txt', blob: new Blob(['test'], {type: 'text/plain'})}\n]\n\nconst packed = await pack(original)\nconst extracted = await unpack(packed)\n\nfor (const file of extracted) {\n    const content = await file.blob.text()\n    logger.log(file.name, '→', content)\n}"
+  }
+]

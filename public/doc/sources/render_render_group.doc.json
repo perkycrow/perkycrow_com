@@ -1,0 +1,27 @@
+[
+  {
+    "type": "action",
+    "title": "Default render group",
+    "source": "const group = new RenderGroup()\nlogger.log('blend mode:', group.blendMode)\nlogger.log('visible:', group.visible)\nlogger.log('opacity:', group.opacity)"
+  },
+  {
+    "type": "action",
+    "title": "With options",
+    "source": "const group = new RenderGroup({\n    blendMode: BLEND_MODES.additive,\n    opacity: 0.8,\n    visible: true\n})\n\nlogger.log('blend mode:', group.blendMode)\nlogger.log('opacity:', group.opacity)"
+  },
+  {
+    "type": "action",
+    "title": "List blend modes",
+    "source": "for (const [name, value] of Object.entries(BLEND_MODES)) {\n    logger.log(name, '→', value)\n}"
+  },
+  {
+    "type": "code",
+    "title": "Adding a pass",
+    "source": "group.addPostPass(vignettePass)\ngroup.hasActivePasses()"
+  },
+  {
+    "type": "code",
+    "title": "Removing a pass",
+    "source": "group.removePostPass(vignettePass)"
+  }
+]

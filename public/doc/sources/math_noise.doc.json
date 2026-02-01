@@ -1,0 +1,37 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const noise = new Noise(42)\nconst defaultNoise = new Noise()"
+  },
+  {
+    "type": "action",
+    "title": "2D noise",
+    "source": "const noise = new Noise(42)\nlogger.log('perlin(1.5, 2.3):', noise.perlin(1.5, 2.3))\nlogger.log('perlin(0.5, 0.5):', noise.perlin(0.5, 0.5))\nlogger.log('perlin(3.0, 1.0):', noise.perlin(3.0, 1.0))"
+  },
+  {
+    "type": "action",
+    "title": "3D noise",
+    "source": "const noise = new Noise(42)\nlogger.log('perlin(1.5, 2.3, 0.7):', noise.perlin(1.5, 2.3, 0.7))\nlogger.log('perlin(0.5, 0.5, 0.5):', noise.perlin(0.5, 0.5, 0.5))"
+  },
+  {
+    "type": "action",
+    "title": "Example",
+    "source": "const noise = new Noise(42)\nlogger.log('perlin2d(1.5, 2.3):', noise.perlin2d(1.5, 2.3))\nlogger.log('perlin(1.5, 2.3, 0):', noise.perlin(1.5, 2.3, 0))\nlogger.log('Same result')"
+  },
+  {
+    "type": "action",
+    "title": "Default parameters",
+    "source": "const noise = new Noise(42)\nlogger.log('fbm(1.5, 2.3):', noise.fbm(1.5, 2.3))"
+  },
+  {
+    "type": "action",
+    "title": "Custom parameters",
+    "source": "const noise = new Noise(42)\nlogger.log('1 octave:', noise.fbm(1.5, 2.3, {octaves: 1}))\nlogger.log('4 octaves:', noise.fbm(1.5, 2.3, {octaves: 4}))\nlogger.log('8 octaves:', noise.fbm(1.5, 2.3, {octaves: 8}))"
+  },
+  {
+    "type": "action",
+    "title": "Reproducibility",
+    "source": "const noise = new Noise(42)\nlogger.log('seed 42:', noise.perlin2d(1.0, 1.0))\n\nnoise.seed(99)\nlogger.log('seed 99:', noise.perlin2d(1.0, 1.0))\n\nnoise.seed(42)\nlogger.log('seed 42 again:', noise.perlin2d(1.0, 1.0))"
+  }
+]

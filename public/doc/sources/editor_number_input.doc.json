@@ -1,0 +1,37 @@
+[
+  {
+    "type": "code",
+    "title": "Setup",
+    "source": "const input = document.createElement('number-input')\ninput.setValue(10)\ninput.addEventListener('change', (e) => {\n    logger.log('Value:', e.detail.value)\n})\ndocument.body.appendChild(input)"
+  },
+  {
+    "type": "container",
+    "title": "Number input",
+    "source": "const input = document.createElement('number-input')\ninput.setValue(42)\ninput.addEventListener('change', (e) => {\n    logger.log('Value:', e.detail.value)\n})\nctx.container.appendChild(input)"
+  },
+  {
+    "type": "container",
+    "title": "Labeled inputs",
+    "source": "const row = ctx.row({gap: 16})\n\nconst xInput = document.createElement('number-input')\nxInput.setLabel('x')\nxInput.setValue(100)\nxInput.addEventListener('change', (e) => {\n    logger.log('X:', e.detail.value)\n})\nrow.appendChild(xInput)\n\nconst yInput = document.createElement('number-input')\nyInput.setLabel('y')\nyInput.setValue(50)\nyInput.addEventListener('change', (e) => {\n    logger.log('Y:', e.detail.value)\n})\nrow.appendChild(yInput)"
+  },
+  {
+    "type": "container",
+    "title": "Constrained input",
+    "source": "const input = document.createElement('number-input')\ninput.setLabel('opacity')\ninput.setMin(0)\ninput.setMax(1)\ninput.setStep(0.1)\ninput.setPrecision(1)\ninput.setValue(0.5)\ninput.addEventListener('change', (e) => {\n    logger.log('Opacity:', e.detail.value)\n})\nctx.container.appendChild(input)"
+  },
+  {
+    "type": "container",
+    "title": "Compact inputs",
+    "source": "const row = ctx.row({gap: 8})\n\nconst fps = document.createElement('number-input')\nfps.setCompact(true)\nfps.setMin(1)\nfps.setMax(60)\nfps.setStep(1)\nfps.setPrecision(0)\nfps.setValue(30)\nfps.addEventListener('change', (e) => {\n    logger.log('FPS:', e.detail.value)\n})\nrow.appendChild(fps)\n\nctx.label('fps', {parent: row})"
+  },
+  {
+    "type": "container",
+    "title": "Try keyboard",
+    "source": "const input = document.createElement('number-input')\ninput.setLabel('value')\ninput.setStep(1)\ninput.setPrecision(0)\ninput.setValue(0)\ninput.addEventListener('change', (e) => {\n    logger.log('Value:', e.detail.value)\n})\nctx.container.appendChild(input)\n\nctx.hint('Click to focus, then use arrow keys')"
+  },
+  {
+    "type": "container",
+    "title": "Context comparison",
+    "source": "const col = ctx.column({gap: 16})\n\nconst row1 = ctx.row({gap: 12, parent: col})\nctx.label('Default:', {parent: row1})\nconst input1 = document.createElement('number-input')\ninput1.setLabel('x')\ninput1.setValue(10)\nrow1.appendChild(input1)\n\nconst row2 = ctx.row({gap: 12, parent: col})\nctx.label('Studio:', {parent: row2})\nconst input2 = document.createElement('number-input')\ninput2.setAttribute('context', 'studio')\ninput2.setLabel('x')\ninput2.setValue(10)\nrow2.appendChild(input2)"
+  }
+]

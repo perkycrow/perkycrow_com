@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Subclass example",
+    "source": "class CustomRenderer extends WebGLObjectRenderer {\n\n    static get handles () {\n        return [CustomObject]\n    }\n\n    flush (matrices) {\n        for (const {object, opacity} of this.collected) {\n            drawCustomObject(object, opacity)\n        }\n    }\n\n}"
+  },
+  {
+    "type": "code",
+    "title": "Declaring handles",
+    "source": "class MyRenderer extends WebGLObjectRenderer {\n    static get handles () {\n        return [MyObject]\n    }\n}"
+  }
+]

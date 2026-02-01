@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "launchAnimatorStudio(manifestData, container, {\n    basePath: '../',\n    animatorId: 'playerAnimator'\n})\n\nlaunchAnimatorStudio(manifestData, container, {\n    animatorId: 'myCustomAnimator',\n    isCustom: true\n})"
+  }
+]

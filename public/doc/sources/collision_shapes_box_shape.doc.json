@@ -1,0 +1,32 @@
+[
+  {
+    "type": "action",
+    "title": "Default box",
+    "source": "const box = new BoxShape()\nlogger.log('type:', box.type)\nlogger.log('size:', box.width, 'x', box.height)\nlogger.log('position:', box.x, box.y)"
+  },
+  {
+    "type": "action",
+    "title": "Custom box",
+    "source": "const box = new BoxShape({width: 60, height: 30, x: 10, y: 20})\nlogger.log('size:', box.width, 'x', box.height)\nlogger.log('position:', box.x, box.y)"
+  },
+  {
+    "type": "action",
+    "title": "Get bounds",
+    "source": "const box = new BoxShape({width: 40, height: 20, x: 10, y: 5})\nconst bounds = box.getBounds()\nlogger.log('left:', bounds.left, 'right:', bounds.right)\nlogger.log('top:', bounds.top, 'bottom:', bounds.bottom)\nlogger.log('center:', bounds.centerX, bounds.centerY)"
+  },
+  {
+    "type": "action",
+    "title": "Check if point is inside",
+    "source": "const box = new BoxShape({width: 40, height: 40, x: 0, y: 0})\nlogger.log('(5, 5) inside:', box.containsPoint(5, 5))\nlogger.log('(100, 100) inside:', box.containsPoint(100, 100))"
+  },
+  {
+    "type": "action",
+    "title": "Sync with body",
+    "source": "const box = new BoxShape({width: 20, height: 20, offset: {x: 5, y: 0}})\nconst body = {position: {x: 100, y: 50}, scale: {x: 2, y: 2}}\n\nbox.updateFromBody(body)\nlogger.log('position:', box.x, box.y)\nlogger.log('scaled size:', box.scaledWidth, 'x', box.scaledHeight)"
+  },
+  {
+    "type": "action",
+    "title": "setSize and setOffset",
+    "source": "const box = new BoxShape()\nbox.setSize(80, 40)\nlogger.log('new size:', box.width, 'x', box.height)\n\nbox.setOffset(10, -5)\nlogger.log('offset:', box.offset)"
+  }
+]

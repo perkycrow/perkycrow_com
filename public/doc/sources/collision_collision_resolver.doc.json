@@ -1,0 +1,27 @@
+[
+  {
+    "type": "action",
+    "title": "Separate overlapping boxes",
+    "source": "const resolver = new CollisionResolver()\n\nconst a = new BoxShape({width: 40, height: 40, x: 0, y: 0})\nconst b = new BoxShape({width: 40, height: 40, x: 30, y: 0})\n\nconst collision = detectCollision(a, b)\nlogger.log('before A:', a.position.x, a.position.y)\nlogger.log('before B:', b.position.x, b.position.y)\n\nresolver.resolve(a, b, collision)\nlogger.log('after A:', a.position.x, a.position.y)\nlogger.log('after B:', b.position.x, b.position.y)"
+  },
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.resolver = new CollisionResolver({restitution: 0.5})"
+  },
+  {
+    "type": "action",
+    "title": "Bouncing bodies",
+    "source": "const a = new BoxShape({width: 40, height: 40, x: 0, y: 0})\na.userData = {velocity: {x: 5, y: 0}, mass: 1}\n\nconst b = new BoxShape({width: 40, height: 40, x: 30, y: 0})\nb.userData = {velocity: {x: -3, y: 0}, mass: 2}\n\nconst collision = detectCollision(a, b)\nlogger.log('before A vel:', a.userData.velocity.x, a.userData.velocity.y)\nlogger.log('before B vel:', b.userData.velocity.x, b.userData.velocity.y)\n\nctx.resolver.resolve(a, b, collision)\nlogger.log('after A vel:', a.userData.velocity.x.toFixed(2), a.userData.velocity.y.toFixed(2))\nlogger.log('after B vel:', b.userData.velocity.x.toFixed(2), b.userData.velocity.y.toFixed(2))"
+  },
+  {
+    "type": "action",
+    "title": "Ball hitting a wall",
+    "source": "const resolver = new CollisionResolver({restitution: 1})\n\nconst ball = new CircleShape({radius: 20, x: 0, y: 0})\nball.userData = {velocity: {x: 10, y: 0}, mass: 1}\n\nconst wall = new BoxShape({width: 100, height: 100, x: 25, y: 0})\nwall.userData = {isStatic: true, velocity: {x: 0, y: 0}, mass: 999}\n\nconst collision = detectCollision(ball, wall)\nresolver.resolve(ball, wall, collision)\n\nlogger.log('ball vel:', ball.userData.velocity.x.toFixed(2), ball.userData.velocity.y.toFixed(2))\nlogger.log('wall pos:', wall.position.x, wall.position.y)"
+  },
+  {
+    "type": "action",
+    "title": "Custom resolver",
+    "source": "const resolver = new CollisionResolver({\n    separationFactor: 1,\n    restitution: 0.8,\n    friction: 0.3\n})\nlogger.log('options:', resolver.options)"
+  }
+]

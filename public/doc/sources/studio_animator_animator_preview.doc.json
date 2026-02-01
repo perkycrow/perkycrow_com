@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const preview = new AnimatorPreview({\n    canvas: document.querySelector('canvas'),\n    unitsInView: {width: 7, height: 5},\n    onFrame: (index) => timeline.setCurrentIndex(index),\n    onComplete: () => controls.reset()\n})"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "preview.play()\npreview.pause()\npreview.stop()"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "preview.setAnimation(animation)\npreview.setAnchor({x: 0.5, y: 0})\npreview.setSize({width: 1, height: 2})\npreview.setMotion({mode: 'walk', speed: 1, direction: 'e'})\npreview.setBackgroundRegion(region)\npreview.seekToFrame(3)\npreview.resize(800, 600)\npreview.render()"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "preview.dispose()"
+  }
+]

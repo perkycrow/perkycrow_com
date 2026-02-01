@@ -1,0 +1,52 @@
+[
+  {
+    "type": "action",
+    "title": "Camera properties",
+    "source": "const camera = new Camera({\n    x: 0,\n    y: 0,\n    zoom: 1,\n    unitsInView: 10,\n    viewportWidth: 800,\n    viewportHeight: 600\n})\n\nlogger.log('Position:', camera.x, camera.y)\nlogger.log('Zoom:', camera.zoom)\nlogger.log('Pixels per unit:', camera.pixelsPerUnit)"
+  },
+  {
+    "type": "code",
+    "title": "Units in view modes",
+    "source": "// Height-based (default) — height fits 10 units, width adapts to aspect ratio\nnew Camera({unitsInView: 10})\n\n// Width-based\nnew Camera({unitsInView: {width: 16}})\n\n// Both — uses the smaller fit\nnew Camera({unitsInView: {width: 16, height: 9}})"
+  },
+  {
+    "type": "action",
+    "title": "Set position and zoom",
+    "source": "const camera = new Camera({unitsInView: 10, viewportWidth: 800, viewportHeight: 600})\n\ncamera.setPosition(5, 3)\nlogger.log('Position:', camera.x, camera.y)\n\ncamera.setZoom(2)\nlogger.log('Zoom:', camera.zoom)\nlogger.log('Pixels per unit:', camera.pixelsPerUnit)"
+  },
+  {
+    "type": "action",
+    "title": "World to screen",
+    "source": "const camera = new Camera({\n    unitsInView: 10,\n    viewportWidth: 800,\n    viewportHeight: 600\n})\n\nconst screen = camera.worldToScreen(0, 0)\nlogger.log('World (0, 0) → Screen:', screen.x, screen.y)\n\nconst screen2 = camera.worldToScreen(5, 3)\nlogger.log('World (5, 3) → Screen:', screen2.x, screen2.y)"
+  },
+  {
+    "type": "action",
+    "title": "Screen to world",
+    "source": "const camera = new Camera({\n    unitsInView: 10,\n    viewportWidth: 800,\n    viewportHeight: 600\n})\n\nconst world = camera.screenToWorld(400, 300)\nlogger.log('Screen (400, 300) → World:', world.x, world.y)\n\nconst world2 = camera.screenToWorld(0, 0)\nlogger.log('Screen (0, 0) → World:', world2.x.toFixed(2), world2.y.toFixed(2))"
+  },
+  {
+    "type": "code",
+    "title": "Follow a player",
+    "source": "const camera = new Camera()\n\ncamera.follow(player, 0.1)\n\n// In your update loop, call camera.update(deltaTime)\n// The camera lerps toward player.x, player.y\n\ncamera.stopFollow()"
+  },
+  {
+    "type": "code",
+    "title": "Animate to position",
+    "source": "camera.animateTo({x: 10, y: 5, zoom: 2}, {\n    duration: 1,\n    easing: 'easeOutQuad',\n    onComplete: () => logger.log('Transition done')\n})\n\n// Or transition to match another camera\ncamera.transitionTo(otherCamera, {duration: 0.5})\n\n// Cancel mid-transition\ncamera.cancelTransition()"
+  },
+  {
+    "type": "action",
+    "title": "Shake parameters",
+    "source": "const camera = new Camera({unitsInView: 10})\n\ncamera.shake({intensity: 0.5, duration: 0.3, decay: true})\nlogger.log('Effects active:', camera.effects.length)\n\ncamera.clearEffects()\nlogger.log('Effects after clear:', camera.effects.length)"
+  },
+  {
+    "type": "code",
+    "title": "Custom effect",
+    "source": "// Animate is the low-level API for custom effects\ncamera.animate((deltaTime, elapsed, total) => {\n    camera.offsetZoom = Math.sin(elapsed * 10) * 0.1\n    return elapsed >= total // return true when done\n}, {\n    duration: 2,\n    onComplete: () => {\n        camera.offsetZoom = 0\n    }\n})"
+  },
+  {
+    "type": "action",
+    "title": "Visibility check",
+    "source": "const camera = new Camera({\n    unitsInView: 10,\n    viewportWidth: 800,\n    viewportHeight: 600\n})\n\nconst visible = camera.isVisible({\n    minX: -1, maxX: 1, minY: -1, maxY: 1, width: 2, height: 2\n})\nlogger.log('Center object visible:', visible)\n\nconst offscreen = camera.isVisible({\n    minX: 100, maxX: 102, minY: 100, maxY: 102, width: 2, height: 2\n})\nlogger.log('Far object visible:', offscreen)"
+  }
+]

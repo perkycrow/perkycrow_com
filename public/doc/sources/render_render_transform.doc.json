@@ -1,0 +1,17 @@
+[
+  {
+    "type": "action",
+    "title": "Default behavior",
+    "source": "const transform = new RenderTransform()\n\nlogger.log('enabled:', transform.enabled)\nlogger.log('getProgram:', transform.getProgram())\n\nconst matrices = {projection: [1, 0, 0, 1], view: [1, 0, 0, 1]}\nconst result = transform.apply({}, matrices)\nlogger.log('apply returns matrices unchanged:', result === matrices)"
+  },
+  {
+    "type": "action",
+    "title": "Toggle enabled",
+    "source": "const transform = new RenderTransform()\nlogger.log('default:', transform.enabled)\n\nconst disabled = new RenderTransform({enabled: false})\nlogger.log('created disabled:', disabled.enabled)"
+  },
+  {
+    "type": "code",
+    "title": "Custom transform skeleton",
+    "source": "class MyTransform extends RenderTransform {\n\n    init (context) {\n        // Register shaders, acquire resources\n    }\n\n    apply (context, matrices) {\n        // Modify and return matrices\n        return matrices\n    }\n\n    getProgram () {\n        // Return custom shader program or null\n        return null\n    }\n\n    applyUniforms (gl, program) {\n        // Set uniforms on the shader program\n    }\n\n    dispose () {\n        // Clean up\n    }\n\n}"
+  }
+]

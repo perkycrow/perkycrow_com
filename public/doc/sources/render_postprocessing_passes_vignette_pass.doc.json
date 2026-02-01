@@ -1,0 +1,12 @@
+[
+  {
+    "type": "action",
+    "title": "Default values",
+    "source": "const pass = new VignettePass()\n\nlogger.log('intensity:', pass.uniforms.uIntensity)\nlogger.log('smoothness:', pass.uniforms.uSmoothness)\nlogger.log('roundness:', pass.uniforms.uRoundness)\nlogger.log('color:', pass.uniforms.uColor)"
+  },
+  {
+    "type": "code",
+    "title": "Customize",
+    "source": "const pass = new VignettePass()\n\npass.setUniform('uIntensity', 0.6)\npass.setUniform('uSmoothness', 1.2)\npass.setUniform('uColor', [0.1, 0.0, 0.05])"
+  }
+]

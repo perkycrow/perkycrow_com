@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "initRegistry(docs, guides)"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const entry = lookupDoc('Logger')\nentry.file     // '/core/logger.doc.js'\nentry.category // 'core'"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const guide = lookupGuide('foreword')\nguide.title    // 'foreword'\nguide.category // 'prologue'"
+  }
+]

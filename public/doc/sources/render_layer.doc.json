@@ -1,0 +1,57 @@
+[
+  {
+    "type": "code",
+    "title": "Default layer",
+    "source": "const layer = new Layer({$id: 'game'})"
+  },
+  {
+    "type": "code",
+    "title": "With options",
+    "source": "const layer = new Layer({\n    $id: 'ui',\n    zIndex: 10,\n    visible: true,\n    opacity: 0.8,\n    pointerEvents: 'none'\n})"
+  },
+  {
+    "type": "action",
+    "title": "Full container (default)",
+    "source": "const layer = new Layer({$id: 'test'})\nconst vp = layer.calculateViewport(800, 600)\nlogger.log('x:', vp.x, 'y:', vp.y)\nlogger.log('width:', vp.width, 'height:', vp.height)"
+  },
+  {
+    "type": "action",
+    "title": "Percentage viewport",
+    "source": "const layer = new Layer({\n    $id: 'test',\n    viewport: {x: 0, y: 0, width: '50%', height: '75%', anchor: 'top-left'}\n})\nconst vp = layer.calculateViewport(800, 600)\nlogger.log('width:', vp.width, '(50% of 800)')\nlogger.log('height:', vp.height, '(75% of 600)')"
+  },
+  {
+    "type": "action",
+    "title": "Anchored to bottom-right",
+    "source": "const layer = new Layer({\n    $id: 'minimap',\n    viewport: {x: 10, y: 10, width: 200, height: 150, anchor: 'bottom-right'}\n})\nconst vp = layer.calculateViewport(800, 600)\nlogger.log('x:', vp.x, 'y:', vp.y)\nlogger.log('width:', vp.width, 'height:', vp.height)"
+  },
+  {
+    "type": "action",
+    "title": "setZIndex",
+    "source": "const layer = new Layer({$id: 'test'})\nlayer.setZIndex(5)\nlogger.log('zIndex:', layer.zIndex)"
+  },
+  {
+    "type": "action",
+    "title": "setVisible",
+    "source": "const layer = new Layer({$id: 'test'})\nlayer.setVisible(false)\nlogger.log('visible:', layer.visible)"
+  },
+  {
+    "type": "action",
+    "title": "setOpacity",
+    "source": "const layer = new Layer({$id: 'test'})\nlayer.setOpacity(0.5)\nlogger.log('opacity:', layer.opacity)"
+  },
+  {
+    "type": "action",
+    "title": "setPointerEvents",
+    "source": "const layer = new Layer({$id: 'test'})\nlayer.setPointerEvents('none')\nlogger.log('pointerEvents:', layer.pointerEvents)"
+  },
+  {
+    "type": "code",
+    "title": "Mounting",
+    "source": "const container = document.getElementById('game-container')\nconst layer = new Layer({$id: 'game'})\nlayer.mount(container)\nlayer.unmount()"
+  },
+  {
+    "type": "action",
+    "title": "Resize updates viewport",
+    "source": "const layer = new Layer({\n    $id: 'test',\n    viewport: {x: 0, y: 0, width: '50%', height: '50%', anchor: 'top-left'}\n})\n\nlayer.resize(1000, 800)\nlogger.log('width:', layer.resolvedViewport.width)\nlogger.log('height:', layer.resolvedViewport.height)\n\nlayer.resize(500, 400)\nlogger.log('after resize - width:', layer.resolvedViewport.width)\nlogger.log('after resize - height:', layer.resolvedViewport.height)"
+  }
+]

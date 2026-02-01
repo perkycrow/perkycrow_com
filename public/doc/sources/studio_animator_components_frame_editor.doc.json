@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const editor = buildFrameEditor(frame, {\n    onFramesUpdate: () => save(),\n    getSuggestions: (current) => allEvents.filter(e => !current.includes(e))\n})"
+  }
+]

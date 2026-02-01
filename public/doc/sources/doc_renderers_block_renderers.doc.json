@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const el = renderText({type: 'text', content: 'Hello **world**'})"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const el = renderDisclaimer({type: 'disclaimer', content: 'Experimental feature'})"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const el = renderCode({type: 'code', title: 'Example', source: 'const x = 1'})\n\nconst withExtracted = renderCode(block, 'overridden source')"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const el = renderSee({\n    type: 'see',\n    name: 'Logger',\n    pageType: 'api',\n    section: 'Events'\n})"
+  }
+]

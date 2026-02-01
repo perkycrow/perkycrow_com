@@ -1,0 +1,32 @@
+[
+  {
+    "type": "action",
+    "title": "register / unregister",
+    "source": "const manager = new ApplicationManager({$id: 'manager'})\n\nmanager.register('demo', Application)\nlogger.log('registered:', manager.constructors.has('demo'))\n\nmanager.unregister('demo')\nlogger.log('after unregister:', manager.constructors.has('demo'))"
+  },
+  {
+    "type": "action",
+    "title": "createApp",
+    "source": "const manager = new ApplicationManager({$id: 'manager'})\nmanager.register('demo', Application)\n\nconst app = manager.createApp('demo', {$id: 'myApp'})\nlogger.log('app id:', app.$id)\nlogger.log('children:', manager.children.length)"
+  },
+  {
+    "type": "action",
+    "title": "startApp / stopApp",
+    "source": "const manager = new ApplicationManager({$id: 'manager'})\nmanager.register('demo', Application)\nconst app = manager.createApp('demo', {$id: 'myApp'})\n\nmanager.startApp('myApp')\nlogger.log('running:', app.running)\n\nmanager.stopApp('myApp')\nlogger.log('after stop:', app.running)"
+  },
+  {
+    "type": "action",
+    "title": "disposeApp",
+    "source": "const manager = new ApplicationManager({$id: 'manager'})\nmanager.register('demo', Application)\nmanager.createApp('demo', {$id: 'temp'})\n\nlogger.log('before:', manager.children.length)\nmanager.disposeApp('temp')\nlogger.log('after:', manager.children.length)"
+  },
+  {
+    "type": "action",
+    "title": "list",
+    "source": "const manager = new ApplicationManager({$id: 'manager'})\nmanager.register('demo', Application)\nmanager.createApp('demo', {$id: 'app1', $name: 'Game One'})\nmanager.createApp('demo', {$id: 'app2', $name: 'Game Two'})\nmanager.createApp('demo', {$id: 'app3', $name: 'Editor'})\n\nlogger.log('all:', manager.list().map(a => a.$name))\nlogger.log('games:', manager.list('Game').map(a => a.$name))"
+  },
+  {
+    "type": "code",
+    "title": "execute",
+    "source": "const manager = new ApplicationManager({$id: 'manager'})\nmanager.register('demo', Application)\nmanager.createApp('demo', {$id: 'myApp'})\n\nmanager.execute('myApp', 'start')"
+  }
+]

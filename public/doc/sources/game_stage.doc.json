@@ -1,0 +1,42 @@
+[
+  {
+    "type": "code",
+    "title": "Defining a stage",
+    "source": "class BattleStage extends Stage {\n    static World = World\n\n    update (deltaTime) {\n        // Stage-specific update logic\n    }\n\n    render () {\n        // Stage-specific render logic\n    }\n}"
+  },
+  {
+    "type": "action",
+    "title": "Stage with world",
+    "source": "class LevelStage extends Stage {\n    static World = World\n}\n\nconst stage = new LevelStage({game: {}})\n\nlogger.log('has world:', stage.world !== undefined)\nlogger.log('has worldView:', stage.worldView !== undefined)"
+  },
+  {
+    "type": "action",
+    "title": "No world by default",
+    "source": "const stage = new Stage({game: {}})\n\nlogger.log('world:', stage.world)\nlogger.log('worldView:', stage.worldView)"
+  },
+  {
+    "type": "action",
+    "title": "Custom WorldView",
+    "source": "class MyWorldView extends WorldView {\n    onStart () {\n        super.onStart()\n        logger.log('Custom world view started')\n    }\n}\n\nclass MyStage extends Stage {\n    static World = World\n    static WorldView = MyWorldView\n}\n\nconst app = new PerkyModule()\nconst stage = app.create(MyStage, {game: {}})\n\nlogger.log('worldView type:', stage.worldView.constructor.name)"
+  },
+  {
+    "type": "code",
+    "title": "Game stage example",
+    "source": "class GameplayStage extends Stage {\n    static World = World\n\n    update (deltaTime) {\n        this.world.update(deltaTime, {})\n    }\n\n    render () {\n        if (this.worldView) {\n            this.worldView.sync()\n        }\n    }\n}"
+  },
+  {
+    "type": "code",
+    "title": "Static properties",
+    "source": "// Stage.World - World class to instantiate (default: null)\n// Stage.WorldView - WorldView class to instantiate (default: WorldView)\n// Stage.$category - 'stage'"
+  },
+  {
+    "type": "code",
+    "title": "Properties",
+    "source": "// stage.game - Reference to the game instance\n// stage.world - The World instance (if World class is set)\n// stage.worldView - The WorldView instance (if both World and WorldView are set)"
+  },
+  {
+    "type": "code",
+    "title": "Methods",
+    "source": "// update(deltaTime) - Override for stage update logic\n// render() - Override for stage render logic"
+  }
+]

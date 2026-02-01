@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Playback state",
+    "source": "const source = audioSystem.play('click', {\n    channel: 'sfx',\n    loop: true,\n    volume: 0.8\n})\n\nsource.playing      // true while sound is active\nsource.loop          // whether it loops\nsource.volume        // 0 to 1\nsource.playbackRate  // 0.1 to 10\nsource.currentTime   // elapsed time in seconds\nsource.channel       // the AudioChannel it belongs to\nsource.spatial       // true for positional audio"
+  },
+  {
+    "type": "container",
+    "title": "Volume and rate control",
+    "source": "const audio = new AudioSystem()\naudio.start()\nawait audio.unlock()\n\nlet source = null\n\nctx.action('Play Oscillator', () => {\n    if (source) {\n        source.stop()\n    }\n    source = audio.playOscillator({type: 'sine', frequency: 440, duration: null})\n    logger.log('Playing sine wave')\n})\n\nctx.slider('Volume', {min: 0, max: 1, default: 1, step: 0.1}, value => {\n    if (source) {\n        source.setVolume(value)\n    }\n})\n\nctx.slider('Playback Rate', {min: 0.5, max: 2, default: 1, step: 0.1}, value => {\n    if (source) {\n        source.setPlaybackRate(value)\n    }\n})\n\nctx.action('Stop', () => {\n    if (source) {\n        source.stop()\n        source = null\n    }\n})"
+  },
+  {
+    "type": "code",
+    "title": "Fade examples",
+    "source": "const source = audioSystem.play('bgm', {channel: 'music', loop: true})\n\n// Fade in over 2 seconds\nsource.fadeIn(2)\n\n// Fade out over 1 second, then stop\nsource.fadeOut(1)\n\n// Fade out without stopping\nsource.fadeOut(1, false)"
+  },
+  {
+    "type": "code",
+    "title": "Spatial source",
+    "source": "const source = audioSystem.playAt('footstep', 5, 3, {\n    refDistance: 1,\n    maxDistance: 20,\n    rolloffFactor: 1\n})\n\nsource.x              // current x position\nsource.y              // current y position\nsource.spatial         // true\nsource.refDistance     // distance at full volume\nsource.maxDistance     // distance where sound is silent\nsource.rolloffFactor  // how quickly volume drops\n\n// Update position\nsource.setPosition(10, 5)\nsource.getPosition()  // {x: 10, y: 5}"
+  },
+  {
+    "type": "code",
+    "title": "Event handling",
+    "source": "const source = audioSystem.play('click')\n\nsource.on('play', () => {\n    logger.log('Playback started')\n})\n\nsource.on('stop', () => {\n    logger.log('Manually stopped')\n})\n\nsource.on('ended', () => {\n    logger.log('Playback finished naturally')\n})"
+  }
+]

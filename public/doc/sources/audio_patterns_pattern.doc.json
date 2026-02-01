@@ -1,0 +1,32 @@
+[
+  {
+    "type": "action",
+    "title": "From string",
+    "source": "const pattern = new Pattern({\n    pattern: 'kick . snare . kick kick snare .',\n    bpm: 120\n})\n\nlogger.log('Steps:', pattern.steps.length)\nlogger.log('BPM:', pattern.bpm)\nlogger.log('Loop:', pattern.loop)"
+  },
+  {
+    "type": "action",
+    "title": "From steps array",
+    "source": "const pattern = new Pattern({\n    steps: ['kick', null, 'snare', null],\n    bpm: 140\n})\n\nlogger.log('Steps:', pattern.stepCount)"
+  },
+  {
+    "type": "code",
+    "title": "Basic playback loop",
+    "source": "const pattern = new Pattern({pattern: 'C D E F G A B c', bpm: 120})\n\npattern.onStep((step, index) => {\n    logger.log('Step', index, ':', step)\n})\n\npattern.play()\n\n// In your update loop:\n// pattern.update(deltaTime)"
+  },
+  {
+    "type": "action",
+    "title": "Swing demo",
+    "source": "const pattern = new Pattern({\n    pattern: 'kick snare kick snare',\n    bpm: 120,\n    swing: 0.5\n})\n\nlogger.log('Swing:', pattern.swing)\n\npattern.setSwing(0.8)\nlogger.log('Swing:', pattern.swing)"
+  },
+  {
+    "type": "action",
+    "title": "Map, reverse, fast, slow",
+    "source": "const original = new Pattern({pattern: 'kick snare hat hat', bpm: 120})\n\nconst reversed = original.reverse()\nlogger.log('Reversed:', reversed.steps)\n\nconst faster = original.fast(2)\nlogger.log('Fast BPM:', faster.bpm)\n\nconst slower = original.slow(2)\nlogger.log('Slow BPM:', slower.bpm)\n\nconst mapped = original.map(step => (step === 'hat' ? 'clap' : step))\nlogger.log('Mapped:', mapped.steps)"
+  },
+  {
+    "type": "action",
+    "title": "Parse examples",
+    "source": "logger.log(parsePattern('kick . snare .'))\nlogger.log(parsePattern('[kick snare] hat . hat'))\nlogger.log(parsePattern('C D E _ G'))"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Register a shader",
+    "source": "const registry = new ShaderRegistry(gl)\n\nregistry.register('sprite', {\n    vertex: vertexSource,\n    fragment: fragmentSource,\n    uniforms: ['uProjectionMatrix', 'uViewMatrix', 'uTexture'],\n    attributes: ['aPosition', 'aTexCoord']\n})\n\nconst program = registry.get('sprite')\nprogram.use()"
+  },
+  {
+    "type": "code",
+    "title": "Set and get defaults",
+    "source": "const registry = new ShaderRegistry(gl)\n\nregistry.register('sprite', {vertex: vs, fragment: fs, uniforms: [], attributes: []})\nregistry.register('primitive', {vertex: vs2, fragment: fs2, uniforms: [], attributes: []})\n\nregistry.setDefault('sprite', 'sprite')\nregistry.setDefault('primitive', 'primitive')\n\nconst spriteShader = registry.getDefault('sprite')"
+  },
+  {
+    "type": "code",
+    "title": "Clean up",
+    "source": "const registry = new ShaderRegistry(gl)\n\nregistry.register('temp', {vertex: vs, fragment: fs, uniforms: [], attributes: []})\nregistry.unregister('temp')\n\nregistry.dispose()"
+  }
+]

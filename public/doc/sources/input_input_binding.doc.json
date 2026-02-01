@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Basic binding",
+    "source": "const binding = new InputBinding({\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump'\n})\n\nlogger.log(binding.deviceName)   // 'keyboard'\nlogger.log(binding.controlName)  // 'Space'\nlogger.log(binding.actionName)   // 'jump'\nlogger.log(binding.eventType)    // 'pressed'"
+  },
+  {
+    "type": "code",
+    "title": "With event type",
+    "source": "const binding = new InputBinding({\n    deviceName: 'mouse',\n    controlName: 'leftButton',\n    actionName: 'shoot',\n    eventType: 'released'\n})\n\nlogger.log(binding.eventType)  // 'released'"
+  },
+  {
+    "type": "action",
+    "title": "Key generation",
+    "source": "const binding = new InputBinding({\n    deviceName: 'keyboard',\n    controlName: 'KeyW',\n    actionName: 'moveUp'\n})\n\nlogger.log(binding.key)\n\nconst withController = new InputBinding({\n    deviceName: 'keyboard',\n    controlName: 'KeyW',\n    actionName: 'moveUp',\n    controllerName: 'player1'\n})\n\nlogger.log(withController.key)"
+  },
+  {
+    "type": "action",
+    "title": "Match check",
+    "source": "const binding = new InputBinding({\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump'\n})\n\nlogger.log('Matches Space pressed:', binding.matches({\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    eventType: 'pressed'\n}))\n\nlogger.log('Matches Space released:', binding.matches({\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    eventType: 'released'\n}))"
+  },
+  {
+    "type": "action",
+    "title": "Rebind",
+    "source": "const binding = new InputBinding({\n    deviceName: 'keyboard',\n    controlName: 'Space',\n    actionName: 'jump'\n})\n\nlogger.log('Before:', binding.deviceName, binding.controlName)\n\nbinding.updateInput({\n    deviceName: 'keyboard',\n    controlName: 'KeyW'\n})\n\nlogger.log('After:', binding.deviceName, binding.controlName)"
+  }
+]

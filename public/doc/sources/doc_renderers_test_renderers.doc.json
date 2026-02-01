@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const wrapper = createDescribeWrapper(describe, 'section-id', 0)\n\nconst nested = createDescribeWrapper(describe, 'nested-id', 2)"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "addDescribeTocLink(tocList, 'PerkyModule', 'section-id', 0)\n\naddDescribeTocLink(tocList, 'update', 'nested-id', 1)"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const el = renderTestHook('beforeEach', {source: 'game = new Game()'})"
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const el = renderTest({title: 'update', source: 'expect(game.fps).toBe(60)'})"
+  }
+]

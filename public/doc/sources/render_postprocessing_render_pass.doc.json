@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Subclass example",
+    "source": "class GrayscalePass extends RenderPass {\n\n    static shaderDefinition = {\n        vertex: '...',\n        fragment: '...',\n        uniforms: ['uTexture', 'uAmount'],\n        attributes: ['aPosition', 'aTexCoord']\n    }\n\n    static defaultUniforms = {\n        uAmount: 1.0\n    }\n\n}"
+  },
+  {
+    "type": "action",
+    "title": "Default uniforms",
+    "source": "const pass = new RenderPass()\n\nlogger.log('uniforms:', pass.uniforms)\nlogger.log('enabled:', pass.enabled)"
+  },
+  {
+    "type": "code",
+    "title": "Set a uniform",
+    "source": "pass.setUniform('uIntensity', 0.5)\npass.setUniform('uColor', [1.0, 0.0, 0.0])"
+  },
+  {
+    "type": "action",
+    "title": "Toggle enabled",
+    "source": "const pass = new RenderPass()\n\nlogger.log('enabled:', pass.enabled)\n\npass.enabled = false\nlogger.log('enabled:', pass.enabled)"
+  }
+]

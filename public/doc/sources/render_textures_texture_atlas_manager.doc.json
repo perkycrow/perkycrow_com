@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Adding images",
+    "source": "const manager = new TextureAtlasManager({atlasSize: 1024})\n\nconst region = manager.add('player', playerImage)\nconst batch = manager.addBatch({\n    enemy: enemyImage,\n    bullet: bulletImage\n})"
+  },
+  {
+    "type": "code",
+    "title": "Named groups",
+    "source": "const manager = new TextureAtlasManager()\n\nmanager.addToNamedAtlas('ui', 'button', buttonImage)\nmanager.addToNamedAtlas('ui', 'icon', iconImage)\nmanager.addToNamedAtlas('tiles', 'grass', grassImage)"
+  },
+  {
+    "type": "code",
+    "title": "Getting a region",
+    "source": "const manager = new TextureAtlasManager()\nmanager.add('sprite', image)\n\nconst region = manager.get('sprite')\nconst exists = manager.has('sprite')"
+  },
+  {
+    "type": "code",
+    "title": "Dirty tracking",
+    "source": "const manager = new TextureAtlasManager()\nmanager.add('sprite', image)\n\nconst dirty = manager.getDirtyAtlases()\n\n// Upload dirty atlas canvases to GPU textures...\nmanager.markAllClean()"
+  },
+  {
+    "type": "code",
+    "title": "Clearing",
+    "source": "const manager = new TextureAtlasManager()\nmanager.clear()"
+  }
+]

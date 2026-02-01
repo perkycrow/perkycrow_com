@@ -1,0 +1,72 @@
+[
+  {
+    "type": "code",
+    "title": "Creation",
+    "source": "const a = new Vec4(1, 2, 3, 4)\nconst b = new Vec4({x: 1, y: 2, z: 3, w: 4})\nconst c = new Vec4([1, 2, 3, 4])"
+  },
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.a = new Vec4(3, 4, 5, 6)\nctx.b = new Vec4(1, 2, 3, 4)"
+  },
+  {
+    "type": "action",
+    "title": "Addition",
+    "source": "logger.log('a:', ctx.a)\nlogger.log('b:', ctx.b)\nlogger.log('a + b:', ctx.a.clone().add(ctx.b))"
+  },
+  {
+    "type": "action",
+    "title": "Subtraction",
+    "source": "logger.log('a:', ctx.a)\nlogger.log('b:', ctx.b)\nlogger.log('a - b:', ctx.a.clone().sub(ctx.b))"
+  },
+  {
+    "type": "action",
+    "title": "Scalar multiplication",
+    "source": "logger.log('a:', ctx.a)\nlogger.log('a * 2:', ctx.a.clone().multiplyScalar(2))"
+  },
+  {
+    "type": "action",
+    "title": "Dot product",
+    "source": "logger.log('a:', ctx.a)\nlogger.log('b:', ctx.b)\nlogger.log('a . b:', ctx.a.dot(ctx.b))"
+  },
+  {
+    "type": "setup",
+    "index": 1,
+    "source": "ctx.v = new Vec4(1, 2, 3, 4)"
+  },
+  {
+    "type": "action",
+    "title": "Length",
+    "source": "logger.log('v:', ctx.v)\nlogger.log('length:', ctx.v.length())\nlogger.log('lengthSq:', ctx.v.lengthSq())\nlogger.log('manhattanLength:', ctx.v.manhattanLength())"
+  },
+  {
+    "type": "action",
+    "title": "Normalize",
+    "source": "logger.log('original:', ctx.v.clone())\nlogger.log('normalized:', ctx.v.clone().normalize())"
+  },
+  {
+    "type": "action",
+    "title": "Lerp",
+    "source": "const a = new Vec4(0, 0, 0, 0)\nconst b = new Vec4(10, 10, 10, 10)\nlogger.log('a:', a)\nlogger.log('b:', b)\nlogger.log('25%:', a.clone().lerp(b, 0.25))\nlogger.log('50%:', a.clone().lerp(b, 0.5))\nlogger.log('75%:', a.clone().lerp(b, 0.75))"
+  },
+  {
+    "type": "action",
+    "title": "Clamp",
+    "source": "const v = new Vec4(5, -3, 12, 0.5)\nconst min = new Vec4(0, 0, 0, 0)\nconst max = new Vec4(10, 10, 10, 1)\nlogger.log('original:', v.clone())\nlogger.log('clamped:', v.clamp(min, max))"
+  },
+  {
+    "type": "action",
+    "title": "Negate",
+    "source": "const v = new Vec4(1, -2, 3, -4)\nlogger.log('original:', v.clone())\nlogger.log('negated:', v.negate())"
+  },
+  {
+    "type": "action",
+    "title": "Example",
+    "source": "const rect = new Vec4(10, 20, 100, 50)\nlogger.log('x:', rect.x)\nlogger.log('y:', rect.y)\nlogger.log('width:', rect.width)\nlogger.log('height:', rect.height)"
+  },
+  {
+    "type": "action",
+    "title": "Example",
+    "source": "const result = new Vec4(1, 0, 0, 0)\n    .multiplyScalar(5)\n    .add(new Vec4(0, 3, 0, 1))\n    .normalize()\nlogger.log('result:', result)"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "code",
+    "title": "Basic usage",
+    "source": "buildDocUrl({name: 'Logger'})\n\n// → \"core_logger.html\"\n\nbuildDocUrl({name: 'Logger', pageType: 'api'})\n\n// → \"core_logger_api.html\"\n\nbuildDocUrl({name: 'Logger', section: 'Events'})\n\n// → \"core_logger.html#events\""
+  },
+  {
+    "type": "code",
+    "title": "Guide URLs",
+    "source": "buildDocUrl({name: 'Foreword', pageType: 'guide'})\n\n// → \"guide_foreword.html\""
+  },
+  {
+    "type": "code",
+    "title": "Tab switching",
+    "source": "getTabUrl('doc')   // → \"core_logger.html\"\ngetTabUrl('api')   // → \"core_logger_api.html\"\ngetTabUrl('test')  // → \"core_logger_test.html\""
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "docFileToHtml('/core/logger.doc.js')\n\n// → \"core_logger.html\"\n\ndocFileToHtml('/core/logger.doc.js', 'api')\n\n// → \"core_logger_api.html\""
+  },
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "extractBaseName('core_logger_api.html')\n\n// → \"core_logger\"\n\nextractBaseName('core_logger.html')\n\n// → \"core_logger\""
+  }
+]

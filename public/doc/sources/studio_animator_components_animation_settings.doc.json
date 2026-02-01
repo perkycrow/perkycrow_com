@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "Usage",
+    "source": "const {container, nameInput, rebuild} = buildAnimationSettings(\n    animator,\n    selectedAnimation,\n    {\n        onRename: (name) => handleRename(name),\n        onMotionChange: (motion) => preview.setMotion(motion),\n        onMotionUpdate: (motion) => preview.setMotion(motion),\n        onDelete: () => deleteAnimation()\n    }\n)\n\nrebuild(newAnimation)"
+  }
+]

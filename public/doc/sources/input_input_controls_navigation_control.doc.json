@@ -1,0 +1,22 @@
+[
+  {
+    "type": "code",
+    "title": "Create and update",
+    "source": "const nav = new NavigationControl({\n    device: null,\n    name: 'navigation'\n})\n\nnav.on('updated', (value) => {\n    logger.log(`deltaX: ${value.deltaX}, deltaY: ${value.deltaY}`)\n})\n\nnav.setValue({deltaX: 0, deltaY: -120, deltaZ: 0})"
+  },
+  {
+    "type": "action",
+    "title": "Read deltas",
+    "source": "const nav = new NavigationControl({\n    device: null,\n    name: 'scroll'\n})\n\nnav.setValue({deltaX: 5, deltaY: -120, deltaZ: 0})\n\nlogger.log('deltaX:', nav.deltaX)\nlogger.log('deltaY:', nav.deltaY)\nlogger.log('deltaZ:', nav.deltaZ)"
+  },
+  {
+    "type": "action",
+    "title": "Mouse wheel scroll",
+    "source": "const nav = new NavigationControl({\n    device: null,\n    name: 'navigation'\n})\n\nnav.setValue({deltaX: 0, deltaY: -120, deltaZ: 0})\nlogger.log('isMouseWheelZoom:', nav.isMouseWheelZoom)\nlogger.log('isTrackpadPan:', nav.isTrackpadPan)\nlogger.log('isTrackpadPinchZoom:', nav.isTrackpadPinchZoom)"
+  },
+  {
+    "type": "action",
+    "title": "Trackpad pan",
+    "source": "const nav = new NavigationControl({\n    device: null,\n    name: 'navigation'\n})\n\nnav.setValue({deltaX: 3, deltaY: 5, deltaZ: 0})\nlogger.log('isTrackpadPan:', nav.isTrackpadPan)\nlogger.log('isMouseWheelZoom:', nav.isMouseWheelZoom)"
+  }
+]

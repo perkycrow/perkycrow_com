@@ -1,0 +1,42 @@
+[
+  {
+    "type": "action",
+    "title": "From ArrayBuffer",
+    "source": "const buffer = new ArrayBuffer(8)\nconst view = new DataView(buffer)\nview.setUint8(0, 72)\nview.setUint8(1, 101)\nview.setUint8(2, 108)\nview.setUint8(3, 108)\nview.setUint8(4, 111)\n\nconst reader = new BinaryReader(buffer)\nlogger.log('length:', reader.length)\nlogger.log('remaining:', reader.remaining)\nlogger.log('read string:', reader.readString(5))"
+  },
+  {
+    "type": "action",
+    "title": "From Uint8Array",
+    "source": "const data = new Uint8Array([0x50, 0x45, 0x52, 0x4B, 0x59])\nconst reader = new BinaryReader(data)\nlogger.log('string:', reader.readString(5))"
+  },
+  {
+    "type": "action",
+    "title": "Integer types",
+    "source": "const buffer = new ArrayBuffer(8)\nconst view = new DataView(buffer)\nview.setUint8(0, 255)\nview.setInt8(1, -42)\nview.setUint16(2, 1024)\nview.setInt32(4, -100000)\n\nconst reader = new BinaryReader(buffer)\nlogger.log('uint8:', reader.readUint8())\nlogger.log('int8:', reader.readInt8())\nlogger.log('uint16:', reader.readUint16())\nlogger.log('int32:', reader.readInt32())"
+  },
+  {
+    "type": "action",
+    "title": "Float types",
+    "source": "const buffer = new ArrayBuffer(12)\nconst view = new DataView(buffer)\nview.setFloat32(0, 3.14)\nview.setFloat64(4, 2.718281828)\n\nconst reader = new BinaryReader(buffer)\nlogger.log('float32:', reader.readFloat32().toFixed(2))\nlogger.log('float64:', reader.readFloat64().toFixed(9))"
+  },
+  {
+    "type": "action",
+    "title": "seek and skip",
+    "source": "const data = new Uint8Array([10, 20, 30, 40, 50])\nconst reader = new BinaryReader(data)\n\nlogger.log('first:', reader.readUint8())\n\nreader.skip(2)\nlogger.log('after skip(2):', reader.readUint8())\n\nreader.seek(0)\nlogger.log('after seek(0):', reader.readUint8())\nlogger.log('remaining:', reader.remaining)"
+  },
+  {
+    "type": "action",
+    "title": "readString",
+    "source": "const data = new Uint8Array([72, 101, 108, 108, 111])\nconst reader = new BinaryReader(data)\nlogger.log('string:', reader.readString(5))"
+  },
+  {
+    "type": "action",
+    "title": "readPascalString",
+    "source": "const data = new Uint8Array([3, 65, 66, 67, 0])\nconst reader = new BinaryReader(data)\nlogger.log('pascal string:', reader.readPascalString(2))"
+  },
+  {
+    "type": "action",
+    "title": "Read raw bytes",
+    "source": "const data = new Uint8Array([0xFF, 0x00, 0xAB, 0xCD, 0xEF])\nconst reader = new BinaryReader(data)\nconst bytes = reader.readBytes(3)\nlogger.log('bytes:', Array.from(bytes).map(b => '0x' + b.toString(16).toUpperCase()).join(' '))\nlogger.log('remaining:', reader.remaining)"
+  }
+]

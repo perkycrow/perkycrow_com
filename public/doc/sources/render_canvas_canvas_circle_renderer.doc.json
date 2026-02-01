@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Registration",
+    "source": "CanvasCircleRenderer.handles // [Circle]"
+  },
+  {
+    "type": "code",
+    "title": "Render call",
+    "source": "const renderer = new CanvasCircleRenderer()\n\n// Called internally by CanvasRenderer during flush\n// renderer.render(circle, ctx)"
+  }
+]

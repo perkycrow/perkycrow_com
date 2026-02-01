@@ -1,0 +1,57 @@
+[
+  {
+    "type": "code",
+    "title": "Input formats",
+    "source": "const a = new Color('#ff6600')\nconst b = new Color('orange')\nconst c = new Color('rgb(255, 102, 0)')\nconst d = new Color('hsl(24, 100, 50)')\nconst e = new Color(0xff6600)\nconst f = new Color([1, 0.4, 0])\nconst g = new Color({r: 1, g: 0.4, b: 0})\nconst h = new Color({h: 24, s: 100, l: 50})"
+  },
+  {
+    "type": "setup",
+    "index": 0,
+    "source": "ctx.color = new Color('#4a9eff')"
+  },
+  {
+    "type": "action",
+    "title": "toHex",
+    "source": "logger.log('hex:', ctx.color.toHex())\nlogger.log('with alpha:', ctx.color.toHex(true))"
+  },
+  {
+    "type": "action",
+    "title": "toRgb / toRgbString",
+    "source": "logger.log('rgb object:', ctx.color.toRgb())\nlogger.log('rgb string:', ctx.color.toRgbString())"
+  },
+  {
+    "type": "action",
+    "title": "toHsl / toHslString",
+    "source": "logger.log('hsl object:', ctx.color.toHsl())\nlogger.log('hsl string:', ctx.color.toHslString())"
+  },
+  {
+    "type": "action",
+    "title": "lighten / darken",
+    "source": "const color = new Color('#4a9eff')\nlogger.log('original:', color.toHex())\nlogger.log('lighten 20:', color.clone().lighten(20).toHex())\nlogger.log('darken 20:', color.clone().darken(20).toHex())"
+  },
+  {
+    "type": "action",
+    "title": "saturate / desaturate",
+    "source": "const color = new Color('#4a9eff')\nlogger.log('original:', color.toHex())\nlogger.log('saturate 30:', color.clone().saturate(30).toHex())\nlogger.log('desaturate 30:', color.clone().desaturate(30).toHex())"
+  },
+  {
+    "type": "action",
+    "title": "rotate",
+    "source": "const color = new Color('#ff0000')\nlogger.log('red:', color.toHex())\nlogger.log('+120°:', color.clone().rotate(120).toHex())\nlogger.log('+240°:', color.clone().rotate(240).toHex())"
+  },
+  {
+    "type": "action",
+    "title": "mix",
+    "source": "const red = new Color('#ff0000')\nconst blue = new Color('#0000ff')\nlogger.log('red:', red.toHex())\nlogger.log('blue:', blue.toHex())\nlogger.log('50% mix:', red.clone().mix(blue, 0.5).toHex())"
+  },
+  {
+    "type": "action",
+    "title": "invert / grayscale",
+    "source": "const color = new Color('#4a9eff')\nlogger.log('original:', color.toHex())\nlogger.log('inverted:', color.clone().invert().toHex())\nlogger.log('grayscale:', color.clone().grayscale().toHex())"
+  },
+  {
+    "type": "action",
+    "title": "luminance / isDark / isLight",
+    "source": "const dark = new Color('#1a1a2e')\nconst light = new Color('#f0f0f0')\nlogger.log('dark luminance:', dark.luminance.toFixed(4))\nlogger.log('dark.isDark:', dark.isDark)\nlogger.log('light luminance:', light.luminance.toFixed(4))\nlogger.log('light.isLight:', light.isLight)"
+  }
+]

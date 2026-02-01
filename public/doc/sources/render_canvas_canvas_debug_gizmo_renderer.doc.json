@@ -1,0 +1,12 @@
+[
+  {
+    "type": "code",
+    "title": "Registration",
+    "source": "CanvasDebugGizmoRenderer.handles // []"
+  },
+  {
+    "type": "code",
+    "title": "Collect and flush",
+    "source": "const renderer = new CanvasDebugGizmoRenderer()\n\nrenderer.collectGizmo(object, 1.0)\nrenderer.flush()\nrenderer.reset()"
+  }
+]

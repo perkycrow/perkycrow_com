@@ -1,0 +1,32 @@
+[
+  {
+    "type": "action",
+    "title": "Overlapping boxes",
+    "source": "const a = new BoxShape({width: 40, height: 40, x: 0, y: 0})\nconst b = new BoxShape({width: 40, height: 40, x: 30, y: 0})\nconst result = detectCollision(a, b)\nlogger.log('depth:', result.depth)\nlogger.log('normal:', result.normal)\nlogger.log('contact:', result.contactPoint)"
+  },
+  {
+    "type": "action",
+    "title": "No collision",
+    "source": "const a = new BoxShape({width: 20, height: 20, x: 0, y: 0})\nconst b = new BoxShape({width: 20, height: 20, x: 100, y: 0})\nlogger.log('result:', detectCollision(a, b))"
+  },
+  {
+    "type": "action",
+    "title": "Overlapping circles",
+    "source": "const a = new CircleShape({radius: 20, x: 0, y: 0})\nconst b = new CircleShape({radius: 20, x: 30, y: 0})\nconst result = detectCollision(a, b)\nlogger.log('depth:', result.depth)\nlogger.log('normal:', result.normal)\nlogger.log('contact:', result.contactPoint)"
+  },
+  {
+    "type": "action",
+    "title": "No collision",
+    "source": "const a = new CircleShape({radius: 10, x: 0, y: 0})\nconst b = new CircleShape({radius: 10, x: 50, y: 0})\nlogger.log('result:', detectCollision(a, b))"
+  },
+  {
+    "type": "action",
+    "title": "Circle hitting box",
+    "source": "const box = new BoxShape({width: 60, height: 60, x: 0, y: 0})\nconst circle = new CircleShape({radius: 15, x: 35, y: 0})\nconst result = detectCollision(box, circle)\nlogger.log('depth:', result.depth)\nlogger.log('normal:', result.normal)\nlogger.log('contact:', result.contactPoint)"
+  },
+  {
+    "type": "action",
+    "title": "Type checks",
+    "source": "const box = new BoxShape()\nconst circle = new CircleShape()\nlogger.log('box vs box:', isBoxVsBox(box, box))\nlogger.log('circle vs circle:', isCircleVsCircle(circle, circle))\nlogger.log('box vs circle:', isBoxVsCircle(box, circle))"
+  }
+]

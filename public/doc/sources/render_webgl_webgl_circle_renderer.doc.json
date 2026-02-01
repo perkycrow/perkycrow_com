@@ -1,0 +1,7 @@
+[
+  {
+    "type": "code",
+    "title": "How circles are drawn",
+    "source": "const circle = new Circle({radius: 20, color: '#ff0000'})\ncircle.setPosition(100, 100)\n\nwebglRenderer.render(scene)"
+  }
+]

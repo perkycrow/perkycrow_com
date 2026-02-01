@@ -1,0 +1,12 @@
+[
+  {
+    "type": "action",
+    "title": "Default outline",
+    "source": "const effect = new OutlineEffect()\n\nlogger.log('type:', effect.type)\nlogger.log('width:', effect.width)\nlogger.log('params:', effect.getParams())"
+  },
+  {
+    "type": "action",
+    "title": "Custom width",
+    "source": "const effect = new OutlineEffect({width: 0.05})\n\nlogger.log('width:', effect.width)\nlogger.log('params:', effect.getParams())"
+  }
+]

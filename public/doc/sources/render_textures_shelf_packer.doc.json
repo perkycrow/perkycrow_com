@@ -1,0 +1,17 @@
+[
+  {
+    "type": "action",
+    "title": "Pack items",
+    "source": "const packer = new ShelfPacker(256, 256, 1)\n\nlogger.log('slot 1:', packer.pack(64, 64))\nlogger.log('slot 2:', packer.pack(64, 64))\nlogger.log('slot 3:', packer.pack(128, 32))\nlogger.log('full:', packer.full)"
+  },
+  {
+    "type": "action",
+    "title": "Check before packing",
+    "source": "const packer = new ShelfPacker(128, 128, 1)\npacker.pack(100, 100)\n\nlogger.log('can fit 100x100:', packer.canFit(100, 100))\nlogger.log('can fit 20x20:', packer.canFit(20, 20))"
+  },
+  {
+    "type": "action",
+    "title": "Filling up",
+    "source": "const packer = new ShelfPacker(64, 64, 0)\n\npacker.pack(64, 32)\nlogger.log('after first:', packer.full)\n\npacker.pack(64, 32)\nlogger.log('after second:', packer.full)\n\nconst result = packer.pack(64, 32)\nlogger.log('third result:', result)\nlogger.log('now full:', packer.full)"
+  }
+]

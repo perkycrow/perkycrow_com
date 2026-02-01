@@ -1,0 +1,17 @@
+[
+  {
+    "type": "action",
+    "title": "Default effect",
+    "source": "const effect = new ShaderEffect()\n\nlogger.log('type:', effect.type)\nlogger.log('enabled:', effect.enabled)\nlogger.log('params:', effect.getParams())\nlogger.log('hints:', effect.getHints())"
+  },
+  {
+    "type": "action",
+    "title": "Created disabled",
+    "source": "const effect = new ShaderEffect({enabled: false})\n\nlogger.log('enabled:', effect.enabled)"
+  },
+  {
+    "type": "code",
+    "title": "Custom shader effect",
+    "source": "class GlowEffect extends ShaderEffect {\n\n    static shader = {\n        params: ['intensity', 'radius'],\n        uniforms: ['uTime'],\n        fragment: `\n            float glowAmount = intensity * 0.5;\n            color.rgb += glowAmount * color.a;\n        `\n    }\n\n    intensity = 1.0\n    radius = 4.0\n\n}"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "type": "action",
+    "title": "Override an asset",
+    "source": "const manifest = {\n    assets: {\n        player: {type: 'spritesheet', source: '/assets/player.json'},\n        enemy: {type: 'spritesheet', source: '/assets/enemy.json'}\n    }\n}\n\nconst overrides = [\n    {id: 'player', source: {custom: true}}\n]\n\nconst patched = applyOverrides(manifest, overrides)\nlogger.log('player source:', JSON.stringify(patched.assets.player.source))\nlogger.log('enemy source:', patched.assets.enemy.source)"
+  },
+  {
+    "type": "action",
+    "title": "Non-matching overrides are ignored",
+    "source": "const manifest = {\n    assets: {\n        player: {type: 'spritesheet', source: '/assets/player.json'}\n    }\n}\n\nconst overrides = [\n    {id: 'unknown', source: {custom: true}}\n]\n\nconst patched = applyOverrides(manifest, overrides)\nlogger.log('player unchanged:', patched.assets.player.source)\nlogger.log('unknown added:', patched.assets.unknown === undefined)"
+  },
+  {
+    "type": "code",
+    "title": "Typical usage",
+    "source": "const overrides = await loadStudioOverrides()\nconst patchedManifest = applyOverrides(originalManifest, overrides)"
+  }
+]

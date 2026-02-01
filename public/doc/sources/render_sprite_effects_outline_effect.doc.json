@@ -1,0 +1,22 @@
+[
+  {
+    "type": "action",
+    "title": "Default outline",
+    "source": "const outline = new OutlineEffect()\n\nlogger.log('type:', outline.type)\nlogger.log('width:', outline.width)\nlogger.log('color:', outline.color)"
+  },
+  {
+    "type": "action",
+    "title": "Custom width and color",
+    "source": "const outline = new OutlineEffect({\n    width: 0.05,\n    color: [1, 0, 0, 1]\n})\n\nlogger.log('width:', outline.width)\nlogger.log('color:', outline.color)"
+  },
+  {
+    "type": "action",
+    "title": "Modify properties",
+    "source": "const outline = new OutlineEffect({width: 0.02})\n\nlogger.log('initial width:', outline.width)\n\noutline.width = 0.08\nlogger.log('new width:', outline.width)\n\noutline.color = [0, 1, 0, 1]\nlogger.log('new color:', outline.color)"
+  },
+  {
+    "type": "action",
+    "title": "getHints",
+    "source": "const outline = new OutlineEffect({\n    width: 0.03,\n    color: [1, 1, 0, 1]\n})\n\nconst hints = outline.getHints()\nlogger.log('hints.width:', hints.width)\nlogger.log('hints.color:', hints.color)"
+  }
+]

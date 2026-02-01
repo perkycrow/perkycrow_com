@@ -1,0 +1,311 @@
+import { d as doc, t as text, s as section, c as code, a as action, l as logger } from "./runtime-DOmi4lo7.js";
+import { P as PerkyModule } from "./perky_module-DrWJO8l1.js";
+import "./registry-CF_H4IOw.js";
+import "./observable_map-BPZFGUWq.js";
+import "./observable_set-BOSKLaPv.js";
+import "./utils-DVCexGPz.js";
+import "./inflector-BxOpyWLP.js";
+const perky_module_doc = doc("PerkyModule", { featured: true }, () => {
+  text(`
+        Base class for all Perky components.
+        Provides lifecycle management, hierarchical composition, and event handling.
+
+        For a conceptual introduction, see the [[PerkyModule:guide]] guide.
+    `);
+  section("$ Convention", () => {
+    text(`
+            All Perky configuration properties are prefixed with \`$\` to avoid conflicts
+            with your own properties. This convention ensures that you can freely use
+            any property name without risking collision with internal configuration.
+        `);
+    code("Reserved $ properties", () => {
+      const module = new PerkyModule({
+        $id: "player",
+        $name: "Player",
+        $category: "entity",
+        $tags: ["controllable"],
+        $bind: "player",
+        $lifecycle: true,
+        $eagerStart: true
+      });
+      module.health = 100;
+      module.name = "Hero";
+      module.id = "custom";
+    });
+  });
+  section("Creation", () => {
+    text("Modules can be created directly or via subclassing.");
+    code("Direct instantiation", () => {
+      new PerkyModule({
+        $id: "myModule",
+        $category: "custom",
+        $tags: ["active", "visible"]
+      });
+    });
+    code("Subclassing", () => {
+    });
+    action("Instance properties", () => {
+      const module = new PerkyModule({
+        $id: "player",
+        $category: "entity"
+      });
+      logger.log("$id:", module.$id);
+      logger.log("$name:", module.$name);
+      logger.log("$category:", module.$category);
+      logger.log("$status:", module.$status);
+    });
+  });
+  section("Lifecycle", () => {
+    text(`
+            Modules have a lifecycle: stopped -> started -> disposed.
+            Lifecycle hooks: \`onStart\`, \`onStop\`, \`onDispose\`.
+        `);
+    action("start / stop", () => {
+      const module = new PerkyModule({ $id: "test" });
+      logger.log("initial status:", module.$status);
+      module.start();
+      logger.log("after start:", module.$status, "running:", module.running);
+      module.stop();
+      logger.log("after stop:", module.$status, "running:", module.running);
+    });
+    action("dispose", () => {
+      const module = new PerkyModule({ $id: "test" });
+      module.start();
+      logger.log("before dispose:", module.$status);
+      module.dispose();
+      logger.log("after dispose:", module.$status, "disposed:", module.disposed);
+    });
+    action("Lifecycle events", () => {
+      const module = new PerkyModule({ $id: "test" });
+      module.on("start", () => logger.log("event: start"));
+      module.on("stop", () => logger.log("event: stop"));
+      module.on("dispose", () => logger.log("event: dispose"));
+      module.start();
+      module.stop();
+      module.dispose();
+    });
+  });
+  section("Children", () => {
+    text(`
+            Modules can contain child modules, stored in a [[Registry]] (\`childrenRegistry\`).
+            Children inherit lifecycle from their parent.
+
+            Use \`create()\` to add children - it handles instantiation and lifecycle binding.
+            For special cases, \`addChild()\` allows adding a pre-created module.
+        `);
+    action("create", () => {
+      const parent = new PerkyModule({ $id: "parent" });
+      parent.create(PerkyModule, { $id: "child1", $category: "component" });
+      parent.create(PerkyModule, { $id: "child2", $category: "component" });
+      logger.log("children:", parent.children.map((c) => c.$id));
+      logger.log("hasChild:", parent.hasChild("child1"));
+      logger.log("getChild:", parent.getChild("child1").$id);
+    });
+    action("addChild", () => {
+      const parent = new PerkyModule({ $id: "parent" });
+      const player = new PerkyModule({ $id: "player", $category: "entity" });
+      parent.addChild(player);
+      logger.log("player.host:", player.host.$id);
+      logger.log("player.installed:", player.installed);
+    });
+    text(`
+            If a module with the same \`$id\` already exists, \`addChild()\` will
+            automatically generate a unique ID (\`enemy\` → \`enemy_1\` → \`enemy_2\`).
+        `);
+    action("Lifecycle propagation", () => {
+      const parent = new PerkyModule({ $id: "parent" });
+      const child = parent.create(PerkyModule, { $id: "child" });
+      child.on("start", () => logger.log("child started"));
+      child.on("stop", () => logger.log("child stopped"));
+      logger.log("Starting parent...");
+      parent.start();
+      logger.log("Stopping parent...");
+      parent.stop();
+    });
+    text(`
+            By default, \`$eagerStart\` is \`true\`. When a child is created on an already
+            started parent, the child will automatically start. Use \`$eagerStart: false\`
+            to defer startup and control it manually.
+        `);
+    action("$eagerStart (default: true)", () => {
+      const parent = new PerkyModule({ $id: "parent" });
+      parent.start();
+      logger.log("parent started:", parent.started);
+      const eager = parent.create(PerkyModule, { $id: "eager" });
+      logger.log("eager.started:", eager.started);
+      const lazy = parent.create(PerkyModule, {
+        $id: "lazy",
+        $eagerStart: false
+      });
+      logger.log("lazy.started:", lazy.started);
+      lazy.start();
+      logger.log("lazy after manual start:", lazy.started);
+    });
+    action("childrenByCategory", () => {
+      const game = new PerkyModule({ $id: "game" });
+      game.create(PerkyModule, { $id: "player", $category: "entity" });
+      game.create(PerkyModule, { $id: "enemy1", $category: "entity" });
+      game.create(PerkyModule, { $id: "score", $category: "ui" });
+      const entities = game.childrenByCategory("entity");
+      logger.log("entities:", entities.map((e) => e.$id));
+    });
+    action("removeChild", () => {
+      const game = new PerkyModule({ $id: "game" });
+      const enemy = game.create(PerkyModule, { $id: "enemy" });
+      logger.log("before:", game.hasChild("enemy"));
+      game.removeChild("enemy");
+      logger.log("after:", game.hasChild("enemy"));
+      logger.log("enemy disposed:", enemy.disposed);
+    });
+  });
+  section("Tags", () => {
+    text(`
+            Tags allow flexible categorization and querying of modules.
+            Internally, tags are stored as an [[ObservableSet]], accessible via \`module.tags\`.
+        `);
+    action("Basic tags", () => {
+      const module = new PerkyModule({
+        $id: "player",
+        $tags: ["controllable", "visible"]
+      });
+      logger.log("$tags:", module.$tags);
+      logger.log("hasTag visible:", module.hasTag("visible"));
+      logger.log("hasTags:", module.hasTags(["controllable", "visible"]));
+    });
+    action("addTag / removeTag", () => {
+      const module = new PerkyModule({ $id: "enemy" });
+      module.addTag("hostile");
+      module.addTag("visible");
+      logger.log("after adding:", module.$tags);
+      module.removeTag("hostile");
+      logger.log("after removing:", module.$tags);
+    });
+    action("childrenByTags", () => {
+      const game = new PerkyModule({ $id: "game" });
+      game.create(PerkyModule, { $id: "player", $tags: ["entity", "controllable"] });
+      game.create(PerkyModule, { $id: "enemy", $tags: ["entity", "hostile"] });
+      game.create(PerkyModule, { $id: "rock", $tags: ["entity"] });
+      logger.log("entities:", game.childrenByTags("entity").map((c) => c.$id));
+      logger.log("hostile:", game.childrenByTags(["entity", "hostile"]).map((c) => c.$id));
+    });
+  });
+  section("Query", () => {
+    text(`
+            Path-based selectors for finding modules in the hierarchy.
+            \`#id\` matches by $id, \`.tag\` by tag, \`@category\` by $category.
+
+            Each space-separated segment matches **direct children only** (not deep descendants).
+            This is intentional for O(1) performance in gameloops.
+            See [[PerkyQuery]] for full syntax.
+        `);
+    action("query / queryAll", () => {
+      var _a, _b;
+      const app = new PerkyModule({ $id: "app" });
+      const game = app.create(PerkyModule, { $id: "game", $category: "scene" });
+      game.create(PerkyModule, { $id: "player", $category: "entity", $tags: ["controllable"] });
+      game.create(PerkyModule, { $id: "enemy", $category: "entity", $tags: ["hostile"] });
+      logger.log("#game:", (_a = app.query("#game")) == null ? void 0 : _a.$id);
+      logger.log("#game @entity:", app.queryAll("#game @entity").map((e) => e.$id));
+      logger.log("#game .hostile:", (_b = app.query("#game .hostile")) == null ? void 0 : _b.$id);
+    });
+  });
+  section("Events", () => {
+    text("PerkyModule extends [[Notifier]] for event handling.");
+    action("on / emit", () => {
+      const module = new PerkyModule({ $id: "test" });
+      module.on("damage", (amount) => {
+        logger.log("received damage:", amount);
+      });
+      module.emit("damage", 25);
+      module.emit("damage", 50);
+    });
+    action("listenTo", () => {
+      const player = new PerkyModule({ $id: "player" });
+      const enemy = new PerkyModule({ $id: "enemy" });
+      player.listenTo(enemy, "attack", (damage) => {
+        logger.log("player received attack:", damage);
+      });
+      enemy.emit("attack", 30);
+    });
+  });
+  section("Delegation", () => {
+    text(`
+            Modules can delegate methods and events to their parent.
+            This is useful for creating facade patterns where a child exposes its API through the parent.
+        `);
+    action("delegateTo", () => {
+      class AudioSystem extends PerkyModule {
+        play(sound) {
+          logger.log("playing:", sound);
+        }
+        stop() {
+          logger.log("stopping audio");
+        }
+        onInstall(host) {
+          this.delegateTo(host, ["play", "stop"]);
+        }
+      }
+      const game = new PerkyModule({ $id: "game" });
+      game.create(AudioSystem, { $id: "audio" });
+      game.play("explosion.mp3");
+      game.stop();
+    });
+    action("delegateEventsTo", () => {
+      const game = new PerkyModule({ $id: "game" });
+      const player = game.create(PerkyModule, { $id: "player" });
+      player.delegateEventsTo(game, ["damage", "death"], "player");
+      game.on("player:damage", (amount) => logger.log("game heard player damage:", amount));
+      game.on("player:death", () => logger.log("game heard player death"));
+      player.emit("damage", 50);
+      player.emit("death");
+    });
+  });
+  section("Linking", () => {
+    text(`
+            Sometimes you need to reference another module without owning it.
+            \`link()\` creates a non-owning reference to a module that belongs to another parent.
+
+            Unlike \`addChild()\`, linked modules:
+            - Are not installed on the linking module
+            - Do not participate in lifecycle (start/stop/dispose)
+            - Are automatically unlinked when disposed
+        `);
+    action("link / unlink", () => {
+      const game = new PerkyModule({ $id: "game" });
+      const textureSystem = game.create(PerkyModule, { $id: "textureSystem" });
+      const tool = new PerkyModule({ $id: "tool" });
+      tool.link(textureSystem, "textures");
+      logger.log("linked:", tool.textures.$id);
+      logger.log("hasLinked:", tool.hasLinked("textures"));
+      tool.unlink("textures");
+      logger.log("after unlink:", tool.hasLinked("textures"));
+    });
+    action("Auto-unlink on dispose", () => {
+      const moduleA = new PerkyModule({ $id: "moduleA" });
+      const moduleB = new PerkyModule({ $id: "moduleB" });
+      moduleA.link(moduleB, "ref");
+      moduleA.on("unlink", (key) => logger.log("unlinked:", key));
+      logger.log("before dispose:", moduleA.hasLinked("ref"));
+      moduleB.dispose();
+      logger.log("after dispose:", moduleA.hasLinked("ref"));
+    });
+    text(`
+            By default, \`link()\` creates a property binding using the alias or the module's $id.
+            Pass \`false\` as alias to skip the binding:
+        `);
+    code("Link without binding", () => {
+      const moduleA = new PerkyModule({ $id: "moduleA" });
+      const moduleB = new PerkyModule({ $id: "moduleB" });
+      moduleA.link(moduleB);
+      moduleA.link(moduleB, "custom");
+      moduleA.link(moduleB, false);
+    });
+    text(`
+            This is useful for tools, editors, or any module that needs to access
+            resources owned by another part of the system without creating tight coupling.
+        `);
+  });
+});
+export {
+  perky_module_doc as default
+};

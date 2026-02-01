@@ -1,0 +1,12 @@
+[
+  {
+    "type": "action",
+    "title": "Constructor",
+    "source": "const request = new ServiceRequest('greet', {name: 'Perky'})\n\nlogger.log('action:', request.action)\nlogger.log('params:', request.params)\nlogger.log('id:', request.id)\nlogger.log('timestamp:', request.timestamp)"
+  },
+  {
+    "type": "action",
+    "title": "export / import",
+    "source": "const original = new ServiceRequest('save', {slot: 1})\nconst data = original.export()\n\nlogger.log('exported:', data)\n\nconst restored = ServiceRequest.import(data)\nlogger.log('restored action:', restored.action)\nlogger.log('restored params:', restored.params)\nlogger.log('same id:', original.id === restored.id)"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "type": "action",
+    "title": "local",
+    "source": "const transport = ServiceTransport.local()\n\ntransport.onMessage(message => {\n    logger.log('received:', message)\n})\n\ntransport.send({type: 'ping'})\ntransport.send({type: 'pong', data: 42})"
+  },
+  {
+    "type": "action",
+    "title": "pair",
+    "source": "const [transportA, transportB] = ServiceTransport.pair()\n\ntransportA.onMessage(message => {\n    logger.log('A received:', message.text)\n})\n\ntransportB.onMessage(message => {\n    logger.log('B received:', message.text)\n})\n\ntransportA.send({text: 'hello from A'})\ntransportB.send({text: 'hello from B'})"
+  },
+  {
+    "type": "action",
+    "title": "onMessage / offMessage",
+    "source": "const transport = ServiceTransport.local()\n\nconst handler = message => {\n    logger.log('handled:', message.value)\n}\n\ntransport.onMessage(handler)\ntransport.send({value: 1})\ntransport.send({value: 2})\n\ntransport.offMessage(handler)\ntransport.send({value: 3})\nlogger.log('(handler removed, 3 not received)')"
+  },
+  {
+    "type": "code",
+    "title": "Available factories",
+    "source": "ServiceTransport.local()\nServiceTransport.pair()\nServiceTransport.auto()\nServiceTransport.auto(worker)\nServiceTransport.worker(worker)\nServiceTransport.main()\nServiceTransport.channel(port)"
+  }
+]

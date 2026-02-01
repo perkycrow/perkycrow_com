@@ -1,0 +1,17 @@
+[
+  {
+    "type": "code",
+    "title": "Adding filters",
+    "source": "const canvas = document.createElement('canvas')\nconst ctx = canvas.getContext('2d')\nconst processor = new CanvasPostProcessor(ctx)\n\nprocessor.addFilter('blur', 2)\nprocessor.addFilter('brightness', 1.2)\nprocessor.filters.length // 2\n\nprocessor.removeFilter('blur')\nprocessor.filters.length // 1\n\nprocessor.clearFilters()\nprocessor.filters.length // 0"
+  },
+  {
+    "type": "code",
+    "title": "Vignette",
+    "source": "const canvas = document.createElement('canvas')\nconst ctx = canvas.getContext('2d')\nconst processor = new CanvasPostProcessor(ctx)\n\nprocessor.applyVignette(0.6, 0.5)"
+  },
+  {
+    "type": "code",
+    "title": "Begin and finish",
+    "source": "const canvas = document.createElement('canvas')\nconst ctx = canvas.getContext('2d')\nconst processor = new CanvasPostProcessor(ctx)\n\nprocessor.addFilter('contrast', 1.5)\nprocessor.begin()\n\n// ... drawing happens here ...\nprocessor.finish(canvas.width, canvas.height)"
+  }
+]
