@@ -2,7 +2,7 @@
   {
     "type": "code",
     "title": "order.json structure",
-    "source": "const order = {\n    docs: {\n        categories: ['core', 'application', 'game'],\n        items: {\n            core: ['perky_module', 'utils', 'logger']\n        }\n    },\n    guides: {\n        categories: ['prologue'],\n        items: {\n            prologue: ['foreword', 'philosophy']\n        }\n    }\n}"
+    "source": "const order = {\n    docs: {\n        categories: ['core', 'application', 'game'],\n        items: {\n            core: ['perky_module', 'utils', 'logger']\n        }\n    },\n    guides: {\n        categories: ['prologue'],\n        items: {\n            prologue: ['foreword']\n        }\n    }\n}"
   },
   {
     "type": "code",

@@ -1,5 +1,5 @@
 import { d as doc, t as text, s as section, c as code } from "./runtime-DOmi4lo7.js";
-const conflict_resolver_doc = doc("Conflict Resolver", { advanced: true }, () => {
+const conflict_resolver_doc = doc("ConflictResolver", { advanced: true }, () => {
   text(`
         A dialog component for resolving version conflicts between game
         animators and locally modified ones. Presents a side-by-side card

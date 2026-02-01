@@ -5605,6 +5605,26 @@
             "title": "no error when no stage is set during render",
             "line": 316,
             "source": "expect(() => {\n    game.gameLoop.emit('render')\n}).not.toThrow()"
+          },
+          {
+            "title": "setStage registers stage controller",
+            "line": 323,
+            "source": "class FooController extends ActionController {}\nclass TestStage extends Stage {\n    static ActionController = FooController\n}\n\ngame.setStage(TestStage)\n\nexpect(game.getController('foo')).toBeDefined()"
+          },
+          {
+            "title": "setStage activates stage controller",
+            "line": 335,
+            "source": "class FooController extends ActionController {}\nclass TestStage extends Stage {\n    static ActionController = FooController\n}\n\ngame.setStage(TestStage)\n\nconst active = game.getActiveControllers()\nexpect(active).toContain('foo')"
+          },
+          {
+            "title": "setStage unregisters previous stage controller",
+            "line": 348,
+            "source": "class FooController extends ActionController {}\nclass BarController extends ActionController {}\nclass StageA extends Stage {\n    static ActionController = FooController\n}\nclass StageB extends Stage {\n    static ActionController = BarController\n}\n\ngame.setStage(StageA)\nexpect(game.getController('foo')).toBeDefined()\n\ngame.setStage(StageB)\nexpect(game.getController('foo')).toBeNull()\nexpect(game.getController('bar')).toBeDefined()"
+          },
+          {
+            "title": "setStage works without stage controller",
+            "line": 367,
+            "source": "class TestStage extends Stage {}\n\ngame.setStage(TestStage)\n\nexpect(game.stage).toBeInstanceOf(TestStage)"
           }
         ],
         "describes": []
@@ -6156,68 +6176,78 @@
             "source": "expect(Stage.WorldView).toBe(WorldView)"
           },
           {
-            "title": "does not create world when World is null",
+            "title": "has null ActionController by default",
             "line": 45,
+            "source": "expect(Stage.ActionController).toBe(null)"
+          },
+          {
+            "title": "does not create world when World is null",
+            "line": 50,
             "source": "expect(stage.world).toBeUndefined()"
           },
           {
             "title": "does not create worldView when no world",
-            "line": 50,
+            "line": 55,
             "source": "expect(stage.worldView).toBeUndefined()"
           },
           {
             "title": "creates world when World is defined",
-            "line": 55,
+            "line": 60,
             "source": "class TestStage extends Stage {\n    static World = World\n}\n\nconst s = new TestStage({game: {}})\n\nexpect(s.world).toBeInstanceOf(World)"
           },
           {
             "title": "creates worldView when World is defined",
-            "line": 66,
+            "line": 71,
             "source": "class TestStage extends Stage {\n    static World = World\n}\n\nconst game = {}\nconst s = new TestStage({game})\n\nexpect(s.worldView).toBeInstanceOf(WorldView)"
           },
           {
             "title": "worldView receives world and game",
-            "line": 78,
+            "line": 83,
             "source": "class TestStage extends Stage {\n    static World = World\n}\n\nconst game = {}\nconst s = new TestStage({game})\n\nexpect(s.worldView.world).toBe(s.world)\nexpect(s.worldView.game).toBe(game)"
           },
           {
             "title": "does not create worldView when WorldView is null",
-            "line": 91,
+            "line": 96,
             "source": "class TestStage extends Stage {\n    static World = World\n    static WorldView = null\n}\n\nconst s = new TestStage({game: {}})\n\nexpect(s.world).toBeInstanceOf(World)\nexpect(s.worldView).toBeUndefined()"
           },
           {
             "title": "world is child of stage",
-            "line": 104,
+            "line": 109,
             "source": "class TestStage extends Stage {\n    static World = World\n}\n\nconst s = new TestStage({game: {}})\n\nexpect(s.getChild('world')).toBe(s.world)"
           },
           {
             "title": "worldView is child of stage",
-            "line": 115,
+            "line": 120,
             "source": "class TestStage extends Stage {\n    static World = World\n}\n\nconst s = new TestStage({game: {}})\n\nexpect(s.getChild('worldView')).toBe(s.worldView)"
           },
           {
-            "title": "update is a no-op by default",
-            "line": 126,
+            "title": "update calls worldView.updateViews when worldView exists",
+            "line": 131,
+            "source": "class TestStage extends Stage {\n    static World = World\n}\n\nconst s = new TestStage({game: {}})\ns.worldView.updateViews = vi.fn()\n\ns.update(0.016)\n\nexpect(s.worldView.updateViews).toHaveBeenCalledWith(0.016)"
+          },
+          {
+            "title": "update does not throw when no worldView",
+            "line": 145,
             "source": "expect(() => stage.update(0.016)).not.toThrow()"
           },
           {
             "title": "render is a no-op by default",
-            "line": 131,
+            "line": 150,
             "source": "expect(() => stage.render()).not.toThrow()"
           },
           {
             "title": "subclass can override update",
-            "line": 136,
+            "line": 155,
             "source": "const updateSpy = vi.fn()\n\nclass TestStage extends Stage {\n    update (deltaTime) {\n        updateSpy(deltaTime)\n    }\n}\n\nconst s = new TestStage({game: {}})\ns.update(0.016)\n\nexpect(updateSpy).toHaveBeenCalledWith(0.016)"
           },
           {
             "title": "subclass can override render",
-            "line": 152,
+            "line": 171,
             "source": "const renderSpy = vi.fn()\n\nclass TestStage extends Stage {\n    render () {\n        renderSpy()\n    }\n}\n\nconst s = new TestStage({game: {}})\ns.render()\n\nexpect(renderSpy).toHaveBeenCalled()"
           },
           {
             "title": "disposing stage disposes world and worldView",
-            "line": 168,
+            "line": 187,
             "source": "class TestStage extends Stage {\n    static World = World\n}\n\nconst s = new TestStage({game: {}})\nconst world = s.world\nconst worldView = s.worldView\n\ns.dispose()\n\nexpect(world.disposed).toBe(true)\nexpect(worldView.disposed).toBe(true)"
           }
         ],
@@ -24181,7 +24211,7 @@
               {
                 "title": "parses [[Name:guide]] as guide link",
                 "line": 189,
-                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'Read [[philosophy:guide]] for the overview.'\n    }]\n}"
+                "source": "const page = new DocPage()\npage.doc = {\n    title: 'Test',\n    blocks: [{\n        type: 'text',\n        content: 'Read [[foreword:guide]] for the overview.'\n    }]\n}"
               },
               {
                 "title": "parses multiple inline links in same text",

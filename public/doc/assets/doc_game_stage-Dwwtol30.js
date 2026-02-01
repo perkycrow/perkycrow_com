@@ -30,7 +30,9 @@ class Stage extends PerkyModule {
     __privateMethod(this, _Stage_instances, createWorld_fn).call(this);
     __privateMethod(this, _Stage_instances, createWorldView_fn).call(this);
   }
-  update() {
+  update(deltaTime) {
+    var _a;
+    (_a = this.worldView) == null ? void 0 : _a.updateViews(deltaTime);
   }
   render() {
   }
@@ -57,6 +59,7 @@ createWorldView_fn = function() {
 __publicField(Stage, "$category", "stage");
 __publicField(Stage, "World", null);
 __publicField(Stage, "WorldView", WorldView);
+__publicField(Stage, "ActionController", null);
 const stage_doc = doc("Stage", () => {
   text(`
         A stage represents a distinct phase of your game — a level, a menu, a cutscene.

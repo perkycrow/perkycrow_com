@@ -12,7 +12,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
 var _state, _overlayEl, _containerEl, _inputEl, _resultsEl, _appActions, _internalCommands, _filteredCommands, _selectedIndex, _history, _maxHistory, _DevToolsCommandPalette_instances, buildDOM_fn, rebuildAll_fn, buildAppActions_fn, buildInternalCommands_fn, addFloatingToolCommands_fn, onInput_fn, showHistory_fn, filterCommands_fn, renderResults_fn, groupCommands_fn, createResultItem_fn, updateSelection_fn, onKeydown_fn, executeCurrentCommand_fn, autocompleteSelected_fn, executeCommand_fn, executeTemplateCommand_fn, executeToolCommand_fn, executeHistoryEntry_fn, addToHistory_fn, executeInspectCommand_fn;
 import { E as EditorComponent, e as editorScrollbarStyles, b as editorBaseStyles, I as ICONS } from "./perky_store-D7zG7vkz.js";
 import { c as createElement, l as logger } from "./preload-helper-D0VL-0Hd.js";
-import { c as commandPaletteStyles, g as getAllTools } from "./main-BRiQm20T.js";
+import { c as commandPaletteStyles, g as getAllTools } from "./main-5OaL7kzS.js";
 import "./spritesheet_viewer-D_-SX66w.js";
 function tokenize(input) {
   const args = [];

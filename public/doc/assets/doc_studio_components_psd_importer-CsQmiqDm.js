@@ -1,5 +1,5 @@
 import { d as doc, t as text, s as section, c as code } from "./runtime-DOmi4lo7.js";
-const psd_importer_doc = doc("PSD Importer", { advanced: true }, () => {
+const psd_importer_doc = doc("PsdImporter", { advanced: true }, () => {
   text(`
         A multi-step wizard for importing Photoshop files into the animator
         studio. Walks through file selection (drag-and-drop or file picker),

@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./devtools_command_palette-IgF2A8cT.js","./perky_store-D7zG7vkz.js","./preload-helper-D0VL-0Hd.js","./spritesheet_viewer-D_-SX66w.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./devtools_command_palette-CuUDf6B7.js","./perky_store-D7zG7vkz.js","./preload-helper-D0VL-0Hd.js","./spritesheet_viewer-D_-SX66w.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
@@ -18,7 +18,7 @@ var __privateWrapper = (obj, member, setter, getter) => ({
     return __privateGet(obj, member, getter);
   }
 });
-var _ApplicationManager_instances, findApp_fn, _actions, _actionList, _engine, _ActionController_instances, defineResourceGetters_fn, _activeControllers, _ActionDispatcher_instances, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentX, _currentY, _touchStartTime, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, updateVerticalSwipes_fn, updateHorizontalSwipes_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, createMainController_fn, autoRegisterBindings_fn, _paused, _fpsLimited, _context, _collected, _rendererRegistry, _renderers, _debugGizmoRenderer, _CanvasRenderer_instances, setupDefaultRenderers_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _context2, _masterGain, _suspended, _pendingDecodes, _masterVolume, _AudioContext_instances, processPendingDecodes_fn, _audioContext, _gainNode, _volume, _muted, _sources, _AudioChannel_instances, updateGain_fn, _audioContext2, _channel, _gainNode2, _pannerNode, _sourceNode, _playing, _loop, _volume2, _playbackRate, _startTime, _pauseTime, _x, _y, _spatial, _refDistance, _maxDistance, _rolloffFactor, _AudioSource_instances, initSpatialOptions_fn, updatePannerPosition_fn, updateGain_fn2, setupNodes_fn, configurePanner_fn, cleanupSourceNode_fn, _audioContext3, _buffers, _pendingAudio, _unlocked, _AudioSystem_instances, loadPendingAudio_fn, applyConfig_fn, _Game_instances, onUpdate_fn, onRender_fn, setupPostPasses_fn, listenForLateAssets_fn, buildTextureAtlases_fn, buildSpritesheets_fn, updateActiveControllers_fn, createRenderSystem_fn, buildRenderSystemConfig_fn, createAudioSystem_fn, _a, _functionBindings, _stringBindings, _AutoView_instances, compileBindings_fn, _classRegistry, _matcherRegistry, _views, _WorldView_instances, bindWorldEvents_fn, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _Stage_instances, createWorld_fn, createWorldView_fn, _program, _enabled, _width, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _enabled2, _program2, _uniforms, _RenderPass_instances, applyUniform_fn, _DenStage_instances, registerViews_fn, createImpactParticles_fn, createHitboxDebug_fn, setupRenderGroups_fn, buildBackground_fn, _WaveSystem_instances, startNextWave_fn, startNextDay_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _GameplayStage_instances, createWaveSystem_fn, wireWaveSystemEvents_fn, wireWorldEvents_fn, createUI_fn, _PreviewControls_instances, buildSpawnPanel_fn, buildSliderPanel_fn, setTimeOfDay_fn, applyStyles_fn2, _PreviewStage_instances, createUI_fn2, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _domBuilt, _BaseTreeNode_instances, ensureDOM_fn, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _isSystemModule, _PerkyExplorerNode_instances, getExplorer_fn, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, updateSystemClass_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _vec2, _xInput, _yInput, _label, _labelEl2, _Vec2Input_instances, buildDOM_fn4, updateDisplay_fn, syncContext_fn, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _filterState, _typeGroupsState, _mainContainer, _assetsListContainer, _ManifestInspector_instances, update_fn6, updateAssetsList_fn, applyFilters_fn, createSection_fn, createConfigSection_fn, createDataGrid_fn, createFiltersBar_fn, createAssetsSection_fn, createTypeGroup_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, toggleController_fn, _unlockedValueEl, _channelsValueEl, _volumeInput, _unlockBtn, _AudioSystemInspector_instances, handleVolumeChange_fn, handleUnlock_fn, bindEvents_fn4, updateAll_fn3, updateUnlocked_fn, updateChannels_fn, updateVolume_fn, _mutedValueEl, _sourcesValueEl, _volumeInput2, _muteBtn, _AudioChannelInspector_instances, handleVolumeChange_fn2, handleToggleMute_fn, bindEvents_fn5, updateAll_fn4, updateMuted_fn, updateSources_fn, updateVolume_fn2, _sectionsState2, _atlasExpandState, _mainContainer2, _TextureSystemInspector_instances, update_fn10, createStatsSection_fn, createAtlasesSection_fn, createSection_fn2, createAtlasCard_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn5, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _showSystemModules, _systemCategories, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _layersBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn6, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateLayersButton_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn7, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn8, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _toolManager, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn9, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _actionsEl2, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn10, createHeader_fn4, updateHeaderActions_fn, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _controlsEl, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn11, togglePin_fn, copyAllLogs_fn, updateControlsVisibility_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn12, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn, _headerEl4, _contentEl5, _isDragging, _isResizing, _dragOffset, _x2, _y2, _width2, _height, _minWidth, _minHeight, _resizable, _onPointerMove, _onPointerUp, _title, _icon, _ToolWindow_instances, buildDOM_fn13, setupDrag_fn, setupResize_fn, cleanupWindowListeners_fn, applyPosition_fn, _registry, _instances, _container, _nextZIndex, _nextInstanceId, _nextX, _nextY, _cascadeOffset, _ToolManager_instances, handleClose_fn, bringToFront_fn, advanceCascade_fn, _params, _options, _contentEl6, _FoobarTool_instances, buildDOM_fn14, render_fn4, _contentEl7, _timelineEl, _previewEl, _spritesheetViewerEl, _animators, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _SpriteAnimatorTool_instances, buildDOM_fn15, getDefaultAnimatorName_fn, selectAnimator_fn, resolveAnimator_fn, resolveSpritesheet_fn, render_fn5, renderNoAnimator_fn, renderAnimator_fn, setupAnimatorSelect_fn, setupExportAllButton_fn, exportAnimatorToClipboard_fn, buildFullConfig_fn, buildAnimationConfig_fn, renderAnimationSelect_fn, renderAnimationInfo_fn, setupTimeline_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, setupPreview_fn, setupSpritesheetViewer_fn;
+var _ApplicationManager_instances, findApp_fn, _actions, _actionList, _engine, _ActionController_instances, defineResourceGetters_fn, _activeControllers, _ActionDispatcher_instances, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentX, _currentY, _touchStartTime, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, updateVerticalSwipes_fn, updateHorizontalSwipes_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, createMainController_fn, autoRegisterBindings_fn, _paused, _fpsLimited, _context, _collected, _rendererRegistry, _renderers, _debugGizmoRenderer, _CanvasRenderer_instances, setupDefaultRenderers_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _context2, _masterGain, _suspended, _pendingDecodes, _masterVolume, _AudioContext_instances, processPendingDecodes_fn, _audioContext, _gainNode, _volume, _muted, _sources, _AudioChannel_instances, updateGain_fn, _audioContext2, _channel, _gainNode2, _pannerNode, _sourceNode, _playing, _loop, _volume2, _playbackRate, _startTime, _pauseTime, _x, _y, _spatial, _refDistance, _maxDistance, _rolloffFactor, _AudioSource_instances, initSpatialOptions_fn, updatePannerPosition_fn, updateGain_fn2, setupNodes_fn, configurePanner_fn, cleanupSourceNode_fn, _audioContext3, _buffers, _pendingAudio, _unlocked, _AudioSystem_instances, loadPendingAudio_fn, applyConfig_fn, _Game_instances, registerStageController_fn, unregisterStageController_fn, onUpdate_fn, onRender_fn, setupPostPasses_fn, listenForLateAssets_fn, buildTextureAtlases_fn, buildSpritesheets_fn, updateActiveControllers_fn, createRenderSystem_fn, buildRenderSystemConfig_fn, createAudioSystem_fn, _a, _functionBindings, _stringBindings, _AutoView_instances, compileBindings_fn, _classRegistry, _matcherRegistry, _views, _WorldView_instances, bindWorldEvents_fn, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _Stage_instances, createWorld_fn, createWorldView_fn, _program, _enabled, _width, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _enabled2, _program2, _uniforms, _RenderPass_instances, applyUniform_fn, _DenStage_instances, registerViews_fn, createImpactParticles_fn, createHitboxDebug_fn, setupRenderGroups_fn, buildBackground_fn, _WaveSystem_instances, updateSpawning_fn, getSpawnConfig_fn, getNextSpawnTime_fn, initWaveSpawn_fn, startNextWave_fn, startNextDay_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _GameplayStage_instances, createWaveSystem_fn, wireWaveSystemEvents_fn, wireWorldEvents_fn, createUI_fn, _PreviewControls_instances, buildSpawnPanel_fn, buildSliderPanel_fn, setTimeOfDay_fn, applyStyles_fn2, _PreviewStage_instances, createUI_fn2, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _domBuilt, _BaseTreeNode_instances, ensureDOM_fn, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _isSystemModule, _PerkyExplorerNode_instances, getExplorer_fn, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, updateSystemClass_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _vec2, _xInput, _yInput, _label, _labelEl2, _Vec2Input_instances, buildDOM_fn4, updateDisplay_fn, syncContext_fn, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _filterState, _typeGroupsState, _mainContainer, _assetsListContainer, _ManifestInspector_instances, update_fn6, updateAssetsList_fn, applyFilters_fn, createSection_fn, createConfigSection_fn, createDataGrid_fn, createFiltersBar_fn, createAssetsSection_fn, createTypeGroup_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, toggleController_fn, _unlockedValueEl, _channelsValueEl, _volumeInput, _unlockBtn, _AudioSystemInspector_instances, handleVolumeChange_fn, handleUnlock_fn, bindEvents_fn4, updateAll_fn3, updateUnlocked_fn, updateChannels_fn, updateVolume_fn, _mutedValueEl, _sourcesValueEl, _volumeInput2, _muteBtn, _AudioChannelInspector_instances, handleVolumeChange_fn2, handleToggleMute_fn, bindEvents_fn5, updateAll_fn4, updateMuted_fn, updateSources_fn, updateVolume_fn2, _sectionsState2, _atlasExpandState, _mainContainer2, _TextureSystemInspector_instances, update_fn10, createStatsSection_fn, createAtlasesSection_fn, createSection_fn2, createAtlasCard_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn5, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _showSystemModules, _systemCategories, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _layersBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn6, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateLayersButton_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn7, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn8, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _toolManager, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn9, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _actionsEl2, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn10, createHeader_fn4, updateHeaderActions_fn, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _controlsEl, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn11, togglePin_fn, copyAllLogs_fn, updateControlsVisibility_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn12, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn, _headerEl4, _contentEl5, _isDragging, _isResizing, _dragOffset, _x2, _y2, _width2, _height, _minWidth, _minHeight, _resizable, _onPointerMove, _onPointerUp, _title, _icon, _ToolWindow_instances, buildDOM_fn13, setupDrag_fn, setupResize_fn, cleanupWindowListeners_fn, applyPosition_fn, _registry, _instances, _container, _nextZIndex, _nextInstanceId, _nextX, _nextY, _cascadeOffset, _ToolManager_instances, handleClose_fn, bringToFront_fn, advanceCascade_fn, _params, _options, _contentEl6, _FoobarTool_instances, buildDOM_fn14, render_fn4, _contentEl7, _timelineEl, _previewEl, _spritesheetViewerEl, _animators, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _SpriteAnimatorTool_instances, buildDOM_fn15, getDefaultAnimatorName_fn, selectAnimator_fn, resolveAnimator_fn, resolveSpritesheet_fn, render_fn5, renderNoAnimator_fn, renderAnimator_fn, setupAnimatorSelect_fn, setupExportAllButton_fn, exportAnimatorToClipboard_fn, buildFullConfig_fn, buildAnimationConfig_fn, renderAnimationSelect_fn, renderAnimationInfo_fn, setupTimeline_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, setupPreview_fn, setupSpritesheetViewer_fn;
 import { l as logger, c as createElement, u as uniqueId, N as Notifier, f as formatNumber$1, a as formatBytes, p as pluralize, _ as __vitePreload, b as createStyleSheet } from "./preload-helper-D0VL-0Hd.js";
 import { P as PerkyModule, R as Registry, M as Manifest, S as SourceManager, l as loaders, T as TextureSystem, m as manifestData, E as EditorComponent, I as ICONS, e as editorScrollbarStyles, a as editorButtonStyles, b as editorBaseStyles, c as editorHeaderStyles, d as PerkyStore } from "./perky_store-D7zG7vkz.js";
 import { C as Circle, R as Rectangle, S as Sprite, B as BaseRenderer, t as traverseAndCollect, W as WebGLRenderer, a as Camera, b as ShaderEffect, G as Group2D, O as Object2D, E as Easing, c as SpriteAnimator, d as WebGLTextureManager, e as controlsSheet, h as handleAttributeChange, f as emitChange, g as RenderGroup } from "./spritesheet_viewer-D_-SX66w.js";
@@ -4370,6 +4370,7 @@ class Game extends Application {
   }
   setStage(StageClass, options = {}) {
     if (this.stage) {
+      __privateMethod(this, _Game_instances, unregisterStageController_fn).call(this);
       this.removeChild(this.stage.$id);
       this.world = null;
       this.worldView = null;
@@ -4381,6 +4382,7 @@ class Game extends Application {
     if (this.stage.worldView) {
       this.worldView = this.stage.worldView;
     }
+    __privateMethod(this, _Game_instances, registerStageController_fn).call(this);
   }
   update() {
   }
@@ -4394,6 +4396,23 @@ class Game extends Application {
   }
 }
 _Game_instances = new WeakSet();
+registerStageController_fn = function() {
+  var _a2;
+  const ControllerClass = (_a2 = this.stage) == null ? void 0 : _a2.constructor.ActionController;
+  if (!ControllerClass) {
+    return;
+  }
+  const controller = this.registerController(ControllerClass);
+  this.stage._controllerName = controller.$id;
+  this.setActiveControllers(controller.$id);
+};
+unregisterStageController_fn = function() {
+  var _a2;
+  if (!((_a2 = this.stage) == null ? void 0 : _a2._controllerName)) {
+    return;
+  }
+  this.unregisterController(this.stage._controllerName);
+};
 onUpdate_fn = function(deltaTime) {
   var _a2;
   __privateMethod(this, _Game_instances, updateActiveControllers_fn).call(this, deltaTime);
@@ -4507,142 +4526,6 @@ __publicField(Game, "AudioSystem", AudioSystem);
 __publicField(Game, "camera", { unitsInView: { width: 10, height: 10 } });
 __publicField(Game, "layer", { type: "webgl" });
 __publicField(Game, "postPasses", []);
-class DenController extends GameController {
-  constructor(options = {}) {
-    super(options);
-    this.currentWave = 0;
-    this.currentDay = 0;
-    this.spawnTimer = 0;
-    this.nextSpawnTime = 0;
-    this.isSpawning = false;
-  }
-  setFps(fps = 60) {
-    this.game.setFpsLimited(true);
-    this.game.setFps(fps);
-  }
-  update(game, deltaTime) {
-    this.world.update(deltaTime, game);
-    this.updateWaveSpawning(deltaTime);
-  }
-  onWaveStart(wave, dayNumber) {
-    this.currentWave = wave;
-    this.currentDay = dayNumber;
-    this.spawnTimer = 0;
-    this.nextSpawnTime = this.getNextSpawnTime();
-    if (wave === 3) {
-      this.spawnAmalgamEnemy({
-        x: 3.5,
-        y: 0,
-        maxSpeed: 0.4
-      });
-    }
-  }
-  setSpawning(isSpawning) {
-    this.isSpawning = isSpawning;
-  }
-  getSpawnConfig() {
-    const settings = this.constructor.waveSettings;
-    const ratios = this.constructor.waveSpawnRatios[this.currentWave];
-    const dayFactor = Math.min(this.currentDay, 10);
-    const intervalDecrease = dayFactor * settings.spawnIntervalDecreasePerDay;
-    const minInterval = Math.max(0.3, settings.baseSpawnInterval.min - intervalDecrease);
-    const maxInterval = Math.max(0.5, settings.baseSpawnInterval.max - intervalDecrease);
-    const enemySpeed = settings.baseEnemySpeed + dayFactor * settings.speedGrowthPerDay;
-    return {
-      enemySpeed,
-      spawnInterval: { min: minInterval, max: maxInterval },
-      spawnY: settings.spawnY,
-      ratios
-    };
-  }
-  getNextSpawnTime() {
-    const config = this.getSpawnConfig();
-    return config.spawnInterval.min + Math.random() * (config.spawnInterval.max - config.spawnInterval.min);
-  }
-  updateWaveSpawning(deltaTime) {
-    if (!this.isSpawning) {
-      return;
-    }
-    this.spawnTimer += deltaTime;
-    if (this.spawnTimer >= this.nextSpawnTime) {
-      const config = this.getSpawnConfig();
-      this.spawnTimer = 0;
-      this.nextSpawnTime = this.getNextSpawnTime();
-      const randomY = config.spawnY.min + Math.random() * (config.spawnY.max - config.spawnY.min);
-      const roll = Math.random();
-      if (roll < config.ratios.granny) {
-        this.spawnGrannyEnemy({
-          x: 3.5,
-          y: randomY,
-          maxSpeed: config.enemySpeed * 0.6
-        });
-      } else if (roll < config.ratios.granny + config.ratios.red) {
-        this.spawnRedEnemy({
-          x: 3.5,
-          y: randomY,
-          maxSpeed: config.enemySpeed * 1.5
-        });
-      } else {
-        this.spawnPigEnemy({
-          x: 3.5,
-          y: randomY,
-          maxSpeed: config.enemySpeed
-        });
-      }
-    }
-  }
-  shoot() {
-    var _a2;
-    const player = this.world.player;
-    if (!player.canShoot()) {
-      return;
-    }
-    player.shootCooldown = player.shootCooldownDuration;
-    player.shootRecoilTimer = player.shootRecoilDuration;
-    this.world.spawnProjectile({
-      x: player.x + 0.3,
-      y: player.y + 0.4
-    });
-    (_a2 = this.denAudio) == null ? void 0 : _a2.playShoot();
-  }
-  spawnPlayer(options = {}) {
-    return this.world.spawnPlayer(options);
-  }
-  spawnPigEnemy(options = {}) {
-    return this.world.spawnPigEnemy(options);
-  }
-  spawnRedEnemy(options = {}) {
-    return this.world.spawnRedEnemy(options);
-  }
-  spawnGrannyEnemy(options = {}) {
-    return this.world.spawnGrannyEnemy(options);
-  }
-  spawnAmalgamEnemy(options = {}) {
-    return this.world.spawnAmalgamEnemy(options);
-  }
-  toggleHitboxDebug() {
-    return this.renderer.toggleHitboxDebug();
-  }
-}
-__publicField(DenController, "bindings", {
-  moveUp: ["KeyW", "ArrowUp", "swipeUp"],
-  moveDown: ["KeyS", "ArrowDown", "swipeDown"],
-  shoot: ["Space", "tap"]
-});
-__publicField(DenController, "resources", ["world", "renderer", "denAudio"]);
-__publicField(DenController, "waveSettings", {
-  baseEnemySpeed: 0.4,
-  speedGrowthPerDay: 0.05,
-  baseSpawnInterval: { min: 1.2, max: 2 },
-  spawnIntervalDecreasePerDay: 0.1,
-  spawnY: { min: -1.9, max: 0.6 }
-});
-__publicField(DenController, "waveSpawnRatios", [
-  { pig: 1 / 2, red: 1 / 2, granny: 0 },
-  { pig: 2 / 3, red: 1 / 3, granny: 0 },
-  { pig: 5 / 10, red: 3 / 10, granny: 2 / 10 },
-  { pig: 5 / 10, red: 3 / 10, granny: 2 / 10 }
-]);
 class ChromaticEffect extends ShaderEffect {
   constructor(options = {}) {
     super(options);
@@ -4956,7 +4839,9 @@ class Stage extends PerkyModule {
     __privateMethod(this, _Stage_instances, createWorld_fn).call(this);
     __privateMethod(this, _Stage_instances, createWorldView_fn).call(this);
   }
-  update() {
+  update(deltaTime) {
+    var _a2;
+    (_a2 = this.worldView) == null ? void 0 : _a2.updateViews(deltaTime);
   }
   render() {
   }
@@ -4983,6 +4868,7 @@ createWorldView_fn = function() {
 __publicField(Stage, "$category", "stage");
 __publicField(Stage, "World", null);
 __publicField(Stage, "WorldView", WorldView);
+__publicField(Stage, "ActionController", null);
 class RenderTransform {
   constructor(options = {}) {
     this.enabled = options.enabled ?? true;
@@ -5523,7 +5409,7 @@ __publicField(PigEnemy, "$tags", ["enemy", "pig"]);
 class RedEnemy extends Enemy {
   constructor(params = {}) {
     super({
-      maxSpeed: 2,
+      maxSpeed: 0.5,
       hp: 2,
       ...params
     });
@@ -5532,13 +5418,9 @@ class RedEnemy extends Enemy {
       height: 0.4,
       offsetY: 0.35
     });
-    this.state = "hopping";
+    this.state = "moving";
     this.stateTimer = 0;
-    this.hopDuration = 0.4;
-    this.hopPauseDuration = 0.15;
-    this.hopProgress = 0;
-    this.hopCount = 0;
-    this.hopsBeforeStop = 3 + Math.floor(Math.random() * 3);
+    this.moveDuration = 1.5 + Math.random();
     this.stopDuration = 0.8;
     this.throwDelay = 0.3;
     this.hasThrown = false;
@@ -5550,27 +5432,12 @@ class RedEnemy extends Enemy {
     this.stateTimer += deltaTime;
     this[this.state](deltaTime);
   }
-  hopping(deltaTime) {
-    this.hopProgress = Math.min(1, this.stateTimer / this.hopDuration);
-    const hopCurve = Math.sin(this.hopProgress * Math.PI);
-    const speedMultiplier = 0.25 + hopCurve * 1.5;
-    this.position.add(this.velocity.clone().multiplyScalar(deltaTime * speedMultiplier));
-    if (this.stateTimer >= this.hopDuration) {
-      this.hopCount++;
+  moving(deltaTime) {
+    this.position.add(this.velocity.clone().multiplyScalar(deltaTime));
+    if (this.stateTimer >= this.moveDuration) {
+      this.state = "stopping";
       this.stateTimer = 0;
-      if (this.hopCount >= this.hopsBeforeStop) {
-        this.state = "stopping";
-        this.hopCount = 0;
-        this.hasThrown = false;
-      } else {
-        this.state = "hopPause";
-      }
-    }
-  }
-  hopPause() {
-    if (this.stateTimer >= this.hopPauseDuration) {
-      this.state = "hopping";
-      this.stateTimer = 0;
+      this.hasThrown = false;
     }
   }
   stopping() {
@@ -5579,9 +5446,9 @@ class RedEnemy extends Enemy {
       this.hasThrown = true;
     }
     if (this.stateTimer >= this.stopDuration) {
-      this.state = "hopping";
+      this.state = "moving";
       this.stateTimer = 0;
-      this.hopsBeforeStop = 3 + Math.floor(Math.random() * 3);
+      this.moveDuration = 1.5 + Math.random();
     }
   }
   throwPie() {
@@ -5596,9 +5463,8 @@ class RedEnemy extends Enemy {
   hit(impactDirection = { x: 1, y: 0 }, knockbackForce = 3) {
     const isDead = super.hit(impactDirection, knockbackForce);
     if (this.state === "stopping") {
-      this.state = "hopping";
+      this.state = "moving";
       this.stateTimer = 0;
-      this.hopCount = 0;
     }
     return isDead;
   }
@@ -5839,8 +5705,7 @@ class DenWorld extends World {
   spawnRedEnemy(options = {}) {
     const enemy = this.create(RedEnemy, {
       x: options.x || 0,
-      y: options.y || 0,
-      maxSpeed: options.maxSpeed || 0.5
+      y: options.y || 0
     });
     enemy.on("throw:pie", ({ x, y, sprite }) => {
       this.spawnEnemyProjectile({ x, y, sprite, size: 0.15 });
@@ -6204,7 +6069,6 @@ class RedEnemyView extends EnemyView {
     this.animator.get("throw").on("event:release", () => {
       logger.log("throw released");
     });
-    this.hopHeight = 0.06;
   }
   update(deltaTime) {
     super.update(deltaTime);
@@ -6214,16 +6078,6 @@ class RedEnemyView extends EnemyView {
     super.sync();
     this.syncAnimation();
     this.syncAnimationSpeed();
-    this.syncHop();
-  }
-  syncHop() {
-    const skipAnim = this.animator.get("skip");
-    if (this.animator.current !== skipAnim) {
-      return;
-    }
-    const t = skipAnim.getSegmentProgress("hop");
-    const hop = 4 * t * (1 - t);
-    this.root.y += hop * this.hopHeight;
   }
   syncAnimation() {
     const state = this.entity.state;
@@ -7395,6 +7249,8 @@ class DenStage extends Stage {
     this.game.execute("spawnPlayer", { x: -2.5 });
   }
   update(deltaTime) {
+    super.update(deltaTime);
+    this.world.update(deltaTime, this.game);
     this.impactParticles.update(deltaTime);
   }
   render() {
@@ -7484,9 +7340,54 @@ buildBackground_fn = function() {
   this.backgroundGroup.addChild(background);
 };
 __publicField(DenStage, "World", DenWorld);
+class DenController extends GameController {
+  shoot() {
+    var _a2;
+    const player = this.world.player;
+    if (!player.canShoot()) {
+      return;
+    }
+    player.shootCooldown = player.shootCooldownDuration;
+    player.shootRecoilTimer = player.shootRecoilDuration;
+    this.world.spawnProjectile({
+      x: player.x + 0.3,
+      y: player.y + 0.4
+    });
+    (_a2 = this.denAudio) == null ? void 0 : _a2.playShoot();
+  }
+  spawnPlayer(options = {}) {
+    return this.world.spawnPlayer(options);
+  }
+  spawnPigEnemy(options = {}) {
+    return this.world.spawnPigEnemy(options);
+  }
+  spawnRedEnemy(options = {}) {
+    return this.world.spawnRedEnemy(options);
+  }
+  spawnGrannyEnemy(options = {}) {
+    return this.world.spawnGrannyEnemy(options);
+  }
+  spawnAmalgamEnemy(options = {}) {
+    return this.world.spawnAmalgamEnemy(options);
+  }
+  setFps(fps = 60) {
+    this.game.setFpsLimited(true);
+    this.game.setFps(fps);
+  }
+  toggleHitboxDebug() {
+    var _a2;
+    return (_a2 = this.engine.stage) == null ? void 0 : _a2.toggleHitboxDebug();
+  }
+}
+__publicField(DenController, "bindings", {
+  moveUp: ["KeyW", "ArrowUp", "swipeUp"],
+  moveDown: ["KeyS", "ArrowDown", "swipeDown"],
+  shoot: ["Space", "tap"]
+});
+__publicField(DenController, "resources", ["world", "denAudio"]);
 class WaveSystem extends PerkyModule {
-  constructor() {
-    super(...arguments);
+  constructor(options = {}) {
+    super(options);
     __privateAdd(this, _WaveSystem_instances);
     __publicField(this, "wavesPerDay", 4);
     __publicField(this, "spawnDurations", [25, 25, 25, 25]);
@@ -7497,6 +7398,9 @@ class WaveSystem extends PerkyModule {
     __publicField(this, "elapsedTime", 0);
     __publicField(this, "paused", false);
     __publicField(this, "waitingForClear", false);
+    __publicField(this, "spawnTimer", 0);
+    __publicField(this, "nextSpawnTime", 0);
+    this.world = options.world || null;
   }
   get isSpawning() {
     return this.progress < 1;
@@ -7516,6 +7420,7 @@ class WaveSystem extends PerkyModule {
       this.elapsedTime += delta;
       const waveStartTimeOfDay = this.wave * (1 / this.wavesPerDay);
       this.timeOfDay = waveStartTimeOfDay + this.progress * (1 / this.wavesPerDay);
+      __privateMethod(this, _WaveSystem_instances, updateSpawning_fn).call(this, delta);
     }
     this.emit("tick", {
       wave: this.wave,
@@ -7546,9 +7451,69 @@ class WaveSystem extends PerkyModule {
     this.elapsedTime = 0;
     this.paused = false;
     this.waitingForClear = false;
+    this.spawnTimer = 0;
+    this.nextSpawnTime = 0;
   }
 }
 _WaveSystem_instances = new WeakSet();
+updateSpawning_fn = function(delta) {
+  if (!this.world) {
+    return;
+  }
+  this.spawnTimer += delta;
+  if (this.spawnTimer < this.nextSpawnTime) {
+    return;
+  }
+  const config = __privateMethod(this, _WaveSystem_instances, getSpawnConfig_fn).call(this);
+  this.spawnTimer = 0;
+  this.nextSpawnTime = __privateMethod(this, _WaveSystem_instances, getNextSpawnTime_fn).call(this);
+  const randomY = config.spawnY.min + Math.random() * (config.spawnY.max - config.spawnY.min);
+  const roll = Math.random();
+  if (roll < config.ratios.granny) {
+    this.world.spawnGrannyEnemy({
+      x: 3.5,
+      y: randomY,
+      maxSpeed: config.enemySpeed * 0.6
+    });
+  } else if (roll < config.ratios.granny + config.ratios.red) {
+    this.world.spawnRedEnemy({
+      x: 3.5,
+      y: randomY
+    });
+  } else {
+    this.world.spawnPigEnemy({
+      x: 3.5,
+      y: randomY,
+      maxSpeed: config.enemySpeed
+    });
+  }
+};
+getSpawnConfig_fn = function() {
+  const settings = this.constructor.waveSettings;
+  const ratios = this.constructor.waveSpawnRatios[this.wave];
+  const dayFactor = Math.min(this.day, 10);
+  const intervalDecrease = dayFactor * settings.spawnIntervalDecreasePerDay;
+  const minInterval = Math.max(0.3, settings.baseSpawnInterval.min - intervalDecrease);
+  const maxInterval = Math.max(0.5, settings.baseSpawnInterval.max - intervalDecrease);
+  const enemySpeed = settings.baseEnemySpeed + dayFactor * settings.speedGrowthPerDay;
+  return {
+    enemySpeed,
+    spawnInterval: { min: minInterval, max: maxInterval },
+    spawnY: settings.spawnY,
+    ratios
+  };
+};
+getNextSpawnTime_fn = function() {
+  const config = __privateMethod(this, _WaveSystem_instances, getSpawnConfig_fn).call(this);
+  return config.spawnInterval.min + Math.random() * (config.spawnInterval.max - config.spawnInterval.min);
+};
+initWaveSpawn_fn = function() {
+  this.spawnTimer = 0;
+  this.nextSpawnTime = __privateMethod(this, _WaveSystem_instances, getNextSpawnTime_fn).call(this);
+  if (this.wave === 3 && this.world) {
+    this.world.spawnAmalgamEnemy({ x: 3.5, y: 0, maxSpeed: 0.4 });
+  }
+};
 startNextWave_fn = function() {
   const nextWave = this.wave + 1;
   if (nextWave >= this.wavesPerDay) {
@@ -7556,6 +7521,7 @@ startNextWave_fn = function() {
   } else {
     this.wave = nextWave;
     this.elapsedTime = 0;
+    __privateMethod(this, _WaveSystem_instances, initWaveSpawn_fn).call(this);
     this.emit("wave:start", { wave: this.wave, day: this.day });
   }
 };
@@ -7568,11 +7534,25 @@ startNextDay_fn = function() {
   this.emit("day:announce", { day: this.day });
   setTimeout(() => {
     this.paused = false;
+    __privateMethod(this, _WaveSystem_instances, initWaveSpawn_fn).call(this);
     this.emit("day:start", { day: this.day });
     this.emit("wave:start", { wave: 0, day: this.day });
   }, this.announcementDuration * 1e3);
 };
 __publicField(WaveSystem, "$category", "waveSystem");
+__publicField(WaveSystem, "waveSettings", {
+  baseEnemySpeed: 0.4,
+  speedGrowthPerDay: 0.05,
+  baseSpawnInterval: { min: 1.2, max: 2 },
+  spawnIntervalDecreasePerDay: 0.1,
+  spawnY: { min: -1.9, max: 0.6 }
+});
+__publicField(WaveSystem, "waveSpawnRatios", [
+  { pig: 1 / 2, red: 1 / 2, granny: 0 },
+  { pig: 2 / 3, red: 1 / 3, granny: 0 },
+  { pig: 5 / 10, red: 3 / 10, granny: 2 / 10 },
+  { pig: 5 / 10, red: 3 / 10, granny: 2 / 10 }
+]);
 const _WaveProgressBar = class _WaveProgressBar extends PerkyModule {
   constructor(options = {}) {
     super(options);
@@ -7737,33 +7717,26 @@ class GameplayStage extends DenStage {
 }
 _GameplayStage_instances = new WeakSet();
 createWaveSystem_fn = function() {
-  this.waveSystem = this.create(WaveSystem, { $bind: "waveSystem" });
+  this.waveSystem = this.create(WaveSystem, {
+    $bind: "waveSystem",
+    world: this.world
+  });
 };
 wireWaveSystemEvents_fn = function() {
   this.waveSystem.on("tick", ({ wave, day, progress, timeOfDay, isSpawning }) => {
     var _a2;
     (_a2 = this.dayNightPass) == null ? void 0 : _a2.setProgress(timeOfDay);
     this.updateShadows(timeOfDay);
-    const denController = this.game.getController("den");
-    denController.setSpawning(isSpawning);
     this.game.emit("wave:tick", { wave, progress, dayNumber: day, timeOfDay, isSpawning });
   });
   this.waveSystem.on("wave:start", ({ wave, day }) => {
-    const denController = this.game.getController("den");
-    denController.onWaveStart(wave, day);
     this.game.emit("wave:start", { wave, dayNumber: day });
   });
   this.waveSystem.on("day:start", ({ day }) => {
     this.game.emit("day:start", { dayNumber: day });
   });
   this.waveSystem.on("day:announce", ({ day }) => {
-    const denController = this.game.getController("den");
-    denController.setSpawning(false);
     this.game.emit("day:announce", { dayNumber: day });
-  });
-  this.waveSystem.on("spawning:end", () => {
-    const denController = this.game.getController("den");
-    denController.setSpawning(false);
   });
 };
 wireWorldEvents_fn = function() {
@@ -7789,9 +7762,10 @@ createUI_fn = function() {
   });
   waveProgressBar.mount(uiLayer);
 };
+__publicField(GameplayStage, "ActionController", DenController);
 const SPAWN_BUTTONS = [
   { label: "Pig", action: "spawnPigEnemy", maxSpeed: 0.4 },
-  { label: "Red", action: "spawnRedEnemy", maxSpeed: 0.6 },
+  { label: "Red", action: "spawnRedEnemy" },
   { label: "Granny", action: "spawnGrannyEnemy", maxSpeed: 0.3 },
   { label: "Amalgam", action: "spawnAmalgamEnemy", maxSpeed: 0.5 }
 ];
@@ -8001,6 +7975,7 @@ createUI_fn2 = function() {
   });
   previewControls.mount(uiLayer);
 };
+__publicField(PreviewStage, "ActionController", DenController);
 class VignettePass extends RenderPass {
 }
 __publicField(VignettePass, "$name", "vignettePass");
@@ -8067,7 +8042,7 @@ class DefendTheDen extends Game {
     gameRenderer.registerShaderEffect(OutlineEffect$1);
     gameRenderer.registerShaderEffect(WaveEffect);
     const StageClass = params.preview ? PreviewStage : GameplayStage;
-    this.setStage(StageClass, params);
+    this.setStage(StageClass);
   }
   onStart() {
     super.onStart();
@@ -8075,7 +8050,7 @@ class DefendTheDen extends Game {
 }
 __publicField(DefendTheDen, "$name", "defendTheDen");
 __publicField(DefendTheDen, "manifest", manifestData);
-__publicField(DefendTheDen, "ActionController", DenController);
+__publicField(DefendTheDen, "ActionController", null);
 __publicField(DefendTheDen, "camera", { unitsInView: { width: 7, height: 5 } });
 __publicField(DefendTheDen, "layers", [
   {
@@ -16365,7 +16340,7 @@ cleanupKeyboard_fn = function() {
 showCommandPalette_fn = async function() {
   if (!__privateGet(this, _commandPaletteEl)) {
     const { default: DevToolsCommandPalette } = await __vitePreload(async () => {
-      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-IgF2A8cT.js");
+      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-CuUDf6B7.js");
       return { default: DevToolsCommandPalette2 };
     }, true ? __vite__mapDeps([0,1,2,3]) : void 0, import.meta.url);
     __privateSet(this, _commandPaletteEl, new DevToolsCommandPalette());

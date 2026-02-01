@@ -2983,7 +2983,7 @@
       {
         "name": "setStage",
         "line": 40,
-        "source": "setStage (StageClass, options = {}) {\n    if (this.stage) {\n        this.removeChild(this.stage.$id)\n        this.world = null\n        this.worldView = null\n    }\n\n    this.create(StageClass, {$bind: 'stage', game: this, ...options})\n\n    if (this.stage.world) {\n        this.world = this.stage.world\n    }\n\n    if (this.stage.worldView) {\n        this.worldView = this.stage.worldView\n    }\n}",
+        "source": "setStage (StageClass, options = {}) {\n    if (this.stage) {\n        this.#unregisterStageController()\n        this.removeChild(this.stage.$id)\n        this.world = null\n        this.worldView = null\n    }\n\n    this.create(StageClass, {$bind: 'stage', game: this, ...options})\n\n    if (this.stage.world) {\n        this.world = this.stage.world\n    }\n\n    if (this.stage.worldView) {\n        this.worldView = this.stage.worldView\n    }\n\n    this.#registerStageController()\n}",
         "kind": "method",
         "params": [
           "StageClass",
@@ -2992,21 +2992,21 @@
       },
       {
         "name": "update",
-        "line": 73,
+        "line": 95,
         "source": "update () {\n\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "render",
-        "line": 78,
+        "line": 100,
         "source": "render () {\n\n}",
         "kind": "method",
         "params": []
       },
       {
         "name": "onStart",
-        "line": 83,
+        "line": 105,
         "source": "onStart () {\n    this.#buildTextureAtlases()\n    this.#buildSpritesheets()\n    this.#listenForLateAssets()\n    this.#setupPostPasses()\n}",
         "kind": "method",
         "params": []
@@ -3387,19 +3387,28 @@
         "source": "static WorldView = WorldView",
         "kind": "property",
         "value": "WorldView"
+      },
+      {
+        "name": "ActionController",
+        "line": 10,
+        "source": "static ActionController = null",
+        "kind": "property",
+        "value": "null"
       }
     ],
     "methods": [
       {
         "name": "update",
-        "line": 47,
-        "source": "update () {\n\n}",
+        "line": 48,
+        "source": "update (deltaTime) {\n    this.worldView?.updateViews(deltaTime)\n}",
         "kind": "method",
-        "params": []
+        "params": [
+          "deltaTime"
+        ]
       },
       {
         "name": "render",
-        "line": 52,
+        "line": 53,
         "source": "render () {\n\n}",
         "kind": "method",
         "params": []
@@ -3409,7 +3418,7 @@
     "setters": [],
     "constructor": {
       "name": "constructor",
-      "line": 11,
+      "line": 12,
       "source": "constructor (options = {}) {\n    super(options)\n\n    this.game = options.game\n\n    this.#createWorld()\n    this.#createWorldView()\n}",
       "kind": "constructor",
       "params": [

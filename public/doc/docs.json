@@ -1108,7 +1108,7 @@
       "id": "color_utils",
       "file": "/render/webgl/color_utils.doc.js",
       "category": "render/webgl",
-      "title": "Color Utils",
+      "title": "ColorUtils",
       "tags": [
         "render/webgl",
         "color_utils"
@@ -2104,7 +2104,7 @@
       "id": "animator_view",
       "file": "/studio/animator/animator_view.doc.js",
       "category": "studio/animator",
-      "title": "Animator View",
+      "title": "AnimatorView",
       "tags": [
         "studio/animator",
         "animator_view"
@@ -2152,7 +2152,7 @@
       "id": "conflict_resolver",
       "file": "/studio/components/conflict_resolver.doc.js",
       "category": "studio/components",
-      "title": "Conflict Resolver",
+      "title": "ConflictResolver",
       "tags": [
         "studio/components",
         "conflict_resolver"
@@ -2164,7 +2164,7 @@
       "id": "psd_importer",
       "file": "/studio/components/psd_importer.doc.js",
       "category": "studio/components",
-      "title": "PSD Importer",
+      "title": "PsdImporter",
       "tags": [
         "studio/components",
         "psd_importer"
@@ -2176,7 +2176,7 @@
       "id": "storage_info",
       "file": "/studio/components/storage_info.doc.js",
       "category": "studio/components",
-      "title": "Storage Info",
+      "title": "StorageInfo",
       "tags": [
         "studio/components",
         "storage_info"
@@ -2194,16 +2194,6 @@
       "tags": [
         "prologue",
         "foreword"
-      ]
-    },
-    {
-      "id": "philosophy",
-      "file": "/doc/guides/prologue/philosophy.guide.js",
-      "category": "prologue",
-      "title": "Philosophy",
-      "tags": [
-        "prologue",
-        "philosophy"
       ]
     },
     {

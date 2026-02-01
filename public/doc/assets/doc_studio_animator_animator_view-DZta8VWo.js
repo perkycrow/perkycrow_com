@@ -1,5 +1,5 @@
 import { d as doc, t as text, s as section, c as code } from "./runtime-DOmi4lo7.js";
-const animator_view_doc = doc("Animator View", { advanced: true }, () => {
+const animator_view_doc = doc("AnimatorView", { advanced: true }, () => {
   text(`
         The main animation editor view. A Web Component that provides a full
         editing interface for sprite animators: animation preview, timeline,

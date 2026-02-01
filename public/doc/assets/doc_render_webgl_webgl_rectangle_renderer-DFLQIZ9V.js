@@ -13,7 +13,7 @@ const webgl_rectangle_renderer_doc = doc("WebGLRectangleRenderer", { advanced: t
             The fill is drawn as a 4-vertex triangle fan. If \`strokeWidth\` is
             greater than zero, stroke lines are drawn on top using \`GL_LINES\`.
             Both fill and stroke colors are parsed from CSS strings via
-            [[parseColor@render/webgl/color_utils]]. Transparent fill colors are
+            [[ColorUtils@render/webgl]]. Transparent fill colors are
             skipped entirely.
         `);
     code("Rectangle with stroke", () => {

@@ -1,6 +1,6 @@
 import { d as doc, t as text, s as section, a as action, l as logger } from "./runtime-DOmi4lo7.js";
 import { p as parseColor } from "./color_utils-4JeeBuMN.js";
-const color_utils_doc = doc("Color Utils", { advanced: true }, () => {
+const color_utils_doc = doc("ColorUtils", { advanced: true }, () => {
   text(`
         Utility for parsing color strings into normalized RGBA objects.
         Used internally by WebGL renderers to convert CSS-style colors into

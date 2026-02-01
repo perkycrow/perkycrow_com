@@ -1,5 +1,5 @@
 import { d as doc, t as text, s as section } from "./runtime-DOmi4lo7.js";
-const storage_info_doc = doc("Storage Info", { advanced: true }, () => {
+const storage_info_doc = doc("StorageInfo", { advanced: true }, () => {
   text(`
         A small popover widget that displays IndexedDB storage usage.
         Shown in the [[HubView@studio]] header as a clickable "Perky Studio"
