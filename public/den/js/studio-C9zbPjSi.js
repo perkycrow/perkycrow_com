@@ -6,10 +6,10 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _overlay, _step, _psd, _converter, _store, _fileInput, _aspectRatioLocked, _aspectRatio, _existingNames, _elements, _PsdImporter_instances, reset_fn, buildDOM_fn, buildHeader_fn, buildBody_fn, buildDropStep_fn, buildPreviewStep_fn, buildProgressStep_fn, toggleAspectLock_fn, handleWidthChange_fn, handleHeightChange_fn, syncDimension_fn, updateStep_fn, updateHeader_fn, handleBack_fn, handleDrop_fn, handleFileSelect_fn, loadFile_fn, populatePreview_fn, validateName_fn, onProgress_fn, handleCreate_fn, showError_fn, _overlay2, _conflicts, _choices, _resolvePromise, _ConflictResolver_instances, buildDOM_fn2, renderConflicts_fn, createConflictItem_fn, createVersionCard_fn, selectVersion_fn, applyChoices_fn, _popoverEl, _isOpen, _boundClose, _StorageInfo_instances, buildDOM_fn3, toggle_fn, open_fn, close_fn, onOutsideClick_fn, refreshContent_fn, _manifest, _animators, _customAnimators, _textureSystem, _appLayout, _contentEl, _psdImporter, _thumbnails, _customMeta, _store2, _conflictResolver, _selectionMode, _selectedItems, _selectBtn, _exportBtn, _deleteBtn, _revertBtn, _HubView_instances, buildDOM_fn4, buildHeaderActions_fn, render_fn, loadCustomAnimators_fn, reconcile_fn, compareVersions_fn, resolveConflicts_fn, deleteCustom_fn, createAnimatorCard_fn, createNewAnimatorCard_fn, openPsdImporter_fn, handleImportComplete_fn, createThumbnail_fn, getFirstFrameRegion_fn, resolveRegion_fn, openAnimator_fn, toggleSelectionMode_fn, toggleItemSelection_fn, updateActionButtons_fn, importFile_fn, exportSelected_fn, revertSelected_fn, deleteSelected_fn;
+var _overlay, _step, _psd, _converter, _store, _fileInput, _aspectRatioLocked, _aspectRatio, _existingNames, _targetName, _elements, _PsdImporter_instances, reset_fn, buildDOM_fn, buildHeader_fn, buildBody_fn, buildDropStep_fn, buildPreviewStep_fn, buildProgressStep_fn, toggleAspectLock_fn, handleWidthChange_fn, handleHeightChange_fn, syncDimension_fn, updateStep_fn, updateHeader_fn, handleBack_fn, handleDrop_fn, handleFileSelect_fn, loadFile_fn, populatePreview_fn, validateName_fn, onProgress_fn, handleCreate_fn, showError_fn, _overlay2, _conflicts, _choices, _resolvePromise, _ConflictResolver_instances, buildDOM_fn2, renderConflicts_fn, createConflictItem_fn, createVersionCard_fn, selectVersion_fn, applyChoices_fn, _popoverEl, _isOpen, _boundClose, _StorageInfo_instances, buildDOM_fn3, toggle_fn, open_fn, close_fn, onOutsideClick_fn, refreshContent_fn, _manifest, _animators, _customAnimators, _textureSystem, _appLayout, _contentEl, _psdImporter, _thumbnails, _customMeta, _store2, _conflictResolver, _selectionMode, _selectedItems, _selectBtn, _exportBtn, _deleteBtn, _revertBtn, _updateBtn, _HubView_instances, buildDOM_fn4, buildHeaderActions_fn, render_fn, loadCustomAnimators_fn, reconcile_fn, compareVersions_fn, resolveConflicts_fn, deleteCustom_fn, createAnimatorCard_fn, createNewAnimatorCard_fn, openPsdImporter_fn, handleImportComplete_fn, createThumbnail_fn, getFirstFrameRegion_fn, resolveRegion_fn, openAnimator_fn, toggleSelectionMode_fn, clearCheckboxes_fn, toggleItemSelection_fn, updateActionButtons_fn, importFile_fn, updateSelected_fn, openPsdImporterForUpdate_fn, exportSelected_fn, revertSelected_fn, deleteSelected_fn;
 import { b as createStyleSheet, d as adoptStyleSheets, c as createElement, a as formatBytes, p as pluralize, l as logger } from "./preload-helper-D0VL-0Hd.js";
-import { P as PsdConverter, l as loadManifest, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-BCP6Puog.js";
-import { E as EditorComponent, d as PerkyStore, I as ICONS, m as manifestData } from "./perky_store-D7zG7vkz.js";
+import { P as PsdConverter, l as loadManifest, b as buildTextureSystem, c as collectAnimators } from "./psd_converter-DTFsa1RA.js";
+import { E as EditorComponent, d as PerkyStore, I as ICONS, m as manifestData } from "./perky_store-9CKwDjn7.js";
 import { f as findAnimationGroups, e as extractFramesFromGroup, p as putPixels } from "./spritesheet-Dcgp3HOr.js";
 const styles$2 = createStyleSheet(`
     :host {
@@ -388,6 +388,7 @@ class PsdImporter extends EditorComponent {
     __privateAdd(this, _aspectRatioLocked, true);
     __privateAdd(this, _aspectRatio, 1);
     __privateAdd(this, _existingNames, /* @__PURE__ */ new Set());
+    __privateAdd(this, _targetName, null);
     __privateAdd(this, _elements, {});
   }
   onConnected() {
@@ -396,7 +397,9 @@ class PsdImporter extends EditorComponent {
     __privateMethod(this, _PsdImporter_instances, buildDOM_fn).call(this);
   }
   open() {
+    const targetName = __privateGet(this, _targetName);
     __privateMethod(this, _PsdImporter_instances, reset_fn).call(this);
+    __privateSet(this, _targetName, targetName);
     __privateGet(this, _overlay).open();
   }
   close() {
@@ -404,6 +407,9 @@ class PsdImporter extends EditorComponent {
   }
   setExistingNames(names) {
     __privateSet(this, _existingNames, new Set(names.map((n) => n.toLowerCase())));
+  }
+  setTargetName(animatorName) {
+    __privateSet(this, _targetName, animatorName.replace(/Animator$/i, ""));
   }
 }
 _overlay = new WeakMap();
@@ -415,12 +421,14 @@ _fileInput = new WeakMap();
 _aspectRatioLocked = new WeakMap();
 _aspectRatio = new WeakMap();
 _existingNames = new WeakMap();
+_targetName = new WeakMap();
 _elements = new WeakMap();
 _PsdImporter_instances = new WeakSet();
 reset_fn = function() {
   __privateSet(this, _step, "drop");
   __privateSet(this, _psd, null);
   __privateSet(this, _aspectRatioLocked, true);
+  __privateSet(this, _targetName, null);
   __privateMethod(this, _PsdImporter_instances, updateStep_fn).call(this);
 };
 buildDOM_fn = function() {
@@ -593,10 +601,11 @@ updateStep_fn = function() {
 };
 updateHeader_fn = function() {
   var _a;
+  const isUpdate = !!__privateGet(this, _targetName);
   const headers = {
-    drop: { backText: "← Cancel", title: "Import PSD" },
+    drop: { backText: "← Cancel", title: isUpdate ? "Update PSD" : "Import PSD" },
     preview: { backText: "← Back", title: ((_a = __privateGet(this, _psd)) == null ? void 0 : _a.filename) || "Preview" },
-    progress: { backText: null, title: "Creating..." }
+    progress: { backText: null, title: isUpdate ? "Updating..." : "Creating..." }
   };
   const config = headers[__privateGet(this, _step)];
   if (config) {
@@ -683,17 +692,25 @@ populatePreview_fn = function(psd, animations) {
     tag.innerHTML = `${anim.name}<span>${anim.frameCount}f</span>`;
     __privateGet(this, _elements).animationTags.appendChild(tag);
   }
-  __privateGet(this, _elements).nameInput.value = psd.filename || "";
+  if (__privateGet(this, _targetName)) {
+    __privateGet(this, _elements).nameInput.value = __privateGet(this, _targetName);
+    __privateGet(this, _elements).nameInput.disabled = true;
+  } else {
+    __privateGet(this, _elements).nameInput.value = psd.filename || "";
+    __privateGet(this, _elements).nameInput.disabled = false;
+  }
   __privateGet(this, _elements).errorMessage.classList.add("hidden");
   __privateMethod(this, _PsdImporter_instances, validateName_fn).call(this);
 };
 validateName_fn = function() {
   const name = sanitizeName(__privateGet(this, _elements).nameInput.value);
   const animatorName = `${name}Animator`.toLowerCase();
-  const isDuplicate = __privateGet(this, _existingNames).has(animatorName);
+  const isUpdate = !!__privateGet(this, _targetName);
+  const isDuplicate = !isUpdate && __privateGet(this, _existingNames).has(animatorName);
   const isValid = name.length > 0 && !isDuplicate;
+  const actionLabel = isUpdate ? "update" : "create";
   __privateGet(this, _elements).outputInfo.innerHTML = `
-            <div class="output-info-title">This will create:</div>
+            <div class="output-info-title">This will ${actionLabel}:</div>
             <div class="output-item"><span class="output-item-icon">${ICONS.image}</span> ${name || "..."}Spritesheet</div>
             <div class="output-item"><span class="output-item-icon">${ICONS.film}</span> ${name || "..."}Animator</div>
         `;
@@ -703,6 +720,7 @@ validateName_fn = function() {
   } else {
     __privateGet(this, _elements).errorMessage.classList.add("hidden");
   }
+  __privateGet(this, _elements).createBtn.textContent = isUpdate ? "Update Animator" : "Create Animator";
   __privateGet(this, _elements).createBtn.disabled = !isValid;
 };
 onProgress_fn = function(stage, percent) {
@@ -1423,6 +1441,8 @@ const hubViewStyles = createStyleSheet(`
     .header-actions button:disabled {
         opacity: 0.3;
         cursor: default;
+        pointer-events: none;
+        color: var(--fg-muted);
     }
 
     .header-actions .danger {
@@ -1472,6 +1492,7 @@ class HubView extends EditorComponent {
     __privateAdd(this, _exportBtn, null);
     __privateAdd(this, _deleteBtn, null);
     __privateAdd(this, _revertBtn, null);
+    __privateAdd(this, _updateBtn, null);
   }
   onConnected() {
     adoptStyleSheets(this.shadowRoot, hubViewStyles);
@@ -1503,6 +1524,7 @@ _selectBtn = new WeakMap();
 _exportBtn = new WeakMap();
 _deleteBtn = new WeakMap();
 _revertBtn = new WeakMap();
+_updateBtn = new WeakMap();
 _HubView_instances = new WeakSet();
 buildDOM_fn4 = function() {
   __privateSet(this, _appLayout, createElement("app-layout", {
@@ -1534,12 +1556,15 @@ buildHeaderActions_fn = function() {
   defaultActions.appendChild(previewBtn);
   defaultActions.appendChild(importBtn);
   const selectionActions = createElement("div", { class: "selection-actions" });
+  __privateSet(this, _updateBtn, createElement("button", { text: "Update" }));
+  __privateGet(this, _updateBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, updateSelected_fn).call(this));
   __privateSet(this, _exportBtn, createElement("button", { text: "Export" }));
   __privateGet(this, _exportBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, exportSelected_fn).call(this));
   __privateSet(this, _revertBtn, createElement("button", { text: "Revert", class: "warning" }));
   __privateGet(this, _revertBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, revertSelected_fn).call(this));
   __privateSet(this, _deleteBtn, createElement("button", { text: "Delete", class: "danger" }));
   __privateGet(this, _deleteBtn).addEventListener("click", () => __privateMethod(this, _HubView_instances, deleteSelected_fn).call(this));
+  selectionActions.appendChild(__privateGet(this, _updateBtn));
   selectionActions.appendChild(__privateGet(this, _exportBtn));
   selectionActions.appendChild(__privateGet(this, _revertBtn));
   selectionActions.appendChild(__privateGet(this, _deleteBtn));
@@ -1553,8 +1578,6 @@ buildHeaderActions_fn = function() {
 render_fn = async function() {
   await __privateMethod(this, _HubView_instances, loadCustomAnimators_fn).call(this);
   await __privateMethod(this, _HubView_instances, reconcile_fn).call(this);
-  const hasCustoms = Object.keys(__privateGet(this, _customAnimators)).length > 0;
-  __privateGet(this, _selectBtn).style.display = hasCustoms ? "block" : "none";
   const section = createElement("div", { class: "section" });
   section.appendChild(createElement("h2", { class: "section-title", text: "Animators" }));
   const grid = createElement("div", { class: "animator-grid" });
@@ -1670,12 +1693,9 @@ deleteCustom_fn = async function(id) {
   localStorage.removeItem(`${SEEN_KEY_PREFIX}${id}`);
 };
 createAnimatorCard_fn = function(name, config, state = "game") {
-  const card = createElement("div", { class: "animator-card" });
+  const card = createElement("div", { class: "animator-card selectable" });
   const isCustom = state === "custom" || state === "modified";
-  if (isCustom) {
-    card.classList.add("selectable");
-    card.dataset.name = name;
-  }
+  card.dataset.name = name;
   const preview = createElement("div", { class: "card-preview" });
   const thumbnail = __privateMethod(this, _HubView_instances, createThumbnail_fn).call(this, name, config);
   preview.appendChild(thumbnail);
@@ -1684,11 +1704,9 @@ createAnimatorCard_fn = function(name, config, state = "game") {
   } else if (state === "modified") {
     preview.appendChild(createElement("div", { class: "card-badge modified", text: "Modified" }));
   }
-  if (isCustom) {
-    const checkbox = createElement("div", { class: "card-checkbox" });
-    checkbox.dataset.name = name;
-    preview.appendChild(checkbox);
-  }
+  const checkbox = createElement("div", { class: "card-checkbox" });
+  checkbox.dataset.name = name;
+  preview.appendChild(checkbox);
   const info = createElement("div", { class: "card-info" });
   info.appendChild(createElement("div", { class: "card-title", text: name }));
   const animCount = config.animations ? Object.keys(config.animations).length : 0;
@@ -1699,11 +1717,11 @@ createAnimatorCard_fn = function(name, config, state = "game") {
   card.appendChild(preview);
   card.appendChild(info);
   card.addEventListener("click", () => {
-    if (__privateGet(this, _selectionMode) && isCustom) {
-      const checkbox = card.querySelector(".card-checkbox");
-      checkbox.classList.toggle("selected");
+    if (__privateGet(this, _selectionMode)) {
+      const checkbox2 = card.querySelector(".card-checkbox");
+      checkbox2.classList.toggle("selected");
       __privateMethod(this, _HubView_instances, toggleItemSelection_fn).call(this, name);
-    } else if (!__privateGet(this, _selectionMode)) {
+    } else {
       __privateMethod(this, _HubView_instances, openAnimator_fn).call(this, name, isCustom);
     }
   });
@@ -1739,6 +1757,7 @@ handleImportComplete_fn = function(e) {
   const { name, animatorConfig, atlases } = e.detail;
   const animatorName = `${name}Animator`;
   __privateGet(this, _customAnimators)[animatorName] = animatorConfig;
+  __privateGet(this, _customMeta).set(animatorName, { updatedAt: Date.now() });
   if ((atlases == null ? void 0 : atlases.length) > 0 && atlases[0].canvas && ((_a = atlases[0].frames) == null ? void 0 : _a.length) > 0) {
     const atlas = atlases[0];
     const firstFrame = atlas.frames[0];
@@ -1824,6 +1843,7 @@ openAnimator_fn = function(name, isCustom = false) {
 toggleSelectionMode_fn = function() {
   __privateSet(this, _selectionMode, !__privateGet(this, _selectionMode));
   __privateGet(this, _selectedItems).clear();
+  __privateMethod(this, _HubView_instances, clearCheckboxes_fn).call(this);
   if (__privateGet(this, _selectionMode)) {
     this.setAttribute("selection-mode", "");
     __privateGet(this, _selectBtn).textContent = "Done";
@@ -1832,6 +1852,12 @@ toggleSelectionMode_fn = function() {
     __privateGet(this, _selectBtn).textContent = "Select";
   }
   __privateMethod(this, _HubView_instances, updateActionButtons_fn).call(this);
+};
+clearCheckboxes_fn = function() {
+  const checkboxes = this.shadowRoot.querySelectorAll(".card-checkbox.selected");
+  for (const cb of checkboxes) {
+    cb.classList.remove("selected");
+  }
 };
 toggleItemSelection_fn = function(name) {
   if (__privateGet(this, _selectedItems).has(name)) {
@@ -1845,6 +1871,7 @@ updateActionButtons_fn = function() {
   const hasSelection = __privateGet(this, _selectedItems).size > 0;
   __privateGet(this, _exportBtn).disabled = !hasSelection;
   __privateGet(this, _deleteBtn).disabled = !hasSelection;
+  __privateGet(this, _updateBtn).disabled = __privateGet(this, _selectedItems).size !== 1;
   const hasModified = [...__privateGet(this, _selectedItems)].some((id) => __privateGet(this, _animators)[id]);
   __privateGet(this, _revertBtn).disabled = !hasModified;
 };
@@ -1861,7 +1888,27 @@ importFile_fn = async function() {
   });
   input.click();
 };
+updateSelected_fn = function() {
+  if (__privateGet(this, _selectedItems).size !== 1) {
+    return;
+  }
+  const name = [...__privateGet(this, _selectedItems)][0];
+  __privateMethod(this, _HubView_instances, toggleSelectionMode_fn).call(this);
+  __privateMethod(this, _HubView_instances, openPsdImporterForUpdate_fn).call(this, name);
+};
+openPsdImporterForUpdate_fn = function(name) {
+  if (!__privateGet(this, _psdImporter)) {
+    __privateSet(this, _psdImporter, document.createElement("psd-importer"));
+    __privateGet(this, _psdImporter).addEventListener("complete", (e) => __privateMethod(this, _HubView_instances, handleImportComplete_fn).call(this, e));
+    this.shadowRoot.appendChild(__privateGet(this, _psdImporter));
+  }
+  __privateGet(this, _psdImporter).setTargetName(name);
+  __privateGet(this, _psdImporter).open();
+};
 exportSelected_fn = async function() {
+  if (__privateGet(this, _selectedItems).size === 0) {
+    return;
+  }
   for (const name of __privateGet(this, _selectedItems)) {
     await __privateGet(this, _store2).export(name);
   }
@@ -1883,6 +1930,9 @@ revertSelected_fn = async function() {
   __privateMethod(this, _HubView_instances, render_fn).call(this);
 };
 deleteSelected_fn = async function() {
+  if (__privateGet(this, _selectedItems).size === 0) {
+    return;
+  }
   const count = __privateGet(this, _selectedItems).size;
   const message = count === 1 ? `Delete "${[...__privateGet(this, _selectedItems)][0]}"?` : `Delete ${count} animators?`;
   if (!confirm(message)) {

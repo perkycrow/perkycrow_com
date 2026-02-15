@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./devtools_command_palette-CuUDf6B7.js","./perky_store-D7zG7vkz.js","./preload-helper-D0VL-0Hd.js","./spritesheet_viewer-D_-SX66w.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./devtools_command_palette-DgG2o20m.js","./perky_store-9CKwDjn7.js","./preload-helper-D0VL-0Hd.js","./spritesheet_viewer-CdXbC75g.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
@@ -18,10 +18,10 @@ var __privateWrapper = (obj, member, setter, getter) => ({
     return __privateGet(obj, member, getter);
   }
 });
-var _ApplicationManager_instances, findApp_fn, _actions, _actionList, _engine, _ActionController_instances, defineResourceGetters_fn, _activeControllers, _ActionDispatcher_instances, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentX, _currentY, _touchStartTime, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, updateVerticalSwipes_fn, updateHorizontalSwipes_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _Application_instances, createMainController_fn, autoRegisterBindings_fn, _paused, _fpsLimited, _context, _collected, _rendererRegistry, _renderers, _debugGizmoRenderer, _CanvasRenderer_instances, setupDefaultRenderers_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _context2, _masterGain, _suspended, _pendingDecodes, _masterVolume, _AudioContext_instances, processPendingDecodes_fn, _audioContext, _gainNode, _volume, _muted, _sources, _AudioChannel_instances, updateGain_fn, _audioContext2, _channel, _gainNode2, _pannerNode, _sourceNode, _playing, _loop, _volume2, _playbackRate, _startTime, _pauseTime, _x, _y, _spatial, _refDistance, _maxDistance, _rolloffFactor, _AudioSource_instances, initSpatialOptions_fn, updatePannerPosition_fn, updateGain_fn2, setupNodes_fn, configurePanner_fn, cleanupSourceNode_fn, _audioContext3, _buffers, _pendingAudio, _unlocked, _AudioSystem_instances, loadPendingAudio_fn, applyConfig_fn, _Game_instances, registerStageController_fn, unregisterStageController_fn, onUpdate_fn, onRender_fn, setupPostPasses_fn, listenForLateAssets_fn, buildTextureAtlases_fn, buildSpritesheets_fn, updateActiveControllers_fn, createRenderSystem_fn, buildRenderSystemConfig_fn, createAudioSystem_fn, _a, _functionBindings, _stringBindings, _AutoView_instances, compileBindings_fn, _classRegistry, _matcherRegistry, _views, _WorldView_instances, bindWorldEvents_fn, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, resolveViews_fn, _Stage_instances, createWorld_fn, createWorldView_fn, _program, _enabled, _width, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _enabled2, _program2, _uniforms, _RenderPass_instances, applyUniform_fn, _DenStage_instances, registerViews_fn, createImpactParticles_fn, createHitboxDebug_fn, setupRenderGroups_fn, buildBackground_fn, _WaveSystem_instances, updateSpawning_fn, getSpawnConfig_fn, getNextSpawnTime_fn, initWaveSpawn_fn, startNextWave_fn, startNextDay_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _GameplayStage_instances, createWaveSystem_fn, wireWaveSystemEvents_fn, wireWorldEvents_fn, createUI_fn, _PreviewControls_instances, buildSpawnPanel_fn, buildSliderPanel_fn, setTimeOfDay_fn, applyStyles_fn2, _PreviewStage_instances, createUI_fn2, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _domBuilt, _BaseTreeNode_instances, ensureDOM_fn, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _isSystemModule, _PerkyExplorerNode_instances, getExplorer_fn, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, updateSystemClass_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _vec2, _xInput, _yInput, _label, _labelEl2, _Vec2Input_instances, buildDOM_fn4, updateDisplay_fn, syncContext_fn, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _WorldViewInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _filterState, _typeGroupsState, _mainContainer, _assetsListContainer, _ManifestInspector_instances, update_fn6, updateAssetsList_fn, applyFilters_fn, createSection_fn, createConfigSection_fn, createDataGrid_fn, createFiltersBar_fn, createAssetsSection_fn, createTypeGroup_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, toggleController_fn, _unlockedValueEl, _channelsValueEl, _volumeInput, _unlockBtn, _AudioSystemInspector_instances, handleVolumeChange_fn, handleUnlock_fn, bindEvents_fn4, updateAll_fn3, updateUnlocked_fn, updateChannels_fn, updateVolume_fn, _mutedValueEl, _sourcesValueEl, _volumeInput2, _muteBtn, _AudioChannelInspector_instances, handleVolumeChange_fn2, handleToggleMute_fn, bindEvents_fn5, updateAll_fn4, updateMuted_fn, updateSources_fn, updateVolume_fn2, _sectionsState2, _atlasExpandState, _mainContainer2, _TextureSystemInspector_instances, update_fn10, createStatsSection_fn, createAtlasesSection_fn, createSection_fn2, createAtlasCard_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn5, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _showSystemModules, _systemCategories, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _layersBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn6, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateLayersButton_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn7, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn8, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _toolManager, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn9, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _actionsEl2, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn10, createHeader_fn4, updateHeaderActions_fn, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _controlsEl, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn11, togglePin_fn, copyAllLogs_fn, updateControlsVisibility_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn12, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn, _headerEl4, _contentEl5, _isDragging, _isResizing, _dragOffset, _x2, _y2, _width2, _height, _minWidth, _minHeight, _resizable, _onPointerMove, _onPointerUp, _title, _icon, _ToolWindow_instances, buildDOM_fn13, setupDrag_fn, setupResize_fn, cleanupWindowListeners_fn, applyPosition_fn, _registry, _instances, _container, _nextZIndex, _nextInstanceId, _nextX, _nextY, _cascadeOffset, _ToolManager_instances, handleClose_fn, bringToFront_fn, advanceCascade_fn, _params, _options, _contentEl6, _FoobarTool_instances, buildDOM_fn14, render_fn4, _contentEl7, _timelineEl, _previewEl, _spritesheetViewerEl, _animators, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _SpriteAnimatorTool_instances, buildDOM_fn15, getDefaultAnimatorName_fn, selectAnimator_fn, resolveAnimator_fn, resolveSpritesheet_fn, render_fn5, renderNoAnimator_fn, renderAnimator_fn, setupAnimatorSelect_fn, setupExportAllButton_fn, exportAnimatorToClipboard_fn, buildFullConfig_fn, buildAnimationConfig_fn, renderAnimationSelect_fn, renderAnimationInfo_fn, setupTimeline_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, setupPreview_fn, setupSpritesheetViewer_fn;
+var _ApplicationManager_instances, findApp_fn, _actions, _actionList, _engine, _ActionController_instances, defineResourceGetters_fn, _activeControllers, _ActionDispatcher_instances, isControllerActive_fn, _resizeObserver, _previousStyles, _onFullscreenChange, _previousDisplay, _PerkyView_instances, setupResizeObserver_fn, setupFullscreenEvents_fn, requestFullscreen_fn, dispatchDisplayModeChanged_fn, _bindings, _InputDevice_instances, initEvents_fn, _keydownListener, _keyupListener, _blurListener, _KeyboardDevice_instances, handleKeydown_fn, handleKeyup_fn, handleBlur_fn, _mousedownListener, _mouseupListener, _mousemoveListener, _contextmenuListener, _wheelListener, _MouseDevice_instances, createControls_fn, handleMousedown_fn, handleMouseup_fn, handleMousemove_fn, handleContextmenu_fn, handleWheel_fn, _touchstartListener, _touchmoveListener, _touchendListener, _touchcancelListener, _activeTouch, _startX, _startY, _currentX, _currentY, _touchStartTime, _TouchDevice_instances, createControls_fn2, handleTouchstart_fn, handleTouchmove_fn, updateVerticalSwipes_fn, updateHorizontalSwipes_fn, handleTouchend_fn, detectTap_fn, findChangedTouch_fn, handleTouchcancel_fn, releaseAllSwipes_fn, findActiveTouch_fn, isTouchActive_fn, _InputSystem_instances, getControlsFromBinding_fn, initEvents_fn2, handleInputEvent_fn, _controllerBindings, _Application_instances, createMainController_fn, autoRegisterBindings_fn, cleanupControllerBindings_fn, _paused, _fpsLimited, _context, _collected, _rendererRegistry, _renderers, _debugGizmoRenderer, _CanvasRenderer_instances, setupDefaultRenderers_fn, _RenderSystem_instances, configureDimensions_fn, setupInitialLayers_fn, setupResizeListener_fn, _context2, _masterGain, _suspended, _pendingDecodes, _masterVolume, _AudioContext_instances, processPendingDecodes_fn, _audioContext, _gainNode, _volume, _muted, _sources, _AudioChannel_instances, updateGain_fn, _audioContext2, _channel, _gainNode2, _pannerNode, _sourceNode, _playing, _loop, _volume2, _playbackRate, _startTime, _pauseTime, _x, _y, _spatial, _refDistance, _maxDistance, _rolloffFactor, _AudioSource_instances, initSpatialOptions_fn, updatePannerPosition_fn, updateGain_fn2, setupNodes_fn, configurePanner_fn, cleanupSourceNode_fn, _audioContext3, _buffers, _pendingAudio, _unlocked, _AudioSystem_instances, loadPendingAudio_fn, applyConfig_fn, _stageRegistry, _currentStageName, _stageControllerName, _gamePostPasses, _stagePostPasses, _Game_instances, registerStageController_fn, unregisterStageController_fn, registerStaticStages_fn, onUpdate_fn, onRender_fn, setupPostPasses_fn, applyStageRenderConfig_fn, applyStageCameraConfig_fn, clearStagePostPasses_fn, applyStagePostPasses_fn, listenForLateAssets_fn, buildTextureAtlases_fn, buildSpritesheets_fn, updateActiveControllers_fn, createRenderSystem_fn, buildRenderSystemConfig_fn, createAudioSystem_fn, _a, _functionBindings, _stringBindings, _AutoView_instances, compileBindings_fn, _viewClassRegistry, _viewMatcherRegistry, _entityViews, _runtimePostPasses, _Stage_instances, createWorld_fn, bindWorldEvents_fn, handleEntitySet_fn, handleEntityDelete_fn, disposeAllViews_fn, cleanupRuntimePostPasses_fn, resolveViews_fn, _program, _enabled, _width, _color, _HitboxDebug_instances, getCollidableEntities_fn, updateVisual_fn, createVisual_fn, createCircle_fn, getColorForEntity_fn, _enabled2, _program2, _uniforms, _RenderPass_instances, applyUniform_fn, _GameStage_instances, registerViews_fn, createImpactParticles_fn, createHitboxDebug_fn, setupRenderGroups_fn, buildBackground_fn, _WaveSystem_instances, updateSpawning_fn, getSpawnConfig_fn, getNextSpawnTime_fn, initWaveSpawn_fn, startNextWave_fn, startNextDay_fn, _WaveProgressBar_instances, showDayAnnouncement_fn, hideDayAnnouncement_fn, updateDayLabel_fn, updateWave_fn, updateProgress_fn, applyStyles_fn, _GameplayStage_instances, createWaveSystem_fn, wireWaveSystemEvents_fn, wireWorldEvents_fn, createUI_fn, _PreviewControls_instances, buildSpawnPanel_fn, buildSliderPanel_fn, setTimeOfDay_fn, applyStyles_fn2, _PreviewStage_instances, createUI_fn2, _state, _depth, _expanded, _selected, _contentEl, _toggleEl, _childrenEl, _domBuilt, _BaseTreeNode_instances, ensureDOM_fn, buildDOM_fn, updateDepth_fn, updateToggle_fn, updateSelectedState_fn, updateChildrenVisibility_fn, handleToggleClick_fn, handleNodeClick_fn, handleContextMenu_fn, getSelectDetail_fn, getToggleDetail_fn, _module, _childNodes, _isSystemModule, _PerkyExplorerNode_instances, getExplorer_fn, bindModuleEvents_fn, updateStatus_fn, updateId_fn, updateCategory_fn, updateSystemClass_fn, clearChildNodes_fn, removeChildNode_fn, handleChildAdded_fn, handleChildRemoved_fn, _object, _childNodes2, _labelEl, _propsEl, _SceneTreeNode_instances, ensureContentElements_fn, updateLabel_fn, updateProps_fn, handleEntityClick_fn, _module2, _gridEl, _actionsEl, _Object2DInspector_instances, render_fn, _content, _worldRenderer, _headerEl, _treeEl, _rootNode, _detailsEl, _selectedObject, _refreshTimeout, _SceneTreeSidebar_instances, bindEvents_fn, scheduleRefresh_fn, clearRefreshTimeout_fn, buildDOM_fn2, createHeader_fn, createTree_fn, handleNodeSelect_fn, updateDetails_fn, updateInspector_fn, _module3, _titleEl, _contentEl2, _PerkyExplorerDetails_instances, buildDOM_fn3, render_fn2, renderEmpty_fn, renderTitle_fn, renderContent_fn, renderCustomInspector_fn, renderInspectMethod_fn, renderDefaultGrid_fn, _BaseRendererInspector_instances, update_fn, _fpsValueEl, _screenFpsValueEl, _statusValueEl, _toggleBtn, _fpsLimitCheckbox, _fpsSlider, _fpsSliderValue, _GameLoopInspector_instances, handleToggle_fn, handleLimitChange_fn, handleSliderChange_fn, bindEvents_fn2, updateAll_fn, updateFps_fn, updateSlider_fn, updateSliderState_fn, updateStatus_fn2, _activeCountEl, _activeSizeEl, _zombieCountEl, _zombieSizeEl, _progressBarEl, _progressValueEl, _totalSizeEl, _autoFlushEl, _maxSizeEl, _TextureManagerInspector_instances, handleFlush_fn, handleFlushStale_fn, bindEvents_fn3, updateAll_fn2, _vec2, _xInput, _yInput, _label, _labelEl2, _Vec2Input_instances, buildDOM_fn4, updateDisplay_fn, syncContext_fn, handleChange_fn, _positionInput, _CanvasLayerInspector_instances, update_fn2, openSceneTree_fn, _StageInspector_instances, update_fn3, openSceneTree_fn2, _WebGLCanvasInspector_instances, update_fn4, renderPostProcessing_fn, _RenderGroupInspector_instances, update_fn5, renderBlendModeSelector_fn, renderPostPasses_fn, _sectionsState, _filterState, _typeGroupsState, _mainContainer, _assetsListContainer, _ManifestInspector_instances, update_fn6, updateAssetsList_fn, applyFilters_fn, createSection_fn, createConfigSection_fn, createDataGrid_fn, createFiltersBar_fn, createAssetsSection_fn, createTypeGroup_fn, _viewMode, _containerEl, _InputBinderInspector_instances, update_fn7, createHeader_fn2, _containerEl2, _ActionControllerInspector_instances, update_fn8, createActionCard_fn, _containerEl3, _ActionDispatcherInspector_instances, update_fn9, createControllerGroup_fn, toggleController_fn, _unlockedValueEl, _channelsValueEl, _volumeInput, _unlockBtn, _AudioSystemInspector_instances, handleVolumeChange_fn, handleUnlock_fn, bindEvents_fn4, updateAll_fn3, updateUnlocked_fn, updateChannels_fn, updateVolume_fn, _mutedValueEl, _sourcesValueEl, _volumeInput2, _muteBtn, _AudioChannelInspector_instances, handleVolumeChange_fn2, handleToggleMute_fn, bindEvents_fn5, updateAll_fn4, updateMuted_fn, updateSources_fn, updateVolume_fn2, _sectionsState2, _atlasExpandState, _mainContainer2, _TextureSystemInspector_instances, update_fn10, createStatsSection_fn, createAtlasesSection_fn, createSection_fn2, createAtlasCard_fn, _menuEl, _actions2, _module4, _ExplorerContextMenu_instances, buildDOM_fn5, renderActions_fn, positionMenu_fn, _handleOutsideClick, _handleKeyDown, _module5, _isMinimized, _isCollapsed, _sceneTreeMode, _focusMode, _embedded, _showSystemModules, _systemCategories, _containerEl4, _sidebarEl, _explorerEl, _minimizedEl, _headerEl2, _treeEl2, _rootNode2, _detailsEl2, _collapseBtnEl, _minimizeBtnEl, _layersBtnEl, _selectedModule, _rootModule, _contextMenuEl, _PerkyExplorer_instances, buildDOM_fn6, createMinimizedView_fn, createExpandedView_fn, createSceneTreeView_fn, createHeader_fn3, createTree_fn2, handleNodeSelect_fn2, handleNodeContextMenu_fn, ensureContextMenu_fn, updateViewState_fn, toggleCollapse_fn, updateCollapseState_fn, updateLayersButton_fn, updateTreeVisibility_fn, showEmptyState_fn, hideEmptyState_fn, updateDetails_fn2, refresh_fn, openSceneTree_fn3, closeSceneTree_fn, navigateToEntity_fn, expandParentsToNode_fn, updateEmbeddedMode_fn, updateHeaderControls_fn, _explorerEl2, _ExplorerTool_instances, buildDOM_fn7, _containerEl5, _registeredListEl, _runningListEl, _appManager, _AppsTool_instances, buildDOM_fn8, refresh_fn2, refreshRegistered_fn, refreshRunning_fn, createRunningItem_fn, startApp_fn, stopApp_fn, disposeApp_fn, _sidebarOpen, _activeTool, _commandPaletteOpen, _loggerOpen, _module6, _appManager2, _toolManager, _state2, _dockEl, _toolButtons, _loggerButton, _commandPaletteButton, _minimized, _DevToolsDock_instances, expand_fn, buildDOM_fn9, render_fn3, renderMinimized_fn, renderExpanded_fn, createToolButton_fn, updateActiveStates_fn, updateLoggerState_fn, _state3, _sidebarEl2, _headerEl3, _titleEl2, _titleIconEl, _titleTextEl, _closeBtn, _actionsEl2, _contentEl3, _currentToolEl, _currentToolId, _DevToolsSidebar_instances, buildDOM_fn10, createHeader_fn4, updateHeaderActions_fn, loadTool_fn, show_fn, hide_fn, _maxEntries, _position, _timestamp, _theme, _entries, _containerEl6, _contentEl4, _controlsEl, _opacityToggle, _isPinned, _onLog, _onClear, _onSpacer, _onTitle, _PerkyLogger_instances, handleMaxEntries_fn, handlePosition_fn, handleTimestamp_fn, handleTheme_fn, handleAttributeChange_fn, buildDOM_fn11, togglePin_fn, copyAllLogs_fn, updateControlsVisibility_fn, bindLoggerEvents_fn, replayHistory_fn, replayEntry_fn, unbindLoggerEvents_fn, handleLog_fn, updateClasses_fn, scrollToBottom_fn, _state4, _dockEl2, _sidebarEl3, _loggerEl, _commandPaletteEl, _keyboardHandler, _PerkyDevTools_instances, buildDOM_fn12, setupKeyboard_fn, cleanupKeyboard_fn, showCommandPalette_fn, hideCommandPalette_fn, _headerEl4, _contentEl5, _isDragging, _isResizing, _dragOffset, _x2, _y2, _width2, _height, _minWidth, _minHeight, _resizable, _onPointerMove, _onPointerUp, _title, _icon, _ToolWindow_instances, buildDOM_fn13, setupDrag_fn, setupResize_fn, cleanupWindowListeners_fn, applyPosition_fn, _registry, _instances, _container, _nextZIndex, _nextInstanceId, _nextX, _nextY, _cascadeOffset, _ToolManager_instances, handleClose_fn, bringToFront_fn, advanceCascade_fn, _params, _options, _contentEl6, _FoobarTool_instances, buildDOM_fn14, render_fn4, _contentEl7, _timelineEl, _previewEl, _spritesheetViewerEl, _animators, _animatorConfig, _animator, _spritesheet, _selectedAnimation, _SpriteAnimatorTool_instances, buildDOM_fn15, getDefaultAnimatorName_fn, selectAnimator_fn, resolveAnimator_fn, resolveSpritesheet_fn, render_fn5, renderNoAnimator_fn, renderAnimator_fn, setupAnimatorSelect_fn, setupExportAllButton_fn, exportAnimatorToClipboard_fn, buildFullConfig_fn, buildAnimationConfig_fn, renderAnimationSelect_fn, renderAnimationInfo_fn, setupTimeline_fn, handleFrameDrop_fn, handleFrameMove_fn, handleFrameDelete_fn, handleFrameDuration_fn, setupPreview_fn, setupSpritesheetViewer_fn;
 import { l as logger, c as createElement, u as uniqueId, N as Notifier, f as formatNumber$1, a as formatBytes, p as pluralize, _ as __vitePreload, b as createStyleSheet } from "./preload-helper-D0VL-0Hd.js";
-import { P as PerkyModule, R as Registry, M as Manifest, S as SourceManager, l as loaders, T as TextureSystem, m as manifestData, E as EditorComponent, I as ICONS, e as editorScrollbarStyles, a as editorButtonStyles, b as editorBaseStyles, c as editorHeaderStyles, d as PerkyStore } from "./perky_store-D7zG7vkz.js";
-import { C as Circle, R as Rectangle, S as Sprite, B as BaseRenderer, t as traverseAndCollect, W as WebGLRenderer, a as Camera, b as ShaderEffect, G as Group2D, O as Object2D, E as Easing, c as SpriteAnimator, d as WebGLTextureManager, e as controlsSheet, h as handleAttributeChange, f as emitChange, g as RenderGroup } from "./spritesheet_viewer-D_-SX66w.js";
+import { P as PerkyModule, R as Registry, M as Manifest, S as SourceManager, l as loaders, T as TextureSystem, m as manifestData, E as EditorComponent, I as ICONS, e as editorScrollbarStyles, a as editorButtonStyles, b as editorBaseStyles, c as editorHeaderStyles, d as PerkyStore } from "./perky_store-9CKwDjn7.js";
+import { C as Circle, R as Rectangle, S as Sprite, B as BaseRenderer, t as traverseAndCollect, W as WebGLRenderer, a as Camera, b as ShaderEffect, G as Group2D, O as Object2D, E as Easing, c as SpriteAnimator, d as WebGLTextureManager, e as controlsSheet, h as handleAttributeChange, f as emitChange, g as RenderGroup } from "./spritesheet_viewer-CdXbC75g.js";
 class ApplicationManager extends PerkyModule {
   constructor() {
     super(...arguments);
@@ -292,6 +292,7 @@ class ActionDispatcher extends PerkyModule {
       getActive: "getActiveControllers",
       pushActive: "pushActiveController",
       popActive: "popActiveController",
+      removeActive: "removeActiveController",
       clearActive: "clearActiveControllers",
       execute: "execute",
       executeTo: "executeTo",
@@ -357,7 +358,11 @@ class ActionDispatcher extends PerkyModule {
     if (stackIndex !== -1) {
       __privateGet(this, _activeControllers).splice(stackIndex, 1);
     }
-    return this.removeChild(name);
+    const removed = this.removeChild(name);
+    if (removed) {
+      this.emit("controller:unregistered", name, controller);
+    }
+    return removed;
   }
   getController(name) {
     return this.getChild(name);
@@ -397,6 +402,15 @@ class ActionDispatcher extends PerkyModule {
     const popped = __privateGet(this, _activeControllers).pop();
     this.emit("controller:popped", popped, __privateGet(this, _activeControllers).length);
     return popped;
+  }
+  removeActive(name) {
+    const index = __privateGet(this, _activeControllers).indexOf(name);
+    if (index === -1) {
+      return false;
+    }
+    __privateGet(this, _activeControllers).splice(index, 1);
+    this.emit("controller:removed", name, __privateGet(this, _activeControllers).length);
+    return true;
   }
   clearActive() {
     __privateSet(this, _activeControllers, []);
@@ -825,6 +839,9 @@ class InputBinder extends PerkyModule {
     __privateGet(this, _bindings).addIndex("actionAll", (binding) => {
       return `${binding.actionName}:${binding.eventType}`;
     });
+    __privateGet(this, _bindings).addIndex("controller", (binding) => {
+      return binding.controllerName || "";
+    });
     if (inputBinder) {
       this.import(inputBinder);
     }
@@ -840,7 +857,8 @@ class InputBinder extends PerkyModule {
       "getBindingsForAction",
       "getAllBindings",
       "clearBindings",
-      "bindCombo"
+      "bindCombo",
+      "unbindForController"
     ]);
   }
   import(inputBinder) {
@@ -931,6 +949,18 @@ class InputBinder extends PerkyModule {
   }
   clearBindings() {
     __privateGet(this, _bindings).clear();
+  }
+  unbindForController(controllerName) {
+    const bindings = __privateGet(this, _bindings).lookup("controller", controllerName || "");
+    const removed = [];
+    for (const binding of [...bindings]) {
+      __privateGet(this, _bindings).delete(binding.key);
+      removed.push(binding);
+    }
+    if (removed.length > 0) {
+      this.emit("bindings:removed", removed, controllerName);
+    }
+    return removed;
   }
   bindCombo(controls, actionName, controllerName = null, eventType = "pressed") {
     if (!Array.isArray(controls) || controls.length < 2) {
@@ -2015,7 +2045,8 @@ class InputSystem extends PerkyModule {
       "getBindingsForAction",
       "getAllBindings",
       "clearBindings",
-      "bindCombo"
+      "bindCombo",
+      "unbindForController"
     ]);
     this.delegateTo(host, [
       "isKeyPressed",
@@ -2250,6 +2281,7 @@ class Application extends PerkyModule {
     var _a2;
     super(options);
     __privateAdd(this, _Application_instances);
+    __privateAdd(this, _controllerBindings, /* @__PURE__ */ new Map());
     const manifestData2 = options.manifest || this.constructor.manifest || {};
     this.create(Manifest, {
       $bind: "manifest",
@@ -2272,6 +2304,7 @@ class Application extends PerkyModule {
       bindings: options.bindings
     });
     this.actionDispatcher.on("controller:set", __privateMethod(this, _Application_instances, autoRegisterBindings_fn).bind(this));
+    this.actionDispatcher.on("controller:unregistered", __privateMethod(this, _Application_instances, cleanupControllerBindings_fn).bind(this));
     __privateMethod(this, _Application_instances, createMainController_fn).call(this);
     (_a2 = this.configureApplication) == null ? void 0 : _a2.call(this, options);
   }
@@ -2279,6 +2312,7 @@ class Application extends PerkyModule {
     return this.loadTag("preload");
   }
 }
+_controllerBindings = new WeakMap();
 _Application_instances = new WeakSet();
 createMainController_fn = function() {
   const ControllerClass = this.constructor.ActionController;
@@ -2291,14 +2325,41 @@ autoRegisterBindings_fn = function(controllerName, controller) {
   var _a2;
   const Controller = controller.constructor;
   const bindings = ((_a2 = Controller.normalizeBindings) == null ? void 0 : _a2.call(Controller, controllerName)) || [];
+  const bindingKeys = [];
   for (const binding of bindings) {
-    this.bindInput({
+    const inputBinding = this.bindInput({
       controlName: binding.key,
       actionName: binding.action,
       controllerName: binding.controllerName,
       eventType: binding.eventType
     });
+    if (inputBinding) {
+      bindingKeys.push(inputBinding.key);
+    }
   }
+  if (bindingKeys.length > 0) {
+    __privateGet(this, _controllerBindings).set(controllerName, bindingKeys);
+  }
+};
+cleanupControllerBindings_fn = function(controllerName) {
+  const bindingKeys = __privateGet(this, _controllerBindings).get(controllerName);
+  if (!bindingKeys) {
+    return;
+  }
+  for (const key of bindingKeys) {
+    const allBindings = this.getAllBindings();
+    const binding = allBindings.find((b) => b.key === key);
+    if (binding) {
+      this.unbind({
+        deviceName: binding.deviceName,
+        controlName: binding.controlName,
+        actionName: binding.actionName,
+        controllerName: binding.controllerName,
+        eventType: binding.eventType
+      });
+    }
+  }
+  __privateGet(this, _controllerBindings).delete(controllerName);
 };
 __publicField(Application, "$category", "application");
 __publicField(Application, "$eagerStart", false);
@@ -4355,6 +4416,11 @@ class Game extends Application {
     var _a2, _b;
     super(params);
     __privateAdd(this, _Game_instances);
+    __privateAdd(this, _stageRegistry, /* @__PURE__ */ new Map());
+    __privateAdd(this, _currentStageName, null);
+    __privateAdd(this, _stageControllerName, null);
+    __privateAdd(this, _gamePostPasses, []);
+    __privateAdd(this, _stagePostPasses, []);
     this.create(GameLoop, { $bind: "gameLoop" });
     __privateMethod(this, _Game_instances, createRenderSystem_fn).call(this, params);
     __privateMethod(this, _Game_instances, createAudioSystem_fn).call(this, params);
@@ -4366,21 +4432,54 @@ class Game extends Application {
     this.camera = (_a2 = this.renderSystem) == null ? void 0 : _a2.getCamera("main");
     this.on("update", __privateMethod(this, _Game_instances, onUpdate_fn));
     this.on("render", __privateMethod(this, _Game_instances, onRender_fn));
+    __privateMethod(this, _Game_instances, registerStaticStages_fn).call(this);
     (_b = this.configureGame) == null ? void 0 : _b.call(this, params);
   }
-  setStage(StageClass, options = {}) {
+  registerStage(nameOrClass, StageClass) {
+    let name;
+    let Class;
+    if (typeof nameOrClass === "string") {
+      name = nameOrClass;
+      Class = StageClass;
+    } else {
+      Class = nameOrClass;
+      name = resolveStageName(Class);
+    }
+    __privateGet(this, _stageRegistry).set(name, Class);
+    return name;
+  }
+  getStageClass(name) {
+    return __privateGet(this, _stageRegistry).get(name) || null;
+  }
+  get stages() {
+    return Array.from(__privateGet(this, _stageRegistry).keys());
+  }
+  get currentStageName() {
+    return __privateGet(this, _currentStageName);
+  }
+  setStage(nameOrClass, options = {}) {
     if (this.stage) {
       __privateMethod(this, _Game_instances, unregisterStageController_fn).call(this);
       this.removeChild(this.stage.$id);
       this.world = null;
-      this.worldView = null;
     }
+    let StageClass;
+    let stageName;
+    if (typeof nameOrClass === "string") {
+      stageName = nameOrClass;
+      StageClass = __privateGet(this, _stageRegistry).get(stageName);
+      if (!StageClass) {
+        throw new Error(`Stage '${stageName}' not registered`);
+      }
+    } else {
+      StageClass = nameOrClass;
+      stageName = resolveStageName(StageClass);
+    }
+    __privateSet(this, _currentStageName, stageName);
+    __privateMethod(this, _Game_instances, applyStageRenderConfig_fn).call(this, StageClass);
     this.create(StageClass, { $bind: "stage", game: this, ...options });
     if (this.stage.world) {
       this.world = this.stage.world;
-    }
-    if (this.stage.worldView) {
-      this.worldView = this.stage.worldView;
     }
     __privateMethod(this, _Game_instances, registerStageController_fn).call(this);
   }
@@ -4395,6 +4494,11 @@ class Game extends Application {
     __privateMethod(this, _Game_instances, setupPostPasses_fn).call(this);
   }
 }
+_stageRegistry = new WeakMap();
+_currentStageName = new WeakMap();
+_stageControllerName = new WeakMap();
+_gamePostPasses = new WeakMap();
+_stagePostPasses = new WeakMap();
 _Game_instances = new WeakSet();
 registerStageController_fn = function() {
   var _a2;
@@ -4403,15 +4507,31 @@ registerStageController_fn = function() {
     return;
   }
   const controller = this.registerController(ControllerClass);
-  this.stage._controllerName = controller.$id;
-  this.setActiveControllers(controller.$id);
+  __privateSet(this, _stageControllerName, controller.$id);
+  this.pushActiveController(controller.$id);
 };
 unregisterStageController_fn = function() {
-  var _a2;
-  if (!((_a2 = this.stage) == null ? void 0 : _a2._controllerName)) {
+  if (!__privateGet(this, _stageControllerName)) {
     return;
   }
-  this.unregisterController(this.stage._controllerName);
+  this.removeActiveController(__privateGet(this, _stageControllerName));
+  this.unregisterController(__privateGet(this, _stageControllerName));
+  __privateSet(this, _stageControllerName, null);
+};
+registerStaticStages_fn = function() {
+  const stages = this.constructor.stages;
+  if (!stages) {
+    return;
+  }
+  if (Array.isArray(stages)) {
+    for (const StageClass of stages) {
+      this.registerStage(StageClass);
+    }
+  } else {
+    for (const [name, StageClass] of Object.entries(stages)) {
+      this.registerStage(name, StageClass);
+    }
+  }
 };
 onUpdate_fn = function(deltaTime) {
   var _a2;
@@ -4435,7 +4555,45 @@ setupPostPasses_fn = function() {
     return;
   }
   for (const PassClass of postPasses) {
-    renderer.addPostPass(PassClass);
+    const pass = renderer.addPostPass(PassClass);
+    __privateGet(this, _gamePostPasses).push(pass);
+  }
+};
+applyStageRenderConfig_fn = function(StageClass) {
+  __privateMethod(this, _Game_instances, clearStagePostPasses_fn).call(this);
+  __privateMethod(this, _Game_instances, applyStageCameraConfig_fn).call(this, StageClass);
+  __privateMethod(this, _Game_instances, applyStagePostPasses_fn).call(this, StageClass);
+};
+applyStageCameraConfig_fn = function(StageClass) {
+  var _a2;
+  const stageCamera = StageClass.camera;
+  const effectiveConfig = stageCamera || this.constructor.camera;
+  if (effectiveConfig == null ? void 0 : effectiveConfig.unitsInView) {
+    (_a2 = this.camera) == null ? void 0 : _a2.setUnitsInView(effectiveConfig.unitsInView);
+  }
+};
+clearStagePostPasses_fn = function() {
+  const renderer = this.getRenderer("game");
+  if (!(renderer == null ? void 0 : renderer.removePostPass)) {
+    return;
+  }
+  for (const pass of __privateGet(this, _stagePostPasses)) {
+    renderer.removePostPass(pass);
+  }
+  __privateSet(this, _stagePostPasses, []);
+};
+applyStagePostPasses_fn = function(StageClass) {
+  const postPasses = StageClass.postPasses;
+  if (!postPasses || postPasses.length === 0) {
+    return;
+  }
+  const renderer = this.getRenderer("game");
+  if (!(renderer == null ? void 0 : renderer.addPostPass)) {
+    return;
+  }
+  for (const PassClass of postPasses) {
+    const pass = renderer.addPostPass(PassClass);
+    __privateGet(this, _stagePostPasses).push(pass);
   }
 };
 listenForLateAssets_fn = function() {
@@ -4526,24 +4684,13 @@ __publicField(Game, "AudioSystem", AudioSystem);
 __publicField(Game, "camera", { unitsInView: { width: 10, height: 10 } });
 __publicField(Game, "layer", { type: "webgl" });
 __publicField(Game, "postPasses", []);
-class ChromaticEffect extends ShaderEffect {
-  constructor(options = {}) {
-    super(options);
-    __publicField(this, "intensity", 0.5);
-    this.intensity = options.intensity ?? 0.5;
+__publicField(Game, "stages", null);
+function resolveStageName(StageClass) {
+  if (StageClass.$name && StageClass.$name !== "stage") {
+    return StageClass.$name;
   }
+  return StageClass.name.replace(/Stage$/, "").toLowerCase();
 }
-__publicField(ChromaticEffect, "shader", {
-  params: ["intensity"],
-  uniforms: [],
-  fragment: `
-            if (intensity > 0.0) {
-                vec2 offset = texelSize * intensity * 50.0;
-                color.r = texture(uTexture, texCoord + vec2(offset.x, 0.0)).r;
-                color.b = texture(uTexture, texCoord - vec2(offset.x, 0.0)).b;
-            }
-        `
-});
 let OutlineEffect$1 = (_a = class extends ShaderEffect {
   constructor(options = {}) {
     super(options);
@@ -4569,26 +4716,6 @@ let OutlineEffect$1 = (_a = class extends ShaderEffect {
             }
         `
 }), _a);
-class WaveEffect extends ShaderEffect {
-  constructor(options = {}) {
-    super(options);
-    __publicField(this, "amplitude", 0.5);
-    __publicField(this, "phase", 0);
-    this.amplitude = options.amplitude ?? 0.5;
-    this.phase = options.phase ?? 0;
-  }
-}
-__publicField(WaveEffect, "shader", {
-  params: ["amplitude", "phase"],
-  fragment: `
-            float wave = sin(texCoord.x * 10.0 + phase) * amplitude;
-            vec2 distorted = texCoord + vec2(0.0, wave * 0.05);
-            if (distorted.x < uvMin.x || distorted.x > uvMax.x || distorted.y < uvMin.y || distorted.y > uvMax.y) {
-                discard;
-            }
-            color = texture(uTexture, distorted);
-        `
-});
 class EntityView {
   constructor(entity, context) {
     this.entity = entity;
@@ -4666,22 +4793,24 @@ compileBindings_fn = function(sync) {
     }
   }
 };
-class WorldView extends PerkyModule {
+class Stage extends PerkyModule {
   constructor(options = {}) {
     super(options);
-    __privateAdd(this, _WorldView_instances);
-    __privateAdd(this, _classRegistry, /* @__PURE__ */ new Map());
-    __privateAdd(this, _matcherRegistry, []);
-    __privateAdd(this, _views, /* @__PURE__ */ new Map());
-    this.world = options.world;
+    __privateAdd(this, _Stage_instances);
+    __privateAdd(this, _viewClassRegistry, /* @__PURE__ */ new Map());
+    __privateAdd(this, _viewMatcherRegistry, []);
+    __privateAdd(this, _entityViews, /* @__PURE__ */ new Map());
+    __privateAdd(this, _runtimePostPasses, []);
     this.game = options.game;
-    this.rootGroup = new Group2D();
+    this.viewsGroup = new Group2D();
+    __privateMethod(this, _Stage_instances, createWorld_fn).call(this);
+    this.on("stop", __privateMethod(this, _Stage_instances, cleanupRuntimePostPasses_fn));
   }
   onStart() {
-    __privateMethod(this, _WorldView_instances, bindWorldEvents_fn).call(this);
+    __privateMethod(this, _Stage_instances, bindWorldEvents_fn).call(this);
   }
   onStop() {
-    __privateMethod(this, _WorldView_instances, disposeAllViews_fn).call(this);
+    __privateMethod(this, _Stage_instances, disposeAllViews_fn).call(this);
   }
   register(classOrMatcher, View, config = null) {
     const isObject2D = isObject2DClass(View);
@@ -4689,88 +4818,107 @@ class WorldView extends PerkyModule {
     if (typeof classOrMatcher === "function" && classOrMatcher.prototype) {
       const isClass = classOrMatcher.toString().startsWith("class ") || Object.getOwnPropertyNames(classOrMatcher.prototype).length > 1;
       if (isClass) {
-        __privateGet(this, _classRegistry).set(classOrMatcher, registration);
+        __privateGet(this, _viewClassRegistry).set(classOrMatcher, registration);
         return this;
       }
     }
-    __privateGet(this, _matcherRegistry).push({ matcher: classOrMatcher, ...registration });
+    __privateGet(this, _viewMatcherRegistry).push({ matcher: classOrMatcher, ...registration });
     return this;
   }
   unregister(classOrMatcher) {
-    if (__privateGet(this, _classRegistry).has(classOrMatcher)) {
-      __privateGet(this, _classRegistry).delete(classOrMatcher);
+    if (__privateGet(this, _viewClassRegistry).has(classOrMatcher)) {
+      __privateGet(this, _viewClassRegistry).delete(classOrMatcher);
       return true;
     }
-    const index = __privateGet(this, _matcherRegistry).findIndex((entry) => entry.matcher === classOrMatcher);
+    const index = __privateGet(this, _viewMatcherRegistry).findIndex((entry) => entry.matcher === classOrMatcher);
     if (index !== -1) {
-      __privateGet(this, _matcherRegistry).splice(index, 1);
+      __privateGet(this, _viewMatcherRegistry).splice(index, 1);
       return true;
     }
     return false;
   }
   clearRegistry() {
-    __privateGet(this, _classRegistry).clear();
-    __privateGet(this, _matcherRegistry).length = 0;
+    __privateGet(this, _viewClassRegistry).clear();
+    __privateGet(this, _viewMatcherRegistry).length = 0;
     return this;
   }
   getViews(entityId) {
-    return __privateGet(this, _views).get(entityId) || [];
+    return __privateGet(this, _entityViews).get(entityId) || [];
   }
   updateViews(deltaTime) {
     var _a2;
-    for (const views of __privateGet(this, _views).values()) {
-      for (const view of views) {
+    for (const views2 of __privateGet(this, _entityViews).values()) {
+      for (const view of views2) {
         (_a2 = view.update) == null ? void 0 : _a2.call(view, deltaTime);
       }
     }
   }
   syncViews() {
-    for (const views of __privateGet(this, _views).values()) {
-      for (const view of views) {
+    for (const views2 of __privateGet(this, _entityViews).values()) {
+      for (const view of views2) {
         view.sync();
       }
     }
   }
-  setupRenderGroups() {
-    const gameRenderer = this.game.getRenderer("game");
-    gameRenderer.appendRenderGroup({
-      $name: "entities",
-      content: this.rootGroup
-    });
-  }
   update(deltaTime) {
     this.updateViews(deltaTime);
   }
-  sync() {
-    this.syncViews();
+  render() {
+  }
+  addPostPass(PassClass) {
+    var _a2;
+    const renderer = (_a2 = this.game) == null ? void 0 : _a2.getRenderer("game");
+    const pass = renderer == null ? void 0 : renderer.addPostPass(PassClass);
+    if (pass) {
+      __privateGet(this, _runtimePostPasses).push(pass);
+    }
+    return pass;
+  }
+  removePostPass(pass) {
+    var _a2;
+    const renderer = (_a2 = this.game) == null ? void 0 : _a2.getRenderer("game");
+    renderer == null ? void 0 : renderer.removePostPass(pass);
+    const index = __privateGet(this, _runtimePostPasses).indexOf(pass);
+    if (index !== -1) {
+      __privateGet(this, _runtimePostPasses).splice(index, 1);
+    }
   }
 }
-_classRegistry = new WeakMap();
-_matcherRegistry = new WeakMap();
-_views = new WeakMap();
-_WorldView_instances = new WeakSet();
+_viewClassRegistry = new WeakMap();
+_viewMatcherRegistry = new WeakMap();
+_entityViews = new WeakMap();
+_runtimePostPasses = new WeakMap();
+_Stage_instances = new WeakSet();
+createWorld_fn = function() {
+  const WorldClass = this.constructor.World;
+  if (!WorldClass) {
+    return;
+  }
+  this.create(WorldClass, { $bind: "world" });
+};
 bindWorldEvents_fn = function() {
   if (!this.world) {
     return;
   }
-  this.listenTo(this.world, "entity:set", (id, entity) => __privateMethod(this, _WorldView_instances, handleEntitySet_fn).call(this, entity));
-  this.listenTo(this.world, "entity:delete", (id) => __privateMethod(this, _WorldView_instances, handleEntityDelete_fn).call(this, id));
+  this.listenTo(this.world, "entity:set", (id, entity) => __privateMethod(this, _Stage_instances, handleEntitySet_fn).call(this, entity));
+  this.listenTo(this.world, "entity:delete", (id) => __privateMethod(this, _Stage_instances, handleEntityDelete_fn).call(this, id));
   for (const entity of this.world.entities) {
-    __privateMethod(this, _WorldView_instances, handleEntitySet_fn).call(this, entity);
+    __privateMethod(this, _Stage_instances, handleEntitySet_fn).call(this, entity);
   }
 };
 handleEntitySet_fn = function(entity) {
-  const registrations = __privateMethod(this, _WorldView_instances, resolveViews_fn).call(this, entity);
+  const registrations = __privateMethod(this, _Stage_instances, resolveViews_fn).call(this, entity);
   if (registrations.length === 0) {
     return;
   }
-  const views = [];
+  const views2 = [];
   for (const { View, config, ObjectClass } of registrations) {
+    const mergedConfig = { ...View.config, ...config };
     const context = {
       game: this.game,
       world: this.world,
-      group: this.rootGroup,
-      config,
+      group: this.viewsGroup,
+      config: mergedConfig,
       ObjectClass
     };
     const view = new View(entity, context);
@@ -4778,46 +4926,58 @@ handleEntitySet_fn = function(entity) {
       view.root.$entity = entity;
       view.root.$view = view;
       view.root.$viewName = ObjectClass ? ObjectClass.name : View.name;
-      this.rootGroup.addChild(view.root);
+      this.viewsGroup.addChild(view.root);
     }
-    views.push(view);
+    views2.push(view);
   }
-  __privateGet(this, _views).set(entity.$id, views);
-  this.emit("view:added", entity.$id, views);
+  __privateGet(this, _entityViews).set(entity.$id, views2);
+  this.emit("view:added", entity.$id, views2);
 };
 handleEntityDelete_fn = function(entityId) {
-  const views = __privateGet(this, _views).get(entityId);
-  if (views) {
-    this.emit("view:removed", entityId, views);
-    for (const view of views) {
+  const views2 = __privateGet(this, _entityViews).get(entityId);
+  if (views2) {
+    this.emit("view:removed", entityId, views2);
+    for (const view of views2) {
       view.dispose();
     }
-    __privateGet(this, _views).delete(entityId);
+    __privateGet(this, _entityViews).delete(entityId);
   }
 };
 disposeAllViews_fn = function() {
-  for (const views of __privateGet(this, _views).values()) {
-    for (const view of views) {
+  for (const views2 of __privateGet(this, _entityViews).values()) {
+    for (const view of views2) {
       view.dispose();
     }
   }
-  __privateGet(this, _views).clear();
+  __privateGet(this, _entityViews).clear();
+};
+cleanupRuntimePostPasses_fn = function() {
+  var _a2;
+  const renderer = (_a2 = this.game) == null ? void 0 : _a2.getRenderer("game");
+  for (const pass of __privateGet(this, _runtimePostPasses)) {
+    renderer == null ? void 0 : renderer.removePostPass(pass);
+  }
+  __privateSet(this, _runtimePostPasses, []);
 };
 resolveViews_fn = function(entity) {
   const results = [];
   const EntityClass = entity.constructor;
-  const classRegistration = __privateGet(this, _classRegistry).get(EntityClass);
+  const classRegistration = __privateGet(this, _viewClassRegistry).get(EntityClass);
   if (classRegistration) {
     results.push(classRegistration);
   }
-  for (const entry of __privateGet(this, _matcherRegistry)) {
+  for (const entry of __privateGet(this, _viewMatcherRegistry)) {
     if (entry.matcher(entity)) {
       results.push(entry);
     }
   }
   return results;
 };
-__publicField(WorldView, "$category", "worldView");
+__publicField(Stage, "$category", "stage");
+__publicField(Stage, "World", null);
+__publicField(Stage, "ActionController", null);
+__publicField(Stage, "camera", null);
+__publicField(Stage, "postPasses", null);
 function isObject2DClass(Class) {
   if (!Class || typeof Class !== "function") {
     return false;
@@ -4831,44 +4991,6 @@ function isObject2DClass(Class) {
   }
   return false;
 }
-class Stage extends PerkyModule {
-  constructor(options = {}) {
-    super(options);
-    __privateAdd(this, _Stage_instances);
-    this.game = options.game;
-    __privateMethod(this, _Stage_instances, createWorld_fn).call(this);
-    __privateMethod(this, _Stage_instances, createWorldView_fn).call(this);
-  }
-  update(deltaTime) {
-    var _a2;
-    (_a2 = this.worldView) == null ? void 0 : _a2.updateViews(deltaTime);
-  }
-  render() {
-  }
-}
-_Stage_instances = new WeakSet();
-createWorld_fn = function() {
-  const WorldClass = this.constructor.World;
-  if (!WorldClass) {
-    return;
-  }
-  this.create(WorldClass, { $bind: "world" });
-};
-createWorldView_fn = function() {
-  const WorldViewClass = this.constructor.WorldView;
-  if (!this.world || !WorldViewClass) {
-    return;
-  }
-  this.create(WorldViewClass, {
-    $bind: "worldView",
-    world: this.world,
-    game: this.game
-  });
-};
-__publicField(Stage, "$category", "stage");
-__publicField(Stage, "World", null);
-__publicField(Stage, "WorldView", WorldView);
-__publicField(Stage, "ActionController", null);
 class RenderTransform {
   constructor(options = {}) {
     this.enabled = options.enabled ?? true;
@@ -5221,6 +5343,10 @@ function updateStunTimer(player, deltaTime) {
     }
   }
 }
+const __vite_glob_0_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Player
+}, Symbol.toStringTag, { value: "Module" }));
 class Projectile extends Entity {
   constructor(params = {}) {
     super(params);
@@ -5267,6 +5393,10 @@ class Projectile extends Entity {
   }
 }
 __publicField(Projectile, "$tags", ["projectile"]);
+const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Projectile
+}, Symbol.toStringTag, { value: "Module" }));
 class Enemy extends Entity {
   constructor(params = {}) {
     super(params);
@@ -5353,6 +5483,10 @@ class Enemy extends Entity {
   }
 }
 __publicField(Enemy, "$tags", ["enemy"]);
+const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Enemy
+}, Symbol.toStringTag, { value: "Module" }));
 class PigEnemy extends Enemy {
   constructor(params = {}) {
     super(params);
@@ -5406,6 +5540,10 @@ class PigEnemy extends Enemy {
   }
 }
 __publicField(PigEnemy, "$tags", ["enemy", "pig"]);
+const __vite_glob_0_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: PigEnemy
+}, Symbol.toStringTag, { value: "Module" }));
 class RedEnemy extends Enemy {
   constructor(params = {}) {
     super({
@@ -5470,6 +5608,10 @@ class RedEnemy extends Enemy {
   }
 }
 __publicField(RedEnemy, "$tags", ["enemy", "red"]);
+const __vite_glob_0_6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: RedEnemy
+}, Symbol.toStringTag, { value: "Module" }));
 class GrannyEnemy extends Enemy {
   constructor(params = {}) {
     super({
@@ -5551,6 +5693,10 @@ class GrannyEnemy extends Enemy {
   }
 }
 __publicField(GrannyEnemy, "$tags", ["enemy", "granny"]);
+const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: GrannyEnemy
+}, Symbol.toStringTag, { value: "Module" }));
 class AmalgamEnemy extends Enemy {
   constructor(params = {}) {
     super({
@@ -5637,6 +5783,10 @@ class AmalgamEnemy extends Enemy {
   }
 }
 __publicField(AmalgamEnemy, "$tags", ["enemy", "amalgam"]);
+const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: AmalgamEnemy
+}, Symbol.toStringTag, { value: "Module" }));
 class DenWorld extends World {
   constructor(options = {}) {
     super(options);
@@ -5814,8 +5964,8 @@ class DenWorld extends World {
     });
   }
   cleanup() {
-    const entities = this.entities;
-    for (const entity of entities) {
+    const entities2 = this.entities;
+    for (const entity of entities2) {
       if (entity.alive === false) {
         this.removeChild(entity.$id);
       }
@@ -5825,6 +5975,51 @@ class DenWorld extends World {
 function testCollision(entityA, entityB) {
   return testHitbox(entityA.hitbox, entityA.position, entityB.hitbox, entityB.position);
 }
+class DenController extends GameController {
+  shoot() {
+    var _a2;
+    const player = this.world.player;
+    if (!player.canShoot()) {
+      return;
+    }
+    player.shootCooldown = player.shootCooldownDuration;
+    player.shootRecoilTimer = player.shootRecoilDuration;
+    this.world.spawnProjectile({
+      x: player.x + 0.3,
+      y: player.y + 0.4
+    });
+    (_a2 = this.denAudio) == null ? void 0 : _a2.playShoot();
+  }
+  spawnPlayer(options = {}) {
+    return this.world.spawnPlayer(options);
+  }
+  spawnPigEnemy(options = {}) {
+    return this.world.spawnPigEnemy(options);
+  }
+  spawnRedEnemy(options = {}) {
+    return this.world.spawnRedEnemy(options);
+  }
+  spawnGrannyEnemy(options = {}) {
+    return this.world.spawnGrannyEnemy(options);
+  }
+  spawnAmalgamEnemy(options = {}) {
+    return this.world.spawnAmalgamEnemy(options);
+  }
+  setFps(fps = 60) {
+    this.game.setFpsLimited(true);
+    this.game.setFps(fps);
+  }
+  toggleHitboxDebug() {
+    var _a2;
+    return (_a2 = this.engine.stage) == null ? void 0 : _a2.toggleHitboxDebug();
+  }
+}
+__publicField(DenController, "bindings", {
+  moveUp: ["KeyW", "ArrowUp", "swipeUp"],
+  moveDown: ["KeyS", "ArrowDown", "swipeDown"],
+  shoot: ["Space", "tap"]
+});
+__publicField(DenController, "resources", ["world", "denAudio"]);
 class SpriteEffect {
   constructor(options = {}) {
     __privateAdd(this, _enabled, true);
@@ -5849,6 +6044,337 @@ class SpriteEffect {
 }
 _enabled = new WeakMap();
 __publicField(SpriteEffect, "type", "base");
+class ImpactSquashEffect extends SpriteEffect {
+  constructor(options = {}) {
+    super(options);
+    this.duration = options.duration ?? 0.25;
+    this.intensity = options.intensity ?? 0.4;
+    this.impactDirection = options.impactDirection ?? { x: 1, y: 0 };
+    this.timer = 0;
+    this.active = false;
+  }
+  trigger(impactDirection = { x: 1, y: 0 }) {
+    this.impactDirection = impactDirection;
+    this.timer = this.duration;
+    this.active = true;
+  }
+  update(deltaTime) {
+    if (!this.active) {
+      return;
+    }
+    this.timer -= deltaTime;
+    if (this.timer <= 0) {
+      this.timer = 0;
+      this.active = false;
+    }
+  }
+  getHints() {
+    if (!this.active) {
+      return null;
+    }
+    const progress = 1 - this.timer / this.duration;
+    const eased = Easing.easeOutElastic(progress);
+    const squashAmount = (1 - eased) * this.intensity;
+    const dirX = Math.abs(this.impactDirection.x);
+    const dirY = Math.abs(this.impactDirection.y);
+    const isHorizontal = dirX > dirY;
+    if (isHorizontal) {
+      return {
+        scaleX: 1 - squashAmount,
+        scaleY: 1 + squashAmount * 0.5
+      };
+    }
+    return {
+      scaleX: 1 + squashAmount * 0.5,
+      scaleY: 1 - squashAmount
+    };
+  }
+}
+__publicField(ImpactSquashEffect, "type", "impact_squash");
+const __vite_glob_2_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: ImpactSquashEffect
+}, Symbol.toStringTag, { value: "Module" }));
+class ChromaticEffect extends ShaderEffect {
+  constructor(options = {}) {
+    super(options);
+    __publicField(this, "intensity", 0.5);
+    this.intensity = options.intensity ?? 0.5;
+  }
+}
+__publicField(ChromaticEffect, "shader", {
+  params: ["intensity"],
+  uniforms: [],
+  fragment: `
+            if (intensity > 0.0) {
+                vec2 offset = texelSize * intensity * 50.0;
+                color.r = texture(uTexture, texCoord + vec2(offset.x, 0.0)).r;
+                color.b = texture(uTexture, texCoord - vec2(offset.x, 0.0)).b;
+            }
+        `
+});
+const __vite_glob_2_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: ChromaticEffect
+}, Symbol.toStringTag, { value: "Module" }));
+class EnemyView extends EntityView {
+  constructor(entity, context) {
+    super(entity, context);
+    const config = context.config || {};
+    const region = context.game.getRegion(config.image);
+    this.baseScaleX = config.width ?? 1;
+    this.baseScaleY = config.height ?? 1;
+    this.root = new Sprite({
+      region,
+      x: entity.x,
+      y: entity.y,
+      width: this.baseScaleX,
+      height: this.baseScaleY,
+      anchorX: config.anchorX ?? 0.5,
+      anchorY: config.anchorY ?? 0.05
+    });
+    this.impactSquash = new ImpactSquashEffect({
+      duration: 0.4,
+      intensity: 0.6
+    });
+    this.chromaticEffect = new ChromaticEffect({ intensity: 0 });
+    this.root.effects.add(this.chromaticEffect);
+    this.lastHp = entity.hp;
+  }
+  update(deltaTime) {
+    if (this.entity.hp < this.lastHp) {
+      this.impactSquash.trigger({ x: 1, y: 0 });
+      this.lastHp = this.entity.hp;
+    }
+    this.impactSquash.update(deltaTime);
+  }
+  sync() {
+    if (!this.root) {
+      return;
+    }
+    this.syncPosition();
+    this.syncHitFlash();
+    this.syncStun();
+    this.syncSquash();
+  }
+  syncPosition() {
+    this.root.x = this.entity.x;
+    this.root.y = this.entity.y;
+    this.root.setDepth(-this.entity.y);
+  }
+  syncHitFlash() {
+    if (this.entity.hitFlashTimer > 0) {
+      const flashIntensity = this.entity.hitFlashTimer / this.entity.hitFlashDuration;
+      this.root.tint = [1, 0.2, 0.2, flashIntensity * 0.7];
+      this.chromaticEffect.intensity = flashIntensity * 0.5;
+    } else {
+      this.root.tint = null;
+      this.chromaticEffect.intensity = 0;
+    }
+  }
+  syncStun() {
+    if (this.entity.isStunned) {
+      const shake = Math.sin(Date.now() * 0.05) * 0.02;
+      this.root.x += shake;
+    }
+  }
+  syncSquash() {
+    const squashHints = this.impactSquash.getHints();
+    if (squashHints) {
+      this.root.scaleX = this.baseScaleX * squashHints.scaleX;
+      this.root.scaleY = this.baseScaleY * squashHints.scaleY;
+    } else {
+      this.root.scaleX = this.baseScaleX;
+      this.root.scaleY = this.baseScaleY;
+    }
+  }
+}
+const __vite_glob_1_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: EnemyView
+}, Symbol.toStringTag, { value: "Module" }));
+class AmalgamEnemyView extends EnemyView {
+  constructor(entity, context) {
+    super(entity, context);
+    this.eyeGlow = 0;
+    this.baseY = 0;
+  }
+  sync() {
+    super.sync();
+    this.syncStalkingAnimation();
+    this.syncFearCharge();
+    this.syncFearActive();
+  }
+  syncStalkingAnimation() {
+    if (this.entity.state !== "stalking") {
+      return;
+    }
+    const progress = this.entity.stepProgress;
+    const sway = Math.sin(progress * Math.PI * 2) * 0.03;
+    this.root.rotation = sway;
+    const bob = Math.abs(Math.sin(progress * Math.PI * 2)) * 0.02;
+    this.root.y = this.entity.y - bob;
+    const breathe = 1 + Math.sin(progress * Math.PI) * 0.03;
+    this.root.scaleX = this.baseScaleX * breathe;
+    this.root.scaleY = this.baseScaleY * (2 - breathe);
+  }
+  syncFearCharge() {
+    if (this.entity.state !== "fearCharging") {
+      this.eyeGlow = 0;
+      return;
+    }
+    const chargeProgress = this.entity.fearProgress;
+    const shake = Math.sin(Date.now() * 0.04) * chargeProgress * 0.04;
+    this.root.x = this.entity.x + shake;
+    this.root.y = this.entity.y;
+    const pulse = 1 + Math.sin(chargeProgress * Math.PI * 6) * 0.08 * chargeProgress;
+    this.root.scaleX = this.baseScaleX * pulse;
+    this.root.scaleY = this.baseScaleY * pulse;
+    this.root.rotation = Math.sin(chargeProgress * Math.PI * 8) * 0.06 * chargeProgress;
+    this.eyeGlow = chargeProgress;
+    const red = 1;
+    const green = 0.2 + (1 - chargeProgress) * 0.3;
+    const blue = 0.1;
+    const intensity = chargeProgress * 0.5;
+    this.root.tint = [red, green, blue, intensity];
+  }
+  syncFearActive() {
+    if (this.entity.state !== "fearActive") {
+      if (this.eyeGlow > 0 && this.entity.state !== "fearCharging") {
+        this.eyeGlow = 0;
+        this.root.tint = null;
+      }
+      return;
+    }
+    const activeProgress = this.entity.stateTimer / this.entity.fearActiveDuration;
+    const fadeOut = 1 - activeProgress;
+    const pulse = Math.sin(activeProgress * Math.PI * 4) * 0.05 * fadeOut;
+    this.root.scaleX = this.baseScaleX * (1.1 + pulse);
+    this.root.scaleY = this.baseScaleY * (1.1 - pulse * 0.5);
+    this.root.x = this.entity.x;
+    this.root.y = this.entity.y;
+    this.root.rotation = 0;
+    const intensity = fadeOut * 0.6;
+    this.root.tint = intensity > 0.01 ? [1, 0.3, 0.2, intensity] : null;
+  }
+}
+__publicField(AmalgamEnemyView, "config", { image: "amalgam", width: 1.2, height: 1.2 });
+const __vite_glob_1_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: AmalgamEnemyView
+}, Symbol.toStringTag, { value: "Module" }));
+class GrannyEnemyView extends EnemyView {
+  constructor(entity, context) {
+    super(entity, context);
+    this.baseY = 0;
+    this.chargeGlow = 0;
+  }
+  sync() {
+    super.sync();
+    this.syncWalkerAnimation();
+    this.syncChargeAnimation();
+    this.syncFireAnimation();
+  }
+  syncWalkerAnimation() {
+    if (this.entity.state !== "walking") {
+      return;
+    }
+    const progress = this.entity.stepProgress;
+    const leanForward = Math.sin(progress * Math.PI) * 0.08;
+    this.root.rotation = -leanForward;
+    const bobHeight = Math.abs(Math.sin(progress * Math.PI * 2)) * 0.03;
+    this.root.y = this.entity.y - bobHeight;
+    const squashPhase = Math.sin(progress * Math.PI * 2);
+    const squash = 1 + squashPhase * 0.05;
+    const stretch = 1 - squashPhase * 0.03;
+    this.root.scaleX = this.baseScaleX * squash;
+    this.root.scaleY = this.baseScaleY * stretch;
+    const shuffle = Math.sin(progress * Math.PI * 4) * 0.01;
+    this.root.x = this.entity.x + shuffle;
+  }
+  syncChargeAnimation() {
+    if (this.entity.state !== "charging") {
+      this.chargeGlow = 0;
+      return;
+    }
+    const chargeProgress = this.entity.stateTimer / this.entity.chargeDuration;
+    const shake = Math.sin(Date.now() * 0.03) * chargeProgress * 0.03;
+    this.root.x = this.entity.x + shake;
+    this.root.y = this.entity.y;
+    const breathe = 1 + Math.sin(chargeProgress * Math.PI * 4) * 0.05 * chargeProgress;
+    this.root.scaleX = this.baseScaleX * breathe;
+    this.root.scaleY = this.baseScaleY * breathe;
+    this.root.rotation = Math.sin(chargeProgress * Math.PI * 6) * 0.05 * chargeProgress;
+    this.chargeGlow = chargeProgress;
+    this.root.tint = [1, 0.5 + chargeProgress * 0.5, 0.2, chargeProgress * 0.3];
+  }
+  syncFireAnimation() {
+    if (this.entity.state !== "firing") {
+      if (this.chargeGlow > 0) {
+        this.chargeGlow = 0;
+        this.root.tint = null;
+      }
+      return;
+    }
+    const fireProgress = this.entity.fireballsFired / this.entity.fireballCount;
+    const recoil = Math.sin(this.entity.stateTimer * 30) * 0.02 * (1 - fireProgress);
+    this.root.x = this.entity.x + recoil * 0.5;
+    this.root.y = this.entity.y;
+    this.root.scaleX = this.baseScaleX * (1 + (1 - fireProgress) * 0.1);
+    this.root.scaleY = this.baseScaleY * (1 - (1 - fireProgress) * 0.05);
+    this.root.rotation = 0.1 * (1 - fireProgress);
+    const glowIntensity = (1 - fireProgress) * 0.4;
+    this.root.tint = glowIntensity > 0.01 ? [1, 0.6, 0.3, glowIntensity] : null;
+  }
+}
+__publicField(GrannyEnemyView, "config", { image: "granny", width: 1, height: 1 });
+const __vite_glob_1_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: GrannyEnemyView
+}, Symbol.toStringTag, { value: "Module" }));
+class WaveEffect extends ShaderEffect {
+  constructor(options = {}) {
+    super(options);
+    __publicField(this, "amplitude", 0.5);
+    __publicField(this, "phase", 0);
+    this.amplitude = options.amplitude ?? 0.5;
+    this.phase = options.phase ?? 0;
+  }
+}
+__publicField(WaveEffect, "shader", {
+  params: ["amplitude", "phase"],
+  fragment: `
+            float wave = sin(texCoord.x * 10.0 + phase) * amplitude;
+            vec2 distorted = texCoord + vec2(0.0, wave * 0.05);
+            if (distorted.x < uvMin.x || distorted.x > uvMax.x || distorted.y < uvMin.y || distorted.y > uvMax.y) {
+                discard;
+            }
+            color = texture(uTexture, distorted);
+        `
+});
+const __vite_glob_2_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: WaveEffect
+}, Symbol.toStringTag, { value: "Module" }));
+class PigEnemyView extends EnemyView {
+  constructor(entity, context) {
+    super(entity, context);
+    this.waveEffect = new WaveEffect({ amplitude: 0.1 });
+    this.root.effects.add(this.waveEffect);
+  }
+  sync() {
+    super.sync();
+    this.syncWave();
+  }
+  syncWave() {
+    this.waveEffect.phase = this.entity.shuffleProgress * Math.PI * 2;
+  }
+}
+__publicField(PigEnemyView, "config", { image: "pig", width: 1, height: 1 });
+const __vite_glob_1_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: PigEnemyView
+}, Symbol.toStringTag, { value: "Module" }));
 class OutlineEffect extends SpriteEffect {
   constructor(options = {}) {
     super(options);
@@ -5922,311 +6448,10 @@ class PlayerView extends EntityView {
     }
   }
 }
-class ImpactSquashEffect extends SpriteEffect {
-  constructor(options = {}) {
-    super(options);
-    this.duration = options.duration ?? 0.25;
-    this.intensity = options.intensity ?? 0.4;
-    this.impactDirection = options.impactDirection ?? { x: 1, y: 0 };
-    this.timer = 0;
-    this.active = false;
-  }
-  trigger(impactDirection = { x: 1, y: 0 }) {
-    this.impactDirection = impactDirection;
-    this.timer = this.duration;
-    this.active = true;
-  }
-  update(deltaTime) {
-    if (!this.active) {
-      return;
-    }
-    this.timer -= deltaTime;
-    if (this.timer <= 0) {
-      this.timer = 0;
-      this.active = false;
-    }
-  }
-  getHints() {
-    if (!this.active) {
-      return null;
-    }
-    const progress = 1 - this.timer / this.duration;
-    const eased = Easing.easeOutElastic(progress);
-    const squashAmount = (1 - eased) * this.intensity;
-    const dirX = Math.abs(this.impactDirection.x);
-    const dirY = Math.abs(this.impactDirection.y);
-    const isHorizontal = dirX > dirY;
-    if (isHorizontal) {
-      return {
-        scaleX: 1 - squashAmount,
-        scaleY: 1 + squashAmount * 0.5
-      };
-    }
-    return {
-      scaleX: 1 + squashAmount * 0.5,
-      scaleY: 1 - squashAmount
-    };
-  }
-}
-__publicField(ImpactSquashEffect, "type", "impact_squash");
-class EnemyView extends EntityView {
-  constructor(entity, context) {
-    super(entity, context);
-    const config = context.config || {};
-    const region = context.game.getRegion(config.image);
-    this.baseScaleX = config.width ?? 1;
-    this.baseScaleY = config.height ?? 1;
-    this.root = new Sprite({
-      region,
-      x: entity.x,
-      y: entity.y,
-      width: this.baseScaleX,
-      height: this.baseScaleY,
-      anchorX: config.anchorX ?? 0.5,
-      anchorY: config.anchorY ?? 0.05
-    });
-    this.impactSquash = new ImpactSquashEffect({
-      duration: 0.4,
-      intensity: 0.6
-    });
-    this.chromaticEffect = new ChromaticEffect({ intensity: 0 });
-    this.root.effects.add(this.chromaticEffect);
-    this.lastHp = entity.hp;
-  }
-  update(deltaTime) {
-    if (this.entity.hp < this.lastHp) {
-      this.impactSquash.trigger({ x: 1, y: 0 });
-      this.lastHp = this.entity.hp;
-    }
-    this.impactSquash.update(deltaTime);
-  }
-  sync() {
-    if (!this.root) {
-      return;
-    }
-    this.syncPosition();
-    this.syncHitFlash();
-    this.syncStun();
-    this.syncSquash();
-  }
-  syncPosition() {
-    this.root.x = this.entity.x;
-    this.root.y = this.entity.y;
-    this.root.setDepth(-this.entity.y);
-  }
-  syncHitFlash() {
-    if (this.entity.hitFlashTimer > 0) {
-      const flashIntensity = this.entity.hitFlashTimer / this.entity.hitFlashDuration;
-      this.root.tint = [1, 0.2, 0.2, flashIntensity * 0.7];
-      this.chromaticEffect.intensity = flashIntensity * 0.5;
-    } else {
-      this.root.tint = null;
-      this.chromaticEffect.intensity = 0;
-    }
-  }
-  syncStun() {
-    if (this.entity.isStunned) {
-      const shake = Math.sin(Date.now() * 0.05) * 0.02;
-      this.root.x += shake;
-    }
-  }
-  syncSquash() {
-    const squashHints = this.impactSquash.getHints();
-    if (squashHints) {
-      this.root.scaleX = this.baseScaleX * squashHints.scaleX;
-      this.root.scaleY = this.baseScaleY * squashHints.scaleY;
-    } else {
-      this.root.scaleX = this.baseScaleX;
-      this.root.scaleY = this.baseScaleY;
-    }
-  }
-}
-class PigEnemyView extends EnemyView {
-  constructor(entity, context) {
-    super(entity, context);
-    this.waveEffect = new WaveEffect({ amplitude: 0.1 });
-    this.root.effects.add(this.waveEffect);
-  }
-  sync() {
-    super.sync();
-    this.syncWave();
-  }
-  syncWave() {
-    this.waveEffect.phase = this.entity.shuffleProgress * Math.PI * 2;
-  }
-}
-class RedEnemyView extends EnemyView {
-  constructor(entity, context) {
-    super(entity, context);
-    const animatorConfig = context.game.getSource("redAnimator");
-    this.animator = new SpriteAnimator({
-      sprite: this.root,
-      config: animatorConfig,
-      textureSystem: context.game.textureSystem
-    });
-    this.root.anchorX = this.animator.anchor.x;
-    this.root.anchorY = this.animator.anchor.y;
-    this.animator.get("throw").on("event:release", () => {
-      logger.log("throw released");
-    });
-  }
-  update(deltaTime) {
-    super.update(deltaTime);
-    this.animator.update(deltaTime);
-  }
-  sync() {
-    super.sync();
-    this.syncAnimation();
-    this.syncAnimationSpeed();
-  }
-  syncAnimation() {
-    const state = this.entity.state;
-    const skipAnim = this.animator.get("skip");
-    const throwAnim = this.animator.get("throw");
-    if (state === "stopping") {
-      if (this.animator.current !== throwAnim) {
-        this.animator.play("throw");
-      }
-    } else if (this.animator.current !== skipAnim) {
-      this.animator.play("skip");
-    }
-  }
-  syncAnimationSpeed() {
-    const anim = this.animator.current;
-    if (anim) {
-      anim.speed = 1;
-    }
-  }
-}
-class GrannyEnemyView extends EnemyView {
-  constructor(entity, context) {
-    super(entity, context);
-    this.baseY = 0;
-    this.chargeGlow = 0;
-  }
-  sync() {
-    super.sync();
-    this.syncWalkerAnimation();
-    this.syncChargeAnimation();
-    this.syncFireAnimation();
-  }
-  syncWalkerAnimation() {
-    if (this.entity.state !== "walking") {
-      return;
-    }
-    const progress = this.entity.stepProgress;
-    const leanForward = Math.sin(progress * Math.PI) * 0.08;
-    this.root.rotation = -leanForward;
-    const bobHeight = Math.abs(Math.sin(progress * Math.PI * 2)) * 0.03;
-    this.root.y = this.entity.y - bobHeight;
-    const squashPhase = Math.sin(progress * Math.PI * 2);
-    const squash = 1 + squashPhase * 0.05;
-    const stretch = 1 - squashPhase * 0.03;
-    this.root.scaleX = this.baseScaleX * squash;
-    this.root.scaleY = this.baseScaleY * stretch;
-    const shuffle = Math.sin(progress * Math.PI * 4) * 0.01;
-    this.root.x = this.entity.x + shuffle;
-  }
-  syncChargeAnimation() {
-    if (this.entity.state !== "charging") {
-      this.chargeGlow = 0;
-      return;
-    }
-    const chargeProgress = this.entity.stateTimer / this.entity.chargeDuration;
-    const shake = Math.sin(Date.now() * 0.03) * chargeProgress * 0.03;
-    this.root.x = this.entity.x + shake;
-    this.root.y = this.entity.y;
-    const breathe = 1 + Math.sin(chargeProgress * Math.PI * 4) * 0.05 * chargeProgress;
-    this.root.scaleX = this.baseScaleX * breathe;
-    this.root.scaleY = this.baseScaleY * breathe;
-    this.root.rotation = Math.sin(chargeProgress * Math.PI * 6) * 0.05 * chargeProgress;
-    this.chargeGlow = chargeProgress;
-    this.root.tint = [1, 0.5 + chargeProgress * 0.5, 0.2, chargeProgress * 0.3];
-  }
-  syncFireAnimation() {
-    if (this.entity.state !== "firing") {
-      if (this.chargeGlow > 0) {
-        this.chargeGlow = 0;
-        this.root.tint = null;
-      }
-      return;
-    }
-    const fireProgress = this.entity.fireballsFired / this.entity.fireballCount;
-    const recoil = Math.sin(this.entity.stateTimer * 30) * 0.02 * (1 - fireProgress);
-    this.root.x = this.entity.x + recoil * 0.5;
-    this.root.y = this.entity.y;
-    this.root.scaleX = this.baseScaleX * (1 + (1 - fireProgress) * 0.1);
-    this.root.scaleY = this.baseScaleY * (1 - (1 - fireProgress) * 0.05);
-    this.root.rotation = 0.1 * (1 - fireProgress);
-    const glowIntensity = (1 - fireProgress) * 0.4;
-    this.root.tint = glowIntensity > 0.01 ? [1, 0.6, 0.3, glowIntensity] : null;
-  }
-}
-class AmalgamEnemyView extends EnemyView {
-  constructor(entity, context) {
-    super(entity, context);
-    this.eyeGlow = 0;
-    this.baseY = 0;
-  }
-  sync() {
-    super.sync();
-    this.syncStalkingAnimation();
-    this.syncFearCharge();
-    this.syncFearActive();
-  }
-  syncStalkingAnimation() {
-    if (this.entity.state !== "stalking") {
-      return;
-    }
-    const progress = this.entity.stepProgress;
-    const sway = Math.sin(progress * Math.PI * 2) * 0.03;
-    this.root.rotation = sway;
-    const bob = Math.abs(Math.sin(progress * Math.PI * 2)) * 0.02;
-    this.root.y = this.entity.y - bob;
-    const breathe = 1 + Math.sin(progress * Math.PI) * 0.03;
-    this.root.scaleX = this.baseScaleX * breathe;
-    this.root.scaleY = this.baseScaleY * (2 - breathe);
-  }
-  syncFearCharge() {
-    if (this.entity.state !== "fearCharging") {
-      this.eyeGlow = 0;
-      return;
-    }
-    const chargeProgress = this.entity.fearProgress;
-    const shake = Math.sin(Date.now() * 0.04) * chargeProgress * 0.04;
-    this.root.x = this.entity.x + shake;
-    this.root.y = this.entity.y;
-    const pulse = 1 + Math.sin(chargeProgress * Math.PI * 6) * 0.08 * chargeProgress;
-    this.root.scaleX = this.baseScaleX * pulse;
-    this.root.scaleY = this.baseScaleY * pulse;
-    this.root.rotation = Math.sin(chargeProgress * Math.PI * 8) * 0.06 * chargeProgress;
-    this.eyeGlow = chargeProgress;
-    const red = 1;
-    const green = 0.2 + (1 - chargeProgress) * 0.3;
-    const blue = 0.1;
-    const intensity = chargeProgress * 0.5;
-    this.root.tint = [red, green, blue, intensity];
-  }
-  syncFearActive() {
-    if (this.entity.state !== "fearActive") {
-      if (this.eyeGlow > 0 && this.entity.state !== "fearCharging") {
-        this.eyeGlow = 0;
-        this.root.tint = null;
-      }
-      return;
-    }
-    const activeProgress = this.entity.stateTimer / this.entity.fearActiveDuration;
-    const fadeOut = 1 - activeProgress;
-    const pulse = Math.sin(activeProgress * Math.PI * 4) * 0.05 * fadeOut;
-    this.root.scaleX = this.baseScaleX * (1.1 + pulse);
-    this.root.scaleY = this.baseScaleY * (1.1 - pulse * 0.5);
-    this.root.x = this.entity.x;
-    this.root.y = this.entity.y;
-    this.root.rotation = 0;
-    const intensity = fadeOut * 0.6;
-    this.root.tint = intensity > 0.01 ? [1, 0.3, 0.2, intensity] : null;
-  }
-}
+const __vite_glob_1_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: PlayerView
+}, Symbol.toStringTag, { value: "Module" }));
 const SOURCE_COLORS = {
   player: "#3a2a1a",
   enemy: "#cc3333"
@@ -6271,6 +6496,100 @@ class ProjectileView extends EntityView {
         this.waveEffect.phase = this.entity.time * 15;
       }
     }
+  }
+}
+const __vite_glob_1_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: ProjectileView
+}, Symbol.toStringTag, { value: "Module" }));
+class RedEnemyView extends EnemyView {
+  constructor(entity, context) {
+    super(entity, context);
+    const animatorConfig = context.game.getSource("redAnimator");
+    this.animator = new SpriteAnimator({
+      sprite: this.root,
+      config: animatorConfig,
+      textureSystem: context.game.textureSystem
+    });
+    this.root.anchorX = this.animator.anchor.x;
+    this.root.anchorY = this.animator.anchor.y;
+    this.animator.get("throw").on("event:release", () => {
+      logger.log("throw released");
+    });
+  }
+  update(deltaTime) {
+    super.update(deltaTime);
+    this.animator.update(deltaTime);
+  }
+  sync() {
+    super.sync();
+    this.syncAnimation();
+    this.syncAnimationSpeed();
+  }
+  syncAnimation() {
+    const state = this.entity.state;
+    const skipAnim = this.animator.get("skip");
+    const throwAnim = this.animator.get("throw");
+    if (state === "stopping") {
+      if (this.animator.current !== throwAnim) {
+        this.animator.play("throw");
+      }
+    } else if (this.animator.current !== skipAnim) {
+      this.animator.play("skip");
+    }
+  }
+  syncAnimationSpeed() {
+    const anim = this.animator.current;
+    if (anim) {
+      anim.speed = 1;
+    }
+  }
+}
+__publicField(RedEnemyView, "config", { image: "red", width: 1, height: 1 });
+const __vite_glob_1_6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: RedEnemyView
+}, Symbol.toStringTag, { value: "Module" }));
+const entityModules = /* @__PURE__ */ Object.assign({ "./entities/amalgam_enemy.js": __vite_glob_0_0, "./entities/enemy.js": __vite_glob_0_1, "./entities/granny_enemy.js": __vite_glob_0_2, "./entities/pig_enemy.js": __vite_glob_0_3, "./entities/player.js": __vite_glob_0_4, "./entities/projectile.js": __vite_glob_0_5, "./entities/red_enemy.js": __vite_glob_0_6 });
+const viewModules = /* @__PURE__ */ Object.assign({ "./views/amalgam_enemy_view.js": __vite_glob_1_0, "./views/enemy_view.js": __vite_glob_1_1, "./views/granny_enemy_view.js": __vite_glob_1_2, "./views/pig_enemy_view.js": __vite_glob_1_3, "./views/player_view.js": __vite_glob_1_4, "./views/projectile_view.js": __vite_glob_1_5, "./views/red_enemy_view.js": __vite_glob_1_6 });
+const effectModules = /* @__PURE__ */ Object.assign({ "./effects/chromatic_effect.js": __vite_glob_2_0, "./effects/impact_squash_effect.js": __vite_glob_2_1, "./effects/wave_effect.js": __vite_glob_2_2 });
+const entities = {};
+for (const module of Object.values(entityModules)) {
+  const Class = module.default;
+  if (Class == null ? void 0 : Class.name) {
+    entities[Class.name] = Class;
+  }
+}
+const views = {};
+for (const module of Object.values(viewModules)) {
+  const Class = module.default;
+  if (Class == null ? void 0 : Class.name) {
+    views[Class.name] = Class;
+  }
+}
+function getViewFor(Entity2) {
+  const viewName = Entity2.name + "View";
+  return views[viewName];
+}
+function autoRegisterViews(stage, overrides = {}) {
+  for (const [name, Entity2] of Object.entries(entities)) {
+    const View = getViewFor(Entity2);
+    if (View) {
+      const config = { ...View.config, ...overrides[name] };
+      stage.register(Entity2, View, config);
+    }
+  }
+}
+const effects = {};
+for (const module of Object.values(effectModules)) {
+  const Class = module.default;
+  if (Class == null ? void 0 : Class.name) {
+    effects[Class.name] = Class;
+  }
+}
+function autoRegisterEffects(renderer) {
+  for (const Effect of Object.values(effects)) {
+    renderer.registerShaderEffect(Effect);
   }
 }
 const DEFAULT_CONFIG = {
@@ -6370,9 +6689,9 @@ class HitboxDebug {
     if (!this.enabled) {
       return;
     }
-    const entities = __privateMethod(this, _HitboxDebug_instances, getCollidableEntities_fn).call(this);
+    const entities2 = __privateMethod(this, _HitboxDebug_instances, getCollidableEntities_fn).call(this);
     const currentIds = /* @__PURE__ */ new Set();
-    for (const entity of entities) {
+    for (const entity of entities2) {
       currentIds.add(entity.$id);
       __privateMethod(this, _HitboxDebug_instances, updateVisual_fn).call(this, entity);
     }
@@ -6388,24 +6707,24 @@ class HitboxDebug {
 }
 _HitboxDebug_instances = new WeakSet();
 getCollidableEntities_fn = function() {
-  const entities = [];
+  const entities2 = [];
   const player = this.world.player;
   if (player && player.alive !== false) {
-    entities.push(player);
+    entities2.push(player);
   }
   const enemies = this.world.childrenByTags("enemy");
   for (const enemy of enemies) {
     if (enemy.alive !== false) {
-      entities.push(enemy);
+      entities2.push(enemy);
     }
   }
   const projectiles = this.world.childrenByTags("projectile");
   for (const projectile of projectiles) {
     if (projectile.alive !== false) {
-      entities.push(projectile);
+      entities2.push(projectile);
     }
   }
-  return entities;
+  return entities2;
 };
 updateVisual_fn = function(entity) {
   let visual = this.visuals.get(entity.$id);
@@ -7231,21 +7550,81 @@ __publicField(DayNightPass, "defaultUniforms", {
 __publicField(DayNightPass, "uniformConfig", {
   uDayNightProgress: { min: 0, max: 1, step: 0.01 }
 });
-class DenStage extends Stage {
+class VignettePass extends RenderPass {
+}
+__publicField(VignettePass, "$name", "vignettePass");
+__publicField(VignettePass, "shaderDefinition", {
+  vertex: `#version 300 es
+            in vec2 aPosition;
+            in vec2 aTexCoord;
+            out vec2 vTexCoord;
+            void main() {
+                gl_Position = vec4(aPosition, 0.0, 1.0);
+                vTexCoord = aTexCoord;
+            }
+        `,
+  fragment: `#version 300 es
+            precision highp float;
+            uniform sampler2D uTexture;
+            uniform float uIntensity;
+            uniform float uSmoothness;
+            uniform float uRoundness;
+            uniform vec3 uColor;
+            in vec2 vTexCoord;
+            out vec4 fragColor;
+
+            float dither(vec2 coord) {
+                return (fract(sin(dot(coord, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
+            }
+
+            void main() {
+                vec4 color = texture(uTexture, vTexCoord);
+                vec2 uv = vTexCoord * 2.0 - 1.0;
+
+                uv.x *= mix(1.0, 0.7, uRoundness);
+
+                float dist = dot(uv, uv);
+
+                float vignette = 1.0 - dist * uIntensity;
+                vignette = smoothstep(0.0, uSmoothness, vignette);
+
+                vec3 finalColor = mix(uColor, color.rgb, vignette);
+                finalColor += dither(gl_FragCoord.xy);
+
+                fragColor = vec4(finalColor, color.a);
+            }
+        `,
+  uniforms: ["uTexture", "uIntensity", "uSmoothness", "uRoundness", "uColor"],
+  attributes: ["aPosition", "aTexCoord"]
+});
+__publicField(VignettePass, "defaultUniforms", {
+  uIntensity: 0.4,
+  uSmoothness: 0.8,
+  uRoundness: 0.5,
+  uColor: [0, 0, 0]
+});
+__publicField(VignettePass, "uniformConfig", {
+  uIntensity: { min: 0, max: 1, step: 0.01 },
+  uSmoothness: { min: 0, max: 2, step: 0.01 },
+  uRoundness: { min: 0, max: 1, step: 0.01 },
+  uColor: { type: "color" }
+});
+class GameStage extends Stage {
   constructor() {
     super(...arguments);
-    __privateAdd(this, _DenStage_instances);
+    __privateAdd(this, _GameStage_instances);
   }
   get dayNightPass() {
     var _a2;
     return (_a2 = this.game.getRenderer("game")) == null ? void 0 : _a2.getPass("dayNightPass");
   }
   onStart() {
-    __privateMethod(this, _DenStage_instances, registerViews_fn).call(this);
-    __privateMethod(this, _DenStage_instances, createImpactParticles_fn).call(this);
-    __privateMethod(this, _DenStage_instances, createHitboxDebug_fn).call(this);
-    __privateMethod(this, _DenStage_instances, setupRenderGroups_fn).call(this);
-    __privateMethod(this, _DenStage_instances, buildBackground_fn).call(this);
+    __privateMethod(this, _GameStage_instances, registerViews_fn).call(this);
+    __privateMethod(this, _GameStage_instances, createImpactParticles_fn).call(this);
+    __privateMethod(this, _GameStage_instances, createHitboxDebug_fn).call(this);
+    __privateMethod(this, _GameStage_instances, setupRenderGroups_fn).call(this);
+    __privateMethod(this, _GameStage_instances, buildBackground_fn).call(this);
+    super.onStart();
     this.game.execute("spawnPlayer", { x: -2.5 });
   }
   update(deltaTime) {
@@ -7255,7 +7634,7 @@ class DenStage extends Stage {
   }
   render() {
     var _a2, _b;
-    this.worldView.syncViews();
+    this.syncViews();
     this.hitboxDebug.update();
     const gameLayer = this.game.getLayer("game");
     this.game.getRenderer("game").setUniform("uTime", performance.now() / 1e3);
@@ -7279,9 +7658,9 @@ class DenStage extends Stage {
     return this.hitboxDebug.toggle();
   }
 }
-_DenStage_instances = new WeakSet();
+_GameStage_instances = new WeakSet();
 registerViews_fn = function() {
-  this.worldView.register(Player, PlayerView).register(PigEnemy, PigEnemyView, { image: "pig", width: 1, height: 1 }).register(RedEnemy, RedEnemyView, { image: "red", width: 1, height: 1 }).register(GrannyEnemy, GrannyEnemyView, { image: "granny", width: 1, height: 1 }).register(AmalgamEnemy, AmalgamEnemyView, { image: "amalgam", width: 1.2, height: 1.2 }).register(Projectile, ProjectileView);
+  autoRegisterViews(this);
 };
 createImpactParticles_fn = function() {
   this.impactParticles = this.create(ImpactParticles, {
@@ -7304,7 +7683,7 @@ setupRenderGroups_fn = function() {
     offsetY: 0,
     color: [0, 0, 0, 0.3]
   });
-  this.entitiesGroup.addChild(this.worldView.rootGroup);
+  this.entitiesGroup.addChild(this.viewsGroup);
   this.entitiesGroup.addChild(this.impactParticles.particleGroup);
   gameRenderer.setRenderGroups([
     {
@@ -7339,52 +7718,9 @@ buildBackground_fn = function() {
   });
   this.backgroundGroup.addChild(background);
 };
-__publicField(DenStage, "World", DenWorld);
-class DenController extends GameController {
-  shoot() {
-    var _a2;
-    const player = this.world.player;
-    if (!player.canShoot()) {
-      return;
-    }
-    player.shootCooldown = player.shootCooldownDuration;
-    player.shootRecoilTimer = player.shootRecoilDuration;
-    this.world.spawnProjectile({
-      x: player.x + 0.3,
-      y: player.y + 0.4
-    });
-    (_a2 = this.denAudio) == null ? void 0 : _a2.playShoot();
-  }
-  spawnPlayer(options = {}) {
-    return this.world.spawnPlayer(options);
-  }
-  spawnPigEnemy(options = {}) {
-    return this.world.spawnPigEnemy(options);
-  }
-  spawnRedEnemy(options = {}) {
-    return this.world.spawnRedEnemy(options);
-  }
-  spawnGrannyEnemy(options = {}) {
-    return this.world.spawnGrannyEnemy(options);
-  }
-  spawnAmalgamEnemy(options = {}) {
-    return this.world.spawnAmalgamEnemy(options);
-  }
-  setFps(fps = 60) {
-    this.game.setFpsLimited(true);
-    this.game.setFps(fps);
-  }
-  toggleHitboxDebug() {
-    var _a2;
-    return (_a2 = this.engine.stage) == null ? void 0 : _a2.toggleHitboxDebug();
-  }
-}
-__publicField(DenController, "bindings", {
-  moveUp: ["KeyW", "ArrowUp", "swipeUp"],
-  moveDown: ["KeyS", "ArrowDown", "swipeDown"],
-  shoot: ["Space", "tap"]
-});
-__publicField(DenController, "resources", ["world", "denAudio"]);
+__publicField(GameStage, "World", DenWorld);
+__publicField(GameStage, "ActionController", DenController);
+__publicField(GameStage, "postPasses", [DayNightPass, VignettePass]);
 class WaveSystem extends PerkyModule {
   constructor(options = {}) {
     super(options);
@@ -7694,7 +8030,7 @@ applyStyles_fn = function() {
 };
 __publicField(_WaveProgressBar, "phaseNames", ["Dawn", "Day", "Dusk", "Night"]);
 let WaveProgressBar = _WaveProgressBar;
-class GameplayStage extends DenStage {
+class GameplayStage extends GameStage {
   constructor() {
     super(...arguments);
     __privateAdd(this, _GameplayStage_instances);
@@ -7762,7 +8098,7 @@ createUI_fn = function() {
   });
   waveProgressBar.mount(uiLayer);
 };
-__publicField(GameplayStage, "ActionController", DenController);
+__publicField(GameplayStage, "$name", "gameplay");
 const SPAWN_BUTTONS = [
   { label: "Pig", action: "spawnPigEnemy", maxSpeed: 0.4 },
   { label: "Red", action: "spawnRedEnemy" },
@@ -7955,7 +8291,7 @@ applyStyles_fn2 = function() {
         ` });
   this.root.appendChild(style);
 };
-class PreviewStage extends DenStage {
+class PreviewStage extends GameStage {
   constructor() {
     super(...arguments);
     __privateAdd(this, _PreviewStage_instances);
@@ -7975,74 +8311,14 @@ createUI_fn2 = function() {
   });
   previewControls.mount(uiLayer);
 };
-__publicField(PreviewStage, "ActionController", DenController);
-class VignettePass extends RenderPass {
-}
-__publicField(VignettePass, "$name", "vignettePass");
-__publicField(VignettePass, "shaderDefinition", {
-  vertex: `#version 300 es
-            in vec2 aPosition;
-            in vec2 aTexCoord;
-            out vec2 vTexCoord;
-            void main() {
-                gl_Position = vec4(aPosition, 0.0, 1.0);
-                vTexCoord = aTexCoord;
-            }
-        `,
-  fragment: `#version 300 es
-            precision highp float;
-            uniform sampler2D uTexture;
-            uniform float uIntensity;
-            uniform float uSmoothness;
-            uniform float uRoundness;
-            uniform vec3 uColor;
-            in vec2 vTexCoord;
-            out vec4 fragColor;
-
-            float dither(vec2 coord) {
-                return (fract(sin(dot(coord, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
-            }
-
-            void main() {
-                vec4 color = texture(uTexture, vTexCoord);
-                vec2 uv = vTexCoord * 2.0 - 1.0;
-
-                uv.x *= mix(1.0, 0.7, uRoundness);
-
-                float dist = dot(uv, uv);
-
-                float vignette = 1.0 - dist * uIntensity;
-                vignette = smoothstep(0.0, uSmoothness, vignette);
-
-                vec3 finalColor = mix(uColor, color.rgb, vignette);
-                finalColor += dither(gl_FragCoord.xy);
-
-                fragColor = vec4(finalColor, color.a);
-            }
-        `,
-  uniforms: ["uTexture", "uIntensity", "uSmoothness", "uRoundness", "uColor"],
-  attributes: ["aPosition", "aTexCoord"]
-});
-__publicField(VignettePass, "defaultUniforms", {
-  uIntensity: 0.4,
-  uSmoothness: 0.8,
-  uRoundness: 0.5,
-  uColor: [0, 0, 0]
-});
-__publicField(VignettePass, "uniformConfig", {
-  uIntensity: { min: 0, max: 1, step: 0.01 },
-  uSmoothness: { min: 0, max: 2, step: 0.01 },
-  uRoundness: { min: 0, max: 1, step: 0.01 },
-  uColor: { type: "color" }
-});
+__publicField(PreviewStage, "$name", "preview");
 class DefendTheDen extends Game {
   configureGame(params = {}) {
     const gameRenderer = this.getRenderer("game");
-    gameRenderer.registerShaderEffect(ChromaticEffect);
+    autoRegisterEffects(gameRenderer);
     gameRenderer.registerShaderEffect(OutlineEffect$1);
-    gameRenderer.registerShaderEffect(WaveEffect);
-    const StageClass = params.preview ? PreviewStage : GameplayStage;
-    this.setStage(StageClass);
+    const stageName = params.preview ? "preview" : "gameplay";
+    this.setStage(stageName);
   }
   onStart() {
     super.onStart();
@@ -8068,7 +8344,10 @@ __publicField(DefendTheDen, "layers", [
     pointerEvents: "none"
   }
 ]);
-__publicField(DefendTheDen, "postPasses", [DayNightPass, VignettePass]);
+__publicField(DefendTheDen, "stages", {
+  gameplay: GameplayStage,
+  preview: PreviewStage
+});
 const toolRegistry = /* @__PURE__ */ new Map();
 function registerTool(Tool) {
   if (!Tool.toolId) {
@@ -10735,54 +11014,54 @@ openSceneTree_fn = function() {
 };
 customElements.define("canvas-layer-inspector", CanvasLayerInspector);
 PerkyExplorerDetails.registerInspector(CanvasLayerInspector);
-class WorldViewInspector extends BaseInspector {
+class StageInspector extends BaseInspector {
   constructor() {
     super();
-    __privateAdd(this, _WorldViewInspector_instances);
+    __privateAdd(this, _StageInspector_instances);
     this.buildDOM();
   }
   static matches(module) {
-    return module instanceof WorldView;
+    return module instanceof Stage;
   }
   onModuleSet(module) {
     if (module) {
-      __privateMethod(this, _WorldViewInspector_instances, update_fn3).call(this);
+      __privateMethod(this, _StageInspector_instances, update_fn3).call(this);
     }
   }
 }
-_WorldViewInspector_instances = new WeakSet();
+_StageInspector_instances = new WeakSet();
 update_fn3 = function() {
   var _a2, _b, _c, _d;
   if (!this.module) {
     return;
   }
   this.clearContent();
-  const worldView = this.module;
-  this.addRow("world", ((_a2 = worldView.world) == null ? void 0 : _a2.$id) || "(none)");
-  this.addRow("game", ((_b = worldView.game) == null ? void 0 : _b.$id) || "(none)");
-  const entityCount = ((_d = (_c = worldView.rootGroup) == null ? void 0 : _c.children) == null ? void 0 : _d.length) ?? 0;
-  this.addRow("entities", entityCount, true);
-  if (worldView.rootGroup && entityCount > 0) {
-    const sceneTreeBtn = this.createButton("🎬", "Scene Tree", () => __privateMethod(this, _WorldViewInspector_instances, openSceneTree_fn2).call(this));
+  const stage = this.module;
+  this.addRow("world", ((_a2 = stage.world) == null ? void 0 : _a2.$id) || "(none)");
+  this.addRow("game", ((_b = stage.game) == null ? void 0 : _b.$id) || "(none)");
+  const entityCount = ((_d = (_c = stage.viewsGroup) == null ? void 0 : _c.children) == null ? void 0 : _d.length) ?? 0;
+  this.addRow("views", entityCount, true);
+  if (stage.viewsGroup && entityCount > 0) {
+    const sceneTreeBtn = this.createButton("🎬", "Scene Tree", () => __privateMethod(this, _StageInspector_instances, openSceneTree_fn2).call(this));
     sceneTreeBtn.classList.add("primary");
     this.actionsEl.appendChild(sceneTreeBtn);
   }
 };
 openSceneTree_fn2 = function() {
   var _a2;
-  if (!((_a2 = this.module) == null ? void 0 : _a2.rootGroup)) {
+  if (!((_a2 = this.module) == null ? void 0 : _a2.viewsGroup)) {
     return;
   }
   this.dispatchEvent(new CustomEvent("open:scene-tree", {
     bubbles: true,
     composed: true,
     detail: {
-      content: this.module.rootGroup,
-      worldView: this.module
+      content: this.module.viewsGroup,
+      stage: this.module
     }
   }));
 };
-__publicField(WorldViewInspector, "styles", `
+__publicField(StageInspector, "styles", `
     .view-list {
         margin-top: 8px;
         padding-top: 8px;
@@ -10810,8 +11089,8 @@ __publicField(WorldViewInspector, "styles", `
         font-size: 10px;
     }
     `);
-customElements.define("world-view-inspector", WorldViewInspector);
-PerkyExplorerDetails.registerInspector(WorldViewInspector);
+customElements.define("stage-inspector", StageInspector);
+PerkyExplorerDetails.registerInspector(StageInspector);
 class WebGLCanvasInspector extends BaseInspector {
   constructor() {
     super(passStyles);
@@ -16340,7 +16619,7 @@ cleanupKeyboard_fn = function() {
 showCommandPalette_fn = async function() {
   if (!__privateGet(this, _commandPaletteEl)) {
     const { default: DevToolsCommandPalette } = await __vitePreload(async () => {
-      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-CuUDf6B7.js");
+      const { default: DevToolsCommandPalette2 } = await import("./devtools_command_palette-DgG2o20m.js");
       return { default: DevToolsCommandPalette2 };
     }, true ? __vite__mapDeps([0,1,2,3]) : void 0, import.meta.url);
     __privateSet(this, _commandPaletteEl, new DevToolsCommandPalette());
